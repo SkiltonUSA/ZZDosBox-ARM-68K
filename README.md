@@ -9,6 +9,8 @@ CD mounting and external MIDI through CAMD. Requires **MUI 3.8+**, Picasso96
 and compatible [XACP firmware](https://github.com/Xanxi-Amiga/XACP-ZZ9000).
 PCM sound-card audio, mouse and joystick support are pending.
 
+![ZZDosBox DOS welcome screen](docs/screenshots/dos-welcome.png)
+
 **Windows for Workgroups 3.11 now boots on the real ZZ9000 A9.** WinBench 3.11
 completed Graphics WinMark at **1,923,752 pixels/sec** (640x480, 16 colours,
 8 MB guest RAM, 3000 cycles/ms). Windows exited cleanly back to DOS and Workbench.
