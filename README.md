@@ -9,11 +9,16 @@ CD mounting and external MIDI through CAMD. Requires **MUI 3.8+**, Picasso96
 and compatible [XACP firmware](https://github.com/Xanxi-Amiga/XACP-ZZ9000).
 PCM sound-card audio, mouse and joystick support are pending.
 
-The current Windows experiment fixes A20 handling and protected-mode page
-faults. Windows Setup and Program Manager worked in native host tests;
-WinBench reached its licence screen. The initial Amiga run stopped with an
-internal allocation failure. A smaller TLB allocation is built; physical
-retesting and completed WinBench results remain pending.
+**Windows for Workgroups 3.11 now boots on the real ZZ9000 A9.** WinBench 3.11
+completed Graphics WinMark at **1,923,752 pixels/sec** (640x480, 16 colours,
+8 MB guest RAM, 3000 cycles/ms). Windows exited cleanly back to DOS and Workbench.
+
+WinBench's score and “37 MHz 80386” label use the emulated PC clock;
+they do not establish equivalent real-world PC speed.
+
+![WinBench running on the ZZ9000](docs/screenshots/windows311/winbench-results.png)
+
+[Windows desktop and test screenshots](docs/screenshots/windows311/README.md)
 
 [0.10.1 artifacts](artifacts/0.10.1-dev) ·
 [Windows experimental build](artifacts/experiments/wfw311-small-tlb) ·

@@ -1,0 +1,28 @@
+{
+  "start_command_utc": "2026-10-13T18:23:11.698937+00:00",
+  "guest_ram_mb": 8,
+  "cycles_per_ms": 3000,
+  "video": "standard VGA 640x480 16 colours",
+  "host_mode": "Workbench window 640x480, FPS overlay enabled",
+  "test": "WinBench 3.11 Graphics WinMark",
+  "result_observed_utc": "2026-10-13T18:27:38.944943+00:00",
+  "wall_seconds_upper_bound": 267.246006,
+  "graphics_winmark_pixels_per_second": 1923752,
+  "displayed_cpu_label": "37MHz 80386",
+  "displayed_reference": "Compaq 486/33m with QVision, 800x600x256",
+  "displayed_reference_score": 7478559,
+  "timing_caveat": "Uses emulated guest clock; CPU MHz label and WinMark score do not establish physical PC equivalence.",
+  "subtests_pixels_per_second": {
+    "MS PATCOPY": 3231315,
+    "ExtTextOut 16 pt System": 1933861,
+    "ExtTextOut 21 pt New Tms Rmn": 1447575,
+    "MS PATINVERT": 690661,
+    "POLYGON ALTERNATE FILL": 522477,
+    "Single Horizontal": 1695090,
+    "Single Vertical": 1085509,
+    "Single Diagonal": 221382,
+    "MS SRCCOPY": 1633974,
+    "Poly Mixed": 505642
+  },
+  "wall_measurement": "Upper bound from launch-key dispatch to result observation; includes input, UI and screenshot delays."
+}

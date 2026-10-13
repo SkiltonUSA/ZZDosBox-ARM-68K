@@ -1,6 +1,37 @@
 # ZZDosBox development handoff
 
-## ZZDosBox Windows research and backup preparation — 13 October 2026
+## ZZDosBox physical Windows / WinBench pass — 13 October 2026
+
+The smaller-TLB build is installed as
+`SD032G:Dev/ZZDosBox/PC/Windows311/ZZDosBox-WFW` (960580 bytes), SHA256
+`e7a17153553633ca535743c8f52051b2c3d9195362be29f356d4ba2e660d6f27`,
+MD5 `4566100283e38bbdfa92bbe6fc802a89`. Executable Workbench launch script:
+`Start-Windows311` in that drawer. Canonical 0.10.1 runtime is unchanged.
+Prior alternate runtime: `ZZDosBox-LargeTLB`; prior disk: `WFW311-base.IMG`.
+Current WFW311.IMG contains licensed user-supplied Windows, DOS and WinBench;
+it is private and has changed since its pre-run MD5 after guest writes.
+
+The full ARM model suite passed. On hardware, Windows reached Program Manager
+and WinBench 3.11 completed Graphics WinMark: **1,923,752 pixels/sec** at 8 MiB,
+3000 cycles/ms, standard VGA 640x480/16 colours, window + FPS overlay enabled.
+WinBench's **37 MHz 80386** label uses the emulated clock; it is not a verified
+physical PC speed equivalent. Result observation was within 267.25 real seconds
+of the start command, including UI/screenshot delays.
+
+Launch WinBench via Program Manager File / Run: `C:\WINBENCH\WINBENCH.EXE`.
+Local first-run licence details were entered; no network registration occurred.
+Windows mouse, PCM sound and networking remain unimplemented. Close apps, then
+File / Exit Windows, confirm, and use F10 at the DOS prompt to close ZZDosBox.
+This full lifecycle passed: SHELL PASS, disk/handles closed, no register/cache
+witness mismatch, launcher exit 0, owned memory released. No Guru/reboot.
+Left on Workbench, launcher still open, no Core1 owner. Evidence and screenshots:
+`amiga/records/2026-10-13/dosbox-wfw/`. These physical findings supersede the earlier pending-retest status.
+
+## ZZDosBox Windows research and GitHub backup — 13 October 2026
+
+Private GitHub backup updated to `33420b220ab1b6e82a67e4c9d5b7b206cb2eb34a` on `main`. Remote hash verified;
+805-file checksum verification and host tests passed. Receipt:
+`.context/zzdosbox-github-backup-receipt.json`.
 
 Windows for Workgroups 3.11 installed and reached Program Manager in native
 host ASan testing after the fast-A20 fix. WinBench opened its licence screen;

@@ -1582,3 +1582,23 @@ after the booted-DOS run. The helper is also present in the embedded C: drawer.
 Final binary checksums and evidence are under
 `amiga/records/2026-10-13/dosbox-startup-cd/`. No physical resize gesture or
 external MIDI instrument playback was tested.
+
+
+## Windows 3.11 and physical WinBench — 13 October 2026
+
+The Windows experiment now boots on the physical ZZ9000 A9. Fast-A20 port 0x92,
+ROM write protection, upstream full-core page-fault recovery and smaller sparse
+TLB banks resolved the installation/startup blockers. The bounded allocation
+remains 32 MiB with 8 MiB guest RAM. The tested DOS runtime remains available
+separately; Windows has its own executable and disk.
+
+WinBench 3.11 Graphics WinMark completed at **1,923,752 pixels/sec**, standard
+VGA 640x480/16 colours and 3000 cycles/ms. Its displayed 37 MHz 80386 estimate
+uses the guest clock; no real PC speed equivalence is established. Command-to-
+result observation took at most 267.25 real seconds, including UI/capture delays.
+Windows exited to DOS and the emulator released its owned resources with zero
+register/cache-witness mismatches. The full ARM model regression also passed.
+
+See [test evidence](../amiga/records/2026-10-13/dosbox-wfw/findings.md).
+Guest mouse, PCM audio and Windows networking remain pending. No Microsoft
+software, WinBench or guest disk image is distributed with the project.

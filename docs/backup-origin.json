@@ -9,6 +9,10 @@
     "license": "GPL-2.0-or-later; retain component notices"
   },
   "experimental_runtime_sha256": "e7a17153553633ca535743c8f52051b2c3d9195362be29f356d4ba2e660d6f27",
-  "physical_windows_retest": "pending",
-  "winbench": "Native licence screen reached; no completed benchmark or physical A9 score"
+  "physical_windows_retest": "Passed: desktop, WinBench Graphics WinMark, exit to DOS and clean emulator teardown",
+  "winbench": {
+    "version": "3.11",
+    "graphics_winmark_pixels_per_second": 1923752,
+    "clock": "emulated guest clock; not physical CPU speed equivalence"
+  }
 }

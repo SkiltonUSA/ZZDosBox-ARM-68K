@@ -56,12 +56,46 @@ retaining all 4 GiB of linear address coverage. Guest RAM stays at 8 MiB and
 the Exec-owned allocation stays at 32 MiB. The protected-mode fixture also
 maps and reads 0x80000000, 0x81000000 and 0xff000000 across a TLB flush.
 
-Physical retest pending; native success alone does not prove target execution.
+The smaller-TLB ARM model regression suite passed, including the high-bank
+paging fixture. The revised build then reached Windows Program Manager on
+the physical A4000TX and completed WinBench 3.11 Graphics WinMark.
 
-## WinBench and backup status
+## Physical WinBench result
 
-The supplied Win16 WinBench program opened its licence screen in the native
-host build. No benchmark completed and no physical A9 WinBench score exists.
-The smaller-TLB ARM build completed; physical testing is still pending.
-The backup keeps the verified installed 0.10.1 executable separate from this
-experiment. Historical model logs below predate the smaller-TLB change.
+- Graphics WinMark: **1,923,752 pixels/sec**, as reported by WinBench.
+- Settings: 8 MiB guest RAM, 3000 cycles/ms, standard VGA 640x480/16 colours,
+  Workbench window 640x480, ARM FPS overlay enabled; networking and PCM off.
+- Launch-command to result observation: **at most 267.25 seconds**. This includes
+  input/UI/screenshot delays, rather than precise test-only instrumentation.
+- WinBench labels the CPU **37 MHz 80386**. This estimate and the pixels/sec
+  score use the emulated PC clock; neither establishes physical 386/37 speed.
+- Its built-in Compaq 486/33m comparison uses QVision at 800x600/256 colours,
+  a different graphics configuration. It is not an equivalent hardware test.
+
+The result screenshot and individual subtest values are preserved alongside
+this report. The earlier native licence-screen test did not produce a score;
+this completed run used the real ZZ9000 A9.
+
+WinBench and Help closed normally. Program Manager's Exit Windows confirmation
+returned to the DOS prompt. F10 then closed the emulator. The log reports
+SHELL PASS, BIOS HDD close=ok, all file handles closed, zero register mismatches
+and cache-witness errors, and LAUNCHER exit=0 with owned memory released.
+No Guru or reboot was observed.
+
+The complete interactive session (boot, application loading, test and manual
+interaction) recorded 12,946 refreshes, 213,047 emulated ms and 805,852 wall ms.
+Those totals are not the benchmark-only duration or a game FPS measurement.
+A future CPU-equivalence comparison needs benchmark-only wall-clock timing;
+it must not scale this mixed-session average into an asserted PC clock speed.
+
+## Installed build and recovery
+
+The alternate Windows runtime and executable Workbench launch script remain
+in their separate Windows311 drawer. The canonical tested 0.10.1 DOS runtime
+is unchanged. The prior Windows runtime and pre-WinBench image are retained.
+WinBench resides inside the private guest disk at C:\WINBENCH\WINBENCH.EXE.
+Windows is keyboard-only: guest mouse, PCM audio and networking remain absent.
+The Amiga was left on Workbench with no Core1 owner after verification.
+
+Microsoft software, WinBench binaries and guest disk images are local supplied
+media and are not included in source backups or releases.

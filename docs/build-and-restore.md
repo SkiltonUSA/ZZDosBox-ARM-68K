@@ -2,7 +2,7 @@
 
 This backup contains current 0.10.1 development source, the historical 0.8
 baseline and a separate experimental Windows build. The Windows build has
-not completed physical validation. See the per-artifact notes before deploying.
+passed physical desktop, Graphics WinMark and shutdown checks. See the per-artifact notes before deploying.
 The original 0.8 artifacts remain unchanged for recovery.
 
 Run `python3 scripts/verify_backup.py` to check the backup hashes, then

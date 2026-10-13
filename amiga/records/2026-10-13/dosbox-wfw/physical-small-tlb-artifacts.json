@@ -1,0 +1,21 @@
+{
+  "runtime": {
+    "bytes": 960580,
+    "sha256": "e7a17153553633ca535743c8f52051b2c3d9195362be29f356d4ba2e660d6f27",
+    "md5": "4566100283e38bbdfa92bbe6fc802a89"
+  },
+  "guest_ram_mb": 8,
+  "allocation_bytes": 33554432,
+  "cycles_per_ms": 3000,
+  "video": "VGA 640x480 16 colours",
+  "display": "Workbench window 640x480 with ARM FPS overlay",
+  "physical_status": "Windows Program Manager, completed WinBench Graphics WinMark, Windows exit to DOS and clean emulator teardown verified",
+  "benchmark_score": 1923752,
+  "clean_exit": {
+    "launcher_exit": 0,
+    "register_mismatches": 0,
+    "cache_witness_bad": 0,
+    "owned_memory_released": true,
+    "disk_closed": true
+  }
+}
