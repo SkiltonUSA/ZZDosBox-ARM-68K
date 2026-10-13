@@ -1,0 +1,33 @@
+Public Message Ports (20):
+  TSPORT
+  WORKBENCH
+  DEFICONS
+  ToolsDaemon 2.1a © Nico François
+  REXX
+  AREXX
+  MagicMenu
+  SIXIES.BRIDGE.NETWATCH
+  AssignWedge.port
+  ZZTemperature.1
+  NewMeter
+  POPO.1
+  QDock
+  ROADIE
+  TCP/IP Control
+  AMIGABRIDGE
+  ZZDOS_LAUNCHER
+  ZZDOSBOX.1
+  ConClip.rendezvous
+  deficons
+Transferred 838468 bytes in 49.4s (16974 B/s), 819 chunks, CRC32 verified
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-PIC
+CRC32: DB549D27
+Size: 838468 bytes
+Transferred 13844 bytes in 1.0s (14160 B/s), 14 chunks, CRC32 verified
+File: RAM:MakeDosIcon
+CRC32: A6955355
+Size: 13844 bytes
+Downloaded 1876 bytes in 0.1s (21635 B/s), 2 chunks, CRC32 verified
+[OK]
+DOSBox icon 64x64 type=3 stack=65536 verified=1
+Downloaded 1122 bytes in 0.1s (18845 B/s), 2 chunks, CRC32 verified

@@ -1,0 +1,49 @@
+LOG: Early LOG Init complete
+LOG: CONFIG: Loaded config file: <workspace>/.context/amiga/dosbox-x-review/reference-dynrec.conf
+LOG: DOSBox-X's working directory: <workspace>/.context/amiga/dosbox-x-review/
+LOG: Logging init: beginning logging proper. This is the end of the early init logging
+LOG: Logging: No logfile was given. All further logging will be discarded.
+LOG: DOSBox-X version 2026.10.01 Commit f1c4414 (macOS ARM SDL2 64-bit)
+LOG: macOS EXE path: <workspace>/.context/research/dosbox-x/src/dosbox-x
+LOG: macOS Resource path: 
+LOG: macOS: NSTouchBar support detected in system
+LOG: Prevent capture: 0
+LOG: SDL: version 2.32.72, Video dummy, Audio dummy
+LOG: Host keyboard layout is now us (US English)
+LOG: Mapper keyboard layout is now us (US English)
+LOG: SDL2 reports desktop display mode 1024 x 768
+LOG: Configured windowposition: -
+LOG: SDL: Current window pixel format: SDL_PIXELFORMAT_RGB888
+LOG: SDL: You are running in 24 bpp mode, this will slow down things!
+LOG: Releasing keyboard
+LOG: Screen report: Method 'None' (-1.000 x -1.000 pixels) at (0.000 x 0.000) (-1.000 x -1.000 mm) (-0.039 x -0.039 in) (-1.000 x -1.000 DPI)
+LOG: ISA BCLK: 8333333.333Hz (25000000/3)
+LOG: monopal: green, 
+LOG: Active save slot: 1 [Empty]
+LOG: USING AVI+ZMBV
+LOG: Max 1073741824 sz 2048
+LOG: Final 2048
+LOG: Final arrangement: Below 4GB = 2048KB, Above 4GB = 0KB
+LOG: MIDI:Opened device:none
+LOG: VOODOO LFB now at d0000000
+LOG: Serial1: BASE 3f8h
+LOG: Serial2: BASE 2f8h
+LOG: MPU-401 Registering I/O ports as if IBM PC MPU-401 at base 330h
+LOG: Memory I/O complexity optimization enabled aka option 'memory io optimization 1'. If the game or demo is unable to draw to the screen properly, set the option to false.
+LOG: The 'scanline render on demand' option is available and may provide a modest boost in video render performance if set to true.
+LOG: Allocated APM BIOS pm entry point at f000:ce20
+LOG: Writing code to fce20
+LOG: Writing code to fce40
+LOG: ISA Plug & Play BIOS enabled
+LOG: VGA ROM BIOS init callback
+LOG: WARNING: No translation support (to host) for code page 0
+LOG: DOS keyboard layout loaded with main language code US for layout us
+LOG: XMS: 50 handles allocated for use by the DOS environment
+LOG: EMS page frame at 0xe000-0xefff
+LOG: COMMAND.COM env size:             720 bytes
+LOG: COMMAND.COM main body (PSP):      0x0701 sz=0x009a
+LOG: COMMAND.COM environment block:    0x079c sz=0x002d
+LOG: COMMAND.COM stack:                0x071b
+LOG: SHELL:Redirect output to file.log
+LOG: SHELL:Redirect output to exe.log
+LOG: SHELL:Redirect output to version.txt

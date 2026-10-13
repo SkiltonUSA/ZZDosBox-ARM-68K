@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-13",
+  "version": "0.8.0-dev",
+  "native_fs": "pass (ASan/UBSan)",
+  "native_embedded_dos_ega": "pass (ASan)",
+  "native_floppy_boot": "pass (ASan)",
+  "native_hdd_sys_boot_persistence": "pass (ASan)",
+  "arm_model": "pass, including original HDD BIOS fixture",
+  "regression": "make test-amiga-arm test-amiga passed",
+  "physical": "PASS: read-only mount/browse/eject, mutual exclusive ownership, A9 DOS write/flush/fresh-process readback, Workbench readback, MUI mount/eject/boot/F10 return",
+  "installed_default": "0.8.0-dev; 0.7 fallback preserved",
+  "dos_high": "stalls in native test; excluded from CONFIG.SYS",
+  "image": "user-supplied DOS and games, not included here",
+  "fps": "no new benchmark",
+  "initial_failure": "First helper mount stalled; user reported Guru during subsequent restart. No retained crash record. Exact Guru cause unconfirmed. Helper corrected and all subsequent tests passed.",
+  "final_state": "Workbench with launcher on Programs, no Core1 owner, image ejected, diagnostic files removed"
+}

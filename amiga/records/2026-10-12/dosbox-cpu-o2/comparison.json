@@ -1,0 +1,32 @@
+{
+  "keen-1-o2": {
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 15608,
+    "fps": 35.75089697590979,
+    "copy_us": 2354345,
+    "pan_wait_us": 5111009,
+    "overlaps": 0,
+    "releases": 558
+  },
+  "fixture-1-o2": {
+    "frames": 18,
+    "emulated_ms": 274,
+    "wall_ms": 767,
+    "fps": 23.46805736636245,
+    "copy_us": 51929,
+    "pan_wait_us": 148572,
+    "overlaps": 0,
+    "releases": 18
+  },
+  "vette-1-o2": {
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 22157,
+    "fps": 25.183914789908382,
+    "copy_us": 2416507,
+    "pan_wait_us": 5163875,
+    "overlaps": 0,
+    "releases": 558
+  }
+}

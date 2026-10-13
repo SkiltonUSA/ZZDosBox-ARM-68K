@@ -1,0 +1,3 @@
+Default O2 rebuild matches installed 0.8 baseline byte-for-byte.
+SHA256 65b433b4902c7fe495bdf562129cff912fc7a5eecf4917b7e3837edfb1c561f5
+Size 838356

@@ -1,0 +1,44 @@
+rc=0 fault=0 detail=
+
+[32;1mZZDosBox core Command Shell[0m
+
+C:\>dir /b
+INPUT.TXT
+FILETEST.COM
+EXETEST.EXE
+README.TXT
+TEST.COM
+
+C:\>type readme.txt
+Text from the DOS 
+
+
+[32;1mZZDosBox core Command Shell[0m
+
+C:\>dir /b
+INPUT.TXT
+FILETEST.COM
+EXETEST.EXE
+README.TXT
+TEST.COM
+
+C:\>type readme.txt
+Text from the DOS C drive
+
+C:\>echo saved text > SAVED.TXT
+
+C:\>type saved.txt
+saved text
+
+C:\>filetest
+ZZDOS files/handles/seek PASS
+
+C:\>exetest
+ZZDOS MZ relocation/memory PASS
+
+C:\>exit
+
+
+PASS upstream shell: DIR, TYPE, redirection, COM and EXE EXEC, return to prompt, EXIT
+FILES requests=58 read=9 written=102400; handles closed
+PASS actual FS host: names, link rejection, bounds, permissions, 100 KiB I/O, truncation, seek/EOF, rename, enumeration, handle limit/cleanup

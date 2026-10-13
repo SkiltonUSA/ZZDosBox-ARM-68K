@@ -1,0 +1,10 @@
+amiga_arexx_send [OK]
+amiga_list_screen_windows Windows on screen @8965318 (7):
+
+  PC  pos=(314,53)  size=265x65  @90A272C
+  ZZDosBox Launcher  pos=(550,180)  size=820x440  @8869B84
+  AmigaBridge v1.20  -  TCP  2345 (bsdsock  pos=(10,20)  size=420x117  @8867A2C
+  Network log output  pos=(0,64)  size=1920x200  @886EA44
+  Roadie 1.3.9  pos=(60,60)  size=230x250  @9061EF4
+  (untitled)  pos=(21,713)  size=600x63  @8FAD7B4
+  (untitled)  pos=(0,11)  size=1920x789  @811F8E4

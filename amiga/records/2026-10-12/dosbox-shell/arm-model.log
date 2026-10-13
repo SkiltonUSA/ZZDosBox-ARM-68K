@@ -1,0 +1,6 @@
+PASS ARM shell 0x12000040 normal requests 246 read 101510 written 100271 rc 0
+PASS ARM shell 0x12000040 read-stop requests 0 read 0 written 0 rc 2
+PASS ARM shell 0x12000040 fs-stop requests 0 read 0 written 0 rc 2
+PASS ARM shell 0x150020c0 normal requests 246 read 101510 written 100271 rc 0
+PASS ARM shell 0x150020c0 read-stop requests 0 read 0 written 0 rc 2
+PASS ARM shell 0x150020c0 fs-stop requests 0 read 0 written 0 rc 2

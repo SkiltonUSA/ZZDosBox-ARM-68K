@@ -1,0 +1,177 @@
+--- a/src/hardware/iohandler.cpp
++++ b/src/hardware/iohandler.cpp
+@@ -525,5 +525,5 @@
+ 
+ void IO_Init(Section * sect) {
+ 	test = new IO(sect);
+-	sect->AddDestroyFunction(&IO_Destroy);
+-}
++	if(sect)sect->AddDestroyFunction(&IO_Destroy);
++}
+--- a/src/hardware/pic.cpp
++++ b/src/hardware/pic.cpp
+@@ -621,5 +621,5 @@
+ 
+ void PIC_Init(Section* sec) {
+ 	test = new PIC_8259A(sec);
+-	sec->AddDestroyFunction(&PIC_Destroy);
+-}
++	if(sec)sec->AddDestroyFunction(&PIC_Destroy);
++}
+--- a/src/hardware/timer.cpp
++++ b/src/hardware/timer.cpp
+@@ -469,5 +469,5 @@
+ }
+ void TIMER_Init(Section* sec) {
+ 	test = new TIMER(sec);
+-	sec->AddDestroyFunction(&TIMER_Destroy);
+-}
++	if(sec)sec->AddDestroyFunction(&TIMER_Destroy);
++}
+--- a/src/hardware/cmos.cpp
++++ b/src/hardware/cmos.cpp
+@@ -326,5 +326,5 @@
+ 
+ void CMOS_Init(Section* sec) {
+ 	test = new CMOS(sec);
+-	sec->AddDestroyFunction(&CMOS_Destroy,true);
+-}
++	if(sec)sec->AddDestroyFunction(&CMOS_Destroy,true);
++}
+--- a/src/hardware/vga_memory.cpp
++++ b/src/hardware/vga_memory.cpp
+@@ -977,7 +977,7 @@
+ 	vga.svga.bank_read_full = vga.svga.bank_write_full = 0;
+ 	vga.svga.bank_size = 0x10000; /* most common bank size is 64K */
+ 
+-	sec->AddDestroyFunction(&VGA_Memory_ShutDown);
++	if(sec)sec->AddDestroyFunction(&VGA_Memory_ShutDown);
+ 
+ 	if (machine==MCH_PCJR) {
+ 		/* PCJr does not have dedicated graphics memory but uses
+--- a/src/ints/bios.cpp
++++ b/src/ints/bios.cpp
+@@ -1430,5 +1430,5 @@
+ 
+ void BIOS_Init(Section* sec) {
+ 	test = new BIOS(sec);
+-	sec->AddDestroyFunction(&BIOS_Destroy,false);
+-}
++	if(sec)sec->AddDestroyFunction(&BIOS_Destroy,false);
++}
+--- a/src/hardware/iohandler.cpp
++++ b/src/hardware/iohandler.cpp
+@@ -22,7 +22,7 @@
+ #include "inout.h"
+ #include "setup.h"
+ #include "cpu.h"
+-#include "../src/cpu/lazyflags.h"
++#include "../cpu/lazyflags.h"
+ #include "callback.h"
+ 
+ //#define ENABLE_PORTLOG
+--- a/src/hardware/vga.cpp
++++ b/src/hardware/vga.cpp
+@@ -240,24 +240,4 @@
+ 	}
+ }
+ 
+-void SVGA_Setup_Driver(void) {
+-	memset(&svga, 0, sizeof(SVGA_Driver));
+-
+-	switch(svgaCard) {
+-	case SVGA_S3Trio:
+-		SVGA_Setup_S3Trio();
+-		break;
+-	case SVGA_TsengET4K:
+-		SVGA_Setup_TsengET4K();
+-		break;
+-	case SVGA_TsengET3K:
+-		SVGA_Setup_TsengET3K();
+-		break;
+-	case SVGA_ParadisePVGA1A:
+-		SVGA_Setup_ParadisePVGA1A();
+-		break;
+-	default:
+-		vga.vmemsize = vga.vmemwrap = 256*1024;
+-		break;
+-	}
+-}
++void SVGA_Setup_Driver(void) { memset(&svga,0,sizeof(svga));vga.vmemsize=vga.vmemwrap=256*1024; }
+--- a/src/hardware/vga_memory.cpp
++++ b/src/hardware/vga_memory.cpp
+@@ -985,3 +985,5 @@
+ 		//TODO map?	
+ 	} 
+ }
++
++void zz_vga_memory_close(){VGA_Memory_ShutDown(nullptr);}
+--- a/src/ints/bios_keyboard.cpp
++++ b/src/ints/bios_keyboard.cpp
+@@ -25,7 +25,7 @@
+ #include "regs.h"
+ #include "inout.h"
+ #include "dos_inc.h"
+-#include "SDL.h"
++#define SDL_VERSION_ATLEAST(a,b,c) 0
+ 
+ /* SDL by default treats numlock and scrolllock different from all other keys.
+  * In recent versions this can disabled by a environment variable which we set in sdlmain.cpp
+--- a/src/ints/bios.cpp
++++ b/src/ints/bios.cpp
+@@ -30,7 +30,7 @@
+ #include "joystick.h"
+ #include "mouse.h"
+ #include "setup.h"
+-#include "serialport.h"
++#include "dos_inc.h"
+ #ifdef __LIBRETRO__
+ #include "libretro.h"
+ #endif
+@@ -525,45 +525,7 @@
+ #define DOSBOX_CLOCKSYNC 0
+ #endif
+ 
+-static void BIOS_HostTimeSync() {
+-	Bit32u milli = 0;
+-#if defined(DB_HAVE_CLOCK_GETTIME) && ! defined(WIN32)
+-	struct timespec tp;
+-	clock_gettime(CLOCK_REALTIME,&tp);
+-	
+-	struct tm *loctime;
+-	loctime = localtime(&tp.tv_sec);
+-	milli = (Bit32u) (tp.tv_nsec / 1000000);
+-#else
+-	/* Setup time and date */
+-	struct timeb timebuffer;
+-	ftime(&timebuffer);
+-	
+-	struct tm *loctime;
+-	loctime = localtime (&timebuffer.time);
+-	milli = (Bit32u) timebuffer.millitm;
+-#endif
+-	/*
+-	loctime->tm_hour = 23;
+-	loctime->tm_min = 59;
+-	loctime->tm_sec = 45;
+-	loctime->tm_mday = 28;
+-	loctime->tm_mon = 2-1;
+-	loctime->tm_year = 2007 - 1900;
+-	*/
+-
+-	dos.date.day=(Bit8u)loctime->tm_mday;
+-	dos.date.month=(Bit8u)loctime->tm_mon+1;
+-	dos.date.year=(Bit16u)loctime->tm_year+1900;
+-
+-	Bit32u ticks=(Bit32u)(((double)(
+-		loctime->tm_hour*3600*1000+
+-		loctime->tm_min*60*1000+
+-		loctime->tm_sec*1000+
+-		milli))*(((double)PIT_TICK_RATE/65536.0)/1000.0));
+-	mem_writed(BIOS_TIMER,ticks);
+-}
+-
++static void BIOS_HostTimeSync(){dos.date.day=1;dos.date.month=1;dos.date.year=1980;mem_writed(BIOS_TIMER,0);}
+ static Bitu INT8_Handler(void) {
+ 	/* Increase the bios tick counter */
+ 	Bit32u value = mem_readd(BIOS_TIMER) + 1;

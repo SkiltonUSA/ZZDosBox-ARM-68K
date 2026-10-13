@@ -1,0 +1,83 @@
+{
+  "scope": "Screenshot-free startup video refresh measurements; not unique game frames or steady gameplay. Identical 2 MiB/VGA/3000 cycles, 8000 simulated ms, scripted Enter.",
+  "results": {
+    "keen": {
+      "base": {
+        "runs": [
+          {
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 15053,
+            "refresh_fps": 37.069022786155585
+          },
+          {
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 15016,
+            "refresh_fps": 37.160362280234416
+          }
+        ],
+        "mean_wall_ms": 15034.5,
+        "mean_refresh_fps": 37.114692533195
+      },
+      "o3": {
+        "runs": [
+          {
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 15112,
+            "refresh_fps": 36.92429857067231
+          },
+          {
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 15088,
+            "refresh_fps": 36.983032873807
+          }
+        ],
+        "mean_wall_ms": 15100,
+        "mean_refresh_fps": 36.953665722239656
+      },
+      "wall_time_change_percent": 0.4356646379992668
+    },
+    "vette": {
+      "base": {
+        "runs": [
+          {
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 20081,
+            "refresh_fps": 27.787460783825505
+          },
+          {
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 20069,
+            "refresh_fps": 27.804075938013852
+          }
+        ],
+        "mean_wall_ms": 20075,
+        "mean_refresh_fps": 27.79576836091968
+      },
+      "o3": {
+        "runs": [
+          {
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 20165,
+            "refresh_fps": 27.67170840565336
+          },
+          {
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 20147,
+            "refresh_fps": 27.69643123045615
+          }
+        ],
+        "mean_wall_ms": 20156,
+        "mean_refresh_fps": 27.684069818054752
+      },
+      "wall_time_change_percent": 0.4034869240348682
+    }
+  }
+}

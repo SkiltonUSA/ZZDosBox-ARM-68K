@@ -1,0 +1,52 @@
+[
+  {
+    "game": "keen",
+    "poll_ms": 20,
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 41397,
+    "fps": 13.479237625914921,
+    "poll_calls": 1214,
+    "wait_us": 39374852
+  },
+  {
+    "game": "keen",
+    "poll_ms": 4,
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 20470,
+    "fps": 27.259404005862237,
+    "poll_calls": 4384,
+    "wait_us": 18833207
+  },
+  {
+    "game": "keen",
+    "poll_ms": 1,
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 19148,
+    "fps": 29.141424691873826,
+    "poll_calls": 12534,
+    "wait_us": 15666476
+  },
+  {
+    "game": "vette",
+    "poll_ms": 20,
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 42166,
+    "fps": 13.233410804913913,
+    "poll_calls": 1237,
+    "wait_us": 39877298
+  },
+  {
+    "game": "vette",
+    "poll_ms": 1,
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 25298,
+    "fps": 22.057079611036446,
+    "poll_calls": 16507,
+    "wait_us": 20660279
+  }
+]

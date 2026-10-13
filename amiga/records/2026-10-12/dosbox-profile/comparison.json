@@ -1,0 +1,26 @@
+{
+  "keen-before": {
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 15511,
+    "fps": 35.974469731158536
+  },
+  "keen-after": {
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 13332,
+    "fps": 41.85418541854185
+  },
+  "vette-before": {
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 22093,
+    "fps": 25.25686869144073
+  },
+  "vette-after": {
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 19337,
+    "fps": 28.856596162796713
+  }
+}

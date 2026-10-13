@@ -1,0 +1,7 @@
+DOSBOX interpreter: rc=0 slices=4 exit=0 hash=f23411c5 fault=0 text=ZZDOS x86 arithmetic/memory PASS
+
+DOSBOX interpreter: rc=0 slices=4 exit=0 hash=f23411c5 fault=0 text=ZZDOS x86 arithmetic/memory PASS
+
+DOSBOX interpreter: rc=0 slices=4 exit=0 hash=f23411c5 fault=0 text=ZZDOS x86 arithmetic/memory PASS
+
+PASS: guest arithmetic/flags/stack/32-bit registers, RAM, DOS text/exit, repeatability, bounded execution, cancellation and unsupported-service rejection

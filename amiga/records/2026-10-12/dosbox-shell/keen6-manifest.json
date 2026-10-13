@@ -1,0 +1,22 @@
+{
+  "AUDIO.CK6": {
+    "bytes": 56265,
+    "sha256": "5eef576c62773bc7c54c2c55c56117dd89ae7aba1d826f1bd201a8699d07b0e3"
+  },
+  "CONFIG.CK6": {
+    "bytes": 543,
+    "sha256": "a6df411e6da3579a9c61abe75dbd2b1f51a1902e4265581da4721500e48fa69b"
+  },
+  "EGAGRAPH.CK6": {
+    "bytes": 457309,
+    "sha256": "84d782e776dcf0e431231cce4ca8aebf10bbb5c6ae6fd25670fe28a0dce0b675"
+  },
+  "GAMEMAPS.CK6": {
+    "bytes": 95421,
+    "sha256": "48047f19d0f7a69db5f351f342868d52a5101e1732129ba297acb35439f8b50e"
+  },
+  "KEEN6C.EXE": {
+    "bytes": 104938,
+    "sha256": "050dadf0c1902fcf9c7288e2a704057bd5ec2159388d3900a0f13ab326b134a3"
+  }
+}

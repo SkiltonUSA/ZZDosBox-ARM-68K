@@ -1,0 +1,19 @@
+rc=0 exit=0 fault=0 text=ZZDOS x86 arithmetic/memory PASS
+
+rc=0 exit=0 fault=0 text=ZZDOS files/handles/seek PASS
+
+rc=0 exit=0 fault=0 text=ZZDOS MZ relocation/memory PASS
+
+rc=0 exit=0 fault=0 text=ZZDOS x86 arithmetic/memory PASS
+
+rc=0 exit=0 fault=0 text=ZZDOS files/handles/seek PASS
+
+rc=0 exit=0 fault=0 text=ZZDOS MZ relocation/memory PASS
+
+rc=0 exit=0 fault=0 text=ZZDOS x86 arithmetic/memory PASS
+
+rc=0 exit=0 fault=0 text=ZZDOS files/handles/seek PASS
+
+rc=0 exit=0 fault=0 text=ZZDOS MZ relocation/memory PASS
+
+PASS real DOS kernel: COM and MZ EXEC, relocation, allocation, file read/write/reopen/seek/EOF, missing files, repeated teardown

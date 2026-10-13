@@ -1,0 +1,8 @@
+PASS ARM instruction model 0x12000040 repeat 0 cancel False invalid False result (1, 0, 4, 4063498693, 0, 0, 0, 0, 34, 0, 0)
+PASS ARM instruction model 0x12000040 repeat 1 cancel False invalid False result (1, 0, 4, 4063498693, 0, 0, 0, 0, 34, 0, 0)
+PASS ARM instruction model 0x150020c0 repeat 0 cancel False invalid False result (1, 0, 4, 4063498693, 0, 0, 0, 0, 34, 0, 0)
+PASS ARM instruction model 0x150020c0 repeat 1 cancel False invalid False result (1, 0, 4, 4063498693, 0, 0, 0, 0, 34, 0, 0)
+PASS ARM instruction model 0x12000040 repeat 0 cancel True invalid False result (1, 0, 2, 0, 3, 0, 0, 0, 0, 0, 0)
+PASS ARM instruction model 0x12000040 repeat 1 cancel True invalid False result (1, 0, 2, 0, 3, 0, 0, 0, 0, 0, 0)
+PASS ARM instruction model 0x12000040 repeat 0 cancel False invalid True result (1, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0)
+PASS ARM instruction model 0x12000040 repeat 1 cancel False invalid True result (1, 0, 3, 0, 1, 0, 0, 0, 0, 0, 0)

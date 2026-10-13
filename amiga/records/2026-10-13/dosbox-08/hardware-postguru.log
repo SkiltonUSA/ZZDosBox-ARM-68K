@@ -1,0 +1,233 @@
+Transferred 25588 bytes in 1.2s (21231 B/s), 25 chunks, CRC32 verified
+Transferred 316 bytes in 0.0s (9106 B/s), 1 chunks, CRC32 verified
+[OK]
+DOSHD device registered=1; action=mount
+Inhibiting DOSHD filesystem
+Changing diskimage.device raw unit 5
+Releasing DOSHD filesystem
+Hard disk mounted.
+Directory "DOSHD:" on Thursday 09-Oct-25
+IO.SYS                        40774 h-par-e- 31-May-94 06:22:00
+MSDOS.SYS                     38138 h-par-e- 31-May-94 06:22:00
+DRVSPACE.BIN                  66294 h-par-e- 31-May-94 06:22:00
+COMMAND.COM                   54645 ---ar-e- 31-May-94 06:22:00
+DOS                             Dir ---arwed Future    06:28:14
+: Erstellt 13.10.2026 06:28:14, letzter Zugriff 13.10.2026
+AUTOEXEC.BAT                     60 ----rwed Future    06:31:32
+: Erstellt 13.10.2026 06:31:32, letzter Zugriff 13.10.2026
+CONFIG.SYS                       73 ----rwed Future    06:29:38
+: Erstellt 13.10.2026 06:29:38, letzter Zugriff 13.10.2026
+GAMES                           Dir ---arwed Future    06:31:32
+: Erstellt 13.10.2026 06:31:32, letzter Zugriff 13.10.2026
+TEMP                            Dir ---arwed Future    06:31:32
+: Erstellt 13.10.2026 06:31:32, letzter Zugriff 13.10.2026
+6 files - 195K bytes - 3 directories - 403 blocks used
+[OK] (no output)
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=85fb474d
+BOOTSTRAP amiga=40c79500 arm=00e69500 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+DOS error: HDD needs an unmounted, writable 32 MiB image
+PC frames=0 emulated_ms=0 wall_ms=37 timed_done=0
+POLL ms=1 calls=10 wait_us=15282 max_us=4537
+SHELL result=1 guest_exit=0 slices=0 bytes=0 hash=811c9dc5 mismatches=0
+
+SHELL FAIL mode=0
+FILES requests=1 read=0 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+DISPLAY frames=0 flips=0 wait_us=0
+COPY observed_us=0 max_us=0
+PIPELINE enabled=0 overlaps=0 releases=0
+ZZDosBox: Application frontend or ARM transfer failed. See the CLI log for details.
+LAUNCHER exit=20; owned memory released
+
+[OK]
+DOSHD device registered=1; action=eject
+Inhibiting DOSHD filesystem
+Changing diskimage.device raw unit 5
+Releasing DOSHD filesystem
+Hard disk ejected.
+[OK] (no output)
+[OK]
+Failed to insert image file "SD032G:Dev/ZZDosBox/PC/Disks/DOS622.IMG"!
+object is in use
+temporary path for compressed images: "T:"
+
+unit 0:            <no image>
+unit 1:            <no image>
+unit 2:            <no image>
+unit 3:            <no image>
+unit 4:            <no image>
+unit 5: DOSHD:     <no image>
+unit 6:            <no image>
+unit 7:            <no image>
+unit 8:            <no image>
+unit 9:            <no image>
+Screenshot saved: /var/folders/fg/qnn7bqhd78vfz3cxbqjd5wxr0000gn/T/amiga_screenshot_2gcsvdp2.ppm (640x480, RLE, 480 rows received)
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=85eda2e0
+BOOTSTRAP amiga=40c7c800 arm=00e6c800 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+FULLSCREEN_BITMAP allocated=0886d924 screen=08887e58 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=09759bfc/41299e00 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+BOOT TEXT:
+                                                                                
+                                                                                
+MS-DOS Version 6.22                                                             
+                                                                                
+C:\>disktest                                                                    
+                                                                                
+MS-DOS Version 6.22                                                             
+                                                                                
+                                                                                
+Memory Type        Total  =   Used  +   Free                                    
+----------------  -------   -------   -------                                   
+Conventional         640K       66K      574K                                   
+Upper                  0K        0K        0K                                   
+Reserved             384K      384K        0K                                   
+Extended (XMS)     7,168K       64K    7,104K                                   
+----------------  -------   -------   -------                                   
+Total memory       8,192K      514K    7,678K                                   
+                                                                                
+Total under 1 MB     640K       66K      574K                                   
+                                                                                
+Largest executable program size       574K (588,000 bytes)                      
+Largest free upper memory block         0K       (0 bytes)                      
+The high memory area is available.                                              
+A9-HDD-PERSIST-PASS                                                             
+C:\>                                                                            
+PC frames=659 emulated_ms=9430 wall_ms=26031 timed_done=0
+POLL ms=1 calls=14324 wait_us=20140201 max_us=68152
+SHELL result=2 guest_exit=0 slices=1077544 bytes=0 hash=811c9dc5 mismatches=0
+
+SHELL PASS mode=0
+BIOS HDD close=ok
+FILES requests=568 read=287744 written=2560; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+DISPLAY frames=659 flips=659 wait_us=6835841
+COPY observed_us=4325537 max_us=67643
+PIPELINE enabled=0 overlaps=0 releases=659
+LAUNCHER exit=0; owned memory released
+
+[OK] (no output)
+Screenshot saved: /var/folders/fg/qnn7bqhd78vfz3cxbqjd5wxr0000gn/T/amiga_screenshot_il94uor6.ppm (640x480, RLE, 480 rows received)
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=85ee6837
+BOOTSTRAP amiga=40c79500 arm=00e69500 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+FULLSCREEN_BITMAP allocated=088874d4 screen=08888188 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=09759bfc/41299e00 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+BOOT TEXT:
+                                                                                
+MS-DOS Version 6.22                                                             
+                                                                                
+A9-HDD-PERSIST-PASS                                                             
+RESTART-READ-PASS                                                               
+C:\>                                                                            
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+PC frames=570 emulated_ms=8162 wall_ms=22713 timed_done=0
+POLL ms=1 calls=12540 wait_us=17494858 max_us=67414
+SHELL result=2 guest_exit=0 slices=1027850 bytes=0 hash=811c9dc5 mismatches=0
+
+SHELL PASS mode=0
+BIOS HDD close=ok
+FILES requests=405 read=206848 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+DISPLAY frames=570 flips=570 wait_us=5347877
+COPY observed_us=3811195 max_us=67465
+PIPELINE enabled=0 overlaps=0 releases=570
+LAUNCHER exit=0; owned memory released
+
+[OK]
+DOSHD device registered=1; action=mount
+Inhibiting DOSHD filesystem
+Changing diskimage.device raw unit 5
+Releasing DOSHD filesystem
+Hard disk mounted.
+A9-HDD-PERSIST-PASS
+Directory "DOSHD:GAMES" on Thursday 09-Oct-25
+KEEN6                           Dir ---arwed Future    06:31:32
+: Erstellt 13.10.2026 06:31:32, letzter Zugriff 13.10.2026
+VETTE                           Dir ---arwed Future    06:31:32
+: Erstellt 13.10.2026 06:31:32, letzter Zugriff 13.10.2026
+ELITE                           Dir ---arwed Future    06:31:32
+: Erstellt 13.10.2026 06:31:32, letzter Zugriff 13.10.2026
+3 directories - 3 blocks used
+DOSHD device registered=1; action=eject
+Inhibiting DOSHD filesystem
+Changing diskimage.device raw unit 5
+Releasing DOSHD filesystem
+Hard disk ejected.
+PASS physical HDD ownership, write/flush, fresh-process readback and Workbench access

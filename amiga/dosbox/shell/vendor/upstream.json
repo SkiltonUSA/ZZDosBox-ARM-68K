@@ -1,0 +1,9 @@
+{
+  "project": "GCC libstdc++",
+  "tag": "releases/gcc-15.2.0",
+  "source": "https://github.com/gcc-mirror/gcc/blob/releases/gcc-15.2.0/libstdc%2B%2B-v3/src/c%2B%2B98/list.cc",
+  "local": "gcc_list.cpp",
+  "sha256": "162afea681f006ff2862b3f2ac032a35e9039bdf6061ea8d9f9e79ac2cc942d3",
+  "changes": "None; compiled as PIC against installed GCC 15 headers",
+  "license": "GPL-3.0-or-later WITH GCC-exception-3.1"
+}

@@ -1,0 +1,7 @@
+amiga_push_file Transferred 25588 bytes in 1.2s (20661 B/s), 25 chunks, CRC32 verified
+amiga_run_script [OK]
+DOSHD device registered=0; action=mount-ro
+Inhibiting DOSHD filesystem
+Changing diskimage.device raw unit 5
+Releasing DOSHD filesystem
+Hard disk mounted.

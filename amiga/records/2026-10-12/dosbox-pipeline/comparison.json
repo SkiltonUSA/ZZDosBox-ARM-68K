@@ -1,0 +1,52 @@
+{
+  "fixture-1-pipeline": {
+    "frames": 18,
+    "emulated_ms": 274,
+    "wall_ms": 803,
+    "fps": 22.415940224159403,
+    "copy_us": 50713,
+    "pan_wait_us": 162398,
+    "overlaps": 0,
+    "releases": 18
+  },
+  "keen-1-serial": {
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 16808,
+    "fps": 33.198476915754405,
+    "copy_us": 2342580,
+    "pan_wait_us": 4552959,
+    "overlaps": 0,
+    "releases": 558
+  },
+  "vette-1-pipeline": {
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 23071,
+    "fps": 24.186207793333622,
+    "copy_us": 2405887,
+    "pan_wait_us": 5247689,
+    "overlaps": 0,
+    "releases": 558
+  },
+  "vette-1-serial": {
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 23092,
+    "fps": 24.16421271435995,
+    "copy_us": 2399816,
+    "pan_wait_us": 5072978,
+    "overlaps": 0,
+    "releases": 558
+  },
+  "keen-1-pipeline": {
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 16749,
+    "fps": 33.31542181622783,
+    "copy_us": 2359259,
+    "pan_wait_us": 5045682,
+    "overlaps": 0,
+    "releases": 558
+  }
+}

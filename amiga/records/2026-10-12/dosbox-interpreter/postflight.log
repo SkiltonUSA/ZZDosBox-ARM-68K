@@ -1,0 +1,22 @@
+amiga_pull_file Downloaded 2569 bytes in 0.1s (27852 B/s), 3 chunks, CRC32 verified
+amiga_ping Amiga alive - clients: 0, chip: 1952912 bytes, fast: 615548504 bytes
+amiga_list_ports Public Message Ports (19):
+  TSPORT
+  WORKBENCH
+  DEFICONS
+  ToolsDaemon 2.1a © Nico François
+  REXX
+  AREXX
+  MagicMenu
+  SIXIES.BRIDGE.NETWATCH
+  AssignWedge.port
+  ZZTemperature.1
+  NewMeter
+  POPO.1
+  QDock
+  ROADIE
+  TCP/IP Control
+  AMIGABRIDGE
+  ConClip.rendezvous
+  lowlevel.library
+  deficons

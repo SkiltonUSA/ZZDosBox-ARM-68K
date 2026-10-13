@@ -1,0 +1,91 @@
+{
+  "decision": "Not selected: small Vette gain, Keen regression",
+  "results": {
+    "keen": {
+      "base": {
+        "runs": [
+          {
+            "file": "keen-base-1.log",
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 15034,
+            "fps": 37.11587069309565
+          },
+          {
+            "file": "keen-base-2.log",
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 15027,
+            "fps": 37.13316031143941
+          }
+        ],
+        "mean_wall_ms": 15030.5,
+        "mean_fps": 37.12451550226753
+      },
+      "cache": {
+        "runs": [
+          {
+            "file": "keen-cache-1.log",
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 15126,
+            "fps": 36.89012296707656
+          },
+          {
+            "file": "keen-cache-2.log",
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 15111,
+            "fps": 36.92674210839785
+          }
+        ],
+        "mean_wall_ms": 15118.5,
+        "mean_fps": 36.908432537737205
+      },
+      "fps_change_percent": -0.5820492513016751
+    },
+    "vette": {
+      "base": {
+        "runs": [
+          {
+            "file": "vette-base-1.log",
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 20051,
+            "fps": 27.829035958306317
+          },
+          {
+            "file": "vette-base-2.log",
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 20074,
+            "fps": 27.797150542990934
+          }
+        ],
+        "mean_wall_ms": 20062.5,
+        "mean_fps": 27.813093250648627
+      },
+      "cache": {
+        "runs": [
+          {
+            "file": "vette-cache-1.log",
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 19797,
+            "fps": 28.186088801333536
+          },
+          {
+            "file": "vette-cache-2.log",
+            "frames": 558,
+            "emulated_ms": 8000,
+            "wall_ms": 19839,
+            "fps": 28.126417662180554
+          }
+        ],
+        "mean_wall_ms": 19818,
+        "mean_fps": 28.156253231757045
+      },
+      "fps_change_percent": 1.2338073223855162
+    }
+  }
+}

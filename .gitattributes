@@ -1,0 +1,7 @@
+amiga/records/** -text -whitespace
+artifacts/** -text -whitespace
+sources/** -text -whitespace
+docs/backup-checks/** -text -whitespace
+licenses/** -text -whitespace
+amiga/dosbox/shell/vendor/** -text -whitespace
+amiga/dosbox/pc/devices.cpp whitespace=-blank-at-eof

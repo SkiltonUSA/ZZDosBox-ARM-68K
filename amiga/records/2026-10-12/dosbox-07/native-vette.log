@@ -1,0 +1,13 @@
+FILES requests=123 read=358911 written=0; handles closed
+PC rc=2 fault=3 detail=
+
+[32;1mZZDosBox core Command Shell[0m
+
+C:\>loadfix vette.exe
+ slices=785708 ticks=8000 frames=558 size=640x400 bpp=16
+
+
+[32;1mZZDosBox core Command Shell[0m
+
+C:\>loadfix vette.exe
+

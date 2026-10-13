@@ -1,0 +1,29 @@
+keen-base-1 {'frames': 558, 'emulated_ms': 8000, 'wall_ms': 15053, 'delivered_fps': 37.069, 'emulated_speed_percent': 53.15}
+keen-o3-1 {'frames': 558, 'emulated_ms': 8000, 'wall_ms': 15112, 'delivered_fps': 36.924, 'emulated_speed_percent': 52.94}
+vette-base-1 {'frames': 558, 'emulated_ms': 8000, 'wall_ms': 20081, 'delivered_fps': 27.787, 'emulated_speed_percent': 39.84}
+vette-o3-1 {'frames': 558, 'emulated_ms': 8000, 'wall_ms': 20165, 'delivered_fps': 27.672, 'emulated_speed_percent': 39.67}
+keen-o3-2 {'frames': 558, 'emulated_ms': 8000, 'wall_ms': 15088, 'delivered_fps': 36.983, 'emulated_speed_percent': 53.02}
+keen-base-2 {'frames': 558, 'emulated_ms': 8000, 'wall_ms': 15016, 'delivered_fps': 37.16, 'emulated_speed_percent': 53.28}
+vette-o3-2 {'frames': 558, 'emulated_ms': 8000, 'wall_ms': 20147, 'delivered_fps': 27.696, 'emulated_speed_percent': 39.71}
+vette-base-2 {'frames': 558, 'emulated_ms': 8000, 'wall_ms': 20069, 'delivered_fps': 27.804, 'emulated_speed_percent': 39.86}
+Public Message Ports (20):
+  TSPORT
+  WORKBENCH
+  DEFICONS
+  ToolsDaemon 2.1a © Nico François
+  REXX
+  AREXX
+  MagicMenu
+  SIXIES.BRIDGE.NETWATCH
+  AssignWedge.port
+  ZZTemperature.1
+  NewMeter
+  POPO.1
+  QDock
+  ROADIE
+  TCP/IP Control
+  AMIGABRIDGE
+  ZZDOS_LAUNCHER
+  ZZDOSBOX.1
+  ConClip.rendezvous
+  deficons

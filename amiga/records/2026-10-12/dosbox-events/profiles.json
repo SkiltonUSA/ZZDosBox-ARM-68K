@@ -1,0 +1,188 @@
+[
+  {
+    "game": "keen",
+    "before": {
+      "log": "keen-1-after-profile.log",
+      "total_ticks": 4559921219,
+      "unwound_scopes": 0,
+      "buckets": {
+        "other": {
+          "ticks": 250367773,
+          "percent": 5.491,
+          "calls": 0
+        },
+        "cpu": {
+          "ticks": 1627972711,
+          "percent": 35.702,
+          "calls": 238596
+        },
+        "events": {
+          "ticks": 1106516092,
+          "percent": 24.266,
+          "calls": 246596
+        },
+        "capture": {
+          "ticks": 720936973,
+          "percent": 15.81,
+          "calls": 223599
+        },
+        "grant": {
+          "ticks": 260414703,
+          "percent": 5.711,
+          "calls": 558
+        },
+        "copy": {
+          "ticks": 593712967,
+          "percent": 13.02,
+          "calls": 558
+        }
+      },
+      "frames": 558,
+      "emulated_ms": 8000,
+      "wall_ms": 13682,
+      "startup_fps": 40.783511182575644
+    },
+    "after": {
+      "log": "keen-1-after-profile.log",
+      "total_ticks": 4409531327,
+      "unwound_scopes": 0,
+      "buckets": {
+        "other": {
+          "ticks": 244427949,
+          "percent": 5.543,
+          "calls": 0
+        },
+        "cpu": {
+          "ticks": 1647375394,
+          "percent": 37.359,
+          "calls": 238596
+        },
+        "events": {
+          "ticks": 946518682,
+          "percent": 21.465,
+          "calls": 246596
+        },
+        "capture": {
+          "ticks": 747561352,
+          "percent": 16.953,
+          "calls": 223599
+        },
+        "grant": {
+          "ticks": 230221358,
+          "percent": 5.221,
+          "calls": 558
+        },
+        "copy": {
+          "ticks": 593426592,
+          "percent": 13.458,
+          "calls": 558
+        }
+      },
+      "frames": 558,
+      "emulated_ms": 8000,
+      "wall_ms": 13230,
+      "startup_fps": 42.17687074829932
+    },
+    "tick_change_percent": {
+      "other": -2.372,
+      "cpu": 1.192,
+      "events": -14.46,
+      "capture": 3.693,
+      "grant": -11.594,
+      "copy": -0.048
+    }
+  },
+  {
+    "game": "vette",
+    "before": {
+      "log": "vette-1-after-profile.log",
+      "total_ticks": 6658531328,
+      "unwound_scopes": 0,
+      "buckets": {
+        "other": {
+          "ticks": 628650424,
+          "percent": 9.441,
+          "calls": 0
+        },
+        "cpu": {
+          "ticks": 2337400271,
+          "percent": 35.104,
+          "calls": 777685
+        },
+        "events": {
+          "ticks": 1977417171,
+          "percent": 29.697,
+          "calls": 785685
+        },
+        "capture": {
+          "ticks": 884984474,
+          "percent": 13.291,
+          "calls": 223607
+        },
+        "grant": {
+          "ticks": 191566231,
+          "percent": 2.877,
+          "calls": 558
+        },
+        "copy": {
+          "ticks": 638512757,
+          "percent": 9.589,
+          "calls": 558
+        }
+      },
+      "frames": 558,
+      "emulated_ms": 8000,
+      "wall_ms": 19977,
+      "startup_fps": 27.932121940231266
+    },
+    "after": {
+      "log": "vette-1-after-profile.log",
+      "total_ticks": 6320061387,
+      "unwound_scopes": 0,
+      "buckets": {
+        "other": {
+          "ticks": 617995619,
+          "percent": 9.778,
+          "calls": 0
+        },
+        "cpu": {
+          "ticks": 2319489484,
+          "percent": 36.7,
+          "calls": 777685
+        },
+        "events": {
+          "ticks": 1604255064,
+          "percent": 25.384,
+          "calls": 785685
+        },
+        "capture": {
+          "ticks": 922510251,
+          "percent": 14.597,
+          "calls": 223607
+        },
+        "grant": {
+          "ticks": 216792577,
+          "percent": 3.43,
+          "calls": 558
+        },
+        "copy": {
+          "ticks": 639018392,
+          "percent": 10.111,
+          "calls": 558
+        }
+      },
+      "frames": 558,
+      "emulated_ms": 8000,
+      "wall_ms": 18965,
+      "startup_fps": 29.422620616925915
+    },
+    "tick_change_percent": {
+      "other": -1.695,
+      "cpu": -0.766,
+      "events": -18.871,
+      "capture": 4.24,
+      "grant": 13.168,
+      "copy": 0.079
+    }
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "tool": "amiga_last_crash",
+    "args": {},
+    "text": "No crash data recorded"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "SD032G:Dev/ZZDosBox/PC/Disks/DiskImageCtrl\nDelete RAM:ZZD08Bench RAM:ZZD08Bench.log\nVersion SD032G:Dev/ZZDosBox/PC/ZZDosBox FILE",
+      "timeout": 10
+    },
+    "text": "[OK]\ntemporary path for compressed images: \"T:\"\n\nunit 0:            <no image>\nunit 1:            <no image>\nunit 2:            <no image>\nunit 3:            <no image>\nunit 4:            <no image>\nunit 5: DOSHD:     <no image>\nunit 6:            <no image>\nunit 7:            <no image>\nunit 8:            <no image>\nunit 9:            <no image>\nRAM:ZZD08Bench  Deleted\nRAM:ZZD08Bench.log  Deleted\nZZDosBox 0.8.0-dev"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": {},
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_screenshot",
+    "args": {
+      "window": "ZZDosBox Launcher"
+    },
+    "text": "Screenshot saved: /var/folders/fg/qnn7bqhd78vfz3cxbqjd5wxr0000gn/T/amiga_screenshot_kt1sk041.ppm (820x440, RLE, 440 rows received)"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "SD032G:Dev/ZZDosBox/PC/Launcher.cfg",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-08-games/Launcher-final.cfg"
+    },
+    "text": "Downloaded 1760 bytes in 0.1s (22643 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "SD032G:Dev/ZZDosBox/PC/Launcher.bak",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-08-games/Launcher-final.bak"
+    },
+    "text": "Downloaded 1760 bytes in 0.1s (23511 B/s), 2 chunks, CRC32 verified"
+  }
+]

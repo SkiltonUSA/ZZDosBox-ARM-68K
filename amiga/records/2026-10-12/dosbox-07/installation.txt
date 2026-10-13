@@ -1,0 +1,11 @@
+Transferred 97604 bytes in 4.6s (21004 B/s), 96 chunks, CRC32 verified
+[OK]
+ZZDosBox 0.7.0-dev
+ZZDosBox Launcher 0.7.0-dev
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox
+CRC32: CE846357
+Size: 832744 bytes
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher
+CRC32: 9832F642
+Size: 97604 bytes
+[OK] (no output)

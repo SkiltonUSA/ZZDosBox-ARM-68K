@@ -1,0 +1,18 @@
+{
+  "repository": "https://github.com/joncampbell123/dosbox-x",
+  "revision": "378e6f8a25768594df87c9f5c99b5df9b3f6a8b0",
+  "version": "2026.10.01 SDL2",
+  "host": "Mac ARM64",
+  "purpose": "Functional reference only; not A9 timing",
+  "results": {
+    "normal": [
+      "DOS file/handle/seek PASS",
+      "MZ relocation/memory PASS"
+    ],
+    "dynamic_rec": [
+      "DOS file/handle/seek PASS",
+      "MZ relocation/memory PASS"
+    ]
+  },
+  "configuration": "[sdl]\noutput=surface\n[dosbox]\nmemsize=2\nmachine=vgaonly\n[cpu]\ncore=normal\ncputype=386\ncycles=fixed 3000\n[mixer]\nnosound=true\n[sblaster]\nsbtype=none\n[autoexec]\nmount c \"<workspace>/.context/amiga/dosbox-x-review/drive\"\nc:\nfiletest > file.log\nexetest > exe.log\nver > version.txt\nexit\n"
+}

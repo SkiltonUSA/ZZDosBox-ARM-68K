@@ -1,0 +1,4 @@
+vette startup: BIOS video AH=00 AL=0e not implemented at f000:11a4 read 247959 bytes
+PASS ARM shell 0x12000040 vette requests 75 read 247959 written 0 rc 1
+vette startup: BIOS video AH=00 AL=0e not implemented at f000:11a4 read 247959 bytes
+PASS ARM shell 0x150020c0 vette requests 75 read 247959 written 0 rc 1

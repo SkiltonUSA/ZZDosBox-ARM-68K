@@ -1,0 +1,9 @@
+{
+  "scheduler_decision": "Both variants rejected: Keen regressions; small Vette gains. Original scheduler restored in production sources.",
+  "installed_runtime": "Original 0.8.0-dev unchanged, verified CRC32 1FCAF3E4, 838356 bytes",
+  "icon": "Installed and read back 64x64, WBTOOL, stack65536; original backed up as LauncherIcon-Original",
+  "cpu_o3": "Build, ARM model, physical EGA/PIT and eight matched game runs passed. Rejected as default: mean wall time +0.44% Keen, +0.40% Vette; two trials per game/build. See cpu-o3/comparison.json.",
+  "bridge": "Recovered after physical-button-release request; owner confirmed recovery. Injected button-up cleared. Final ping/launcher checks passed, no Core1 owner, no crash data.",
+  "limitations": "Startup video refresh rates, not steady-play or unique-game-frame rates. No general O3 regression claim from two trials. No audio implemented.",
+  "next": "Measure x86 interpreter guest-memory and graphics conversion costs before further optimisation; avoid synthetic Workbench drag/size gestures."
+}

@@ -1,0 +1,330 @@
+[
+  {
+    "log": "cancel-1-after-profile.log",
+    "total_ticks": 83465062,
+    "unwound_scopes": 0,
+    "buckets": {
+      "other": {
+        "ticks": 83465062,
+        "percent": 100.0,
+        "calls": 0
+      },
+      "cpu": {
+        "ticks": 0,
+        "percent": 0.0,
+        "calls": 0
+      },
+      "events": {
+        "ticks": 0,
+        "percent": 0.0,
+        "calls": 0
+      },
+      "capture": {
+        "ticks": 0,
+        "percent": 0.0,
+        "calls": 0
+      },
+      "grant": {
+        "ticks": 0,
+        "percent": 0.0,
+        "calls": 0
+      },
+      "copy": {
+        "ticks": 0,
+        "percent": 0.0,
+        "calls": 0
+      }
+    },
+    "frames": 0,
+    "emulated_ms": 0,
+    "wall_ms": 252,
+    "startup_fps": 0.0
+  },
+  {
+    "log": "fixture-1-after-profile.log",
+    "total_ticks": 253442523,
+    "unwound_scopes": 0,
+    "buckets": {
+      "other": {
+        "ticks": 82308009,
+        "percent": 32.476,
+        "calls": 0
+      },
+      "cpu": {
+        "ticks": 80814969,
+        "percent": 31.887,
+        "calls": 105498
+      },
+      "events": {
+        "ticks": 58334411,
+        "percent": 23.017,
+        "calls": 105772
+      },
+      "capture": {
+        "ticks": 14279267,
+        "percent": 5.634,
+        "calls": 7200
+      },
+      "grant": {
+        "ticks": 5617932,
+        "percent": 2.217,
+        "calls": 18
+      },
+      "copy": {
+        "ticks": 12087935,
+        "percent": 4.769,
+        "calls": 18
+      }
+    },
+    "frames": 18,
+    "emulated_ms": 274,
+    "wall_ms": 778,
+    "startup_fps": 23.13624678663239
+  },
+  {
+    "log": "fixture-1-profile.log",
+    "total_ticks": 268922445,
+    "unwound_scopes": 0,
+    "buckets": {
+      "other": {
+        "ticks": 82812162,
+        "percent": 30.794,
+        "calls": 0
+      },
+      "cpu": {
+        "ticks": 81436485,
+        "percent": 30.283,
+        "calls": 105498
+      },
+      "events": {
+        "ticks": 58876289,
+        "percent": 21.893,
+        "calls": 105772
+      },
+      "capture": {
+        "ticks": 27623044,
+        "percent": 10.272,
+        "calls": 7200
+      },
+      "grant": {
+        "ticks": 5964292,
+        "percent": 2.218,
+        "calls": 18
+      },
+      "copy": {
+        "ticks": 12210173,
+        "percent": 4.54,
+        "calls": 18
+      }
+    },
+    "frames": 18,
+    "emulated_ms": 274,
+    "wall_ms": 816,
+    "startup_fps": 22.058823529411764
+  },
+  {
+    "log": "keen-1-after-profile.log",
+    "total_ticks": 4559921219,
+    "unwound_scopes": 0,
+    "buckets": {
+      "other": {
+        "ticks": 250367773,
+        "percent": 5.491,
+        "calls": 0
+      },
+      "cpu": {
+        "ticks": 1627972711,
+        "percent": 35.702,
+        "calls": 238596
+      },
+      "events": {
+        "ticks": 1106516092,
+        "percent": 24.266,
+        "calls": 246596
+      },
+      "capture": {
+        "ticks": 720936973,
+        "percent": 15.81,
+        "calls": 223599
+      },
+      "grant": {
+        "ticks": 260414703,
+        "percent": 5.711,
+        "calls": 558
+      },
+      "copy": {
+        "ticks": 593712967,
+        "percent": 13.02,
+        "calls": 558
+      }
+    },
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 13682,
+    "startup_fps": 40.783511182575644
+  },
+  {
+    "log": "keen-1-profile.log",
+    "total_ticks": 5300648178,
+    "unwound_scopes": 0,
+    "buckets": {
+      "other": {
+        "ticks": 261194595,
+        "percent": 4.928,
+        "calls": 0
+      },
+      "cpu": {
+        "ticks": 1676488528,
+        "percent": 31.628,
+        "calls": 238596
+      },
+      "events": {
+        "ticks": 1133332850,
+        "percent": 21.381,
+        "calls": 246596
+      },
+      "capture": {
+        "ticks": 1434872418,
+        "percent": 27.07,
+        "calls": 223599
+      },
+      "grant": {
+        "ticks": 201054178,
+        "percent": 3.793,
+        "calls": 558
+      },
+      "copy": {
+        "ticks": 593705609,
+        "percent": 11.201,
+        "calls": 558
+      }
+    },
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 15909,
+    "startup_fps": 35.0744861399208
+  },
+  {
+    "log": "stop-1-after-profile.log",
+    "total_ticks": 2371851718,
+    "unwound_scopes": 0,
+    "buckets": {
+      "other": {
+        "ticks": 176175437,
+        "percent": 7.428,
+        "calls": 0
+      },
+      "cpu": {
+        "ticks": 708244429,
+        "percent": 29.86,
+        "calls": 110207
+      },
+      "events": {
+        "ticks": 545031762,
+        "percent": 22.979,
+        "calls": 113918
+      },
+      "capture": {
+        "ticks": 456300756,
+        "percent": 19.238,
+        "calls": 103536
+      },
+      "grant": {
+        "ticks": 112551760,
+        "percent": 4.745,
+        "calls": 258
+      },
+      "copy": {
+        "ticks": 373547574,
+        "percent": 15.749,
+        "calls": 258
+      }
+    },
+    "frames": 258,
+    "emulated_ms": 3711,
+    "wall_ms": 7120,
+    "startup_fps": 36.235955056179776
+  },
+  {
+    "log": "vette-1-after-profile.log",
+    "total_ticks": 6658531328,
+    "unwound_scopes": 0,
+    "buckets": {
+      "other": {
+        "ticks": 628650424,
+        "percent": 9.441,
+        "calls": 0
+      },
+      "cpu": {
+        "ticks": 2337400271,
+        "percent": 35.104,
+        "calls": 777685
+      },
+      "events": {
+        "ticks": 1977417171,
+        "percent": 29.697,
+        "calls": 785685
+      },
+      "capture": {
+        "ticks": 884984474,
+        "percent": 13.291,
+        "calls": 223607
+      },
+      "grant": {
+        "ticks": 191566231,
+        "percent": 2.877,
+        "calls": 558
+      },
+      "copy": {
+        "ticks": 638512757,
+        "percent": 9.589,
+        "calls": 558
+      }
+    },
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 19977,
+    "startup_fps": 27.932121940231266
+  },
+  {
+    "log": "vette-1-profile.log",
+    "total_ticks": 7644619082,
+    "unwound_scopes": 0,
+    "buckets": {
+      "other": {
+        "ticks": 634233641,
+        "percent": 8.296,
+        "calls": 0
+      },
+      "cpu": {
+        "ticks": 2392797823,
+        "percent": 31.3,
+        "calls": 777685
+      },
+      "events": {
+        "ticks": 2019599701,
+        "percent": 26.419,
+        "calls": 785685
+      },
+      "capture": {
+        "ticks": 1750510271,
+        "percent": 22.899,
+        "calls": 223607
+      },
+      "grant": {
+        "ticks": 208877536,
+        "percent": 2.732,
+        "calls": 558
+      },
+      "copy": {
+        "ticks": 638600110,
+        "percent": 8.354,
+        "calls": 558
+      }
+    },
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 22934,
+    "startup_fps": 24.330688061393563
+  }
+]

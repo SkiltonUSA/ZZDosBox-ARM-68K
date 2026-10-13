@@ -1,0 +1,52 @@
+{
+  "baseline": {
+    "runs": [
+      {
+        "frames": 558,
+        "emulated_ms": 8000,
+        "wall_ms": 14325,
+        "fps": 38.952879581151834
+      },
+      {
+        "frames": 558,
+        "emulated_ms": 8000,
+        "wall_ms": 14355,
+        "fps": 38.87147335423197
+      },
+      {
+        "frames": 558,
+        "emulated_ms": 8000,
+        "wall_ms": 14346,
+        "fps": 38.89585947302384
+      }
+    ],
+    "median_wall_ms": 14346,
+    "mean_fps": 38.90673746946921
+  },
+  "cold": {
+    "runs": [
+      {
+        "frames": 558,
+        "emulated_ms": 8000,
+        "wall_ms": 15229,
+        "fps": 36.640619869984896
+      },
+      {
+        "frames": 558,
+        "emulated_ms": 8000,
+        "wall_ms": 15247,
+        "fps": 36.59736341575392
+      },
+      {
+        "frames": 558,
+        "emulated_ms": 8000,
+        "wall_ms": 15228,
+        "fps": 36.643026004728135
+      }
+    ],
+    "median_wall_ms": 15229,
+    "mean_fps": 36.627003096822314
+  },
+  "scope": "A4000TX, Keen timed startup, identical 2 MiB VGA / 3000 cycle / 8000 emulated-ms sessions. Not steady gameplay or DOSBox-X speed.",
+  "elapsed_change_percent": 6.155025791161295
+}

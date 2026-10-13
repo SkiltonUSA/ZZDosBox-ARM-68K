@@ -1,0 +1,43 @@
+{
+  "version": "0.6.0-dev",
+  "runtime_bytes": 754724,
+  "runtime_sha256": "24b15c69a1e0587ed1c00ae08282411884582b34510e83eb05c02634d382d0f7",
+  "arm_elf_sha256": "9ca462ae74e999648215934bde3416c2f19a38814289d5c429bd7a4ccf8c9a3a",
+  "launcher": {
+    "bytes": 94408,
+    "sha256": "b647fbdceb44222e5d344475a8f4e43a75dadac3a268ab036903088682625313",
+    "sources": {
+      "amiga/dosbox/launcher/session.h": "a04012a95a7653d52664bdadeb768f0006a63897f9d764ff6da63304b651f1dc",
+      "amiga/dosbox/launcher/main.c": "1b4f769e9382d55f7b6310546fa6c159cadac2426044893024eb49e9967a3bb4",
+      "amiga/dosbox/launcher/model.h": "56479061c2ff2d5f5e23a559d87b65cf547008c04e76c5cf43f010f6156c851d",
+      "amiga/dosbox/launcher/icon.c": "e81b602f695889c087fa1de5c78130585c37b29913c3c99846226ed435d198bf"
+    }
+  },
+  "workbench_disks": {
+    "device": "diskimage.device 37.7",
+    "filesystem": "fat95",
+    "access": "read-only",
+    "units": {
+      "DOSD1": 0,
+      "DOSD2": 1,
+      "DOSD3": 2,
+      "DOSSUP": 3,
+      "DOSBOOT": 4
+    }
+  },
+  "limitations": [
+    "No real DOS disk boot or CONFIG.SYS drivers",
+    "No XMS/EMS, audio or joystick",
+    "Root-level 8.3 files only",
+    "C: space reporting capped at about 2 GiB; not reserved space"
+  ],
+  "physical_checks": [
+    "EGA 1 MiB / 1000 cycles",
+    "CGA 2 MiB / 6000 cycles",
+    "DOS shared C write and Workbench read",
+    "BIOS INT16 keyboard",
+    "Keen unlimited session and F10 exit",
+    "MUI default AUTOEXEC, terminal exit and temporary file cleanup",
+    "Workbench read-only disks eject/remount/repeated mount"
+  ]
+}

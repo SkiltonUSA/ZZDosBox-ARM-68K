@@ -1,0 +1,90 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=859f76c8
+BOOTSTRAP amiga=40c86680 arm=00e76680 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+SHELL result=0 guest_exit=0 slices=25 bytes=770 hash=a68d04c1 mismatches=0
+
+
+[32;1mZZDosBox core Command Shell[0m
+
+C:\>dir /b
+DATA0.TXT
+DATA1.TXT
+DATA2.TXT
+DATA3.TXT
+DATA4.TXT
+DATA5.TXT
+DATA6.TXT
+DATA7.TXT
+DATA8.TXT
+DATA9.TXT
+EXETEST.EXE
+FILETEST.COM
+INPUT.TXT
+LARGE.BIN
+README.TXT
+
+C:\>type readme.txt
+ZZDosBox C drive
+
+C:\>echo saved text > SAVED.TXT
+
+C:\>type saved.txt
+saved text
+
+C:\>filetest
+ZZDOS files/handles/seek PASS
+
+C:\>exetest
+ZZDOS MZ relocation/memory PASS
+
+C:\>copy LARGE.BIN LARGE2.BIN
+ LARGE.BIN
+   1 File(s) copied.
+
+C:\>ren LARGE2.BIN RENAMED.BIN
+
+C:\>dir /b
+DATA0.TXT
+DATA1.TXT
+DATA2.TXT
+DATA3.TXT
+DATA4.TXT
+DATA5.TXT
+DATA6.TXT
+DATA7.TXT
+DATA8.TXT
+DATA9.TXT
+EXETEST.EXE
+FILETEST.COM
+INPUT.TXT
+LARGE.BIN
+README.TXT
+SAVED.TXT
+OUTPUT.TXT
+RENAMED.BIN
+
+C:\>exit
+
+
+SHELL PASS mode=1
+FILES requests=250 read=101514 written=100271; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+LAUNCHER exit=0; owned memory released

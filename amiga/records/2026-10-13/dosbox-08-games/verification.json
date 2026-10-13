@@ -1,0 +1,163 @@
+{
+  "runtime": "0.8.0-dev",
+  "binary_sha256": "65b433b4902c7fe495bdf562129cff912fc7a5eecf4917b7e3837edfb1c561f5",
+  "method": "Physical A4000TX A9; 2 MiB, VGA, 3000 cycles, 8000 simulated ms; scripted Enter at 4000/4100 ms; no screenshots in timed tests. Program profiles tested separately via MUI. No binary changes.",
+  "runs": [
+    {
+      "label": "keen-1",
+      "frames": 558,
+      "emulated_ms": 8000,
+      "wall_ms": 15000,
+      "refresh_fps": 37.2,
+      "emulated_speed_percent": 53.333333333333336,
+      "instrumented": false
+    },
+    {
+      "label": "keen-2",
+      "frames": 558,
+      "emulated_ms": 8000,
+      "wall_ms": 14989,
+      "refresh_fps": 37.227300020014674,
+      "emulated_speed_percent": 53.37247314697445,
+      "instrumented": false
+    },
+    {
+      "label": "keen-3",
+      "frames": 558,
+      "emulated_ms": 8000,
+      "wall_ms": 15050,
+      "refresh_fps": 37.07641196013289,
+      "emulated_speed_percent": 53.15614617940199,
+      "instrumented": false
+    },
+    {
+      "label": "vette-1",
+      "frames": 558,
+      "emulated_ms": 8000,
+      "wall_ms": 20038,
+      "refresh_fps": 27.847090527996805,
+      "emulated_speed_percent": 39.92414412616029,
+      "instrumented": false
+    },
+    {
+      "label": "elite-1",
+      "frames": 559,
+      "emulated_ms": 8000,
+      "wall_ms": 14114,
+      "refresh_fps": 39.60606490009919,
+      "emulated_speed_percent": 56.68130933824571,
+      "instrumented": false
+    },
+    {
+      "label": "keen-profile",
+      "frames": 558,
+      "emulated_ms": 8000,
+      "wall_ms": 15390,
+      "refresh_fps": 36.25730994152047,
+      "emulated_speed_percent": 51.98180636777128,
+      "instrumented": true,
+      "profile": {
+        "log": "keen-profile.log",
+        "total_ticks": 5125943591,
+        "unwound_scopes": 0,
+        "buckets": {
+          "other": {
+            "ticks": 229946505,
+            "percent": 4.486,
+            "calls": 0
+          },
+          "cpu": {
+            "ticks": 1950005278,
+            "percent": 38.042,
+            "calls": 238596
+          },
+          "events": {
+            "ticks": 960513127,
+            "percent": 18.738,
+            "calls": 246596
+          },
+          "capture": {
+            "ticks": 749634903,
+            "percent": 14.624,
+            "calls": 223599
+          },
+          "grant": {
+            "ticks": 644500584,
+            "percent": 12.573,
+            "calls": 558
+          },
+          "copy": {
+            "ticks": 591343194,
+            "percent": 11.536,
+            "calls": 558
+          }
+        },
+        "frames": 558,
+        "emulated_ms": 8000,
+        "wall_ms": 15390,
+        "startup_fps": 36.25730994152047
+      }
+    },
+    {
+      "label": "vette-profile",
+      "frames": 558,
+      "emulated_ms": 8000,
+      "wall_ms": 20670,
+      "refresh_fps": 26.99564586357039,
+      "emulated_speed_percent": 38.703434929850026,
+      "instrumented": true,
+      "profile": {
+        "log": "vette-profile.log",
+        "total_ticks": 6889618087,
+        "unwound_scopes": 0,
+        "buckets": {
+          "other": {
+            "ticks": 620014359,
+            "percent": 8.999,
+            "calls": 0
+          },
+          "cpu": {
+            "ticks": 2521985735,
+            "percent": 36.606,
+            "calls": 777685
+          },
+          "events": {
+            "ticks": 1591536110,
+            "percent": 23.1,
+            "calls": 785685
+          },
+          "capture": {
+            "ticks": 919990241,
+            "percent": 13.353,
+            "calls": 223607
+          },
+          "grant": {
+            "ticks": 624559676,
+            "percent": 9.065,
+            "calls": 558
+          },
+          "copy": {
+            "ticks": 611531966,
+            "percent": 8.876,
+            "calls": 558
+          }
+        },
+        "frames": 558,
+        "emulated_ms": 8000,
+        "wall_ms": 20670,
+        "startup_fps": 26.99564586357039
+      }
+    }
+  ],
+  "keen_mean_refresh_fps": 37.167903993382524,
+  "keen_median_wall_ms": 15000,
+  "limitations": [
+    "Startup, not steady gameplay or unique game image FPS.",
+    "Vette driving blocked at original manual question.",
+    "Keen movement/scrolling checked on world map; no level completion.",
+    "Elite menus and launch/front-view screen checked; no prolonged flight validation.",
+    "No audio, mouse or joystick tests; those devices remain unimplemented.",
+    "Profiler wall times include instrumentation overhead; kept separate."
+  ],
+  "settings": "Saved 8 MiB/EGA/1000-cycle/green-on-black/edited AUTOEXEC profile survived launcher restart; marker executed and normal exit passed. Original profile bytes restored. No claim that DOS shell alone exercises EGA drawing or all guest RAM."
+}

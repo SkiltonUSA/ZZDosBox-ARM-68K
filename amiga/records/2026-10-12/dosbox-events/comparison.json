@@ -1,0 +1,38 @@
+{
+  "keen-before": {
+    "output_hash": "368eecbb",
+    "slices": 246596,
+    "file_read": 150640,
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 13291,
+    "fps": 41.983296967872995
+  },
+  "keen-after": {
+    "output_hash": "368eecbb",
+    "slices": 246596,
+    "file_read": 150640,
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 12990,
+    "fps": 42.956120092378754
+  },
+  "vette-before": {
+    "output_hash": "0e55a6ea",
+    "slices": 785685,
+    "file_read": 358911,
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 19321,
+    "fps": 28.880492728119663
+  },
+  "vette-after": {
+    "output_hash": "0e55a6ea",
+    "slices": 785685,
+    "file_read": 358911,
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 18192,
+    "fps": 30.67282321899736
+  }
+}

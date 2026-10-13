@@ -1,0 +1,19 @@
+Transferred 100420 bytes in 5.2s (19414 B/s), 99 chunks, CRC32 verified
+[OK]
+ZZDosBox 0.8.0-dev
+ZZDosBox Launcher 0.8.0-dev
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox
+CRC32: 1FCAF3E4
+Size: 838356 bytes
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher
+CRC32: DD8BE52F
+Size: 100420 bytes
+[OK] (no output)
+Windows on screen @8965318 (6):
+
+  ZZDosBox Launcher  pos=(550,180)  size=820x440  @886E92C
+  AmigaBridge v1.20  -  TCP  2345 (bsdsock  pos=(10,20)  size=420x117  @8867A2C
+  Network log output  pos=(0,64)  size=1920x200  @886EA44
+  Roadie 1.3.9  pos=(60,60)  size=230x250  @9061EF4
+  (untitled)  pos=(21,713)  size=600x63  @8FAD7B4
+  (untitled)  pos=(0,11)  size=1920x789  @811F8E4

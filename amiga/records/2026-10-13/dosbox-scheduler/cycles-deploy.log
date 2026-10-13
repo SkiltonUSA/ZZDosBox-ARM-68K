@@ -1,0 +1,26 @@
+amiga_list_ports Public Message Ports (20):
+  TSPORT
+  WORKBENCH
+  DEFICONS
+  ToolsDaemon 2.1a © Nico François
+  REXX
+  AREXX
+  MagicMenu
+  SIXIES.BRIDGE.NETWATCH
+  AssignWedge.port
+  ZZTemperature.1
+  NewMeter
+  POPO.1
+  QDock
+  ROADIE
+  TCP/IP Control
+  AMIGABRIDGE
+  ZZDOS_LAUNCHER
+  ZZDOSBOX.1
+  ConClip.rendezvous
+  deficons
+amiga_push_file Transferred 838820 bytes in 48.1s (17432 B/s), 820 chunks, CRC32 verified
+amiga_checksum File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Cycles
+CRC32: 5FCD0332
+Size: 838820 bytes
+amiga_run_script [OK] (no output)

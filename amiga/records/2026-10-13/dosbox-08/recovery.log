@@ -1,0 +1,58 @@
+amiga_list_ports Public Message Ports (18):
+  TSPORT
+  WORKBENCH
+  DEFICONS
+  ToolsDaemon 2.1a © Nico François
+  REXX
+  AREXX
+  MagicMenu
+  SIXIES.BRIDGE.NETWATCH
+  AssignWedge.port
+  ZZTemperature.1
+  NewMeter
+  POPO.1
+  QDock
+  ROADIE
+  TCP/IP Control
+  AMIGABRIDGE
+  ConClip.rendezvous
+  deficons
+amiga_run_script [OK]
+ZZDosBox 0.7.0-dev
+amiga_push_file Transferred 25420 bytes in 2.8s (9047 B/s), 25 chunks, CRC32 verified
+amiga_run_script [OK]
+DOSHD device registered=0; action=inspect
+temporary path for compressed images: "T:"
+
+unit 0:            <no image>
+unit 1:            <no image>
+unit 2:            <no image>
+unit 3:            <no image>
+unit 4:            <no image>
+unit 5:            <no image>
+unit 6:            <no image>
+unit 7:            <no image>
+unit 8:            <no image>
+unit 9:            <no image>
+Directory "SD032G:Dev/ZZDosBox/PC/Disks" on Thursday 09-Oct-25
+DOS622.IMG                 33554432 ----rwed Tomorrow  06:01:13
+1 file - 32M bytes - 32770 blocks used
+amiga_list_ports Public Message Ports (18):
+  TSPORT
+  WORKBENCH
+  DEFICONS
+  ToolsDaemon 2.1a © Nico François
+  REXX
+  AREXX
+  MagicMenu
+  SIXIES.BRIDGE.NETWATCH
+  AssignWedge.port
+  ZZTemperature.1
+  NewMeter
+  POPO.1
+  QDock
+  ROADIE
+  TCP/IP Control
+  AMIGABRIDGE
+  ConClip.rendezvous
+  deficons

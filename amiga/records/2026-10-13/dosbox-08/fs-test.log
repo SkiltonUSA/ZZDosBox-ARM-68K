@@ -1,0 +1,2 @@
+FILES requests=93 read=526 written=102917; handles closed
+PASS actual FS host: names, link rejection, bounds, permissions, exclusive HDD ownership/persistence/bounds, 100 KiB I/O, truncation, seek/EOF, rename, nested directories, cross-directory moves, traversal rejection, enumeration, handle limit/cleanup

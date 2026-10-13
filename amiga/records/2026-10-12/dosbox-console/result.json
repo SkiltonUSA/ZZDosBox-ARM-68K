@@ -1,0 +1,33 @@
+{
+  "version": "0.3.0-dev",
+  "executable_sha256": "38f1c08e0825617f6e8b151022fac1b77485c8d7438060d6d9f0db1881c31556",
+  "arm_elf_sha256": "a01182783de273c3b80a3eb1bcae45cf0147d59920d448c330eb2cd9df3bc8dc",
+  "hardware": "A4000TX / ZZ9000 Core1, XX19c / XACP 1.7",
+  "tests": {
+    "console_api": {
+      "bytes": 5032,
+      "fnv1a": "5ade1b27",
+      "mismatches": 0
+    },
+    "keyboard_window": {
+      "typed": [
+        "hello",
+        "exit"
+      ],
+      "bytes": 118,
+      "fnv1a": "2e350fbb",
+      "guest_exit": 0
+    },
+    "cancellation": [
+      "waiting for input",
+      "output ring full",
+      "window close"
+    ]
+  },
+  "all_launchers_exit": 0,
+  "all_register_mismatches": 0,
+  "all_cache_witness_errors": 0,
+  "owned_memory_released": true,
+  "final_state": "Workbench, bridge and Roadie present, no Core1 owner",
+  "limits": "Program runner only; no DOS shell, VGA, BIOS keyboard/video, PC key mapping, FPU or audio"
+}

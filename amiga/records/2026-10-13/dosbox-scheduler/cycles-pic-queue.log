@@ -1,0 +1,6 @@
+PIC trial=0 steps=1211 callbacks=95 trace=2a7be545d7db48f6
+PIC trial=1 steps=1233 callbacks=190 trace=6d7f7fe82145815c
+PIC trial=2 steps=1310 callbacks=285 trace=2f20d0d6903c961c
+PIC trial=3 steps=1409 callbacks=380 trace=e96d51c5c053f686
+PIC trial=4 steps=1211 callbacks=475 trace=ff1adc02f6742e52
+PASS PIC queue trace

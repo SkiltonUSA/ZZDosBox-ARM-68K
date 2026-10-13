@@ -1,0 +1,14 @@
+{
+  "executable_sha256": "12667663cfa1426196620bfa5a5396ba9f64e615098f971d373a1d72bc01a519",
+  "game_sha256": "5c02bf1e7ef5351e9bb05281504693d4692c0d5328407a3b265e06398cb6b3c9",
+  "game_bytes": 74576,
+  "command": "loadfix elite.exe",
+  "frames": 559,
+  "emulated_ms": 8000,
+  "wall_ms": 12314,
+  "startup_fps": 45.395484814032805,
+  "scope": "Timed startup, no gameplay or audio claim; screenshot capture run excluded",
+  "native_final_frame": "Elite title, ship, dashboard and Press any key to start game",
+  "early_physical_capture": "Black with cursor; not used to claim title display",
+  "physical_visual_status": "Unconfirmed: bridge captures bitmap Planes[0], whereas direct output uses P96-locked memory; both captures black/cursor"
+}

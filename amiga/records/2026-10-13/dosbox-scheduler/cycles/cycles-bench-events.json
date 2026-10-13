@@ -1,0 +1,1935 @@
+[
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 76 bytes in 0.0s (3172 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/keen-base-1.log"
+    },
+    "text": "Downloaded 2028 bytes in 0.1s (27966 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 76 bytes in 0.0s (3723 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Cycles --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/keen-cache-1.log"
+    },
+    "text": "Downloaded 2028 bytes in 0.1s (26990 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 87 bytes in 0.0s (3833 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/vette-base-1.log"
+    },
+    "text": "Downloaded 2040 bytes in 0.1s (28075 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 87 bytes in 0.0s (3318 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Cycles --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/vette-cache-1.log"
+    },
+    "text": "Downloaded 2040 bytes in 0.1s (26026 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 76 bytes in 0.0s (3540 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Cycles --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/keen-cache-2.log"
+    },
+    "text": "Downloaded 2028 bytes in 0.1s (28845 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 76 bytes in 0.0s (3738 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/keen-base-2.log"
+    },
+    "text": "Downloaded 2028 bytes in 0.1s (28468 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 87 bytes in 0.0s (4379 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Cycles --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/vette-cache-2.log"
+    },
+    "text": "Downloaded 2040 bytes in 0.1s (27484 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 87 bytes in 0.0s (4340 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/vette-base-2.log"
+    },
+    "text": "Downloaded 2040 bytes in 0.1s (28282 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 76 bytes in 0.0s (3690 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/keen-base-3.log"
+    },
+    "text": "Downloaded 2028 bytes in 0.1s (26375 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 76 bytes in 0.0s (3619 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Cycles --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/keen-cache-3.log"
+    },
+    "text": "Downloaded 2028 bytes in 0.1s (26453 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 87 bytes in 0.0s (2463 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/vette-base-3.log"
+    },
+    "text": "Downloaded 2040 bytes in 0.1s (26863 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_push_file",
+    "args": {
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/benchmark.session",
+      "amiga_path": "RAM:ZZDPICBench"
+    },
+    "text": "Transferred 87 bytes in 0.0s (4314 B/s), 1 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Cycles --session RAM:ZZDPICBench >RAM:ZZDPICBench.log",
+      "timeout": 10
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (21):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  Sixies.ARM.Debug.Owner\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_pull_file",
+    "args": {
+      "amiga_path": "RAM:ZZDPICBench.log",
+      "local_path": "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pic-cache/cycles/vette-cache-3.log"
+    },
+    "text": "Downloaded 2040 bytes in 0.1s (27361 B/s), 2 chunks, CRC32 verified"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  }
+]

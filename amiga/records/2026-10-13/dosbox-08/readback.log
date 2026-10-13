@@ -1,0 +1,62 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=85ee6837
+BOOTSTRAP amiga=40c79500 arm=00e69500 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+FULLSCREEN_BITMAP allocated=088874d4 screen=08888188 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=09759bfc/41299e00 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+BOOT TEXT:
+                                                                                
+MS-DOS Version 6.22                                                             
+                                                                                
+A9-HDD-PERSIST-PASS                                                             
+RESTART-READ-PASS                                                               
+C:\>                                                                            
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+PC frames=570 emulated_ms=8162 wall_ms=22713 timed_done=0
+POLL ms=1 calls=12540 wait_us=17494858 max_us=67414
+SHELL result=2 guest_exit=0 slices=1027850 bytes=0 hash=811c9dc5 mismatches=0
+
+SHELL PASS mode=0
+BIOS HDD close=ok
+FILES requests=405 read=206848 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+DISPLAY frames=570 flips=570 wait_us=5347877
+COPY observed_us=3811195 max_us=67465
+PIPELINE enabled=0 overlaps=0 releases=570
+LAUNCHER exit=0; owned memory released

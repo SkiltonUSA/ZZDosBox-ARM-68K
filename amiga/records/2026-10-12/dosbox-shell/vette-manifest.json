@@ -1,0 +1,102 @@
+{
+  "BIGVET.BIN": {
+    "bytes": 24184,
+    "sha256": "6741a21a15142de19742824d49fd87eb728ae6366ee4e17beff45d8dc5aa816a"
+  },
+  "CONFIG.BIN": {
+    "bytes": 60,
+    "sha256": "49393ba6772de337cb536d6c74abcac2aa48df863732a8cffbb01ce70c440cf4"
+  },
+  "CRASH0.BIN": {
+    "bytes": 7783,
+    "sha256": "72ea8cdac38b530d8d0411af25cb8493d3bb2bfdbe4ce314431f6ebcd751e4e8"
+  },
+  "CRASH1.BIN": {
+    "bytes": 8008,
+    "sha256": "3171a72bf4dfe68a2abce8f5b1be6b1127d9704a9f754af205004f94e5835c0b"
+  },
+  "EGAPIC.BIN": {
+    "bytes": 15788,
+    "sha256": "02a41cbdd7e6ac473fda77afaa316a58bee6129ae5dc1a6454e52cdaf5b252a0"
+  },
+  "EGASKILL.BIN": {
+    "bytes": 7140,
+    "sha256": "78ccdd2c0a81bf6d2b54f914293444d228a615a08e51378ebcefbbc775b8b805"
+  },
+  "GARAGE.BIN": {
+    "bytes": 33500,
+    "sha256": "75963140193d4e4777414caaaf983e6fcea1ba25fdc73836d04cb9172119a803"
+  },
+  "HIGHSC.BIN": {
+    "bytes": 36100,
+    "sha256": "8fefd3c802aabddcbdabf8ebb0bdec2b89e389e14d71f432456e26f1ee5bd253"
+  },
+  "HORIZON0.BIN": {
+    "bytes": 38400,
+    "sha256": "c6258d46b48c7244ca7c10b439874f8a32c521261c282b9e878862895327dc51"
+  },
+  "HORIZON1.BIN": {
+    "bytes": 38400,
+    "sha256": "1df862017f2e56032c6c44650ef5f42deb7ff3d128bb80b03f582b94d5b0254c"
+  },
+  "HORIZON2.BIN": {
+    "bytes": 38400,
+    "sha256": "2aa4dad3d2a5963f5038bb705aeae76f43b5516d7ec14558e4d61e0fefa32629"
+  },
+  "LOSER0.BIN": {
+    "bytes": 9028,
+    "sha256": "ee9d099883d4c44b2f574d6424b8f82d38e61ee7299fa9f05c9bf0047ab10805"
+  },
+  "LOSER1.BIN": {
+    "bytes": 9439,
+    "sha256": "0c352f299e57b09156837b28c0973b7ecfe04b9a20d28c10ec39b9ad000dc380"
+  },
+  "LOSER2.BIN": {
+    "bytes": 9561,
+    "sha256": "b9cb90756b656b5e43cae1c4d2eea25831e6404b9f4121b8bc622ccaa01a559e"
+  },
+  "LOSER3.BIN": {
+    "bytes": 10001,
+    "sha256": "5b0eda3f776a62956134bebd93168c6321ad55a16f3172d62bc546f4bf29a6cf"
+  },
+  "MAPPIC.BIN": {
+    "bytes": 44380,
+    "sha256": "57b7c33f0902d05615fd0cfb328f2eaf99f58412601cda7c21ec26406263d169"
+  },
+  "PENALTY.BIN": {
+    "bytes": 7203,
+    "sha256": "1b07ff32512ca94b3b8292a69274247fd28d790452cea9cce34baaa6d84aad2d"
+  },
+  "REDVETTE.BIN": {
+    "bytes": 10354,
+    "sha256": "fdd59bae60b2da787b2bf3e694d30bf484b478d3fb5deaddd558874de2f225fc"
+  },
+  "SCORE.BIN": {
+    "bytes": 1400,
+    "sha256": "13bb5e813c332319a674620b7c7ee2e419653805bd374e081c05ec1d86b2a905"
+  },
+  "SPETRUM.BIN": {
+    "bytes": 2944,
+    "sha256": "77be8be9521afaec56a0b6119505b44ce90624a7c69a03783188c132410fea0c"
+  },
+  "TICKET.BIN": {
+    "bytes": 7975,
+    "sha256": "4d829b1bcf79c74c059e9fd845940c4cda519ce84e419d76bd665f64ab04a86d"
+  },
+  "TITLE.BIN": {
+    "bytes": 26771,
+    "sha256": "eea4e25ba64cb4fac07510dc51792cadc6392da16be55b580128316ef5c31f79"
+  },
+  "VETTE.EXE": {
+    "bytes": 248173,
+    "sha256": "01398afc24708fdcb82fcc746743507992cd0d822b7c171bc61ee6b869d5ac8f"
+  },
+  "VX.BIN": {
+    "bytes": 13199,
+    "sha256": "47190f1b531c204b9e1c7003e7f56b4dc831727c1f7d15984f21b38744a942db"
+  },
+  "WINNER.BIN": {
+    "bytes": 57908,
+    "sha256": "1c4383129b3318ce65145d58361850f595b9554c4347f48ee318535e9fa3f2f3"
+  }
+}

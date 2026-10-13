@@ -1,0 +1,277 @@
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/hardware/vga_xga.cpp:973:9: warning: 14 enumeration values not handled in switch: 'M_CGA2', 'M_CGA4', 'M_EGA'... [-Wswitch]
+  973 |         switch(XGA_COLOR_MODE) {
+      |                ^~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/hardware/vga_xga.cpp:30:25: note: expanded from macro 'XGA_COLOR_MODE'
+   30 | #define XGA_COLOR_MODE          vga.s3.xga_color_mode
+      |                                 ^~~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/hardware/vga_xga.cpp:973:9: note: add missing switch cases
+  973 |         switch(XGA_COLOR_MODE) {
+      |                ^
+  974 |         case M_LIN8:
+  975 |                 reg = (Bit8u)(val&0xff); break;
+  976 |         case M_LIN15:
+  977 |         case M_LIN16:
+  978 |                 reg = (Bit16u)(val&0xffff); break;
+  979 |         case M_LIN32:
+  980 |                 if (xga.control1 & 0x200)
+  981 |                         reg = val;
+  982 |                 else if (xga.control1 & 0x10)
+  983 |                         reg = (reg&0x0000ffff)|(val<<16);
+  984 |                 else
+  985 |                         reg = (reg&0xffff0000)|(val&0x0000ffff);
+  986 |                 xga.control1 ^= 0x10;
+  987 |                 break;
+  988 |         }
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/hardware/vga_xga.cpp:30:25: note: expanded from macro 'XGA_COLOR_MODE'
+   30 | #define XGA_COLOR_MODE          vga.s3.xga_color_mode
+      |                                 ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/hardware/vga_xga.cpp:992:9: warning: 14 enumeration values not handled in switch: 'M_CGA2', 'M_CGA4', 'M_EGA'... [-Wswitch]
+  992 |         switch(XGA_COLOR_MODE) {
+      |                ^~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/hardware/vga_xga.cpp:30:25: note: expanded from macro 'XGA_COLOR_MODE'
+   30 | #define XGA_COLOR_MODE          vga.s3.xga_color_mode
+      |                                 ^~~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/hardware/vga_xga.cpp:992:9: note: add missing switch cases
+  992 |         switch(XGA_COLOR_MODE) {
+      |                ^
+  993 |         case M_LIN8:
+  994 |                 return (Bit8u)(reg&0xff);
+  995 |         case M_LIN15: case M_LIN16:
+  996 |                 return (Bit16u)(reg&0xffff);
+  997 |         case M_LIN32:
+  998 |                 if (xga.control1 & 0x200) return reg;
+  999 |                 xga.control1 ^= 0x10;
+ 1000 |                 if (xga.control1 & 0x10) return reg&0x0000ffff;
+ 1001 |                 else return reg>>16;
+ 1002 |         }
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/hardware/vga_xga.cpp:30:25: note: expanded from macro 'XGA_COLOR_MODE'
+   30 | #define XGA_COLOR_MODE          vga.s3.xga_color_mode
+      |                                 ^
+2 warnings generated.
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_char.cpp:598:11: warning: enumeration values 'MCH_HERC' and 'MCH_TANDY' not handled in switch [-Wswitch]
+  598 |                 switch (machine) {
+      |                         ^~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_char.cpp:598:11: note: add missing switch cases
+  598 |                 switch (machine) {
+      |                         ^
+1 warning generated.
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_memory.cpp:143:11: warning: enumeration value 'SVGA_None' not handled in switch [-Wswitch]
+  143 |                         switch(svgaCard) {
+      |                                ^~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_memory.cpp:143:11: note: add missing switch cases
+  143 |                         switch(svgaCard) {
+      |                                ^
+  144 |                         case SVGA_S3Trio:
+1 warning generated.
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:447:11: warning: 7 enumeration values not handled in switch: 'M_HERC_GFX', 'M_HERC_TEXT', 'M_CGA16'... [-Wswitch]
+  447 |                 switch (CurMode->type) {
+      |                         ^~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:447:11: note: add missing switch cases
+  447 |                 switch (CurMode->type) {
+      |                         ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:519:10: warning: enumeration values 'MCH_EGA' and 'MCH_VGA' not handled in switch [-Wswitch]
+  519 |         switch (machine) {
+      |                 ^~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:519:10: note: add missing switch cases
+  519 |         switch (machine) {
+      |                 ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:566:9: warning: 14 enumeration values not handled in switch: 'M_EGA', 'M_VGA', 'M_LIN4'... [-Wswitch]
+  566 |         switch(CurMode->type) {
+      |                ^~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:566:9: note: add missing switch cases
+  566 |         switch(CurMode->type) {
+      |                ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:600:10: warning: enumeration values 'MCH_EGA' and 'MCH_VGA' not handled in switch [-Wswitch]
+  600 |         switch (machine) {
+      |                 ^~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:600:10: note: add missing switch cases
+  600 |         switch (machine) {
+      |                 ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:807:10: warning: 8 enumeration values not handled in switch: 'M_HERC_GFX', 'M_HERC_TEXT', 'M_CGA16'... [-Wswitch]
+  807 |         switch (CurMode->type) {
+      |                 ^~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:807:10: note: add missing switch cases
+  807 |         switch (CurMode->type) {
+      |                 ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1032:10: warning: 8 enumeration values not handled in switch: 'M_HERC_GFX', 'M_HERC_TEXT', 'M_CGA16'... [-Wswitch]
+ 1032 |         switch (CurMode->type) {
+      |                 ^~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1032:10: note: add missing switch cases
+ 1032 |         switch (CurMode->type) {
+      |                 ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1107:10: warning: 8 enumeration values not handled in switch: 'M_HERC_GFX', 'M_HERC_TEXT', 'M_CGA16'... [-Wswitch]
+ 1107 |         switch (CurMode->type) {
+      |                 ^~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1107:10: note: add missing switch cases
+ 1107 |         switch (CurMode->type) {
+      |                 ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1147:10: warning: 7 enumeration values not handled in switch: 'M_HERC_GFX', 'M_HERC_TEXT', 'M_CGA16'... [-Wswitch]
+ 1147 |         switch (CurMode->type) {
+      |                 ^~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1147:10: note: add missing switch cases
+ 1147 |         switch (CurMode->type) {
+      |                 ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1248:11: warning: 7 enumeration values not handled in switch: 'M_HERC_GFX', 'M_HERC_TEXT', 'M_CGA16'... [-Wswitch]
+ 1248 |                 switch (CurMode->type) {
+      |                         ^~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1248:11: note: add missing switch cases
+ 1248 |                 switch (CurMode->type) {
+      |                         ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1340:10: warning: 15 enumeration values not handled in switch: 'M_EGA', 'M_VGA', 'M_LIN4'... [-Wswitch]
+ 1340 |         switch (CurMode->type) {
+      |                 ^~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1340:10: note: add missing switch cases
+ 1340 |         switch (CurMode->type) {
+      |                 ^
+ 1341 |         case M_CGA2:
+ 1342 |                 real_writeb(BIOSMEM_SEG,BIOSMEM_CURRENT_MSR,0x1e);
+ 1343 |                 break;
+ 1344 |         case M_CGA4:
+ 1345 |                 if (CurMode->mode==4) real_writeb(BIOSMEM_SEG,BIOSMEM_CURRENT_MSR,0x2a);
+ 1346 |                 else if (CurMode->mode==5) real_writeb(BIOSMEM_SEG,BIOSMEM_CURRENT_MSR,0x2e);
+ 1347 |                 else real_writeb(BIOSMEM_SEG,BIOSMEM_CURRENT_MSR,0x2);
+ 1348 |                 break;
+ 1349 |         case M_TEXT:
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1491:9: warning: 12 enumeration values not handled in switch: 'M_CGA2', 'M_CGA4', 'M_EGA'... [-Wswitch]
+ 1491 |         switch(vmodeBlock->type) {
+      |                ^~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_modes.cpp:1491:9: note: add missing switch cases
+ 1491 |         switch(vmodeBlock->type) {
+      |                ^
+ 1492 |         case M_LIN4:
+ 1493 |                 return vmodeBlock->swidth*vmodeBlock->sheight/2;
+ 1494 |         case M_LIN8:
+ 1495 |                 return vmodeBlock->swidth*vmodeBlock->sheight;
+ 1496 |         case M_LIN15: case M_LIN16:
+ 1497 |                 return vmodeBlock->swidth*vmodeBlock->sheight*2;
+ 1498 |         case M_LIN32:
+ 1499 |                 return vmodeBlock->swidth*vmodeBlock->sheight*4;
+ 1500 |         case M_TEXT:
+ 1501 |                 return vmodeBlock->twidth*vmodeBlock->theight*2;
+ 1502 |         }
+11 warnings generated.
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:152:14: warning: taking address of packed member 'BytesPerScanLine' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  152 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth/8);
+      |                            ^~~~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:160:14: warning: taking address of packed member 'BytesPerScanLine' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  160 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth);
+      |                            ^~~~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:169:14: warning: taking address of packed member 'BytesPerScanLine' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  169 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth*2);
+      |                            ^~~~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:186:14: warning: taking address of packed member 'BytesPerScanLine' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  186 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth*2);
+      |                            ^~~~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:201:14: warning: taking address of packed member 'BytesPerScanLine' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  201 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth*4);
+      |                            ^~~~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:218:14: warning: taking address of packed member 'BytesPerScanLine' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  218 |                 var_write(&minfo.BytesPerScanLine, mblock->twidth * 2);
+      |                            ^~~~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:241:13: warning: taking address of packed member 'ModeAttributes' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  241 |         var_write(&minfo.ModeAttributes, modeAttributes);
+      |                    ^~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:245:14: warning: taking address of packed member 'WinGranularity' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  245 |                 var_write(&minfo.WinGranularity,32);
+      |                            ^~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:246:14: warning: taking address of packed member 'WinSize' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  246 |                 var_write(&minfo.WinSize,32);
+      |                            ^~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:247:14: warning: taking address of packed member 'WinASegment' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  247 |                 var_write(&minfo.WinASegment,0xb800);
+      |                            ^~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:248:14: warning: taking address of packed member 'XResolution' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  248 |                 var_write(&minfo.XResolution,mblock->twidth);
+      |                            ^~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:249:14: warning: taking address of packed member 'YResolution' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  249 |                 var_write(&minfo.YResolution,mblock->theight);
+      |                            ^~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:251:14: warning: taking address of packed member 'WinGranularity' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  251 |                 var_write(&minfo.WinGranularity,64);
+      |                            ^~~~~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:252:14: warning: taking address of packed member 'WinSize' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  252 |                 var_write(&minfo.WinSize,64);
+      |                            ^~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:253:14: warning: taking address of packed member 'WinASegment' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  253 |                 var_write(&minfo.WinASegment,0xa000);
+      |                            ^~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:254:14: warning: taking address of packed member 'XResolution' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  254 |                 var_write(&minfo.XResolution,mblock->swidth);
+      |                            ^~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:255:14: warning: taking address of packed member 'YResolution' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  255 |                 var_write(&minfo.YResolution,mblock->sheight);
+      |                            ^~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:257:13: warning: taking address of packed member 'WinFuncPtr' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  257 |         var_write(&minfo.WinFuncPtr,int10.rom.set_window);
+      |                    ^~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:262:40: warning: taking address of packed member 'PhysBasePtr' of class or structure 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  262 |         if (modeAttributes & 0x80) var_write(&minfo.PhysBasePtr,S3_LFB_BASE);
+      |                                               ^~~~~~~~~~~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:582:10: warning: 4 enumeration values not handled in switch: 'SVGA_None', 'SVGA_TsengET4K', 'SVGA_TsengET3K'... [-Wswitch]
+  582 |         switch (svgaCard) {
+      |                 ^~~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_vesa.cpp:582:10: note: add missing switch cases
+  582 |         switch (svgaCard) {
+      |                 ^
+  583 |         case SVGA_S3Trio:
+  584 |                 break;
+  585 |         }
+20 warnings generated.
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_pal.cpp:37:10: warning: enumeration values 'MCH_HERC' and 'MCH_CGA' not handled in switch [-Wswitch]
+   37 |         switch (machine) {
+      |                 ^~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_pal.cpp:37:10: note: add missing switch cases
+   37 |         switch (machine) {
+      |                 ^
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_pal.cpp:91:10: warning: enumeration values 'MCH_HERC' and 'MCH_CGA' not handled in switch [-Wswitch]
+   91 |         switch (machine) {
+      |                 ^~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_pal.cpp:91:10: note: add missing switch cases
+   91 |         switch (machine) {
+      |                 ^
+   92 |         case TANDY_ARCH_CASE:
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_pal.cpp:107:10: warning: enumeration values 'MCH_HERC' and 'MCH_CGA' not handled in switch [-Wswitch]
+  107 |         switch (machine) {
+      |                 ^~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_pal.cpp:107:10: note: add missing switch cases
+  107 |         switch (machine) {
+      |                 ^
+  108 |         case TANDY_ARCH_CASE:
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_pal.cpp:313:10: warning: enumeration value 'MCH_HERC' not handled in switch [-Wswitch]
+  313 |         switch (machine) {
+      |                 ^~~~~~~
+/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/src/ints/int10_pal.cpp:313:10: note: add missing switch cases
+  313 |         switch (machine) {
+      |                 ^
+  314 |         case MCH_CGA:
+4 warnings generated.
+FILES requests=49 read=33594 written=256; handles closed
+PC rc=0 fault=0 detail=
+
+[32;1mZZDosBox core Command Shell[0m
+
+C:\>filetest
+ZZDOS files/handles/seek PASS
+
+C:\>exetest
+ZZDOS MZ relocation/memory PASS
+
+C:\>egatest
+EGA/P slices=105249 ticks=274 frames=18 size=320x400 bpp=16
+
+
+[32;1mZZDosBox core Command Shell[0m
+
+C:\>filetest
+ZZDOS files/handles/seek PASS
+
+C:\>exetest
+ZZDOS MZ relocation/memory PASS
+
+C:\>egatest
+EGA/PIT PASS
+
+C:\>exit
+
+
+PASS EGA 16-colour planes, 128000 pixels, PIT/BIOS IRQ timing and DOS return

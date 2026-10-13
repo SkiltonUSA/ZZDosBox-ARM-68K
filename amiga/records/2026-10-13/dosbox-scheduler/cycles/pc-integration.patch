@@ -1,0 +1,516 @@
+--- a/include/paging.h
++++ b/include/paging.h
+@@ -29,7 +29,7 @@
+ 
+ // disable this to reduce the size of the TLB
+ // NOTE: does not work with the dynamic core (dynrec is fine)
+-#define USE_FULL_TLB
++/* USE_FULL_TLB disabled for the bounded XACP allocation. */
+ 
+ class PageDirectory;
+ 
+--- a/include/paging.h
++++ b/include/paging.h
+@@ -224,15 +224,11 @@
+ 
+ void PAGING_InitTLBBank(tlb_entry **bank);
+ 
++tlb_entry *PAGING_GetHighTLBEntry(PhysPt address);
+ static INLINE tlb_entry *get_tlb_entry(PhysPt address) {
+-	Bitu index=(address>>12);
+-	if (TLB_BANKS && (index >= TLB_SIZE)) {
+-		Bitu bank=(address>>BANK_SHIFT) - 1;
+-		if (!paging.tlbh_banks[bank])
+-			PAGING_InitTLBBank(&paging.tlbh_banks[bank]);
+-		return &paging.tlbh_banks[bank][index & BANK_MASK];
+-	}
+-	return &paging.tlbh[index];
++ Bitu index=address>>12;
++ if(index>=TLB_SIZE)return PAGING_GetHighTLBEntry(address);
++ return &paging.tlbh[index];
+ }
+ 
+ static INLINE HostPt get_tlb_read(PhysPt address) {
+--- a/src/cpu/paging.cpp
++++ b/src/cpu/paging.cpp
+@@ -871,3 +871,13 @@
+ 
+ 
+ void zz_dosbox_paging_init(){paging.enabled=false; PAGING_InitTLB(); for(Bitu i=0;i<LINK_START;i++)paging.firstmb[i]=i;pf_queue.used=0;}
++
++#if !defined(USE_FULL_TLB)
++/* Keep rare high-bank allocation out of every interpreter memory access. */
++__attribute__((noinline)) tlb_entry *PAGING_GetHighTLBEntry(PhysPt address) {
++ Bitu bank=(address>>BANK_SHIFT)-1;
++ if(bank>=TLB_BANKS)E_Exit("Invalid high TLB bank");
++ if(!paging.tlbh_banks[bank])PAGING_InitTLBBank(&paging.tlbh_banks[bank]);
++ return &paging.tlbh_banks[bank][(address>>12)&BANK_MASK];
++}
++#endif
+--- a/src/hardware/iohandler.cpp
++++ b/src/hardware/iohandler.cpp
+@@ -525,5 +525,5 @@
+ 
+ void IO_Init(Section * sect) {
+ 	test = new IO(sect);
+-	sect->AddDestroyFunction(&IO_Destroy);
+-}
++	if(sect)sect->AddDestroyFunction(&IO_Destroy);
++}
+--- a/src/hardware/pic.cpp
++++ b/src/hardware/pic.cpp
+@@ -621,5 +621,5 @@
+ 
+ void PIC_Init(Section* sec) {
+ 	test = new PIC_8259A(sec);
+-	sec->AddDestroyFunction(&PIC_Destroy);
+-}
++	if(sec)sec->AddDestroyFunction(&PIC_Destroy);
++}
+--- a/src/hardware/timer.cpp
++++ b/src/hardware/timer.cpp
+@@ -469,5 +469,5 @@
+ }
+ void TIMER_Init(Section* sec) {
+ 	test = new TIMER(sec);
+-	sec->AddDestroyFunction(&TIMER_Destroy);
+-}
++	if(sec)sec->AddDestroyFunction(&TIMER_Destroy);
++}
+--- a/src/hardware/cmos.cpp
++++ b/src/hardware/cmos.cpp
+@@ -326,5 +326,5 @@
+ 
+ void CMOS_Init(Section* sec) {
+ 	test = new CMOS(sec);
+-	sec->AddDestroyFunction(&CMOS_Destroy,true);
+-}
++	if(sec)sec->AddDestroyFunction(&CMOS_Destroy,true);
++}
+--- a/src/hardware/vga_memory.cpp
++++ b/src/hardware/vga_memory.cpp
+@@ -977,7 +977,7 @@
+ 	vga.svga.bank_read_full = vga.svga.bank_write_full = 0;
+ 	vga.svga.bank_size = 0x10000; /* most common bank size is 64K */
+ 
+-	sec->AddDestroyFunction(&VGA_Memory_ShutDown);
++	if(sec)sec->AddDestroyFunction(&VGA_Memory_ShutDown);
+ 
+ 	if (machine==MCH_PCJR) {
+ 		/* PCJr does not have dedicated graphics memory but uses
+--- a/src/ints/bios.cpp
++++ b/src/ints/bios.cpp
+@@ -1430,5 +1430,5 @@
+ 
+ void BIOS_Init(Section* sec) {
+ 	test = new BIOS(sec);
+-	sec->AddDestroyFunction(&BIOS_Destroy,false);
+-}
++	if(sec)sec->AddDestroyFunction(&BIOS_Destroy,false);
++}
+--- a/src/hardware/iohandler.cpp
++++ b/src/hardware/iohandler.cpp
+@@ -22,7 +22,7 @@
+ #include "inout.h"
+ #include "setup.h"
+ #include "cpu.h"
+-#include "../src/cpu/lazyflags.h"
++#include "../cpu/lazyflags.h"
+ #include "callback.h"
+ 
+ //#define ENABLE_PORTLOG
+--- a/src/hardware/pic.cpp
++++ b/src/hardware/pic.cpp
+@@ -166,6 +166,10 @@
+ 
+ struct PICEntry {
+ 	float index;
++	float cycle_index;
++	Bit32s cycle_max;
++	Bits cycle_floor, cycle_due;
++	bool cycle_valid, cycle_integral;
+ 	Bitu value;
+ 	PIC_EventHandler pic_event;
+ 	PICEntry * next;
+@@ -370,6 +374,82 @@
+ 	pic->set_imr(newmask);
+ }
+ 
++#ifndef DB_PIC_EVENT_CACHE
++#define DB_PIC_EVENT_CACHE 0
++#endif
++static inline float PIC_EventCycles(PICEntry *entry) {
++#if DB_PIC_EVENT_CACHE
++ if (!entry->cycle_valid || entry->cycle_max != CPU_CycleMax) {
++  entry->cycle_index = entry->index * CPU_CycleMax;
++  entry->cycle_max = CPU_CycleMax;
++  entry->cycle_valid = true;
++#if DB_PIC_EVENT_CACHE == 2
++  // In this range integers are exactly representable as float. If a future
++  // nonnegative deadline is reduced by a nonnegative integer, its fractional
++  // bits remain representable (the magnitude only decreases). Consequently
++  // trunc(product-index) == floor(product)-index, with no rounding change.
++  entry->cycle_integral = entry->cycle_index >= 0.0f && entry->cycle_index <= 65536.0f;
++  if (entry->cycle_integral) {
++   entry->cycle_floor = (Bits)entry->cycle_index;
++   entry->cycle_due = entry->cycle_floor + (entry->cycle_index != (float)entry->cycle_floor);
++  }
++#endif
++ }
++#ifdef DB_NATIVE
++ // Native tests check the real queue's invalidation sites on every lookup.
++ if (entry->cycle_index != entry->index * CPU_CycleMax)
++  E_Exit("Stale PIC deadline cache");
++#endif
++ return entry->cycle_index;
++#else
++ return entry->index * CPU_CycleMax;
++#endif
++}
++
++static inline bool PIC_EventDue(PICEntry *entry, Bits index) {
++ float cycles = PIC_EventCycles(entry);
++#if DB_PIC_EVENT_CACHE == 2
++ if (entry->cycle_integral && index >= 0 && index <= 65536) {
++  bool result = index >= entry->cycle_due;
++#ifdef DB_NATIVE
++  if (result != (cycles <= index)) E_Exit("PIC due comparison changed");
++#endif
++  return result;
++ }
++#endif
++ return cycles <= index;
++}
++static inline Bits PIC_EventBudget(PICEntry *entry, Bits index) {
++ float cycles = PIC_EventCycles(entry);
++#if DB_PIC_EVENT_CACHE == 2
++ if (entry->cycle_integral && index >= 0 && index <= entry->cycle_floor) {
++  Bits result = entry->cycle_floor - index;
++#ifdef DB_NATIVE
++  if (result != (Bits)(cycles-index)) E_Exit("PIC cycle budget changed");
++#endif
++  return result;
++ }
++#endif
++ return (Bits)(cycles-index);
++}
++#ifdef DB_NATIVE
++// Exercise the actual compiled helpers, including cached CPU-budget changes.
++void zz_pic_deadline_case(float when, Bits index) {
++ PICEntry entry = {};
++ entry.index = when;
++ const Bit32s budgets[] = {1,500,1000,3000,6000,9999,10000,3000};
++ for (unsigned i=0;i<sizeof(budgets)/sizeof(*budgets);i++) {
++  CPU_CycleMax = budgets[i];
++  float expected = when * CPU_CycleMax;
++  for (unsigned repeat=0;repeat<2;repeat++) {
++   if (PIC_EventDue(&entry,index) != (expected<=index) ||
++       PIC_EventBudget(&entry,index) != (Bits)(expected-index))
++    E_Exit("PIC deadline differential mismatch");
++  }
++ }
++}
++#endif
++
+ static void AddEntry(PICEntry * entry) {
+ 	PICEntry * find_entry=pic_queue.next_entry;
+ 	if (GCC_UNLIKELY(find_entry ==0)) {
+@@ -409,6 +489,7 @@
+ 		return;
+ 	}
+ 	PICEntry * entry=pic_queue.free_entry;
++	entry->cycle_valid=false;
+ 	if(InEventService) entry->index = delay + srv_lag;
+ 	else entry->index = delay + PIC_TickIndex();
+ 
+@@ -479,7 +560,7 @@
+ 	/* Check the queue for an entry */
+ 	Bits index_nd=PIC_TickIndexND();
+ 	InEventService = true;
+-	while (pic_queue.next_entry && (pic_queue.next_entry->index*CPU_CycleMax<=index_nd)) {
++	while (pic_queue.next_entry && (PIC_EventDue(pic_queue.next_entry,index_nd))) {
+ 		PICEntry * entry=pic_queue.next_entry;
+ 		pic_queue.next_entry=entry->next;
+ 
+@@ -494,7 +575,7 @@
+ 
+ 	/* Check when to set the new cycle end */
+ 	if (pic_queue.next_entry) {
+-		Bits cycles=(Bits)(pic_queue.next_entry->index*CPU_CycleMax-index_nd);
++		Bits cycles=PIC_EventBudget(pic_queue.next_entry,index_nd);
+ 		if (GCC_UNLIKELY(!cycles)) cycles=1;
+ 		if (cycles<CPU_CycleLeft) {
+ 			CPU_Cycles=cycles;
+@@ -546,6 +627,7 @@
+ 	PICEntry * entry=pic_queue.next_entry;
+ 	while (entry) {
+ 		entry->index -= 1.0;
++		entry->cycle_valid=false;
+ 		entry=entry->next;
+ 	}
+ 	/* Call our list of ticker handlers */
+--- a/src/hardware/vga.cpp
++++ b/src/hardware/vga.cpp
+@@ -240,24 +240,4 @@
+ 	}
+ }
+ 
+-void SVGA_Setup_Driver(void) {
+-	memset(&svga, 0, sizeof(SVGA_Driver));
+-
+-	switch(svgaCard) {
+-	case SVGA_S3Trio:
+-		SVGA_Setup_S3Trio();
+-		break;
+-	case SVGA_TsengET4K:
+-		SVGA_Setup_TsengET4K();
+-		break;
+-	case SVGA_TsengET3K:
+-		SVGA_Setup_TsengET3K();
+-		break;
+-	case SVGA_ParadisePVGA1A:
+-		SVGA_Setup_ParadisePVGA1A();
+-		break;
+-	default:
+-		vga.vmemsize = vga.vmemwrap = 256*1024;
+-		break;
+-	}
+-}
++void SVGA_Setup_Driver(void) { memset(&svga,0,sizeof(svga));vga.vmemsize=vga.vmemwrap=256*1024; }
+--- a/src/hardware/vga_memory.cpp
++++ b/src/hardware/vga_memory.cpp
+@@ -985,3 +985,5 @@
+ 		//TODO map?	
+ 	} 
+ }
++
++void zz_vga_memory_close(){VGA_Memory_ShutDown(nullptr);}
+--- a/src/ints/bios_keyboard.cpp
++++ b/src/ints/bios_keyboard.cpp
+@@ -25,7 +25,7 @@
+ #include "regs.h"
+ #include "inout.h"
+ #include "dos_inc.h"
+-#include "SDL.h"
++#define SDL_VERSION_ATLEAST(a,b,c) 0
+ 
+ /* SDL by default treats numlock and scrolllock different from all other keys.
+  * In recent versions this can disabled by a environment variable which we set in sdlmain.cpp
+--- a/src/ints/bios.cpp
++++ b/src/ints/bios.cpp
+@@ -30,7 +30,7 @@
+ #include "joystick.h"
+ #include "mouse.h"
+ #include "setup.h"
+-#include "serialport.h"
++#include "dos_inc.h"
+ #ifdef __LIBRETRO__
+ #include "libretro.h"
+ #endif
+@@ -525,45 +525,7 @@
+ #define DOSBOX_CLOCKSYNC 0
+ #endif
+ 
+-static void BIOS_HostTimeSync() {
+-	Bit32u milli = 0;
+-#if defined(DB_HAVE_CLOCK_GETTIME) && ! defined(WIN32)
+-	struct timespec tp;
+-	clock_gettime(CLOCK_REALTIME,&tp);
+-	
+-	struct tm *loctime;
+-	loctime = localtime(&tp.tv_sec);
+-	milli = (Bit32u) (tp.tv_nsec / 1000000);
+-#else
+-	/* Setup time and date */
+-	struct timeb timebuffer;
+-	ftime(&timebuffer);
+-	
+-	struct tm *loctime;
+-	loctime = localtime (&timebuffer.time);
+-	milli = (Bit32u) timebuffer.millitm;
+-#endif
+-	/*
+-	loctime->tm_hour = 23;
+-	loctime->tm_min = 59;
+-	loctime->tm_sec = 45;
+-	loctime->tm_mday = 28;
+-	loctime->tm_mon = 2-1;
+-	loctime->tm_year = 2007 - 1900;
+-	*/
+-
+-	dos.date.day=(Bit8u)loctime->tm_mday;
+-	dos.date.month=(Bit8u)loctime->tm_mon+1;
+-	dos.date.year=(Bit16u)loctime->tm_year+1900;
+-
+-	Bit32u ticks=(Bit32u)(((double)(
+-		loctime->tm_hour*3600*1000+
+-		loctime->tm_min*60*1000+
+-		loctime->tm_sec*1000+
+-		milli))*(((double)PIT_TICK_RATE/65536.0)/1000.0));
+-	mem_writed(BIOS_TIMER,ticks);
+-}
+-
++static void BIOS_HostTimeSync(){dos.date.day=1;dos.date.month=1;dos.date.year=1980;mem_writed(BIOS_TIMER,0);}
+ static Bitu INT8_Handler(void) {
+ 	/* Increase the bios tick counter */
+ 	Bit32u value = mem_readd(BIOS_TIMER) + 1;
+--- a/src/ints/bios_disk.cpp
++++ b/src/ints/bios_disk.cpp
+@@ -24,7 +24,8 @@
+ #include "regs.h"
+ #include "mem.h"
+ #include "dos_inc.h" /* for Drives[] */
+-#include "../dos/drives.h"
++#include "drive.h"
++extern Bit8u db_image_sector(bool,Bit32u,void *,bool);
+ #include "mapper.h"
+ 
+ 
+@@ -137,68 +138,20 @@
+ 	return sreq;
+ }
+ 
+-void swapInNextDisk(bool pressed) {
+-	if (!pressed)
+-		return;
+-	DriveManager::CycleAllDisks();
+-	/* Hack/feature: rescan all disks as well */
+-	LOG_MSG("Diskcaching reset for normal mounted drives.");
+-	for(Bitu i=0;i<DOS_DRIVES;i++) {
+-		if (Drives[i]) Drives[i]->EmptyCache();
+-	}
+-	swapPosition++;
+-	if(diskSwap[swapPosition] == NULL) swapPosition = 0;
+-	swapInDisks();
+-	swapping_requested = true;
+-}
+-
+-
+ Bit8u imageDisk::Read_Sector(Bit32u head,Bit32u cylinder,Bit32u sector,void * data) {
+ 	Bit32u sectnum;
+-
++ if(head>=heads||cylinder>=cylinders||!sector)return 4;
+ 	sectnum = ( (cylinder * heads + head) * sectors ) + sector - 1L;
+ 
+ 	return Read_AbsoluteSector(sectnum, data);
+ }
+ 
+-Bit8u imageDisk::Read_AbsoluteSector(Bit32u sectnum, void * data) {
+-	Bit32u bytenum;
+-
+-	bytenum = sectnum * sector_size;
+-
+-	if (last_action==WRITE || bytenum!=current_fpos) fseek(diskimg,bytenum,SEEK_SET);
+-	size_t ret=fread(data, 1, sector_size, diskimg);
+-	current_fpos=bytenum+ret;
+-	last_action=READ;
+-
+-	return 0x00;
+-}
+-
+-Bit8u imageDisk::Write_Sector(Bit32u head,Bit32u cylinder,Bit32u sector,void * data) {
+-	Bit32u sectnum;
+-
+-	sectnum = ( (cylinder * heads + head) * sectors ) + sector - 1L;
+-
+-	return Write_AbsoluteSector(sectnum, data);
+-}
+-
+-
+-Bit8u imageDisk::Write_AbsoluteSector(Bit32u sectnum, void *data) {
+-	Bit32u bytenum;
+-
+-	bytenum = sectnum * sector_size;
+-
+-	//LOG_MSG("Writing sectors to %ld at bytenum %d", sectnum, bytenum);
+-
+-	if (last_action==READ || bytenum!=current_fpos) fseek(diskimg,bytenum,SEEK_SET);
+-	size_t ret=fwrite(data, 1, sector_size, diskimg);
+-	current_fpos=bytenum+ret;
+-	last_action=WRITE;
+-
+-	return ((ret>0)?0x00:0x05);
+-
+-}
+-
++Bit8u imageDisk::Read_AbsoluteSector(Bit32u sector,void *data){return db_image_sector(hardDrive,sector,data,false);}
++Bit8u imageDisk::Write_Sector(Bit32u head,Bit32u cylinder,Bit32u sector,void*data){
++ if(head>=heads||cylinder>=cylinders||!sector)return 4;
++ return Write_AbsoluteSector((cylinder*heads+head)*sectors+sector-1,data);
++}
++Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_sector(hardDrive,sector,data,true);}
+ imageDisk::imageDisk(FILE *imgFile, const char *imgName, Bit32u imgSizeK, bool isHardDisk) {
+ 	heads = 0;
+ 	cylinders = 0;
+@@ -207,7 +160,7 @@
+ 	current_fpos = 0;
+ 	last_action = NONE;
+ 	diskimg = imgFile;
+-	fseek(diskimg,0,SEEK_SET);
++	/* Read-only image is preloaded inside the owned ARM allocation. */
+ 	memset(diskname,0,512);
+ 	safe_strncpy(diskname, imgName, sizeof(diskname));
+ 	active = false;
+@@ -390,6 +343,7 @@
+ 
+ 		segat = SegValue(es);
+ 		bufptr = reg_bx;
++		if(!reg_al||!(reg_cl&63)||(reg_cl&63)>imageDiskList[drivenum]->sectors){reg_ah=4;CALLBACK_SCF(true);return CBRET_NONE;}
+ 		for(i=0;i<reg_al;i++) {
+ 			last_status = imageDiskList[drivenum]->Read_Sector((Bit32u)reg_dh, (Bit32u)(reg_ch | ((reg_cl & 0xc0)<< 2)), (Bit32u)((reg_cl & 63)+i), sectbuf);
+ 			if((last_status != 0x00) || (killRead)) {
+@@ -417,6 +371,7 @@
+ 
+ 
+ 		bufptr = reg_bx;
++		if(!reg_al||!(reg_cl&63)||(reg_cl&63)>imageDiskList[drivenum]->sectors){reg_ah=4;CALLBACK_SCF(true);return CBRET_NONE;}
+ 		for(i=0;i<reg_al;i++) {
+ 			for(t=0;t<imageDiskList[drivenum]->getSectSize();t++) {
+ 				sectbuf[t] = real_readb(SegValue(es),bufptr);
+@@ -425,7 +380,7 @@
+ 
+ 			last_status = imageDiskList[drivenum]->Write_Sector((Bit32u)reg_dh, (Bit32u)(reg_ch | ((reg_cl & 0xc0) << 2)), (Bit32u)((reg_cl & 63) + i), &sectbuf[0]);
+ 			if(last_status != 0x00) {
+-            CALLBACK_SCF(true);
++            reg_ah=last_status;CALLBACK_SCF(true);
+ 				return CBRET_NONE;
+ 			}
+         }
+@@ -447,6 +402,7 @@
+ 		/*
+ 		segat = SegValue(es);
+ 		bufptr = reg_bx;
++		if(!reg_al||!(reg_cl&63)||(reg_cl&63)>imageDiskList[drivenum]->sectors){reg_ah=4;CALLBACK_SCF(true);return CBRET_NONE;}
+ 		for(i=0;i<reg_al;i++) {
+ 			last_status = imageDiskList[drivenum]->Read_Sector((Bit32u)reg_dh, (Bit32u)(reg_ch | ((reg_cl & 0xc0)<< 2)), (Bit32u)((reg_cl & 63)+i), sectbuf);
+ 			if(last_status != 0x00) {
+@@ -466,15 +422,7 @@
+ 		CALLBACK_SCF(false);
+           
+ 		break;
+-	case 0x05: /* Format track */
+-		if (driveInactive(drivenum)) {
+-			reg_ah = 0xff;
+-			CALLBACK_SCF(true);
+-			return CBRET_NONE;
+-		}
+-		reg_ah = 0x00;
+-		CALLBACK_SCF(false);
+-		break;
++	case 0x05: reg_ah=3;CALLBACK_SCF(true);break;
+ 	case 0x08: /* Get drive parameters */
+ 		if(driveInactive(drivenum)) {
+ 			last_status = 0x07;
+@@ -597,9 +545,9 @@
+ 	imgDTASeg = 0;
+ 
+ /* Setup the Bios Area */
+-	mem_writeb(BIOS_HARDDISK_COUNT,2);
+-
+-	MAPPER_AddHandler(swapInNextDisk,MK_f4,MMOD1,"swapimg","Swap Image");
++	mem_writeb(BIOS_HARDDISK_COUNT,0);
++
++	
+ 	killRead = false;
+ 	swapping_requested = false;
+ }

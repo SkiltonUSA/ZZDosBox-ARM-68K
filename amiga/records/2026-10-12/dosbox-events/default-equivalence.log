@@ -1,0 +1,17 @@
+Default O2 build outputs byte-identical to explicit candidate; ARM overrides identical.
+{
+  "dosbox.elf": "885a85f983e344a482f14595f8c81ba7732b01923c46e796f7635c01e15a0975",
+  "ZZDosBox": "12667663cfa1426196620bfa5a5396ba9f64e615098f971d373a1d72bc01a519",
+  "integration.patch": "33b16201c3dae2ef2c79f0588e8001ceafc91448a15ecb3b12dee467a92a9147",
+  "Diagnostic.com": "376cd073e55f4c8015f1de6dc8befa6b80e71088a285b35df3ff666468ad48e8",
+  "dos-integration.patch": "6fdf32f0e42d18db19df9dd71310bd0cb6639760c10caf15f16db9044f00b2e9",
+  "FileTest.com": "d28062401b40cb7b1bc7d15c3c437b65b85f8a56f5d51b8bbc59df3f2748302c",
+  "ExeTest.exe": "97a10e4d64ed8b96fe0464515e840d908e8eebab416d8d081c897ae546d15740",
+  "INPUT.TXT": "34e74cd225ecbf83b8c1fd7424fbfa663bcfff126e5d23a674668c67ab9da38e",
+  "Echo.com": "7a5ab510eb4e32bb25e0932dcda8d16dae1bcdb305ad99bb4a5802d2a6082492",
+  "IoTest.com": "decb621a43a7679daade4274faace5c013612715d033623faa3fadee61954d9d",
+  "shell-integration.patch": "3e773015dab5b40133ad27eb5ca1811fcf46d96d5a04a0a1ecfba139676d619f",
+  "LoadFix.com": "5914b77fee30be627200229a0f2aa5d1d6ab6e516bf26cae60b850d121de3c08",
+  "pc-integration.patch": "cddcd17b8eccb33cd363277c28cb44a2f14542c39f6849d5faf1cfaa3dd40f52",
+  "EGATEST.COM": "0b241972fdd303f863667d492086da72c199cf48054041bfc260a78e67836fb8"
+}

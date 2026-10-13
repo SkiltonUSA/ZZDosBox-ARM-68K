@@ -1,0 +1,4 @@
+PASS: 16384 allocation alignments; private/shared/table/boundary permissions; L2 and unrelated RAM unmapped
+/usr/bin/arm-none-eabi-ld: warning: /work/.context/amiga/dosbox-pc/dosbox.elf has a LOAD segment with RWX permissions
+/usr/bin/arm-none-eabi-ld: warning: /work/.context/amiga/dosbox-pc/mapping.elf has a LOAD segment with RWX permissions
+Built /Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-pc/ZZDosBox 728548 bytes; ARM image 549576 relocations 2035

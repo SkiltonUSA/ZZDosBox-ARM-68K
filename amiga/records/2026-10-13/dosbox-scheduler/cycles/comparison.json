@@ -1,0 +1,35 @@
+{
+  "decision": "Not selected: Keen regression; only marginal Vette benefit",
+  "games": {
+    "keen": {
+      "wall_ms": {
+        "base": [
+          15018,
+          15048,
+          15032
+        ],
+        "cache": [
+          15291,
+          15325,
+          15324
+        ]
+      },
+      "median_change_percent": 1.9425226184140554
+    },
+    "vette": {
+      "wall_ms": {
+        "base": [
+          20030,
+          20055,
+          20047
+        ],
+        "cache": [
+          19913,
+          19934,
+          19907
+        ]
+      },
+      "median_change_percent": -0.6684291914002105
+    }
+  }
+}

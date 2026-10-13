@@ -1,0 +1,34 @@
+amiga_ping Amiga alive - clients: 0, chip: 2021104 bytes, fast: 616571200 bytes
+amiga_list_ports Public Message Ports (20):
+  TSPORT
+  WORKBENCH
+  DEFICONS
+  ToolsDaemon 2.1a © Nico François
+  REXX
+  AREXX
+  MagicMenu
+  SIXIES.BRIDGE.NETWATCH
+  AssignWedge.port
+  ZZTemperature.1
+  NewMeter
+  POPO.1
+  QDock
+  ROADIE
+  TCP/IP Control
+  AMIGABRIDGE
+  ZZDOS_LAUNCHER
+  ZZDOSBOX.1
+  ConClip.rendezvous
+  deficons
+amiga_list_screen_windows Windows on screen @8965318 (6):
+
+  ZZDosBox Launcher  pos=(781,287)  size=820x440  @8869B84
+  AmigaBridge v1.20  -  TCP  2345 (bsdsock  pos=(10,20)  size=420x117  @8867A2C
+  Network log output  pos=(0,64)  size=1920x200  @886EA44
+  Roadie 1.3.9  pos=(60,60)  size=230x250  @9061EF4
+  (untitled)  pos=(21,713)  size=600x63  @8FAD7B4
+  (untitled)  pos=(0,11)  size=1920x789  @811F8E4
+amiga_checksum File: SD032G:Dev/ZZDosBox/PC/ZZDosBox
+CRC32: 1FCAF3E4
+Size: 838356 bytes
+amiga_last_crash No crash data recorded

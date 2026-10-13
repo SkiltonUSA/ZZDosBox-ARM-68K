@@ -1,0 +1,6 @@
+PASS ARM console 0x12000040 normal bytes 5032 full True rc 0
+PASS ARM console 0x12000040 read-stop bytes 7 full False rc 2
+PASS ARM console 0x12000040 write-stop bytes 4103 full True rc 2
+PASS ARM console 0x150020c0 normal bytes 5032 full True rc 0
+PASS ARM console 0x150020c0 read-stop bytes 7 full False rc 2
+PASS ARM console 0x150020c0 write-stop bytes 4103 full True rc 2

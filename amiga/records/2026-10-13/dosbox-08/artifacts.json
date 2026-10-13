@@ -1,0 +1,18 @@
+{
+  "ZZDosBox": {
+    "bytes": 838356,
+    "sha256": "65b433b4902c7fe495bdf562129cff912fc7a5eecf4917b7e3837edfb1c561f5"
+  },
+  "dosbox.elf": {
+    "bytes": 832848,
+    "sha256": "de6fcb769982ff9b2dee398ce0f0f45eafda118ec2fbaaf0dee51734ef002256"
+  },
+  "ZZDosBox-Launcher": {
+    "bytes": 100420,
+    "sha256": "58eb1d0e362c85c0b8c6f252cbf9d6aff7d76ecd50cc025a8d290f2d81ea61cc"
+  },
+  "ZZDosDisk": {
+    "bytes": 25588,
+    "sha256": "01df79c0958c609264ea6b05e5d487ad251c73447c9c037564845087552e169f"
+  }
+}

@@ -1,0 +1,52 @@
+amiga_run_script [OK]
+Directory "DOSHD:" on Thursday 09-Oct-25
+IO.SYS                        40774 h-par-e- 31-May-94 06:22:00
+MSDOS.SYS                     38138 h-par-e- 31-May-94 06:22:00
+DRVSPACE.BIN                  66294 h-par-e- 31-May-94 06:22:00
+COMMAND.COM                   54645 ---ar-e- 31-May-94 06:22:00
+DOS                             Dir ---arwed Future    06:28:14
+: Erstellt 13.10.2026 06:28:14, letzter Zugriff 13.10.2026
+AUTOEXEC.BAT                     60 ----rwed Future    06:31:32
+: Erstellt 13.10.2026 06:31:32, letzter Zugriff 13.10.2026
+CONFIG.SYS                       73 ----rwed Future    06:29:38
+: Erstellt 13.10.2026 06:29:38, letzter Zugriff 13.10.2026
+GAMES                           Dir ---arwed Future    06:31:32
+: Erstellt 13.10.2026 06:31:32, letzter Zugriff 13.10.2026
+TEMP                            Dir ---arwed Future    06:31:32
+: Erstellt 13.10.2026 06:31:32, letzter Zugriff 13.10.2026
+6 files - 195K bytes - 3 directories - 403 blocks used
+DEVICE=C:\DOS\HIMEM.SYS /TESTMEM:OFF
+FILES=30
+BUFFERS=10
+LASTDRIVE=Z
+temporary path for compressed images: "T:"
+
+unit 0:            <no image>
+unit 1:            <no image>
+unit 2:            <no image>
+unit 3:            <no image>
+unit 4:            <no image>
+unit 5: DOSHD:     "SD032G:Dev/ZZDosBox/PC/Disks/DOS622.IMG" (read only)
+unit 6:            <no image>
+unit 7:            <no image>
+unit 8:            <no image>
+unit 9:            <no image>
+amiga_list_ports Public Message Ports (18):
+  TSPORT
+  WORKBENCH
+  DEFICONS
+  ToolsDaemon 2.1a © Nico François
+  REXX
+  AREXX
+  MagicMenu
+  SIXIES.BRIDGE.NETWATCH
+  AssignWedge.port
+  ZZTemperature.1
+  NewMeter
+  POPO.1
+  QDock
+  ROADIE
+  TCP/IP Control
+  AMIGABRIDGE
+  ConClip.rendezvous
+  deficons

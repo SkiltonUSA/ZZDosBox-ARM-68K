@@ -1,0 +1,31 @@
+selftest physical lifecycle verified
+RENAMED.BIN 100003 635e9a7d2f64ce04a46b1503cbe287b8721795f215f4b8cf24b256908acaab1a
+SAVED.TXT 12 0ceb58570e2c58b2ead9ae67840bff6bddc70df6e18d43f19875e281f02d3f82
+OUTPUT.TXT 256 34e74cd225ecbf83b8c1fd7424fbfa663bcfff126e5d23a674668c67ab9da38e
+cancel-read physical lifecycle verified
+vette physical lifecycle verified
+keen physical lifecycle verified
+Amiga alive - clients: 0, chip: 1952912 bytes, fast: 615524456 bytes
+Public Message Ports (19):
+  TSPORT
+  WORKBENCH
+  DEFICONS
+  ToolsDaemon 2.1a © Nico François
+  REXX
+  AREXX
+  MagicMenu
+  SIXIES.BRIDGE.NETWATCH
+  AssignWedge.port
+  ZZTemperature.1
+  NewMeter
+  POPO.1
+  QDock
+  ROADIE
+  TCP/IP Control
+  AMIGABRIDGE
+  ConClip.rendezvous
+  lowlevel.library
+  deficons
+Screens (1):
+
+  Amiga Workbench Release 3.2 Kickstart 47  1920x800  8bpp  LORES  @895EE38

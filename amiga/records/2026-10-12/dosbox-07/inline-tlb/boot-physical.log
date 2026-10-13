@@ -1,0 +1,61 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=845c9d56
+BOOTSTRAP amiga=40620680 arm=00810680 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+FULLSCREEN_BITMAP allocated=09553a54 screen=09555f80 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=0aefb00c/41322ac0 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+BOOT TEXT:
+Device driver not found: 'BANANA'.                                              
+No valid CDROM device drivers selected                                          
+A:\>ver                                                                         
+                                                                                
+MS-DOS Version 6.22                                                             
+                                                                                
+                                                                                
+A:\>mem                                                                         
+                                                                                
+Memory Type        Total  =   Used  +   Free                                    
+----------------  -------   -------   -------                                   
+Conventional         640K       71K      569K                                   
+Upper                  0K        0K        0K                                   
+Reserved             384K      384K        0K                                   
+Extended (XMS)     7,168K       64K    7,104K                                   
+----------------  -------   -------   -------                                   
+Total memory       8,192K      519K    7,673K                                   
+                                                                                
+Total under 1 MB     640K       71K      569K                                   
+                                                                                
+Largest executable program size       569K (583,024 bytes)                      
+Largest free upper memory block         0K       (0 bytes)                      
+The high memory area is available.                                              
+                                                                                
+A:\>                                                                            
+PC frames=1172 emulated_ms=16753 wall_ms=43972 timed_done=0
+POLL ms=1 calls=25563 wait_us=34388063 max_us=67652
+SHELL result=2 guest_exit=0 slices=1375982 bytes=0 hash=811c9dc5 mismatches=0
+
+SHELL PASS mode=0
+FILES requests=363 read=1474560 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+DISPLAY frames=1172 flips=1172 wait_us=11226537
+COPY observed_us=7156779 max_us=68030
+PIPELINE enabled=0 overlaps=0 releases=1172
+LAUNCHER exit=0; owned memory released

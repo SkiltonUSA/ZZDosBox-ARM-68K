@@ -1,0 +1,4 @@
+keen startup: PC BIOS not implemented at f000:11c4 AX=0000 read 104934 bytes
+PASS ARM shell 0x12000040 keen requests 35 read 104934 written 0 rc 1
+keen startup: PC BIOS not implemented at f000:11c4 AX=0000 read 104934 bytes
+PASS ARM shell 0x150020c0 keen requests 35 read 104934 written 0 rc 1

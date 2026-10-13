@@ -1,0 +1,2 @@
+amiga_arexx_send Timeout waiting for ARexx result
+amiga_list_ports ERROR: the Amiga bridge did not respond to 'PORTS' within the timeout. It is reachable but not answering — most likely busy running a long command or wedged. This is a communication timeout, NOT an unsupported command.

@@ -1,0 +1,13 @@
+FILES requests=33 read=74362 written=0; handles closed
+PC rc=2 fault=3 detail=
+
+[32;1mZZDosBox core Command Shell[0m
+
+C:\>loadfix elite.exe
+ slices=414840 ticks=8000 frames=559 size=320x200 bpp=8
+
+
+[32;1mZZDosBox core Command Shell[0m
+
+C:\>loadfix elite.exe
+

@@ -1,0 +1,15 @@
+[
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (19):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ConClip.rendezvous\n  lowlevel.library\n  deficons"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "IF EXISTS SD032G:Dev/ZZDosBox/PC/ZZDosBox-PreCPU\n Echo \"Pre-CPU backup already exists\"\nELSE\n Copy SD032G:Dev/ZZDosBox/PC/ZZDosBox TO SD032G:Dev/ZZDosBox/PC/ZZDosBox-PreCPU\n IF WARN\n  Quit 20\n ENDIF\nENDIF\nCopy SD032G:Dev/ZZDosBox/PC/ZZDosBox-Opt TO SD032G:Dev/ZZDosBox/PC/ZZDosBox\nIF WARN\n Quit 20\nENDIF\nProtect SD032G:Dev/ZZDosBox/PC/ZZDosBox +e\nList SD032G:Dev/ZZDosBox/PC/ZZDosBox\nList SD032G:Dev/ZZDosBox/PC/ZZDosBox-PreCPU",
+      "timeout": 10
+    },
+    "text": "[OK]\nDirectory \"SD032G:Dev/ZZDosBox/PC\" on Friday 10-Oct-25\nZZDosBox                     714964 ----rwed Today     00:24:54\n1 file - 698K bytes - 700 blocks used\nDirectory \"SD032G:Dev/ZZDosBox/PC\" on Friday 10-Oct-25\nZZDosBox-PreCPU              695244 ----rwed Today     00:24:53\n1 file - 678K bytes - 680 blocks used"
+  }
+]

@@ -1,0 +1,40 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=845cbfba
+BOOTSTRAP amiga=40620680 arm=00810680 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+SETTINGS memory_mb=2 machine=0 cycles=3000 live=0
+FULLSCREEN_BITMAP allocated=09556254 screen=095d1d88 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=0aefb00c/41322ac0 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+PC frames=558 emulated_ms=8000 wall_ms=15829 timed_done=1
+POLL ms=1 calls=9088 wait_us=11503862 max_us=16796
+SHELL result=2 guest_exit=0 slices=246596 bytes=58 hash=b88d041b mismatches=0
+
+
+[32;1mZZDosBox core Command Shell[0m
+
+C:\>KEEN6C
+
+SHELL PASS mode=0
+FILES requests=106 read=150640 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+DISPLAY frames=558 flips=558 wait_us=4999079
+COPY observed_us=2333368 max_us=7220
+PIPELINE enabled=0 overlaps=0 releases=558
+LAUNCHER exit=0; owned memory released

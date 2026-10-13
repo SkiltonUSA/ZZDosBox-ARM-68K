@@ -1,0 +1,24 @@
+{
+  "version": "0.7.0-dev",
+  "installed_and_crc_verified": true,
+  "final_core1_owner": false,
+  "runtime_sha256": "23914a18812cdb39cbc114153fd3cfb9ad4b29d7968d7269e0f401458de723ae",
+  "launcher_sha256": "cc0a14b2eb3a460aca4617cad1418bd10913082670f28d0c9e0f9d0964c578b7",
+  "physical_checks": [
+    "nested C: directories/files",
+    "MS-DOS 6.22 floppy boot",
+    "8 MiB guest memory via HIMEM",
+    "keyboard VER and MEM",
+    "F10 and clean restore/release",
+    "MUI boot button and return (unchanged launcher; earlier inline TLB payload)",
+    "three matched Keen startup trials per old/final variant"
+  ],
+  "pending": [
+    "writable BIOS hard-disk image and MS-DOS hard-disk installation",
+    "embedded XMS/EMS",
+    "PC audio",
+    "PC mouse/joystick",
+    "bare-metal ARM dynamic recompiler"
+  ],
+  "dosbox_x": "Mac functional reference only; not ported or benchmarked on A9"
+}

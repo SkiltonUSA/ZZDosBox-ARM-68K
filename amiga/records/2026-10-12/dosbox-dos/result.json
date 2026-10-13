@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0-dev",
+  "physical_result": "PASS",
+  "test_programs": [
+    "FileTest.com",
+    "ExeTest.exe"
+  ],
+  "file_output": {
+    "bytes": 256,
+    "matches_input": true,
+    "sha256": "34e74cd225ecbf83b8c1fd7424fbfa663bcfff126e5d23a674668c67ab9da38e",
+    "fnv1a": "f23411c5"
+  },
+  "guest_exit_codes": [
+    0,
+    0
+  ],
+  "register_mismatches": 0,
+  "cache_witness_errors": 0,
+  "launcher_exit": 0,
+  "core1_owner_released": true,
+  "workbench_and_bridge_present": true,
+  "scope": "DOSBox normal interpreter and DOS kernel; staged files; no shell, VGA or audio"
+}

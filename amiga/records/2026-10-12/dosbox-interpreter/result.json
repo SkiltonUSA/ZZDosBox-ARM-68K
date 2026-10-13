@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-12",
+  "hardware": "A4000TX / ZZ9000 Core1 / XX19c XACP 1.7",
+  "status": "interpreter diagnostic passed; full DOS/PC port incomplete",
+  "guest_ram_hash": "f23411c5",
+  "normal_runs": 12,
+  "timed_samples_excluding_warmup": 10,
+  "fixture_with_reset_median_us": 65208.5,
+  "fixture_with_reset_min_us": 64981,
+  "fixture_with_reset_max_us": 65313,
+  "timing_scope": "Includes entire guest reset, paging/TLB initialization and diagnostic execution. Not steady-state x86 throughput or game FPS.",
+  "cancellation_total_us": 134483,
+  "cancellation_note": "Includes the host waiting about 100ms before requesting stop; not pure stop latency",
+  "register_mismatches": 0,
+  "cache_witness_errors": 0,
+  "launcher_exit": 0,
+  "owned_memory_released": true,
+  "executable_sha256": "632fc700c999763fbab6e7457aebdb079b1e6b1718cdbf6cc1f0696e2d7907b9"
+}

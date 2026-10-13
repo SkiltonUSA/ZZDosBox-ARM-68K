@@ -1,0 +1,23 @@
+{
+  "version": "0.4.0-dev",
+  "installed_matches_final_build": true,
+  "executable_bytes": 470500,
+  "sha256": "97cced163c25f0a116036ed9c461e204861d30fcc0d3d2c6c0b126c9576c5de3",
+  "native_shell": "ASan pass",
+  "native_file_service": "ASan/UBSan pass with test DOS facade",
+  "arm_model_shell_cases": 6,
+  "physical_runs": [
+    "shell file roundtrip",
+    "input-wait cancellation",
+    "Vette EGA dependency fault",
+    "Keen 6 BIOS dependency fault",
+    "interactive DIR/EXIT",
+    "window-close cancellation"
+  ],
+  "all_physical_runs_register_mismatches": 0,
+  "all_physical_runs_witness_errors": 0,
+  "all_physical_runs_owned_memory_released": true,
+  "game_playability": false,
+  "fps": null,
+  "final_core1_owner": false
+}

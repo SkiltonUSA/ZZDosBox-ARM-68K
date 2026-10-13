@@ -1,0 +1,42 @@
+[
+  {
+    "game": "keen",
+    "stage": "before",
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 19195,
+    "fps": 29.070070330815316,
+    "copy_observed_us": 4702499,
+    "copy_ms_per_frame": 8.427417562724015
+  },
+  {
+    "game": "keen",
+    "stage": "after",
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 16780,
+    "fps": 33.253873659118,
+    "copy_observed_us": 2333800,
+    "copy_ms_per_frame": 4.182437275985663
+  },
+  {
+    "game": "vette",
+    "stage": "before",
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 25355,
+    "fps": 22.00749359100769,
+    "copy_observed_us": 4709908,
+    "copy_ms_per_frame": 8.440695340501792
+  },
+  {
+    "game": "vette",
+    "stage": "after",
+    "frames": 558,
+    "emulated_ms": 8000,
+    "wall_ms": 23055,
+    "fps": 24.20299284320104,
+    "copy_observed_us": 2374084,
+    "copy_ms_per_frame": 4.25463082437276
+  }
+]

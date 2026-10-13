@@ -1,0 +1,26 @@
+[OK] (no output)
+BIGVET.BIN Transferred 24184 bytes in 1.1s (21053 B/s), 24 chunks, CRC32 verified
+CONFIG.BIN Transferred 60 bytes in 0.0s (2246 B/s), 1 chunks, CRC32 verified
+CRASH0.BIN Transferred 7783 bytes in 0.4s (20539 B/s), 8 chunks, CRC32 verified
+CRASH1.BIN Transferred 8008 bytes in 0.4s (19990 B/s), 8 chunks, CRC32 verified
+EGAPIC.BIN Transferred 15788 bytes in 0.8s (20630 B/s), 16 chunks, CRC32 verified
+EGASKILL.BIN Transferred 7140 bytes in 1.5s (4680 B/s), 7 chunks, CRC32 verified
+GARAGE.BIN Transferred 33500 bytes in 1.6s (20781 B/s), 33 chunks, CRC32 verified
+HIGHSC.BIN Transferred 36100 bytes in 1.7s (21027 B/s), 36 chunks, CRC32 verified
+HORIZON0.BIN Transferred 38400 bytes in 1.8s (21039 B/s), 38 chunks, CRC32 verified
+HORIZON1.BIN Transferred 38400 bytes in 1.8s (20777 B/s), 38 chunks, CRC32 verified
+HORIZON2.BIN Transferred 38400 bytes in 1.9s (20723 B/s), 38 chunks, CRC32 verified
+LOSER0.BIN Transferred 9028 bytes in 0.5s (18131 B/s), 9 chunks, CRC32 verified
+LOSER1.BIN Transferred 9439 bytes in 0.5s (17239 B/s), 10 chunks, CRC32 verified
+LOSER2.BIN Transferred 9561 bytes in 0.5s (18241 B/s), 10 chunks, CRC32 verified
+LOSER3.BIN Transferred 10001 bytes in 0.6s (17251 B/s), 10 chunks, CRC32 verified
+MAPPIC.BIN Transferred 44380 bytes in 4.1s (10880 B/s), 44 chunks, CRC32 verified
+PENALTY.BIN Transferred 7203 bytes in 0.5s (14338 B/s), 8 chunks, CRC32 verified
+REDVETTE.BIN Transferred 10354 bytes in 0.6s (16947 B/s), 11 chunks, CRC32 verified
+SCORE.BIN Transferred 1400 bytes in 0.2s (8725 B/s), 2 chunks, CRC32 verified
+SPETRUM.BIN Transferred 2944 bytes in 0.2s (12874 B/s), 3 chunks, CRC32 verified
+TICKET.BIN Transferred 7975 bytes in 0.5s (14822 B/s), 8 chunks, CRC32 verified
+TITLE.BIN Transferred 26771 bytes in 1.7s (15663 B/s), 27 chunks, CRC32 verified
+VETTE.EXE Transferred 248173 bytes in 14.9s (16638 B/s), 243 chunks, CRC32 verified
+VX.BIN Transferred 13199 bytes in 1.9s (6815 B/s), 13 chunks, CRC32 verified
+WINNER.BIN Transferred 57908 bytes in 3.1s (18409 B/s), 57 chunks, CRC32 verified
