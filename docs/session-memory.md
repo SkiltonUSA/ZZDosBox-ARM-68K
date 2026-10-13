@@ -22,7 +22,10 @@ Windows exit to DOS, final build window/fullscreen switches and input. Native
 ASan and full linked ARM model suite pass. All final hardware teardowns restored
 register/cache witnesses and released owned memory. One injected F10 during
 a view transition was missed; repeat after the player has focus. The final
-session is closed, Workbench/launcher remain up, no Core1 owner.
+test session closed cleanly. At 15:30 local, a new canonical `PC/ZZDosBox`
+session was observed in fullscreen at 6000 cycles/ms (process 2, Core1 owned),
+started outside this agent’s test script. It was left running. Recheck ownership
+before further deployment or tests.
 
 Added 242 checksum-verified game files in Shell/Games/EMPIRE, OREGON and CIV;
 appended three profiles while preserving the five existing entries. Oregon
