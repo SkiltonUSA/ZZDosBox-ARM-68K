@@ -12,6 +12,15 @@ static void save_view(struct pc_saved_view *v){v->window=window;v->bitmap=direct
 static void load_view(const struct pc_saved_view *v){window=v->window;direct_bitmap=v->bitmap;direct_format=v->format;direct_native_format=v->native;}
 static int display_hotkey(UWORD raw,UWORD qualifiers){
  unsigned key=raw&127;int down=!(raw&128);
+#ifdef DB_SCANLINE_TEST
+ if(key==0x58){
+  if(down&&!(qualifiers&IEQUALIFIER_REPEAT)){
+   pc_display_scanlines((scan_mode+1)%3);
+   printf("SCANLINE_MODE requested=%u epoch=%u (0=off 1=full 2=skip)\n",scan_mode,scan_epoch);
+  }
+  return 1;
+ }
+#endif
  if(key==0x44&&(qualifiers&(IEQUALIFIER_LALT|IEQUALIFIER_RALT))){
   if(down&&!(qualifiers&IEQUALIFIER_REPEAT))switch_requested=!fullscreen;
   return 1;
@@ -46,5 +55,8 @@ static int display_switch(void){
   nf_init(&full_slots);pc_flow_init(&flow,pipeline?2:1);ScreenToFront(full_screen);
  }
  focus_due=us()+100000u;focus_pending=1;
+#ifdef DB_SCANLINE_TEST
+ scan_epoch++;
+#endif
  update_live_title();console_shown=0;switch_requested=-1;printf("DISPLAY_SWITCH mode=%s completed_frame=%u\n",fullscreen?"fullscreen":"window",complete);return 1;
 }

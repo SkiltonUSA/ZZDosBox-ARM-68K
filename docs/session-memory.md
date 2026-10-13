@@ -1,5 +1,131 @@
 # ZZDosBox development handoff
 
+## ZZDosBox software scanline experiment — 13 October 2026
+
+Separate `RAM:ZZScanBench` implements a Classic software mask in the final ARM
+copy. F9 cycles Off/Full/Skip. It is independent of XANI's Workbench FPGA
+controls; no firmware change. Fullscreen 640x480 only; window/overlay output
+is unmasked. Normal runtime and launcher settings remain unchanged.
+
+Matched Doom Demo3 at 10000 cycles/ms, 8 MiB guest, no audio/overlay:
+normal **7.3281 FPS**, black rows rewritten **7.4409**, black rows preserved
+**7.5970**. Single runs: preliminary +3.67% vs normal, +2.10% vs identical mask
+rewritten. Only final-copy work is reduced, not x86/VGA rendering. Exactly
+three buffers initialized; 3,121,920 black rows skipped. All runs cleaned up.
+
+Separate physical EGA and interactive Full -> Skip -> Off/F10 checks passed.
+Screenshots show 240 black odd rows in both masked modes, restored when Off;
+owner was not watching. Not a tear-free scanout claim. Native sanitizers and
+ARM-model pixel/ownership/transition/cancellation tests passed. Core1 idle,
+Workbench restored, global FPGA scanlines Off. Candidate is RAM-only; local
+build `.context/amiga/dosbox-dynrec-4m-neon-pipe-scan/ZZDosBox-Dynrec`.
+Evidence and exact hashes: `amiga/records/2026-10-13/dosbox-scanlines/`.
+
+## ZZDosBox NEON / 4 MiB / overlap installed — 13 October 2026
+
+Separate candidate `RAM:ZZTuneNeon` (lost on reboot), local
+`.context/amiga/dosbox-dynrec-4m-neon-pipe/ZZDosBox-Dynrec`, SHA256
+`55085f15f23bc3fc077498e2b2cd9bf3770558a9706147ece163240ac73dcb7d`.
+Now installed as `SD032G:Dev/ZZDosBox/PC/ZZDosBox`, verified MD5
+`62a29c0ece11553121368b219c286741`. Initial dynrec preserved as `ZZDosBox-1M`
+(MD5 `8020c504f3f3d621939d1ceffed0818f`); `ZZDosBox-Interpreter` also retained.
+Launcher loads the new runtime on its next launch. Launcher.cfg MD5 before
+and after installation: `297dddafcdd1fa80cf87d4aeaca3361d`. No profiles or
+separate Windows executable changed.
+
+Doom Demo3, matched 10000-cycle settings: 6.94 initial / 6.96 overlap /
+6.97 4 MiB + overlap / **7.29 NEON + 4 MiB + overlap** real FPS. About 5%
+above initial dynrec. All complete with clean NEON/MMU/cache/memory teardown.
+Total allocation still 32 MiB, guest RAM 8 MiB, private heap 8 MiB. Build and
+model commands, exact hashes and physical evidence: today's `dosbox-tuning/`.
+
+Interactive test at 3000 cycles/ms reached window mode but injected reverse
+switch/F10 did not take effect. Bridge briefly timed out; reconnect succeeded.
+Owner confirmed Workbench responsive. CLI `Break 10 C` cancelled our test,
+with context/register/witness restoration clean and owned memory released.
+No reboot. Second manual-key test passed: owner confirmed both Alt+Return
+switches and F10; `physical-interactive2.log` records both switches, checked
+restoration and memory release. Core1 owner absent, launcher on Workbench.
+Installed after that test using checked staging/rename with rollback. Nothing
+launched after installation. See `dosbox-tuning/installation.json`. Injected
+input failure's cause remains unconfirmed; physical keys did not reproduce it.
+
+
+## Dynrec connected to the normal ZZDosBox launcher — 13 October 2026
+
+At the owner's request, installed the exact physically tested dynrec executable
+as `SD032G:Dev/ZZDosBox/PC/ZZDosBox`. The MUI launcher already invokes that
+sibling path for program, terminal and boot launches; no UI rebuild needed.
+MD5 verified `8020c504f3f3d621939d1ceffed0818f` (SHA256 and build identity below).
+Preserved the previous runtime as `PC/ZZDosBox-Interpreter`, MD5 verified
+`a0472312aa609271755c08f16702d42f`. Launcher.cfg checksum remained
+`6e698ae2f79aaabed42b713e9416db24`; profiles/settings were not changed.
+
+A user-owned fullscreen DOS session was active during installation. It was
+left running, without injected input or a second Core1 launch. It still uses
+the already-loaded interpreter: exit and launch again for dynrec. Empire combat
+and Windows compatibility remain pending; the Doom result is the verified
+speed measurement. Installation used a checked staging file and rename with
+rollback on failure. See `dosbox-dynrec/launcher-install.log` in today's records.
+The owner then requested closing the active game. Sent F10 down/up; confirmed
+the Core1 owner disappeared and the MUI launcher returned on Workbench. The
+next launch will load dynrec. No replacement game was launched.
+The separate Windows311/ZZDosBox-WFW executable remains its previous build.
+To revert the normal launcher, close its DOS session, preserve the dynrec file,
+and restore `ZZDosBox-Interpreter` to the sibling `ZZDosBox` executable path.
+
+
+## ZZDosBox ARMv7 dynamic recompiler verified — 13 October 2026
+
+Built a separate prototype with `scripts/build_dosbox_dos_arm.py --pc
+--pc-dynrec --pc-doom-clock` (explicit Podman connection as in the record).
+Artifact: `.context/amiga/dosbox-dynrec/ZZDosBox-Dynrec`, 1,071,752 bytes,
+SHA256 `e3d0718d9bb41e9b0ee51053c32e9a8b9c4ac7717625f86099325590d827f0aa`.
+Temporary hardware path: `RAM:ZZJit1013/ZZDosBox-Dynrec` (lost on reboot).
+Canonical installed player/launcher remain the interpreter; not promoted or
+published. The temporary HTTP transfer server has been stopped.
+
+Uses pinned libretro DOSBox ARMv7 dynrec, with a 1 MiB executable code cache
+and 4 MiB heap inside the existing 32 MiB owned allocation. Local A9 I/D cache
+publication replaces Linux syscalls; no firmware/Core0/shared-L2 changes.
+Physical generated-code rewrite witness, self-modifying DOS code and fullscreen
+EGA/PIT passed. Linked-model CPU/files/MZ, paging, cancellation, BIOS/HDD,
+mouse and relocation checks passed. Normal interpreter sanitizer check passed.
+
+Full Doom 1.9 shareware Demo3 at the previous 8 MiB / VGA / 10000 cycles /
+fresh defaults / fullscreen / no-overlay settings completed all 2134 gametics:
+**307.311 seconds / about 6.94 real FPS**, versus 689.143 seconds / 3.10 FPS
+for the interpreter. **2.24× throughput**. One physical run per build, sampled
+with the read-only observer; approximately one-frame endpoint uncertainty.
+Guest-clock 11.67 FPS is not the hardware score. No input/screenshots during
+the measured run. This does not establish general Intel CPU equivalence.
+
+JIT witness 1, 12,365 commits, 24,818,803 dispatches; SHELL PASS / guest exit 0,
+13,012 flips, checked register/cache restoration clean, memory released.
+Workbench, bridge and Roadie confirmed available; no Core1 owner remains.
+Evidence and repeatable build/model commands:
+`amiga/records/2026-10-13/dosbox-dynrec/`. Broader games and Windows 3.11 remain
+pending on dynrec. No game media or guest RAM dumps included in records.
+
+
+## ZZDosBox overall optimisation candidate — 13 October 2026
+
+User requested overall optimisation first, with Empire combat retesting later.
+Two local source changes are under verification: exact incremental generic
+scaling and 4 KiB read-ahead for exclusive BIOS HDD images (immediate writes).
+Installed runtime and the owner's active session are untouched. Read-ahead does
+not cover Empire's mounted directory. Local disk/pixel differential tests, the ARM scaler model, ARM/68k build and
+full linked ARM model regressions pass. Candidate (not deployed): 978232 bytes,
+SHA256 64598728b83dbcb8237b656f252923d95a274005a93c65fb04992ff50805e41b,
+retained at `.context/amiga/dosbox-optimisation/ZZDosBox`. Physical speed
+comparison remains pending. See
+`amiga/records/2026-10-13/dosbox-optimisation/findings.md`.
+
+The `hard drive data rate limit=0` remark was explicitly clarified as a forum
+report, not an observed Amiga improvement. That DOSBox-X option is absent
+from this port. Reviewed dosbox-rewrite at 659519f0bda38b0ec454c40ccd1371144077d8e8
+as a design reference; no emulator-base switch or code import was made.
+
 ## ZZDosBox mouse and three-game installation — 13 October 2026
 
 Default `SD032G:Dev/ZZDosBox/PC/ZZDosBox` and

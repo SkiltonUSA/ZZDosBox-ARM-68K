@@ -1,0 +1,26 @@
+{
+  "ZZDosBox-DoomBench": {
+    "bytes": 979736,
+    "sha256": "3064e9d0a3ae10ac6d5b8c058c21e7ea4495652902c40c5a7aab1d84980f748a"
+  },
+  "dosbox.elf": {
+    "bytes": 933052,
+    "sha256": "258056951a1c1a638c71dffc7a9daaf7ca571a225ed84785f5e9c8414c5a7ccb"
+  },
+  "doom_clock.h": {
+    "bytes": 1232,
+    "sha256": "2002a131f0bdc33b80d00b7241fc2c1496160f66891792b19cdc2b8250d3b844"
+  },
+  "bench-doom.cpp": {
+    "bytes": 5626,
+    "sha256": "24a74d92961d2a0c54a6fbfbe55e5b05c860762d9c164649b5629dd6cec4220f"
+  },
+  "build-benchmark.py": {
+    "bytes": 12078,
+    "sha256": "f3c99e49e108da3ffe4017caee1282d8f2af5084c6ac5e447c30e24b696f7da0"
+  },
+  "doom.session": {
+    "bytes": 115,
+    "sha256": "c677c69b163a6178c3e9cddc330080f15e2ca16338d990ee8ef98c76c6cc38ae"
+  }
+}

@@ -1,0 +1,52 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=844fcf56
+BOOTSTRAP amiga=4060c700 arm=007fc700 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+DISPLAY_CONFIG mode=window fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+JIT magic=4a495431 commits=20 witness=1 dispatches=1061 cache_bytes=1048576 heap_peak=2333952
+DOOMCLOCK magic=44424d31 signature=0 rejected=0 first=0 last=0 sim_first=0 sim_last=0 start=0000000000000000 end=0000000000000000
+CPU_CYCLES applied=3000
+ARM_FPS tenths=0
+PC frames=1 emulated_ms=32 wall_ms=68 timed_done=0
+POLL ms=1 calls=10 wait_us=12346 max_us=1324
+SHELL result=0 guest_exit=0 slices=876 bytes=326 hash=031c27c8 mismatches=0
+DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>SMCTEST.COM
+JIT self-modifying guest code PASS
+
+C:\>exit
+
+
+SHELL PASS mode=0
+FILES requests=7 read=172 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=1 flips=0 wait_us=0
+COPY observed_us=4751 max_us=4751
+PIPELINE enabled=0 overlaps=0 releases=1
+LAUNCHER exit=0; owned memory released

@@ -1602,3 +1602,60 @@ register/cache-witness mismatches. The full ARM model regression also passed.
 See [test evidence](../amiga/records/2026-10-13/dosbox-wfw/findings.md).
 Guest mouse, PCM audio and Windows networking remain pending. No Microsoft
 software, WinBench or guest disk image is distributed with the project.
+
+## ARMv7 dynamic recompiler experiment — 13 October 2026
+
+A separate `--pc-dynrec` build enables the pinned upstream x86-to-ARM JIT.
+Its generated-code arena is bounded inside the existing owned allocation;
+Core1 performs local instruction-cache publication instead of the upstream
+Linux syscall. The real A9 passed generated-code rewrite and guest
+self-modification checks, then fullscreen EGA/PIT with clean restoration.
+The same Doom Demo3 workload improved from approximately **3.10 to 6.94 real
+FPS (2.24×)**, with all 2134 ticks completed and clean teardown. This is one
+physical run per build; broader compatibility remains unproven.
+
+Build instructions, model coverage and physical logs are in
+[`dosbox-dynrec/method.md`](../amiga/records/2026-10-13/dosbox-dynrec/method.md).
+At the owner’s request, the tested dynrec binary now occupies the normal
+launcher’s runtime path, with the interpreter preserved as a fallback. Windows
+and broader game compatibility need separate tests.
+
+
+## NEON pixels, 4 MiB cache and display overlap — 13 October 2026
+
+A separate candidate adds checked integer NEON capture/scaling, a 4 MiB JIT
+cache and bounded overlap of a spare-buffer write with the preceding PAN
+acknowledgement. Total owned allocation remains 32 MiB; benchmark guest RAM
+remains 8 MiB. The code-cache metadata and heap budget grow within that bound.
+
+Real Doom Demo3 results: initial dynrec 6.94 FPS, overlap 6.96 FPS, larger cache
+plus overlap 6.97 FPS, and NEON plus both 7.29 FPS. The approximately 5% total
+gain comes predominantly from the NEON candidate; the other single-run
+differences are too small to establish a gain. This puts the tested workload
+within Thandor's 386DX-33 results (6.89–7.47 FPS), not a general PC equivalence.
+All timed runs used 10000 cycles/ms and cleanly restored ARM state and released
+memory. Model checks cover pixel guards, JIT bounds, SIMD context restoration,
+self-modification, paging and display ownership.
+
+The separate 3000-cycle interactive check switched into a Workbench window,
+but injected return/exit keys did not work; CLI cancellation was clean. The
+physical-key repeat passed both switches and F10, with clean restoration and
+memory release. The tested candidate is now the normal launcher runtime,
+with initial dynrec and interpreter fallbacks preserved. See
+[methods, logs and limitations](../amiga/records/2026-10-13/dosbox-tuning/method.md).
+
+## Software Classic scanline copy experiment — 13 October 2026
+
+A separate experimental build measured Doom Demo3 at 7.3281 FPS normally,
+7.4409 FPS with black rows rewritten each frame, and 7.5970 FPS with those
+rows initialized once per buffer then preserved. The last result is +3.67%
+vs normal and +2.10% vs rewriting the same mask; single runs, so preliminary.
+This reduces final ARM framebuffer-copy work, not guest CPU/VGA rendering.
+It is independent of the Workbench FPGA scanline controls.
+
+All timed runs restored state and released memory. Separate physical F9
+Full -> Skip -> Off captures verified black rows and restored normal output;
+F10 exited cleanly. The user was not watching; screenshots do not establish
+tear-free monitor scanout. Native/ARM-model checks also passed. The normal
+installed executable remains unchanged; the candidate is RAM-only.
+See [method and raw results](../amiga/records/2026-10-13/dosbox-scanlines/method.md).

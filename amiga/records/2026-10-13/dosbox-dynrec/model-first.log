@@ -1,0 +1,9 @@
+PASS JIT generated-code execution, rewrite witness, commits 73 dispatches 127 heap 2338176
+PASS profile publication and exclusive totals cpu unwound 0
+PASS ARM x86 arithmetic/memory, DOS files and MZ relocation 0x12000040
+PASS JIT generated-code execution, rewrite witness, commits 19 dispatches 221 heap 2333952
+PASS profile publication and exclusive totals smc unwound 0
+PASS ARM JIT guest self-modification / invalidation
+PASS JIT generated-code execution, rewrite witness, commits 22 dispatches 21 heap 2491712
+PASS profile publication and exclusive totals paging unwound 0
+PASS ARM protected-mode demand-page fault, full decoder and resume

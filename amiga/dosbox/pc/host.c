@@ -60,6 +60,15 @@ int db_arguments(int argc,char **argv){
   else if(!strcmp(argv[i],"--cancel-read"))testmode=2;
   else if(!strcmp(argv[i],"--serial-video"))pc_display_pipeline(0);
   else if(!strcmp(argv[i],"--pipeline-video"))pc_display_pipeline(1);
+#ifdef DB_SCANLINE_TEST
+  else if(!strcmp(argv[i],"--scanline-copy")&&i+1<argc){
+   const char *m=argv[++i];
+   if(!strcmp(m,"off"))pc_display_scanlines(0);
+   else if(!strcmp(m,"full"))pc_display_scanlines(1);
+   else if(!strcmp(m,"skip"))pc_display_scanlines(2);
+   else return -1;
+  }
+#endif
   else if(!strcmp(argv[i],"--profile"))profiling=1;
   else if(!strcmp(argv[i],"--command")&&i+1<argc){
    const char *s=argv[++i];if(strlen(s)>140)return -1;

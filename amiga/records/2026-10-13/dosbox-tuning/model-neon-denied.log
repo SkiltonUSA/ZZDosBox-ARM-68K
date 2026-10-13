@@ -1,0 +1,1 @@
+PASS denied firmware SIMD access fails without executing NEON

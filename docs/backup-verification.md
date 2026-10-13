@@ -1,5 +1,23 @@
 # Backup validation — 13 October 2026
 
+## Latest dynrec / NEON / scanline backup
+
+The exact installed DOS executable and separate scanline candidate are saved
+with build metadata and ELF symbols. All backup hashes verified. Exported host
+tests and sanitizer checks passed; the restored scanline ELF passed the ARM
+model Full/Skip/Off transitions across three buffers with poisoned rows, pixel
+guards, nonce repair and SIMD restoration. The raw benchmark analyser reproduced
+7.3281 / 7.4409 / 7.5970 real FPS. No new hardware run was needed for this backup.
+
+Validation logs: `amiga/records/2026-10-13/dosbox-scanlines/backup-*.log`.
+Current runtime SHA256:
+`55085f15f23bc3fc077498e2b2cd9bf3770558a9706147ece163240ac73dcb7d`.
+Scanline experiment SHA256:
+`02442db69194befb55f8644c61badc01655bcc493d63adc11a3051ef75d89144`.
+
+## Earlier baseline backup
+
+
 The independent export restored its pinned upstream Git bundle and saved build
 inputs without using the source workspace checkout. Host tests passed for
 profiles/AUTOEXEC, frame ownership, framebuffer mapping, profiling, capture and

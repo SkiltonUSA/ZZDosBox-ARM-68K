@@ -1,0 +1,147 @@
+--- a/include/config.h
++++ b/include/config.h
+@@ -171,3 +171,6 @@
+ #error "Can't determine pointer size"
+ #endif
+ 
++
++#define C_DYNREC 1
++#define C_TARGETCPU ARMV7LE
+--- a/src/cpu/core_dynrec.cpp
++++ b/src/cpu/core_dynrec.cpp
+@@ -1,3 +1,4 @@
++#include "dynrec_plan.h"
+ /*
+  *  Copyright (C) 2002-2021  The DOSBox Team
+  *
+@@ -53,9 +54,9 @@
+ #include "pic.h"
+ 
+ #define CACHE_MAXSIZE	(4096*2)
+-#define CACHE_TOTAL		(1024*1024*8)
+-#define CACHE_PAGES		(512)
+-#define CACHE_BLOCKS	(128*1024)
++#define CACHE_TOTAL		DB_JIT_CACHE
++#define CACHE_PAGES		(128)
++#define CACHE_BLOCKS	(8*1024*DB_JIT_MIB)
+ #define CACHE_ALIGN		(16)
+ #define DYN_HASH_SHIFT	(4)
+ #define DYN_PAGE_HASH	(4096>>DYN_HASH_SHIFT)
+@@ -181,6 +182,7 @@
+ 	execution process, or returning from the core etc.
+ */
+ 
++unsigned db_dynrec_dispatches;
+ Bits CPU_Core_Dynrec_Run(void) {
+ 	for (;;) {
+ 		// Determine the linear address of CS:EIP
+@@ -226,6 +228,7 @@
+ 		cache.block.running=0;
+ 		// now we're ready to run the dynamic code block
+ //		BlockReturn ret=((BlockReturn (*)(void))(block->cache.start))();
++		db_dynrec_dispatches++;
+ 		BlockReturn ret=core_dynrec.runcode(block->cache.start);
+ 
+ 		switch (ret) {
+--- a/src/cpu/core_dynrec/risc_armv4le-common.h
++++ b/src/cpu/core_dynrec/risc_armv4le-common.h
+@@ -84,27 +84,7 @@
+ #define HOST_pc HOST_r15
+ 
+ 
+-static void cache_block_closing(const Bit8u* block_start,Bitu block_size) {
+-#if (__ARM_EABI__)
+-	//flush cache - eabi
+-	register unsigned long _beg __asm ("a1") = (unsigned long)(block_start);				// block start
+-	register unsigned long _end __asm ("a2") = (unsigned long)(block_start+block_size);		// block end
+-	register unsigned long _flg __asm ("a3") = 0;
+-	register unsigned long _par __asm ("r7") = 0xf0002;										// sys_cacheflush
+-	__asm __volatile ("swi 0x0"
+-		: // no outputs
+-		: "r" (_beg), "r" (_end), "r" (_flg), "r" (_par)
+-		);
+-#else
+-// GP2X BEGIN
+-	//flush cache - old abi
+-	register unsigned long _beg __asm ("a1") = (unsigned long)(block_start);				// block start
+-	register unsigned long _end __asm ("a2") = (unsigned long)(block_start+block_size);		// block end
+-	register unsigned long _flg __asm ("a3") = 0;
+-	__asm __volatile ("swi 0x9f0002		@ sys_cacheflush"
+-		: // no outputs
+-		: "r" (_beg), "r" (_end), "r" (_flg)
+-		);
+-// GP2X END
+-#endif
++extern "C" void db_dynrec_commit(const void *,unsigned);
++static void cache_block_closing(const Bit8u *start,Bitu size) {
++ db_dynrec_commit(start,size);
+ }
+--- a/src/cpu/dyn_cache.h
++++ b/src/cpu/dyn_cache.h
+@@ -1,3 +1,5 @@
++extern "C" void *db_dynrec_alloc(unsigned);
++extern "C" void db_dynrec_commit(const void *,unsigned);
+ /*
+  *  Copyright (C) 2002-2021  The DOSBox Team
+  *
+@@ -627,14 +629,7 @@
+ 		}
+ 		if (cache_code_start_ptr==NULL) {
+ 			// allocate the code cache memory
+-#if defined (WIN32)
+-			cache_code_start_ptr=(Bit8u*)VirtualAlloc(0,CACHE_TOTAL+CACHE_MAXSIZE+PAGESIZE_TEMP-1+PAGESIZE_TEMP,
+-				MEM_COMMIT,PAGE_EXECUTE_READWRITE);
+-			if (!cache_code_start_ptr)
+-				cache_code_start_ptr=(Bit8u*)malloc(CACHE_TOTAL+CACHE_MAXSIZE+PAGESIZE_TEMP-1+PAGESIZE_TEMP);
+-#else
+-			cache_code_start_ptr=(Bit8u*)malloc(CACHE_TOTAL+CACHE_MAXSIZE+PAGESIZE_TEMP-1+PAGESIZE_TEMP);
+-#endif
++cache_code_start_ptr=(Bit8u*)db_dynrec_alloc(CACHE_TOTAL+CACHE_MAXSIZE+PAGESIZE_TEMP*2-1);
+ 			if(!cache_code_start_ptr) E_Exit("Allocating dynamic cache failed");
+ 
+ 			// align the cache at a page boundary
+@@ -669,6 +664,7 @@
+ 		core_dynrec.runcode=(BlockReturn (*)(const Bit8u*))cache.pos;
+ //		link_blocks[1].cache.start=cache.pos;
+ 		dyn_run_code();
++		db_dynrec_commit(cache_code_link_blocks,PAGESIZE_TEMP);
+ #endif
+ 
+ 		cache.free_pages=0;
+@@ -684,26 +680,13 @@
+ }
+ 
+ static void cache_close(void) {
+-/*	for (;;) {
+-		if (cache.used_pages) {
+-			CodePageHandler * cpage=cache.used_pages;
+-			CodePageHandler * npage=cache.used_pages->next;
+-			cpage->ClearRelease();
+-			delete cpage;
+-			cache.used_pages=npage;
+-		} else break;
+-	}
+-	if (cache_blocks != NULL) {
+-		free(cache_blocks);
+-		cache_blocks = NULL;
+-	}
+-	if (cache_code_start_ptr != NULL) {
+-		### care: under windows VirtualFree() has to be used if
+-		###       VirtualAlloc was used for memory allocation
+-		free(cache_code_start_ptr);
+-		cache_code_start_ptr = NULL;
+-	}
+-	cache_code = NULL;
+-	cache_code_link_blocks = NULL;
+-	cache_initialized = false; */
+-}
++ while(cache.used_pages)cache.used_pages->ClearRelease();
++ while(cache.free_pages){
++  CodePageHandlerDynRec *p=cache.free_pages;cache.free_pages=p->next;
++  free(p->invalidation_map);delete p;
++ }
++ free(cache_blocks);cache_blocks=NULL;
++ cache_code_start_ptr=cache_code=cache_code_link_blocks=NULL;
++ memset(&cache,0,sizeof(cache));memset(link_blocks,0,sizeof(link_blocks));
++ cache_initialized=false;
++}

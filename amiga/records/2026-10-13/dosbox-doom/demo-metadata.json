@@ -1,0 +1,10 @@
+{
+  "wad_lump": "DEMO3",
+  "version": 109,
+  "skill": 2,
+  "episode": 1,
+  "map": 7,
+  "bytes": 8550,
+  "tic_commands": 2134,
+  "website_gametics": 2134
+}

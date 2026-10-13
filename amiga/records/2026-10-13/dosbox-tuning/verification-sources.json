@@ -1,0 +1,10 @@
+{
+  "scripts/build_dosbox_dos_arm.py": "07b55793e410266f31861df24ae38a3d2f76b30f8eb1b4359b2c1be89e2ed34c",
+  "scripts/prepare_dosbox_dynrec.py": "f04cf4c22dea186ee5056dace0881b4ed23c3a7952e16273ceea1f19b28b8af7",
+  "tests/amiga/dosbox/check_pc_arm.py": "8d7163ed9b29e4e31e38e90a9f66669a84588a0608adc858d0b1c48f6fce442d",
+  "tests/amiga/dosbox/check_capture_arm.py": "52b23b4eecf864225df20a41b698915856753f8ff41d985af3eb2d9bc9498439",
+  "tests/amiga/dosbox/check_scale_arm.py": "f9e0b99b47e01ac150d9ed2f734beb933a4937ffe4bf3bef287f1c6cff5e2d03",
+  "tests/amiga/dosbox/present_plan.c": "c2cd60739721438d820011820e3c91bcb8e8e5be9e455ca4ef5942075dd1346b",
+  "tests/amiga/dosbox/dynrec_plan.c": "3b5af6a92aa6d32d66aeeae37456431bfd3b297d5f596bca9b965c03ad39b6a7",
+  "tests/amiga/dosbox/check_dynrec_arm.py": "7f8b173009a5b65e12cd77d77ab2b3049cf4f2a43924e218def816e36f9f0cc1"
+}

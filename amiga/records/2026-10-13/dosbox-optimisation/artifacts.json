@@ -1,0 +1,29 @@
+{
+  "status": "ARM/68k build, host differential tests and full linked ARM model passed; not deployed; physical speed comparison pending",
+  "files": {
+    "ZZDosBox": {
+      "bytes": 978232,
+      "sha256": "64598728b83dbcb8237b656f252923d95a274005a93c65fb04992ff50805e41b"
+    },
+    "dosbox.elf": {
+      "bytes": 932280,
+      "sha256": "00720e41c7a8cbe7270872b35d34fee8e1ff2b9a995107ba5740a34b0e5470ba"
+    },
+    "build.json": {
+      "bytes": 22378,
+      "sha256": "72973547a3a6a0f2121440d7a87534ab637fe8ea91bac948fc11c70a174c06f2"
+    },
+    "ZZDosBox-before": {
+      "bytes": 977864,
+      "sha256": "604a2b276d8896139927445391d9a6ff92687d2b96416fd173727d25745b65b0"
+    },
+    "dosbox-before.elf": {
+      "bytes": 931712,
+      "sha256": "6fd8423fcded5b91b562283ff6d6b483106a7188673082901930d78ac97c3aa7"
+    },
+    "build-before.json": {
+      "bytes": 22271,
+      "sha256": "feaf20b2e338a7748d532ed06ed9a9912a8bcee02ae922615f8c8d53a3e97e78"
+    }
+  }
+}

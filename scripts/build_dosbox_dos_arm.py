@@ -10,7 +10,10 @@ import os
 cmd=json.loads(os.environ.get('DOSBOX_ARM_COMMAND','["podman","--connection","nuflix-converter-root","exec","zzffmpeg-toolchain"]'))
 def inside(p):return '/work/'+str(Path(p).relative_to(ROOT))
 def run(args):subprocess.run([*cmd,*map(str,args)],check=True)
-parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--container-command');parser.add_argument('--console',action='store_true');parser.add_argument('--shell',action='store_true');parser.add_argument('--pc',action='store_true');parser.add_argument('--pc-cpu-opt',choices=['Os','O2','O3'],help='PC interpreter optimisation level (default: O2 for PC)');parser.add_argument('--pc-hardware-opt',choices=['Os','O2'],help='PIC, VGA drawing and VGA memory optimisation level (default: O2 for PC)');args=parser.parse_args()
+parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--container-command');parser.add_argument('--console',action='store_true');parser.add_argument('--shell',action='store_true');parser.add_argument('--pc',action='store_true');parser.add_argument('--pc-cpu-opt',choices=['Os','O2','O3'],help='PC interpreter optimisation level (default: O2 for PC)');parser.add_argument('--pc-hardware-opt',choices=['Os','O2'],help='PIC, VGA drawing and VGA memory optimisation level (default: O2 for PC)');parser.add_argument('--pc-doom-clock',action='store_true',help='Read-only observer for the supplied Doom 1.9 shareware benchmark');parser.add_argument('--pc-dynrec',action='store_true',help='Separate experimental ARMv7 JIT build');parser.add_argument('--pc-jit-mib',type=int,choices=(1,4),default=1);parser.add_argument('--pc-neon',action='store_true');parser.add_argument('--pc-pipeline',action='store_true');parser.add_argument('--pc-scanlines',action='store_true');args=parser.parse_args()
+if (args.pc_neon or args.pc_pipeline or args.pc_scanlines or args.pc_jit_mib!=1) and not args.pc_dynrec:parser.error('tuning options require --pc-dynrec')
+if args.pc_doom_clock and not args.pc:parser.error('--pc-doom-clock requires --pc')
+if args.pc_dynrec and not args.pc:parser.error('--pc-dynrec requires --pc')
 if not args.pc and args.pc_cpu_opt is not None:parser.error('--pc-cpu-opt requires --pc')
 if not args.pc and args.pc_hardware_opt is not None:parser.error('--pc-hardware-opt requires --pc')
 args.pc_cpu_opt=args.pc_cpu_opt or ('O2' if args.pc else 'Os')
@@ -26,7 +29,11 @@ if args.shell:
  import build_dosbox_shell as sb
  if args.pc:
   import build_dosbox_pc as pb
+  if args.pc_dynrec:pb.OUT=ROOT/('.context/amiga/dosbox-dynrec'+('-4m' if args.pc_jit_mib==4 else '')+('-neon' if args.pc_neon else '')+('-pipe' if args.pc_pipeline else '')+('-scan' if args.pc_scanlines else ''))
   OUT=pb.OUT;b.OUT=OUT;sources=pb.prepare()
+  if args.pc_dynrec:
+   from prepare_dosbox_dynrec import prepare
+   sources+=prepare(OUT)
  else:OUT=sb.OUT;b.OUT=OUT;sources=sb.prepare()
 else:sources=b.prepare()
 if args.console:b.console_fixtures()
@@ -38,11 +45,17 @@ for name in ['worker.cpp','mmu.c','mmu.h','mmu_asm.S','mmu_plan.h']:
  if name=='mmu_plan.h':
   moves={'0x40000u':'0x100000u','0x50000u':'0x118000u','0x60000u':'0x120000u','0x80000u':'0x180000u','0x84000u':'0x1c0000u','0x82000u':'0x182000u','0x82400u':'0x182400u'}
   s=re.sub('|'.join(moves),lambda m:moves[m[0]],s)
+  if args.pc_dynrec:
+   s=s.replace('#include <stdint.h>', '#include <stdint.h>\n#include \"dynrec_plan.h\"')
+   s=s.replace('if(page>=base+MB_TABLE_BEGIN)attr|=1u;', 'if(page>=base+MB_TABLE_BEGIN && !db_jit_page(base,page))attr|=1u;')
  (OUT/name).write_text(s)
-subprocess.run(['clang','-O2','-I'+str(OUT),'-DMB_ALLOCATION=0x2000000u',str(ROOT/'tests/amiga/mesen/mmu_plan.c'),'-o',str(OUT/'test-mmu')],check=True)
+subprocess.run(['clang','-O2','-I'+str(OUT),'-I'+str(pc),*(['-DDB_DYNREC','-DDB_JIT_MIB='+str(args.pc_jit_mib)] if args.pc_dynrec else []),'-DMB_ALLOCATION=0x2000000u',str(ROOT/'tests/amiga/mesen/mmu_plan.c'),'-o',str(OUT/'test-mmu')],check=True)
 subprocess.run([str(OUT/'test-mmu')],check=True)
 flags=['-Os' ,'-mcpu=cortex-a9','-marm','-mfloat-abi=soft','-mno-unaligned-access','-ffreestanding','-fno-builtin','-fPIC','-fvisibility=hidden','-ffunction-sections','-fdata-sections','-fno-stack-protector','-DZZ_BLOCK_SIZE=0x2000000','-DZZ_CONTROL=0x180000','-DMB_MMU','-DMB_DCACHE','-DMB_ALLOCATION=0x2000000u',
  *['-I'+inside(p) for p in [OUT,OUT/'include',OUT/'src/cpu',SRC,console,shell,pc,OUT/'src/ints',BASE,common,ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']],'-include',inside(ROOT/'amiga/pocketsnes/libc_config.h')]
+if args.pc_dynrec:flags+=['-DDB_DYNREC','-DDB_JIT_MIB='+str(args.pc_jit_mib)]
+if args.pc_neon:flags+=['-DDB_NEON']
+if args.pc_scanlines:flags+=['-DDB_SCANLINE_TEST']
 sources += [SRC/'adapter.cpp',BASE/'runtime.cpp',console/'bench.cpp' if args.console else SRC/'bench.cpp',SRC/'drive.cpp',ROOT/'amiga/ffmpeg_bench/heap.c',ROOT/'amiga/mesen_snes/system/memory.c',OUT/'worker.cpp',OUT/'mmu.c',OUT/'mmu_asm.S',ROOT/'.context/amiga/ffmpeg-bench/picolibc-1.8.12/libc/machine/arm/setjmp.S',ROOT/'.context/amiga/ffmpeg-bench/picolibc-1.8.12/libc/stdlib/srandom.c',SRC/'platform_time.c']
 if args.console:sources.append(console/'transport.cpp')
 if args.shell:
@@ -51,6 +64,15 @@ if args.shell:
 if args.pc:
  sources=[pc/'adapter.cpp' if p==shell/'adapter.cpp' else OUT/'frontend.cpp' if p==shell/'frontend.cpp' else pc/'bench.cpp' if p==shell/'bench.cpp' else pc/'runtime.cpp' if p==BASE/'runtime.cpp' else pc/'platform_time.c' if p==SRC/'platform_time.c' else p for p in sources]
  sources += [pc/'devices.cpp',pc/'boot.cpp',pc/'video.cpp',pc/'direct.cpp',pc/'profile.cpp',pc/'cd.cpp',pc/'midi.cpp']
+if args.pc_dynrec:sources.append(pc/'dynrec.cpp')
+if args.pc_neon:sources += [pc/'pixels_neon.cpp',pc/'neon_context.cpp',pc/'neon_state.S']
+if args.pc_doom_clock:
+ text=(pc/'bench.cpp').read_text()
+ text=text.replace('#include "dosbox.h"','#include "dosbox.h"\n#include "doom_clock.h"\nstatic DoomClock doom_clock;')
+ text=text.replace('void db_pc_tick(){','void db_pc_tick(){\n doom_clock.tick(MemBase,db_memory_mb,PIC_Ticks,pc_clock_ticks());')
+ text=text.replace(' pc_prof_finish();',' pc_prof_finish();\n doom_clock.publish(b);')
+ bench=OUT/'bench-doom.cpp';bench.write_text(text)
+ sources=[bench if src==pc/'bench.cpp' else src for src in sources]
 header_digest=hashlib.sha256(b''.join(p.read_bytes() for p in sorted(OUT.rglob('*.h')) if p.name not in ('zz_payload.h','expected.h'))+b''.join(p.read_bytes() for p in sorted(SRC.glob('*.h')))+b''.join(p.read_bytes() for p in sorted(console.glob('*.h')))+b''.join(p.read_bytes() for p in sorted(shell.glob('*.h')))+b''.join(p.read_bytes() for p in sorted(pc.glob('*.h')) if p.name not in ('display.h','fullscreen.h','windowed.h','window_geometry.h','present_plan.h'))).digest()
 objects=[];overrides={}
 for i,src in enumerate(sources):
@@ -58,11 +80,13 @@ for i,src in enumerate(sources):
  cpp=src.suffix=='.cpp'
  extra=['-std=c++17','-fno-exceptions','-fno-rtti','-fno-threadsafe-statics','-fno-use-cxa-atexit'] if cpp else []
  if cpp and args.shell:extra+=['-include',inside(shell/'cxx_config.h')]
- if cpp and ('src/cpu' not in src.as_posix() or (args.pc and src.name=='paging.cpp')):extra+=['-fno-freestanding'] # banked TLB needs malloc declarations; implementation stays our owned heap
- if args.pc and src==OUT/'src/cpu/core_normal.cpp':
+ if cpp and ('src/cpu' not in src.as_posix() or (args.pc and src.name in ('paging.cpp','core_dynrec.cpp'))):extra+=['-fno-freestanding'] # banked TLB needs malloc declarations; implementation stays our owned heap
+ if args.pc and src in (OUT/'src/cpu/core_normal.cpp',OUT/'src/cpu/core_dynrec.cpp'):
   extra+=['-'+args.pc_cpu_opt];overrides[str(src.relative_to(ROOT))]=['-'+args.pc_cpu_opt]
  if args.pc and src.parent==OUT/'src/hardware' and src.stem in ('pic','vga_draw','vga_memory'):
   extra+=['-'+args.pc_hardware_opt];overrides[str(src.relative_to(ROOT))]=['-'+args.pc_hardware_opt]
+ if src.name=='pixels_neon.cpp':
+  extra+=['-O2','-mfloat-abi=softfp','-mfpu=neon'];overrides[str(src.relative_to(ROOT))]=['-O2','-mfloat-abi=softfp','-mfpu=neon']
  digest=hashlib.sha256(src.read_bytes()+header_digest+str(flags+extra).encode()).hexdigest();stamp=obj.with_suffix('.sha256')
  if not stamp.exists() or stamp.read_text()!=digest:
   run(['arm-none-eabi-g++' if cpp else 'arm-none-eabi-gcc',*flags,*extra,'-c',inside(src),'-o',inside(obj)])
@@ -70,7 +94,10 @@ for i,src in enumerate(sources):
 libc=ROOT/'.context/amiga/pocketsnes/libc.a'
 assert libc.exists(),'Build PIC libc with scripts/build_pocketsnes_libc.py first'
 elf=OUT/'dosbox.elf'
-run(['arm-none-eabi-ld','-shared','-Bsymbolic','--gc-sections','--exclude-libs=ALL','--no-undefined','-T',inside(BASE/'payload.ld'),'-Map='+inside(OUT/'link.map'),*map(inside,objects),'--start-group',inside(libc),'/usr/lib/gcc/arm-none-eabi/15/thumb/v7-a/nofp/libgcc.a','--end-group','-o',inside(elf)])
+linker=BASE/'payload.ld'
+if args.pc_dynrec:
+ linker=OUT/'payload.ld';linker.write_text((BASE/'payload.ld').read_text().replace('0x1fd0000',hex(0x1f00000-args.pc_jit_mib*0x100000)))
+run(['arm-none-eabi-ld','-shared','-Bsymbolic','--gc-sections','--exclude-libs=ALL','--no-undefined','-T',inside(linker),'-Map='+inside(OUT/'link.map'),*map(inside,objects),'--start-group',inside(libc),'/usr/lib/gcc/arm-none-eabi/15/thumb/v7-a/nofp/libgcc.a','--end-group','-o',inside(elf)])
 spec=importlib.util.spec_from_file_location('pack',BASE/'elf.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 image,rel,entry=m.unpack(elf.read_bytes())
 run(['arm-none-eabi-gcc',*flags,'-c',inside(ROOT/'amiga/arm_debug/zz9000/mapping_probe.S'),'-o',inside(OUT/'mapping.o')])
@@ -79,7 +106,23 @@ mapping,mrel,point=unpack_elf((OUT/'mapping.elf').read_bytes());assert not mrel 
 def array(n,data):return 'static const unsigned char '+n+'[]={'+','.join(map(str,data))+'};\n'
 (OUT/'zz_payload.h').write_text(f'#define ZZ_ENTRY {entry}u\n'+array('zz_image',image)+array('zz_mapping_probe',mapping)+'static const unsigned long zz_relocations[]={'+','.join(map(str,rel))+'};\n')
 (OUT/'host.c').write_text(((pc if args.pc else shell if args.shell else console if args.console else SRC)/'host.c').read_text())
-relative=OUT.relative_to(ROOT);binary=OUT/('ZZDosBox' if args.console else 'ZZDosBox-DOS')
+if args.pc_dynrec:
+ text=(OUT/'host.c').read_text();marker='   printf("CPU_CYCLES applied=%u\\n",receive(PC_CYCLE_APPLIED));'
+ addition='   {unsigned o=PC_VIDEO+0xd40;syncio->pull(shared+o,24,NULL);printf("JIT magic=%08x commits=%u witness=%u dispatches=%u cache_bytes=%u heap_peak=%u\\n",ad_get(shared,o),ad_get(shared,o+4),ad_get(shared,o+8),ad_get(shared,o+12),ad_get(shared,o+16),ad_get(shared,o+20));}\n'
+ assert marker in text;(OUT/'host.c').write_text(text.replace(marker,addition+marker))
+if args.pc_neon:
+ text=(OUT/'host.c').read_text();marker='   printf("CPU_CYCLES applied=%u\\n",receive(PC_CYCLE_APPLIED));'
+ addition='   {unsigned o=PC_VIDEO+0xd60;syncio->pull(shared+o,28,NULL);printf("NEON magic=%08x witness=%u context_equal=%u cpacr=%08x fpexc=%08x mvfr0=%08x mvfr1=%08x\\n",ad_get(shared,o),ad_get(shared,o+4),ad_get(shared,o+8),ad_get(shared,o+12),ad_get(shared,o+16),ad_get(shared,o+20),ad_get(shared,o+24));ok=ok&&ad_get(shared,o)==0x4e454f31&&ad_get(shared,o+4)==42&&ad_get(shared,o+8)==1;}\n'
+ assert marker in text;(OUT/'host.c').write_text(text.replace(marker,addition+marker))
+if args.pc_scanlines:
+ text=(OUT/'host.c').read_text();marker='   printf("CPU_CYCLES applied=%u\\n",receive(PC_CYCLE_APPLIED));'
+ addition='   {unsigned o=PC_VIDEO+0xd80;syncio->pull(shared+o,24,NULL);printf("SCANLINES magic=%08x frames=%u rendered_rows=%u cleared_rows=%u skipped_rows=%u nonce_repairs=%u\\n",ad_get(shared,o),ad_get(shared,o+4),ad_get(shared,o+8),ad_get(shared,o+12),ad_get(shared,o+16),ad_get(shared,o+20));}\n'
+ assert marker in text;(OUT/'host.c').write_text(text.replace(marker,addition+marker))
+if args.pc_doom_clock:
+ text=(OUT/'host.c').read_text();marker='   printf("CPU_CYCLES applied=%u\\n",receive(PC_CYCLE_APPLIED));'
+ addition='   {unsigned o=PC_VIDEO+0xd00;syncio->pull(shared+o,44,NULL);printf("DOOMCLOCK magic=%08x signature=%u rejected=%u first=%u last=%u sim_first=%u sim_last=%u start=%08x%08x end=%08x%08x\\n",ad_get(shared,o),ad_get(shared,o+4),ad_get(shared,o+8),ad_get(shared,o+12),ad_get(shared,o+16),ad_get(shared,o+20),ad_get(shared,o+24),ad_get(shared,o+28),ad_get(shared,o+32),ad_get(shared,o+36),ad_get(shared,o+40));}\n'
+ assert marker in text;(OUT/'host.c').write_text(text.replace(marker,addition+marker))
+relative=OUT.relative_to(ROOT);binary=OUT/('ZZDosBox-Dynrec' if args.pc_dynrec else 'ZZDosBox' if args.console else 'ZZDosBox-DOS')
 launcher=ROOT/'amiga/arm_debug/zz9000/launcher.c'
 if args.console:
  # Local staging only: consume application arguments before generic launcher CLI.
@@ -88,13 +131,13 @@ if args.console:
  launcher=OUT/'launcher.c';launcher.write_text(text)
 version='0.10.1-dev' if args.pc else '0.4.0-dev' if args.shell else '0.3.0-dev' if args.console else '0.2.0-dev'
 subprocess.run([*host_command,'run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-Wall','-Wextra','-Werror',
- *(['-DFF_DIRECT','-DZZ_PC_CD'] if args.pc else []),'-DZZ_HEADLESS_BENCH','-DZZ_RELEASE','-DZZ_BLOCK_SIZE=0x2000000','-DZZ_CONTROL=0x180000','-DMB_ALLOCATION=0x2000000u','-DZZ_APP_NAME="'+binary.name+'"','-DZZ_APP_VERSION="'+version+'"','-DZZ_MIN_STACK=65536','-DMB_MMU','-DMB_DCACHE','-DZZ_HEADLESS_MMU','-DZZ_HEADLESS_ICACHE',
- '-I'+str(relative),'-Iamiga/arm_debug','-Iamiga/arm_debug/zz9000','-Iamiga/mesen_bench','-Iamiga/dosbox/dos','-Iamiga/dosbox/console','-Iamiga/dosbox/shell','-Iamiga/dosbox/pc','-Iamiga/mesen_nes',str(launcher.relative_to(ROOT)),str(relative/'host.c'),*(['amiga/dosbox/console/window.c'] if args.console else []),*(['amiga/dosbox/shell/fs_host.c'] if args.shell else []),*(['amiga/dosbox/pc/display.c','amiga/dosbox/pc/cd_host.c','amiga/dosbox/pc/midi_host.c'] if args.pc else []),'-lamiga','-o',str(relative/binary.name)],cwd=ROOT,check=True)
+ *(['-DDB_SCANLINE_TEST'] if args.pc_scanlines else []),*(['-DDB_PIPELINE_DEFAULT=1'] if args.pc_pipeline else []),*(['-DFF_DIRECT','-DZZ_PC_CD'] if args.pc else []),'-DZZ_HEADLESS_BENCH','-DZZ_RELEASE','-DZZ_BLOCK_SIZE=0x2000000','-DZZ_CONTROL=0x180000','-DMB_ALLOCATION=0x2000000u','-DZZ_APP_NAME="'+binary.name+'"','-DZZ_APP_VERSION="'+version+'"','-DZZ_MIN_STACK=65536','-DMB_MMU','-DMB_DCACHE','-DZZ_HEADLESS_MMU','-DZZ_HEADLESS_ICACHE',
+ '-I'+str(relative),'-Iamiga/dosbox/pc','-Iamiga/arm_debug','-Iamiga/arm_debug/zz9000','-Iamiga/mesen_bench','-Iamiga/dosbox/dos','-Iamiga/dosbox/console','-Iamiga/dosbox/shell','-Iamiga/dosbox/pc','-Iamiga/mesen_nes',str(launcher.relative_to(ROOT)),str(relative/'host.c'),*(['amiga/dosbox/console/window.c'] if args.console else []),*(['amiga/dosbox/shell/fs_host.c'] if args.shell else []),*(['amiga/dosbox/pc/display.c','amiga/dosbox/pc/cd_host.c','amiga/dosbox/pc/midi_host.c'] if args.pc else []),'-lamiga','-o',str(relative/binary.name)],cwd=ROOT,check=True)
 assert binary.read_bytes()[:4]==b'\0\0\x03\xf3'
 record={'upstream':json.loads((BASE/'upstream.json').read_text()),'scope':('PC BIOS/PIT/keyboard/EGA, CD and external CAMD MIDI prototype; no PCM audio; no game-speed claim' if args.pc else 'Upstream DOS shell with live flat C drive; no VGA/audio/PC BIOS' if args.shell else 'Real DOS kernel, external COM/EXE loading and bounded private file drive; no VGA/audio/shell yet'), 'image_bytes':len(image),'relocations':len(rel),'allocation':0x2000000,
- 'outputs':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [elf,binary,OUT/'integration.patch',OUT/'Diagnostic.com',OUT/'dos-integration.patch',OUT/'FileTest.com',OUT/'ExeTest.exe',OUT/'INPUT.TXT',*([OUT/'Echo.com',OUT/'IoTest.com'] if args.console else []),*([OUT/'shell-integration.patch',OUT/'LoadFix.com'] if args.shell else []),*([OUT/'pc-integration.patch',OUT/'EGATEST.COM'] if args.pc else [])]},'libc_sha256':hashlib.sha256(libc.read_bytes()).hexdigest(),
- 'console':args.console,'shell':args.shell,'pc':args.pc,'version':version,
- 'source_hashes':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [*sources,*SRC.glob('*.*'),*console.glob('*.*'),*shell.glob('*.*'),*pc.glob('*.*'),launcher,ROOT/'scripts/build_dosbox.py',ROOT/'scripts/build_dosbox_dos.py',*([ROOT/'scripts/build_dosbox_shell.py',shell/'vendor/upstream.json'] if args.shell else []),*([ROOT/'scripts/build_dosbox_pc.py',ROOT/'amiga/dosbox/launcher/session.h'] if args.pc else []),Path(__file__),ROOT/'amiga/arm_debug/zz9000/launcher.c',ROOT/'amiga/arm_debug/zz9000/layout.h',ROOT/'amiga/arm_debug/zz9000/mapping_probe.S',OUT/'host.c',OUT/'mmu_plan.h'] if p.is_file()},
+ 'outputs':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [elf,binary,OUT/'integration.patch',OUT/'Diagnostic.com',OUT/'dos-integration.patch',OUT/'FileTest.com',OUT/'ExeTest.exe',OUT/'INPUT.TXT',*([OUT/'Echo.com',OUT/'IoTest.com'] if args.console else []),*([OUT/'shell-integration.patch',OUT/'LoadFix.com'] if args.shell else []),*([OUT/'pc-integration.patch',OUT/'EGATEST.COM'] if args.pc else []),*([OUT/'dynrec-integration.patch'] if args.pc_dynrec else [])]},'libc_sha256':hashlib.sha256(libc.read_bytes()).hexdigest(),
+ 'doom_clock':args.pc_doom_clock,'dynrec':args.pc_dynrec,'jit_mib':args.pc_jit_mib,'neon':args.pc_neon,'pipeline_default':args.pc_pipeline,'scanline_test':args.pc_scanlines,'console':args.console,'shell':args.shell,'pc':args.pc,'version':version,
+ 'source_hashes':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [*sources,*SRC.glob('*.*'),*console.glob('*.*'),*shell.glob('*.*'),*pc.glob('*.*'),launcher,ROOT/'scripts/build_dosbox.py',ROOT/'scripts/build_dosbox_dos.py',*([ROOT/'scripts/build_dosbox_shell.py',shell/'vendor/upstream.json'] if args.shell else []),*([ROOT/'scripts/build_dosbox_pc.py',ROOT/'amiga/dosbox/launcher/session.h'] if args.pc else []),*([ROOT/'scripts/prepare_dosbox_dynrec.py'] if args.pc_dynrec else []),Path(__file__),ROOT/'amiga/arm_debug/zz9000/launcher.c',ROOT/'amiga/arm_debug/zz9000/layout.h',ROOT/'amiga/arm_debug/zz9000/mapping_probe.S',OUT/'host.c',OUT/'mmu_plan.h'] if p.is_file()},
  'arm_flags':flags,'arm_overrides':overrides,'compiler':subprocess.check_output([*cmd,'arm-none-eabi-g++','--version'],text=True)}
 (OUT/'build.json').write_text(json.dumps(record,indent=2)+'\n')
 print('Built',binary,binary.stat().st_size,'bytes; ARM image',len(image),'relocations',len(rel))

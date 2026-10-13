@@ -29,6 +29,10 @@ int main(void) {
                 assert(((attr>>6)&7)==4 && (attr&12)==4 && !(attr&1024));
             } else {assert(((attr>>6)&7)==1 && !(attr&12) && (attr&1024));}
             assert(((attr>>4)&3)==1 && !(attr&512));
+            #ifdef DB_DYNREC
+            if(db_jit_page(base,page)){assert(!(attr&1));assert(full&&!public_page&&!table_page);}
+            else
+#endif
             if(page>=base+MB_TABLE_BEGIN)assert(attr&1);
         }
         assert(lookup(MB_TIMER_PAGE,pool)==(MB_TIMER_PAGE|MB_PAGE_TIMER));

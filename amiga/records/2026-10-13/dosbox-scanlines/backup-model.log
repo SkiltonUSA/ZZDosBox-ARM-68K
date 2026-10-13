@@ -1,0 +1,6 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals scan-transition unwound 0
+PASS scanline masks, three preserved slots, nonce repair and row guards scan-transition frames checked 18
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry scan-transition
+PASS ARM shell 0x12000040 scan-transition requests 15 read 32113 written 0 rc 0

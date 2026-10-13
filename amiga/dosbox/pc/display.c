@@ -30,10 +30,17 @@ static ULONG direct_format,direct_native_format,active,complete,frames;
 /* Host-observed grant-to-completion latency includes polling delay. */
 static ULONG copy_start,copy_us,copy_max;
 static struct pc_flow flow;
-/* Opt-in: current game workloads did not produce frames early enough to overlap. */
-static int pipeline=0,console_shown,fullscreen=1;
+/* Default stays serial unless the separately tested build opts in. */
+#ifndef DB_PIPELINE_DEFAULT
+#define DB_PIPELINE_DEFAULT 0
+#endif
+static int pipeline=DB_PIPELINE_DEFAULT,console_shown,fullscreen=1;
 static UBYTE *locked_memory;
 static ULONG overlaps,releases;
+#ifdef DB_SCANLINE_TEST
+static unsigned scan_mode,scan_epoch=1;
+void pc_display_scanlines(unsigned mode){scan_mode=mode;scan_epoch++;}
+#endif
 static UBYTE *direct_readback;
 static ULONG us(void){struct timeval t;GetSysTime(&t);return t.tv_secs*1000000u+t.tv_micro;}
 #include "fullscreen.h"
@@ -103,6 +110,9 @@ int pc_display_service(void){
  nonce=ad_get(shared,ZZ_CONTROL)^seq^0x973b102du;
  ad_put(target,0,nonce);ad_put(target,span-4,nonce^0x31415926u);syncio->push(target,4,NULL);syncio->push(target+span-4,4,NULL);
  publish(PC_VIDEO+44,640);publish(PC_VIDEO+48,480);publish(PC_VIDEO+20,addr);publish(PC_VIDEO+24,full_pitch);publish(PC_VIDEO+28,direct_format);publish(PC_VIDEO+32,nonce);
+#ifdef DB_SCANLINE_TEST
+ publish(PC_VIDEO+52,scan_mode);publish(PC_VIDEO+56,scan_epoch);
+#endif
  copy_start=us();publish(PC_VIDEO+16,seq);active=seq;return 1;
 }
 extern void pc_console_cleanup(void);

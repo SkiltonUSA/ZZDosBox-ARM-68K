@@ -1,0 +1,656 @@
+--- a/include/paging.h
++++ b/include/paging.h
+@@ -29,7 +29,7 @@
+ 
+ // disable this to reduce the size of the TLB
+ // NOTE: does not work with the dynamic core (dynrec is fine)
+-#define USE_FULL_TLB
++/* USE_FULL_TLB disabled for the bounded XACP allocation. */
+ 
+ class PageDirectory;
+ 
+--- a/include/paging.h
++++ b/include/paging.h
+@@ -39,9 +39,9 @@
+ #if defined(USE_FULL_TLB)
+ #define TLB_SIZE		(1024*1024)
+ #else
+-#define TLB_SIZE		65536	// This must a power of 2 and greater then LINK_START
+-#define BANK_SHIFT		28
+-#define BANK_MASK		0xffff // always the same as TLB_SIZE-1?
++#define TLB_SIZE		4096	// This must a power of 2 and greater then LINK_START
++#define BANK_SHIFT		24
++#define BANK_MASK		0xfff // always the same as TLB_SIZE-1?
+ #define TLB_BANKS		((1024*1024/TLB_SIZE)-1)
+ #endif
+ 
+--- a/src/cpu/cpu.cpp
++++ b/src/cpu/cpu.cpp
+@@ -552,6 +552,9 @@
+ }
+ 
+ void CPU_Exception(Bitu which,Bitu error ) {
++#ifdef DB_NATIVE
++ extern void db_native_exception(Bitu,Bitu);db_native_exception(which,error);
++#endif
+ //	LOG_MSG("Exception %d error %x",which,error);
+ 	cpu.exception.error=error;
+ 	CPU_Interrupt(which,CPU_INT_EXCEPTION | ((which>=8) ? CPU_INT_HAS_ERROR : 0),reg_eip);
+--- a/include/paging.h
++++ b/include/paging.h
+@@ -224,15 +224,11 @@
+ 
+ void PAGING_InitTLBBank(tlb_entry **bank);
+ 
++tlb_entry *PAGING_GetHighTLBEntry(PhysPt address);
+ static INLINE tlb_entry *get_tlb_entry(PhysPt address) {
+-	Bitu index=(address>>12);
+-	if (TLB_BANKS && (index >= TLB_SIZE)) {
+-		Bitu bank=(address>>BANK_SHIFT) - 1;
+-		if (!paging.tlbh_banks[bank])
+-			PAGING_InitTLBBank(&paging.tlbh_banks[bank]);
+-		return &paging.tlbh_banks[bank][index & BANK_MASK];
+-	}
+-	return &paging.tlbh[index];
++ Bitu index=address>>12;
++ if(index>=TLB_SIZE)return PAGING_GetHighTLBEntry(address);
++ return &paging.tlbh[index];
+ }
+ 
+ static INLINE HostPt get_tlb_read(PhysPt address) {
+--- a/src/cpu/paging.cpp
++++ b/src/cpu/paging.cpp
+@@ -871,3 +871,13 @@
+ 
+ 
+ void zz_dosbox_paging_init(){paging.enabled=false; PAGING_InitTLB(); for(Bitu i=0;i<LINK_START;i++)paging.firstmb[i]=i;pf_queue.used=0;}
++
++#if !defined(USE_FULL_TLB)
++/* Keep rare high-bank allocation out of every interpreter memory access. */
++__attribute__((noinline)) tlb_entry *PAGING_GetHighTLBEntry(PhysPt address) {
++ Bitu bank=(address>>BANK_SHIFT)-1;
++ if(bank>=TLB_BANKS)E_Exit("Invalid high TLB bank");
++ if(!paging.tlbh_banks[bank])PAGING_InitTLBBank(&paging.tlbh_banks[bank]);
++ return &paging.tlbh_banks[bank][(address>>12)&BANK_MASK];
++}
++#endif
+--- a/src/hardware/iohandler.cpp
++++ b/src/hardware/iohandler.cpp
+@@ -525,5 +525,5 @@
+ 
+ void IO_Init(Section * sect) {
+ 	test = new IO(sect);
+-	sect->AddDestroyFunction(&IO_Destroy);
+-}
++	if(sect)sect->AddDestroyFunction(&IO_Destroy);
++}
+--- a/src/hardware/pic.cpp
++++ b/src/hardware/pic.cpp
+@@ -621,5 +621,5 @@
+ 
+ void PIC_Init(Section* sec) {
+ 	test = new PIC_8259A(sec);
+-	sec->AddDestroyFunction(&PIC_Destroy);
+-}
++	if(sec)sec->AddDestroyFunction(&PIC_Destroy);
++}
+--- a/src/hardware/timer.cpp
++++ b/src/hardware/timer.cpp
+@@ -469,5 +469,5 @@
+ }
+ void TIMER_Init(Section* sec) {
+ 	test = new TIMER(sec);
+-	sec->AddDestroyFunction(&TIMER_Destroy);
+-}
++	if(sec)sec->AddDestroyFunction(&TIMER_Destroy);
++}
+--- a/src/hardware/cmos.cpp
++++ b/src/hardware/cmos.cpp
+@@ -326,5 +326,5 @@
+ 
+ void CMOS_Init(Section* sec) {
+ 	test = new CMOS(sec);
+-	sec->AddDestroyFunction(&CMOS_Destroy,true);
+-}
++	if(sec)sec->AddDestroyFunction(&CMOS_Destroy,true);
++}
+--- a/src/hardware/mpu401.cpp
++++ b/src/hardware/mpu401.cpp
+@@ -681,5 +681,5 @@
+ 
+ void MPU401_Init(Section* sec) {
+ 	test = new MPU401(sec);
+-	sec->AddDestroyFunction(&MPU401_Destroy,true);
+-}
++	if(sec)sec->AddDestroyFunction(&MPU401_Destroy,true);
++}
+--- a/src/hardware/vga_memory.cpp
++++ b/src/hardware/vga_memory.cpp
+@@ -977,7 +977,7 @@
+ 	vga.svga.bank_read_full = vga.svga.bank_write_full = 0;
+ 	vga.svga.bank_size = 0x10000; /* most common bank size is 64K */
+ 
+-	sec->AddDestroyFunction(&VGA_Memory_ShutDown);
++	if(sec)sec->AddDestroyFunction(&VGA_Memory_ShutDown);
+ 
+ 	if (machine==MCH_PCJR) {
+ 		/* PCJr does not have dedicated graphics memory but uses
+--- a/src/ints/bios.cpp
++++ b/src/ints/bios.cpp
+@@ -1430,5 +1430,5 @@
+ 
+ void BIOS_Init(Section* sec) {
+ 	test = new BIOS(sec);
+-	sec->AddDestroyFunction(&BIOS_Destroy,false);
+-}
++	if(sec)sec->AddDestroyFunction(&BIOS_Destroy,false);
++}
+--- a/src/hardware/mpu401.cpp
++++ b/src/hardware/mpu401.cpp
+@@ -1,3 +1,4 @@
++extern unsigned db_midi_mode;
+ /*
+  *  Copyright (C) 2002-2021  The DOSBox Team
+  *
+@@ -640,7 +641,7 @@
+ 	MPU401(Section* configuration):Module_base(configuration){
+ 		installed = false;
+ 		Section_prop * section=static_cast<Section_prop *>(configuration);
+-		const char* s_mpu = section->Get_string("mpu401");
++		const char* s_mpu = db_midi_mode==1?"intelligent":db_midi_mode==2?"uart":"none";
+ 		if(strcasecmp(s_mpu,"none") == 0) return;
+ 		if(strcasecmp(s_mpu,"off") == 0) return;
+ 		if(strcasecmp(s_mpu,"false") == 0) return;
+@@ -668,7 +669,7 @@
+ 	~MPU401(){
+ 		if(!installed) return;
+ 		Section_prop * section=static_cast<Section_prop *>(m_configuration);
+-		if(strcasecmp(section->Get_string("mpu401"),"intelligent")) return;
++		if(!mpu.intelligent)return;
+ 		PIC_SetIRQMask(mpu.irq,true);
+ 		}
+ };
+@@ -676,7 +677,7 @@
+ static MPU401* test;
+ 
+ void MPU401_Destroy(Section* /*sec*/){
+-	delete test;
++	PIC_RemoveEvents(MPU401_Event);PIC_RemoveEvents(MPU401_EOIHandler);PIC_RemoveEvents(MPU401_ResetDone);delete test;test=nullptr;
+ }
+ 
+ void MPU401_Init(Section* sec) {
+--- a/src/ints/mouse.cpp
++++ b/src/ints/mouse.cpp
+@@ -1119,7 +1119,7 @@
+ 	// Callback for mouse interrupt 0x33
+ 	call_int33=CALLBACK_Allocate();
+ //	RealPt i33loc=RealMake(CB_SEG+1,(call_int33*CB_SIZE)-0x10);
+-	RealPt i33loc=RealMake(DOS_GetMemory(0x1)-1,0x10);
++	RealPt i33loc=RealMake(CB_SEG+1,CB_SOFFSET+(call_int33*CB_SIZE)-0x10);
+ 	CALLBACK_Setup(call_int33,&INT33_Handler,CB_MOUSE,Real2Phys(i33loc),"Mouse");
+ 	// Wasteland needs low(seg(int33))!=0 and low(ofs(int33))!=0
+ 	real_writed(0,0x33<<2,i33loc);
+@@ -1195,3 +1195,5 @@
+ 	Mouse_Reset();
+ 	Mouse_SetSensitivity(50,50,50);
+ }
++
++extern "C" bool db_mouse_relative(){return useps2callback;}
+--- a/src/hardware/iohandler.cpp
++++ b/src/hardware/iohandler.cpp
+@@ -22,7 +22,7 @@
+ #include "inout.h"
+ #include "setup.h"
+ #include "cpu.h"
+-#include "../src/cpu/lazyflags.h"
++#include "../cpu/lazyflags.h"
+ #include "callback.h"
+ 
+ //#define ENABLE_PORTLOG
+--- a/src/hardware/vga.cpp
++++ b/src/hardware/vga.cpp
+@@ -240,24 +240,4 @@
+ 	}
+ }
+ 
+-void SVGA_Setup_Driver(void) {
+-	memset(&svga, 0, sizeof(SVGA_Driver));
+-
+-	switch(svgaCard) {
+-	case SVGA_S3Trio:
+-		SVGA_Setup_S3Trio();
+-		break;
+-	case SVGA_TsengET4K:
+-		SVGA_Setup_TsengET4K();
+-		break;
+-	case SVGA_TsengET3K:
+-		SVGA_Setup_TsengET3K();
+-		break;
+-	case SVGA_ParadisePVGA1A:
+-		SVGA_Setup_ParadisePVGA1A();
+-		break;
+-	default:
+-		vga.vmemsize = vga.vmemwrap = 256*1024;
+-		break;
+-	}
+-}
++void SVGA_Setup_Driver(void) { memset(&svga,0,sizeof(svga));vga.vmemsize=vga.vmemwrap=256*1024; }
+--- a/src/hardware/vga_memory.cpp
++++ b/src/hardware/vga_memory.cpp
+@@ -985,3 +985,5 @@
+ 		//TODO map?	
+ 	} 
+ }
++
++void zz_vga_memory_close(){VGA_Memory_ShutDown(nullptr);}
+--- a/src/ints/bios_keyboard.cpp
++++ b/src/ints/bios_keyboard.cpp
+@@ -25,7 +25,7 @@
+ #include "regs.h"
+ #include "inout.h"
+ #include "dos_inc.h"
+-#include "SDL.h"
++#define SDL_VERSION_ATLEAST(a,b,c) 0
+ 
+ /* SDL by default treats numlock and scrolllock different from all other keys.
+  * In recent versions this can disabled by a environment variable which we set in sdlmain.cpp
+--- a/src/ints/bios.cpp
++++ b/src/ints/bios.cpp
+@@ -30,7 +30,7 @@
+ #include "joystick.h"
+ #include "mouse.h"
+ #include "setup.h"
+-#include "serialport.h"
++#include "dos_inc.h"
+ #ifdef __LIBRETRO__
+ #include "libretro.h"
+ #endif
+@@ -525,45 +525,7 @@
+ #define DOSBOX_CLOCKSYNC 0
+ #endif
+ 
+-static void BIOS_HostTimeSync() {
+-	Bit32u milli = 0;
+-#if defined(DB_HAVE_CLOCK_GETTIME) && ! defined(WIN32)
+-	struct timespec tp;
+-	clock_gettime(CLOCK_REALTIME,&tp);
+-	
+-	struct tm *loctime;
+-	loctime = localtime(&tp.tv_sec);
+-	milli = (Bit32u) (tp.tv_nsec / 1000000);
+-#else
+-	/* Setup time and date */
+-	struct timeb timebuffer;
+-	ftime(&timebuffer);
+-	
+-	struct tm *loctime;
+-	loctime = localtime (&timebuffer.time);
+-	milli = (Bit32u) timebuffer.millitm;
+-#endif
+-	/*
+-	loctime->tm_hour = 23;
+-	loctime->tm_min = 59;
+-	loctime->tm_sec = 45;
+-	loctime->tm_mday = 28;
+-	loctime->tm_mon = 2-1;
+-	loctime->tm_year = 2007 - 1900;
+-	*/
+-
+-	dos.date.day=(Bit8u)loctime->tm_mday;
+-	dos.date.month=(Bit8u)loctime->tm_mon+1;
+-	dos.date.year=(Bit16u)loctime->tm_year+1900;
+-
+-	Bit32u ticks=(Bit32u)(((double)(
+-		loctime->tm_hour*3600*1000+
+-		loctime->tm_min*60*1000+
+-		loctime->tm_sec*1000+
+-		milli))*(((double)PIT_TICK_RATE/65536.0)/1000.0));
+-	mem_writed(BIOS_TIMER,ticks);
+-}
+-
++static void BIOS_HostTimeSync(){dos.date.day=1;dos.date.month=1;dos.date.year=1980;mem_writed(BIOS_TIMER,0);}
+ static Bitu INT8_Handler(void) {
+ 	/* Increase the bios tick counter */
+ 	Bit32u value = mem_readd(BIOS_TIMER) + 1;
+--- a/src/ints/bios_disk.cpp
++++ b/src/ints/bios_disk.cpp
+@@ -24,7 +24,8 @@
+ #include "regs.h"
+ #include "mem.h"
+ #include "dos_inc.h" /* for Drives[] */
+-#include "../dos/drives.h"
++#include "drive.h"
++extern Bit8u db_image_sector(bool,Bit32u,void *,bool);
+ #include "mapper.h"
+ 
+ 
+@@ -137,68 +138,20 @@
+ 	return sreq;
+ }
+ 
+-void swapInNextDisk(bool pressed) {
+-	if (!pressed)
+-		return;
+-	DriveManager::CycleAllDisks();
+-	/* Hack/feature: rescan all disks as well */
+-	LOG_MSG("Diskcaching reset for normal mounted drives.");
+-	for(Bitu i=0;i<DOS_DRIVES;i++) {
+-		if (Drives[i]) Drives[i]->EmptyCache();
+-	}
+-	swapPosition++;
+-	if(diskSwap[swapPosition] == NULL) swapPosition = 0;
+-	swapInDisks();
+-	swapping_requested = true;
+-}
+-
+-
+ Bit8u imageDisk::Read_Sector(Bit32u head,Bit32u cylinder,Bit32u sector,void * data) {
+ 	Bit32u sectnum;
+-
++ if(head>=heads||cylinder>=cylinders||!sector)return 4;
+ 	sectnum = ( (cylinder * heads + head) * sectors ) + sector - 1L;
+ 
+ 	return Read_AbsoluteSector(sectnum, data);
+ }
+ 
+-Bit8u imageDisk::Read_AbsoluteSector(Bit32u sectnum, void * data) {
+-	Bit32u bytenum;
+-
+-	bytenum = sectnum * sector_size;
+-
+-	if (last_action==WRITE || bytenum!=current_fpos) fseek(diskimg,bytenum,SEEK_SET);
+-	size_t ret=fread(data, 1, sector_size, diskimg);
+-	current_fpos=bytenum+ret;
+-	last_action=READ;
+-
+-	return 0x00;
+-}
+-
+-Bit8u imageDisk::Write_Sector(Bit32u head,Bit32u cylinder,Bit32u sector,void * data) {
+-	Bit32u sectnum;
+-
+-	sectnum = ( (cylinder * heads + head) * sectors ) + sector - 1L;
+-
+-	return Write_AbsoluteSector(sectnum, data);
+-}
+-
+-
+-Bit8u imageDisk::Write_AbsoluteSector(Bit32u sectnum, void *data) {
+-	Bit32u bytenum;
+-
+-	bytenum = sectnum * sector_size;
+-
+-	//LOG_MSG("Writing sectors to %ld at bytenum %d", sectnum, bytenum);
+-
+-	if (last_action==READ || bytenum!=current_fpos) fseek(diskimg,bytenum,SEEK_SET);
+-	size_t ret=fwrite(data, 1, sector_size, diskimg);
+-	current_fpos=bytenum+ret;
+-	last_action=WRITE;
+-
+-	return ((ret>0)?0x00:0x05);
+-
+-}
+-
++Bit8u imageDisk::Read_AbsoluteSector(Bit32u sector,void *data){return db_image_sector(hardDrive,sector,data,false);}
++Bit8u imageDisk::Write_Sector(Bit32u head,Bit32u cylinder,Bit32u sector,void*data){
++ if(head>=heads||cylinder>=cylinders||!sector)return 4;
++ return Write_AbsoluteSector((cylinder*heads+head)*sectors+sector-1,data);
++}
++Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_sector(hardDrive,sector,data,true);}
+ imageDisk::imageDisk(FILE *imgFile, const char *imgName, Bit32u imgSizeK, bool isHardDisk) {
+ 	heads = 0;
+ 	cylinders = 0;
+@@ -207,7 +160,7 @@
+ 	current_fpos = 0;
+ 	last_action = NONE;
+ 	diskimg = imgFile;
+-	fseek(diskimg,0,SEEK_SET);
++	/* Read-only image is preloaded inside the owned ARM allocation. */
+ 	memset(diskname,0,512);
+ 	safe_strncpy(diskname, imgName, sizeof(diskname));
+ 	active = false;
+@@ -390,6 +343,7 @@
+ 
+ 		segat = SegValue(es);
+ 		bufptr = reg_bx;
++		if(!reg_al||!(reg_cl&63)||(reg_cl&63)>imageDiskList[drivenum]->sectors){reg_ah=4;CALLBACK_SCF(true);return CBRET_NONE;}
+ 		for(i=0;i<reg_al;i++) {
+ 			last_status = imageDiskList[drivenum]->Read_Sector((Bit32u)reg_dh, (Bit32u)(reg_ch | ((reg_cl & 0xc0)<< 2)), (Bit32u)((reg_cl & 63)+i), sectbuf);
+ 			if((last_status != 0x00) || (killRead)) {
+@@ -417,6 +371,7 @@
+ 
+ 
+ 		bufptr = reg_bx;
++		if(!reg_al||!(reg_cl&63)||(reg_cl&63)>imageDiskList[drivenum]->sectors){reg_ah=4;CALLBACK_SCF(true);return CBRET_NONE;}
+ 		for(i=0;i<reg_al;i++) {
+ 			for(t=0;t<imageDiskList[drivenum]->getSectSize();t++) {
+ 				sectbuf[t] = real_readb(SegValue(es),bufptr);
+@@ -425,7 +380,7 @@
+ 
+ 			last_status = imageDiskList[drivenum]->Write_Sector((Bit32u)reg_dh, (Bit32u)(reg_ch | ((reg_cl & 0xc0) << 2)), (Bit32u)((reg_cl & 63) + i), &sectbuf[0]);
+ 			if(last_status != 0x00) {
+-            CALLBACK_SCF(true);
++            reg_ah=last_status;CALLBACK_SCF(true);
+ 				return CBRET_NONE;
+ 			}
+         }
+@@ -447,6 +402,7 @@
+ 		/*
+ 		segat = SegValue(es);
+ 		bufptr = reg_bx;
++		if(!reg_al||!(reg_cl&63)||(reg_cl&63)>imageDiskList[drivenum]->sectors){reg_ah=4;CALLBACK_SCF(true);return CBRET_NONE;}
+ 		for(i=0;i<reg_al;i++) {
+ 			last_status = imageDiskList[drivenum]->Read_Sector((Bit32u)reg_dh, (Bit32u)(reg_ch | ((reg_cl & 0xc0)<< 2)), (Bit32u)((reg_cl & 63)+i), sectbuf);
+ 			if(last_status != 0x00) {
+@@ -466,15 +422,7 @@
+ 		CALLBACK_SCF(false);
+           
+ 		break;
+-	case 0x05: /* Format track */
+-		if (driveInactive(drivenum)) {
+-			reg_ah = 0xff;
+-			CALLBACK_SCF(true);
+-			return CBRET_NONE;
+-		}
+-		reg_ah = 0x00;
+-		CALLBACK_SCF(false);
+-		break;
++	case 0x05: reg_ah=3;CALLBACK_SCF(true);break;
+ 	case 0x08: /* Get drive parameters */
+ 		if(driveInactive(drivenum)) {
+ 			last_status = 0x07;
+@@ -597,9 +545,9 @@
+ 	imgDTASeg = 0;
+ 
+ /* Setup the Bios Area */
+-	mem_writeb(BIOS_HARDDISK_COUNT,2);
+-
+-	MAPPER_AddHandler(swapInNextDisk,MK_f4,MMOD1,"swapimg","Swap Image");
++	mem_writeb(BIOS_HARDDISK_COUNT,0);
++
++	
+ 	killRead = false;
+ 	swapping_requested = false;
+ }
+--- a/shell_messages.cpp
++++ b/shell_messages.cpp
+@@ -70,39 +70,12 @@
+ 	MSG_Add("SHELL_CMD_SUBST_NO_REMOVE","Unable to remove, drive not in use.\n");
+ 	MSG_Add("SHELL_CMD_SUBST_FAILURE","SUBST failed. You either made an error in your commandline or the target drive is already used.\nIt's only possible to use SUBST on Local drives");
+ 
+-	MSG_Add("SHELL_STARTUP_BEGIN",
+-		"\033[44;1m\xC9\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
+-		"\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
+-		"\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xBB\n"
+-		"\xBA \033[32mWelcome to DOSBox\033[37m                                                  \xBA\n"
+-		"\xBA                                                                    \xBA\n"
+-//		"\xBA DOSBox runs real and protected mode games.                         \xBA\n"
+-		"\xBA For a short introduction for new users type: \033[33mINTRO\033[37m                 \xBA\n"
+-		"\xBA For supported shell commands type: \033[33mHELP\033[37m                            \xBA\n"
+-		"\xBA                                                                    \xBA\n"
+-		"\xBA To adjust options use the frontend options menu.                   \xBA\n"
+-		"\xBA                                                                    \xBA\n"
+-	);
+-	MSG_Add("SHELL_STARTUP_CGA","\xBA DOSBox supports Composite CGA mode.                                \xBA\n"
+-	        "\xBA Use \033[31moptions menu\033[37m to set composite output and CGA model            .\xBA\n"
+-	        "\xBA                                                                    \xBA\n"
+-	);
+-	MSG_Add("SHELL_STARTUP_HERC","\xBA Use \033[31moptions menu\033[37m to select hercules palette.                       \xBA\n"
+-	        "\xBA                                                                    \xBA\n"
+-	);
+-	MSG_Add("SHELL_STARTUP_DEBUG",
+-	        "\xBA Press \033[31malt-Pause\033[37m to enter the debugger or start the exe with \033[33mDEBUG\033[37m. \xBA\n"
+-	        "\xBA                                                                    \xBA\n"
+-	);
+-	MSG_Add("SHELL_STARTUP_END",
+-	        "\xBA \033[32mHAVE FUN!\033[37m                                                          \xBA\n"
+-	        "\xBA \033[32mThe DOSBox Team \033[33mhttp://www.dosbox.com\033[37m                              \xBA\n"
+-	        "\xC8\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
+-	        "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD"
+-	        "\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xCD\xBC\033[0m\n"
+-	        //"\n" //Breaks the startup message if you type a mount and a drive change.
+-	);
+-	MSG_Add("SHELL_STARTUP_SUB","\n\n\033[32;1mZZDosBox %s Command Shell\033[0m\n\n");
++	MSG_Add("SHELL_STARTUP_BEGIN","DosBox ZZ9000 project                         0.10.1-dev\nAmigaOS - 32-bit | DOSBox / libretro\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\n\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\nF10: close session             HELP: DOS commands\n\n");
++	MSG_Add("SHELL_STARTUP_CGA","");
++	MSG_Add("SHELL_STARTUP_HERC","");
++	MSG_Add("SHELL_STARTUP_DEBUG","");
++	MSG_Add("SHELL_STARTUP_END","");
++	MSG_Add("SHELL_STARTUP_SUB","DosBox ZZ9000 project                         0.10.1-dev\nAmigaOS - 32-bit | DOSBox / libretro\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\n\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\nF10: close session             HELP: DOS commands\n\n");
+ 	MSG_Add("SHELL_CMD_CHDIR_HELP","Displays/changes the current directory.\n");
+ 	MSG_Add("SHELL_CMD_CHDIR_HELP_LONG","CHDIR [drive:][path]\n"
+ 	        "CHDIR [..]\n"
+--- a/src/dos/dos_mscdex.cpp
++++ b/src/dos/dos_mscdex.cpp
+@@ -28,7 +28,7 @@
+ #include "bios_disk.h"
+ #include "cpu.h"
+ 
+-#include "cdrom.h"
++#include "cd_interface.h"
+ 
+ #define MSCDEX_LOG LOG(LOG_MISC,LOG_ERROR)
+ //#define MSCDEX_LOG
+--- a/src/dos/drive_iso.cpp
++++ b/src/dos/drive_iso.cpp
+@@ -19,11 +19,11 @@
+ 
+ #include <cctype>
+ #include <cstring>
+-#include "cdrom.h"
++#include "cd_interface.h"
+ #include "dosbox.h"
+ #include "dos_system.h"
+ #include "support.h"
+-#include "drives.h"
++#include "cd_iso.h"
+ 
+ #define FLAGS1	((iso) ? de.fileFlags : de.timeZone)
+ #define FLAGS2	((iso) ? de->fileFlags : de->timeZone)
+--- a/src/dos/drive_iso.cpp
++++ b/src/dos/drive_iso.cpp
+@@ -1,3 +1,4 @@
++extern "C" char *strtok_r(char *,const char *,char **);
+ /*
+  *  Copyright (C) 2002-2021  The DOSBox Team
+  *
+@@ -536,7 +537,8 @@
+ 	strreplace(isoPath, '\\', '/');
+ 	
+ 	// iterate over all path elements (name), and search each of them in the current de
+-	for(char* name = strtok(isoPath, "/"); NULL != name; name = strtok(NULL, "/")) {
++	char *token_context=nullptr;
++	for(char* name = strtok_r(isoPath, "/", &token_context); NULL != name; name = strtok_r(NULL, "/", &token_context)) {
+ 
+ 		bool found = false;	
+ 		// current entry must be a directory, abort otherwise
+--- a/src/dos/dos_mscdex.cpp
++++ b/src/dos/dos_mscdex.cpp
+@@ -252,64 +252,7 @@
+ 	// Set return type to ok
+ 	int result = 0;
+ 	// Get Mounttype and init needed cdrom interface
+-	switch (CDROM_GetMountType(physicalPath,forceCD)) {
+-	case 0x00: {	
+-		LOG(LOG_MISC,LOG_NORMAL)("MSCDEX: Mounting physical cdrom: %s"	,physicalPath);
+-#if defined (WIN32)
+-		// Check OS
+-		OSVERSIONINFO osi;
+-		osi.dwOSVersionInfoSize = sizeof(osi);
+-		GetVersionEx(&osi);
+-		if ((osi.dwPlatformId==VER_PLATFORM_WIN32_NT) && (osi.dwMajorVersion>4)) {
+-			// only WIN NT/200/XP
+-			if (useCdromInterface==CDROM_USE_IOCTL_DIO) {
+-				cdrom[numDrives] = new CDROM_Interface_Ioctl(CDROM_Interface_Ioctl::CDIOCTL_CDA_DIO);
+-				LOG(LOG_MISC,LOG_NORMAL)("MSCDEX: IOCTL Interface.");
+-				break;
+-			}
+-			if (useCdromInterface==CDROM_USE_IOCTL_DX) {
+-				cdrom[numDrives] = new CDROM_Interface_Ioctl(CDROM_Interface_Ioctl::CDIOCTL_CDA_DX);
+-				LOG(LOG_MISC,LOG_NORMAL)("MSCDEX: IOCTL Interface (digital audio extraction).");
+-				break;
+-			}
+-			if (useCdromInterface==CDROM_USE_IOCTL_MCI) {
+-				cdrom[numDrives] = new CDROM_Interface_Ioctl(CDROM_Interface_Ioctl::CDIOCTL_CDA_MCI);
+-				LOG(LOG_MISC,LOG_NORMAL)("MSCDEX: IOCTL Interface (media control interface).");
+-				break;
+-			}
+-		}
+-		if (useCdromInterface==CDROM_USE_ASPI) {
+-			// all Wins - ASPI
+-			cdrom[numDrives] = new CDROM_Interface_Aspi();
+-			LOG(LOG_MISC,LOG_NORMAL)("MSCDEX: ASPI Interface.");
+-			break;
+-		}
+-#endif
+-#ifndef WITH_FAKE_SDL
+-#if defined (LINUX) || defined(OS2)
+-		// Always use IOCTL in Linux or OS/2
+-		cdrom[numDrives] = new CDROM_Interface_Ioctl();
+-		LOG(LOG_MISC,LOG_NORMAL)("MSCDEX: IOCTL Interface.");
+-#else
+-		// Default case windows and other oses
+-		cdrom[numDrives] = new CDROM_Interface_SDL();
+-		LOG(LOG_MISC,LOG_NORMAL)("MSCDEX: SDL Interface.");
+-#endif
+-#endif // __LIBRETRO__
+-		} break;
+-	case 0x01:	// iso cdrom interface	
+-		LOG(LOG_MISC,LOG_NORMAL)("MSCDEX: Mounting iso file as cdrom: %s", physicalPath);
+-		cdrom[numDrives] = new CDROM_Interface_Image((Bit8u)numDrives);
+-		break;
+-	case 0x02:	// fake cdrom interface (directories)
+-		cdrom[numDrives] = new CDROM_Interface_Fake;
+-		LOG(LOG_MISC,LOG_NORMAL)("MSCDEX: Mounting directory as cdrom: %s",physicalPath);
+-		LOG(LOG_MISC,LOG_NORMAL)("MSCDEX: You wont have full MSCDEX support !");
+-		result = 5;
+-		break;
+-	default	:	// weird result
+-		return 6;
+-	};
++	cdrom[numDrives] = new CDROM_Interface_Image((Bit8u)numDrives);
+ 
+ 	if (!cdrom[numDrives]->SetDevice(physicalPath,forceCD)) {
+ //		delete cdrom[numDrives] ; mount seems to delete it
+@@ -817,9 +760,9 @@
+ 
+ 	Bit32u status = ((trayOpen?1:0) << 0)					|	// Drive is open ?
+ 					((dinfo[subUnit].locked?1:0) << 1)		|	// Drive is locked ?
+-					(1<<2)									|	// raw + cooked sectors
+-					(1<<4)									|	// Can read sudio
+-					(1<<8)									|	// Can control audio
++					(0<<2)									|	// raw + cooked sectors
++					(0<<4)									|	// Can read sudio
++					(0<<8)									|	// Can control audio
+ 					(1<<9)									|	// Red book & HSG
+ 					((dinfo[subUnit].audioPlay?1:0) << 10)	|	// Audio is playing ?
+ 					((media?0:1) << 11);						// Drive is empty ?
+@@ -1345,7 +1288,7 @@
+ 
+ void MSCDEX_Init(Section* sec) {
+ 	// AddDestroy func
+-	sec->AddDestroyFunction(&MSCDEX_ShutDown);
++	if(sec)sec->AddDestroyFunction(&MSCDEX_ShutDown);
+ 	/* Register the mscdex device */
+ 	DOS_Device * newdev = new device_MSCDEX();
+ 	DOS_AddDevice(newdev);

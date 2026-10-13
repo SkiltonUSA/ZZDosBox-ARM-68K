@@ -1,0 +1,15 @@
+PASS JIT cache witness/report, commits 4 dispatches 0 heap 2268288
+PASS profile publication and exclusive totals read-stop unwound 0
+PASS ARM cancellation read-stop
+PASS JIT cache witness/report, commits 4 dispatches 0 heap 2268352
+PASS profile publication and exclusive totals fs-stop unwound 0
+PASS ARM cancellation fs-stop
+PASS JIT cache witness/report, commits 30 dispatches 32 heap 2245952
+PASS profile publication and exclusive totals boot unwound 0
+PASS ARM BIOS boot/read/bounds, A20 aliasing, ROM protection and timed stop
+PASS JIT cache witness/report, commits 55 dispatches 3585 heap 2333952
+PASS profile publication and exclusive totals mouse unwound 0
+PASS ARM mouse ring wrap, DOS position/buttons, release and BIOS PS2 IRQ12
+PASS JIT cache witness/report, commits 34 dispatches 44 heap 2245952
+PASS profile publication and exclusive totals hdd unwound 0
+PASS ARM HDD BIOS geometry, cross-track read/write and end bounds

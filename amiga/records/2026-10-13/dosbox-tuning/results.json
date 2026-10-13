@@ -1,0 +1,118 @@
+[
+  {
+    "label": "1 MiB, scalar, serial",
+    "seconds_approx": 307.31128042631127,
+    "game_fps_approx": 6.94409914611547,
+    "ratio_to_initial_dynrec": 1.0,
+    "jit": {
+      "magic": "4a495431",
+      "commits": "12365",
+      "witness": "1",
+      "dispatches": "24818803",
+      "cache_bytes": "1048576",
+      "heap_peak": "2334080"
+    },
+    "pipeline": {
+      "enabled": "0",
+      "overlaps": "0",
+      "releases": "13012"
+    },
+    "display": {
+      "frames": "13012",
+      "flips": "13012",
+      "wait_us": "119188457"
+    },
+    "copy": {
+      "observed_us": "37809009",
+      "max_us": "8226"
+    },
+    "clean_teardown": true
+  },
+  {
+    "label": "1 MiB, scalar, overlap",
+    "seconds_approx": 306.57914364357913,
+    "game_fps_approx": 6.960682238974914,
+    "ratio_to_initial_dynrec": 1.0023880841143693,
+    "jit": {
+      "magic": "4a495431",
+      "commits": "12341",
+      "witness": "1",
+      "dispatches": "24816312",
+      "cache_bytes": "1048576",
+      "heap_peak": "2334080"
+    },
+    "pipeline": {
+      "enabled": "1",
+      "overlaps": "21",
+      "releases": "12987"
+    },
+    "display": {
+      "frames": "13008",
+      "flips": "13008",
+      "wait_us": "119034303"
+    },
+    "copy": {
+      "observed_us": "37769701",
+      "max_us": "7511"
+    },
+    "clean_teardown": true
+  },
+  {
+    "label": "4 MiB, scalar, overlap",
+    "seconds_approx": 306.28043621728045,
+    "game_fps_approx": 6.967470813206315,
+    "ratio_to_initial_dynrec": 1.0033656874130201,
+    "jit": {
+      "magic": "4a495431",
+      "commits": "9670",
+      "witness": "1",
+      "dispatches": "24814356",
+      "cache_bytes": "4194304",
+      "heap_peak": "3906944"
+    },
+    "pipeline": {
+      "enabled": "1",
+      "overlaps": "18",
+      "releases": "12993"
+    },
+    "display": {
+      "frames": "13011",
+      "flips": "13011",
+      "wait_us": "118849684"
+    },
+    "copy": {
+      "observed_us": "37965017",
+      "max_us": "13355"
+    },
+    "clean_teardown": true
+  },
+  {
+    "label": "4 MiB, NEON, overlap",
+    "seconds_approx": 292.74244675074243,
+    "game_fps_approx": 7.289684238435736,
+    "ratio_to_initial_dynrec": 1.0497667278431049,
+    "jit": {
+      "magic": "4a495431",
+      "commits": "9644",
+      "witness": "1",
+      "dispatches": "24811193",
+      "cache_bytes": "4194304",
+      "heap_peak": "3906944"
+    },
+    "pipeline": {
+      "enabled": "1",
+      "overlaps": "104",
+      "releases": "12904"
+    },
+    "display": {
+      "frames": "13008",
+      "flips": "13008",
+      "wait_us": "118740107"
+    },
+    "copy": {
+      "observed_us": "38113731",
+      "max_us": "11288"
+    },
+    "clean_teardown": true
+  }
+]

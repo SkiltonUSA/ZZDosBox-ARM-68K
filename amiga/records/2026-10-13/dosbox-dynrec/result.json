@@ -1,0 +1,41 @@
+{
+  "gametics": 2134,
+  "guest_realtics": 6401,
+  "guest_clock_fps_not_hardware_score": 11.668489298547103,
+  "a9_timer_hz_nominal": 333333333,
+  "observer": {
+    "magic": "44424d31",
+    "signature": "1",
+    "rejected": "0",
+    "first": "0",
+    "last": "2134",
+    "sim_first": "1980",
+    "sim_last": "184777",
+    "start": "000021843343fa2b",
+    "end": "0000219c0cfdfa28"
+  },
+  "jit": {
+    "magic": "4a495431",
+    "commits": "12365",
+    "witness": "1",
+    "dispatches": "24818803",
+    "cache_bytes": "1048576",
+    "heap_peak": "2334080"
+  },
+  "measured_seconds_approx": 307.31128042631127,
+  "measured_game_fps_approx": 6.94409914611547,
+  "interpreter_game_fps_approx": 3.096599813678129,
+  "speed_ratio_approx": 2.2424916243430553,
+  "conditions": {
+    "guest_memory_mib": 8,
+    "cycles_per_ms": 10000,
+    "machine": "VGA",
+    "display": "640x480 fullscreen",
+    "fps_overlay": false,
+    "command": "DOOM.EXE -timedemo demo3",
+    "doom_settings": "fresh defaults",
+    "cpu_core": "ARMv7 dynamic recompiler"
+  },
+  "endpoint_limit": "Sampled every emulated ms; final sample before rendering last frame. Approximately one-frame endpoint uncertainty.",
+  "clean_teardown": true
+}

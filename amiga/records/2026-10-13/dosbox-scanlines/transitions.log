@@ -1,0 +1,28 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals scan-full unwound 0
+PASS scanline masks, three preserved slots, nonce repair and row guards scan-full frames checked 18
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry scan-full
+PASS ARM shell 0x12000040 scan-full requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals scan-skip unwound 0
+PASS scanline masks, three preserved slots, nonce repair and row guards scan-skip frames checked 18
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry scan-skip
+PASS ARM shell 0x12000040 scan-skip requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals scan-transition unwound 0
+PASS scanline masks, three preserved slots, nonce repair and row guards scan-transition frames checked 18
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry scan-transition
+PASS ARM shell 0x12000040 scan-transition requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 27438 heap 3906816
+PASS profile publication and exclusive totals scan-stop unwound 1
+PASS cancellation during framebuffer write revokes mapping
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals scan-transition unwound 0
+PASS scanline masks, three preserved slots, nonce repair and row guards scan-transition frames checked 18
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry scan-transition
+PASS ARM shell 0x150020c0 scan-transition requests 15 read 32113 written 0 rc 0

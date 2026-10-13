@@ -1,0 +1,44 @@
+[
+  {
+    "mode": "off",
+    "seconds": 291.205999089206,
+    "game_fps": 7.328145734203386,
+    "rows": {
+      "frames": 13014,
+      "rendered_rows": 6246720,
+      "cleared_rows": 0,
+      "skipped_rows": 0,
+      "nonce_repairs": 0
+    },
+    "clean_teardown": true,
+    "gain_percent_vs_off": 0.0
+  },
+  {
+    "mode": "full",
+    "seconds": 286.7923164077923,
+    "game_fps": 7.440924592155558,
+    "rows": {
+      "frames": 13011,
+      "rendered_rows": 3122640,
+      "cleared_rows": 3122640,
+      "skipped_rows": 0,
+      "nonce_repairs": 13011
+    },
+    "clean_teardown": true,
+    "gain_percent_vs_off": 1.538982193350602
+  },
+  {
+    "mode": "skip",
+    "seconds": 280.90107295390106,
+    "game_fps": 7.596980593770152,
+    "rows": {
+      "frames": 13011,
+      "rendered_rows": 3122640,
+      "cleared_rows": 720,
+      "skipped_rows": 3121920,
+      "nonce_repairs": 13011
+    },
+    "clean_teardown": true,
+    "gain_percent_vs_off": 3.668525017345181
+  }
+]

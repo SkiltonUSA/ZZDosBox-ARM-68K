@@ -157,11 +157,21 @@ extern void zz_dosbox_paging_init();
 extern void CPU_Core_Normal_Init();
 extern void CALLBACK_Init(Section*);
 extern void db_cd_setup(),db_cd_mount(),db_cd_close();
+#ifdef DB_NEON
+extern "C" void db_neon_begin(),db_neon_finish();
+#endif
+#ifdef DB_DYNREC
+extern void CPU_Core_Dynrec_Cache_Init(bool),CPU_Core_Dynrec_Cache_Close();
+extern "C" void db_dynrec_preflight(),db_dynrec_report();
+#endif
 static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,DosboxResult *out,int (*stop)()){
  result=out;memset(out,0,sizeof(*out));finished=false;stop_fn=stop;
  if(bytes>0xff00||!limit){out->fault=2;return 1;}
  slice_limit=limit;
  int jumped=setjmp(escape);if(jumped)return jumped==2?2:1;
+#ifdef DB_NEON
+ db_neon_begin();
+#endif
  machine=db_machine_option==1?MCH_EGA:db_machine_option==2?MCH_CGA:MCH_VGA;
  memset(ram,0,sizeof(ram));memset(&cpu_regs,0,sizeof(cpu_regs));memset(&cpu,0,sizeof(cpu));memset(&Segs,0,sizeof(Segs));
  zz_dosbox_paging_init();CPU_ArchitectureType=CPU_ARCHTYPE_386SLOW;CPU_Core_Normal_Init();cpudecoder=CPU_Core_Normal_Run;
@@ -172,6 +182,9 @@ static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,Dosbox
  // Preserve the PC BIOS and VGA ROM against guest RAM probes.
  for(unsigned page=0xc0;page<0xc8;page++)handlers[page]=&rom_page;
  for(unsigned page=0xf0;page<0x100;page++)handlers[page]=&rom_page;
+#ifdef DB_DYNREC
+ db_dynrec_preflight();CPU_Core_Dynrec_Cache_Init(true);cpudecoder=CPU_Core_Dynrec_Run;
+#endif
  CALLBACK_Init(nullptr);db_pc_init();db_cd_setup();ansi_bytes=0;extended_key=-1;
  if(db_vga_console)INT10_ScrollWindow(0,0,24,79,0,db_text_attr,0);
  if(*db_boot_name||*db_hdd_name){db_boot_start();DOSBOX_RunMachine();return 0;}
@@ -210,12 +223,18 @@ extern "C" int db_run_io(const uint8_t *program,unsigned bytes,unsigned limit,Do
  console_io=io;finishing=false;
  int rc=run_guest(program,bytes,limit,out,stop);
  pc_prof_unwind();
+#ifdef DB_DYNREC
+ CPU_Core_Dynrec_Cache_Close();db_dynrec_report();
+#endif
  finishing=true;
  zz_shell_cleanup();
  db_boot_close();
  db_pc_close();
  db_unmount();db_cd_close();
  for(unsigned i=0;i<CB_MAX;i++){delete[] CallBack_Description[i];CallBack_Description[i]=nullptr;}
+#ifdef DB_NEON
+ db_neon_finish();
+#endif
  result=nullptr;console_io=nullptr;
  return rc;
 }

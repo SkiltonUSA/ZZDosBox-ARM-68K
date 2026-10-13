@@ -20,5 +20,9 @@ test-host:
 	.context/tests/scale
 	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc tests/amiga/dosbox/mouse_geometry.c -o .context/tests/mouse
 	.context/tests/mouse
+	clang++ -std=c++17 -O2 -fsanitize=address,undefined -Iamiga/dosbox/pc tests/amiga/dosbox/scanline_plan.cpp -o .context/tests/scanlines
+	.context/tests/scanlines
+	clang -std=c99 -O2 -fsanitize=address,undefined -Iamiga/dosbox/pc tests/amiga/dosbox/dynrec_plan.c -o .context/tests/dynrec
+	.context/tests/dynrec
 test-model:
 	$(PYTHON) tests/amiga/dosbox/check_pc_arm.py

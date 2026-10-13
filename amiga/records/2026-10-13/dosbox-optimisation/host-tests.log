@@ -1,0 +1,3 @@
+PASS disk cache: 19 sequential sectors / 3 transfers; random reads/writes, EOF, reopen, errors, guards
+PASS scaler: 329728 widths/formats, all 4:3 window widths, exact pixels and row guards
+Both compiled and run with AddressSanitizer and UndefinedBehaviorSanitizer.

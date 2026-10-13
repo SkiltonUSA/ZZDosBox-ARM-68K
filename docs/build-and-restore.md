@@ -50,8 +50,8 @@ are retained to preserve the source layout. Standalone export changes only
 container command configuration and two small imported build helpers.
 
 Keep the default O2 CPU optimisation. O3 and the two scheduler-cache experiments
-showed no consistent gain; see the scheduler records. Current timing is startup
-refresh throughput, not steady gameplay or a full-speed emulation claim.
+showed no consistent gain; see the scheduler records. Early timing records measure startup refresh throughput. Later Doom Demo3
+records use the physical A9 timer and report real game FPS.
 
 ## Runtime requirements
 
@@ -87,3 +87,32 @@ current model suite. This selects the mouse-capable ELF and its original
 INT33/PS2 fixture; the older Windows experiment predates this fixture.
 `python3 scripts/build_dosbox_pc.py --sanitize --game mouse` runs the native
 mouse test after preparing the pinned source. No licensed media is needed.
+
+## Current dynrec and scanline backups
+
+The current DOS executable is `artifacts/development/neon-dynrec/pc/ZZDosBox-Dynrec`.
+The optional scanline test is in `artifacts/experiments/scanline-copy/pc/`.
+Both retain ELF symbols, build metadata and integration patches. The normal
+launcher installation uses the filename `ZZDosBox`; the scanline build is
+experimental and has not replaced it. Windows uses its separate saved runtime.
+
+Restore inputs using `python3 scripts/restore_build_inputs.py --neon-build`
+or `--scanline-build`. Generated outputs are preserved, so use a fresh checkout
+for independent restoration. These flags restore their distinct model directories.
+After configuring the toolchain above, rebuild with:
+
+```sh
+python3 scripts/build_dosbox_dos_arm.py --pc --pc-dynrec --pc-jit-mib 4 \
+  --pc-pipeline --pc-neon --pc-doom-clock
+# Add --pc-scanlines for the separate experiment.
+```
+
+Run the saved scanline ELF model checks with a Unicorn-enabled Python:
+
+```sh
+python tests/amiga/dosbox/check_dynrec_arm.py \
+  --out .context/amiga/dosbox-dynrec-4m-neon-pipe-scan
+```
+
+Normal tuned output uses `.context/amiga/dosbox-dynrec-4m-neon-pipe` instead.
+These flags do not install files or run anything on the Amiga.

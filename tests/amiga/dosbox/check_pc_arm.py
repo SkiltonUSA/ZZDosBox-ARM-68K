@@ -4,7 +4,7 @@
 Instruction-model evidence only. AmigaDOS backend and physical lifecycle must
 be verified separately. Uses an original EGA/PIT fixture, no game data.
 """
-import argparse,importlib.util,struct,subprocess,re
+import argparse,importlib.util,struct,subprocess,re,json
 from pathlib import Path
 from unicorn import Uc,UC_ARCH_ARM,UC_MODE_ARM,UC_HOOK_MEM_READ,UC_HOOK_MEM_WRITE,UC_HOOK_CODE
 from unicorn.arm_const import *
@@ -21,7 +21,14 @@ def run(base,mode,profile=False,options=None):
  for line in subprocess.check_output(['/opt/homebrew/opt/llvm/bin/llvm-nm','-n',str(OUT/'dosbox.elf')],text=True).splitlines():
   f=line.split()
   if len(f)==3:symbols[f[2]]=int(f[0],16)+base
+ jit='db_dynrec_commit' in symbols
+ neon='db_neon_begin' in symbols
+ jit_mib=json.loads((OUT/'build.json').read_text()).get('jit_mib',1) if jit else 1
  u=Uc(UC_ARCH_ARM,UC_MODE_ARM);u.ctl_set_cpu_model(UC_CPU_ARM_CORTEX_A9)
+ if neon and mode!='neon-denied':
+  u.reg_write(UC_ARM_REG_C1_C0_2,0x00f00000);u.reg_write(UC_ARM_REG_FPEXC,0x40000000)
+  for i in range(32):u.reg_write(globals()['UC_ARM_REG_D'+str(i)],0xa5a5000000000000+i)
+  u.reg_write(UC_ARM_REG_FPSCR,0x01000000)
  u.mem_map(base&~4095,0x2002000);u.mem_write(base,bytes(image));u.mem_write(symbols['_ZL6shared'],struct.pack('<I',base))
  def put(off,n):u.mem_write(base+off,struct.pack('>I',n&0xffffffff))
  def get(off):return struct.unpack('>I',u.mem_read(base+off,4))[0]
@@ -41,9 +48,11 @@ def run(base,mode,profile=False,options=None):
   if not base<=address<=base+0x2000000-size or (size>1 and address%size):bad.append((hex(address),size,hex(u.reg_read(UC_ARM_REG_PC)-base)));u.emu_stop()
  u.hook_add(UC_HOOK_MEM_READ|UC_HOOK_MEM_WRITE,access,begin=base&~4095,end=base-1)
  u.hook_add(UC_HOOK_MEM_READ|UC_HOOK_MEM_WRITE,access,begin=base+0x2000000,end=(base&~4095)+0x2002000-1)
+ scan_test=mode in ("scan-full","scan-skip","scan-transition","scan-stop")
+ scan_mask=0;scan_epoch=0;scan_checked=set();scan_buffers=set()
  width,height=640,480
  frame=0x00fff040;pitch=3840 if mode=="resize" else 2560;span=(height-1)*pitch+width*4;fmt=3 if base==0x12000040 else 4
- u.mem_map(frame&~4095,0x2b0000 if mode=="resize" else 0x140000)
+ u.mem_map(frame&~4095,0x400000 if scan_test else 0x2b0000 if mode=="resize" else 0x140000)
  l1=(base+0x100000+16383)&~16383
  u.mem_write(base+0x182000+15*4,struct.pack('<I',l1))
  put(0x188040,1000);put(0x188044,0)
@@ -54,7 +63,7 @@ def run(base,mode,profile=False,options=None):
   u.mem_write(base+0x1881c0,bytes([0x20,0xa0]));put(0x188140,2)
 
  copy_stopped=[False]
- if mode=='copy-stop':
+ if mode in ('copy-stop','scan-stop'):
   def stop_copy(u,kind,address,size,value,data):
    if not copy_stopped[0]:
     copy_stopped[0]=True;put(0x180080,1);u.mem_write(base+0x1d0008,struct.pack('<I',1))
@@ -66,6 +75,8 @@ def run(base,mode,profile=False,options=None):
   keys=b'';put(0x1882c0,3);put(0x1882c8,7);put(0x188040,0)
  if mode in ('cga','keyboard'):
   file='CGATEST.COM' if mode=='cga' else 'KEYTEST.COM';files={file:(OUT/file).read_bytes()};keys=file.encode()+b'\rexit\r'
+ if mode=='smc':
+  files={'SMCTEST.COM':(OUT/'SMCTEST.COM').read_bytes()};keys=b'smctest\rexit\r'
  if mode=='cpu':
   files={name:(OUT/source).read_bytes() for name,source in [('DIAG.COM','Diagnostic.com'),('FILETEST.COM','FileTest.com'),('EXETEST.EXE','ExeTest.exe'),('INPUT.TXT','INPUT.TXT')]}
   keys=b'diag\rfiletest\rexetest\rexit\r'
@@ -101,9 +112,18 @@ def run(base,mode,profile=False,options=None):
   assert re.fullmatch(r'[A-Z0-9_-]{1,8}(\.[A-Z0-9_-]{1,3})?',text),text
   return text
  def bad_code(u,address,size,data):
+  if jit and ((base+0x1f00000-jit_mib*0x100000+4095)&~4095)<=address<((base+0x1f20000)&~4095):return
   raise AssertionError(('execution outside text',hex(address-base),'lr',hex(u.reg_read(UC_ARM_REG_LR)-base),'sp',hex(u.reg_read(UC_ARM_REG_SP)-base)))
  u.hook_add(UC_HOOK_CODE,bad_code,begin=base+len(image),end=base+0x1cffff)
  u.hook_add(UC_HOOK_CODE,bad_code,begin=base+0x200000,end=base+0x1feffff)
+ if neon:
+  # Unicorn's A9 CPACR MRC reads zero even after C1_C0_2 is set; model only
+  # that hardware-register read. Real availability/restoration is checked
+  # separately on the A9. Keep all subsequent policy checks/instructions.
+  def cpacr_read(u,address,size,data):
+   u.reg_write(UC_ARM_REG_R1,u.reg_read(UC_ARM_REG_C1_C0_2))
+   u.reg_write(UC_ARM_REG_PC,address+4)
+  u.hook_add(UC_HOOK_CODE,cpacr_read,begin=symbols['db_neon_available'],end=symbols['db_neon_available'])
  pc=symbols['mesen_test']
  for tick in range(50000):
   # Preserve Thumb state when resuming a quantum inside the soft-float library.
@@ -138,15 +158,37 @@ def run(base,mode,profile=False,options=None):
     width,height=[(320,240),(960,720),(508,381),(640,480)][(vseq-1)%4]
     span=(height-1)*pitch+width*4
     put(0x18802c,width);put(0x188030,height)
+   if scan_test:
+    frame=0x00fff040+((vseq-1)%3)*0x140000
+    scan_epoch=(vseq-1)//6+1 if mode=='scan-transition' else 1
+    scan_mask=1 if mode=='scan-full' else (0 if mode=='scan-transition' and scan_epoch%2==0 else 2)
+    put(0x188034,scan_mask);put(0x188038,scan_epoch)
+    sw=struct.unpack('<I',u.mem_read(symbols['db_width'],4))[0]
+    sh=struct.unpack('<I',u.mem_read(symbols['db_height'],4))[0]
+    source=bytes(u.mem_read(symbols['db_pixels'],sw*sh*4))
+    rows=[]
+    for sy in range(sh):
+     line=source[sy*sw*4:(sy+1)*sw*4]
+     pixels=[line[(x*sw//width)*4:(x*sw//width)*4+4] for x in range(width)]
+     rows.append(b''.join(pixels if fmt==3 else [p[::-1] for p in pixels]))
+    scan_expected=b''.join((bytes(width*4) if scan_mask and y%2 else rows[y*sh//height])+(bytes(pitch-width*4) if y<height-1 else b'') for y in range(height))
+    if frame not in scan_buffers:
+     u.mem_write(frame,b'\xa5'*span+b'\0'*4);scan_buffers.add(frame)
    nonce=vseq^0x12345678
-   u.mem_write(frame,b'\x00'*(span+4))
+   if not scan_test:u.mem_write(frame,b'\x00'*(span+4))
    u.mem_write(frame,struct.pack('>I',nonce ^ (1 if mode=='badnonce' else 0)));u.mem_write(frame+span-4,struct.pack('>I',nonce^0x31415926))
    for off,val in [(20,frame),(24,pitch),(28,fmt),(32,nonce),(16,vseq)]:put(0x188000+off,val)
    frame_seq=vseq
   if frame_seq and get(0x188024)==frame_seq:
-   assert get(0x188028)==(7 if mode=='badnonce' else 2 if mode=='copy-stop' else 0)
+   assert get(0x188028)==(7 if mode=='badnonce' else 2 if mode in ('copy-stop','scan-stop') else 0)
    captured=bytes(u.mem_read(frame,span))
    assert bytes(u.mem_read(frame+span,4))==b'\0'*4
+   if scan_test and not get(0x188028) and frame_seq not in scan_checked:
+    scan_checked.add(frame_seq)
+    assert captured==scan_expected,('per-frame scanline pixels',mode,frame_seq,scan_mask)
+    if scan_mask:
+     for y in range(1,height,2):assert captured[y*pitch:y*pitch+width*4]==bytes(width*4),(mode,frame_seq,y)
+
   seq=get(CMD)
   if seq!=get(REPLY):
    assert seq==seen_request+1 or (mode=='fs-stop' and seq==seen_request);seen_request=seq
@@ -206,6 +248,21 @@ def run(base,mode,profile=False,options=None):
   if pc==base+0x1ff0000:break
  else:raise AssertionError(('worker timeout',output[-200:],hex(pc-base)))
  result=struct.unpack('<11I',u.mem_read(base+0x1e0000,44));rc=u.reg_read(UC_ARM_REG_R0)
+ if mode=='neon-denied':
+  assert rc==1 and get(0x188d68)==0
+  detail=bytes(u.mem_read(base+0x180900+128,160)).split(b'\0')[0]
+  assert b'NEON unavailable' in detail,detail
+  print('PASS denied firmware SIMD access fails without executing NEON',flush=True);return
+ if neon and mode!='invalid-options':
+  assert get(0x188d60)==0x4e454f31 and get(0x188d64)==42 and get(0x188d68)==1,(rc,[hex(get(0x188d60+i*4)) for i in range(7)],bytes(u.mem_read(base+0x180980,160)))
+  for i in range(32):assert u.reg_read(globals()['UC_ARM_REG_D'+str(i)])==0xa5a5000000000000+i
+  assert u.reg_read(UC_ARM_REG_FPSCR)==0x01000000
+  print('PASS NEON execution witness, all 32 SIMD registers and FPSCR restored',flush=True)
+ if jit and mode!='invalid-options':
+  assert get(0x188d40)==0x4a495431 and get(0x188d48)==1 and get(0x188d44)>3
+  # Cancellation at the initial prompt can precede the first guest dispatch.
+  if mode not in ('read-stop','fs-stop'):assert get(0x188d4c)>0
+  print('PASS JIT cache witness/report, commits',get(0x188d44),'dispatches',get(0x188d4c),'heap',get(0x188d54),flush=True)
  detail=bytes(u.mem_read(base+0x180900+128,160)).split(b'\0')[0]
  if profile:
   assert get(0x188084)==0x50524631 and get(0x188094)==0
@@ -246,7 +303,7 @@ def run(base,mode,profile=False,options=None):
  if mode in ('read-stop','fs-stop'):
   assert rc==2 and result[4]==3 and stopping,(mode,rc,result,detail)
   print('PASS ARM cancellation',mode,flush=True);return
- if mode=='copy-stop':
+ if mode in ('copy-stop','scan-stop'):
   assert rc==2 and result[4]==3 and copy_stopped[0],(rc,result,detail)
   assert get(0x188024)==1 and get(0x188028)==2
   for section in range(frame>>20,((frame+span-1)>>20)+1):assert struct.unpack('<I',u.mem_read(l1+section*4,4))[0]==0
@@ -278,6 +335,9 @@ def run(base,mode,profile=False,options=None):
   print('PASS ARM PC options/input',mode,options,'frames',frame_seq,flush=True);return
 
  if mode=='speed':assert get(0x1883c8)==2500, get(0x1883c8)
+ if mode=='smc':
+  assert b'JIT self-modifying guest code PASS' in output and b'FAIL' not in output,(rc,result,detail,output)
+  print('PASS ARM JIT guest self-modification / invalidation',flush=True);return
  if mode=='cpu':
   for message in [b'ZZDOS x86 arithmetic/memory PASS',b'ZZDOS files/handles/seek PASS',b'ZZDOS MZ relocation/memory PASS']:
    assert message in output,(message,output)
@@ -288,6 +348,15 @@ def run(base,mode,profile=False,options=None):
  assert b'EGA/PIT PASS' in output and frame_seq>=10 and captured,output
  colors=[0x000000,0x0000ad,0x00aa00,0x00aaad,0xad0000,0xad00ad,0xad5500,0xadaaad,0x525552,0x5255ff,0x52ff52,0x52ffff,0xff5552,0xff55ff,0xffff52,0xffffff]
  expected=b''.join(b''.join(struct.pack('<I' if fmt==3 else '>I',colors[x*4//width+(y*4//height)*4]) for x in range(width))+ (bytes(pitch-width*4) if y<height-1 else b'') for y in range(height))
+ if scan_test:
+  if scan_mask:
+   expected=bytearray(expected)
+   for y in range(1,height,2):expected[y*pitch:y*pitch+width*4]=bytes(width*4)
+  assert get(0x188d80)==0x53434e31
+  assert get(0x188d88)>0 and get(0x188d8c)>0
+  if mode!='scan-full':assert get(0x188d90)>0
+  assert len(scan_buffers)==3 and len(scan_checked)>=10
+  print('PASS scanline masks, three preserved slots, nonce repair and row guards',mode,'frames checked',len(scan_checked),flush=True)
  assert captured==expected,'EGA colour/presentation mismatch'
  # Temporary framebuffer mappings must be revoked before completion.
  for section in range(frame>>20,(frame+span-1>>20)+1):assert struct.unpack('<I',u.mem_read(l1+section*4,4))[0]==0

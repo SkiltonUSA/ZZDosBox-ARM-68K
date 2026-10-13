@@ -1,0 +1,22 @@
+{
+  "DxYl9S/DEICE.EXE": {
+    "bytes": 17303,
+    "sha256": "4f77c1fee9c6e579ee325e83b0fc9d79254bb4837be950d06059260395fb4569"
+  },
+  "c13CU7/DOOMS_19.1": {
+    "bytes": 1439232,
+    "sha256": "430588fc6dc095ef92adccb444feb7f343363c9aac895685ab217bea301e5f42"
+  },
+  "8pRzpx/DOOMS_19.2": {
+    "bytes": 994588,
+    "sha256": "b476526a75fb6b081abed086cf38d31f85d91f89cede17ead0e082d4da8488c9"
+  },
+  "mJS3rt/DOOMS_19.DAT": {
+    "bytes": 226,
+    "sha256": "94e78ec5e44728613bd807485eb9a8a97ba8ff5fdb6d96ecfd4c1a6a8c3d9125"
+  },
+  "0lRpYj/INSTALL.BAT": {
+    "bytes": 184,
+    "sha256": "1c49dca7b64a1ceb96b062ef7da0dcb2e5879d4dfbe902a10f5bfc94fe0e3a7d"
+  }
+}

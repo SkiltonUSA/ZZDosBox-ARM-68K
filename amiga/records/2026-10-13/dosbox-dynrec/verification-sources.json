@@ -1,0 +1,6 @@
+{
+  "scripts/prepare_dosbox_dynrec.py": "fae307a5ec950e05a3f00ab210b051b0a4109b65b40556858304d8450ed68f5f",
+  "tests/amiga/dosbox/check_dynrec_arm.py": "d9a82bf014fdd26040e6fe878fb020c2dd773357dcdcae6099d3c7bd47b2b21b",
+  "tests/amiga/dosbox/check_pc_arm.py": "a6e4fdf0db90ac918b1b65d4f5fc849acee94b7c3f9641354ed88797fe922430",
+  "tests/amiga/dosbox/dynrec_plan.c": "3b5af6a92aa6d32d66aeeae37456431bfd3b297d5f596bca9b965c03ad39b6a7"
+}

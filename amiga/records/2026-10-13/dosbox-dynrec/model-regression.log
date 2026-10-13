@@ -1,0 +1,18 @@
+PASS JIT generated-code execution, rewrite witness, commits 29 dispatches 308219 heap 2333952
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0
+PASS JIT generated-code execution, rewrite witness, commits 20 dispatches 27438 heap 2333952
+PASS profile publication and exclusive totals copy-stop unwound 1
+PASS cancellation during framebuffer write revokes mapping
+PASS JIT generated-code execution, rewrite witness, commits 8 dispatches 4 heap 2350272
+PASS profile publication and exclusive totals guest-bound unwound 1
+PASS banked TLB rejects unsupported guest address guest-bound Guest page bound 1001 at 191:100 ss:sp=191:fffe
+Traceback (most recent call last):
+  File "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-dynrec/run-model.py", line 7, in <module>
+    t.run(0x12000040,mode,True,options=(8,0,3000))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dskilton/conductor/workspaces/sixies_development/port-louis/tests/amiga/dosbox/check_pc_arm.py", line 215, in run
+    assert get(0x188d4c)>0
+           ^^^^^^^^^^^^^^^
+AssertionError

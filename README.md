@@ -11,6 +11,15 @@ The new development build adds DOS and PS/2 mouse input, tested with
 Oregon Trail and Windows 3.11 on the A9.
 PCM sound-card audio and joystick support are pending.
 
+The latest DOS development runtime adds ARMv7 dynamic recompilation, NEON
+pixel conversion and a 4 MiB code cache. Doom Demo3 improved from **3.10 to
+7.29 real FPS** on the tested ZZ9000. A separate scanline experiment measured
+**7.33 FPS normally / 7.60 FPS skipping black rows** (+3.7%, single runs).
+
+[Current DOS executable](artifacts/development/neon-dynrec) ·
+[Performance results](amiga/records/2026-10-13/dosbox-tuning/method.md) ·
+[Scanline experiment](artifacts/experiments/scanline-copy)
+
 **Audio:** CAMD v37+ is optional for external MIDI. AHI and ZZ9000AX are
 currently detected only; they do not enable PCM sound in this build.
 
@@ -30,7 +39,7 @@ they do not establish equivalent real-world PC speed.
 
 [Windows desktop and test screenshots](docs/screenshots/windows311/README.md)
 
-[Current mouse build](artifacts/development/mouse) ·
+[Earlier mouse build](artifacts/development/mouse) ·
 [Mouse test results](amiga/records/2026-10-13/dosbox-mouse/findings.md) ·
 [0.10.1 recovery artifacts](artifacts/0.10.1-dev) ·
 [Windows experimental build](artifacts/experiments/wfw311-small-tlb) ·

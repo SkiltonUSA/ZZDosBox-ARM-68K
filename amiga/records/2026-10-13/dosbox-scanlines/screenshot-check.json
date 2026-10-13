@@ -1,0 +1,20 @@
+{
+  "full": {
+    "width": 640,
+    "height": 480,
+    "black_odd_rows": 240,
+    "black_even_rows": 2
+  },
+  "skip": {
+    "width": 640,
+    "height": 480,
+    "black_odd_rows": 240,
+    "black_even_rows": 0
+  },
+  "off": {
+    "width": 640,
+    "height": 480,
+    "black_odd_rows": 0,
+    "black_even_rows": 0
+  }
+}

@@ -4,6 +4,29 @@ Amiga-specific development history, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 These are development milestones, not upstream DOSBox release numbers.
 
+## ARMv7 dynrec, NEON and scanline experiments — 13 October 2026
+
+- Integrated the existing ARMv7 dynamic recompiler with owned executable memory
+  and A9 cache publication. Doom Demo3 improved from 3.10 to 6.94 real FPS.
+- Installed a tested 4 MiB JIT-cache / NEON-pixel / display-overlap build:
+  7.29 real FPS, with interpreter and initial-dynrec fallbacks retained.
+- Separate Classic scanline experiment: normal 7.33 FPS, rewritten black rows
+  7.44, preserved black rows 7.60. Single runs; preliminary +3.7% vs normal.
+  This saves final framebuffer writes, not guest rendering; it is independent
+  of FPGA scanline controls and has not replaced the normal executable.
+- Physical lifecycle, mode-toggle and pixel checks passed; detailed evidence
+  is retained with each experiment. No firmware change.
+
+## Earlier optimisation candidate — historical
+
+- Replaced per-pixel division in generic nearest-neighbour scaling with an
+  exact quotient/remainder accumulator; preserved 1x/2x paths and output pixels.
+- Added bounded 4 KiB read-ahead for exclusively owned BIOS hard-disk images.
+  Writes remain immediate, invalidate cached reads, and preserve error handling.
+- Local pixel, disk-model and ARM scaler checks pass. Physical comparisons
+  were pending at this stage; later results and
+  installed-build status are recorded above.
+
 ## Mouse development build — 13 October 2026
 
 - Added the upstream DOSBox INT33 mouse driver and BIOS PS/2 callback support.

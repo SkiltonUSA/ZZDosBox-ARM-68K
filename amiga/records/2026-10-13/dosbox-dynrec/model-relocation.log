@@ -1,0 +1,6 @@
+PASS JIT cache witness/report, commits 73 dispatches 127 heap 2338176
+PASS profile publication and exclusive totals cpu unwound 0
+PASS ARM x86 arithmetic/memory, DOS files and MZ relocation 0x150020c0
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 2333952
+PASS profile publication and exclusive totals smc unwound 0
+PASS ARM JIT guest self-modification / invalidation

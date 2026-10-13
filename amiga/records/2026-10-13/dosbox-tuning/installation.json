@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-13",
+  "path": "SD032G:Dev/ZZDosBox/PC/ZZDosBox",
+  "bytes": 1072836,
+  "md5": "62a29c0ece11553121368b219c286741",
+  "sha256": "55085f15f23bc3fc077498e2b2cd9bf3770558a9706147ece163240ac73dcb7d",
+  "backup_dynrec": "SD032G:Dev/ZZDosBox/PC/ZZDosBox-1M",
+  "backup_dynrec_md5": "8020c504f3f3d621939d1ceffed0818f",
+  "backup_interpreter": "SD032G:Dev/ZZDosBox/PC/ZZDosBox-Interpreter",
+  "backup_interpreter_md5": "a0472312aa609271755c08f16702d42f",
+  "launcher_config_md5_before_and_after": "297dddafcdd1fa80cf87d4aeaca3361d",
+  "method": "Verified staging copy, rename with rollback on failure, post-install checksum verification",
+  "manual_controls": "Owner confirmed window/fullscreen and F10; log verifies both switches and clean teardown"
+}

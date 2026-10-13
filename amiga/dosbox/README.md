@@ -18,8 +18,8 @@ ZZ9000AX driver check. MIDI needs CAMD and a connected external synthesizer.
 Requires **MUI 3.8 or later** and XACP on the ZZ9000; tested with XX19c firmware.
 AHI and ZZ9000AX are currently detected only; PCM output is not implemented.
 
-[Features and compatibility](../../docs/features.md) ·
-[Amiga requirements](../../docs/requirements.md) · [Changelog](CHANGELOG.md)
+[Features and compatibility](../../docs/amiga-dosbox-features.md) ·
+[Amiga requirements](../../docs/amiga-dosbox-requirements.md) · [Changelog](CHANGELOG.md)
 
 The A9 runs the x86 interpreter and draws directly into the ZZ9000 framebuffer;
 the Amiga handles files, input and display coordination. A writable Amiga

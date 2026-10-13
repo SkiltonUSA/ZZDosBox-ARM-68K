@@ -103,6 +103,9 @@ static int window_service(void){
  ad_put(locked_memory,0,nonce);ad_put(locked_memory,span-4,nonce^0x31415926u);
  syncio->push(locked_memory,4,NULL);syncio->push(locked_memory+span-4,4,NULL);
  publish(PC_VIDEO+44,window_width);publish(PC_VIDEO+48,window_height);
+#ifdef DB_SCANLINE_TEST
+ publish(PC_VIDEO+52,0);publish(PC_VIDEO+56,scan_epoch);
+#endif
  publish(PC_VIDEO+20,addr);publish(PC_VIDEO+24,full_pitch);publish(PC_VIDEO+28,direct_format);publish(PC_VIDEO+32,nonce);
  copy_start=us();publish(PC_VIDEO+16,seq);active=seq;return 1;
 }

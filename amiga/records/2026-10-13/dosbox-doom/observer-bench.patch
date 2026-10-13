@@ -1,0 +1,56 @@
+--- amiga/dosbox/pc/bench.cpp
++++ bench-doom.cpp
+@@ -20,6 +20,31 @@
+ extern "C" void db_output(const char*);
+ extern "C" volatile uint8_t *db_shared();
+ extern "C" const DbConsoleIO *db_stream(int (*)());
++/* Local benchmark-only observer for the supplied, unmodified Doom 1.9 EXE.
++ * Guest addresses are validated against the loaded executable's code/string.
++ * Read-only sampling once per emulated ms; never alters x86 registers or RAM. */
++#pragma once
++#include <stdint.h>
++#include <string.h>
++struct DoomClock {
++ uint64_t start=0,end=0;
++ unsigned first=0,last=0,sim_first=0,sim_last=0,signature=0,rejected=0;
++ void tick(const uint8_t *ram,unsigned memory_mb,unsigned sim,uint64_t now){
++  if(end||rejected||memory_mb!=8)return;
++  if(!signature){
++   static const uint8_t code[]={0x53,0x51,0x52,0x56,0x55,0x83,0x3d,0xa4,0xa3,0x1b,0,0,0x74,0x20,0xe8,0xbd,0x7f,0xff,0xff,0x2b,0x05,0x98,0xa3,0x1b,0,0x50,0x8b,0x0d,0xbc,0xa3,0x1b,0,0x51,0x68,0xcc,0x13,0x1b,0,0xe8,0xa5,0x8e,0xff,0xff};
++   if(memcmp(ram+0x169c40,code,sizeof(code))||memcmp(ram+0x1b13cc,"timed %i gametics in %i realtics",30))return;
++   signature=1;
++  }
++  uint32_t timing,began,game;
++  memcpy(&timing,ram+0x1ba3a4,4);memcpy(&began,ram+0x1ba398,4);memcpy(&game,ram+0x1ba3bc,4);
++  if(timing!=1||!began)return;
++  if(!start){if(game>1){rejected=1;return;}start=now;first=game;sim_first=sim;}
++  if(game>=2134){if(game!=2134){rejected=1;return;}end=now;last=game;sim_last=sim;}
++ }
++};
++
++static DoomClock doom_clock;
+ static unsigned boot_pos;static bool boot_prompt;static char boot_command[160];
+ static void boot_keys(){
+  if(!*boot_command||(!*db_boot_name&&!*db_hdd_name))return;
+@@ -37,6 +62,7 @@
+  }
+ }
+ void db_pc_tick(){
++ doom_clock.tick(MemBase,db_memory_mb,PIC_Ticks,pc_clock_ticks());
+  db_mouse_tick(db_shared());
+  unsigned requested=ad_get(db_shared(),PC_CYCLE_REQUEST);
+  if(requested){if(requested<500||requested>10000)E_Exit("CPU speed request out of bounds");if(requested!=db_cpu_cycles){db_cpu_cycles=requested;CPU_CycleMax=requested;}ad_put(db_shared(),PC_CYCLE_APPLIED,requested);}
+@@ -72,6 +98,13 @@
+  pc_prof_start();
+  uint32_t start=clock();int rc=db_run_io(nullptr,0,ad_get(b,PC_DURATION)?10000000:0xffffffffu,&r,stop,db_stream(stop));
+  pc_prof_finish();
++ const unsigned base=PC_VIDEO+0xd00;
++ ad_put(b,base,0x44424d31u);ad_put(b,base+4,doom_clock.signature);ad_put(b,base+8,doom_clock.rejected);
++ ad_put(b,base+12,doom_clock.first);ad_put(b,base+16,doom_clock.last);
++ ad_put(b,base+20,doom_clock.sim_first);ad_put(b,base+24,doom_clock.sim_last);
++ ad_put(b,base+28,doom_clock.start>>32);ad_put(b,base+32,doom_clock.start);
++ ad_put(b,base+36,doom_clock.end>>32);ad_put(b,base+40,doom_clock.end);
++ __asm__ volatile("dsb sy":::"memory");
+  out->ticks=clock()-start;out->checked=verify;out->cycles=r.slices;out->errors=r.fault;out->actual_pc=r.exit_code;out->expected_pc=r.bytes;out->actual_regs=db_frames;out->expected_regs=PIC_Ticks;
+  db_output(r.text);return rc;
+ }

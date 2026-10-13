@@ -3,6 +3,7 @@
 #include "drive_decl.h"
 #include "fs_wire.h"
 #include "shell_api.h"
+#include "disk_cache.h"
 #include <string.h>
 extern "C" volatile uint8_t *db_shared();
 extern bool db_shell_finishing();
@@ -111,13 +112,18 @@ bool db_load_boot(const char *name,uint8_t *data,unsigned size){
 }
 
 /* BIOS hard disk: the host retains an exclusive lock for the whole session. */
-bool db_disk_open(const char *name){return rpc(FS_DISK_OPEN,0,0,0,0,name)&&reply(2)==FS_DISK_SECTORS;}
-bool db_disk_sector(unsigned sector,void *data,bool writing){
- if(sector>=FS_DISK_SECTORS)return false;
- if(writing){for(unsigned i=0;i<512;i++)db_shared()[FS_DATA+i]=((uint8_t*)data)[i];fence();}
- if(!rpc(writing?FS_DISK_WRITE:FS_DISK_READ,0,1,sector)||reply(2)!=1)return false;
- if(!writing)for(unsigned i=0;i<512;i++)((uint8_t*)data)[i]=db_shared()[FS_DATA+i];
+static DbDiskCache disk_cache;
+static_assert(DbDiskCache::sectors*DbDiskCache::sector_bytes<=FS_CHUNK,"disk read-ahead exceeds mailbox");
+bool db_disk_open(const char *name){disk_cache.reset();return rpc(FS_DISK_OPEN,0,0,0,0,name)&&reply(2)==FS_DISK_SECTORS;}
+static bool disk_transfer(unsigned sector,unsigned n,void *data,bool writing){
+ if(writing){for(unsigned i=0;i<n*512;i++)db_shared()[FS_DATA+i]=((uint8_t*)data)[i];fence();}
+ if(!rpc(writing?FS_DISK_WRITE:FS_DISK_READ,0,n,sector)||reply(2)!=n)return false;
+ if(!writing)for(unsigned i=0;i<n*512;i++)((uint8_t*)data)[i]=db_shared()[FS_DATA+i];
  return true;
+}
+bool db_disk_sector(unsigned sector,void *data,bool writing){
+ db_shell_poll(); /* Cache hits retain cooperative cancellation. */
+ return disk_cache.access(sector,data,writing,FS_DISK_SECTORS,disk_transfer);
 }
 
 /* Selected CD source is host-owned and always read-only. */

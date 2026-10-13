@@ -4,7 +4,14 @@
 #include <stdlib.h>
 #include "dosbox.h"
 extern "C" void fb_heap_init(void *,size_t);
+#ifdef DB_DYNREC
+#ifndef DB_JIT_MIB
+#define DB_JIT_MIB 1
+#endif
+alignas(64) static uint8_t heap[(DB_JIT_MIB==4?8:4)*1024*1024];
+#else
 alignas(64) static uint8_t heap[2*1024*1024];
+#endif
 extern "C" void (*__init_array_start[])();
 extern "C" void (*__init_array_end[])();
 extern "C" void db_runtime_init(){

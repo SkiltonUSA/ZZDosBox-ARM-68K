@@ -2,6 +2,9 @@
 #pragma once
 #include <stdint.h>
 #include <string.h>
+#ifdef DB_NEON
+extern "C" void pc_neon_capture(uint32_t *,const uint8_t *,unsigned,unsigned);
+#endif
 struct pc_rgb565_tables {
  uint32_t low[256],high[256];
  constexpr pc_rgb565_tables():low{},high{} {
@@ -15,6 +18,9 @@ struct pc_rgb565_tables {
 static constexpr pc_rgb565_tables pc_rgb565;
 static inline bool pc_capture_row(uint32_t *dst,const uint8_t *src,
  unsigned width,unsigned bpp,const uint32_t *palette){
+#ifdef DB_NEON
+ if(bpp==16||bpp==32){pc_neon_capture(dst,src,width,bpp);return true;}
+#endif
  switch(bpp){
  case 8:
   for(unsigned x=0;x<width;x++)dst[x]=palette[src[x]];

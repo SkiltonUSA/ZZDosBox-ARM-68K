@@ -1,0 +1,77 @@
+{
+  "scope": "Unicorn executed ARM instructions for one row; not hardware cycles, timing or FPS",
+  "rows": [
+    {
+      "build": "before",
+      "source_width": 320,
+      "target_width": 640,
+      "arm_instructions": 1934
+    },
+    {
+      "build": "before",
+      "source_width": 640,
+      "target_width": 640,
+      "arm_instructions": 2581
+    },
+    {
+      "build": "before",
+      "source_width": 640,
+      "target_width": 960,
+      "arm_instructions": 64786
+    },
+    {
+      "build": "before",
+      "source_width": 320,
+      "target_width": 960,
+      "arm_instructions": 60607
+    },
+    {
+      "build": "before",
+      "source_width": 640,
+      "target_width": 508,
+      "arm_instructions": 34551
+    },
+    {
+      "build": "before",
+      "source_width": 800,
+      "target_width": 640,
+      "arm_instructions": 42597
+    },
+    {
+      "build": "candidate",
+      "source_width": 320,
+      "target_width": 640,
+      "arm_instructions": 1935
+    },
+    {
+      "build": "candidate",
+      "source_width": 640,
+      "target_width": 640,
+      "arm_instructions": 2579
+    },
+    {
+      "build": "candidate",
+      "source_width": 640,
+      "target_width": 960,
+      "arm_instructions": 10599
+    },
+    {
+      "build": "candidate",
+      "source_width": 320,
+      "target_width": 960,
+      "arm_instructions": 10599
+    },
+    {
+      "build": "candidate",
+      "source_width": 640,
+      "target_width": 508,
+      "arm_instructions": 5645
+    },
+    {
+      "build": "candidate",
+      "source_width": 800,
+      "target_width": 640,
+      "arm_instructions": 7093
+    }
+  ]
+}
