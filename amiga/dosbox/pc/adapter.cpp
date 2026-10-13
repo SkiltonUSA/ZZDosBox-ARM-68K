@@ -70,7 +70,7 @@ public:
 };
 static RomPage rom_page;
 static PageHandler *handlers[2048];
-PageHandler *MEM_GetPageHandler(Bitu page){if(page>=2048)E_Exit("Guest page bound");return handlers[page]?handlers[page]:&ram_page;}
+PageHandler *MEM_GetPageHandler(Bitu page){if(page>=2048)E_Exit("Guest page bound %x at %x:%x ss:sp=%x:%x",(unsigned)page,SegValue(cs),reg_eip,SegValue(ss),reg_esp);return handlers[page]?handlers[page]:&ram_page;}
 void MEM_SetPageHandler(Bitu page,Bitu pages,PageHandler *h){if(page>2048||pages>2048-page)E_Exit("Page handler bound");for(Bitu i=0;i<pages;i++)handlers[page+i]=h;PAGING_ClearTLB();}
 void MEM_ResetPageHandler(Bitu p,Bitu n){MEM_SetPageHandler(p,n,nullptr);}
 void MEM_SetLFB(Bitu,Bitu,PageHandler*,PageHandler*){E_Exit("SVGA LFB not supported");}

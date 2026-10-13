@@ -3,7 +3,7 @@
 #include <chrono>
 #include <thread>
 static bool interactive;
-static unsigned interactive_keys;
+static unsigned interactive_keys,interactive_mouse;
 static auto interactive_start=std::chrono::steady_clock::now();
 void db_native_exception(Bitu which,Bitu error){
  static unsigned count;
@@ -20,6 +20,13 @@ void db_native_exception(Bitu which,Bitu error){
 static void interactive_tick(){
  if(!interactive)return;
  if(PIC_Ticks%20==0){
+  std::ifstream mousefile(".context/amiga/wfw311/mouse.txt");unsigned mx,my,buttons,valid,mi=0;
+  while(mousefile>>mx>>my>>buttons>>valid){if(mi++==interactive_mouse){
+   unsigned w=ad_get(shared,PC_MOUSE_WRITE),r=ad_get(shared,PC_MOUSE_READ);
+   if(w-r<PC_MOUSE_SIZE){unsigned p=PC_MOUSE_DATA+(w&(PC_MOUSE_SIZE-1))*PC_MOUSE_STRIDE;
+    ad_put(shared,p,mx);ad_put(shared,p+4,my);ad_put(shared,p+8,buttons);ad_put(shared,p+12,valid);ad_put(shared,PC_MOUSE_WRITE,w+1);interactive_mouse++;
+   }break;
+  }}
   std::ifstream keys(".context/amiga/wfw311/keys.txt");unsigned key,down,n=0;
   while(keys>>key>>down){if(n++==interactive_keys){if(key>0&&key<KBD_LAST&&down<2)KEYBOARD_AddKey((KBD_KEYS)key,down);interactive_keys++;break;}}
  }

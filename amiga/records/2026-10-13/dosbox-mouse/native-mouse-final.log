@@ -1,0 +1,21 @@
+FILES requests=8 read=304 written=0; handles closed
+PC rc=0 fault=0 detail=DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: w slices=1199 ticks=6 frames=0 size=640x480 bpp=16
+DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>mousetst
+DOS mouse + PS2 IRQ12 PASS
+
+C:\>exit
+
+
+Mouse stage=5 host=4
+PASS mouse queue wrap, scaled position, 3 buttons, focus release, BIOS PS2 callback

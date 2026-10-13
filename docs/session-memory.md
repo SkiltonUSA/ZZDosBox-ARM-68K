@@ -1,5 +1,38 @@
 # ZZDosBox development handoff
 
+## ZZDosBox mouse and three-game installation — 13 October 2026
+
+Default `SD032G:Dev/ZZDosBox/PC/ZZDosBox` and
+`PC/Windows311/ZZDosBox-WFW` now use the mouse build (977864 bytes), SHA256
+`604a2b276d8896139927445391d9a6ff92687d2b96416fd173727d25745b65b0`,
+MD5 `a0472312aa609271755c08f16702d42f`. Both promoted copies were independently
+checksummed. Recovery: `PC/ZZDosBox-PreMouse` and
+`PC/Windows311/ZZDosBox-NoMouse`. Launcher remains 0.10.1-dev; no firmware change.
+Mouse input is automatic, no extra Amiga library. DOS INT33 and BIOS PS/2;
+three buttons, window/fullscreen mapping, focus/display-transition releases.
+Host pointer hidden over the guest image. No continuous relative pointer capture.
+
+Windows now uses its supplied Microsoft/IBM PS/2 `MOUSE.DRV`. Previous
+`WINDOWS/SYSTEM.INI` is backed up as `SYSTEM.PRE` inside the private disk.
+The temporary WFWHD diskimage unit 6 was ejected before boot. Never mount it
+concurrently with the emulator. No Microsoft driver/image goes to GitHub.
+
+Physical tests: Oregon Options/quit, Windows movement/double-click Write,
+Windows exit to DOS, final build window/fullscreen switches and input. Native
+ASan and full linked ARM model suite pass. All final hardware teardowns restored
+register/cache witnesses and released owned memory. One injected F10 during
+a view transition was missed; repeat after the player has focus. The final
+session is closed, Workbench/launcher remain up, no Core1 owner.
+
+Added 242 checksum-verified game files in Shell/Games/EMPIRE, OREGON and CIV;
+appended three profiles while preserving the five existing entries. Oregon
+uses `OREGON.EXE -16`. Civilization's English hard-disk files were extracted
+from the supplied data-CD image; no CD mount is needed for that profile.
+Empire/Civilization are installed, not full compatibility results. Launcher
+had unsaved File startup selections with empty paths; restored Default for
+AUTOEXEC/CONFIG so it could save/close normally. Private game/media archives
+remain local. Evidence: `amiga/records/2026-10-13/dosbox-mouse/`.
+
 ## ZZDosBox physical Windows / WinBench pass — 13 October 2026
 
 The smaller-TLB build is installed as
@@ -25,7 +58,8 @@ File / Exit Windows, confirm, and use F10 at the DOS prompt to close ZZDosBox.
 This full lifecycle passed: SHELL PASS, disk/handles closed, no register/cache
 witness mismatch, launcher exit 0, owned memory released. No Guru/reboot.
 Left on Workbench, launcher still open, no Core1 owner. Evidence and screenshots:
-`amiga/records/2026-10-13/dosbox-wfw/`. These physical findings supersede the earlier pending-retest status.
+`amiga/records/2026-10-13/dosbox-wfw/`. Physical findings and owner-provided DOS/Windows screenshots are now backed up
+on private GitHub main `20dc70cc47be9fbae8a5b5b2d252b61b6e615313`; remote hash and 821-file manifest verified.
 
 ## ZZDosBox Windows research and GitHub backup — 13 October 2026
 

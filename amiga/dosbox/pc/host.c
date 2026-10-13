@@ -203,7 +203,7 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected){
  {unsigned j;for(j=0;j<160;j++)shared[PC_BOOT_COMMAND+j]=settings.system?settings.command[j]:0;syncio->push(shared+PC_BOOT_COMMAND,160,NULL);}
  pc_display_mode(settings.display);pc_display_size(settings.size);
  printf("DISPLAY_CONFIG mode=%s fps=%u system=%s\n",settings.display?"fullscreen":"window",settings.fps,(*hdd_name||*boot_name)?"booted DOS":"embedded DOS 5");
- publish(PC_OPTIONS,0);publish(PC_KEY_WRITE,0);publish(PC_KEY_READ,0);publish(PC_CONSOLE_WAIT,0);
+ publish(PC_OPTIONS,0);publish(PC_KEY_WRITE,0);publish(PC_KEY_READ,0);publish(PC_MOUSE_WRITE,0);publish(PC_MOUSE_READ,0);publish(PC_CONSOLE_WAIT,0);
  if(configured){publish(PC_OPTIONS+4,settings.memory);publish(PC_OPTIONS+8,settings.machine);publish(PC_OPTIONS+12,settings.cycles);publish(PC_OPTIONS,PC_OPTIONS_MAGIC);printf("SETTINGS memory_mb=%u machine=%u cycles=%u live=%u\n",settings.memory,settings.machine,settings.cycles,settings.live);}
  publish(PC_CYCLE_REQUEST,configured?settings.cycles:3000);publish(PC_CYCLE_APPLIED,0);
  publish(PC_DURATION,duration);publish(PC_DONE,0);

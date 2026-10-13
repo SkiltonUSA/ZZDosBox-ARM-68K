@@ -1,0 +1,49 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=85aebc69
+BOOTSTRAP amiga=4060c700 arm=007fc700 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+DISPLAY_CONFIG mode=window fps=1 system=embedded DOS 5
+SETTINGS memory_mb=2 machine=0 cycles=3000 live=1
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+CPU_CYCLES applied=3000
+ARM_FPS tenths=304
+PC frames=2632 emulated_ms=43940 wall_ms=113988 timed_done=0
+POLL ms=1 calls=52494 wait_us=77719492 max_us=82793
+SHELL result=0 guest_exit=0 slices=1367745 bytes=293 hash=eacfd011 mismatches=0
+DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>OREGON.EXE -16
+
+C:\>exit
+
+
+SHELL PASS mode=0
+FILES requests=4960 read=1065445 written=267; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=14 press=5 release=5
+DISPLAY frames=2632 flips=0 wait_us=0
+COPY observed_us=15494709 max_us=83165
+PIPELINE enabled=0 overlaps=0 releases=2632
+LAUNCHER exit=0; owned memory released

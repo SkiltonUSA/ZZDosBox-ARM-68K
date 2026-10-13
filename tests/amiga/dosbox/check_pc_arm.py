@@ -88,6 +88,10 @@ def run(base,mode,profile=False,options=None):
   files={};keys=b'type d:\\hello.txt\rcopy d:\\large.bin c:\\CDLARGE.BIN\rexit\r'
  if mode=='midi':
   files={'MIDITEST.COM':(OUT/'MIDITEST.COM').read_bytes()};keys=b'miditest\rexit\r';put(0x1883c0,1);put(0x18a000,0xffffff00);put(0x18a040,0xffffff00)
+ if mode in ('mouse','mouse-invalid','mouse-stop'):
+  files={'MOUSETST.COM':(OUT/'MOUSETST.COM').read_bytes()};keys=b'mousetst\rexit\r'
+  put(0x188400,0xfffffffe);put(0x188440,0xfffffffe)
+ mouse_stage=0
  midi_bytes=bytearray()
  raw_sent=False
  disk_open=False
@@ -104,6 +108,13 @@ def run(base,mode,profile=False,options=None):
  for tick in range(50000):
   # Preserve Thumb state when resuming a quantum inside the soft-float library.
   u.emu_start(pc | (1 if u.reg_read(UC_ARM_REG_CPSR)&32 else 0),base+0x1ff0000,count=100000);pc=u.reg_read(UC_ARM_REG_PC);assert not bad,bad
+  if mode in ('mouse','mouse-invalid','mouse-stop'):
+   stage=u.mem_read(symbols['_ZL3ram']+0x500,1)[0]
+   if 0<stage<5 and stage!=mouse_stage:
+    w=get(0x188400);at=0x188480+(w&127)*16
+    for off,val in [(0,16384),(4,49151),(8,1 if stage in (1,4) else 6 if stage==2 else 0),(12,2 if mode=='mouse-invalid' else int(stage!=3))]:put(at+off,val)
+    put(0x188400,w+1);mouse_stage=stage
+    if mode=='mouse-stop':stopping=True
   mr=get(0x18a040);mw=get(0x18a000);mn=(mw-mr)&0xffffffff;assert mn<=4096
   for mi in range(mn):midi_bytes+=u.mem_read(base+0x18b000+((mr+mi)&4095),1)
   put(0x18a040,mw)
@@ -202,6 +213,16 @@ def run(base,mode,profile=False,options=None):
   buckets=[(get(0x188098+i*16)<<32)|get(0x18809c+i*16) for i in range(6)]
   assert total>0 and sum(buckets)==total,(total,buckets)
   print('PASS profile publication and exclusive totals',mode,'unwound',get(0x188090),flush=True)
+ if mode=='mouse':
+  assert rc==0 and b'DOS mouse + PS2 IRQ12 PASS' in output and not handles,(rc,result,detail,output[-300:])
+  assert get(0x188400)==2 and get(0x188440)==2
+  print('PASS ARM mouse ring wrap, DOS position/buttons, release and BIOS PS2 IRQ12',flush=True);return
+ if mode=='mouse-invalid':
+  assert rc==1 and b'Mouse event bound' in detail,(rc,result,detail)
+  print('PASS ARM malformed mouse event rejected',flush=True);return
+ if mode=='mouse-stop':
+  assert rc==2 and result[4]==3 and stopping,(rc,result,detail)
+  print('PASS ARM cancellation with pending mouse input',flush=True);return
  if mode=='cd':
   assert rc==0 and b'ZZCD data read PASS' in output and files['CDLARGE.BIN']==bytes(i%251 for i in range(5003)),(rc,result,detail,output[-300:])
   print('PASS ARM CD ISO9660 file read and cross-sector copy',flush=True);return
@@ -239,7 +260,7 @@ def run(base,mode,profile=False,options=None):
   return
  if mode in ('guest-bound','high-bank-bound'):
   expected=(b'Guest page bound',) if mode=='guest-bound' else (b'Guest page bound',b'Out of Memory')
-  assert rc==1 and detail in expected,(rc,result,detail)
+  assert rc==1 and any(detail==e or detail.startswith(e+b' ') for e in expected),(rc,result,detail)
   print('PASS banked TLB rejects unsupported guest address',mode,detail.decode(),flush=True);return
  if mode=='invalid-options':
   assert rc==1 and b'Invalid PC options' in detail and frame_seq==0,(rc,result,detail)
@@ -305,3 +326,6 @@ if __name__=='__main__':
  run(0x12000040,'cd');run(0x150020c0,'midi')
 
 if __name__=='__main__':run(0x12000040,'speed')
+
+if __name__=="__main__":
+ for mode in ("mouse","mouse-invalid","mouse-stop"):run(0x12000040,mode)

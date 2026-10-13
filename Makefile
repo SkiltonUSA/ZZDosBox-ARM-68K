@@ -18,5 +18,7 @@ test-host:
 	.context/tests/capture
 	clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/scale.cpp -o .context/tests/scale
 	.context/tests/scale
+	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc tests/amiga/dosbox/mouse_geometry.c -o .context/tests/mouse
+	.context/tests/mouse
 test-model:
 	$(PYTHON) tests/amiga/dosbox/check_pc_arm.py

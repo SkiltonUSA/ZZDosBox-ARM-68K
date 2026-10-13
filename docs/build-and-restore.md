@@ -55,6 +55,8 @@ refresh throughput, not steady gameplay or a full-speed emulation claim.
 
 ## Runtime requirements
 
+See [Amiga requirements](requirements.md) for required and optional drivers.
+
 AmigaOS, MUI 3.8+, Picasso96, ZZ9000 and compatible XACP firmware (tested XX19c).
 Disk-image access additionally requires diskimage.device and fat95. Supply
 licensed DOS disks yourself. Workbench and DOS must not mount a writable image
@@ -76,3 +78,12 @@ the new build, so rebuild current source before testing a baseline restoration.
 The native WfW harness needs separately supplied media and local scratch paths.
 Neither Windows nor WinBench is bundled. Native desktop/WinBench startup does
 not establish physical ARM performance or a completed benchmark score.
+
+## Current mouse build
+
+In a fresh checkout, restore with
+`python3 scripts/restore_build_inputs.py --mouse-build` before running the
+current model suite. This selects the mouse-capable ELF and its original
+INT33/PS2 fixture; the older Windows experiment predates this fixture.
+`python3 scripts/build_dosbox_pc.py --sanitize --game mouse` runs the native
+mouse test after preparing the pinned source. No licensed media is needed.

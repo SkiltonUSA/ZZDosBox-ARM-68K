@@ -8,6 +8,8 @@
 #include "pic.h"
 #include "keyboard.h"
 #include "inout.h"
+extern void db_mouse_reset();
+extern void MOUSE_Init(Section*);
 extern void IO_Init(Section*),PIC_Init(Section*),TIMER_Init(Section*),CMOS_Init(Section*),KEYBOARD_Init(Section*),BIOS_Init(Section*),VGA_Init(Section*),INT10_Init(Section*);
 extern void IO_Destroy(Section*),PIC_Destroy(Section*),TIMER_Destroy(Section*),CMOS_Destroy(Section*),BIOS_Destroy(Section*),zz_vga_memory_close();
 
@@ -22,7 +24,7 @@ static void write_a20(Bitu,Bitu value,Bitu){
 }
 void db_pc_init(){
  CPU_CycleMax=db_cpu_cycles;CPU_Cycles=0;CPU_CycleLeft=db_cpu_cycles;PIC_Ticks=0;
- db_video_reset();IO_Init(nullptr);PIC_Init(nullptr);TIMER_Init(nullptr);CMOS_Init(nullptr);KEYBOARD_Init(nullptr);BIOS_Init(nullptr);VGA_Init(nullptr);INT10_Init(nullptr);db_midi_setup();MPU401_Init(nullptr);initialized=true;
+ db_video_reset();IO_Init(nullptr);PIC_Init(nullptr);TIMER_Init(nullptr);CMOS_Init(nullptr);KEYBOARD_Init(nullptr);BIOS_Init(nullptr);VGA_Init(nullptr);INT10_Init(nullptr);MOUSE_Init(nullptr);db_mouse_reset();db_midi_setup();MPU401_Init(nullptr);initialized=true;
  a20_control=0;IO_RegisterReadHandler(0x92,read_a20,IO_MB);IO_RegisterWriteHandler(0x92,write_a20,IO_MB);MEM_A20_Enable(false);
 }
 void db_pc_close(){if(!initialized)return;MPU401_Destroy(nullptr);BIOS_Destroy(nullptr);TIMER_Destroy(nullptr);CMOS_Destroy(nullptr);PIC_Destroy(nullptr);zz_vga_memory_close();IO_Destroy(nullptr);initialized=false;}
@@ -32,8 +34,7 @@ void PCSPEAKER_SetCounter(Bitu,Bitu){}
 void PCSPEAKER_SetType(Bitu){}
 bool JOYSTICK_IsEnabled(Bitu){return false;}
 float JOYSTICK_GetMove_X(Bitu){return 0;}float JOYSTICK_GetMove_Y(Bitu){return 0;}
-bool Mouse_SetPS2State(bool){return false;}void Mouse_ChangePS2Callback(Bit16u,Bit16u){}
-void Mouse_BeforeNewVideoMode(bool){}void Mouse_AfterNewVideoMode(bool){}
+void Mouse_AutoLock(bool){} /* Intuition retains ownership of the host pointer. */
 #include "setup.h"
 #include "mapper.h"
 bool DOS_LayoutKey(Bitu,Bit8u,Bit8u,Bit8u){return false;}

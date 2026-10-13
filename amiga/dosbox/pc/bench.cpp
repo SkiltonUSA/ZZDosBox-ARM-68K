@@ -11,6 +11,7 @@
 #include "console_io.h"
 #include "bench.h"
 #include "pc_wire.h"
+#include "mouse_input.h"
 #include "profile.h"
 #include "options.h"
 #include "keys.h"
@@ -36,6 +37,7 @@ static void boot_keys(){
  }
 }
 void db_pc_tick(){
+ db_mouse_tick(db_shared());
  unsigned requested=ad_get(db_shared(),PC_CYCLE_REQUEST);
  if(requested){if(requested<500||requested>10000)E_Exit("CPU speed request out of bounds");if(requested!=db_cpu_cycles){db_cpu_cycles=requested;CPU_CycleMax=requested;}ad_put(db_shared(),PC_CYCLE_APPLIED,requested);}
  unsigned t=ad_get(db_shared(),PC_DURATION);

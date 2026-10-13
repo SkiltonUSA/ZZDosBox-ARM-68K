@@ -27,6 +27,8 @@ static int display_hotkey(UWORD raw,UWORD qualifiers){
 static int display_switch(void){
  unsigned i;if(switch_requested<0||switch_requested==fullscreen){switch_requested=-1;return 1;}
  if(active||direct_locked||(fullscreen&&!pc_flow_idle(&flow,&full_slots)))return 1;
+ if(!mouse_room())return 1;
+ if(!mouse_release())return 0;
  /* Release guest modifiers before changing the input window. */
  for(i=0;i<128;i++)if(window_keys[i]&&!window_key(i|128))return 0;
  if(fullscreen){

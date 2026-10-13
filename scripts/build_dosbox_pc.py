@@ -5,14 +5,14 @@ from pathlib import Path
 import build_dosbox_shell as shell
 ROOT=shell.ROOT;OUT=ROOT/'.context/amiga/dosbox-pc';SRC=ROOT/'amiga/dosbox/pc';UP=shell.UP
 HW=['iohandler','pic','timer','keyboard','cmos','mpu401','vga','vga_attr','vga_crtc','vga_dac','vga_draw','vga_gfx','vga_other','vga_memory','vga_misc','vga_seq','vga_xga']
-INTS=['bios','bios_disk','bios_keyboard','int10','int10_char','int10_memory','int10_misc','int10_modes','int10_vesa','int10_pal','int10_put_pixel','int10_video_state','int10_vptable']
+INTS=['mouse','bios','bios_disk','bios_keyboard','int10','int10_char','int10_memory','int10_misc','int10_modes','int10_vesa','int10_pal','int10_put_pixel','int10_video_state','int10_vptable']
 def prepare():
  shell.OUT=OUT;sources=shell.prepare();patch=[]
  planes=bytes(sum(((((x*8+bit)//80+4*(y//50))>>plane)&1)<<(7-bit) for bit in range(8)) for plane in range(4) for y in range(200) for x in range(40))
  (OUT/'ega-planes.bin').write_bytes(planes)
  subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/'egatest.S'),'-o','egatest.o'],cwd=OUT,check=True)
  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x100','--oformat=binary','egatest.o','-o','EGATEST.COM'],cwd=OUT,check=True)
- for name in ['keytest','cgatest','boottest','pagingtest','hddtest','badmem','miditest','welcome']:
+ for name in ['keytest','cgatest','boottest','pagingtest','hddtest','badmem','miditest','welcome','mousetst']:
   subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/(name+'.S')),'-o',name+'.o'],cwd=OUT,check=True)
   subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x7c00' if name=='pagingtest' else '0x100','--oformat=binary',name+'.o','-o',name.upper()+'.COM'],cwd=OUT,check=True)
  (OUT/'ZZHELLO.COM').write_bytes((OUT/'WELCOME.COM').read_bytes())
@@ -62,6 +62,9 @@ __attribute__((noinline)) tlb_entry *PAGING_GetHighTLBEntry(PhysPt address) {
   text=text.replace('delete test;', 'PIC_RemoveEvents(MPU401_Event);PIC_RemoveEvents(MPU401_EOIHandler);PIC_RemoveEvents(MPU401_ResetDone);delete test;test=nullptr;')
   return 'extern unsigned db_midi_mode;\n'+text
  change('src/hardware/mpu401.cpp',mpu)
+ # Keep INT33 callbacks in BIOS callback storage: booted DOS owns low RAM.
+ # Preserve the nonzero segment/offset expected by older DOS applications.
+ change('src/ints/mouse.cpp',lambda s:s.replace('RealMake(DOS_GetMemory(0x1)-1,0x10)', 'RealMake(CB_SEG+1,CB_SOFFSET+(call_int33*CB_SIZE)-0x10)')+"\nextern \"C\" bool db_mouse_relative(){return useps2callback;}\n")
  change('src/hardware/iohandler.cpp',lambda s:s.replace('../src/cpu/lazyflags.h','../cpu/lazyflags.h'))
  change('src/hardware/vga.cpp',lambda s:s[:s.index('void SVGA_Setup_Driver(void) {')]+'void SVGA_Setup_Driver(void) { memset(&svga,0,sizeof(svga));vga.vmemsize=vga.vmemwrap=256*1024; }\n')
  change('src/hardware/vga_memory.cpp',lambda s:s+'\nvoid zz_vga_memory_close(){VGA_Memory_ShutDown(nullptr);}\n')
@@ -133,7 +136,7 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
  return sources
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw'],default='fixture');args=p.parse_args();sources=prepare()
+ p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse'],default='fixture');args=p.parse_args();sources=prepare()
  if args.prepare_only:return
  flags=['-std=c++17','-O2','-g','-fno-exceptions','-fno-rtti','-ffunction-sections','-fdata-sections','-Wno-format','-Wno-deprecated-declarations','-DZZ_CONTROL=0x180000','-DDB_NATIVE','-DZZ_PC_CD',*['-I'+str(x) for x in [SRC,shell.SRC,ROOT/'amiga/dosbox/dos',ROOT/'amiga/dosbox/console',OUT,OUT/'include',OUT/'src/cpu',OUT/'src/ints',ROOT/'amiga/dosbox',ROOT/'amiga/mesen_bench',ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']]]
  if args.sanitize:flags+=['-fsanitize=address','-fno-omit-frame-pointer']

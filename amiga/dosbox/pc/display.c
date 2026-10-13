@@ -48,7 +48,7 @@ void pc_display_size(unsigned preset){window_preset=preset<3?preset:1;}
 void pc_display_mode(int full){fullscreen=full!=0;}
 void pc_display_pipeline(int enabled){pipeline=enabled!=0;}
 int pc_display_open(volatile uint8_t *b,const struct ad_io *io){
- shared=b;syncio=io;active=complete=frames=0;
+ shared=b;syncio=io;active=complete=frames=0;host_mouse_buttons=host_mouse_events=host_mouse_down=host_mouse_up=0;
  copy_start=copy_us=copy_max=0;
  overlaps=releases=0;locked_memory=NULL;pc_flow_init(&flow,pipeline?2:1);
  GfxBase=(struct GfxBase*)OpenLibrary("graphics.library",39);if(!GfxBase)return 0;
@@ -75,9 +75,10 @@ int pc_display_service(void){
  }
  if(!direct_locked && window){struct IntuiMessage *msg;
   display_focus();
-  while((msg=(struct IntuiMessage *)GetMsg(window->UserPort))){ULONG cl=msg->Class;UWORD raw=msg->Code,qual=msg->Qualifier;ReplyMsg((struct Message *)msg);
+  while(mouse_room()&&(msg=(struct IntuiMessage *)GetMsg(window->UserPort))){ULONG cl=msg->Class;UWORD raw=msg->Code,qual=msg->Qualifier;WORD mx=msg->MouseX,my=msg->MouseY;ReplyMsg((struct Message *)msg);
+   if(!mouse_event(cl,raw,mx,my))return 0;
    if(cl==IDCMP_RAWKEY){if(raw==0x59)return -1;if(!display_hotkey(raw,qual)&&!window_key(raw))return 0;}
-   if(cl==IDCMP_INACTIVEWINDOW){unsigned i;for(i=0;i<128;i++)if(window_keys[i]&&!window_key(i|128))return 0;}
+   if(cl==IDCMP_INACTIVEWINDOW){unsigned i;if(!mouse_release())return 0;for(i=0;i<128;i++)if(window_keys[i]&&!window_key(i|128))return 0;}
   }
  }
  if(switch_requested>=0)return display_switch();
@@ -117,6 +118,7 @@ void ff_cleanup(void){
  if(direct_readback){FreeVec(direct_readback);direct_readback=NULL;}
  if(GfxBase){CloseLibrary((struct Library*)GfxBase);GfxBase=NULL;}
  pc_console_cleanup();
+ printf("MOUSE events=%u press=%u release=%u\n",host_mouse_events,host_mouse_down,host_mouse_up);
  printf("DISPLAY frames=%u flips=%u wait_us=%u\n",frames,full_slots.flips,full_wait_us);
  printf("COPY observed_us=%u max_us=%u\n",copy_us,copy_max);
  printf("PIPELINE enabled=%u overlaps=%u releases=%u\n",pipeline,overlaps,releases);

@@ -1,0 +1,15 @@
+{
+  "ZZDosBox": {
+    "bytes": 977864,
+    "sha256": "604a2b276d8896139927445391d9a6ff92687d2b96416fd173727d25745b65b0"
+  },
+  "dosbox.elf": {
+    "bytes": 931712,
+    "sha256": "6fd8423fcded5b91b562283ff6d6b483106a7188673082901930d78ac97c3aa7"
+  },
+  "build.json": {
+    "bytes": 22271,
+    "sha256": "feaf20b2e338a7748d532ed06ed9a9912a8bcee02ae922615f8c8d53a3e97e78"
+  },
+  "arm_matches_model_tested_elf": true
+}

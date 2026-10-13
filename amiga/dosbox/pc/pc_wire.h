@@ -33,3 +33,15 @@
 
 #define PC_CYCLE_REQUEST (PC_VIDEO+964u) /* Host request, 500..10000 cycles/ms. */
 #define PC_CYCLE_APPLIED (PC_VIDEO+968u) /* ARM acknowledgement at tick boundary. */
+
+/* Mouse events: independent producer/consumer cache lines, 128 x 16 bytes.
+ * x/y normalized 0..65535, buttons bits 0..2, position-valid 0/1.
+ * A release without position is used for focus and display transitions. */
+#define PC_MOUSE_WRITE (PC_VIDEO+1024u)
+#define PC_MOUSE_READ (PC_VIDEO+1088u)
+#define PC_MOUSE_DATA (PC_VIDEO+1152u)
+#define PC_MOUSE_SIZE 128u
+#define PC_MOUSE_STRIDE 16u
+#if PC_MOUSE_DATA+PC_MOUSE_SIZE*PC_MOUSE_STRIDE > PC_BOOT_TEXT
+#error Mouse queue overlaps boot text
+#endif

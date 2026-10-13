@@ -6,6 +6,7 @@ static int window_ready;
 static unsigned window_preset=1,window_width,window_height,paint_width,paint_height;
 static LONG window_black=-1;
 static UBYTE window_keys[128];
+#include "mouse_host.h"
 static void window_black_rect(LONG x,LONG y,LONG w,LONG h){
  if(w>0&&h>0)RectFill(window->RPort,x,y,x+w-1,y+h-1);
 }
@@ -41,9 +42,10 @@ static int window_open(void){
  if(!direct_bitmap||!p96GetBitMapAttr(direct_bitmap,P96BMA_ISONBOARD))return 0;
  window=OpenWindowTags(NULL,WA_PubScreen,(ULONG)workbench,WA_Left,60,WA_Top,70,
   WA_InnerWidth,width,WA_InnerHeight,height,WA_Title,(ULONG)"ZZDosBox - F10 closes",
-  WA_Flags,WFLG_SIZEGADGET|WFLG_SIZEBBOTTOM|WFLG_DRAGBAR|WFLG_DEPTHGADGET|WFLG_CLOSEGADGET|WFLG_ACTIVATE|WFLG_SIMPLE_REFRESH,
-  WA_IDCMP,IDCMP_NEWSIZE|IDCMP_RAWKEY|IDCMP_CLOSEWINDOW|IDCMP_REFRESHWINDOW|IDCMP_INACTIVEWINDOW,TAG_DONE);
+  WA_Flags,WFLG_REPORTMOUSE|WFLG_RMBTRAP|WFLG_SIZEGADGET|WFLG_SIZEBBOTTOM|WFLG_DRAGBAR|WFLG_DEPTHGADGET|WFLG_CLOSEGADGET|WFLG_ACTIVATE|WFLG_SIMPLE_REFRESH,
+  WA_IDCMP,IDCMP_MOUSEMOVE|IDCMP_MOUSEBUTTONS|IDCMP_NEWSIZE|IDCMP_RAWKEY|IDCMP_CLOSEWINDOW|IDCMP_REFRESHWINDOW|IDCMP_INACTIVEWINDOW,TAG_DONE);
  if(!window)return 0;
+ window_mouse_pointer=AllocMem(12,MEMF_CHIP|MEMF_CLEAR);
  WindowLimits(window,320+window->BorderLeft+window->BorderRight,240+window->BorderTop+window->BorderBottom,960+window->BorderLeft+window->BorderRight,720+window->BorderTop+window->BorderBottom);
  window_paint();
  printf("WINDOW native_format=%u geometry=%ux%u resizable=1 ARM=owned-bitmap present=P96-blit\n",format,width,height);
@@ -60,13 +62,14 @@ static int window_events(void){
  struct IntuiMessage *msg;
  if(direct_locked)return 1;
  display_focus();
- while((msg=(struct IntuiMessage*)GetMsg(window->UserPort))){
-  ULONG cl=msg->Class;UWORD raw=msg->Code,qual=msg->Qualifier;ReplyMsg((struct Message*)msg);
+ while(mouse_room()&&(msg=(struct IntuiMessage*)GetMsg(window->UserPort))){
+  ULONG cl=msg->Class;UWORD raw=msg->Code,qual=msg->Qualifier;WORD mx=msg->MouseX,my=msg->MouseY;ReplyMsg((struct Message*)msg);
+  if(!mouse_event(cl,raw,mx,my))return 0;
   if(cl==IDCMP_CLOSEWINDOW||(cl==IDCMP_RAWKEY&&raw==0x59))return -1;
   if(cl==IDCMP_REFRESHWINDOW){BeginRefresh(window);window_paint();EndRefresh(window,TRUE);}
   if(cl==IDCMP_NEWSIZE)window_paint();
   if(cl==IDCMP_RAWKEY&&!display_hotkey(raw,qual)&&!window_key(raw))return 0;
-  if(cl==IDCMP_INACTIVEWINDOW){unsigned i;for(i=0;i<128;i++)if(window_keys[i]&&!window_key(i|128))return 0;}
+  if(cl==IDCMP_INACTIVEWINDOW){unsigned i;if(!mouse_release())return 0;for(i=0;i<128;i++)if(window_keys[i]&&!window_key(i|128))return 0;}
 
  }
  return 1;
@@ -106,7 +109,9 @@ static int window_service(void){
 static void window_cleanup(void){
  /* No blitter/Intuition or allocation teardown until Core1 is synchronously idle. */
  full_unlock();
- if(window){CloseWindow(window);window=NULL;}
+ if(window){if(window_mouse_hidden)ClearPointer(window);CloseWindow(window);window=NULL;}
+ window_mouse_hidden=0;
+ if(window_mouse_pointer){FreeMem(window_mouse_pointer,12);window_mouse_pointer=NULL;}
  if(direct_bitmap){p96FreeBitMap(direct_bitmap);direct_bitmap=NULL;}
  if(workbench&&window_black>=0){ReleasePen(workbench->ViewPort.ColorMap,window_black);window_black=-1;}
  if(workbench){UnlockPubScreen(NULL,workbench);workbench=NULL;}

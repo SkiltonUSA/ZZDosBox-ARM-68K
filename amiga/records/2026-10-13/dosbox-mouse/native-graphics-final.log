@@ -1,0 +1,52 @@
+FILES requests=100 read=33607 written=269; handles closed
+PC rc=0 fault=0 detail=DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: w slices=105249 ticks=274 frames=18 size=320x400 bpp=16
+DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>md ZZTEMP
+
+C:\>md ZZTEMP\SAVE
+
+C:\>cd ZZTEMP\SAVE
+
+C:\ZZTEMP\SAVE>echo nested-pass > STATE.TXT
+
+C:\ZZTEMP\SAVE>type STATE.TXT
+nested-pass
+
+C:\ZZTEMP\SAVE>cd \
+
+C:\>cd ZZTEMP
+
+C:\ZZTEMP>dir /b
+SAVE
+
+C:\ZZTEMP>cd \
+
+C:\>del ZZTEMP\SAVE\STATE.TXT
+
+C:\>rd ZZTEMP\SAVE
+
+C:\>rd ZZTEMP
+
+C:\>filetest
+ZZDOS files/handles/seek PASS
+
+C:\>exetest
+ZZDOS MZ relocation/memory PASS
+
+C:\>egatest
+EGA/PIT PASS
+
+C:\>exit
+
+
+PASS EGA 16-colour planes, 128000 pixels, PIT/BIOS IRQ timing and DOS return

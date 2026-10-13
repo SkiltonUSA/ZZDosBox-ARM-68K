@@ -16,6 +16,10 @@ Settings includes external MT-32/General MIDI through CAMD and a CAMD/AHI/
 ZZ9000AX driver check. MIDI needs CAMD and a connected external synthesizer.
 
 Requires **MUI 3.8 or later** and XACP on the ZZ9000; tested with XX19c firmware.
+AHI and ZZ9000AX are currently detected only; PCM output is not implemented.
+
+[Features and compatibility](../../docs/features.md) ·
+[Amiga requirements](../../docs/requirements.md) · [Changelog](CHANGELOG.md)
 
 The A9 runs the x86 interpreter and draws directly into the ZZ9000 framebuffer;
 the Amiga handles files, input and display coordination. A writable Amiga
@@ -32,7 +36,7 @@ on the A4000TX. Eight emulated seconds took 15 real seconds: this is not full
 speed or a steady gameplay measurement. Keen map movement, Vette startup,
 Elite launch and return to Workbench have been checked.
 
-Current limits: restricted DOS 8.3 names; no PCM sound-card audio, mouse or joystick.
+Current limits: restricted DOS 8.3 names; no PCM sound-card audio or joystick. The new mouse build supports DOS INT33 and BIOS PS/2 input.
 The Cortex-A9 and this port are 32-bit; 64-bit x86 software is not supported. Embedded DOS has no XMS/EMS driver; CONFIG.SYS is an
 editor/export reference there. Booted MS-DOS runs the configuration and
 drivers on its disk and can use its own HIMEM driver. `DOS=HIGH` and EMM386

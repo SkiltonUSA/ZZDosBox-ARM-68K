@@ -12,6 +12,7 @@
 #include "mem.h"
 #include "cd_host.h"
 #include "pc_wire.h"
+#include "mouse_input.h"
 #include "cpu.h"
 #include "midi_wire.h"
 extern "C" {
@@ -23,6 +24,7 @@ extern "C" void db_native_fs_service(){db_fs_service();}
 static std::string midi_bytes;
 extern "C" void db_native_midi_service(){unsigned r=ad_get(shared,PC_MIDI_READ),w=ad_get(shared,PC_MIDI_WRITE);assert(w-r<=PC_MIDI_SIZE);while(r!=w)midi_bytes+=(char)shared[PC_MIDI_DATA+(r++&(PC_MIDI_SIZE-1))];ad_put(shared,PC_MIDI_READ,r);}
 static void sync_range(volatile void*,size_t,void*){}static void barrier(void*){}
+static bool mouse_mode;static unsigned mouse_stage;
 static bool boot_mode,cd_boot,welcome_mode;static unsigned welcome_border;
 static std::string input,output,boot_text;static unsigned pos;static unsigned limit_ms=8000;
 static int read(void*){return pos<input.size()?(uint8_t)input[pos++]:-1;}
@@ -31,6 +33,12 @@ static int write(void*,const uint8_t*p,unsigned n){output.append((const char*)p,
 static int stop(){if((boot_mode||welcome_mode)&&PIC_Ticks>=limit_ms&&boot_text.empty()){welcome_border=mem_readw(0xb8000+162);for(unsigned i=0;i<80*25;i++)boot_text+=(char)mem_readb(0xb8000+i*2);}return PIC_Ticks>=limit_ms;}
 #include "../../../tests/amiga/dosbox/native_interactive.inc"
 void db_pc_tick(){
+ if(mouse_mode){unsigned stage=mem_readb(0x500);if(stage&&stage<5&&stage!=mouse_stage){
+  unsigned w=ad_get(shared,PC_MOUSE_WRITE),p=PC_MOUSE_DATA+(w&(PC_MOUSE_SIZE-1))*PC_MOUSE_STRIDE;
+  ad_put(shared,p,16384);ad_put(shared,p+4,49151);ad_put(shared,p+8,stage==1||stage==4?1:stage==2?6:0);ad_put(shared,p+12,stage!=3);
+  ad_put(shared,PC_MOUSE_WRITE,w+1);mouse_stage=stage;
+ }}
+ db_mouse_tick(db_shared());
  interactive_tick();
  db_native_midi_service();
  // One scheduled Enter key for menu progression; actual PC keyboard/IRQ path.
@@ -63,6 +71,10 @@ int main(int argc,char**argv){
   std::filesystem::copy_file(".context/amiga/dosbox-pc/MIDITEST.COM",root+"/MIDITEST.COM",std::filesystem::copy_options::overwrite_existing);
   ad_put(shared,PC_MIDI_MODE,1);ad_put(shared,PC_MIDI_WRITE,0xffffff00);ad_put(shared,PC_MIDI_READ,0xffffff00);input="miditest\rexit\r";
  }
+ if(game=="mouse"){
+  mouse_mode=true;std::filesystem::copy_file(".context/amiga/dosbox-pc/MOUSETST.COM",root+"/MOUSETST.COM",std::filesystem::copy_options::overwrite_existing);
+  ad_put(shared,PC_MOUSE_WRITE,0xfffffffe);ad_put(shared,PC_MOUSE_READ,0xfffffffe);input="mousetst\rexit\r";
+ }
  if(game=="welcome"){
   welcome_mode=true;db_vga_console=true;limit_ms=1000;
   std::filesystem::copy_file(".context/amiga/dosbox-pc/ZZHELLO.COM",root+"/ZZHELLO.COM",std::filesystem::copy_options::overwrite_existing);input="zzhello\r";
@@ -92,6 +104,7 @@ int main(int argc,char**argv){
   assert(midi_bytes.size()==5000+sizeof(tail));for(unsigned i=0;i<5000;i++)assert((unsigned char)midi_bytes[i]==0xf8);
   assert(!memcmp(midi_bytes.data()+5000,tail,sizeof(tail)));puts("PASS MPU-401 version/UART, MIDI running status/SysEx bytes, queue wrap/backpressure");
  }
+ if(game=="mouse"){printf("Mouse stage=%u host=%u\n",mem_readb(0x500),mouse_stage);fflush(stdout);assert(rc==0&&mem_readb(0x500)==5&&output.find("DOS mouse + PS2 IRQ12 PASS")!=std::string::npos);puts("PASS mouse queue wrap, scaled position, 3 buttons, focus release, BIOS PS2 callback");}
  if(game=="fixture"){
   const uint32_t colors[]={0x000000,0x0000ad,0x00aa00,0x00aaad,0xad0000,0xad00ad,0xad5500,0xadaaad,0x525552,0x5255ff,0x52ff52,0x52ffff,0xff5552,0xff55ff,0xffff52,0xffffff};
   assert(rc==0&&db_frames>=10&&db_width==320&&db_height==400);

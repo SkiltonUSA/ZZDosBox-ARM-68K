@@ -6,9 +6,11 @@ from verify_backup import verify
 ROOT=Path(__file__).resolve().parents[1]
 def main():
  parser=argparse.ArgumentParser()
- parser.add_argument("--windows-experiment",action="store_true")
+ group=parser.add_mutually_exclusive_group()
+ group.add_argument("--windows-experiment",action="store_true")
+ group.add_argument("--mouse-build",action="store_true")
  args=parser.parse_args()
- pc_source="artifacts/experiments/wfw311-small-tlb/pc" if args.windows_experiment else "artifacts/0.8.0-dev/pc"
+ pc_source="artifacts/development/mouse/pc" if args.mouse_build else "artifacts/experiments/wfw311-small-tlb/pc" if args.windows_experiment else "artifacts/0.8.0-dev/pc"
  verify()
  checkout=ROOT/'.context/research/dosbox-libretro';checkout.parent.mkdir(parents=True,exist_ok=True)
  pin=json.loads((ROOT/'amiga/dosbox/upstream.json').read_text())
@@ -17,7 +19,7 @@ def main():
   subprocess.run(['git','-C',str(checkout),'checkout','--detach',pin['revision']],check=True)
  assert subprocess.check_output(['git','-C',str(checkout),'rev-parse','HEAD'],text=True).strip()==pin['revision']
  assert not subprocess.check_output(['git','-C',str(checkout),'status','--porcelain'],text=True).strip()
- for source,target in [(pc_source,'.context/amiga/dosbox-pc'),('artifacts/0.8.0-dev/launcher','.context/amiga/dosbox-launcher')]:
+ for source,target in [(pc_source,'.context/amiga/dosbox-pc'),('artifacts/0.10.1-dev/launcher' if args.mouse_build else 'artifacts/0.8.0-dev/launcher','.context/amiga/dosbox-launcher')]:
   out=ROOT/target;out.mkdir(parents=True,exist_ok=True)
   for p in (ROOT/source).iterdir():
    q=out/p.name
