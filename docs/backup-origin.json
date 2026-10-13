@@ -1,13 +1,14 @@
 {
   "date": "2026-10-13",
-  "version": "0.8.0-dev",
-  "source_head": "824f13a7db0eb98b82b8ef4e1a891db9386227d2",
-  "scope": "Current working source including uncommitted DOSBox development; not a whole-machine backup. Games and Microsoft DOS media excluded.",
-  "runtime_sha256": "65b433b4902c7fe495bdf562129cff912fc7a5eecf4917b7e3837edfb1c561f5",
+  "version": "0.10.1-dev plus Windows experiment",
+  "scope": "DOSBox source, executables, tests and development handoff; not an Amiga disk backup",
   "upstream": {
     "repository": "https://github.com/libretro/dosbox-libretro",
     "revision": "a563bb5e9753f207d74e9d8c417d793b784fa4be",
     "reviewed": "2026-10-12",
     "license": "GPL-2.0-or-later; retain component notices"
-  }
+  },
+  "experimental_runtime_sha256": "e7a17153553633ca535743c8f52051b2c3d9195362be29f356d4ba2e660d6f27",
+  "physical_windows_retest": "pending",
+  "winbench": "Native licence screen reached; no completed benchmark or physical A9 score"
 }

@@ -122,6 +122,6 @@ static void full_cleanup(void){
  if(full_screen){CloseScreen(full_screen);full_screen=NULL;}
  /* The screen copy belongs to Intuition. Free only our supplied bitmap. */
  direct_bitmap=full_allocation;full_allocation=NULL;
- if(GfxBase){CloseLibrary((struct Library *)GfxBase);GfxBase=NULL;}
+
  full_attached=0;
 }

@@ -1,0 +1,19 @@
+mkdir -p .context/tests
+clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/launcher tests/amiga/dosbox/launcher.c -o .context/tests/launcher
+.context/tests/launcher
+PASS profile/session round trip, malformed input, quoted paths, default/edited AUTOEXEC and CRLF
+clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/present_plan.c -o .context/tests/present
+.context/tests/present
+PASS 98 latency schedules, 168000 frames, ACK wrap, slot exclusivity, bounded batches, timeout/stop lock retention
+clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/direct_plan.c -o .context/tests/direct
+.context/tests/direct
+PC direct mapping: 7440 geometry, boundary, no-clobber and unmap cases PASS
+clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/profile.c -o .context/tests/profile
+.context/tests/profile
+PASS profile exclusive sum, nested scopes, cancellation unwind, low-word wrap, bounds
+clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/capture.cpp -o .context/tests/capture
+.context/tests/capture
+PASS all 65536 RGB565 colours, 1024 widths, 8/16/32 bpp, four source alignments and guards
+clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/scale.cpp -o .context/tests/scale
+.context/tests/scale
+PASS scaler: 329728 widths/formats, all 4:3 window widths, exact pixels and row guards

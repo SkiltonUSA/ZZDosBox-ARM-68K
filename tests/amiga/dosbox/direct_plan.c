@@ -33,5 +33,20 @@ int main(void){
  assert(!pc_span(0x200000,764,1));assert(!pc_span(0x200000,4097,1));
  assert(!pc_span(0x200000,1024,0));assert(!pc_span(0x200000,1024,5));
  assert(!pc_map(l1,l2+1,0x10000001,0x200000,1024,3));
+ for(unsigned width=320;width<=960;width+=4){
+  unsigned height=width*3/4,pitch=3840,span=(height-1)*pitch+width*4;
+  uint32_t addr=0x00fffffcu;
+  memset(l1,0,sizeof(l1));memset(l2,0xa5,sizeof(l2));
+  assert(pc_span_size(addr,pitch,3,width,height)==span);
+  assert(pc_map_size(l1,l2+1,0x10000000,addr,pitch,3,width,height));
+  assert(l2[0]==0xa5a5a5a5&&l2[1025]==0xa5a5a5a5);
+  pc_unmap(l1,addr,span);for(unsigned i=0;i<4096;i++)assert(!l1[i]);
+  assert(!pc_span_size(PC_APERTURE_END-span+4,pitch,3,width,height));
+ }
+ assert(!pc_span_size(0x200000,3840,3,0,480));
+ assert(!pc_span_size(0x200000,3840,3,960,721));
+ assert(!pc_span_size(0x200000,3840,3,961,720));
+ assert(!pc_span_size(0x200000,3840,3,0xffffffffu,480));
+ assert(!pc_span_size(0x200000,1280,3,640,480));
  printf("PC direct mapping: %u geometry, boundary, no-clobber and unmap cases PASS\n",cases);
 }

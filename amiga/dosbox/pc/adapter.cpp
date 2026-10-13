@@ -16,6 +16,8 @@
 #include "shell_api.h"
 #include "pc.h"
 #include "timer.h"
+#include "bios.h"
+#include "int10.h"
 #include "profile.h"
 #ifndef DB_NATIVE
 #include "pc_wire.h"
@@ -26,6 +28,8 @@ static void console_wait(int){}
 #endif
 static uint8_t ram[8*1024*1024];
 unsigned db_memory_mb=2,db_machine_option=0,db_cpu_cycles=3000;
+bool db_vga_console=false;unsigned db_text_attr=7;
+static unsigned ansi_bytes;static int extended_key=-1;
 HostPt MemBase=ram;
 MachineType machine=MCH_VGA;
 SVGACards svgaCard=SVGA_None;
@@ -57,6 +61,14 @@ public:
  HostPt GetHostWritePt(Bitu page) override {return GetHostReadPt(page);}
 };
 static RamPage ram_page;
+class RomPage:public RamPage {
+public:
+ RomPage(){flags=PFLAG_READABLE|PFLAG_HASROM;}
+ void writeb(PhysPt,Bitu) override {}
+ void writew(PhysPt,Bitu) override {}
+ void writed(PhysPt,Bitu) override {}
+};
+static RomPage rom_page;
 static PageHandler *handlers[2048];
 PageHandler *MEM_GetPageHandler(Bitu page){if(page>=2048)E_Exit("Guest page bound");return handlers[page]?handlers[page]:&ram_page;}
 void MEM_SetPageHandler(Bitu page,Bitu pages,PageHandler *h){if(page>2048||pages>2048-page)E_Exit("Page handler bound");for(Bitu i=0;i<pages;i++)handlers[page+i]=h;PAGING_ClearTLB();}
@@ -65,7 +77,6 @@ void MEM_SetLFB(Bitu,Bitu,PageHandler*,PageHandler*){E_Exit("SVGA LFB not suppor
 static bool a20;
 bool MEM_A20_Enabled(){return a20;}
 void MEM_A20_Enable(bool on){a20=on;for(unsigned i=0;i<16;i++)PAGING_MapPage(0x100+i,on?0x100+i:i);}
-Bits CPU_Core_Full_Run(){E_Exit("Unexpected full decoder");}
 Bits CPU_Core_Simple_Run(){E_Exit("Unexpected simple decoder");}
 #include "dos_inc.h"
 #include "drive.h"
@@ -78,14 +89,39 @@ void DOSBOX_RunMachine(){
   if(!queued){TIMER_AddTick();db_pc_tick();}
   pc_prof_leave();if(!queued)continue;
   pc_prof_enter(PP_CPU);Bits n=(*cpudecoder)();pc_prof_leave();
-  if(n<0)E_Exit("Decoder error");
+  // The upstream page-fault decoder returns -1 when its nested fault has
+  // completed. Unwind only this RunMachine invocation so paging can resume.
+  if(n<0)return;
   if(n){if((Bitu)n>=CB_MAX||!CallBack_Handlers[n])E_Exit("Invalid callback");if(CallBack_Handlers[n]()==CBRET_STOP)return;}
  }
 }
 void DOSBOX_SetLoop(LoopHandler*){E_Exit("Unexpected loop change");}
 void DOSBOX_SetNormalLoop(){}
 extern void zz_dos_init();
+static void vga_text(const uint8_t *p,unsigned n){
+ for(unsigned i=0;i<n;i++){
+  uint8_t c=p[i];
+  if(ansi_bytes||c==27){
+   if(!ansi_bytes){ansi_bytes=1;continue;}
+   if((ansi_bytes==1&&c!='[')||(ansi_bytes>1&&c>=0x40&&c<=0x7e)||++ansi_bytes>=32)ansi_bytes=0;
+   continue;
+  }
+  INT10_TeletypeOutputAttr(c,db_text_attr,true);
+ }
+}
+static int bios_ready(){return extended_key>=0||mem_readw(BIOS_KEYBOARD_BUFFER_HEAD)!=mem_readw(BIOS_KEYBOARD_BUFFER_TAIL);}
+static int bios_read(){
+ if(extended_key>=0){int c=extended_key;extended_key=-1;return c;}
+ unsigned head=mem_readw(BIOS_KEYBOARD_BUFFER_HEAD),tail=mem_readw(BIOS_KEYBOARD_BUFFER_TAIL);
+ if(head==tail)return -1;
+ unsigned start=mem_readw(BIOS_KEYBOARD_BUFFER_START),end=mem_readw(BIOS_KEYBOARD_BUFFER_END);
+ if(start<0x1e||end>0x100||start>=end||head<start||head>=end||(head&1))E_Exit("BIOS keyboard bounds");
+ unsigned key=real_readw(0x40,head);head+=2;if(head>=end)head=start;mem_writew(BIOS_KEYBOARD_BUFFER_HEAD,head);
+ if(!(key&255))extended_key=(key>>8)&255;
+ return key&255;
+}
 void db_console(const uint8_t *data,unsigned size){
+ if(db_vga_console)vga_text(data,size);
  if(console_io){
   check_stop();int rc=console_io->write(console_io->opaque,data,size);
   if(rc<0)cancelled();if(!rc)E_Exit("Console transport failed");
@@ -97,11 +133,13 @@ void db_console(const uint8_t *data,unsigned size){
  }
  result->text[result->bytes<sizeof(result->text)?result->bytes:sizeof(result->text)-1]=0;
 }
-int db_console_ready(){return console_io&&console_io->ready(console_io->opaque);}
+int db_console_ready(){return (db_vga_console&&bios_ready())||(console_io&&console_io->ready(console_io->opaque));}
 unsigned db_console_read(uint8_t *data,unsigned size,bool echo){
  unsigned used=0;if(!console_io)return 0;
  while(used<size){
-  check_stop();console_wait(!console_io->ready(console_io->opaque));int c=console_io->read(console_io->opaque);
+  check_stop();console_wait(!db_vga_console&&!console_io->ready(console_io->opaque));
+  int c=console_io->read(console_io->opaque);
+  if(c==-1&&db_vga_console){c=bios_read();if(c==-1)CALLBACK_Idle();}
   if(c==-1)continue;if(c==-2)break;
   console_wait(0);
   if(c<0||c>255)E_Exit("Console input failed");
@@ -118,6 +156,7 @@ static Bitu returned(){if(GETFLAG(CF))E_Exit("DOS EXEC failed %u",reg_ax);result
 extern void zz_dosbox_paging_init();
 extern void CPU_Core_Normal_Init();
 extern void CALLBACK_Init(Section*);
+extern void db_cd_setup(),db_cd_mount(),db_cd_close();
 static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,DosboxResult *out,int (*stop)()){
  result=out;memset(out,0,sizeof(*out));finished=false;stop_fn=stop;
  if(bytes>0xff00||!limit){out->fault=2;return 1;}
@@ -130,9 +169,13 @@ static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,Dosbox
  cpu.stack.mask=0xffff;cpu.stack.notmask=0xffff0000;cpu.idt.SetBase(0);cpu.idt.SetLimit(1023);CPU_SetFlags(FLAG_IF,FMASK_ALL);
  reg_sp=0xfffe;reg_eip=0x100;
  memset(handlers,0,sizeof(handlers));a20=false;
- CALLBACK_Init(nullptr);db_pc_init();
+ // Preserve the PC BIOS and VGA ROM against guest RAM probes.
+ for(unsigned page=0xc0;page<0xc8;page++)handlers[page]=&rom_page;
+ for(unsigned page=0xf0;page<0x100;page++)handlers[page]=&rom_page;
+ CALLBACK_Init(nullptr);db_pc_init();db_cd_setup();ansi_bytes=0;extended_key=-1;
+ if(db_vga_console)INT10_ScrollWindow(0,0,24,79,0,db_text_attr,0);
  if(*db_boot_name||*db_hdd_name){db_boot_start();DOSBOX_RunMachine();return 0;}
- zz_dos_init();dos.echo=false;db_mount(program,bytes);
+ zz_dos_init();dos.echo=false;db_mount(program,bytes);db_cd_mount();
  // Parent PSP lives in DOSBox's reserved shell region. EXEC is invoked
  // through the real INT21 entry, so its RETF/IRET and parent restoration run.
  const Bit16u pspseg=DOS_FIRST_SHELL;
@@ -171,7 +214,7 @@ extern "C" int db_run_io(const uint8_t *program,unsigned bytes,unsigned limit,Do
  zz_shell_cleanup();
  db_boot_close();
  db_pc_close();
- db_unmount();
+ db_unmount();db_cd_close();
  for(unsigned i=0;i<CB_MAX;i++){delete[] CallBack_Description[i];CallBack_Description[i]=nullptr;}
  result=nullptr;console_io=nullptr;
  return rc;

@@ -1,0 +1,17 @@
+FILES requests=8 read=682 written=0; handles closed
+PC rc=2 fault=3 detail=DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: w slices=57541 ticks=1000 frames=68 size=720x400 bpp=16
+DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>zzhello
+
+C:\>
+PASS welcome DOS version, coloured CP437 frame, BIOS cursor and prompt return

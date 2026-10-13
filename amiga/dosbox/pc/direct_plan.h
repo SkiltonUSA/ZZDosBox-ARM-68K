@@ -11,15 +11,15 @@
 #define PC_APERTURE_END 0x041f0000u
 #define PC_PAGE 0x453u /* normal NC, shared, privileged RW, XN */
 static inline uint32_t pc_bpp(uint32_t format){return format==1||format==2?3:format==3||format==4?4:0;}
-static inline uint32_t pc_span(uint32_t addr,uint32_t pitch,uint32_t format){
+static inline uint32_t pc_span_size(uint32_t addr,uint32_t pitch,uint32_t format,uint32_t width,uint32_t height){
  uint32_t bpp=pc_bpp(format),span;
- if(!bpp || (addr&3) || (pitch&3) || pitch<640*bpp || pitch>4096)return 0;
- span=479*pitch+640*bpp;
+ if(!bpp || width<320 || width>960 || height<240 || height>720 || (addr&3) || (pitch&3) || pitch<width*bpp || pitch>4096)return 0;
+ span=(height-1)*pitch+width*bpp;
  if(addr<PC_APERTURE_FIRST || addr>PC_APERTURE_END-span)return 0;
  return span;
 }
-static inline int pc_map(uint32_t *l1,uint32_t *l2,uint32_t table,uint32_t addr,uint32_t pitch,uint32_t format){
- uint32_t span=pc_span(addr,pitch,format),first=addr>>20,last,i,page;
+static inline int pc_map_size(uint32_t *l1,uint32_t *l2,uint32_t table,uint32_t addr,uint32_t pitch,uint32_t format,uint32_t width,uint32_t height){
+ uint32_t span=pc_span_size(addr,pitch,format,width,height),first=addr>>20,last,i,page;
  if(!span || (table&1023))return 0;
  last=(addr+span-1)>>20;
  if(last-first>3)return 0;
@@ -34,3 +34,6 @@ static inline void pc_unmap(uint32_t *l1,uint32_t addr,uint32_t span){
  uint32_t first=addr>>20,last=(addr+span-1)>>20;
  for(uint32_t i=first;i<=last;i++)l1[i]=0;
 }
+
+static inline uint32_t pc_span(uint32_t addr,uint32_t pitch,uint32_t format){return pc_span_size(addr,pitch,format,640,480);}
+static inline int pc_map(uint32_t *l1,uint32_t *l2,uint32_t table,uint32_t addr,uint32_t pitch,uint32_t format){return pc_map_size(l1,l2,table,addr,pitch,format,640,480);}

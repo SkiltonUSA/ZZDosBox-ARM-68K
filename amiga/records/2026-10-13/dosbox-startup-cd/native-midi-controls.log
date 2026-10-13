@@ -1,0 +1,20 @@
+FILES requests=8 read=195 written=0; handles closed
+PC rc=0 fault=0 detail=DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: w slices=18 ticks=6 frames=0 size=720x400 bpp=16
+DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>miditest
+MPU401 intelligent/UART PASS
+
+C:\>exit
+
+
+PASS MPU-401 version/UART, MIDI running status/SysEx bytes, queue wrap/backpressure

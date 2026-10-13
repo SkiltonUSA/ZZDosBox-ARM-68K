@@ -1,0 +1,100 @@
+[
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Status",
+      "timeout": 45
+    },
+    "text": "[OK]\nProcess  1: Loaded as command: TCP/IP Superserver\nProcess  2: Loaded as command: Status\nProcess  3: Loaded as command: SD032G:amiga-bridge/amiga-bridge\nProcess  4: Loaded as command: SYS:C/TitleShadow\nProcess  5: Loaded as command: MagicMenu\nProcess  6: Loaded as command: C:bridge-netwatch\nProcess  7: Loaded as command: Workbench\nProcess  8: Loaded as command: ToolsDaemon\nProcess  9: Loaded as command: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (20):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ZZDOS_LAUNCHER\n  ZZDOSBOX.1\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Break 9 C",
+      "timeout": 45
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_ports",
+    "args": null,
+    "text": "Public Message Ports (18):\n  TSPORT\n  WORKBENCH\n  DEFICONS\n  ToolsDaemon 2.1a \u00a9 Nico Fran\u00e7ois\n  REXX\n  AREXX\n  MagicMenu\n  SIXIES.BRIDGE.NETWATCH\n  AssignWedge.port\n  ZZTemperature.1\n  NewMeter\n  POPO.1\n  QDock\n  ROADIE\n  TCP/IP Control\n  AMIGABRIDGE\n  ConClip.rendezvous\n  deficons"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "If NOT EXISTS \"SD032G:Dev/ZZDosBox/PC/ZZDosBox-PreStart\"\nCopy \"SD032G:Dev/ZZDosBox/PC/ZZDosBox\" \"SD032G:Dev/ZZDosBox/PC/ZZDosBox-PreStart\"\nEndIf",
+      "timeout": 45
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "If NOT EXISTS \"SD032G:Dev/ZZDosBox/PC/Launcher-PreStart\"\nCopy \"SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher\" \"SD032G:Dev/ZZDosBox/PC/Launcher-PreStart\"\nEndIf",
+      "timeout": 45
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "If NOT EXISTS \"SD032G:Dev/ZZDosBox/PC/Launcher.cfg-PreStart\"\nCopy \"SD032G:Dev/ZZDosBox/PC/Launcher.cfg\" \"SD032G:Dev/ZZDosBox/PC/Launcher.cfg-PreStart\"\nEndIf",
+      "timeout": 45
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "If NOT EXISTS \"SD032G:Dev/ZZDosBox/PC/Disks/DOS622-PreStart.IMG\"\nCopy \"SD032G:Dev/ZZDosBox/PC/Disks/DOS622.IMG\" \"SD032G:Dev/ZZDosBox/PC/Disks/DOS622-PreStart.IMG\"\nEndIf",
+      "timeout": 45
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Copy \"SD032G:Dev/ZZDosBox/PC/ZZDosBox-Startup\" \"SD032G:Dev/ZZDosBox/PC/ZZDosBox\"\nCopy \"SD032G:Dev/ZZDosBox/PC/Launcher-Startup\" \"SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher\"",
+      "timeout": 45
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_checksum",
+    "args": {
+      "path": "SD032G:Dev/ZZDosBox/PC/ZZDosBox"
+    },
+    "text": "File: SD032G:Dev/ZZDosBox/PC/ZZDosBox\nCRC32: A7118584\nSize: 918612 bytes"
+  },
+  {
+    "tool": "amiga_checksum",
+    "args": {
+      "path": "SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher"
+    },
+    "text": "File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher\nCRC32: 625D32CF\nSize: 160104 bytes"
+  },
+  {
+    "tool": "amiga_run_script",
+    "args": {
+      "script": "Stack 65536\nRun >NIL: \"SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher\" >RAM:ZZDLauncher010.log",
+      "timeout": 45
+    },
+    "text": "[OK] (no output)"
+  },
+  {
+    "tool": "amiga_list_screen_windows",
+    "args": null,
+    "text": "Windows on screen @8965318 (6):\n\n  ZZDosBox Launcher  pos=(781,287)  size=820x440  @886D7F4\n  AmigaBridge v1.20  -  TCP  2345 (bsdsock  pos=(10,20)  size=420x117  @8867A2C\n  Network log output  pos=(0,64)  size=1920x200  @886EA44\n  Roadie 1.3.9  pos=(60,60)  size=230x250  @9061EF4\n  (untitled)  pos=(21,713)  size=600x63  @8FAD7B4\n  (untitled)  pos=(0,11)  size=1920x789  @811F8E4"
+  }
+]

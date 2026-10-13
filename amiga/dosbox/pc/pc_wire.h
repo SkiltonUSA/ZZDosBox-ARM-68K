@@ -25,3 +25,11 @@
 #define PC_BOOT_NAME (PC_VIDEO+576u) /* 13-byte 8.3 name; empty = embedded DOS. */
 #define PC_HDD_NAME (PC_VIDEO+640u) /* 13-byte 8.3 name; fixed 32 MiB HDD. */
 #define PC_BOOT_TEXT 0x189000u /* Final colour text page, then completion magic. */
+
+#define PC_UI_FLAGS (PC_VIDEO+704u) /* bit 0: FPS; bit 1: VGA shell */
+#define PC_FPS_TENTHS (PC_VIDEO+708u) /* ARM rolling completed-frame rate */
+#define PC_TEXT_COLOURS (PC_VIDEO+712u) /* VGA foreground/background attribute */
+#define PC_BOOT_COMMAND (PC_VIDEO+768u) /* 160-byte, NUL-terminated DOS command */
+
+#define PC_CYCLE_REQUEST (PC_VIDEO+964u) /* Host request, 500..10000 cycles/ms. */
+#define PC_CYCLE_APPLIED (PC_VIDEO+968u) /* ARM acknowledgement at tick boundary. */

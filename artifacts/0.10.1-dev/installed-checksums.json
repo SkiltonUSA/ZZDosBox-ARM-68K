@@ -1,0 +1,34 @@
+{
+  "runtime": {
+    "bytes": 918612,
+    "crc32": "A7118584",
+    "sha256": "b92eff5ffb7b36bce27b6e4bcb24acc78b98a2ff31e6338728ef9a1d7f1693c6"
+  },
+  "launcher": {
+    "bytes": 160104,
+    "crc32": "625D32CF",
+    "sha256": "f43418fa2e246c0de4321b1af9416d4940c7ec943bd1d1a94bb92492593ff403"
+  },
+  "cd_driver": {
+    "bytes": 87,
+    "crc32": "ED0C5898",
+    "sha256": "315b7f3bdbe356af7e4f7f4b0ffd3793446cff0b3c00412095f0963de5d37e03"
+  },
+  "welcome": {
+    "bytes": 654,
+    "crc32": "0E8A118A",
+    "sha256": "e6b1aacfa0a5346f60d8fdd8b893b39389dc8fd6fd9a91d5c0ba5e39ba1b92d9"
+  },
+  "version": "0.10.1-dev",
+  "audio_detection": {
+    "CAMD": "37.14",
+    "cluster": "out.0",
+    "AHI": "4.180",
+    "ZZ9000AX_modes": 2,
+    "instrument_playback_tested": false
+  },
+  "startup_restored": {
+    "AUTOEXEC.BAT": true,
+    "CONFIG.SYS": true
+  }
+}

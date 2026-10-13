@@ -1,0 +1,32 @@
+{
+  "version": "0.9.1-dev",
+  "presets": [
+    {
+      "width": 320,
+      "height": 240,
+      "physical_terminal_keyboard_fps_exit": "PASS"
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "physical_terminal_keyboard_fps_exit": "PASS"
+    },
+    {
+      "width": 960,
+      "height": 720,
+      "physical_terminal_keyboard_fps_exit": "PASS"
+    }
+  ],
+  "msdos_fullscreen": "PASS",
+  "mui_preset_save_and_fullscreen_disable": "PASS",
+  "mui_msdos_boot_and_close": "PASS",
+  "final_show_fps_location": "Settings (physical screenshot verified)",
+  "final_display_and_window_size_location": "DOS terminal (physical screenshot verified)",
+  "native_asan": "PASS",
+  "geometry_mapping_scaling_fps_config_tests": "PASS",
+  "arm_instruction_model_including_changing_geometry": "PASS",
+  "shared_arm_and_mcp_tests": "PASS",
+  "physical_drag_resize": "NOT TESTED; use physical mouse, not bridge synthetic sizing",
+  "no_crash_record": true,
+  "core1_idle_after_acceptance": true
+}

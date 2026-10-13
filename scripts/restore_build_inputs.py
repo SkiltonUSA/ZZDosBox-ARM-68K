@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """Restore saved development inputs locally; no deployment or hardware access."""
-import json,shutil,subprocess,tarfile
+import argparse,json,shutil,subprocess,tarfile
 from pathlib import Path
 from verify_backup import verify
 ROOT=Path(__file__).resolve().parents[1]
 def main():
+ parser=argparse.ArgumentParser()
+ parser.add_argument("--windows-experiment",action="store_true")
+ args=parser.parse_args()
+ pc_source="artifacts/experiments/wfw311-small-tlb/pc" if args.windows_experiment else "artifacts/0.8.0-dev/pc"
  verify()
  checkout=ROOT/'.context/research/dosbox-libretro';checkout.parent.mkdir(parents=True,exist_ok=True)
  pin=json.loads((ROOT/'amiga/dosbox/upstream.json').read_text())
@@ -13,7 +17,7 @@ def main():
   subprocess.run(['git','-C',str(checkout),'checkout','--detach',pin['revision']],check=True)
  assert subprocess.check_output(['git','-C',str(checkout),'rev-parse','HEAD'],text=True).strip()==pin['revision']
  assert not subprocess.check_output(['git','-C',str(checkout),'status','--porcelain'],text=True).strip()
- for source,target in [('artifacts/0.8.0-dev/pc','.context/amiga/dosbox-pc'),('artifacts/0.8.0-dev/launcher','.context/amiga/dosbox-launcher')]:
+ for source,target in [(pc_source,'.context/amiga/dosbox-pc'),('artifacts/0.8.0-dev/launcher','.context/amiga/dosbox-launcher')]:
   out=ROOT/target;out.mkdir(parents=True,exist_ok=True)
   for p in (ROOT/source).iterdir():
    q=out/p.name

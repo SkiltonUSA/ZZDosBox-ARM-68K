@@ -9,21 +9,21 @@ template<bool Swap> static inline uint32_t pc_pixel(uint32_t c) {
 }
 
 template<bool Swap> static inline void pc_row(volatile uint32_t *dst,
- const uint32_t *src,unsigned width) {
- if(width==320) {
-  for(unsigned x=0;x<320;x++) {
+ const uint32_t *src,unsigned width,unsigned target) {
+ if(width*2==target) {
+  for(unsigned x=0;x<width;x++) {
    uint32_t c=pc_pixel<Swap>(src[x]);
    dst[x*2]=c;dst[x*2+1]=c;
   }
- } else if(width==640) {
-  for(unsigned x=0;x<640;x++)dst[x]=pc_pixel<Swap>(src[x]);
+ } else if(width==target) {
+  for(unsigned x=0;x<target;x++)dst[x]=pc_pixel<Swap>(src[x]);
  } else {
-  for(unsigned x=0;x<640;x++)dst[x]=pc_pixel<Swap>(src[x*width/640]);
+  for(unsigned x=0;x<target;x++)dst[x]=pc_pixel<Swap>(src[x*width/target]);
  }
 }
 
 static inline void pc_scale_row(volatile uint32_t *dst,const uint32_t *src,
- unsigned width,unsigned format) {
- if(format==3)pc_row<false>(dst,src,width);
- else pc_row<true>(dst,src,width);
+ unsigned width,unsigned format,unsigned target=640) {
+ if(format==3)pc_row<false>(dst,src,width,target);
+ else pc_row<true>(dst,src,width,target);
 }

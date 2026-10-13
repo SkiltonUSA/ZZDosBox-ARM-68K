@@ -6,6 +6,9 @@
 #include <string.h>
 #include "fs_host.h"
 #include "fs_wire.h"
+#ifdef ZZ_PC_CD
+#include "cd_host.h"
+#endif
 static volatile uint8_t *shared;
 static const struct ad_io *syncio;
 static BPTR root,working,disk,handles[FS_HANDLES];
@@ -74,6 +77,11 @@ int db_fs_service(void){
  if((op==FS_CLOSE||op==FS_READ||op==FS_WRITE||op==FS_SEEK)&&(h==0||h>FS_HANDLES||!handles[h-1])){err=6;goto reply;}
  parent=directory(dir);if(!parent){err=3;goto reply;}working=parent;old=CurrentDir(parent);requests++;
  switch(op){
+#ifdef ZZ_PC_CD
+ case FS_CD_READ:
+  if(!n||n>2||!db_cd_host_read(pos,n,data)){err=21;break;}
+  result=n;for(i=0;i<n*2048;i++)shared[FS_DATA+i]=data[i];syncio->push(shared+FS_DATA,n*2048,NULL);read_bytes+=n*2048;break;
+#endif
  case FS_DISK_OPEN:{
   BPTR lock;
   if(disk||*dir||entry(name,0,0)!=1||fib.fib_DirEntryType!=ST_FILE){err=5;break;}

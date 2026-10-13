@@ -1,0 +1,34 @@
+{
+  "version": "0.9.0-dev",
+  "runtime": {
+    "bytes": 850584,
+    "crc32": "6F849EC3",
+    "sha256": "4634499134230d9f9eec534b130c0e1c9c55c68132baaf8a65e8eaf9c285d6a8"
+  },
+  "launcher": {
+    "bytes": 108640,
+    "crc32": "58875C97",
+    "sha256": "4276774c19b07fc2573a1b8629a80d23d4fb91df3ba4108a37acf6894f588de2"
+  },
+  "hardware": [
+    "MS-DOS 6.22 window with ARM FPS, startup VER and physical raw-key VER, F10",
+    "Embedded DOS 5.00 window, FPS disabled, raw-key VER, F10",
+    "Keen graphics in Workbench window with ARM FPS, F10",
+    "MS-DOS 6.22 fullscreen with ARM FPS, deferred PAN ACK, F10",
+    "MUI saved settings and restart, Open terminal, window close gadget, clean return"
+  ],
+  "checks": "All physical runs passed register/cache-witness restoration and owned-memory release; no crash data recorded. Model/native tests passed.",
+  "backups": [
+    "ZZDosBox-PreWindow",
+    "Launcher-PreWindow",
+    "Launcher.cfg-PreWindow"
+  ],
+  "limitations": [
+    "Window mode requires 32-bit RTG Workbench",
+    "FPS counts completed video refreshes using nominal XX19c global timer; not a new game-performance benchmark",
+    "MS-DOS commands/startup files are on its HDD, embedded DOS uses host drawers",
+    "No new audio/mouse/joystick implementation"
+  ],
+  "final_state": "Launcher ready on DOS terminal page, MS-DOS 6.22 selected, Workbench window and FPS enabled; no Core1 owner.",
+  "github": "Not pushed in this task; previous private GitHub backup is 0.8."
+}

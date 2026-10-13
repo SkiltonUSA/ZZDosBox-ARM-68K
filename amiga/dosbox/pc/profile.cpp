@@ -4,7 +4,7 @@
 extern "C" volatile uint8_t *db_shared();
 bool pc_prof_enabled;
 static pc_profile profile;
-static uint64_t now(){
+uint64_t pc_clock_ticks(){
  volatile uint32_t *t=(volatile uint32_t*)0xf8f00200u;uint32_t hi,lo;
  __asm__ volatile("dsb sy":::"memory");
  do{hi=t[1];lo=t[0];}while(hi!=t[1]);
@@ -12,14 +12,14 @@ static uint64_t now(){
 }
 void pc_prof_start(){
  pc_prof_enabled=ad_get(db_shared(),PC_PROFILE)!=0;
- if(pc_prof_enabled)pp_init(&profile,now());
+ if(pc_prof_enabled)pp_init(&profile,pc_clock_ticks());
 }
-void pc_prof_push(unsigned n){pp_enter(&profile,n,now());}
-void pc_prof_pop(){pp_leave(&profile,now());}
-void pc_prof_unwind(){if(pc_prof_enabled)pp_unwind(&profile,now());}
+void pc_prof_push(unsigned n){pp_enter(&profile,n,pc_clock_ticks());}
+void pc_prof_pop(){pp_leave(&profile,pc_clock_ticks());}
+void pc_prof_unwind(){if(pc_prof_enabled)pp_unwind(&profile,pc_clock_ticks());}
 void pc_prof_finish(){
  if(!pc_prof_enabled)return;
- pp_finish(&profile,now());pc_prof_enabled=false;
+ pp_finish(&profile,pc_clock_ticks());pc_prof_enabled=false;
  volatile uint8_t *p=db_shared()+PC_PROFILE;
  ad_put(p,8,profile.total>>32);ad_put(p,12,profile.total);
  ad_put(p,16,profile.unwound);ad_put(p,20,profile.error);

@@ -3,7 +3,10 @@
 #include "dosbox.h"
 #include "pc.h"
 #include "pic.h"
+#include "cpu.h"
 #include "keyboard.h"
+#include "bios.h"
+#include "mem.h"
 #include "adapter.h"
 #include "console_io.h"
 #include "bench.h"
@@ -16,7 +19,25 @@ extern "C" void db_runtime_init();
 extern "C" void db_output(const char*);
 extern "C" volatile uint8_t *db_shared();
 extern "C" const DbConsoleIO *db_stream(int (*)());
+static unsigned boot_pos;static bool boot_prompt;static char boot_command[160];
+static void boot_keys(){
+ if(!*boot_command||(!*db_boot_name&&!*db_hdd_name))return;
+ if(!boot_prompt){
+  unsigned cur=mem_readw(0x450),row=cur>>8,col=cur&255;
+  if(row<25&&col>=4&&col<=80){
+   const char *prompt="C:\\>";unsigned at=0xb8000+(row*80+col-4)*2,i;
+   for(i=0;i<4&&mem_readb(at+i*2)==(unsigned)prompt[i];i++){}
+   if(i==4)boot_prompt=true;
+  }
+ }
+ if(boot_prompt&&boot_pos<=strlen(boot_command)){
+  unsigned c=boot_command[boot_pos];if(!c)c=13;
+  if(BIOS_AddKeyToBuffer(c==13?0x1c0d:c))boot_pos++;
+ }
+}
 void db_pc_tick(){
+ unsigned requested=ad_get(db_shared(),PC_CYCLE_REQUEST);
+ if(requested){if(requested<500||requested>10000)E_Exit("CPU speed request out of bounds");if(requested!=db_cpu_cycles){db_cpu_cycles=requested;CPU_CycleMax=requested;}ad_put(db_shared(),PC_CYCLE_APPLIED,requested);}
  unsigned t=ad_get(db_shared(),PC_DURATION);
  if(t&&PIC_Ticks>=t)ad_put(db_shared(),PC_DONE,1);
  volatile uint8_t *b=db_shared();unsigned w=ad_get(b,PC_KEY_WRITE),r=ad_get(b,PC_KEY_READ);
@@ -24,6 +45,7 @@ void db_pc_tick(){
  if(w-r>PC_KEY_SIZE)E_Exit("Keyboard ring bound");
  while(r!=w){unsigned raw=b[PC_KEY_DATA+(r&(PC_KEY_SIZE-1))];KBD_KEYS key=pc_key(raw);if(key!=KBD_NONE)KEYBOARD_AddKey(key,!(raw&128));r++;}
  __asm__ volatile("dsb sy":::"memory");ad_put(b,PC_KEY_READ,r);
+ boot_keys();
  if(t&&PIC_Ticks==4000)KEYBOARD_AddKey(KBD_enter,true);
  if(t&&PIC_Ticks==4100)KEYBOARD_AddKey(KBD_enter,false);
 }
@@ -40,6 +62,11 @@ extern "C" int mesen_test(int verify,MesenResult*out,int(*halt)(),uint32_t(*cloc
  if(*db_boot_name&&!fs_name_valid(db_boot_name)){db_output("Invalid boot image name");return 1;}
  for(unsigned i=0;i<13;i++)db_hdd_name[i]=b[PC_HDD_NAME+i];
  if(*db_hdd_name&&!fs_name_valid(db_hdd_name)){db_output("Invalid HDD image name");return 1;}
+ db_vga_console=(ad_get(b,PC_UI_FLAGS)&2)!=0;db_text_attr=ad_get(b,PC_TEXT_COLOURS)&127;
+ boot_pos=0;boot_prompt=false;
+ for(unsigned i=0;i<sizeof(boot_command);i++)boot_command[i]=b[PC_BOOT_COMMAND+i];
+ if(boot_command[159]){db_output("Boot command too long");return 1;}
+ for(unsigned i=0;boot_command[i];i++)if((unsigned char)boot_command[i]<32||(unsigned char)boot_command[i]>=127){db_output("Invalid boot command");return 1;}
  pc_prof_start();
  uint32_t start=clock();int rc=db_run_io(nullptr,0,ad_get(b,PC_DURATION)?10000000:0xffffffffu,&r,stop,db_stream(stop));
  pc_prof_finish();

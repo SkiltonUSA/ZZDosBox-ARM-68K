@@ -7,6 +7,7 @@ static inline void pc_prof_leave(){}
 static inline void pc_prof_unwind(){}
 #else
 extern bool pc_prof_enabled;
+uint64_t pc_clock_ticks();
 void pc_prof_start();void pc_prof_finish();
 void pc_prof_unwind();
 void pc_prof_push(unsigned);void pc_prof_pop();

@@ -1357,3 +1357,228 @@ and the installed baseline unchanged (CRC32 1FCAF3E4).
 The supplied DOSBox icon was installed and independently read back before the
 stall. It is a classic 64x64 Workbench image retaining the launch stack and
 metadata; no extra icon library is required beyond the target's existing OS.
+
+
+## Workbench window / DOS selection / ARM FPS — 0.9 development
+
+Both guest text mode and graphics use the same 640x480 presentation path.
+Embedded shell output mirrors into the VGA text buffer; BIOS keyboard input
+and CALLBACK_Idle keep keyboard interrupts and VGA refresh running while the
+shell waits. The host console-device screen is no longer opened by this PC
+frontend. Older diagnostic/shared console components remain available.
+
+Window mode allocates an offscreen Picasso96 bitmap on ZZ9000, locks and
+challenges its mapping before each ARM write, then unlocks after completion
+and uses a clipped BltBitMapRastPort/WaitBlit to the Workbench window. The ARM
+never maps Workbench's screen bitmap. The current window path requires a
+32-bit RTG Workbench. Fullscreen retains XACP deferred PAN/acknowledgement
+and slot ownership. F10 or the window close gadget requests cooperative stop;
+allocations survive until synchronous Core1 reset. Focus loss releases keys.
+
+The optional overlay is calculated and drawn on Core1 after scaling, without
+modifying guest pixels. It reports completed video refreshes over a rolling
+real-time half-second interval, using XX19c's nominal 333.333 MHz global timer.
+It is not guest simulated FPS, distinct game-image count, or a 68k UI timer.
+The counter includes normal rendering/presentation stalls. Screenshots can
+pause execution and temporarily lower its displayed value.
+
+Session/profile format 2 saves display, FPS and DOS choice. Version 1 imports
+preserve fullscreen with FPS off and embedded DOS. New profiles default to
+window mode. The added MS-DOS terminal profile boots the existing DOS622.IMG;
+exclusive image ownership still applies. Booted DOS executes its own startup
+files. Commands entered for MS-DOS refer to files inside its disk, not Amiga
+host drawers; the boot command waits for the root C:\> prompt before keyboard
+injection. No DOS media or system preferences are replaced.
+
+Physical acceptance passed for both DOS choices in windows, Keen window
+output, FPS enabled/disabled, and MS-DOS fullscreen. F10 and the Workbench
+window close gadget returned cleanly. MUI saved options survived a restart and
+Open terminal launched the selected installed DOS. Register/cache restoration,
+owned-memory release, native ASan and full ARM-model tests passed. Installed
+as 0.9.0-dev; evidence: `amiga/records/2026-10-13/dosbox-window/`.
+Earlier timings above remain historical, not a new performance claim.
+
+## Resizable Workbench window — 0.9.1-dev
+
+The DOS terminal tab now groups DOS selection, Display and Window size. Show
+FPS is in Settings. The three starting sizes are 320×240, 640×480 and 960×720. Fullscreen
+ignores the window preset and disables its control. Profile/session format 3
+stores the preset; versions 1 and 2 import with 640×480. Programs, terminal
+sessions and disk boot all use the selected display settings.
+
+The native Intuition size gadget adjusts the client between 320×240 and
+960×720. Each new frame is fitted to a centred 4:3 rectangle, with black
+margins. A stable, owned 960×720 P96 bitmap avoids allocation changes during
+resize. The host publishes fitted width/height at video-mailbox +44/+48 before
+the grant sequence. Core1 validates those dimensions, pitch, aperture and both
+nonce endpoints before temporarily mapping and drawing. Only a completed,
+unmapped frame is blitted into the OS-clipped window. If the window shrinks
+while a frame is in flight, the completed old frame is cropped to the new
+client until the next grant uses its geometry. Fullscreen remains 640×480.
+
+Local checks cover profile migration, invalid presets, every 4:3 output width
+from 320 to 960, FPS bounds, mapping limits and 354,801 client geometries.
+The ARM instruction model alternates 320×240, 960×720, 508×381 and 640×480,
+checks exact EGA output including untouched row padding, and confirms mapping
+revocation in both 32-bit formats. Native ASan and the shared ARM/MCP suites
+also pass. These checks do not establish physical drag-resize behaviour.
+
+Physical acceptance passed for all three starting sizes, raw keyboard VER,
+FPS and F10 exit; MS-DOS 6.22 fullscreen; saved MUI presets and disabled size
+control in fullscreen; and MUI-launched 6.22 at 640×480 with the native close
+gadget. Each run restored register/cache witnesses and released ownership.
+Show FPS was subsequently moved back to Settings at the owner's request;
+that layout-only launcher rebuild is installed. Physical dragging of the
+size gadget remains a user check: bridge-injected window sizing previously
+stalled Intuition, so no synthetic resize gesture was used. Evidence is in
+`amiga/records/2026-10-13/dosbox-window-sizes/`.
+
+## Startup files, data CDs and external MIDI — 13 October 2026
+
+The 0.10 development change groups Terminal, AUTOEXEC.BAT, CONFIG.SYS and
+CD-ROM beneath DOS terminal. Each startup file selects Default, Edited or
+an Amiga file. DOS 6.22 defaults are read from its actual disk. Custom startup
+files temporarily replace the disk versions for a session, with reserved
+backups and a recovery marker; normal return restores the originals. Embedded
+DOS executes the selected batch file but does not process CONFIG.SYS.
+
+The owner's [CONFIG.SYS/AUTOEXEC guide](https://ctrl-alt-rees.com/archive/madsenworld.dk/con_auto/index-uk.htm)
+is a useful reference, especially its DOS 6.22 section and matching CD driver
+`/D:` names. Windows/DOS 7 examples are not defaults for this port. This change
+does not add EMM386 or DOS=HIGH support.
+
+Data CD sources are an ISO9660 image or a mounted Amiga CD device, exposed
+read-only as D:. The host uses bounded 2048-byte reads; physical reads have a
+five-second timer and use the mounted device's actual driver/unit. It never
+writes/ejects the CD or reconfigures Poseidon. Embedded DOS uses the pinned
+DOSBox ISO/MSCDEX implementation. Booted DOS uses the original ZZDOSCD.SYS
+request gateway plus the user's installed Microsoft MSCDEX.EXE. Audio CDs,
+CUE/BIN tracks and hot media changes are outside this version.
+
+Two integration failures were found in native tests: read-ahead request 82h
+must not write a caller buffer, and an ISO test fixture needs valid path tables
+for real MSCDEX. Both were corrected before target deployment. The bare-metal
+ISO path walker uses strtok_r with caller-owned state instead of libc's TLS
+strtok. No DOSBox firmware changes are involved.
+
+MIDI settings distinguish an external Roland MT-32 (intelligent MPU-401 at
+330h, upstream IRQ9) from external General MIDI (UART at 330h). The ARM runs
+pinned DOSBox MPU-401 code; a bounded 4096-byte shared ring carries MIDI bytes
+to CAMD on the 68k. CAMD retains serial/USB-device ownership. The output is
+selectable, default out.0, and off by default. Host batches respect serial
+MIDI wire rate and apply a conservative 300ms processing gap after MT-32 SysEx.
+Queue backpressure is cancellable; no silently dropped bytes. Exit cancels
+sustain and sends All Notes Off to the selected output.
+
+This is **external MIDI routing, not an MT-32 software synthesizer**. No Roland
+ROM files are needed for a real module. Choose Roland MT-32 in the game's
+own setup too; General MIDI and MT-32 instrument mappings differ. The
+[DOSBox sound documentation](https://www.dosbox.com/wiki/Sound) describes this
+separation between emulated PC hardware and an external synthesizer.
+
+Sound-card follow-up: connect a PCM mixer/AHI pipeline for PC speaker and
+AdLib/OPL first, then Sound Blaster with DMA/IRQ and separate MIDI music.
+Tandy needs its own device work. The screenshot's IBM Music Feature option
+is not implemented. These devices must not appear as working launcher choices
+until their guest I/O and output paths are tested. AHI/ZZ9000AX playback is
+separate from the real MT-32's analogue audio output.
+
+Validation: native ASan and ARM instruction-model CD/MIDI fixtures pass,
+including cross-sector ISO copy, intelligent/UART handshake, running
+status/SysEx byte preservation and ring wrap/backpressure. Startup transaction
+fault tests preserve present/absent originals and recover interrupted renames.
+Physical embedded DOS read the original test ISO and listed AMINET13 through
+UMSD: (`usbscsi.device` unit 0, ISO9660, 325420 sectors). The physical MPU-401
+fixture delivered 5015 bytes into an internal CAMD capture: 5005 messages,
+three notes, one SysEx and no capture errors. No external Roland notes were
+sent, and audible playback remains untested.
+
+The MUI File selection physically booted MS-DOS 6.22, executed the selected
+AUTOEXEC, loaded Microsoft MSCDEX 2.23 and read the test ISO as D:. Return
+restored both original disk startup files byte-for-byte and ejected DOSHD.
+The original launcher profile was restored; MIDI and CD are off by default.
+The custom 87-byte ZZDOSCD.SYS remains installed in the DOS disk root for
+future CD sessions. The full pre-test disk image and previous binaries/config
+are preserved on the Amiga. These runs passed register/cache witnesses and
+owned-memory release. The startup run used runtime 0.10.0 and UI 0.10.1;
+display-control follow-up is recorded separately below.
+
+The 0.10.1 follow-up adds the requested “DosBox ZZ9000 project” welcome text,
+project URL, version and AmigaOS/32-bit identification. The Cortex-A9 is
+ARMv7-A, not an AArch64 processor; the host build's bitness does not imply
+64-bit x86 guest support. The MUI About button uses an existing OpenURL
+installation if available.
+
+Live controls: Alt+Return changes display; Ctrl+minus/plus requests CPU cycles
+in 500-cycle steps, bounded to 500–10000 cycles/ms. ARM acknowledges speed at
+a millisecond tick boundary. Higher requested cycles do not increase physical
+CPU capacity. Display switching waits for completion/unmapping and a completed
+PAN acknowledgement, retains both OS bitmap allocations, and frees them only
+after the existing synchronous Core1 reset. No firmware change is involved.
+
+Settings can inspect CAMD version and the selected cluster, AHI version and
+advertised ZZ9000AX AHI modes. The detector opens AHI without a playback unit;
+it does not allocate audio channels, play test tones or change preferences.
+An available mode/cluster is not proof of connected speakers or an MT-32.
+
+### Idle-CPU research
+
+The owner highlighted DOSBox Staging's `cpu_idle` option. Its
+[CPU manual](https://www.dosbox-staging.org/0.83/manual/system/cpu/)
+describes guest HLT-based idling, an off switch for third-party DOS power
+management tools, and reduced desktop host load with maximum cycles. That
+desktop percentage is not a ZZ9000 measurement or a promise of game speedup.
+
+Source review of this port finds an existing `CPU_HLT`/`HLT_Decode` emulator,
+but `CALLBACK_Idle` and blocking BIOS INT 16h still execute short NOP loops.
+The embedded VGA prompt calls `CALLBACK_Idle` while awaiting keyboard input.
+Thus guest idle-loop work is a candidate for reduction. The bare-metal ARM
+also polls shared-memory handshakes, and the 68k services display, files and
+MIDI with a timed polling loop. Emulating guest HLT does not automatically
+sleep either physical processor.
+
+Follow-up: prototype an optional guest idle path, compare interpreter work
+and prompt responsiveness on/off at matched cycles, then measure host polling
+separately. Preserve timer IRQs, cursor blink, keyboard wake-up, cancellation,
+MIDI delivery and display ownership. Do not introduce ARM WFI/WFE without a
+verified XACP wake-up contract. Test embedded DOS and booted 6.22 separately;
+Windows 3.1 and WQGHLT compatibility are unverified. No `cpu_idle` control is
+implemented in 0.10.1.
+
+
+### Display controls and welcome acceptance
+
+Physical 0.10.1 display tests passed four mode changes per session, starting
+and exiting once in a Workbench window and once in fullscreen. CPU hotkeys
+requested 3500 then 3000 cycles/ms and the ARM acknowledged 3000. Each exit
+restored register/cache witnesses and released owned memory. Early automation
+sent later keys before Intuition had completed focus changes; clicking the
+window allowed clean exit. The final implementation defers activation until
+after the asynchronous screen switch and outside bitmap locks. Acceptance
+waits for the actual active window/screen before sending the next key, rather
+than treating a captured image as proof of input focus.
+
+Settings physically detected CAMD 37.14 with out.0, AHI 4.180, and two
+ZZ9000AX modes. Default startup-file pages were checked after disk reads
+completed and showed the actual DOS disk files. Initial captures taken while
+those reads were pending still showed the previous editor text.
+
+The owner's extended welcome template is adapted through an original DOS
+helper, `ZZHELLO.COM`, called by the temporary startup batch. It draws a blue
+panel, CP437 double-line border, ASCII ZZDosBox logo, version, detected DOS
+version, project URL and real shortcuts. It uses text-mode video memory and
+BIOS services; no ANSI.SYS, Windows COLOR command, fake Windows/NC choices or
+unsupported load-high configuration is introduced. User-selected AUTOEXEC
+commands still execute, and both original disk startup files are restored.
+The helper is installed only when absent, or reused when byte-identical;
+conflicting files are preserved and reported. Native ASan validation checks
+the border character/attribute, DOS version, title, controls and prompt return.
+
+The final MUI launch passed physically in both embedded DOS 5 (fullscreen)
+and real MS-DOS 6.22 (Workbench window). Screenshots show the new panel and
+correct DOS version; both exits passed register/cache restoration and owned
+memory release. The original AUTOEXEC/CONFIG files were checked byte-for-byte
+after the booted-DOS run. The helper is also present in the embedded C: drawer.
+Final binary checksums and evidence are under
+`amiga/records/2026-10-13/dosbox-startup-cd/`. No physical resize gesture or
+external MIDI instrument playback was tested.

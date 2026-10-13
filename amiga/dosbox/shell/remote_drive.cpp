@@ -119,3 +119,9 @@ bool db_disk_sector(unsigned sector,void *data,bool writing){
  if(!writing)for(unsigned i=0;i<512;i++)((uint8_t*)data)[i]=db_shared()[FS_DATA+i];
  return true;
 }
+
+/* Selected CD source is host-owned and always read-only. */
+bool db_cd_sector(unsigned sector,void *data){
+ if(!rpc(FS_CD_READ,0,1,sector)||reply(2)!=1)return false;
+ for(unsigned i=0;i<2048;i++)((uint8_t*)data)[i]=db_shared()[FS_DATA+i];return true;
+}

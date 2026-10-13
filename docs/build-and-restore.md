@@ -1,9 +1,9 @@
 # Build and restore
 
-This is a development backup of 0.8.0-dev, not a finished DOSBox release.
-`artifacts/0.8.0-dev/pc/ZZDosBox` matches the installed, tested executable.
-The launcher, disk helper and supplied icon are alongside it. Rejected speed
-experiments live separately under `artifacts/experiments/`.
+This backup contains current 0.10.1 development source, the historical 0.8
+baseline and a separate experimental Windows build. The Windows build has
+not completed physical validation. See the per-artifact notes before deploying.
+The original 0.8 artifacts remain unchanged for recovery.
 
 Run `python3 scripts/verify_backup.py` to check the backup hashes, then
 `python3 scripts/restore_build_inputs.py` to populate ignored build inputs.
@@ -63,3 +63,16 @@ or existing system preferences merely to restore this application.
 
 The backup includes source, executable artifacts and selected test evidence.
 It excludes user games, Microsoft DOS, credentials and whole-machine data.
+
+## Windows experiment
+
+For a fresh checkout, `python3 scripts/restore_build_inputs.py --windows-experiment`
+restores the new ARM ELF and original regression fixtures. Existing generated
+outputs are preserved, so use a fresh checkout when comparing builds. Run
+`make test-model` with a Python environment containing Unicorn 2.1.4. Default
+restoration continues to use the historical 0.8 baseline; current tests target
+the new build, so rebuild current source before testing a baseline restoration.
+
+The native WfW harness needs separately supplied media and local scratch paths.
+Neither Windows nor WinBench is bundled. Native desktop/WinBench startup does
+not establish physical ARM performance or a completed benchmark score.

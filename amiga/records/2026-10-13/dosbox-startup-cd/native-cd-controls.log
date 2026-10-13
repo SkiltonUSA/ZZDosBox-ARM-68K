@@ -1,0 +1,40 @@
+CD ISO9660 sectors=32 read-only
+FILES requests=58 read=18432 written=5024; handles closed
+PC rc=0 fault=0 detail=DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: w slices=0 ticks=0 frames=0 size=0x0 bpp=0
+DosBox ZZ9000 project                         0.10.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>dir d:\
+Directory of D:\.
+HELLO    TXT                 21 13-10-2026  0:00
+LARGE    BIN              5,003 13-10-2026  0:00
+SUBDIR         <DIR>            13-10-2026  0:00
+    2 File(s)             5,024 Bytes.
+    1 Dir(s)                  0 Bytes free.
+
+C:\>type d:\hello.txt
+ZZCD data read PASS
+
+C:\>copy d:\large.bin c:\CDLARGE.BIN
+ LARGE.BIN
+   1 File(s) copied.
+
+C:\>copy d:\subdir\nested.txt c:\CDNEST.TXT
+ NESTED.TXT
+   1 File(s) copied.
+
+C:\>echo bad > d:\DENIED.TXT
+bad
+
+C:\>exit
+
+
+PASS ISO9660 D: read/copy/nested/cross-sector and write protection

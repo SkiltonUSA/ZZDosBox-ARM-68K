@@ -14,7 +14,7 @@
 #define FS_NAME_SIZE 13u
 /* Command: seq, operation, handle/index, count/flags, position, whence.
  * Reply: ack, DOS error, result, size, attributes, DOS date, DOS time. */
-enum { FS_OPEN=1,FS_CREATE,FS_CLOSE,FS_READ,FS_WRITE,FS_SEEK,FS_STAT,FS_LIST,FS_DELETE,FS_RENAME,FS_SPACE,FS_MKDIR,FS_RMDIR,FS_TESTDIR,FS_DISK_OPEN,FS_DISK_CLOSE,FS_DISK_READ,FS_DISK_WRITE };
+enum { FS_OPEN=1,FS_CREATE,FS_CLOSE,FS_READ,FS_WRITE,FS_SEEK,FS_STAT,FS_LIST,FS_DELETE,FS_RENAME,FS_SPACE,FS_MKDIR,FS_RMDIR,FS_TESTDIR,FS_DISK_OPEN,FS_DISK_CLOSE,FS_DISK_READ,FS_DISK_WRITE,FS_CD_READ };
 /* Initial BIOS HDD geometry: 128 cylinders, 16 heads, 32 sectors (32 MiB).
  * Disk RPCs use a dedicated exclusive handle, sector index and 1..8 sectors. */
 #define FS_DISK_SECTORS 65536u

@@ -1,0 +1,12 @@
+[OK]
+DOSHD device registered=1; action=mount
+Inhibiting DOSHD filesystem
+Changing diskimage.device raw unit 5
+Releasing DOSHD filesystem
+Hard disk mounted.
+[OK]
+DOSHD device registered=1; action=eject
+Inhibiting DOSHD filesystem
+Changing diskimage.device raw unit 5
+Releasing DOSHD filesystem
+Hard disk ejected.

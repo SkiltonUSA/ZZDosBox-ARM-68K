@@ -1,0 +1,64 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=85cb9255
+BOOTSTRAP amiga=4060c700 arm=007fc700 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+DISPLAY_CONFIG mode=window fps=1 system=booted DOS
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+CD ISO9660 sectors=32 read-only
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+BOOT TEXT:
+Starting MS-DOS...                                                              
+                                                                                
+DosBox ZZ9000 project - 0.10.1-dev                                              
+AmigaOS - 32-bit                                                                
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K                                  
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed                      
+F10: close session                                                              
+MSCDEX Version 2.23                                                             
+Copyright (C) Microsoft Corp. 1986-1993. All rights reserved.                   
+       Drive D: = Driver ZZDOSCD unit 0                                         
+ZZSTART FILE PASS                                                               
+ZZCD data read PASS                                                             
+                                                                                
+MS-DOS Version 6.22                                                             
+                                                                                
+C:\>                                                                            
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+ARM_FPS tenths=180
+PC frames=488 emulated_ms=6984 wall_ms=28742 timed_done=0
+POLL ms=1 calls=15681 wait_us=21714634 max_us=70544
+SHELL result=2 guest_exit=0 slices=970163 bytes=0 hash=811c9dc5 mismatches=0
+
+SHELL PASS mode=0
+BIOS HDD close=ok
+FILES requests=519 read=271360 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+DISPLAY frames=488 flips=0 wait_us=0
+COPY observed_us=13700727 max_us=84043
+PIPELINE enabled=0 overlaps=0 releases=488
+LAUNCHER exit=0; owned memory released

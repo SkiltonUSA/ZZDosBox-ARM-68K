@@ -1,5 +1,178 @@
 # ZZDosBox development handoff
 
+## ZZDosBox Windows research and backup preparation — 13 October 2026
+
+Windows for Workgroups 3.11 installed and reached Program Manager in native
+host ASan testing after the fast-A20 fix. WinBench opened its licence screen;
+no benchmark score exists. The physical Windows experiment stopped with worker
+heap exhaustion, then returned cleanly. Smaller sparse TLB banks have been
+built but have not yet been retested physically. 8 MiB guest RAM and 32 MiB
+owned allocation are unchanged. See `amiga/records/2026-10-13/dosbox-wfw/`.
+
+The canonical installed 0.10.1 runtime was retrieved read-only and its SHA-256
+matched `b92eff5ffb7b36bce27b6e4bcb24acc78b98a2ff31e6338728ef9a1d7f1693c6`.
+Backup artifacts retain this tested runtime separately from the Windows
+experiment. Microsoft media, WinBench, games and disk images stay local.
+
+## ZZDosBox 0.10.1 startup, CD, MIDI and welcome installed — 13 October 2026
+
+Canonical drawer: `SD032G:Dev/ZZDosBox/PC/`. Runtime `ZZDosBox`: 918612 bytes,
+CRC32 `A7118584`, SHA256
+`b92eff5ffb7b36bce27b6e4bcb24acc78b98a2ff31e6338728ef9a1d7f1693c6`.
+MUI `ZZDosBox-Launcher`: 160104 bytes, CRC32 `625D32CF`, SHA256
+`f43418fa2e246c0de4321b1af9416d4940c7ec943bd1d1a94bb92492593ff403`.
+Both were promoted and independently checksummed. Launch with Stack 65536.
+
+DOS terminal now contains Terminal, AUTOEXEC.BAT, CONFIG.SYS and CD-ROM tabs.
+Startup files select Default / Edited / File. For DOS 6.22 the launcher mounts
+DOSHD, recovers any startup transaction, installs temporary root startup files,
+ejects before boot, then restores originals and ejects on return. Preserve
+`ZZDSTART.TXN`, `ZZDAUTO.BAK` and `ZZDCONF.BAK` if interrupted; next preparation
+recovers them. Native fault tests and a physical File + ISO launch passed;
+both original startup files were compared byte-for-byte after return.
+
+CD is read-only D: from ISO9660 or an existing Amiga CD mount. Physical UMSD:
+uses `usbscsi.device` unit 0, AMINET13, 325420 sectors. Both its directory and
+an original test ISO were read by embedded DOS. Real DOS 6.22 used the new
+87-byte `ZZDOSCD.SYS` and existing Microsoft MSCDEX 2.23 to read the ISO.
+Driver remains in the app drawer and DOS disk root. No USB/CD configuration
+or firmware changes. No audio-CD support.
+
+The original 654-byte `ZZHELLO.COM` (CRC32 `0E8A118A`) draws the blue CP437
+welcome panel, ASCII logo, project/version, detected DOS version and shortcuts.
+It is installed in the app drawer, DOS disk root and embedded C: drawer;
+launcher startup calls it without changing permanent AUTOEXEC/CONFIG files.
+Physical MUI launches passed in DOS 5 fullscreen and DOS 6.22 window. It does
+not depend on ANSI.SYS or the non-DOS-6 COLOR command. Existing helper files
+must match the shipped bytes; conflicting files are preserved and reported.
+
+Alt+Return switches window/fullscreen; Ctrl+minus/plus changes CPU cycles in
+500 steps (500–10000); F10 closes. Physical tests passed four switches per
+session, with clean exits from both display modes and speed changes 3000 ->
+3500 -> 3000. Retain both bitmap allocations until synchronous Core1 reset.
+Intuition focus changes asynchronously; final code delays activation outside
+bitmap locks. Tests wait for actual active window/screen before the next key.
+Early tests needed a click to refocus before clean exit; no reboot was needed.
+Do not synthesize Workbench drag/resize gestures (earlier Intuition stall).
+
+Settings supports external MT-32/intelligent MPU-401 or General MIDI/UART
+through CAMD, off by default. Internal CAMD capture physically verified 5015
+bytes / 5005 messages, three notes, one SysEx, errors zero. No external notes
+were sent and audible Roland playback is untested. New Check audio drivers
+found CAMD 37.14, out.0, AHI 4.180 and two ZZ9000AX modes. This only establishes
+installed drivers/routing; PCM Sound Blaster/AdLib/PC speaker audio is pending.
+
+Previous binaries/config: `ZZDosBox-PreStart`, `Launcher-PreStart`,
+`Launcher.cfg-PreStart`; full DOS disk backup `Disks/DOS622-PreStart.IMG`.
+Original profiles restored after tests (format 5); selected MS-DOS 6.22,
+window 640x480, FPS on, MIDI/CD off. Launcher left on DOS terminal, no Core1
+owner, DOSHD ejected. No GitHub push; private GitHub backup remains 0.8.
+
+Native ASan EGA/PIT/CD/MIDI/welcome, startup/profile units, full ARM model
+(including CD/MIDI/speed) and shared ARM/MCP checks pass. All recorded target
+runs finished with register/cache witnesses restored and owned memory released.
+Evidence: `amiga/records/2026-10-13/dosbox-startup-cd/`; scratch automation and
+screenshots: `.context/amiga/dosbox-startup-cd/`.
+
+Owner also highlighted Staging's HLT-based `cpu_idle`. Reviewed and documented
+as follow-up; **not implemented** and no ZZ9000 idle-power saving measured.
+Current core emulates HLT but prompt callbacks still run NOP idle loops.
+An emulated HLT does not sleep the physical ARM, whose XACP handshakes still
+poll. Do not introduce ARM WFI/WFE without a verified wake-up contract.
+Cortex-A9 and this port are 32-bit; no 64-bit x86 guest support.
+
+## ZZDosBox 0.9.1 resizable window installed — 13 October 2026
+
+Supersedes the 0.9 installation below. Canonical location remains
+`SD032G:Dev/ZZDosBox/PC/`. Runtime `ZZDosBox`: 856340 bytes, CRC32
+`38EF3834`, SHA256 `8d337250df045eba3e143ac8553381ee9bda1fb1178288be83b3d281977b0f97`.
+Launcher: 109744 bytes, CRC32 `10DCA4AE`, SHA256
+`270d4b8517b0bac6644690b6bb5950cf7105deea46f18a22a4f1d31b621772df`.
+Both installed and independently checksummed. Previous binaries/config are
+`ZZDosBox-PreSizes`, `Launcher-PreSizes`, `Launcher.cfg-PreSizes`; older
+PreWindow backups remain. Launch UI with Stack 65536 as before.
+
+DOS terminal now has Display (Workbench window / Fullscreen) and Window size
+(320×240 / 640×480 / 960×720). **Show FPS is in Settings**, per the owner's
+latest request. Format 3 saves the preset per profile; formats 1/2 import at
+640×480. Disk boot also consumes the preset. Fullscreen disables the size
+control and stays 640×480. Native Workbench size gadget permits client sizes
+between 320×240 and 960×720, with a centred 4:3 picture and black margins.
+The P96 bitmap remains allocated at maximum capacity throughout the session;
+resize only changes the next validated ARM grant dimensions.
+
+Verified physically: all three terminal sizes, keyboard VER, ARM FPS and F10;
+MS-DOS 6.22 fullscreen; MUI preset cycling/save/readback, fullscreen disabling
+size; MUI Open terminal boots 6.22 at 640×480, native close gadget returns.
+All runs restored register/cache witnesses and released owned memory. Final
+FPS relocation is layout-only, rebuilt and installed after these runs.
+Native ASan, configuration/scaling/geometry/mapping/FPS tests, full ARM PC
+model (including changing geometry in both formats), and shared ARM/MCP
+checks pass. **Physical drag-resizing remains untested.** Do not synthesize
+window dragging/sizing through the bridge; see the earlier Intuition stall.
+
+Final profile: MS-DOS 6.22, window, 640×480, FPS enabled. Other profiles kept
+their existing settings. Launcher is on DOS terminal, no Core1 owner, disk
+image ejected from Workbench. No firmware/startup/disk-image changes or GitHub
+push. Evidence: `amiga/records/2026-10-13/dosbox-window-sizes/`;
+local automation/screenshots: `.context/amiga/dosbox-window-sizes/`.
+
+
+## ZZDosBox 0.9 window / DOS choice / ARM FPS installed — 13 October 2026
+
+Canonical `SD032G:Dev/ZZDosBox/PC/ZZDosBox` is 0.9.0-dev, 850584 bytes,
+CRC32 `6F849EC3`, SHA256
+`4634499134230d9f9eec534b130c0e1c9c55c68132baaf8a65e8eaf9c285d6a8`.
+Launcher is 108640 bytes, CRC32 `58875C97`, SHA256
+`4276774c19b07fc2573a1b8629a80d23d4fb91df3ba4108a37acf6894f588de2`.
+Both were transferred and independently checksummed. Backups in the same
+folder: `ZZDosBox-PreWindow`, `Launcher-PreWindow`, `Launcher.cfg-PreWindow`.
+The DOSBox icon remains installed. Launch the UI with Stack 65536 (its icon
+also retains 65536); do not inherit a small Shell stack.
+
+DOS terminal chooses DOSBox DOS 5 or installed MS-DOS 6.22. Settings chooses
+Workbench window/fullscreen and Show FPS. A new MS-DOS 6.22 profile boots
+existing `Disks/DOS622.IMG`, with 8 MB guest RAM; no disk contents were replaced.
+MS-DOS uses its own disk startup files. Host-drawer, colour and edited-startup
+controls are disabled there. Commands for booted DOS refer to its disk paths.
+Session/profile format 2 saves the new options; old profiles import as
+fullscreen, FPS off, embedded DOS. New profiles default to window mode.
+
+ARM renders into a locked, nonce-verified offscreen P96 bitmap, then the host
+blits completed frames into a clipped Workbench window. Current Workbench
+32-bit format 9 is physically verified. Fullscreen retains deferred XACP PAN.
+The embedded prompt now renders through VGA and uses BIOS keyboard/idle IRQ
+handling. Optional Core1 overlay measures completed video refreshes against
+XX19c's nominal 333.333 MHz global timer; it is not unique game frames.
+
+Verified physically: MS-DOS 6.22 window + FPS + VER (startup and raw keyboard),
+embedded DOS 5.00 window with FPS off + VER, Keen window graphics + FPS,
+MS-DOS fullscreen + FPS + PAN ACKs. All returned on F10 with register/cache
+witnesses restored and owned memory released. MUI saved options survived a
+restart; its Open terminal button booted 6.22 with FPS, and the window close
+gadget returned cleanly. No crash data recorded. Native ASan fixture, config
+migration/FPS unit tests, full ARM PC model including VGA-shell raw-key VER/EXIT,
+and `make test-amiga-arm test-amiga` passed.
+
+Final state: launcher on DOS terminal tab, MS-DOS 6.22 selected, window + FPS
+saved, no Core1 owner. Image remains ejected from Workbench. No firmware or
+startup-service changes. Evidence: `amiga/records/2026-10-13/dosbox-window/`.
+Local automation/screenshots: `.context/amiga/dosbox-window/`. No GitHub push;
+the previous private backup remains 0.8.0-dev.
+
+## ZZDosBox GitHub backup — 13 October 2026
+
+Created private repository https://github.com/SkiltonUSA/ZZDosBox-ARM-68K,
+main commit `1303167e68a41965593895bfdae57d27acf24906`. Remote branch and
+artifact Git blob hashes verified. Local export: `.context/ZZDosBox-ARM-68K`;
+receipt: `.context/zzdosbox-github-backup-receipt.json`. Contains 0.8.0-dev
+runtime/launcher/icon, editable source and shared dependencies, pinned upstream
+Git bundle, picolibc sources/build support, DOSBox-only handoff and hardware
+records. No games or Microsoft DOS media. This is not an Amiga disk backup.
+Independent export passed 639-file checksum manifest, host tests, native ASan
+fixture and ARM instruction model. Original runtime and hardware untouched.
+Repository remains private; no GitHub Release was created.
+
 ## ZZDosBox scheduler experiments / icon update — 13 October 2026
 
 **Recovered:** bridge temporarily stopped answering after an injected Workbench

@@ -12,6 +12,8 @@
 #include "fs_host.h"
 #include "fs_wire.h"
 #include "display.h"
+#include "cd_host.h"
+#include "midi_host.h"
 #include "pc_wire.h"
 #include "mmu.h"
 #include "profile_plan.h"
@@ -39,13 +41,18 @@ static char auto_command[176];
 static const char commands[]="dir /b\rtype readme.txt\recho saved text > SAVED.TXT\rtype saved.txt\rfiletest\rexetest\rcopy LARGE.BIN LARGE2.BIN\rren LARGE2.BIN RENAMED.BIN\rdir /b\rexit\r";
 static char transcript[8192];
 int db_arguments(int argc,char **argv){
- int i;if(argc==0)return 0;dl_defaults(&settings);
+ int i;if(argc==0)return 0;dl_defaults(&settings);settings.display=1;
  for(i=1;i<argc;i++){
   if(!strcmp(argv[i],"--session")&&i+1<argc){
    if(!dl_session_read(argv[++i],&settings)){puts("Invalid launcher session");return -1;}
    configured=1;drive=settings.drive;duration=settings.live?0:8000;
-   if(*settings.command)snprintf(auto_command,sizeof(auto_command),"%s\r%s",settings.command,settings.terminal?"":"exit\r");
+   if(settings.system){strcpy(hdd_name,"DOS622.IMG");duration=0;}
+   if(*settings.command&&!settings.system)snprintf(auto_command,sizeof(auto_command),"%s\r%s",settings.command,settings.terminal?"":"exit\r");
   }
+  else if(!strcmp(argv[i],"--window"))settings.display=0;
+  else if(!strcmp(argv[i],"--fullscreen"))settings.display=1;
+  else if(!strcmp(argv[i],"--window-size")&&i+1<argc){const char *n=argv[++i];if(strlen(n)!=1||!strchr("012",*n))return -1;settings.size=*n-'0';}
+  else if(!strcmp(argv[i],"--fps"))settings.fps=1;
   else if(!strcmp(argv[i],"--memory")&&i+1<argc){const char *m=argv[++i];if(strlen(m)!=1||!strchr("1248",*m))return -1;memory_override=*m-'0';}
   else if(!strcmp(argv[i],"--hdd")&&i+1<argc){unsigned j;const char *name=argv[++i];if(strlen(name)>=sizeof(hdd_name))return -1;strcpy(hdd_name,name);for(j=0;hdd_name[j];j++)if(hdd_name[j]>='a'&&hdd_name[j]<='z')hdd_name[j]-=32;if(!fs_name_valid(hdd_name))return -1;duration=0;}
   else if(!strcmp(argv[i],"--boot")&&i+1<argc){unsigned j;const char *name=argv[++i];if(strlen(name)>=sizeof(boot_name))return -1;strcpy(boot_name,name);for(j=0;boot_name[j];j++)if(boot_name[j]>='a'&&boot_name[j]<='z')boot_name[j]-=32;if(!fs_name_valid(boot_name))return -1;duration=0;}
@@ -116,16 +123,17 @@ static int run(struct DbWindow *console){
  publish(DB_TX_WRITE,testmode?0xfffffffcu:0);publish(DB_TX_READ,testmode?0xfffffffcu:0);publish(DB_RX_EOF,0);
  publish(MB_HOST+8,token);publish(MB_HOST+MB_OP,MB_VERIFY);publish(MB_HOST+MB_SEQ,++sequence);
  for(;;){
-  ULONG ack,error;int want_stop=0;
+  ULONG ack,error;int want_stop=0,midi_result;
   if(receive(PC_CONSOLE_WAIT)&&!pc_display_locked()&&!pc_display_pending())pc_display_console(1);
   if(!stopping){int display_result=pc_display_service();if(display_result<=0){if(!display_result)transport_ok=0;want_stop=1;}}
+  if(!(midi_result=db_midi_host_service())){transport_ok=0;want_stop=1;}
   if(!db_fs_service()){transport_ok=0;want_stop=1;}
   if(!drain(pc_display_locked()?NULL:console)){transport_ok=0;want_stop=1;}
   if((testmode==1||auto_command[0])&&received>=7&&!sent){
    const UBYTE *testkeys=(const UBYTE *)(auto_command[0]?auto_command:commands);
    if(!input(testkeys,strlen((const char *)testkeys))){transport_ok=0;want_stop=1;}sent=1;
   }
-  if(!testmode&&!stopping&&!pc_display_locked()){
+  if(console&&!testmode&&!stopping&&!pc_display_locked()){
    ULONG w=ad_get(shared,DB_RX_WRITE),r=receive(DB_RX_READ),space;
    unsigned count=0;
    if((ULONG)(w-r)>DB_RX_SIZE){transport_ok=0;want_stop=1;space=0;}else space=DB_RX_SIZE-(w-r);
@@ -142,11 +150,13 @@ static int run(struct DbWindow *console){
    if(count&&!input(keys,count)){transport_ok=0;want_stop=1;}
   }
   syncio->pull(shared+MB_REPLY,320,NULL);ack=ad_get(shared+MB_REPLY,MB_ACK);error=ad_get(shared+MB_REPLY,MB_ERROR);
-  if(ack==sequence&&(!pc_display_pending()||stopping||!transport_ok)){
+  if(ack==sequence&&(midi_result!=2||stopping||!transport_ok)&&(!pc_display_pending()||stopping||!transport_ok)){
    int ok=transport_ok&&ad_get(shared+MB_REPLY,68)==(token^ZZ_XOR);
    if(!drain(pc_display_locked()?NULL:console))ok=0;
    if(*boot_name||*hdd_name){syncio->pull(shared+PC_BOOT_TEXT,2004,NULL);if(ad_get(shared,PC_BOOT_TEXT+2000)==0x424f4f54){unsigned row,col;char text[81];puts("BOOT TEXT:");for(row=0;row<25;row++){for(col=0;col<80;col++)text[col]=shared[PC_BOOT_TEXT+row*80+col];text[80]=0;puts(text);}}}
    if(error&&error!=2)printf("DOS error: %.*s\n",159,(const char *)(shared+MB_REPLY+128));
+   printf("CPU_CYCLES applied=%u\n",receive(PC_CYCLE_APPLIED));
+   printf("ARM_FPS tenths=%u\n",receive(PC_FPS_TENTHS));
    printf("PC frames=%u emulated_ms=%u wall_ms=%u timed_done=%u\n",value(9),value(10),(ULONG)(us()-start)/1000u,receive(PC_DONE));
    if(profiling){
     static const char *names[]={"other","cpu","events","capture","grant","copy"};unsigned i;
@@ -180,9 +190,6 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected){
  struct MsgPort *port=NULL;struct timerequest *timer=NULL;int opened=0,rc=20;struct DbWindow *console=NULL;
  (void)connected;shared=base;syncio=io;
  if(!db_fs_open(base,io,drive)){puts("Cannot open DOS drive drawer");goto done;}
- if(!testmode){
-  console=configured?db_window_open_colours(settings.fg,settings.bg):db_window_open();if(!console){puts("Cannot open console window");goto done;}
- }
  port=CreateMsgPort();if(!port)goto done;
  timer=(struct timerequest *)CreateIORequest(port,sizeof(*timer));if(!timer)goto done;
  if(OpenDevice(TIMERNAME,UNIT_MICROHZ,(struct IORequest *)timer,0))goto done;
@@ -191,14 +198,23 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected){
  {unsigned j;for(j=0;j<FS_NAME_SIZE;j++)shared[PC_BOOT_NAME+j]=boot_name[j];syncio->push(shared+PC_BOOT_NAME,FS_NAME_SIZE,NULL);}
  {unsigned j;for(j=0;j<FS_NAME_SIZE;j++)shared[PC_HDD_NAME+j]=hdd_name[j];syncio->push(shared+PC_HDD_NAME,FS_NAME_SIZE,NULL);}
  publish(PC_BOOT_TEXT+2000,0);
+ publish(PC_UI_FLAGS,(testmode?0:2)|(settings.fps?1:0));publish(PC_FPS_TENTHS,0);
+ {static const unsigned ansi_to_vga[]={0,4,2,6,1,5,3,7};publish(PC_TEXT_COLOURS,ansi_to_vga[settings.fg]|(ansi_to_vga[settings.bg]<<4));}
+ {unsigned j;for(j=0;j<160;j++)shared[PC_BOOT_COMMAND+j]=settings.system?settings.command[j]:0;syncio->push(shared+PC_BOOT_COMMAND,160,NULL);}
+ pc_display_mode(settings.display);pc_display_size(settings.size);
+ printf("DISPLAY_CONFIG mode=%s fps=%u system=%s\n",settings.display?"fullscreen":"window",settings.fps,(*hdd_name||*boot_name)?"booted DOS":"embedded DOS 5");
  publish(PC_OPTIONS,0);publish(PC_KEY_WRITE,0);publish(PC_KEY_READ,0);publish(PC_CONSOLE_WAIT,0);
  if(configured){publish(PC_OPTIONS+4,settings.memory);publish(PC_OPTIONS+8,settings.machine);publish(PC_OPTIONS+12,settings.cycles);publish(PC_OPTIONS,PC_OPTIONS_MAGIC);printf("SETTINGS memory_mb=%u machine=%u cycles=%u live=%u\n",settings.memory,settings.machine,settings.cycles,settings.live);}
+ publish(PC_CYCLE_REQUEST,configured?settings.cycles:3000);publish(PC_CYCLE_APPLIED,0);
  publish(PC_DURATION,duration);publish(PC_DONE,0);
  publish(PC_PROFILE,profiling);publish(PC_PROFILE+4,0);
+ publish(PC_VIDEO+944,0);
+ if(settings.cd_mode){ULONG count=db_cd_host_open(settings.cd_mode,settings.cd_path);if(!count){puts("Cannot mount CD: select a readable ISO9660 image or mounted CD device");goto done;}publish(PC_VIDEO+944,count);}
+ if(!db_midi_host_open(base,io,settings.midi,settings.midi_port)){puts("Cannot connect selected CAMD MIDI output");goto done;}
  if(!pc_display_open(base,io)){puts("Cannot open PC display");goto done;}
  rc=run(console);
 done:
- db_fs_close();
+ db_midi_host_close();db_cd_host_close();db_fs_close();
  if(pc_display_locked()){puts("Display lock retained for reset");}
  deferred_console=console;
  poll_timer=NULL;

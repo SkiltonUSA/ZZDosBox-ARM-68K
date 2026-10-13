@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Stage pinned upstream PC devices and capture native DOSBox frames."""
-import argparse,difflib,hashlib,shutil,subprocess
+import argparse,difflib,hashlib,shutil,subprocess,re,json
 from pathlib import Path
 import build_dosbox_shell as shell
 ROOT=shell.ROOT;OUT=ROOT/'.context/amiga/dosbox-pc';SRC=ROOT/'amiga/dosbox/pc';UP=shell.UP
-HW=['iohandler','pic','timer','keyboard','cmos','vga','vga_attr','vga_crtc','vga_dac','vga_draw','vga_gfx','vga_other','vga_memory','vga_misc','vga_seq','vga_xga']
+HW=['iohandler','pic','timer','keyboard','cmos','mpu401','vga','vga_attr','vga_crtc','vga_dac','vga_draw','vga_gfx','vga_other','vga_memory','vga_misc','vga_seq','vga_xga']
 INTS=['bios','bios_disk','bios_keyboard','int10','int10_char','int10_memory','int10_misc','int10_modes','int10_vesa','int10_pal','int10_put_pixel','int10_video_state','int10_vptable']
 def prepare():
  shell.OUT=OUT;sources=shell.prepare();patch=[]
@@ -12,9 +12,11 @@ def prepare():
  (OUT/'ega-planes.bin').write_bytes(planes)
  subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/'egatest.S'),'-o','egatest.o'],cwd=OUT,check=True)
  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x100','--oformat=binary','egatest.o','-o','EGATEST.COM'],cwd=OUT,check=True)
- for name in ['keytest','cgatest','boottest','hddtest','badmem']:
+ for name in ['keytest','cgatest','boottest','pagingtest','hddtest','badmem','miditest','welcome']:
   subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/(name+'.S')),'-o',name+'.o'],cwd=OUT,check=True)
-  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x100','--oformat=binary',name+'.o','-o',name.upper()+'.COM'],cwd=OUT,check=True)
+  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x7c00' if name=='pagingtest' else '0x100','--oformat=binary',name+'.o','-o',name.upper()+'.COM'],cwd=OUT,check=True)
+ (OUT/'ZZHELLO.COM').write_bytes((OUT/'WELCOME.COM').read_bytes())
+ (OUT/'welcome-build.json').write_text(json.dumps({'source_sha256':hashlib.sha256((SRC/'welcome.S').read_bytes()).hexdigest(),'bytes':(OUT/'ZZHELLO.COM').stat().st_size,'sha256':hashlib.sha256((OUT/'ZZHELLO.COM').read_bytes()).hexdigest()},indent=2)+'\n')
  (OUT/'BOOTTEST.IMG').write_bytes((OUT/'BOOTTEST.COM').read_bytes()+bytes([0x39,0x5a])+bytes(1440*1024-514))
  for path in ['src/hardware','src/ints','src/gui']:shutil.copytree(UP/path,OUT/path,dirs_exist_ok=True)
  def change(rel,fn):
@@ -22,6 +24,12 @@ def prepare():
  # Upstream banked software TLB: retain full guest address coverage without
  # a 20 MiB always-resident translation table on 32-bit ARM.
  change('include/paging.h',lambda s:s.replace('#define USE_FULL_TLB','/* USE_FULL_TLB disabled for the bounded XACP allocation. */'))
+ # Windows uses sparse high linear addresses. A 256 MiB bank costs 1.25 MiB
+ # on ARM and exhausts the 2 MiB heap after only two banks. Keep the full
+ # 32-bit address space, but allocate 16 MiB banks (80 KiB each on ARM).
+ change('include/paging.h',lambda s:s.replace('#define TLB_SIZE\t\t65536','#define TLB_SIZE\t\t4096').replace('#define BANK_SHIFT\t\t28','#define BANK_SHIFT\t\t24').replace('#define BANK_MASK\t\t0xffff','#define BANK_MASK\t\t0xfff'))
+ # Optional native exception trace for protected-mode installation research.
+ change('src/cpu/cpu.cpp',lambda s:s.replace('void CPU_Exception(Bitu which,Bitu error ) {', 'void CPU_Exception(Bitu which,Bitu error ) {\n#ifdef DB_NATIVE\n extern void db_native_exception(Bitu,Bitu);db_native_exception(which,error);\n#endif'))
  def cold_tlb(s):
   a=s.index('static INLINE tlb_entry *get_tlb_entry(PhysPt address) {')
   b=s.index('static INLINE HostPt get_tlb_read(',a)
@@ -48,6 +56,12 @@ __attribute__((noinline)) tlb_entry *PAGING_GetHighTLBEntry(PhysPt address) {
  for n in HW+INTS:
   rel=('src/hardware/' if n in HW else 'src/ints/')+n+'.cpp'
   change(rel,lambda s:s.replace('sec->AddDestroyFunction(', 'if(sec)sec->AddDestroyFunction(').replace('sect->AddDestroyFunction(', 'if(sect)sect->AddDestroyFunction('))
+ def mpu(text):
+  text=text.replace('const char* s_mpu = section->Get_string("mpu401");','const char* s_mpu = db_midi_mode==1?"intelligent":db_midi_mode==2?"uart":"none";')
+  text=text.replace('if(strcasecmp(section->Get_string("mpu401"),"intelligent")) return;', 'if(!mpu.intelligent)return;')
+  text=text.replace('delete test;', 'PIC_RemoveEvents(MPU401_Event);PIC_RemoveEvents(MPU401_EOIHandler);PIC_RemoveEvents(MPU401_ResetDone);delete test;test=nullptr;')
+  return 'extern unsigned db_midi_mode;\n'+text
+ change('src/hardware/mpu401.cpp',mpu)
  change('src/hardware/iohandler.cpp',lambda s:s.replace('../src/cpu/lazyflags.h','../cpu/lazyflags.h'))
  change('src/hardware/vga.cpp',lambda s:s[:s.index('void SVGA_Setup_Driver(void) {')]+'void SVGA_Setup_Driver(void) { memset(&svga,0,sizeof(svga));vga.vmemsize=vga.vmemwrap=256*1024; }\n')
  change('src/hardware/vga_memory.cpp',lambda s:s+'\nvoid zz_vga_memory_close(){VGA_Memory_ShutDown(nullptr);}\n')
@@ -83,7 +97,33 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
   s=s[:a]+'case 0x05: reg_ah=3;CALLBACK_SCF(true);break;\n\t'+s[b:]
   return s
  change('src/ints/bios_disk.cpp',disks)
+ # This port has its own controls; do not advertise unsupported upstream menus.
+ def welcome(text):
+  messages={
+   'SHELL_STARTUP_BEGIN':"DosBox ZZ9000 project                         0.10.1-dev\nAmigaOS - 32-bit | DOSBox / libretro\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\n\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\nF10: close session             HELP: DOS commands\n\n",
+   'SHELL_STARTUP_END':'', 'SHELL_STARTUP_CGA':'', 'SHELL_STARTUP_HERC':'', 'SHELL_STARTUP_DEBUG':''}
+  messages['SHELL_STARTUP_SUB']=messages['SHELL_STARTUP_BEGIN']
+  for key,value in messages.items():
+   text=re.sub(r'MSG_Add\("'+key+r'",.*?\);',lambda m:'MSG_Add("'+key+'",'+json.dumps(value)+');',text,flags=re.S)
+  return text
+ change('shell_messages.cpp',welcome)
+ # Keep DOSBox's ISO9660 and MSCDEX implementation; replace platform CD I/O.
+ for name in ['dos_mscdex','drive_iso']:
+  target=OUT/'src/dos'/f'{name}.cpp';original=(UP/'src/dos'/f'{name}.cpp').read_text();target.write_text(original)
+  change('src/dos/'+name+'.cpp',lambda text:text.replace('#include "cdrom.h"','#include "cd_interface.h"').replace('#include "drives.h"','#include "cd_iso.h"'))
+ change('src/dos/drive_iso.cpp',lambda text:'extern \"C\" char *strtok_r(char *,const char *,char **);\n'+text.replace('for(char* name = strtok(isoPath, "/"); NULL != name; name = strtok(NULL, "/"))', 'char *token_context=nullptr;\n\tfor(char* name = strtok_r(isoPath, "/", &token_context); NULL != name; name = strtok_r(NULL, "/", &token_context))'))
+ def mscdex(text):
+  a=text.index('switch (CDROM_GetMountType');b=text.index('\n\tif (!cdrom[numDrives]->SetDevice',a)
+  text=text[:a]+'cdrom[numDrives] = new CDROM_Interface_Image((Bit8u)numDrives);\n'+text[b:]
+  text=text.replace('(1<<2)', '(0<<2)').replace('(1<<4)', '(0<<4)').replace('(1<<8)', '(0<<8)')
+  return text.replace('sec->AddDestroyFunction(&MSCDEX_ShutDown);','if(sec)sec->AddDestroyFunction(&MSCDEX_ShutDown);')
+ change('src/dos/dos_mscdex.cpp',mscdex)
+ sources += [OUT/'src/dos/dos_mscdex.cpp',OUT/'src/dos/drive_iso.cpp']
+ subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/'cddriver.S'),'-o','cddriver.o'],cwd=OUT,check=True)
+ subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0','--oformat=binary','cddriver.o','-o','ZZDOSCD.SYS'],cwd=OUT,check=True)
  sources += [OUT/'src/hardware'/f'{n}.cpp' for n in HW]+[OUT/'src/ints'/f'{n}.cpp' for n in INTS]
+ # Paging executes a single instruction through the reentrant full decoder.
+ sources.append(OUT/'src/cpu/core_full.cpp')
  frontend=(shell.SRC/'frontend.cpp').read_text();a=frontend.index('static Bitu bios_video()');b=frontend.index('void zz_shell_run()',a);frontend=frontend[:a]+frontend[b:]
  a=frontend.index(' Bitu cb=');b=frontend.index(' first_shell=new',a);frontend=frontend[:a]+frontend[b:];(OUT/'frontend.cpp').write_text(frontend)
  remote=(shell.SRC/'remote_drive.cpp').read_text().replace('__asm__ volatile("dsb sy" ::: "memory");','__atomic_thread_fence(__ATOMIC_SEQ_CST);')
@@ -93,17 +133,17 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
  return sources
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd'],default='fixture');args=p.parse_args();sources=prepare()
+ p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw'],default='fixture');args=p.parse_args();sources=prepare()
  if args.prepare_only:return
- flags=['-std=c++17','-O2','-g','-fno-exceptions','-fno-rtti','-ffunction-sections','-fdata-sections','-Wno-format','-Wno-deprecated-declarations','-DZZ_CONTROL=0x180000','-DDB_NATIVE',*['-I'+str(x) for x in [SRC,shell.SRC,ROOT/'amiga/dosbox/dos',ROOT/'amiga/dosbox/console',OUT,OUT/'include',OUT/'src/cpu',OUT/'src/ints',ROOT/'amiga/dosbox',ROOT/'amiga/mesen_bench',ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']]]
+ flags=['-std=c++17','-O2','-g','-fno-exceptions','-fno-rtti','-ffunction-sections','-fdata-sections','-Wno-format','-Wno-deprecated-declarations','-DZZ_CONTROL=0x180000','-DDB_NATIVE','-DZZ_PC_CD',*['-I'+str(x) for x in [SRC,shell.SRC,ROOT/'amiga/dosbox/dos',ROOT/'amiga/dosbox/console',OUT,OUT/'include',OUT/'src/cpu',OUT/'src/ints',ROOT/'amiga/dosbox',ROOT/'amiga/mesen_bench',ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']]]
  if args.sanitize:flags+=['-fsanitize=address','-fno-omit-frame-pointer']
- sources += [SRC/'adapter.cpp',OUT/'frontend.cpp',OUT/'native_drive.cpp',SRC/'devices.cpp',SRC/'boot.cpp',SRC/'video.cpp',SRC/'native.cpp']
+ sources += [SRC/'adapter.cpp',OUT/'frontend.cpp',OUT/'native_drive.cpp',SRC/'devices.cpp',SRC/'cd.cpp',SRC/'midi.cpp',SRC/'boot.cpp',SRC/'video.cpp',SRC/'native.cpp']
  headers=b''.join(x.read_bytes() for d in [OUT/'include',SRC,shell.SRC,ROOT/'amiga/dosbox/dos'] for x in sorted(d.glob('*.h')))
  objects=[]
  for i,s in enumerate(sources):
-  o=OUT/(f'{i}-'+s.stem+'.native.o');stamp=o.with_suffix('.sha256');objects.append(str(o));digest=hashlib.sha256(s.read_bytes()+headers+str(flags).encode()).hexdigest()
+  o=OUT/(f'{i}-'+s.stem+'.native.o');stamp=o.with_suffix('.sha256');objects.append(str(o));extra=(ROOT/'tests/amiga/dosbox/native_interactive.inc').read_bytes() if s==SRC/'native.cpp' else b'';digest=hashlib.sha256(s.read_bytes()+extra+headers+str(flags).encode()).hexdigest()
   if not stamp.exists() or stamp.read_text()!=digest:subprocess.run(['clang++',*flags,'-c',str(s),'-o',str(o)],check=True);stamp.write_text(digest)
- for s in [shell.SRC/'fs_host.c',SRC/'native_fs.c']:
+ for s in [shell.SRC/'fs_host.c',SRC/'native_fs.c',SRC/'cd_host.c']:
   o=OUT/(s.stem+'.native.o');objects.append(str(o));cf=[f for f in flags if f not in ['-std=c++17','-fno-rtti','-fno-exceptions']]
   subprocess.run(['clang','-std=c11','-I'+str(ROOT/'tests/amiga/dosbox/fs_mock'),*cf,'-c',str(s),'-o',str(o)],check=True)
  subprocess.run(['clang++',*flags,*objects,'-Wl,-dead_strip','-o',str(OUT/'pc-test')],check=True)

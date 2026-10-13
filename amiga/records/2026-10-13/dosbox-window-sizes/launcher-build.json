@@ -1,0 +1,11 @@
+{
+  "bytes": 109744,
+  "sha256": "270d4b8517b0bac6644690b6bb5950cf7105deea46f18a22a4f1d31b621772df",
+  "sources": {
+    "amiga/dosbox/launcher/session.h": "3dd4f4b14f44c9611c3d2d8effec3f4b79c94b2a905a0d50e0a59565faa4a749",
+    "amiga/dosbox/launcher/main.c": "37a35985ade73212f87d3d5e0acc9494ed84809090a1ca346aab718e1b116d89",
+    "amiga/dosbox/launcher/model.h": "6209a126229ff7b81a226755a97f80e611ddb62b26276e839650ff2c6ba048fd",
+    "amiga/dosbox/launcher/icon.c": "dcb218545e2d67d59cfe83b9cc09e899f339190f25ad2d8b4a6ee43d175cc81f",
+    "amiga/dosbox/launcher/disk.c": "30def43be864fd589afb0396287292fc7740b1cc059f659ee48be552f6054e7b"
+  }
+}
