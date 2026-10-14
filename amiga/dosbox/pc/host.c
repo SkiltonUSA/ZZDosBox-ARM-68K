@@ -174,6 +174,9 @@ static int drain(struct DbWindow *console){
 #include "video_trace_host.h"
 #include "video_debug_host.h"
 #endif
+#ifdef DB_MEMORY_DEBUG
+#include "memory_host.h"
+#endif
 static int run(struct DbWindow *console){
  ULONG start=us(),stop_time=0;int sent=0,stopping=0,forced=0,transport_ok=1;
  ULONG token=(sequence+1)^ad_get(shared,ZZ_CONTROL);UBYTE keys[64];
@@ -187,6 +190,9 @@ static int run(struct DbWindow *console){
  publish(MB_HOST+8,token);publish(MB_HOST+MB_OP,MB_VERIFY);publish(MB_HOST+MB_SEQ,++sequence);
  for(;;){
   ULONG ack,error;int want_stop=0,midi_result;
+#ifdef DB_MEMORY_DEBUG
+  memory_host_service(stopping);if(memory_stop_requested)want_stop=1;
+#endif
 #ifdef DB_VIDEO_TRACE
   if(trace_enabled&&!pc_display_locked()&&!pc_display_pending())video_trace_poll();
 #endif
@@ -305,8 +311,14 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected){
  if(settings.cd_mode){ULONG count=db_cd_host_open(settings.cd_mode,settings.cd_path);if(!count){puts("Cannot mount CD: select a readable ISO9660 image or mounted CD device");goto done;}publish(PC_VIDEO+944,count);}
  if(!db_midi_host_open(base,io,settings.midi,settings.midi_port)){puts("Cannot connect selected CAMD MIDI output");goto done;}
  if(!pc_display_open(base,io)){puts("Cannot open PC display");goto done;}
+#ifdef DB_MEMORY_DEBUG
+ if(!memory_host_open()){puts("Guest memory debug port unavailable");goto done;}
+#endif
  rc=run(console);
 done:
+#ifdef DB_MEMORY_DEBUG
+ memory_host_close();
+#endif
 #ifdef DB_VIDEO_TRACE
  video_debug_close();
 #endif

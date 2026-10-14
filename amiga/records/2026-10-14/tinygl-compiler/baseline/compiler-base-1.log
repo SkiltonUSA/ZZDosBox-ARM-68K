@@ -1,0 +1,64 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=0aead4c4
+BOOTSTRAP amiga=40c58e00 arm=00e48e00 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+DISPLAY_CONFIG mode=fullscreen fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+FULLSCREEN_BITMAP allocated=0886c8dc screen=0919a188 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=0b05f9b4/40f93600 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+VIDEO adapter=0 source=320x400 monochrome=0
+JIT magic=4a495431 commits=29 witness=1 dispatches=308220 cache_bytes=4194304 heap_peak=3906816
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+RASTERBENCH magic=52535431 errors=0 count=7 quick=0
+RASTERBENCH case=0 n=1024 repeats=16 hash=88b1e9f7 t0=0000000002164a96 t1=000000000216bd04 t2=00000000020da974 t3=00000000020e26fb
+RASTERBENCH case=1 n=128 repeats=16 hash=0628ae41 t0=0000000001668f7c t1=00000000016665f6 t2=00000000015f375c t3=00000000015fcd97
+RASTERBENCH case=2 n=32 repeats=16 hash=88077dd1 t0=0000000018e88eb8 t1=000000001446fe53 t2=0000000018e30a95 t3=0000000014402617
+RASTERBENCH case=3 n=32 repeats=16 hash=ccddff61 t0=000000000d107687 t1=000000001011a9e7 t2=000000000d08c708 t3=00000000100a0109
+RASTERBENCH case=4 n=0 repeats=128 hash=ee731dc5 t0=00000000031fb35d t1=00000000031e24d7 t2=0000000002e6697e t3=0000000002e52c98
+RASTERBENCH case=5 n=0 repeats=128 hash=88c99dc5 t0=0000000002c21bcc t1=0000000002c1bfce t2=0000000002c239d1 t3=0000000002c1fe23
+RASTERBENCH case=6 n=0 repeats=128 hash=90e05dc5 t0=0000000001d7aed8 t1=0000000001d7d3a3 t2=0000000001d77cdf t3=0000000001d80148
+SCANLINES magic=53434e31 frames=18 rendered_rows=8640 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=3000
+PRESENT magic=50525331 source=18 shown=18 skipped=0 divisor=1 changes=0 mode=0 hz=60 work_ticks=6367101 copy_ticks=1446976 total_copy=000000001ab4a0f9
+ARM_FPS tenths=0
+PC frames=18 emulated_ms=274 wall_ms=14134 timed_done=0
+POLL ms=1 calls=8739 wait_us=11119834 max_us=26093
+SHELL result=0 guest_exit=0 slices=108508 bytes=304 hash=97312e96 mismatches=0
+DosBox ZZ9000 project                         0.11.0-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>EGATEST.COM
+EGA/PIT PASS
+
+C:\>exit
+
+
+SHELL PASS mode=0
+FILES requests=14 read=32113 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=18 flips=18 wait_us=201969
+COPY observed_us=58881 max_us=6701
+PIPELINE enabled=1 overlaps=0 releases=18
+LAUNCHER exit=0; owned memory released

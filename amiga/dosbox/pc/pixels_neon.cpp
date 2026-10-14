@@ -55,5 +55,32 @@ static inline void scale(volatile uint32_t *out,const uint32_t *src,unsigned n,u
  }
 }
 
-extern "C" void pc_neon_scale(volatile uint32_t *out,const uint32_t *src,unsigned n,unsigned format,unsigned target){scale(out,src,n,format,target,8);}
+#ifdef DB_NEON_DISPATCH
+/* Select row invariants once. Keep the four-pixel footprint and scalar tail. */
+template<bool Twice,bool Swap> static void scale_fixed(uint32_t *dst,const uint32_t *src,unsigned n){
+ unsigned x=0;
+ for(;x+4<=n;x+=4){
+  uint32x4_t p=vld1q_u32(src+x);
+  if(Swap)p=vreinterpretq_u32_u8(vrev32q_u8(vreinterpretq_u8_u32(p)));
+  if(Twice){uint32x4x2_t d=vzipq_u32(p,p);vst1q_u32(dst+x*2,d.val[0]);vst1q_u32(dst+x*2+4,d.val[1]);}
+  else vst1q_u32(dst+x,p);
+ }
+ for(;x<n;x++){
+  uint32_t p=Swap?__builtin_bswap32(src[x]):src[x];
+  if(Twice){dst[x*2]=p;dst[x*2+1]=p;}else dst[x]=p;
+ }
+}
+#endif
+extern "C" void pc_neon_scale(volatile uint32_t *out,const uint32_t *src,unsigned n,unsigned format,unsigned target){
+#ifdef DB_NEON_DISPATCH
+ uint32_t *dst=const_cast<uint32_t *>(out);
+ if(target==n*2){if(format==3)scale_fixed<true,false>(dst,src,n);else scale_fixed<true,true>(dst,src,n);}
+ else{if(format==3)scale_fixed<false,false>(dst,src,n);else scale_fixed<false,true>(dst,src,n);}
+#else
+ scale(out,src,n,format,target,8);
+#endif
+}
+#ifdef DB_PIXEL_BENCH
+extern "C" void pc_neon_scale_reference(volatile uint32_t *out,const uint32_t *src,unsigned n,unsigned format,unsigned target){scale(out,src,n,format,target,8);}
+#endif
 extern "C" void pc_neon_scale_dim(volatile uint32_t *out,const uint32_t *src,unsigned n,unsigned format,unsigned target,unsigned level){scale(out,src,n,format,target,level);}

@@ -1,0 +1,223 @@
+
+.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench/dosbox.elf:	file format elf32-littlearm
+
+Disassembly of section .text:
+
+000b8354 <zz_mat_neon>:
+   b8354: f2803010     	vmov.i32	d3, #0x0
+   b8358: e280c010     	add	r12, r0, #16
+   b835c: e1a03001     	mov	r3, r1
+   b8360: f2235113     	vorr	d5, d3, d3
+   b8364: f2237113     	vorr	d7, d3, d3
+   b8368: f2230113     	vorr	d0, d3, d3
+   b836c: f4ac580f     	vld1.32	{d5[0]}, [r12]
+   b8370: e280c020     	add	r12, r0, #32
+   b8374: f2231113     	vorr	d1, d3, d3
+   b8378: f4ac780f     	vld1.32	{d7[0]}, [r12]
+   b837c: e280c030     	add	r12, r0, #48
+   b8380: f4ac080f     	vld1.32	{d0[0]}, [r12]
+   b8384: e280c004     	add	r12, r0, #4
+   b8388: f2212111     	vorr	d2, d1, d1
+   b838c: f4a0380f     	vld1.32	{d3[0]}, [r0]
+   b8390: f2214111     	vorr	d4, d1, d1
+   b8394: f2216111     	vorr	d6, d1, d1
+   b8398: f4ac180f     	vld1.32	{d1[0]}, [r12]
+   b839c: e280c014     	add	r12, r0, #20
+   b83a0: f4630a8d     	vld1.32	{d16, d17}, [r3]!
+   b83a4: f4ac280f     	vld1.32	{d2[0]}, [r12]
+   b83a8: e280c024     	add	r12, r0, #36
+   b83ac: f3e069c3     	vmul.f32	q11, q8, d3[0]
+   b83b0: f4ac480f     	vld1.32	{d4[0]}, [r12]
+   b83b4: e280c034     	add	r12, r0, #52
+   b83b8: f3e049c5     	vmul.f32	q10, q8, d5[0]
+   b83bc: f4ac680f     	vld1.32	{d6[0]}, [r12]
+   b83c0: e280c008     	add	r12, r0, #8
+   b83c4: f3e029c7     	vmul.f32	q9, q8, d7[0]
+   b83c8: f4638a8f     	vld1.32	{d24, d25}, [r3]
+   b83cc: e2813020     	add	r3, r1, #32
+   b83d0: f3e009c0     	vmul.f32	q8, q8, d0[0]
+   b83d4: e2811030     	add	r1, r1, #48
+   b83d8: f2803010     	vmov.i32	d3, #0x0
+   b83dc: f3e861c1     	vmla.f32	q11, q12, d1[0]
+   b83e0: f3e821c4     	vmla.f32	q9, q12, d4[0]
+   b83e4: f3e801c6     	vmla.f32	q8, q12, d6[0]
+   b83e8: f3e841c2     	vmla.f32	q10, q12, d2[0]
+   b83ec: f4638a8f     	vld1.32	{d24, d25}, [r3]
+   b83f0: e2803038     	add	r3, r0, #56
+   b83f4: f2235113     	vorr	d5, d3, d3
+   b83f8: f2237113     	vorr	d7, d3, d3
+   b83fc: f2236113     	vorr	d6, d3, d3
+   b8400: f4ac380f     	vld1.32	{d3[0]}, [r12]
+   b8404: e280c018     	add	r12, r0, #24
+   b8408: f2804010     	vmov.i32	d4, #0x0
+   b840c: f4ac580f     	vld1.32	{d5[0]}, [r12]
+   b8410: e280c028     	add	r12, r0, #40
+   b8414: f3e861c3     	vmla.f32	q11, q12, d3[0]
+   b8418: f4a3680f     	vld1.32	{d6[0]}, [r3]
+   b841c: e280300c     	add	r3, r0, #12
+   b8420: f3e841c5     	vmla.f32	q10, q12, d5[0]
+   b8424: f4ac780f     	vld1.32	{d7[0]}, [r12]
+   b8428: f3e801c6     	vmla.f32	q8, q12, d6[0]
+   b842c: f3e821c7     	vmla.f32	q9, q12, d7[0]
+   b8430: f4618a8f     	vld1.32	{d24, d25}, [r1]
+   b8434: e2821020     	add	r1, r2, #32
+   b8438: f2245114     	vorr	d5, d4, d4
+   b843c: f2246114     	vorr	d6, d4, d4
+   b8440: f2247114     	vorr	d7, d4, d4
+   b8444: f4a3480f     	vld1.32	{d4[0]}, [r3]
+   b8448: e280301c     	add	r3, r0, #28
+   b844c: f4a3580f     	vld1.32	{d5[0]}, [r3]
+   b8450: e280302c     	add	r3, r0, #44
+   b8454: f3e861c4     	vmla.f32	q11, q12, d4[0]
+   b8458: f4a3680f     	vld1.32	{d6[0]}, [r3]
+   b845c: e280303c     	add	r3, r0, #60
+   b8460: f3e841c5     	vmla.f32	q10, q12, d5[0]
+   b8464: f4a3780f     	vld1.32	{d7[0]}, [r3]
+   b8468: e2823030     	add	r3, r2, #48
+   b846c: f3e821c6     	vmla.f32	q9, q12, d6[0]
+   b8470: f3e801c7     	vmla.f32	q8, q12, d7[0]
+   b8474: f4426a8d     	vst1.32	{d22, d23}, [r2]!
+   b8478: f4424a8f     	vst1.32	{d20, d21}, [r2]
+   b847c: f4412a8f     	vst1.32	{d18, d19}, [r1]
+   b8480: f4430a8f     	vst1.32	{d16, d17}, [r3]
+   b8484: e12fff1e     	bx	lr
+
+000b8488 <zz_vec_neon>:
+   b8488: e3530003     	cmp	r3, #3
+   b848c: e92d40f0     	push	{r4, r5, r6, r7, lr}
+   b8490: e1a04003     	mov	r4, r3
+   b8494: ed2d8b10     	vpush	{d8, d9, d10, d11, d12, d13, d14, d15}
+   b8498: e1a0e001     	mov	lr, r1
+   b849c: e24dd044     	sub	sp, sp, #68
+   b84a0: e1a06002     	mov	r6, r2
+   b84a4: 9a00005e     	bls	0xb8624 <zz_vec_neon+0x19c> @ imm = #0x178
+   b84a8: e3a0c004     	mov	r12, #4
+   b84ac: e1a07001     	mov	r7, r1
+   b84b0: e1a03001     	mov	r3, r1
+   b84b4: f4a0780f     	vld1.32	{d7[0]}, [r0]
+   b84b8: e280e004     	add	lr, r0, #4
+   b84bc: e1a0500c     	mov	r5, r12
+   b84c0: f463818d     	vld4.32	{d24, d26, d28, d30}, [r3]!
+   b84c4: e28cc004     	add	r12, r12, #4
+   b84c8: e154000c     	cmp	r4, r12
+   b84cc: e2811040     	add	r1, r1, #64
+   b84d0: f4ae380f     	vld1.32	{d3[0]}, [lr]
+   b84d4: e280e010     	add	lr, r0, #16
+   b84d8: f463918f     	vld4.32	{d25, d27, d29, d31}, [r3]
+   b84dc: f4ae680f     	vld1.32	{d6[0]}, [lr]
+   b84e0: e280e014     	add	lr, r0, #20
+   b84e4: f3a889c7     	vmul.f32	q4, q12, d7[0]
+   b84e8: f4ae280f     	vld1.32	{d2[0]}, [lr]
+   b84ec: e280e008     	add	lr, r0, #8
+   b84f0: f4ee080f     	vld1.32	{d16[0]}, [lr]
+   b84f4: e280e020     	add	lr, r0, #32
+   b84f8: f4ae580f     	vld1.32	{d5[0]}, [lr]
+   b84fc: e280e024     	add	lr, r0, #36
+   b8500: f3aa81c3     	vmla.f32	q4, q13, d3[0]
+   b8504: f4ae180f     	vld1.32	{d1[0]}, [lr]
+   b8508: e280e018     	add	lr, r0, #24
+   b850c: f4ee180f     	vld1.32	{d17[0]}, [lr]
+   b8510: e280e00c     	add	lr, r0, #12
+   b8514: f4ee480f     	vld1.32	{d20[0]}, [lr]
+   b8518: e280e030     	add	lr, r0, #48
+   b851c: f4ae480f     	vld1.32	{d4[0]}, [lr]
+   b8520: e280e034     	add	lr, r0, #52
+   b8524: f4ae080f     	vld1.32	{d0[0]}, [lr]
+   b8528: e280e028     	add	lr, r0, #40
+   b852c: f228a158     	vorr	q5, q4, q4
+   b8530: f22081b0     	vorr	d8, d16, d16
+   b8534: f4ee280f     	vld1.32	{d18[0]}, [lr]
+   b8538: e280e01c     	add	lr, r0, #28
+   b853c: f3aca1c8     	vmla.f32	q5, q14, d8[0]
+   b8540: f4ee580f     	vld1.32	{d21[0]}, [lr]
+   b8544: e280e038     	add	lr, r0, #56
+   b8548: f22481b4     	vorr	d8, d20, d20
+   b854c: f4ee380f     	vld1.32	{d19[0]}, [lr]
+   b8550: e280e02c     	add	lr, r0, #44
+   b8554: f4ee680f     	vld1.32	{d22[0]}, [lr]
+   b8558: e280e03c     	add	lr, r0, #60
+   b855c: f4ee780f     	vld1.32	{d23[0]}, [lr]
+   b8560: e1a0e002     	mov	lr, r2
+   b8564: e2822040     	add	r2, r2, #64
+   b8568: f3aea1c8     	vmla.f32	q5, q15, d8[0]
+   b856c: f3a889c6     	vmul.f32	q4, q12, d6[0]
+   b8570: f3aa81c2     	vmla.f32	q4, q13, d2[0]
+   b8574: f40daadf     	vst1.64	{d10, d11}, [sp:64]
+   b8578: f228a158     	vorr	q5, q4, q4
+   b857c: f22181b1     	vorr	d8, d17, d17
+   b8580: f3aca1c8     	vmla.f32	q5, q14, d8[0]
+   b8584: f22581b5     	vorr	d8, d21, d21
+   b8588: f3aea1c8     	vmla.f32	q5, q15, d8[0]
+   b858c: f3a889c5     	vmul.f32	q4, q12, d5[0]
+   b8590: f3aa81c1     	vmla.f32	q4, q13, d1[0]
+   b8594: ed8dab04     	vstr	d10, [sp, #16]
+   b8598: ed8dbb06     	vstr	d11, [sp, #24]
+   b859c: f228a158     	vorr	q5, q4, q4
+   b85a0: f22281b2     	vorr	d8, d18, d18
+   b85a4: f3aca1c8     	vmla.f32	q5, q14, d8[0]
+   b85a8: f22681b6     	vorr	d8, d22, d22
+   b85ac: f3aea1c8     	vmla.f32	q5, q15, d8[0]
+   b85b0: f3a889c4     	vmul.f32	q4, q12, d4[0]
+   b85b4: f3aa81c0     	vmla.f32	q4, q13, d0[0]
+   b85b8: ed8dab08     	vstr	d10, [sp, #32]
+   b85bc: ed8dbb0a     	vstr	d11, [sp, #40]
+   b85c0: f228a158     	vorr	q5, q4, q4
+   b85c4: f22381b3     	vorr	d8, d19, d19
+   b85c8: f3aca1c8     	vmla.f32	q5, q14, d8[0]
+   b85cc: f22781b7     	vorr	d8, d23, d23
+   b85d0: f3aea1c8     	vmla.f32	q5, q15, d8[0]
+   b85d4: ed8dab0c     	vstr	d10, [sp, #48]
+   b85d8: ed8dbb0e     	vstr	d11, [sp, #56]
+   b85dc: ecdd8b10     	vldmia	sp, {d24, d25, d26, d27, d28, d29, d30, d31}
+   b85e0: f44e818d     	vst4.32	{d24, d26, d28, d30}, [lr]!
+   b85e4: f44e918f     	vst4.32	{d25, d27, d29, d31}, [lr]
+   b85e8: 2affffb0     	bhs	0xb84b0 <zz_vec_neon+0x28> @ imm = #-0x140
+   b85ec: e1a0e007     	mov	lr, r7
+   b85f0: e1540005     	cmp	r4, r5
+   b85f4: 8a000002     	bhi	0xb8604 <zz_vec_neon+0x17c> @ imm = #0x8
+   b85f8: e28dd044     	add	sp, sp, #68
+   b85fc: ecbd8b10     	vpop	{d8, d9, d10, d11, d12, d13, d14, d15}
+   b8600: e8bd80f0     	pop	{r4, r5, r6, r7, pc}
+   b8604: e0443005     	sub	r3, r4, r5
+   b8608: e1a05205     	lsl	r5, r5, #4
+   b860c: e0862005     	add	r2, r6, r5
+   b8610: e08e1005     	add	r1, lr, r5
+   b8614: e28dd044     	add	sp, sp, #68
+   b8618: ecbd8b10     	vpop	{d8, d9, d10, d11, d12, d13, d14, d15}
+   b861c: e8bd40f0     	pop	{r4, r5, r6, r7, lr}
+   b8620: ea000020     	b	0xb86a8 <zz_vec_scalar> @ imm = #0x80
+   b8624: e3a05000     	mov	r5, #0
+   b8628: eafffff0     	b	0xb85f0 <zz_vec_neon+0x168> @ imm = #-0x40
+
+000b862c <zz_mat_scalar>:
+   b862c: e92d40f0     	push	{r4, r5, r6, r7, lr}
+   b8630: e280c010     	add	r12, r0, #16
+   b8634: e1a07001     	mov	r7, r1
+   b8638: e1a06002     	mov	r6, r2
+   b863c: e2804004     	add	r4, r0, #4
+   b8640: e3a05000     	mov	r5, #0
+   b8644: e0861105     	add	r1, r6, r5, lsl #2
+   b8648: e1a0e007     	mov	lr, r7
+   b864c: e3a02000     	mov	r2, #0
+   b8650: ed5c7a04     	vldr	s15, [r12, #-16]
+   b8654: e1a0000e     	mov	r0, lr
+   b8658: ed9e7a00     	vldr	s14, [lr]
+   b865c: e1a03004     	mov	r3, r4
+   b8660: ee677a87     	vmul.f32	s15, s15, s14
+   b8664: ecf36a01     	vldmia	r3!, {s13}
+   b8668: e2800010     	add	r0, r0, #16
+   b866c: ed907a00     	vldr	s14, [r0]
+   b8670: e15c0003     	cmp	r12, r3
+   b8674: ee467a87     	vmla.f32	s15, s13, s14
+   b8678: 1afffff9     	bne	0xb8664 <zz_mat_scalar+0x38> @ imm = #-0x1c
+   b867c: e2822001     	add	r2, r2, #1
+   b8680: e28ee004     	add	lr, lr, #4
+   b8684: e3520004     	cmp	r2, #4
+   b8688: ece17a01     	vstmia	r1!, {s15}
+   b868c: 1affffef     	bne	0xb8650 <zz_mat_scalar+0x24> @ imm = #-0x44
+   b8690: e2855004     	add	r5, r5, #4
+   b8694: e2844010     	add	r4, r4, #16
+   b8698: e3550010     	cmp	r5, #16
+   b869c: e28cc010     	add	r12, r12, #16
+   b86a0: 1affffe7     	bne	0xb8644 <zz_mat_scalar+0x18> @ imm = #-0x64
+   b86a4: e8bd80f0     	pop	{r4, r5, r6, r7, pc}

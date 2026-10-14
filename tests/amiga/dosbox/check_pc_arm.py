@@ -17,7 +17,7 @@ commands=b'dir /b\rtype readme.txt\recho saved text > SAVED.TXT\rtype saved.txt\
 def scan_row(data,mode,y):
  factor=(0 if y%2 else 8) if mode in (1,2) else (5 if y%2 else 8) if mode==3 else (8,6,4,6)[y%4] if mode==4 else 8
  return bytes(c*factor//8 for c in data)
-def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000):
+def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000,memory_requests=None,memory_stop=False,matrix_stop=False):
  image,rel,_=pack.unpack((OUT/'dosbox.elf').read_bytes())
  for off in rel:struct.pack_into('<I',image,off,struct.unpack_from('<I',image,off)[0]+base)
  symbols={}
@@ -36,6 +36,7 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   for i in range(32):u.reg_write(globals()['UC_ARM_REG_D'+str(i)],0xa5a5000000000000+i)
   u.reg_write(UC_ARM_REG_FPSCR,inherited_fpscr)
  u.mem_map(base&~4095,0x2002000);u.mem_write(base,bytes(image));u.mem_write(symbols['_ZL6shared'],struct.pack('<I',base))
+ if 'zz_matrix_quick' in symbols:u.mem_write(symbols['zz_matrix_quick'],struct.pack('<I',1)) # correctness only; shorten microbenchmark repetition
  scheduler_digest=hashlib.sha256();scheduler_count=[0]
  if scheduler_trace is not None:
   names={address:name for name,address in symbols.items()}
@@ -61,6 +62,14 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
    address=symbols['_Z12PIC_RunQueuev'];u.hook_add(UC_HOOK_CODE,ieee_policy,begin=address,end=address)
  def put(off,n):u.mem_write(base+off,struct.pack('>I',n&0xffffffff))
  def get(off):return struct.unpack('>I',u.mem_read(base+off,4))[0]
+ matrix_closed=[]
+ if matrix_stop:
+  def matrix_cancel(u,address,size,data):
+   put(0x180080,1);u.mem_write(base+0x1d0008,struct.pack('<I',1))
+  u.hook_add(UC_HOOK_CODE,matrix_cancel,begin=symbols['zz_matrix_scene_draw'],end=symbols['zz_matrix_scene_draw'])
+  for close_name in ('tglClose','ZB_close'):
+   def closed(u,address,size,data):matrix_closed.append(address)
+   u.hook_add(UC_HOOK_CODE,closed,begin=symbols[close_name],end=symbols[close_name])
  trace_records=[]
  if trace_build:
   put(0x188fa0,0 if developer and not developer.get('trace',True) else 1)
@@ -138,6 +147,11 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   keys=b'';put(0x1882c0,3);put(0x1882c8,7);put(0x188040,0)
  if mode in ('cga','keyboard'):
   file='CGATEST.COM' if mode=='cga' else 'KEYTEST.COM';files={file:(OUT/file).read_bytes()};keys=file.encode()+b'\rexit\r'
+ if mode=='memory-smc':
+  import sys
+  sys.path.insert(0,str(ROOT/'scripts'))
+  from make_dosbox_memory_fixture import make
+  files={'MEMPATCH.COM':make()};keys=b'mempatch\rexit\r';memory_requests=[]
  if mode=='smc':
   files={'SMCTEST.COM':(OUT/'SMCTEST.COM').read_bytes()};keys=b'smctest\rexit\r'
  if mode=='cpu':
@@ -189,8 +203,35 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   u.hook_add(UC_HOOK_CODE,cpacr_read,begin=symbols['db_neon_available'],end=symbols['db_neon_available'])
  pause_actions=list(developer['actions']) if developer else []
  pause_seen=[];pause_hold=None
+ memory_at=0;memory_pending=False;memory_seen=[]
+ external_target=[None];external_writes=[0]
+ if mode=='memory-smc':
+  def external_write(u,address,size,data):
+   at=u.reg_read(UC_ARM_REG_R1)
+   if external_target[0] is not None and at in (external_target[0],external_target[0]+1):external_writes[0]+=1
+  functions=[a for n,a in symbols.items() if 'CodePageHandlerDynRec' in n and 'writebE' in n]
+  assert functions
+  for address in functions:u.hook_add(UC_HOOK_CODE,external_write,begin=address,end=address)
+
  pc=symbols['mesen_test']
  for tick in range(50000):
+  if mode=='memory-smc' and not memory_requests and tick>100:
+   data=bytes(u.mem_read(symbols['_ZL3ram']+0x500,8))
+   if data[4:]==b'MEM1':
+    segment,offset=struct.unpack('<HH',data[:4]);external_target[0]=segment*16+offset
+    memory_requests.extend([((2,0,0,0,0,0,0,0),0,None),((5,external_target[0],0,2,0x2222,0,0,0x1111),0,None),((3,0,0,0,0,0,0,0),0,None)])
+  if memory_requests is not None:
+   if memory_pending and get(0x18c080)==memory_at+1:
+    fields=struct.unpack('>8I',u.mem_read(base+0x18c0c0,32));payload=bytes(u.mem_read(base+0x18c0e0,256))
+    request,error,check=memory_requests[memory_at]
+    assert fields[0]==error,(request,fields)
+    if check:check(fields,payload)
+    memory_seen.append(fields);memory_at+=1;memory_pending=False
+    if memory_stop and memory_at==len(memory_requests):stopping=True
+   if not memory_pending and memory_at<len(memory_requests):
+    request=memory_requests[memory_at][0]
+    u.mem_write(base+0x18c000,struct.pack('>8I',*request));put(0x18c040,memory_at+1);memory_pending=True
+
   # Preserve Thumb state when resuming a quantum inside the soft-float library.
   u.emu_start(pc | (1 if u.reg_read(UC_ARM_REG_CPSR)&32 else 0),base+0x1ff0000,count=100000);pc=u.reg_read(UC_ARM_REG_PC);assert not bad,bad
   if mode in ('mouse','mouse-invalid','mouse-stop'):
@@ -334,6 +375,9 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   if stopping:u.mem_write(base+0x1d0008,struct.pack('<I',1))
   if pc==base+0x1ff0000:break
  else:raise AssertionError(('worker timeout',output[-200:],hex(pc-base)))
+ if memory_requests is not None:
+  assert memory_at==len(memory_requests),(memory_at,len(memory_requests))
+  print('PASS guest memory command/ACK sequence',memory_at,'requests',flush=True)
  result=struct.unpack('<11I',u.mem_read(base+0x1e0000,44));rc=u.reg_read(UC_ARM_REG_R0)
  if scheduler_trace is not None:scheduler_trace.update(digest=scheduler_digest.hexdigest(),calls=scheduler_count[0])
  if mode=='neon-denied':
@@ -346,6 +390,11 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   for i in range(32):assert u.reg_read(globals()['UC_ARM_REG_D'+str(i)])==0xa5a5000000000000+i
   assert u.reg_read(UC_ARM_REG_FPSCR)==inherited_fpscr
   print('PASS NEON execution witness, all 32 SIMD registers and FPSCR restored',flush=True)
+ if matrix_stop:
+  assert rc==2 and result[4]==3 and not handles,(rc,result)
+  assert symbols['tglClose'] in matrix_closed and symbols['ZB_close'] in matrix_closed
+  assert get(0x188e00)==0,'Interrupted benchmark must not publish completion'
+  print('PASS cancellation inside matrix scene: GL and colour/depth buffers closed, SIMD/FPSCR restored',flush=True);return
  if developer:
   assert not pause_actions and len(pause_seen)==len(developer['actions'])
   assert get(0x188fb0)==0,'paused status not cleared on exit'
@@ -371,6 +420,39 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   assert get(0x188e00)==last
   if 'zz_gl_render' in symbols:assert trace_records[-1][1]==10
   print('PASS diagnostic phase ordering, error cleanup and ring wrap',len(trace_records),'records',flush=True)
+ if json.loads((OUT/'build.json').read_text()).get('matrix_bench') and not json.loads((OUT/'build.json').read_text()).get('tinygl_bench') and mode not in ('neon-denied','invalid-options'):
+  assert get(0x188e00)==0x4d415431 and get(0x188e04)==0 and get(0x188e08)==6 and get(0x188e0c)==1
+  for i,n in enumerate((4,16,256,1024,384,3072)):
+   o=0x188e10+i*40
+   assert get(o)==i and get(o+4)==n and get(o+8)==2
+   assert get(o+12)!=0
+   for m in range(3):assert get(o+16+m*8) or get(o+20+m*8)
+  print('PASS matrix report, exact dyadic outputs, scene hashes, guards and cleanup; timings are model-only',flush=True)
+ if json.loads((OUT/'build.json').read_text()).get('tinygl_bench') and not json.loads((OUT/'build.json').read_text()).get('tinygl_raster') and mode not in ('neon-denied','invalid-options'):
+  assert (get(0x188e00),get(0x188e04),get(0x188e08),get(0x188e0c))==(0x54474c31,0,3,1),[hex(get(0x188e00+i*4)) for i in range(4)]
+  for i,n in enumerate((1024,128,32)):
+   o=0x188e10+i*128
+   assert (get(o),get(o+4),get(o+8))==(i,n,2) and get(o+12)
+   for m in range(2):
+    values=[(get(o+32+m*48+j*8)<<32)|get(o+36+m*48+j*8) for j in range(6)]
+    assert values[0]==sum(values[1:]) and all(values),values
+  print('PASS TinyGL internal A/B image/depth hashes, stage accounting, cleanup; model timings only',flush=True)
+ if json.loads((OUT/'build.json').read_text()).get('tinygl_raster') and mode not in ('neon-denied','invalid-options'):
+  assert (get(0x188e00),get(0x188e04),get(0x188e08),get(0x188e0c))==(0x52535431,0,7,1),[hex(get(0x188e00+i*4)) for i in range(4)]
+  for i,n in enumerate((1024,128,32,32,0,0,0)):
+   o=0x188e10+i*48
+   assert (get(o),get(o+4),get(o+8))==(i,n,2) and get(o+12)
+   for m in range(4):assert get(o+16+m*8) or get(o+20+m*8)
+  print('PASS TinyGL raster/clear kernel self-checks, four-method colour/depth hashes, cleanup; model timing only',flush=True)
+ if json.loads((OUT/'build.json').read_text()).get('pixel_bench') and mode!='neon-denied':
+  assert get(0x188e00)==0x50495831 and get(0x188e04)==0 and get(0x188e08)==8
+  for i in range(8):
+   o=0x188e10+i*32
+   assert get(o) in (320,640) and get(o+4) in (get(o),get(o)*2)
+   assert get(o+8) in (3,4) and get(o+12)==2048
+   assert get(o+16) or get(o+20)
+   assert get(o+24) or get(o+28)
+  print('PASS private pixel benchmark report, exact pixels and guards; timings are model-only',flush=True)
  if 'zz_gl_render' in symbols and mode not in ('neon-denied','invalid-options'):
   assert get(0x188de0)==0x474c3031 and get(0x188df0)==1
   # Rendering now follows a validated grant; an invalid nonce never renders.
@@ -383,7 +465,7 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
  if jit and mode!='invalid-options':
   assert get(0x188d40)==0x4a495431 and get(0x188d48)==1 and get(0x188d44)>3
   # Cancellation at the initial prompt can precede the first guest dispatch.
-  if mode not in ('read-stop','fs-stop'):assert get(0x188d4c)>0
+  if mode not in ('read-stop','fs-stop') and not memory_stop:assert get(0x188d4c)>0
   print('PASS JIT cache witness/report, commits',get(0x188d44),'dispatches',get(0x188d4c),'heap',get(0x188d54),flush=True)
  detail=bytes(u.mem_read(base+0x180900+128,160)).split(b'\0')[0]
  if profile:
@@ -428,6 +510,9 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
  if mode in ('read-stop','fs-stop'):
   assert rc==2 and result[4]==3 and stopping,(mode,rc,result,detail)
   print('PASS ARM cancellation',mode,flush=True);return
+ if memory_stop:
+  assert rc==2 and result[4]==3 and not handles,(rc,result,detail)
+  print('PASS memory pause cancellation and owned-resource cleanup',flush=True);return
  if mode=='present-stop':
   assert rc==2 and result[4]==3 and frame_seq==1,(rc,result,detail,frame_seq)
   assert get(0x188da0)==0x50525331 and get(0x188dac)==1
@@ -474,6 +559,9 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   print('PASS ARM PC options/input',mode,options,'frames',frame_seq,flush=True);return
 
  if mode=='speed':assert get(0x1883c8)==2500, get(0x1883c8)
+ if mode=='memory-smc':
+  assert b'MEMORY PATCH PASS' in output and external_writes[0]==2,(output,external_writes)
+  print('PASS external paused edit invalidates translated x86 code and executes replacement',flush=True);return
  if mode=='smc':
   assert b'JIT self-modifying guest code PASS' in output and b'FAIL' not in output,(rc,result,detail,output)
   print('PASS ARM JIT guest self-modification / invalidation',flush=True);return

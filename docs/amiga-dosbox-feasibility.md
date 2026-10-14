@@ -1659,3 +1659,46 @@ F10 exited cleanly. The user was not watching; screenshots do not establish
 tear-free monitor scanout. Native/ARM-model checks also passed. The normal
 installed executable remains unchanged; the candidate is RAM-only.
 See [method and raw results](../amiga/records/2026-10-13/dosbox-scanlines/method.md).
+
+## DOSBox Staging manual review — 13 October 2026
+
+The linked 0.83 documentation is marked as a development website. Its
+configuration names and defaults are not a drop-in interface for this
+libretro-derived, bare-metal XACP port.
+
+- [CPU](https://www.dosbox-staging.org/0.83/manual/system/cpu/): investigate
+  finer per-profile fixed cycles, an interpreter compatibility choice, then
+  mode-specific budgets and idle yielding. Current launcher presets remain
+  1000/3000/6000, with runtime adjustment 500–10000. Staging's desktop defaults
+  and approximate CPU-equivalence table do not establish A9 throughput.
+- [DOS](https://www.dosbox-staging.org/0.83/manual/system/dos/): candidates
+  include reported-version overrides, shell history and compatible file locking.
+  Reporting 6.22 would not replace our separate booted MS-DOS installation.
+- [Graphics adapters](https://www.dosbox-staging.org/0.83/manual/graphics/adapters/):
+  S3/VESA and Tandy/PCjr/Hercules are compatibility candidates beyond current
+  CGA/EGA/VGA. Audit upstream code, memory bounds, BIOS and renderer coverage
+  before exposing them. Emulated video-memory delay is a compatibility cost,
+  not a framebuffer throughput optimisation. Software-emulated Voodoo or
+  ReelMagic does not itself provide ZZ9000 hardware acceleration.
+
+No additional CPU, DOS or adapter feature was enabled by this review.
+Normal/Adaptive controls final presentation, independently of guest CPU cycles.
+
+## Graphics adapter / rendering references — 13 October 2026
+
+The Staging [aspect-ratio guide](https://www.dosbox-staging.org/0.83/manual/graphics/rendering/aspect-ratios-and-scaling/)
+explains why 320×200 and Hercules 720×348 require non-square-pixel correction.
+Our existing output fits a 4:3 rectangle with black window borders, including
+Hercules; no square-pixel or integer-scaling selector was added in this change.
+
+The [colour guide](https://www.dosbox-staging.org/0.83/manual/graphics/rendering/colour-and-image-adjustments/)
+informed the four monochrome labels. Our Hercules palette approximations are
+independent of its OpenGL colour-management path. CGA monochrome (`cga_mono`)
+is not a new machine option in this release.
+
+The [shader guide](https://www.dosbox-staging.org/0.83/manual/graphics/rendering/shaders/)
+requires OpenGL output. Adaptive CRT shader selection is a visual effect choice;
+it is unrelated to this port's Adaptive presentation cadence. A separate TinyGL
+experiment implements a partial fixed-function software path, not GLSL support.
+See the [adapter evidence](../amiga/records/2026-10-13/dosbox-adapters/method.md)
+and [OpenGL integration](../amiga/dosbox/opengl/README.md).

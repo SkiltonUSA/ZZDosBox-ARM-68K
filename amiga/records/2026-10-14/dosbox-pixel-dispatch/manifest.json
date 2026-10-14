@@ -1,0 +1,21 @@
+{
+  "scale-check.log": "69a8c0f5b05457ea1ba355fb098f282d7b22593c5b377003e93c9aeab7b64181",
+  "analyse.py": "8693055c1cec3359dc937d972648833cc26223c04d85fed4cf39be41856dedbb",
+  "installed-profile.log": "c974702ef7670e48ba1449d3d0aa06e5313cfa87c7a72820104ef75a32a3b88e",
+  "doom-a1.log": "df232aec541aff2c1c0c6e772f0a195a3a9d18cde0656ba704639490c0b2b9d5",
+  "doom-a2.log": "14bcc3b2b78c570efa055eaa578040863a97d4197282e108113c729dbd37fd7b",
+  "results.json": "825851b7e9da64ef16357b4565bf24145544784d504ae447047b24c008e6bf98",
+  "linked-check.log": "f068fdea335695dae7cf2ae29a522f23e05e6a9c28c3556ef29b24cbc0df1951",
+  "kernel-1.log": "3051be7888db6fbf834b992c22b274ff7413299d119caec43f0a400d02cdc4d6",
+  "doom-b2.log": "37d3c7404f361c5c49a86c2bf4fa447bc12583eb0162cf874cf45dd650ceb073",
+  "doom-b1.log": "c626597c34f195d2c44c08f81364c14f20d6d020a6cd572f989ae97021bc5c6e",
+  "candidate/dosbox.elf": "9aadb58adc7eadb92c5546cbd60287a7a0f362ddebb30df08b111bb7e5265026",
+  "candidate/ZZDosBox-Dynrec": "56b1f994711db0abc640febe225009551f81480626f5faec36e932f101cf977a",
+  "candidate/build.json": "ff76b3f144716cc5d3b0c9a3436f81acadfdf200c6dfffe0559a88ded1f4b608",
+  "baseline/dosbox.elf": "2090e16765308d699e81680903560c4a743bd60814fc4da94054e93cffb76696",
+  "baseline/ZZDosBox-Dynrec": "cccfd75208ea662f0ce8036d8ab1cbccfde8ac2846715ddfd0d338272d5a6aa0",
+  "baseline/build.json": "085d98aef75c6d9307300d3ebcf79e66a558f484b53e3ac27d0b2465f6330ef6",
+  "kernel/dosbox.elf": "f0a6c92d47a063bf05709eedbf9316133717d96fdd917166434ab3b4e7e7bae7",
+  "kernel/ZZDosBox-Dynrec": "8a634c44aa6d40894464232d7223438fcaccd55a54b6b95f17a3e3b2aae603ed",
+  "kernel/build.json": "06ca006539b8205915bd88c4997227da38581dea124d4dda1a2afcb116209903"
+}

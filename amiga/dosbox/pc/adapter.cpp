@@ -92,8 +92,17 @@ Bits CPU_Core_Simple_Run(){E_Exit("Unexpected simple decoder");}
 #include "dos_inc.h"
 #include "drive.h"
 static unsigned slice_limit;
+#ifdef DB_MEMORY_DEBUG
+#include "memory_arm.h"
+#endif
 void DOSBOX_RunMachine(){
+#ifdef DB_MEMORY_DEBUG
+ ++run_depth;
+#endif
  for(;;){
+#ifdef DB_MEMORY_DEBUG
+  if(run_depth==1)memory_debug_poll();
+#endif
   check_stop();if(result->slices++>=slice_limit&&slice_limit!=0xffffffffu)E_Exit("Instruction budget exceeded");
   pc_prof_enter(PP_EVENTS);
   bool queued=PIC_RunQueue();
@@ -102,8 +111,16 @@ void DOSBOX_RunMachine(){
   pc_prof_enter(PP_CPU);Bits n=(*cpudecoder)();pc_prof_leave();
   // The upstream page-fault decoder returns -1 when its nested fault has
   // completed. Unwind only this RunMachine invocation so paging can resume.
-  if(n<0)return;
-  if(n){if((Bitu)n>=CB_MAX||!CallBack_Handlers[n])E_Exit("Invalid callback");if(CallBack_Handlers[n]()==CBRET_STOP)return;}
+  if(n<0){
+#ifdef DB_MEMORY_DEBUG
+ --run_depth;
+#endif
+ return;}
+  if(n){if((Bitu)n>=CB_MAX||!CallBack_Handlers[n])E_Exit("Invalid callback");if(CallBack_Handlers[n]()==CBRET_STOP){
+#ifdef DB_MEMORY_DEBUG
+ --run_depth;
+#endif
+ return;}}
  }
 }
 void DOSBOX_SetLoop(LoopHandler*){E_Exit("Unexpected loop change");}
@@ -148,6 +165,9 @@ int db_console_ready(){return (db_vga_console&&bios_ready())||(console_io&&conso
 unsigned db_console_read(uint8_t *data,unsigned size,bool echo){
  unsigned used=0;if(!console_io)return 0;
  while(used<size){
+#ifdef DB_MEMORY_DEBUG
+  if(!run_depth)memory_debug_poll();
+#endif
   check_stop();console_wait(!db_vga_console&&!console_io->ready(console_io->opaque));
   int c=console_io->read(console_io->opaque);
   if(c==-1&&db_vga_console){c=bios_read();if(c==-1)CALLBACK_Idle();}
@@ -179,9 +199,22 @@ static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,Dosbox
  result=out;memset(out,0,sizeof(*out));finished=false;stop_fn=stop;
  if(bytes>0xff00||!limit){out->fault=2;return 1;}
  slice_limit=limit;
+#ifdef DB_MEMORY_DEBUG
+ memory_debug_reset();
+#endif
  int jumped=setjmp(escape);if(jumped)return jumped==2?2:1;
 #ifdef DB_NEON
  db_neon_begin();
+#ifdef DB_PIXEL_BENCH
+ extern void pc_pixel_benchmark();
+ pc_pixel_benchmark();
+#endif
+#ifdef DB_MATRIX_BENCH
+ extern int pc_matrix_benchmark(int (*)());
+ int matrix_rc=pc_matrix_benchmark(stop_fn);
+ if(!matrix_rc)cancelled();
+ if(matrix_rc<0)E_Exit("Matrix benchmark validation failed");
+#endif
 #endif
  if(db_machine_option>=PC_ADAPTER_COUNT)E_Exit("Unknown video adapter");
  const MachineType adapters[]={MCH_VGA,MCH_EGA,MCH_CGA,MCH_VGA,MCH_TANDY,MCH_PCJR,MCH_HERC};

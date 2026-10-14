@@ -1,0 +1,8 @@
+{
+  "url": "https://github.com/jserv/tinygl.git",
+  "revision": "c2e48591a6bfba1a85f1b87a78dcf1abf7dff57a",
+  "patch_sha256": "e085c96a6bb7a90af9e6a15502549805a89fa4c0281e931e6a0abd68b8b95e26",
+  "scope": "partial fixed-function API, software only; no GLSL",
+  "matrix_benchmark_patch": "Replace two negative signed edge shifts with bounded multiplication; only diagnostic scene build",
+  "matrix_benchmark_patch_sha256": "27fb5b3db04e0105534ab39e1441d24e1d5bc83b070bebf9cfec6699f468543e"
+}

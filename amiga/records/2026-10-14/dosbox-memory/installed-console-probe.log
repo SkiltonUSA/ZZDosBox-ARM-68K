@@ -1,0 +1,15 @@
+MEM op=1 error=0 paused=0 count=0
+MEM op=5 error=2 paused=0 count=0
+MEM op=2 error=0 paused=1 count=0
+MEM op=5 error=0 paused=1 count=1
+MEM op=4 error=0 paused=1 count=4
+MEM op=6 error=0 paused=1 count=1
+MEM op=5 error=0 paused=1 count=1
+MEM op=7 error=0 paused=1 count=1
+MEM op=8 error=0 paused=1 count=1
+MEM op=4 error=3 paused=1 count=0
+MEM op=5 error=1 paused=1 count=0
+MEM op=5 error=0 paused=1 count=1
+MEM op=3 error=0 paused=0 count=0
+MEM op=9 error=0 paused=0 count=0
+MEMORY PROTOCOL PASS

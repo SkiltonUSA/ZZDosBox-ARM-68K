@@ -1,12 +1,191 @@
 # ZZDosBox development handoff
 
-## Current Direct runtime — 14 October 2026
+## TinyGL compiler profiles — 14 October 2026
 
-The measured PIC VFP runtime is installed and passed its installed-path
-EGA/PIT check. The previous Direct runtime is retained for rollback. The
-MUI launcher, OpenGL and Windows executables are unchanged by this update.
-[Report, measurements and reproduction](performance-pic-vfp.md).
-The sections below are earlier development history.
+Nine fresh RAM-only physical runs (three each O2, O3, O3+automatic vectorisation)
+completed. Only ztriangle.c, zbuffer.c and raster clear.c changed compiler flags;
+all other ARM objects are byte-identical. All native/model/physical correctness
+and cleanup checks passed. No installed changes; runtime remains `5C74FFFC`.
+
+Keep O2 default. Original visible fill: 78.355 -> 90.904 / 91.005 ms for O3 /
+O3-vector (**13.80% / 13.90% lower throughput**). Handwritten NEON spans + clear:
+63.699 -> 63.808 / 63.749 ms, no gain. O3 custom zero clear gains only ~1.6%;
+automatic vectorisation regresses original clear cases 1.55–3.14%. No game-FPS
+gain established. Continue with rejected-span algorithm work, not global O3.
+
+Final diagnostic staged: `RAM:ZZRaster/ZZRasterBench`, O3-vector, CRC32
+`CF00BF01`, 1195576 bytes. Final bridge/Workbench responsive; no Core1 owner or
+Software Failure. Installed app, firmware, startup and profiles unchanged.
+Report: `docs/amiga-tinygl-compiler-experiment.md`; evidence:
+`amiga/records/2026-10-14/tinygl-compiler/`. No publication/release.
+C-Chads TinyGL reviewed at `36a7987e7bebfda19615ea33341b1cc0ff9c3b13`:
+related source, no dedicated NEON implementation found; not substituted or
+benchmarked. Current pinned jserv source retains depth-specialised paths.
+
+## TinyGL raster/clear diagnostic — 14 October 2026
+
+Completed two candidates, three physical RAM-only runs each. Revision 2 is
+`RAM:ZZRaster/ZZRasterBench`, CRC32 `8FAD32D1`, 1171224 bytes. Installed runtime
+remains `5C74FFFC`; no installed application/profile/startup/firmware changes.
+
+Revision 2 exact NEON integer spans improve visible-fill throughput **22.93%**
+(78.356 -> 63.740 ms), but mostly occluded fill loses **18.66%**
+(41.179 -> 50.625 ms). Small-triangle/clipping spans give no meaningful gain.
+Keep spans diagnostic-only, disabled by default. Zero-only NEON clearing gains
+**7.75%** (1.228 -> 1.140 ms); nonzero clears remain scalar. No DOS game FPS or
+production-build gain established; diagnostic scalar baselines differ between
+builds. Revision 1 regressed both fill scenes and is retained as negative evidence.
+
+Native sanitizer/exact-image checks, all four linked ARM lifecycle tests,
+physical 656-case self-checks and all scene colour/depth hashes passed.
+Physical EGA/PIT/shell, SIMD/MMU/register/cache-witness restoration and memory
+release passed. Bridge/Workbench responsive; no Core1 owner or Software Failure
+on final checks. Next target: isolate rejected-span/mask overhead and validate
+zero clearing in a standalone production build. Do not globally enable spans.
+
+Report: `docs/amiga-tinygl-raster-experiment.md`. Exact binaries, source snapshots,
+logs/results/manifests: `amiga/records/2026-10-14/tinygl-raster/v1/` and `v2/`.
+No publication/release.
+
+## TinyGL internal-transform diagnostic — 14 October 2026
+
+Three physical RAM-only runs completed. No installed runtime/launcher/profile
+changes. `RAM:ZZTinyGL/ZZTinyGLBench`: CRC32 `16EDEFE9`, 1157896 bytes.
+Internal unlit NEON vertex + matrix replacement gave no useful whole-scene gain:
+geometry 6.030 -> 6.065 ms (**0.58% lower throughput**); clipping 4.181 ->
+4.182 ms; fill 77.614 -> 77.614 ms. Keep diagnostic-only. Fill raster work is
+97.94% of instrumented wall time; pixel spans/depth and clear throughput are
+better next targets. Profiling inflates geometry time ~50%; use separate
+unprofiled timings for speed claims. No DOS game FPS gain established.
+
+Native sanitizer/image tests and linked normal/copy-stop/mid-scene-stop/
+denied-SIMD tests passed. Physical images/depth hashes matched, EGA/PIT/shell
+passed, SIMD/MMU/register/cache-witness restoration and memory release clean.
+Final bridge/Workbench responsive with no Core1 owner or Software Failure.
+Installed normal runtime remains CRC32 `5C74FFFC`. No publication/release.
+Report: `docs/amiga-tinygl-internal-transforms.md`; exact binary, ELF, three logs,
+results and source snapshots: `amiga/records/2026-10-14/tinygl-internal/`.
+
+## Cortex-A9 matrix / native scene experiment — 14 October 2026
+
+RAM-only benchmark completed; no installed runtime/launcher/profile changes.
+`RAM:ZZMatrix/ZZMatrixBench` is the separate diagnostic (CRC32 `048382F7`,
+1169592 bytes). Three runs passed exact dyadic math/image checks, EGA/PIT,
+SIMD/FPSCR/MMU/register/cache restoration, file closure and memory release.
+Final bridge/Workbench checks responsive; no Core1 owner or Software Failure.
+Installed Direct runtime remains CRC32 `5C74FFFC`.
+
+Specialised NEON vs scalar VFP medians: 4x4 multiply **0.623 -> 0.230 us
+(2.71x throughput)**; 1024-vertex batch **148.501 -> 93.118 us (1.59x)**.
+CMSIS-DSP improves that batch **28.38%** but is slower for isolated 4x4.
+Offscreen TinyGL scenes gain only **0.50% / 0.20%** at 128/1024 triangles;
+dense-scene timing ranges overlap and one run regressed. No useful game or
+scene FPS gain is established. Current DOSBox GL uses glDrawPixels, not this
+geometry pipeline. Keep these kernels as an opt-in native ARM experiment.
+
+`--pc-matrix-bench` requires checked PIC/VFP + NEON; mutually excludes other
+diagnostic report users and GL presentation. Current pinned CMSIS packing
+buffers are bounded to 336 KiB using software blocking budgets, included in
+owned BSS, with no firmware cache configuration changes. A diagnostic-only
+TinyGL patch fixes two signed-negative edge shifts found by host UBSan.
+Native sanitizers, 366 actual-ARM kernel calls and linked normal/copy-stop/
+mid-scene-stop/denied-SIMD tests passed before physical runs. Mid-scene stop
+closes both GL and colour/depth buffers before restoring SIMD state.
+
+Report: `docs/amiga-dosbox-matrix-benchmark.md`; evidence and exact binary:
+`amiga/records/2026-10-14/dosbox-matrix/`. No GitHub publication or Release
+was created for this experiment.
+
+## ZZDosBox memory Developer tools — 14 October 2026
+
+Installed separate **0.12.0-dev** application
+`SD032G:Dev/ZZDosBox/PC/ZZDosBox-Developer` with Workbench Tool icon, and companion
+`ZZDosBox-Memory`. The standard launcher and VFP runtime remain unchanged:
+CRC32 `A86FCE99` and `5C74FFFC`, respectively. Developer launcher CRC32
+`D12E6535`, 234636 bytes, SHA256
+`e129eb31b9139a0d1fb4ecb3bd279c7af58df19f816afee52fb6c352c673e1f4`.
+Memory runtime CRC32 `8A7B0DD1`, 1096004 bytes, SHA256
+`938d3f88a814945b365726ed5f094a44f6141459e12086e318839a7009c6e598`.
+
+Developer > Memory tools is opt-in and session-only. Direct rendering; do not
+combine with video-trace/frame-breakpoint or OpenGL builds. MUI remains alive
+using a separate DOS process for the runtime; worker completion uses a forbidden
+return into DOS teardown so parent code cannot unload before worker return.
+Tools operate only on guest physical RAM. Reads are snapshots up to 256 bytes;
+writes/undo and scans require a safe guest pause outside the x86 decoder. Scans
+are max 64 KiB / 4096 matches, with explicit overflow rejection. Exact/unknown
+initial and equal/changed/unchanged/increased/decreased refinement supported.
+16/32-bit x86 disassembler uses bounded copies of guest bytes, not ARM stepping.
+Legacy video/ROM holes and addresses outside configured RAM are rejected.
+Writes compare the old value and use the DOSBox code-page handler for JIT
+invalidation. Shared request/reply offsets are within the existing owned public
+allocation, not fixed DDR reservations. No XACP/firmware/startup changes.
+
+Native sanitizer tests and 100000 randomized decoder inputs passed. Linked ARM
+tests passed 11 protocol requests, paused cancellation, copy cancellation, and
+external patching of already translated x86 code (two invalidating byte writes).
+Physical console protocol and external patch fixture passed. MUI physically
+changed byte 00010000 from 0 to 42 in a disposable guest, found its single scan
+match, showed both disassembly modes, undid to 0, monitored live, resumed and
+stopped. Clean SIMD/MMU/cache restoration and owned-memory release were checked
+in each completed log. Temporary launcher was then closed, with no Core1 or
+memory-debug port left. This does not resolve the older unrelated unattended
+Developer failure documented below; standard launcher is deliberately retained.
+The installed-path console protocol smoke test also passed after CRC verification.
+Final state: Workbench/Roadie/bridge responsive; no Core1 owner, memory-debug port,
+or temporary developer launcher. Details: `docs/amiga-dosbox-memory-tools.md`; local evidence under
+`.context/amiga/dosbox-memory/` and `amiga/records/2026-10-14/dosbox-memory/`.
+
+## ZZDosBox adapters / monochrome / optional OpenGL installed — 13 October 2026
+
+**Current installed launcher: 0.11.0-dev**, in `SD032G:Dev/ZZDosBox/PC`, open
+on Workbench with Direct rendering selected. Settings adds S3/VESA, Tandy,
+PCjr and Hercules alongside existing VGA/EGA/CGA. Hercules offers White,
+Amber, Green and Paperwhite. S3 uses 1 MiB emulated VRAM: up to 1024×768×8 or
+800×600×16, scaled to the existing 4:3 output. Tandy/PCjr sound and Windows S3
+drivers are not verified. Existing separate Windows runtime is unchanged.
+
+Renderer selection offers Direct / OpenGL (experimental). The latter bundles
+a pinned TinyGL fixed-function API subset on Core1, not GLSL or a guest OpenGL
+driver. Its 640×480 private output uses the normal XACP handoff. It requires no
+Amiga GL library or new firmware. Direct retains an 8 MiB worker heap; OpenGL
+uses 10 MiB; both fit the existing 32 MiB owned allocation and 4 MiB JIT layout.
+GL cleanup is before SIMD/FPSCR restoration. Keep Direct for speed.
+
+Matched physical Doom Demo3, 10000 cycles, 8 MiB guest, Normal presentation,
+no overlay/scanlines, profiling on: Direct **7.0023 FPS**, OpenGL **4.7245 FPS**
+(-32.53%). One pair, actual game-tic/global-timer measurement, not VGA FPS.
+Both completed cleanly. GL pass optimization reduced short-fixture means from
+about 28.5 to 10.8–12.0 ms; Doom's final GL mean was 10.127 ms per presented frame.
+No tear-free or visual game-compatibility claim is inferred from these checks.
+
+All ten original adapter fixtures passed native sanitizers, ARM model and
+physical hardware. Three tinted Hercules palettes passed exact model pixels
+and hardware lifecycle checks. GL passed native pixel oracles, ARM relocation,
+SIMD restoration, cancellation, resize, scanline, input/MIDI and physical S3/
+Hercules tests, plus a MUI windowed launch. Full baseline dynrec regression passed.
+
+Installed normal/adaptive/scanline runtimes are identical 1088828-byte copies,
+SHA256 afe2b83c30407c4f9970a053c713f1579101616d9828f84cac16d6b51bd6221f.
+OpenGL: 1154388 bytes, SHA256
+52073c2f60be82cf47587b8bfb3958461d9fd8c3fdadaec8263cc4cc1c2bbfad.
+Launcher: 170872 bytes, SHA256
+5800d201a8732f16200edcf441808c80ef4f657ce0c7b003c8b63b1f3c5a0785.
+ZZHELLO2.COM is a separately named 665-byte welcome helper with Hercules B000
+text support; old ZZHELLO.COM copies are preserved.
+
+Previous executables/icon/Launcher.cfg are in `PC/PreAdapters`; `.pre11`
+executable copies also remain. Installed save migrated all nine profiles v7→v9,
+with exact parsed equality for old fields/order/last=2; new fields zero. The
+existing 65536-byte Workbench icon stack is preserved. **Stack 65536 is still
+mandatory** for Shell launches. No Core1 owner remains; bridge/Roadie/Workbench
+are present. Firmware and global scanline controls were not changed.
+
+Evidence: `amiga/records/2026-10-13/dosbox-adapters/` and
+`amiga/records/2026-10-13/dosbox-opengl/`. New build switch `--pc-opengl` adds the
+optional runtime to the existing adapters/4m/NEON/pipeline/scan/presentation
+build. Tests: scripts/test_dosbox_opengl.py and tests/amiga/dosbox/check_opengl_arm.py.
+GitHub publishing was not requested in this session; these changes are local.
 
 
 ## ZZDosBox software scanline experiment — 13 October 2026

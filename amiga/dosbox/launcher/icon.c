@@ -1,4 +1,4 @@
-/* Apply supplied DOSBox artwork, preserving an existing icon's launch data. */
+/* Apply artwork and a safe stack minimum, preserving other launch data. */
 #include <proto/exec.h>
 #include <proto/icon.h>
 #include <workbench/workbench.h>
@@ -18,6 +18,7 @@ int main(int argc,char **argv){
  if(!d)d=GetDefDiskObject(argc>2?WBPROJECT:WBTOOL);
  if(d){
   if(!existing){d->do_StackSize=65536;d->do_CurrentX=d->do_CurrentY=NO_ICON_POSITION;}
+  if(d->do_StackSize<65536)d->do_StackSize=65536;
   /* A new DiskObject avoids carrying an old ColorIcon image over the art. */
   n=NewDiskObject(d->do_Type);
   if(n){

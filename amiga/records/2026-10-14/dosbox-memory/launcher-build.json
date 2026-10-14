@@ -1,0 +1,16 @@
+{
+  "bytes": 234636,
+  "sha256": "e129eb31b9139a0d1fb4ecb3bd279c7af58df19f816afee52fb6c352c673e1f4",
+  "sources": {
+    "amiga/dosbox/launcher/developer.h": "e1498d646eef06663e31c14ab1f632c5402cef1a726e0e5cbf1f1100280b60ca",
+    "amiga/dosbox/launcher/audio_detect.h": "cbfe27788e3907bea313a9f3b580c39cce2cf87f663daeaaf89fe61920d6159a",
+    "amiga/dosbox/launcher/startup.h": "bb810f64aaff1eaddb37122e2950d0b106efa08a1ab53291204388550aa96afe",
+    "amiga/dosbox/launcher/session.h": "1cd31ed2f9290bdc0acad87f8ab314d95fc723c669ba4373a406e9900777322c",
+    "amiga/dosbox/launcher/main.c": "0160a6554364fe7f5ce3704fd5b0270700b82a79a5661370bbec7beb374ac8e4",
+    "amiga/dosbox/launcher/memory_ui.h": "e3b896a0029a4771ed1355a9ad127e99261f8845973e40dd6b8b4827bc576086",
+    "amiga/dosbox/launcher/model.h": "a208625555504732604b3cfeced12befdcd01e208c3e2b751a1debde9109a594",
+    "amiga/dosbox/launcher/icon.c": "60744c0206ce3b9c6ded94e1d72b717bd24efe8e96883270a789b3ac3540f93d",
+    "amiga/dosbox/launcher/disk.c": "30def43be864fd589afb0396287292fc7740b1cc059f659ee48be552f6054e7b",
+    "amiga/dosbox/launcher/startup_ui.h": "7d21ab8670847b50ba7476b01d08383531d12f86c06a130e10da3031ed2d85c4"
+  }
+}

@@ -1,0 +1,864 @@
+{
+  "scope": "Native offscreen TinyGL only; same rendering method across compiler builds; no DOS game FPS claim",
+  "inputs": {
+    "baseline": ".context/amiga/tinygl-compiler/baseline-results.json",
+    "o3": ".context/amiga/tinygl-compiler/o3-results.json",
+    "o3-vector": ".context/amiga/tinygl-compiler/o3-vector-results.json"
+  },
+  "cases": [
+    {
+      "name": "geometry",
+      "hash": "88b1e9f7",
+      "methods": {
+        "baseline": {
+          "baseline": {
+            "median_us": 6561.014819061014,
+            "range_us": [
+              6555.124319055124,
+              6565.372131565372
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 6538.825881538826,
+            "range_us": [
+              6531.346881531346,
+              6541.614756541614
+            ],
+            "throughput_gain_percent": 0.3393413117916966,
+            "time_reduction_percent": 0.3381936809184638
+          },
+          "o3-vector": {
+            "median_us": 6589.596944089597,
+            "range_us": [
+              6587.953694087953,
+              6612.172694112172
+            ],
+            "throughput_gain_percent": -0.4337461800940412,
+            "time_reduction_percent": -0.435635733447004
+          }
+        },
+        "spans": {
+          "baseline": {
+            "median_us": 6560.896881560897,
+            "range_us": [
+              6551.551881551552,
+              6570.864756570865
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 6535.439069035439,
+            "range_us": [
+              6533.971131533971,
+              6535.796444035796
+            ],
+            "throughput_gain_percent": 0.3895348461907533,
+            "time_reduction_percent": 0.3880233599922178
+          },
+          "o3-vector": {
+            "median_us": 6584.068506584068,
+            "range_us": [
+              6581.9321315819325,
+              6586.872381586872
+            ],
+            "throughput_gain_percent": -0.35193474976755734,
+            "time_reduction_percent": -0.35317770483931366
+          }
+        },
+        "clear": {
+          "baseline": {
+            "median_us": 6459.333756459334,
+            "range_us": [
+              6455.096631455097,
+              6460.84950646085
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 6431.38988143139,
+            "range_us": [
+              6431.115006431115,
+              6435.9003814359
+            ],
+            "throughput_gain_percent": 0.43449200784146935,
+            "time_reduction_percent": 0.4326123417914496
+          },
+          "o3-vector": {
+            "median_us": 6458.732631458733,
+            "range_us": [
+              6454.566193954566,
+              6466.975693966976
+            ],
+            "throughput_gain_percent": 0.009307166512417808,
+            "time_reduction_percent": 0.00930630035954616
+          }
+        },
+        "both": {
+          "baseline": {
+            "median_us": 6465.359068965359,
+            "range_us": [
+              6461.9068189619065,
+              6466.23094396623
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 6440.669443940669,
+            "range_us": [
+              6434.553381434554,
+              6444.592881444592
+            ],
+            "throughput_gain_percent": 0.3833394220831732,
+            "time_reduction_percent": 0.38187554258515277
+          },
+          "o3-vector": {
+            "median_us": 6461.254506461254,
+            "range_us": [
+              6460.652443960653,
+              6463.225881463226
+            ],
+            "throughput_gain_percent": 0.06352578280270915,
+            "time_reduction_percent": 0.06348545317161891
+          }
+        }
+      }
+    },
+    {
+      "name": "clipping",
+      "hash": "0628ae41",
+      "methods": {
+        "baseline": {
+          "baseline": {
+            "median_us": 4405.991254405992,
+            "range_us": [
+              4399.912691899913,
+              4413.961316913961
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 4372.450129372451,
+            "range_us": [
+              4370.21981687022,
+              4390.238441890238
+            ],
+            "throughput_gain_percent": 0.7671013743124178,
+            "time_reduction_percent": 0.7612617251566256
+          },
+          "o3-vector": {
+            "median_us": 4406.377316906377,
+            "range_us": [
+              4399.190629399191,
+              4417.553066917553
+            ],
+            "throughput_gain_percent": -0.008761448977689934,
+            "time_reduction_percent": -0.008762216674829126
+          }
+        },
+        "spans": {
+          "baseline": {
+            "median_us": 4399.735504399736,
+            "range_us": [
+              4394.201254394201,
+              4403.998129403998
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 4371.035629371036,
+            "range_us": [
+              4368.030566868031,
+              4387.902754387903
+            ],
+            "throughput_gain_percent": 0.6565921091068683,
+            "time_reduction_percent": 0.6523090990356195
+          },
+          "o3-vector": {
+            "median_us": 4416.186566916187,
+            "range_us": [
+              4401.888191901888,
+              4418.747254418747
+            ],
+            "throughput_gain_percent": -0.3725173804860038,
+            "time_reduction_percent": -0.37391026119639736
+          }
+        },
+        "clear": {
+          "baseline": {
+            "median_us": 4315.745254315745,
+            "range_us": [
+              4296.826879296827,
+              4317.298691817298
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 4271.661379271662,
+            "range_us": [
+              4267.598629267599,
+              4285.944379285945
+            ],
+            "throughput_gain_percent": 1.0320077162015107,
+            "time_reduction_percent": 1.021466107157265
+          },
+          "o3-vector": {
+            "median_us": 4284.622316784622,
+            "range_us": [
+              4280.143504280144,
+              4290.68925429069
+            ],
+            "throughput_gain_percent": 0.7263869538559398,
+            "time_reduction_percent": 0.7211486243308807
+          }
+        },
+        "both": {
+          "baseline": {
+            "median_us": 4322.956316822956,
+            "range_us": [
+              4298.551316798551,
+              4323.445879323446
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 4278.972754278972,
+            "range_us": [
+              4269.674816769675,
+              4290.037129290037
+            ],
+            "throughput_gain_percent": 1.0279000374564307,
+            "time_reduction_percent": 1.0174417532932245
+          },
+          "o3-vector": {
+            "median_us": 4288.363316788364,
+            "range_us": [
+              4281.753941781754,
+              4291.401379291401
+            ],
+            "throughput_gain_percent": 0.8066713913712942,
+            "time_reduction_percent": 0.8002162756068687
+          }
+        }
+      }
+    },
+    {
+      "name": "fill",
+      "hash": "88077dd1",
+      "methods": {
+        "baseline": {
+          "baseline": {
+            "median_us": 78355.13857835514,
+            "range_us": [
+              78330.26145333025,
+              78358.14682835815
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 90903.81927840383,
+            "range_us": [
+              90893.28871589329,
+              90948.53821594853
+            ],
+            "throughput_gain_percent": -13.804349255796232,
+            "time_reduction_percent": -16.015134332893833
+          },
+          "o3-vector": {
+            "median_us": 91005.18777850519,
+            "range_us": [
+              90974.58102847458,
+              91026.33834102635
+            ],
+            "throughput_gain_percent": -13.900360527730172,
+            "time_reduction_percent": -16.144504916547376
+          }
+        },
+        "spans": {
+          "baseline": {
+            "median_us": 63786.92762628693,
+            "range_us": [
+              63695.12143869512,
+              63791.05806379105
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 63911.52550141152,
+            "range_us": [
+              63897.82637639782,
+              63982.47137648247
+            ],
+            "throughput_gain_percent": -0.19495368659575574,
+            "time_reduction_percent": -0.19533449840158923
+          },
+          "o3-vector": {
+            "median_us": 63878.68300137868,
+            "range_us": [
+              63864.36043886436,
+              63890.33500139034
+            ],
+            "throughput_gain_percent": -0.14364005452299766,
+            "time_reduction_percent": -0.14384667596678558
+          }
+        },
+        "clear": {
+          "baseline": {
+            "median_us": 78281.54614078155,
+            "range_us": [
+              78246.88564074688,
+              78287.35601578736
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 90823.42640332344,
+            "range_us": [
+              90802.20759080221,
+              90833.16159083316
+            ],
+            "throughput_gain_percent": -13.809080717618638,
+            "time_reduction_percent": -16.02150299891443
+          },
+          "o3-vector": {
+            "median_us": 90884.17246588417,
+            "range_us": [
+              90820.6000283206,
+              90912.54665341254
+            ],
+            "throughput_gain_percent": -13.866689857173276,
+            "time_reduction_percent": -16.099102465909464
+          }
+        },
+        "both": {
+          "baseline": {
+            "median_us": 63698.67981369868,
+            "range_us": [
+              63634.62325113463,
+              63702.82037620283
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 63807.93681380793,
+            "range_us": [
+              63799.794626299794,
+              63875.20131387519
+            ],
+            "throughput_gain_percent": -0.17122791546771987,
+            "time_reduction_percent": -0.17152160834226216
+          },
+          "o3-vector": {
+            "median_us": 63749.06293874906,
+            "range_us": [
+              63744.74593874474,
+              63749.214438749215
+            ],
+            "throughput_gain_percent": -0.07903351473383946,
+            "time_reduction_percent": -0.07909602710407526
+          }
+        }
+      }
+    },
+    {
+      "name": "occluded-fill",
+      "hash": "ccddff61",
+      "methods": {
+        "baseline": {
+          "baseline": {
+            "median_us": 41096.76135359676,
+            "range_us": [
+              41052.95516605296,
+              41216.203916216204
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 42033.256729533256,
+            "range_us": [
+              42006.87229200687,
+              42056.378292056375
+            ],
+            "throughput_gain_percent": -2.2279867152870336,
+            "time_reduction_percent": -2.2787571212214974
+          },
+          "o3-vector": {
+            "median_us": 42014.3038545143,
+            "range_us": [
+              42012.78847951278,
+              42022.78354202278
+            ],
+            "throughput_gain_percent": -2.183881242194974,
+            "time_reduction_percent": -2.2326394360445923
+          }
+        },
+        "spans": {
+          "baseline": {
+            "median_us": 50652.626113152626,
+            "range_us": [
+              50548.6993630487,
+              50811.43523831144
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 50509.201550509206,
+            "range_us": [
+              50489.45480048945,
+              50549.91811304991
+            ],
+            "throughput_gain_percent": 0.2839572953850622,
+            "time_reduction_percent": 0.283153261043223
+          },
+          "o3-vector": {
+            "median_us": 50526.56123802656,
+            "range_us": [
+              50493.520175493526,
+              50591.66498809167
+            ],
+            "throughput_gain_percent": 0.24950218664632207,
+            "time_reduction_percent": 0.24888122255389833
+          }
+        },
+        "clear": {
+          "baseline": {
+            "median_us": 41002.32154100232,
+            "range_us": [
+              40955.61660345562,
+              41126.698728626696
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 41919.163354419165,
+            "range_us": [
+              41882.68841688269,
+              41920.33879192034
+            ],
+            "throughput_gain_percent": -2.1871662982992035,
+            "time_reduction_percent": -2.2360729318704697
+          },
+          "o3-vector": {
+            "median_us": 41893.566791893565,
+            "range_us": [
+              41875.298104375295,
+              41899.22741689923
+            ],
+            "throughput_gain_percent": -2.127403606664746,
+            "time_reduction_percent": -2.1736458263710734
+          }
+        },
+        "both": {
+          "baseline": {
+            "median_us": 50539.29117553929,
+            "range_us": [
+              50454.57773795458,
+              50712.25692571225
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 50394.107300394106,
+            "range_us": [
+              50380.1019878801,
+              50437.896425437895
+            ],
+            "throughput_gain_percent": 0.28809692823759114,
+            "time_reduction_percent": 0.28726931416769297
+          },
+          "o3-vector": {
+            "median_us": 50380.38923788039,
+            "range_us": [
+              50363.93273786393,
+              50471.28248797128
+            ],
+            "throughput_gain_percent": 0.3154043469347112,
+            "time_reduction_percent": 0.31441267568828035
+          }
+        }
+      }
+    },
+    {
+      "name": "clear-zero",
+      "hash": "ee731dc5",
+      "methods": {
+        "baseline": {
+          "baseline": {
+            "median_us": 1227.214993414715,
+            "range_us": [
+              1226.7430090392431,
+              1228.3401809158402
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 1227.1173059146172,
+            "range_us": [
+              1226.7138059142137,
+              1227.4332199774333
+            ],
+            "throughput_gain_percent": 0.007960730374101388,
+            "time_reduction_percent": 0.007960096692272156
+          },
+          "o3-vector": {
+            "median_us": 1246.5344074965344,
+            "range_us": [
+              1246.1701184336703,
+              1246.861032496861
+            ],
+            "throughput_gain_percent": -1.549850045504908,
+            "time_reduction_percent": -1.5742485371746717
+          }
+        },
+        "spans": {
+          "baseline": {
+            "median_us": 1226.5137668515138,
+            "range_us": [
+              1225.9490402884492,
+              1226.536266851536
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 1225.0171652875172,
+            "range_us": [
+              1224.6001184121,
+              1227.091173102091
+            ],
+            "throughput_gain_percent": 0.12216984434216815,
+            "time_reduction_percent": 0.12202077175524906
+          },
+          "o3-vector": {
+            "median_us": 1246.8528059343528,
+            "range_us": [
+              1245.924048120924,
+              1247.3838528098838
+            ],
+            "throughput_gain_percent": -1.6312301649429761,
+            "time_reduction_percent": -1.6582805372865606
+          }
+        },
+        "clear": {
+          "baseline": {
+            "median_us": 1140.3449542653448,
+            "range_us": [
+              1139.7213995772213,
+              1140.7991495782992
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 1122.3697745598697,
+            "range_us": [
+              1122.2898761222898,
+              1123.9579464364579
+            ],
+            "throughput_gain_percent": 1.6015381127421957,
+            "time_reduction_percent": 1.5762931767480337
+          },
+          "o3-vector": {
+            "median_us": 1124.6404698746403,
+            "range_us": [
+              1121.619001121619,
+              1125.1128058126128
+            ],
+            "throughput_gain_percent": 1.3964004329717117,
+            "time_reduction_percent": 1.3771696302915526
+          }
+        },
+        "both": {
+          "baseline": {
+            "median_us": 1139.3596652018598,
+            "range_us": [
+              1138.4435636384435,
+              1139.7686730147686
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 1121.0576495585576,
+            "range_us": [
+              1120.9943448709944,
+              1123.65007143615
+            ],
+            "throughput_gain_percent": 1.6325668577801489,
+            "time_reduction_percent": 1.6063422466390032
+          },
+          "o3-vector": {
+            "median_us": 1121.9103058094104,
+            "range_us": [
+              1121.7140167467142,
+              1122.939258935439
+            ],
+            "throughput_gain_percent": 1.5553257067070447,
+            "time_reduction_percent": 1.5315058032494
+          }
+        }
+      }
+    },
+    {
+      "name": "clear-arbitrary",
+      "hash": "88c99dc5",
+      "methods": {
+        "baseline": {
+          "baseline": {
+            "median_us": 1084.5827823345826,
+            "range_us": [
+              1084.4332979594333,
+              1084.7910713972913
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 1082.858016707858,
+            "range_us": [
+              1082.105954207106,
+              1083.5276260835276
+            ],
+            "throughput_gain_percent": 0.15927901905072872,
+            "time_reduction_percent": 0.15902572443681207
+          },
+          "o3-vector": {
+            "median_us": 1119.7743058072742,
+            "range_us": [
+              1118.3005089308006,
+              1120.3601729953602
+            ],
+            "throughput_gain_percent": -3.1427336107092696,
+            "time_reduction_percent": -3.244706079229953
+          }
+        },
+        "spans": {
+          "baseline": {
+            "median_us": 1083.0952979580952,
+            "range_us": [
+              1082.8578057703578,
+              1084.0308292090308
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 1082.9246495204247,
+            "range_us": [
+              1082.2795323322796,
+              1083.14008702064
+            ],
+            "throughput_gain_percent": 0.015758108169960927,
+            "time_reduction_percent": 0.01575562538146391
+          },
+          "o3-vector": {
+            "median_us": 1117.6398292426397,
+            "range_us": [
+              1117.517040180017,
+              1118.5905245560905
+            ],
+            "throughput_gain_percent": -3.090846476718123,
+            "time_reduction_percent": -3.1894267614003713
+          }
+        },
+        "clear": {
+          "baseline": {
+            "median_us": 1084.3586026468586,
+            "range_us": [
+              1083.8186963963187,
+              1084.7628995222628
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 1083.928032333928,
+            "range_us": [
+              1083.2177588957177,
+              1084.1422276466421
+            ],
+            "throughput_gain_percent": 0.0397231458257874,
+            "time_reduction_percent": 0.03970737280817316
+          },
+          "o3-vector": {
+            "median_us": 1119.7076964322077,
+            "range_us": [
+              1119.271922994272,
+              1121.488032371488
+            ],
+            "throughput_gain_percent": -3.1569930168368177,
+            "time_reduction_percent": -3.259908087514951
+          }
+        },
+        "both": {
+          "baseline": {
+            "median_us": 1083.7041807712042,
+            "range_us": [
+              1082.7224542077224,
+              1084.404821396905
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 1083.8402588963404,
+            "range_us": [
+              1083.3532979583533,
+              1083.9027667089028
+            ],
+            "throughput_gain_percent": -0.012555182742035598,
+            "time_reduction_percent": -0.012556759266102446
+          },
+          "o3-vector": {
+            "median_us": 1117.9497198679499,
+            "range_us": [
+              1117.7473370552473,
+              1119.8862433073862
+            ],
+            "throughput_gain_percent": -3.063245017923588,
+            "time_reduction_percent": -3.1600449370210226
+          }
+        }
+      }
+    },
+    {
+      "name": "clear-colour-only",
+      "hash": "90e05dc5",
+      "methods": {
+        "baseline": {
+          "baseline": {
+            "median_us": 724.505063224505,
+            "range_us": [
+              724.3335241618335,
+              724.6085632246085
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 724.2274225992275,
+            "range_us": [
+              723.761016348761,
+              724.9733444749734
+            ],
+            "throughput_gain_percent": 0.038336110538472745,
+            "time_reduction_percent": 0.038321419596687445
+          },
+          "o3-vector": {
+            "median_us": 743.3075632433076,
+            "range_us": [
+              742.1575085546575,
+              743.5926335560927
+            ],
+            "throughput_gain_percent": -2.529572003379177,
+            "time_reduction_percent": -2.595219960937145
+          }
+        },
+        "spans": {
+          "baseline": {
+            "median_us": 724.7412663497413,
+            "range_us": [
+              724.7258210372258,
+              725.202914787703
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 725.6709851006709,
+            "range_us": [
+              725.0732116625733,
+              726.2885632262886
+            ],
+            "throughput_gain_percent": -0.12811849584982715,
+            "time_reduction_percent": -0.12828284990755723
+          },
+          "o3-vector": {
+            "median_us": 743.1143210556143,
+            "range_us": [
+              741.039047616039,
+              744.7611804322612
+            ],
+            "throughput_gain_percent": -2.4724398635964318,
+            "time_reduction_percent": -2.535119160305488
+          }
+        },
+        "clear": {
+          "baseline": {
+            "median_us": 724.0458054115459,
+            "range_us": [
+              723.9142975989143,
+              724.2052272867052
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 724.3637350993638,
+            "range_us": [
+              724.359094474359,
+              724.4666022869666
+            ],
+            "throughput_gain_percent": -0.043890889674969014,
+            "time_reduction_percent": -0.043910162235838435
+          },
+          "o3-vector": {
+            "median_us": 744.0214226190215,
+            "range_us": [
+              743.5696882435697,
+              744.5321491820322
+            ],
+            "throughput_gain_percent": -2.6848174797386437,
+            "time_reduction_percent": -2.7588886032039683
+          }
+        },
+        "both": {
+          "baseline": {
+            "median_us": 725.1361647876362,
+            "range_us": [
+              724.9996882249997,
+              725.4635866629636
+            ],
+            "throughput_gain_percent": 0.0,
+            "time_reduction_percent": 0.0
+          },
+          "o3": {
+            "median_us": 724.6248054121248,
+            "range_us": [
+              724.1084538491085,
+              725.725946038226
+            ],
+            "throughput_gain_percent": 0.07056884772533856,
+            "time_reduction_percent": 0.07051908322088796
+          },
+          "o3-vector": {
+            "median_us": 743.3634382433634,
+            "range_us": [
+              742.6705554301706,
+              743.6403523061404
+            ],
+            "throughput_gain_percent": -2.452000262321208,
+            "time_reduction_percent": -2.513634589038216
+          }
+        }
+      }
+    }
+  ]
+}

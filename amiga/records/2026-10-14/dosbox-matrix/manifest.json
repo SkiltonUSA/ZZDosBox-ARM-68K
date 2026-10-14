@@ -1,0 +1,69 @@
+{
+  "scope": "Three physical A9 matrix/offscreen-scene runs; no installed change or DOS game FPS claim",
+  "files": {
+    "LICENSE.CMSIS-DSP": {
+      "bytes": 11357,
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1"
+    },
+    "LICENSE.TinyGL": {
+      "bytes": 1072,
+      "sha256": "d9449a1303cc324cc36e8d479557880c6b864e01fbada7c3c171f90de522698d"
+    },
+    "arm-validation.log": {
+      "bytes": 1232,
+      "sha256": "ddaa4fca059727a5d5588a22f90262253e3650ecd409f2b923ab2e7fbd912824"
+    },
+    "artifacts/ZZMatrixBench": {
+      "bytes": 1169592,
+      "sha256": "1ed574c1364eec041f2f1ab4cd32a56ac12af8d60b1de293195a2afaadfbd2bb"
+    },
+    "artifacts/matrix.elf": {
+      "bytes": 1148960,
+      "sha256": "bafa885565071a79ebb19b72d1a79b7d090a9759c3ce06daf05b3924594e7432"
+    },
+    "build.json": {
+      "bytes": 47080,
+      "sha256": "a7774f235497104553ae7832f6b6f5caabdfec29686c81755242d12399cdaf64"
+    },
+    "build.log": {
+      "bytes": 688,
+      "sha256": "ccb55e788e9ed1f85de96e092992e8b16f1793a190d4783bc3195e26fc16a7ae"
+    },
+    "cmsis-provenance.json": {
+      "bytes": 7929,
+      "sha256": "1956001b47e02d9afcbc8a5b34c62a73d395f570a13db6f70cd917054563fef3"
+    },
+    "kernels-disassembly.txt": {
+      "bytes": 9748,
+      "sha256": "29ddadcea1788d49e98d99bb461e5aa1f8ec8d97b74a5eb8c983d3cc9f6e3e2b"
+    },
+    "matrix-1.log": {
+      "bytes": 3660,
+      "sha256": "32680272a8a6bfb0b6220245a771f88dfd7ec3434a649bf7190182985dd746a5"
+    },
+    "matrix-2.log": {
+      "bytes": 3660,
+      "sha256": "3b75b71044497069eb62e61a37f79ef1b7e4147c20f0411e256dac376be9445e"
+    },
+    "matrix-3.log": {
+      "bytes": 3660,
+      "sha256": "cc87701eb44d1b989528aa7da774deecfb13980a700c30481ec0b181ca528269"
+    },
+    "native-validation.log": {
+      "bytes": 129,
+      "sha256": "d48f49fe6ccf01a03078277a4ba9b6784e6df6f7b528e9570ea011752a77be49"
+    },
+    "results.json": {
+      "bytes": 11345,
+      "sha256": "9dc851c058e2c1e3c8a0e80e11a651cc831cd692414ab232b657e62180a73f25"
+    },
+    "source-manifest.json": {
+      "bytes": 1672,
+      "sha256": "b026d0a5b859cc7116cbc42952cf1902a9b23eb0c396f340f08b334f52ae5a6d"
+    },
+    "tinygl-provenance.json": {
+      "bytes": 491,
+      "sha256": "6d1e3a17739936ce8d0134d86eac731cacf16d6a5346892ef4547877088993a7"
+    }
+  }
+}

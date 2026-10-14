@@ -3,7 +3,7 @@
 #include "../pc/cd_host.h"
 static int welcome_support(const char*root){
  char source[DL_PATH],dest[DL_PATH],tmp[DL_PATH];FILE*a,*b;unsigned char data[512],check[512];size_t n;int ok=1;
- path(source,"ZZHELLO.COM");if(!dl_join(dest,sizeof(dest),root,"ZZHELLO.COM")||!dl_join(tmp,sizeof(tmp),root,"ZZHELLO.TMP"))return 0;
+ path(source,"ZZHELLO2.COM");if(!dl_join(dest,sizeof(dest),root,"ZZHELLO2.COM")||!dl_join(tmp,sizeof(tmp),root,"ZZHELLO2.TMP"))return 0;
  a=fopen(source,"rb");if(!a)return 0;
  if(exists(dest)){
   b=fopen(dest,"rb");if(!b){fclose(a);return 0;}
@@ -43,7 +43,7 @@ static int startup_prepare(const struct dl_profile*p,int *changed){
  static char text[2][DL_TEXT],combined[DL_TEXT];char file[DL_PATH];unsigned i;int ok=1;
  *changed=0;if(!hdd_available()||!startup_disk(1)){note("Cannot mount the DOS hard disk for startup files.");return 0;}
  if(!dl_startup_restore("DOSHD:")){note("Startup recovery needed: keep ZZDSTART.TXN and its backups.");ok=0;goto done;}
- if(!welcome_support("DOSHD:")){note("Cannot install ZZHELLO.COM; check for a conflicting file.");ok=0;goto done;}
+ if(!welcome_support("DOSHD:")){note("Cannot install ZZHELLO2.COM; check for a conflicting file.");ok=0;goto done;}
 
  for(i=0;i<2;i++){
   unsigned mode=i?p->config_mode:p->edited;const char*src=i?p->configsys:p->autoexec;
@@ -55,7 +55,7 @@ static int startup_prepare(const struct dl_profile*p,int *changed){
   int n;if(!startup_support()){ok=0;note("Cannot install CD driver; check ZZDOSCD.SYS and C:\\DOS\\MSCDEX.EXE.");goto done;}
   n=snprintf(combined,sizeof(combined),"%s\nLASTDRIVE=Z\nDEVICE=C:\\ZZDOSCD.SYS /D:ZZDOSCD\n",text[1]);if(n<0||n>=(int)sizeof(combined)||!dl_text_valid(combined)){ok=0;goto done;}strcpy(text[1],combined);
  }
- {int n=snprintf(combined,sizeof(combined),"@echo off\n%sC:\\ZZHELLO.COM\n%s",p->cd_mode?"C:\\DOS\\MSCDEX.EXE /D:ZZDOSCD /L:D\n":"",text[0]);if(n<0||n>=(int)sizeof(combined)||!dl_text_valid(combined)){ok=0;goto done;}strcpy(text[0],combined);}
+ {int n=snprintf(combined,sizeof(combined),"@echo off\n%sC:\\ZZHELLO2.COM\n%s",p->cd_mode?"C:\\DOS\\MSCDEX.EXE /D:ZZDOSCD /L:D\n":"",text[0]);if(n<0||n>=(int)sizeof(combined)||!dl_text_valid(combined)){ok=0;goto done;}strcpy(text[0],combined);}
  ok=dl_startup_apply("DOSHD:",text[0],text[1]);*changed=ok;
  if(!ok)note("Could not prepare startup files; originals retained for recovery.");
 done:if(!startup_disk(0)){note("Cannot eject DOS hard disk; session was not started.");ok=0;}return ok;

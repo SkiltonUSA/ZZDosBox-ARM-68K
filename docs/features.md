@@ -1,6 +1,7 @@
 # ZZDosBox features and compatibility
 
-This describes **0.10.1-dev** and the separate **Windows/mouse development build**.
+This describes the current **Direct development runtime** and the separate
+**Windows/mouse development build**; individual options depend on the chosen build.
 It is the implemented Amiga feature set, not the complete feature list of
 [upstream dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 
@@ -26,7 +27,7 @@ load its device drivers. Booted MS-DOS processes the files on its own disk.
 
 | Feature | Support |
 | --- | --- |
-| PC adapters | CGA, EGA and VGA selections. This is not a complete SVGA/VESA implementation. |
+| PC adapters | VGA, EGA, CGA, S3/VESA, Tandy, PCjr and Hercules selections. Broader high-resolution compatibility needs testing. |
 | Fullscreen | Dedicated 640×480 true-colour RTG screen with XACP buffer presentation. |
 | Workbench window | ARM rendering into an owned ZZ9000 bitmap, followed by an AmigaOS-clipped blit into the window. |
 | Window sizes | 320×240, 640×480 and 960×720 presets. Native resize handling within those limits. |
@@ -41,7 +42,7 @@ not yet been verified; it should not be presented as a completed hardware test.
 
 | Feature | Support |
 | --- | --- |
-| Execution | 32-bit ARM Cortex-A9 Core1 runs a software x86 interpreter with a 386-class CPU configuration. The 68K handles AmigaOS services. |
+| Execution | 32-bit ARM Cortex-A9 Core1 runs 386-class x86 emulation. Current Direct builds use ARMv7 dynamic recompilation; the separate Windows build retains the interpreter. The 68K handles AmigaOS services. |
 | Real mode | DOS shell, COM/EXE programs and BIOS-based DOS boot. |
 | Protected mode | The Windows build includes 386 paging, nested page-fault recovery and sparse high-address mappings. Verified with Windows 3.11 and an original page-fault test. |
 | A20 and ROM | Windows build implements fast-A20 port 0x92, proper initial aliasing, and write protection for BIOS/VGA ROM. |
@@ -51,8 +52,8 @@ not yet been verified; it should not be presented as a completed hardware test.
 | Worker ownership | One application owns Core1. Runtime mapping and buffer checks, bounded memory, cancellation and register/cache restoration protect the application's lifecycle. |
 
 Protected-mode support does not establish compatibility with every DOS extender
-or Windows application. No dynarec/JIT, x87 FPU or 64-bit x86 guest support is
-enabled. The owned allocation and checks are not a general security sandbox
+or Windows application. The current Direct runtime enables ARMv7 dynarec/JIT. No x87 FPU or
+64-bit x86 guest support is enabled. The owned allocation and checks are not a general security sandbox
 for untrusted programs.
 
 ## Files and media

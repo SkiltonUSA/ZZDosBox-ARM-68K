@@ -1,0 +1,49 @@
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:21:10: missed: statement clobbers memory: zb_19 = gl_malloc (56);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:46:16: missed: statement clobbers memory: _7 = gl_malloc (size_26);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:51:20: missed: statement clobbers memory: _11 = gl_malloc (_10);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:53:13: missed: statement clobbers memory: gl_free (_12);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:70:5: missed: statement clobbers memory: gl_free (zb_19);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:25:15: note: ***** Analysis failed with vector mode V4SI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:25:15: note: ***** The result for vector mode V16QI would be the same
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:25:15: note: ***** Re-trying analysis with vector mode V8QI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:25:15: note: ***** Analysis failed with vector mode V8QI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:77:9: missed: statement clobbers memory: gl_free (_2);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:79:5: missed: statement clobbers memory: gl_free (_3);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:80:5: missed: statement clobbers memory: gl_free (zb_6(D));
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:81:1: note: ***** Analysis failed with vector mode V16QI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:81:1: note: ***** Skipping vector mode V16QI, which would repeat the analysis for V16QI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:98:16: missed: statement clobbers memory: new_zbuf_22 = gl_malloc (size_19);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:111:5: missed: statement clobbers memory: gl_free (_55);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:103:20: missed: statement clobbers memory: new_pbuf_25 = gl_malloc (_5);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:111:5: missed: statement clobbers memory: gl_free (_44);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:113:9: missed: statement clobbers memory: gl_free (_8);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:105:13: missed: statement clobbers memory: gl_free (new_zbuf_22);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:116:15: note: ***** Analysis failed with vector mode V4SI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:116:15: note: ***** The result for vector mode V16QI would be the same
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:116:15: note: ***** Re-trying analysis with vector mode V8QI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:116:15: note: ***** Analysis failed with vector mode V8QI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:141:36: note: ***** Analysis failed with vector mode VOID
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:283:19: missed: couldn't vectorize loop
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:283:19: missed: not vectorized: number of iterations cannot be computed.
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:313:6: note: vectorized 0 loops in function.
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:294:9: missed: statement clobbers memory: memcpy (p1_15, q_12, _31);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:316:1: note: ***** Analysis failed with vector mode V4SI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:316:1: note: ***** Skipping vector mode V16QI, which would repeat the analysis for V4SI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:402:23: missed: couldn't vectorize loop
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:402:23: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:362:19: missed: couldn't vectorize loop
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:362:19: missed: may need non-SLP handling
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:354:19: optimized: loop vectorized using 16 byte vectors
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:354:19: optimized:  loop versioned for vectorization to enhance alignment
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:342:19: missed: couldn't vectorize loop
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:342:19: missed: may need non-SLP handling
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:332:19: optimized: loop vectorized using 16 byte vectors
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:332:19: optimized:  loop versioned for vectorization to enhance alignment
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:366:6: note: vectorized 2 loops in function.
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:374:24: missed: statement clobbers memory: _2 = zz_clear_buffers (zb_31(D), clear_z_32(D), z_33(D), clear_color_34(D), r_35(D), g_36(D), b_37(D));
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:394:13: missed: statement clobbers memory: memset (pretmp_130, 255, _11);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:391:13: missed: statement clobbers memory: memset (pretmp_130, 0, _7);
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:415:21: note: ***** Analysis failed with vector mode V4SI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:415:21: note: ***** The result for vector mode V16QI would be the same
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:415:21: note: ***** Re-trying analysis with vector mode V8QI
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/tinygl/src/zbuffer.c:415:21: note: ***** Analysis failed with vector mode V8QI

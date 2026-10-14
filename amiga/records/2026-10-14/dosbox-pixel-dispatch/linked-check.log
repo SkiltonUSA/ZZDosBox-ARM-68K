@@ -1,0 +1,27 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 1034503 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 1034503 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0
+PASS baseline/candidate identical guest scheduler, output and pixels
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 27438 heap 3906816
+PASS profile publication and exclusive totals copy-stop unwound 1
+PASS cancellation during framebuffer write revokes mapping
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals resize unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 691200 geometry resize
+PASS ARM shell 0x150020c0 resize requests 15 read 32113 written 0 rc 0
+PASS denied firmware SIMD access fails without executing NEON
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS private pixel benchmark report, exact pixels and guards; timings are model-only
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0

@@ -1,0 +1,5 @@
+MEM op=4 error=0 paused=0 count=8
+MEM op=2 error=0 paused=1 count=0
+MEM op=5 error=0 paused=1 count=1
+MEM op=3 error=0 paused=0 count=0
+MEMORY EXTERNAL PATCH REQUEST PASS

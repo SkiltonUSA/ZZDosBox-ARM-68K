@@ -32,4 +32,56 @@ int main(void){struct dl_session s,t;static struct dl_library a,b;char tmp[]="/t
  s.midi=3;assert(!dl_session_write(tmp,&s));s.midi=1;s.midi_port[0]=0;assert(!dl_session_write(tmp,&s));
  a.p[0].size=1;a.p[0].edited=2;strcpy(a.p[0].auto_file,"RAM:My startup.bat");a.p[0].config_mode=1;a.p[0].cd_mode=1;strcpy(a.p[0].cd_path,"SD:Test.iso");a.p[0].midi=2;strcpy(a.p[0].midi_port,"out.0");assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b));assert(!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
  a.p[0].auto_file[0]=0;assert(!dl_library_write(tmp,&a));
- unlink(tmp);puts("PASS profile/session round trip, malformed input, quoted paths, default/edited AUTOEXEC and CRLF");return 0;}
+ for(unsigned machine=0;machine<PC_ADAPTER_COUNT;machine++){
+  dl_profile_default(&a.p[0]);strcpy(a.p[0].title,"Adapter");strcpy(a.p[0].drive,"RAM:Test");a.p[0].machine=machine;
+  assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&b.p[0].machine==machine);
+  dl_defaults(&s);strcpy(s.drive,"RAM:Test");s.machine=machine;
+  assert(dl_session_write(tmp,&s)&&dl_session_read(tmp,&t)&&t.machine==machine);
+ }
+ a.p[0].machine=PC_ADAPTER_COUNT;assert(!dl_library_write(tmp,&a));s.machine=PC_ADAPTER_COUNT;assert(!dl_session_write(tmp,&s));
+ /* Scanline preferences are per-program, retained while temporarily unavailable. */
+ a.count=2;a.last=1;
+ for(unsigned i=0;i<2;i++){dl_profile_default(&a.p[i]);strcpy(a.p[i].title,i?"Masked":"Normal");strcpy(a.p[i].drive,"RAM:Test");a.p[i].display=1;}
+ assert(!a.p[0].scanlines);a.p[1].scanlines=1;
+ assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b));
+ assert(!memcmp(&a,&b,sizeof(a)));
+ assert(!dl_scanlines_active(&b.p[0])&&dl_scanlines_active(&b.p[1]));
+ b.p[1].display=0;assert(!dl_scanlines_active(&b.p[1]));b.p[1].display=1;b.p[1].fps=1;assert(!dl_scanlines_active(&b.p[1]));b.p[1].fps=0;assert(dl_scanlines_active(&b.p[1]));
+ a.p[1].scanlines=4;assert(!dl_library_write(tmp,&a));a.p[1].scanlines=1;
+ for(unsigned style=1;style<=3;style++){
+  a.p[1].scanlines=style;assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b));assert(b.p[1].scanlines==style);
+  assert(!strcmp(dl_scanline_args(&b.p[1]),style==1?" --scanlines classic":style==2?" --scanlines soft":" --scanlines gradient"));
+  b.p[1].fps=1;assert(!*dl_scanline_args(&b.p[1]));
+ }
+ /* Presentation is independent of display mode and scanline availability. */
+ a.p[1].presentation=1;assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b));
+ assert(!b.p[0].presentation&&b.p[1].presentation==1);
+ for(unsigned present=0;present<2;present++)for(unsigned display=0;display<2;display++)for(unsigned fps=0;fps<2;fps++)for(unsigned style=0;style<4;style++){
+  struct dl_profile*p=&b.p[0];p->presentation=present;p->display=display;p->fps=fps;p->scanlines=style;
+  int masked=style&&display&&!fps;
+  assert(!strcmp(dl_player_name(present,dl_scanlines_active(p)),present?"ZZDosBox-Adaptive":masked?"ZZDosBox-Scanlines":"ZZDosBox"));
+  assert(!strcmp(dl_presentation_args(present),present?" --presentation adaptive --present-hz 60":""));
+ }
+ a.p[1].presentation=2;assert(!dl_library_write(tmp,&a));a.p[1].presentation=1;
+ /* v5-v8 migrate with white phosphor / direct rendering defaults. */
+ a.count=1;a.last=0;a.p[0].presentation=0;a.p[0].scanlines=0;
+ for(unsigned colour=0;colour<4;colour++)for(unsigned renderer=0;renderer<2;renderer++){
+  a.p[0].monochrome=colour;a.p[0].renderer=renderer;
+  assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b));
+  assert(b.p[0].monochrome==colour&&b.p[0].renderer==renderer);
+  assert(!strcmp(dl_profile_player(&b.p[0]),renderer?"ZZDosBox-OpenGL":"ZZDosBox"));
+ }
+ a.p[0].renderer=2;assert(!dl_library_write(tmp,&a));a.p[0].renderer=0;
+ a.p[0].monochrome=4;assert(!dl_library_write(tmp,&a));a.p[0].monochrome=0;
+ assert(dl_library_write(tmp,&a));f=fopen(tmp,"rb");n=fread(out,1,sizeof(out)-1,f);fclose(f);
+ assert(n>16&&!memcmp(out+n-8,"0\n0\n0\n0\n",8));
+ for(unsigned v=5;v<=8;v++){
+  size_t len=n-(9-v)*2;out[8]='0'+v;f=fopen(tmp,"wb");assert(fwrite(out,1,len,f)==len);fclose(f);
+  assert(dl_library_read(tmp,&b)&&b.count==1&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
+ }
+ out[8]='9';f=fopen(tmp,"wb");assert(fwrite(out,1,n-2,f)==n-2);fclose(f);assert(!dl_library_read(tmp,&b));
+ for(unsigned offset=2;offset<=8;offset+=2){
+  out[n-offset]=(offset==2||offset==6)?'2':'4';f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fclose(f);assert(!dl_library_read(tmp,&b));out[n-offset]='0';
+ }
+ f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fputs("extra\n",f);fclose(f);assert(!dl_library_read(tmp,&b));
+ unlink(tmp);puts("PASS profiles/sessions, adapter/colour/renderer migration and validation");return 0;}

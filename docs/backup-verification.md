@@ -32,3 +32,17 @@ SHA256: `65b433b4902c7fe495bdf562129cff912fc7a5eecf4917b7e3837edfb1c561f5`
 A restore-script omission of the original native C-drive fixtures was found
 and fixed before this backup. Container commands are configurable in the
 export. Runtime source and current executables were not changed for export.
+
+## TinyGL research backup
+
+The standalone checkout passed `make test-host` and the O3-vector native
+TinyGL ASan/UBSan/exact-output suite. The launcher header's optional monochrome
+helper is now `static inline` so strict standalone builds do not report it as
+unused; behaviour is unchanged. Native logs are in `docs/backup-checks/`.
+
+The backup retains the previously completed physical and linked-ARM evidence,
+including nine fresh compiler-comparison runs, three runs per compiler profile.
+The backup operation did not rerun hardware workloads or replace the installed
+Direct executable. Exact diagnostic binaries and original source snapshots are
+preserved under `amiga/records/2026-10-14/`; the export build script retains its
+configurable `DOSBOX_ARM_COMMAND` adaptation. No release tag was created.

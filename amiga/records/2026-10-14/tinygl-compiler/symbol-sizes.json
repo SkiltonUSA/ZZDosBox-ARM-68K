@@ -1,0 +1,19 @@
+{
+  "baseline": {
+    "ZB_clear": 476,
+    "ZB_fillTriangleSmoothNOBLEND_DT1_DW1": 3156,
+    "zz_clear_buffers": 224,
+    "zz_fill16": 168,
+    "zz_fill32": 164
+  },
+  "o3": {
+    "ZB_clear": 532,
+    "ZB_fillTriangleSmoothNOBLEND_DT1_DW1": 3312,
+    "zz_clear_buffers": 604
+  },
+  "o3-vector": {
+    "ZB_clear": 624,
+    "ZB_fillTriangleSmoothNOBLEND_DT1_DW1": 3312,
+    "zz_clear_buffers": 584
+  }
+}

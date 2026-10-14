@@ -1,0 +1,18 @@
+{
+  "amiga/dosbox/matrix/scene.c": "d77ace2465d4379faca39eb3262639e4fa9853ebec29f1f7e3a9600d7312afc6",
+  "amiga/dosbox/matrix/kernels.h": "b67dac77bb5e7a7a48ba4f3e3e883825d8171ffb331a978e05a7247397a6ac78",
+  "amiga/dosbox/matrix/neon.c": "5fb6823ce9972b21f7afb4c1cdf9fe99334f434d7f05a3b9eb8beabc0d87c3e2",
+  "amiga/dosbox/matrix/bench.cpp": "0a2f1eab897f03073ec58fe02909b02c62b756d5a5b500d1d5f75630d5df597d",
+  "amiga/dosbox/matrix/scalar.c": "391aeed6b0a84dea3fb702fa81b2473377115fd9baa0de527f59cf95ffb2781b",
+  "amiga/dosbox/matrix/cmsis.c": "43db087e6a469411e912c1793f7faf1c2b1aa393e8e90731ded2265f16eecd8b",
+  "scripts/prepare_dosbox_matrix.py": "c33c6ccb8cfe88b25a8d534956da398537e92f17c436ba4c16a8dd9ed8585f0a",
+  "scripts/build_dosbox_dos_arm.py": "3759d87cbd35f5a1f12cd841035b7e5c30fd6a8b5efd5705c779c8c700a5ede2",
+  "scripts/test_dosbox_matrix.py": "4c012db9f52cc37f3e32d8248e1a5c00a12192e0475abea7960e665e6d986e36",
+  "scripts/measure_dosbox_matrix.py": "8bec51d05b7fb4ef9e247299e924cb8551d5cc75d22bcf911c870e1dbb39f503",
+  "scripts/analyse_dosbox_matrix.py": "ef07b85144acf6489d45cab918842724908f95f978b3a441253a0281e0d60624",
+  "tests/amiga/dosbox/matrix.c": "f41a471cfc75f8b85336b38fb9f462837d9117b3118973e10b03b70c5a8253c4",
+  "tests/amiga/dosbox/check_matrix_arm.py": "f2417e6008933ea5bd474310cf828b9d8f5906cffb158dfd349c6c3b9d62d7ce",
+  "tests/amiga/dosbox/check_pc_arm.py": "f68ffec9731d66cf2676c983c65dbfbaf4846d30572285c930a01d543e28fe5e",
+  "amiga/dosbox/pc/adapter.cpp": "0d3fc958f7cd52eacc7f74ef9ed0c722f272fd4929c2b79222c9c78b432a838b",
+  "docs/amiga-dosbox-matrix-benchmark.md": "a56cfc4269265e36fca1069285ba29ea64252aa8a3f3a399425dd679247fdee5"
+}

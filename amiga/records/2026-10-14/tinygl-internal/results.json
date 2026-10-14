@@ -1,0 +1,549 @@
+{
+  "timer_hz": 333333333.0,
+  "scope": "private 640x480 offscreen native TinyGL, no DOS/game/scanout FPS claim",
+  "profiling_caveat": "Exclusive stages include timer/hook overhead; totals are measured separately with profiling disabled. Raw stage percentages are not unbiased production shares.",
+  "runs": [
+    {
+      "log": ".context/amiga/dosbox-tinygl/tinygl-1.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "scalar_us": 6029.6388810296385,
+          "neon_us": 6059.54025605954,
+          "profile": {
+            "scalar": {
+              "wall_us": 9176.694009176694,
+              "stages_us": {
+                "transform": 2587.302002587302,
+                "clip": 475.407000475407,
+                "raster": 2400.8040024008037,
+                "clear": 1197.795001197795,
+                "other": 2515.386002515386
+              },
+              "shares_percent": {
+                "transform": 28.194271270241767,
+                "clip": 5.18059118022242,
+                "raster": 26.16197074894292,
+                "clear": 13.052576450734874,
+                "other": 27.410590349858023
+              },
+              "instrumentation_slowdown": 1.5219309464864097
+            },
+            "neon": {
+              "wall_us": 9086.604009086604,
+              "stages_us": {
+                "transform": 2502.987002502987,
+                "clip": 474.75000047475,
+                "raster": 2410.086002410086,
+                "clear": 1210.7400012107398,
+                "other": 2488.0410024880407
+              },
+              "shares_percent": {
+                "transform": 27.545901637179306,
+                "clip": 5.224724220401813,
+                "raster": 26.52350647172475,
+                "clear": 13.324449926507198,
+                "other": 27.381417744186937
+              },
+              "instrumentation_slowdown": 1.499553369581133
+            }
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "scalar_us": 4181.482316681482,
+          "neon_us": 4181.620691681621,
+          "profile": {
+            "scalar": {
+              "wall_us": 4658.145004658145,
+              "stages_us": {
+                "transform": 340.017000340017,
+                "clip": 266.937000266937,
+                "raster": 2484.7710024847706,
+                "clear": 1211.808001211808,
+                "other": 354.612000354612
+              },
+              "shares_percent": {
+                "transform": 7.299407811478603,
+                "clip": 5.730542952183756,
+                "raster": 53.34250007245374,
+                "clear": 26.014819203781762,
+                "other": 7.612729960102143
+              },
+              "instrumentation_slowdown": 1.113993711291108
+            },
+            "neon": {
+              "wall_us": 4695.822004695822,
+              "stages_us": {
+                "transform": 329.75700032975703,
+                "clip": 261.975000261975,
+                "raster": 2542.422002542422,
+                "clear": 1207.071001207071,
+                "other": 354.597000354597
+              },
+              "shares_percent": {
+                "transform": 7.022348802829409,
+                "clip": 5.578895452170035,
+                "raster": 54.14221407881303,
+                "clear": 25.705211994832855,
+                "other": 7.551329671354663
+              },
+              "instrumentation_slowdown": 1.122966990773957
+            }
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "scalar_us": 77580.64376508065,
+          "neon_us": 77597.60539009761,
+          "profile": {
+            "scalar": {
+              "wall_us": 77732.78107773278,
+              "stages_us": {
+                "transform": 129.936000129936,
+                "clip": 43.512000043512,
+                "raster": 76121.99707612199,
+                "clear": 1223.4060012234058,
+                "other": 213.93000021393001
+              },
+              "shares_percent": {
+                "transform": 0.1671572769279926,
+                "clip": 0.05597638401744562,
+                "raster": 97.92779316618044,
+                "clear": 1.573861097289186,
+                "other": 0.2752120755849453
+              },
+              "instrumentation_slowdown": 1.0019610215289372
+            },
+            "neon": {
+              "wall_us": 77811.37207781138,
+              "stages_us": {
+                "transform": 125.90400012590402,
+                "clip": 44.088000044088,
+                "raster": 76204.9050762049,
+                "clear": 1221.504001221504,
+                "other": 214.97100021497099
+              },
+              "shares_percent": {
+                "transform": 0.16180668296145712,
+                "clip": 0.05666009847506609,
+                "raster": 97.93543416764325,
+                "clear": 1.5698270941681893,
+                "other": 0.2762719567520285
+              },
+              "instrumentation_slowdown": 1.0027548103661077
+            }
+          }
+        }
+      }
+    },
+    {
+      "log": ".context/amiga/dosbox-tinygl/tinygl-2.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "scalar_us": 6024.713256024713,
+          "neon_us": 6064.924881064925,
+          "profile": {
+            "scalar": {
+              "wall_us": 9202.707009202708,
+              "stages_us": {
+                "transform": 2586.2640025862643,
+                "clip": 478.78200047878204,
+                "raster": 2423.292002423292,
+                "clear": 1207.5720012075722,
+                "other": 2506.797002506797
+              },
+              "shares_percent": {
+                "transform": 28.103296127976257,
+                "clip": 5.2026213591283526,
+                "raster": 26.332382417477813,
+                "clear": 13.121921625886818,
+                "other": 27.239778469530755
+              },
+              "instrumentation_slowdown": 1.5274929474859242
+            },
+            "neon": {
+              "wall_us": 9091.431009091431,
+              "stages_us": {
+                "transform": 2500.74000250074,
+                "clip": 475.25100047525103,
+                "raster": 2427.135002427135,
+                "clear": 1207.302001207302,
+                "other": 2481.003002481003
+              },
+              "shares_percent": {
+                "transform": 27.5065608483417,
+                "clip": 5.227460891470221,
+                "raster": 26.696952327966848,
+                "clear": 13.279559620482187,
+                "other": 27.28946631173904
+              },
+              "instrumentation_slowdown": 1.499017908280356
+            }
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "scalar_us": 4187.3786291873785,
+          "neon_us": 4181.402441681403,
+          "profile": {
+            "scalar": {
+              "wall_us": 4651.803004651802,
+              "stages_us": {
+                "transform": 335.454000335454,
+                "clip": 269.622000269622,
+                "raster": 2483.484002483484,
+                "clear": 1209.756001209756,
+                "other": 353.487000353487
+              },
+              "shares_percent": {
+                "transform": 7.2112684049604,
+                "clip": 5.796075199229202,
+                "raster": 53.387557469652094,
+                "clear": 26.006174380127444,
+                "other": 7.5989245460308625
+              },
+              "instrumentation_slowdown": 1.110910528182772
+            },
+            "neon": {
+              "wall_us": 4631.478004631478,
+              "stages_us": {
+                "transform": 326.349000326349,
+                "clip": 263.247000263247,
+                "raster": 2484.2610024842606,
+                "clear": 1208.535001208535,
+                "other": 349.086000349086
+              },
+              "shares_percent": {
+                "transform": 7.046325168769019,
+                "clip": 5.6838659278960195,
+                "raster": 53.63862248724921,
+                "clear": 26.093938047422444,
+                "other": 7.537248368663308
+              },
+              "instrumentation_slowdown": 1.1076374659524744
+            }
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "scalar_us": 77633.91757763393,
+          "neon_us": 77615.48576511549,
+          "profile": {
+            "scalar": {
+              "wall_us": 77760.88207776088,
+              "stages_us": {
+                "transform": 129.32700012932702,
+                "clip": 43.794000043794,
+                "raster": 76158.81007615881,
+                "clear": 1220.994001220994,
+                "other": 207.957000207957
+              },
+              "shares_percent": {
+                "transform": 0.16631369999121154,
+                "clip": 0.056318805643176734,
+                "raster": 97.93974559084863,
+                "clear": 1.5701905233019349,
+                "other": 0.2674313802150547
+              },
+              "instrumentation_slowdown": 1.0016354256501354
+            },
+            "neon": {
+              "wall_us": 77854.78507785479,
+              "stages_us": {
+                "transform": 125.42700012542699,
+                "clip": 44.178000044178,
+                "raster": 76250.22907625024,
+                "clear": 1218.942001218942,
+                "other": 216.009000216009
+              },
+              "shares_percent": {
+                "transform": 0.16110377801441492,
+                "clip": 0.056744103782445744,
+                "raster": 97.93903997037562,
+                "clear": 1.565660993091176,
+                "other": 0.27745115473634663
+              },
+              "instrumentation_slowdown": 1.0030831387625851
+            }
+          }
+        }
+      }
+    },
+    {
+      "log": ".context/amiga/dosbox-tinygl/tinygl-3.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "scalar_us": 6043.05956854306,
+          "neon_us": 6064.8071310648065,
+          "profile": {
+            "scalar": {
+              "wall_us": 9205.821009205822,
+              "stages_us": {
+                "transform": 2589.981002589981,
+                "clip": 473.601000473601,
+                "raster": 2418.324002418324,
+                "clear": 1209.396001209396,
+                "other": 2514.5190025145193
+              },
+              "shares_percent": {
+                "transform": 28.134166414923772,
+                "clip": 5.14458189008889,
+                "raster": 26.269509259413148,
+                "clear": 13.137296499682103,
+                "other": 27.314445935892085
+              },
+              "instrumentation_slowdown": 1.5233708860204538
+            },
+            "neon": {
+              "wall_us": 9090.771009090771,
+              "stages_us": {
+                "transform": 2505.459002505459,
+                "clip": 476.586000476586,
+                "raster": 2413.986002413986,
+                "clear": 1207.683001207683,
+                "other": 2487.057002487057
+              },
+              "shares_percent": {
+                "transform": 27.560467643503507,
+                "clip": 5.24252563396438,
+                "raster": 26.554249359047766,
+                "clear": 13.284714794817734,
+                "other": 27.35804256866662
+              },
+              "instrumentation_slowdown": 1.4989381875849845
+            }
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "scalar_us": 4179.225004179225,
+          "neon_us": 4196.086316696086,
+          "profile": {
+            "scalar": {
+              "wall_us": 4677.669004677668,
+              "stages_us": {
+                "transform": 335.544000335544,
+                "clip": 266.391000266391,
+                "raster": 2505.783002505783,
+                "clear": 1209.765001209765,
+                "other": 360.18600036018603
+              },
+              "shares_percent": {
+                "transform": 7.1733164531308224,
+                "clip": 5.694951908739161,
+                "raster": 53.56905330411366,
+                "clear": 25.862561032001196,
+                "other": 7.700117302015171
+              },
+              "instrumentation_slowdown": 1.1192670889937726
+            },
+            "neon": {
+              "wall_us": 4640.199004640199,
+              "stages_us": {
+                "transform": 324.651000324651,
+                "clip": 262.905000262905,
+                "raster": 2492.4570024924574,
+                "clear": 1208.6700012086699,
+                "other": 351.51600035151597
+              },
+              "shares_percent": {
+                "transform": 6.9964887281773915,
+                "clip": 5.665813039483867,
+                "raster": 53.71444198837162,
+                "clear": 26.047805277316773,
+                "other": 7.575450966650353
+              },
+              "instrumentation_slowdown": 1.1058397407548561
+            }
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "scalar_us": 77613.9034526139,
+          "neon_us": 77614.42564011442,
+          "profile": {
+            "scalar": {
+              "wall_us": 77791.20007779119,
+              "stages_us": {
+                "transform": 131.922000131922,
+                "clip": 44.097000044096994,
+                "raster": 76182.47407618248,
+                "clear": 1218.228001218228,
+                "other": 214.479000214479
+              },
+              "shares_percent": {
+                "transform": 0.16958473452009995,
+                "clip": 0.05668636041094623,
+                "raster": 97.93199487859809,
+                "clear": 1.5660228920494863,
+                "other": 0.2757111344213741
+              },
+              "instrumentation_slowdown": 1.002284341043168
+            },
+            "neon": {
+              "wall_us": 77743.88707774389,
+              "stages_us": {
+                "transform": 125.12400012512401,
+                "clip": 43.776000043776,
+                "raster": 76138.10107613809,
+                "clear": 1221.681001221681,
+                "other": 215.205000215205
+              },
+              "shares_percent": {
+                "transform": 0.16094384372625978,
+                "clip": 0.0563079641232757,
+                "raster": 97.93451798981957,
+                "clear": 1.5714174414767814,
+                "other": 0.27681276085411066
+              },
+              "instrumentation_slowdown": 1.0016680074169428
+            }
+          }
+        }
+      }
+    }
+  ],
+  "summary": [
+    {
+      "name": "geometry",
+      "triangles": 1024,
+      "hash": "88b1e9f7",
+      "scalar_us": 6029.6388810296385,
+      "neon_us": 6064.8071310648065,
+      "throughput_gain_percent": -0.57987417035954,
+      "time_reduction_percent": -0.583256323124326,
+      "scalar_range_us": [
+        6024.713256024713,
+        6043.05956854306
+      ],
+      "neon_range_us": [
+        6059.54025605954,
+        6064.924881064925
+      ],
+      "profile_median_us": {
+        "scalar": {
+          "transform": 2587.302002587302,
+          "clip": 475.407000475407,
+          "raster": 2418.324002418324,
+          "clear": 1207.5720012075722,
+          "other": 2514.5190025145193
+        },
+        "neon": {
+          "transform": 2502.987002502987,
+          "clip": 475.25100047525103,
+          "raster": 2413.986002413986,
+          "clear": 1207.683001207683,
+          "other": 2487.057002487057
+        }
+      },
+      "profile_slowdown": {
+        "scalar": 1.5233708860204538,
+        "neon": 1.499017908280356
+      }
+    },
+    {
+      "name": "clipping",
+      "triangles": 128,
+      "hash": "0628ae41",
+      "scalar_us": 4181.482316681482,
+      "neon_us": 4181.620691681621,
+      "throughput_gain_percent": -0.0033091236709692495,
+      "time_reduction_percent": -0.003309233177595239,
+      "scalar_range_us": [
+        4179.225004179225,
+        4187.3786291873785
+      ],
+      "neon_range_us": [
+        4181.402441681403,
+        4196.086316696086
+      ],
+      "profile_median_us": {
+        "scalar": {
+          "transform": 335.544000335544,
+          "clip": 266.937000266937,
+          "raster": 2484.7710024847706,
+          "clear": 1209.765001209765,
+          "other": 354.612000354612
+        },
+        "neon": {
+          "transform": 326.349000326349,
+          "clip": 262.905000262905,
+          "raster": 2492.4570024924574,
+          "clear": 1208.535001208535,
+          "other": 351.51600035151597
+        }
+      },
+      "profile_slowdown": {
+        "scalar": 1.113993711291108,
+        "neon": 1.1076374659524744
+      }
+    },
+    {
+      "name": "fill",
+      "triangles": 32,
+      "hash": "88077dd1",
+      "scalar_us": 77613.9034526139,
+      "neon_us": 77614.42564011442,
+      "throughput_gain_percent": -0.000672796965528466,
+      "time_reduction_percent": -0.0006728014921186798,
+      "scalar_range_us": [
+        77580.64376508065,
+        77633.91757763393
+      ],
+      "neon_range_us": [
+        77597.60539009761,
+        77615.48576511549
+      ],
+      "profile_median_us": {
+        "scalar": {
+          "transform": 129.936000129936,
+          "clip": 43.794000043794,
+          "raster": 76158.81007615881,
+          "clear": 1220.994001220994,
+          "other": 213.93000021393001
+        },
+        "neon": {
+          "transform": 125.42700012542699,
+          "clip": 44.088000044088,
+          "raster": 76204.9050762049,
+          "clear": 1221.504001221504,
+          "other": 215.205000215205
+        }
+      },
+      "profile_slowdown": {
+        "scalar": 1.0019610215289372,
+        "neon": 1.0027548103661077
+      }
+    }
+  ]
+}

@@ -24,9 +24,19 @@ def main():
                  'read-stop', 'fs-stop', 'boot', 'mouse', 'hdd'):
         pc.run(0x12000040, mode, True, options=(8, 0, 3000))
     if build.get('scanline_test'):
-        for mode in ('scan-full','scan-skip','scan-transition','scan-stop'):
+        for mode in ('scan-full','scan-skip','scan-transition','scan-stop','scan-soft','scan-gradient'):
             pc.run(0x12000040,mode,True,options=(8,0,3000))
-        pc.run(0x150020c0,'scan-skip',True,options=(8,0,3000))
+        for mode in ('scan-skip','scan-soft','scan-gradient'):
+            pc.run(0x150020c0,mode,True,options=(8,0,3000))
+    if build.get('presentation_test'):
+        results=[pc.run(0x12000040,'fixture',True,options=(8,0,3000),presentation=mode) for mode in (0,2,1)]
+        assert len({(r['source'],r['guest_ms'],r['output']) for r in results})==1,results
+        print('PASS identical guest EGA/PIT output, source frames and emulated time across presentation modes',flush=True)
+        pc.run(0x150020c0,'fixture',True,options=(8,0,3000),presentation=2)
+        pc.run(0x12000040,'present-stop',True,options=(8,0,3000),presentation=2)
+        for mode in ('mouse','midi','resize','scan-transition'):
+            if mode!='scan-transition' or build.get('scanline_test'):
+                pc.run(0x12000040,mode,True,options=(8,0,3000),presentation=2)
     if build.get('neon'):
         pc.run(0x12000040, 'neon-denied', True, options=(8, 0, 3000))
     for mode in ('cpu', 'smc'):

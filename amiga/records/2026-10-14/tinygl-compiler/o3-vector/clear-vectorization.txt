@@ -1,0 +1,231 @@
+/work/amiga/dosbox/tinygl_raster/clear.c:10:11: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:10:11: missed: may need non-SLP handling
+/work/amiga/dosbox/tinygl_raster/clear.c:9:13: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_14, _67);
+/work/amiga/dosbox/tinygl_raster/clear.c:8:14: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_2, _39);
+/work/amiga/dosbox/tinygl_raster/clear.c:6:6: note: vectorized 0 loops in function.
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_2, _39);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_5, _39);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_8, _39);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_11, _39);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_14, _67);
+/work/amiga/dosbox/tinygl_raster/clear.c:11:1: note: ***** Analysis failed with vector mode V4SI
+/work/amiga/dosbox/tinygl_raster/clear.c:11:1: note: ***** Skipping vector mode V16QI, which would repeat the analysis for V4SI
+/work/amiga/dosbox/tinygl_raster/clear.c:16:11: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:16:11: missed: may need non-SLP handling
+/work/amiga/dosbox/tinygl_raster/clear.c:15:13: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_14, _67);
+/work/amiga/dosbox/tinygl_raster/clear.c:14:14: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_2, _39);
+/work/amiga/dosbox/tinygl_raster/clear.c:12:6: note: vectorized 0 loops in function.
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_2, _39);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_5, _39);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_8, _39);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_11, _39);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_14, _67);
+/work/amiga/dosbox/tinygl_raster/clear.c:17:1: note: ***** Analysis failed with vector mode V8HI
+/work/amiga/dosbox/tinygl_raster/clear.c:17:1: note: ***** Skipping vector mode V16QI, which would repeat the analysis for V8HI
+/work/amiga/dosbox/tinygl_raster/clear.c:30:33: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:30:33: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+/work/amiga/dosbox/tinygl_raster/clear.c:10:11: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:10:11: missed: may need non-SLP handling
+/work/amiga/dosbox/tinygl_raster/clear.c:9:13: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_84, { 0, 0, 0, 0 });
+/work/amiga/dosbox/tinygl_raster/clear.c:8:14: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_70, { 0, 0, 0, 0 });
+/work/amiga/dosbox/tinygl_raster/clear.c:16:11: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:16:11: missed: may need non-SLP handling
+/work/amiga/dosbox/tinygl_raster/clear.c:15:13: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_60, { 0, 0, 0, 0, 0, 0, 0, 0 });
+/work/amiga/dosbox/tinygl_raster/clear.c:14:14: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_46, { 0, 0, 0, 0, 0, 0, 0, 0 });
+/work/amiga/dosbox/tinygl_raster/clear.c:18:5: note: vectorized 0 loops in function.
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_46, { 0, 0, 0, 0, 0, 0, 0, 0 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_50, { 0, 0, 0, 0, 0, 0, 0, 0 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_53, { 0, 0, 0, 0, 0, 0, 0, 0 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_56, { 0, 0, 0, 0, 0, 0, 0, 0 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_60, { 0, 0, 0, 0, 0, 0, 0, 0 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_70, { 0, 0, 0, 0 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_74, { 0, 0, 0, 0 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_77, { 0, 0, 0, 0 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_80, { 0, 0, 0, 0 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_84, { 0, 0, 0, 0 });
+/work/amiga/dosbox/tinygl_raster/clear.c:28:52: note: ***** Analysis failed with vector mode V4SI
+/work/amiga/dosbox/tinygl_raster/clear.c:28:52: note: ***** The result for vector mode V16QI would be the same
+/work/amiga/dosbox/tinygl_raster/clear.c:28:52: note: ***** Re-trying analysis with vector mode V8QI
+/work/amiga/dosbox/tinygl_raster/clear.c:28:52: note: ***** Analysis failed with vector mode V8QI
+/work/amiga/dosbox/tinygl_raster/clear.c:39:23: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:39:23: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+/work/amiga/dosbox/tinygl_raster/clear.c:39:54: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:39:54: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+/work/amiga/dosbox/tinygl_raster/clear.c:39:89: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:39:89: missed: not vectorized: loop nest containing two or more consecutive inner loops cannot be vectorized
+/work/amiga/dosbox/tinygl_raster/clear.c:52:27: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:52:27: missed: not vectorized: unsupported control flow in loop.
+/work/amiga/dosbox/tinygl_raster/clear.c:52:27: optimized: loop vectorized using 16 byte vectors
+/work/amiga/dosbox/tinygl_raster/clear.c:16:11: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:16:11: missed: may need non-SLP handling
+/work/amiga/dosbox/tinygl_raster/clear.c:15:13: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_202, { 22136, 22136, 22136, 22136, 22136, 22136, 22136, 22136 });
+/work/amiga/dosbox/tinygl_raster/clear.c:10:11: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:10:11: missed: may need non-SLP handling
+/work/amiga/dosbox/tinygl_raster/clear.c:9:13: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_226, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/work/amiga/dosbox/tinygl_raster/clear.c:8:14: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_212, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/work/amiga/dosbox/tinygl_raster/clear.c:50:27: optimized: loop vectorized using 16 byte vectors
+/work/amiga/dosbox/tinygl_raster/clear.c:45:27: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:45:27: missed: not vectorized: unsupported control flow in loop.
+/work/amiga/dosbox/tinygl_raster/clear.c:45:27: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:45:27: missed: not vectorized: unsupported control flow in loop.
+/work/amiga/dosbox/tinygl_raster/clear.c:45:27: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/clear.c:45:27: missed: not vectorized: unsupported control flow in loop.
+/work/amiga/dosbox/tinygl_raster/span.h:19:13: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_425, 14);
+/work/amiga/dosbox/tinygl_raster/span.h:19:13: missed: couldn't vectorize loop
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _18 = __builtin_neon_vshru_nv4si (_227, 14);
+/work/amiga/dosbox/tinygl_raster/span.h:19:13: missed: couldn't vectorize loop
+/work/amiga/dosbox/tinygl_raster/span.h:19:13: missed: not vectorized: unsupported control flow in loop.
+/work/amiga/dosbox/tinygl_raster/clear.c:40:27: optimized: loop vectorized using 16 byte vectors
+/work/amiga/dosbox/tinygl_raster/clear.c:37:10: note: vectorized 3 loops in function.
+/work/amiga/dosbox/tinygl_raster/span.h:11:20: missed: not vectorized: more than one data ref in stmt: lanes = *.LC0;
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11035:22: missed: statement clobbers memory: _89 = __builtin_neon_vld1v4si (&lanes);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:8629:22: missed: statement clobbers memory: _90 = __builtin_neon_vmla_nv4si ({ -16, -16, -16, -16 }, _89, 19088743);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:8629:22: missed: statement clobbers memory: _92 = __builtin_neon_vmla_nv4si ({ -65536, -65536, -65536, -65536 }, _89, -54321);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:8629:22: missed: statement clobbers memory: _94 = __builtin_neon_vmla_nv4si ({ 2147483647, 2147483647, 2147483647, 2147483647 }, _89, 76543);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:8629:22: missed: statement clobbers memory: _96 = __builtin_neon_vmla_nv4si ({ 1245183, 1245183, 1245183, 1245183 }, _89, -99887);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _100 = __builtin_neon_vshru_nv4si (_99, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:10575:22: missed: statement clobbers memory: _105 = __builtin_neon_vld1v4hi (_104);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7740:22: missed: statement clobbers memory: _107 = __builtin_neon_vmovluv4hi (_105);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _112 = __builtin_neon_vmovnv4si (_111);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:6285:20: missed: statement clobbers memory: _116 = __builtin_neon_vget_lanedi (__a.15_115, 0);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _122 = __builtin_neon_vshru_nv4si (_121, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _127 = __builtin_neon_vshru_nv4si (_126, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11035:22: missed: statement clobbers memory: _141 = __builtin_neon_vld1v4si (_253);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:9362:22: missed: statement clobbers memory: _145 = __builtin_neon_vbslv4si (_111, _68, _141);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_253, _145);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _148 = __builtin_neon_vmovnv4si (_100);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:9268:22: missed: statement clobbers memory: _153 = __builtin_neon_vbslv4hi (_112, _148, _105);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_104, _153);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_134, _135);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _138 = __builtin_neon_vmovnv4si (_100);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_104, _138);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1230 = __builtin_neon_vshru_nv4si (_90, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1234 = __builtin_neon_vshru_nv4si (_94, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1239 = __builtin_neon_vshru_nv4si (_96, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_4, _1246);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _1251 = __builtin_neon_vmovnv4si (_1230);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_6, _1251);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1267 = __builtin_neon_vshru_nv4si (_1265, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1271 = __builtin_neon_vshru_nv4si (_1269, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1276 = __builtin_neon_vshru_nv4si (_1274, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1282, _1283);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _1288 = __builtin_neon_vmovnv4si (_1267);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_1286, _1288);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1304 = __builtin_neon_vshru_nv4si (_1302, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1308 = __builtin_neon_vshru_nv4si (_1306, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1313 = __builtin_neon_vshru_nv4si (_1311, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1319, _1320);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _1325 = __builtin_neon_vmovnv4si (_1304);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_1323, _1325);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1341 = __builtin_neon_vshru_nv4si (_1339, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1345 = __builtin_neon_vshru_nv4si (_1343, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1350 = __builtin_neon_vshru_nv4si (_1348, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1356, _1357);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _1362 = __builtin_neon_vmovnv4si (_1341);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_1360, _1362);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1378 = __builtin_neon_vshru_nv4si (_1376, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1382 = __builtin_neon_vshru_nv4si (_1380, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1387 = __builtin_neon_vshru_nv4si (_1385, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1393, _1394);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _1399 = __builtin_neon_vmovnv4si (_1378);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_1397, _1399);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1415 = __builtin_neon_vshru_nv4si (_1413, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1419 = __builtin_neon_vshru_nv4si (_1417, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1424 = __builtin_neon_vshru_nv4si (_1422, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1430, _1431);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _1436 = __builtin_neon_vmovnv4si (_1415);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_1434, _1436);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1452 = __builtin_neon_vshru_nv4si (_1450, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1456 = __builtin_neon_vshru_nv4si (_1454, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1461 = __builtin_neon_vshru_nv4si (_1459, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1467, _1468);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _1473 = __builtin_neon_vmovnv4si (_1452);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_1471, _1473);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1489 = __builtin_neon_vshru_nv4si (_1487, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1493 = __builtin_neon_vshru_nv4si (_1491, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1498 = __builtin_neon_vshru_nv4si (_1496, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1504, _1505);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _1510 = __builtin_neon_vmovnv4si (_1489);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_1508, _1510);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1526 = __builtin_neon_vshru_nv4si (_1524, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1530 = __builtin_neon_vshru_nv4si (_1528, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1535 = __builtin_neon_vshru_nv4si (_1533, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1541, _1542);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _1547 = __builtin_neon_vmovnv4si (_1526);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_1545, _1547);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _18 = __builtin_neon_vshru_nv4si (_227, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _402 = __builtin_neon_vshru_nv4si (_400, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _407 = __builtin_neon_vshru_nv4si (_405, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_273, _271);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:7635:22: missed: statement clobbers memory: _353 = __builtin_neon_vmovnv4si (_18);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:11942:3: missed: statement clobbers memory: __builtin_neon_vst1v4hi (_351, _353);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_90, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _954 = __builtin_neon_vshru_nv4si (_94, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _959 = __builtin_neon_vshru_nv4si (_96, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_4, _966);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_980, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _985 = __builtin_neon_vshru_nv4si (_983, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _990 = __builtin_neon_vshru_nv4si (_988, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_996, _997);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_1011, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1016 = __builtin_neon_vshru_nv4si (_1014, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1021 = __builtin_neon_vshru_nv4si (_1019, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1027, _1028);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_1042, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1047 = __builtin_neon_vshru_nv4si (_1045, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1052 = __builtin_neon_vshru_nv4si (_1050, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1058, _1059);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_1073, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1078 = __builtin_neon_vshru_nv4si (_1076, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1083 = __builtin_neon_vshru_nv4si (_1081, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1089, _1090);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_1104, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1109 = __builtin_neon_vshru_nv4si (_1107, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1114 = __builtin_neon_vshru_nv4si (_1112, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1120, _1121);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_1135, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1140 = __builtin_neon_vshru_nv4si (_1138, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1145 = __builtin_neon_vshru_nv4si (_1143, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1151, _1152);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_1166, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1171 = __builtin_neon_vshru_nv4si (_1169, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1176 = __builtin_neon_vshru_nv4si (_1174, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1182, _1183);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_1197, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1202 = __builtin_neon_vshru_nv4si (_1200, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _1207 = __builtin_neon_vshru_nv4si (_1205, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_1213, _1214);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: __builtin_neon_vshru_nv4si (_425, 14);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _431 = __builtin_neon_vshru_nv4si (_429, 8);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:4568:22: missed: statement clobbers memory: _436 = __builtin_neon_vshru_nv4si (_434, 16);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_488, _489);
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_4, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_781, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_785, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_789, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_212, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_216, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_219, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_222, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12267:3: missed: statement clobbers memory: __builtin_neon_vst1v4si (_226, { -1424870314, -1424870314, -1424870314, -1424870314 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_6, { 22136, 22136, 22136, 22136, 22136, 22136, 22136, 22136 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_251, { 22136, 22136, 22136, 22136, 22136, 22136, 22136, 22136 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_255, { 22136, 22136, 22136, 22136, 22136, 22136, 22136, 22136 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_259, { 22136, 22136, 22136, 22136, 22136, 22136, 22136, 22136 });
+/usr/lib/gcc/arm-none-eabi/15/include/arm_neon.h:12260:3: missed: statement clobbers memory: __builtin_neon_vst1v8hi (_202, { 22136, 22136, 22136, 22136, 22136, 22136, 22136, 22136 });
+/work/amiga/dosbox/tinygl_raster/clear.c:47:84: note: ***** Analysis failed with vector mode V4SI
+/work/amiga/dosbox/tinygl_raster/clear.c:47:84: note: ***** The result for vector mode V16QI would be the same
+/work/amiga/dosbox/tinygl_raster/clear.c:47:84: note: ***** Re-trying analysis with vector mode V8QI
+/work/amiga/dosbox/tinygl_raster/clear.c:47:84: note: ***** Analysis failed with vector mode V8QI

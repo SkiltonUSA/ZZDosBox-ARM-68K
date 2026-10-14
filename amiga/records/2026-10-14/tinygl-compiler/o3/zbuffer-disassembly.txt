@@ -1,0 +1,326 @@
+
+.context/amiga/tinygl-compiler/o3/103-zbuffer.arm.o:	file format elf32-littlearm
+
+Disassembly of section .text.ZB_open:
+
+00000000 <ZB_open>:
+       0: e92d4030     	push	{r4, r5, lr}
+       4: e1a04000     	mov	r4, r0
+       8: e24dd00c     	sub	sp, sp, #12
+       c: e3a00038     	mov	r0, #56
+      10: e1a05003     	mov	r5, r3
+      14: e58d1004     	str	r1, [sp, #0x4]
+      18: e58d2000     	str	r2, [sp]
+      1c: ebfffffe     	bl	0x1c <ZB_open+0x1c>     @ imm = #-0x8
+			0000001c:  R_ARM_CALL	gl_malloc
+      20: e2503000     	subs	r3, r0, #0
+      24: 0a000029     	beq	0xd0 <ZB_open+0xd0>     @ imm = #0xa4
+      28: e59d2000     	ldr	r2, [sp]
+      2c: e59d1004     	ldr	r1, [sp, #0x4]
+      30: e3520003     	cmp	r2, #3
+      34: e1a02104     	lsl	r2, r4, #2
+      38: e3c44003     	bic	r4, r4, #3
+      3c: e5831024     	str	r1, [r3, #0x24]
+      40: e5834020     	str	r4, [r3, #0x20]
+      44: e5832028     	str	r2, [r3, #0x28]
+      48: 1a00001e     	bne	0xc8 <ZB_open+0xc8>     @ imm = #0x78
+      4c: e0040491     	mul	r4, r1, r4
+      50: e58d3000     	str	r3, [sp]
+      54: e1a00084     	lsl	r0, r4, #1
+      58: ebfffffe     	bl	0x58 <ZB_open+0x58>     @ imm = #-0x8
+			00000058:  R_ARM_CALL	gl_malloc
+      5c: e59d3000     	ldr	r3, [sp]
+      60: e3500000     	cmp	r0, #0
+      64: e5830000     	str	r0, [r3]
+      68: 0a000016     	beq	0xc8 <ZB_open+0xc8>     @ imm = #0x58
+      6c: e3550000     	cmp	r5, #0
+      70: 13a02000     	movne	r2, #0
+      74: 15835004     	strne	r5, [r3, #0x4]
+      78: 15c32034     	strbne	r2, [r3, #0x34]
+      7c: 0a000004     	beq	0x94 <ZB_open+0x94>     @ imm = #0x10
+      80: e3a02000     	mov	r2, #0
+      84: e5832008     	str	r2, [r3, #0x8]
+      88: e1a00003     	mov	r0, r3
+      8c: e28dd00c     	add	sp, sp, #12
+      90: e8bd8030     	pop	{r4, r5, pc}
+      94: e5932024     	ldr	r2, [r3, #0x24]
+      98: e5930028     	ldr	r0, [r3, #0x28]
+      9c: e0000290     	mul	r0, r0, r2
+      a0: ebfffffe     	bl	0xa0 <ZB_open+0xa0>     @ imm = #-0x8
+			000000a0:  R_ARM_CALL	gl_malloc
+      a4: e59d3000     	ldr	r3, [sp]
+      a8: e3500000     	cmp	r0, #0
+      ac: 13a02001     	movne	r2, #1
+      b0: e5830004     	str	r0, [r3, #0x4]
+      b4: 15c32034     	strbne	r2, [r3, #0x34]
+      b8: 1afffff0     	bne	0x80 <ZB_open+0x80>     @ imm = #-0x40
+      bc: e5930000     	ldr	r0, [r3]
+      c0: ebfffffe     	bl	0xc0 <ZB_open+0xc0>     @ imm = #-0x8
+			000000c0:  R_ARM_CALL	gl_free
+      c4: e59d3000     	ldr	r3, [sp]
+      c8: e1a00003     	mov	r0, r3
+      cc: ebfffffe     	bl	0xcc <ZB_open+0xcc>     @ imm = #-0x8
+			000000cc:  R_ARM_CALL	gl_free
+      d0: e3a03000     	mov	r3, #0
+      d4: eaffffeb     	b	0x88 <ZB_open+0x88>     @ imm = #-0x54
+
+Disassembly of section .text.ZB_close:
+
+00000000 <ZB_close>:
+       0: e92d4010     	push	{r4, lr}
+       4: e1a04000     	mov	r4, r0
+       8: e5d03034     	ldrb	r3, [r0, #0x34]
+       c: e3530000     	cmp	r3, #0
+      10: 1a000004     	bne	0x28 <ZB_close+0x28>    @ imm = #0x10
+      14: e5940000     	ldr	r0, [r4]
+      18: ebfffffe     	bl	0x18 <ZB_close+0x18>    @ imm = #-0x8
+			00000018:  R_ARM_CALL	gl_free
+      1c: e1a00004     	mov	r0, r4
+      20: e8bd4010     	pop	{r4, lr}
+      24: eafffffe     	b	0x24 <ZB_close+0x24>    @ imm = #-0x8
+			00000024:  R_ARM_JUMP24	gl_free
+      28: e5900004     	ldr	r0, [r0, #0x4]
+      2c: ebfffffe     	bl	0x2c <ZB_close+0x2c>    @ imm = #-0x8
+			0000002c:  R_ARM_CALL	gl_free
+      30: eafffff7     	b	0x14 <ZB_close+0x14>    @ imm = #-0x24
+
+Disassembly of section .text.ZB_resize:
+
+00000000 <ZB_resize>:
+       0: e92d47f0     	push	{r4, r5, r6, r7, r8, r9, r10, lr}
+       4: e3c25003     	bic	r5, r2, #3
+       8: e0080593     	mul	r8, r3, r5
+       c: e1a04000     	mov	r4, r0
+      10: e1a09003     	mov	r9, r3
+      14: e1a07001     	mov	r7, r1
+      18: e1a00088     	lsl	r0, r8, #1
+      1c: ebfffffe     	bl	0x1c <ZB_resize+0x1c>   @ imm = #-0x8
+			0000001c:  R_ARM_CALL	gl_malloc
+      20: e2506000     	subs	r6, r0, #0
+      24: 0a00002b     	beq	0xd8 <ZB_resize+0xd8>   @ imm = #0xac
+      28: e3570000     	cmp	r7, #0
+      2c: 0a000011     	beq	0x78 <ZB_resize+0x78>   @ imm = #0x44
+      30: e5940000     	ldr	r0, [r4]
+      34: ebfffffe     	bl	0x34 <ZB_resize+0x34>   @ imm = #-0x8
+			00000034:  R_ARM_CALL	gl_free
+      38: e5d43034     	ldrb	r3, [r4, #0x34]
+      3c: e3530000     	cmp	r3, #0
+      40: 1a000009     	bne	0x6c <ZB_resize+0x6c>   @ imm = #0x24
+      44: e1a02105     	lsl	r2, r5, #2
+      48: e3a03000     	mov	r3, #0
+      4c: e3a00000     	mov	r0, #0
+      50: e5846000     	str	r6, [r4]
+      54: e5845020     	str	r5, [r4, #0x20]
+      58: e5849024     	str	r9, [r4, #0x24]
+      5c: e5842028     	str	r2, [r4, #0x28]
+      60: e5847004     	str	r7, [r4, #0x4]
+      64: e5c43034     	strb	r3, [r4, #0x34]
+      68: e8bd87f0     	pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+      6c: e5940004     	ldr	r0, [r4, #0x4]
+      70: ebfffffe     	bl	0x70 <ZB_resize+0x70>   @ imm = #-0x8
+			00000070:  R_ARM_CALL	gl_free
+      74: eafffff2     	b	0x44 <ZB_resize+0x44>   @ imm = #-0x38
+      78: e1a00108     	lsl	r0, r8, #2
+      7c: ebfffffe     	bl	0x7c <ZB_resize+0x7c>   @ imm = #-0x8
+			0000007c:  R_ARM_CALL	gl_malloc
+      80: e2507000     	subs	r7, r0, #0
+      84: 0a000011     	beq	0xd0 <ZB_resize+0xd0>   @ imm = #0x44
+      88: e5940000     	ldr	r0, [r4]
+      8c: ebfffffe     	bl	0x8c <ZB_resize+0x8c>   @ imm = #-0x8
+			0000008c:  R_ARM_CALL	gl_free
+      90: e5d43034     	ldrb	r3, [r4, #0x34]
+      94: e3530000     	cmp	r3, #0
+      98: 1a000009     	bne	0xc4 <ZB_resize+0xc4>   @ imm = #0x24
+      9c: e1a02105     	lsl	r2, r5, #2
+      a0: e3a03001     	mov	r3, #1
+      a4: e3a00000     	mov	r0, #0
+      a8: e5846000     	str	r6, [r4]
+      ac: e5845020     	str	r5, [r4, #0x20]
+      b0: e5849024     	str	r9, [r4, #0x24]
+      b4: e5842028     	str	r2, [r4, #0x28]
+      b8: e5847004     	str	r7, [r4, #0x4]
+      bc: e5c43034     	strb	r3, [r4, #0x34]
+      c0: e8bd87f0     	pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+      c4: e5940004     	ldr	r0, [r4, #0x4]
+      c8: ebfffffe     	bl	0xc8 <ZB_resize+0xc8>   @ imm = #-0x8
+			000000c8:  R_ARM_CALL	gl_free
+      cc: eafffff2     	b	0x9c <ZB_resize+0x9c>   @ imm = #-0x38
+      d0: e1a00006     	mov	r0, r6
+      d4: ebfffffe     	bl	0xd4 <ZB_resize+0xd4>   @ imm = #-0x8
+			000000d4:  R_ARM_CALL	gl_free
+      d8: e3e00000     	mvn	r0, #0
+      dc: e8bd87f0     	pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+
+Disassembly of section .text.pxReverse32:
+
+00000000 <pxReverse32>:
+       0: e6bf0f30     	rev	r0, r0
+       4: e12fff1e     	bx	lr
+
+Disassembly of section .text.ZB_copyFrameBuffer:
+
+00000000 <ZB_copyFrameBuffer>:
+       0: e5903024     	ldr	r3, [r0, #0x24]
+       4: e3530000     	cmp	r3, #0
+       8: d12fff1e     	bxle	lr
+       c: e92d41f0     	push	{r4, r5, r6, r7, r8, lr}
+      10: e1a07002     	mov	r7, r2
+      14: e1a06000     	mov	r6, r0
+      18: e1a05001     	mov	r5, r1
+      1c: e3a04000     	mov	r4, #0
+      20: e5963020     	ldr	r3, [r6, #0x20]
+      24: e1a00005     	mov	r0, r5
+      28: e5961004     	ldr	r1, [r6, #0x4]
+      2c: e1a02007     	mov	r2, r7
+      30: e0855007     	add	r5, r5, r7
+      34: e0030493     	mul	r3, r3, r4
+      38: e2844001     	add	r4, r4, #1
+      3c: e0811103     	add	r1, r1, r3, lsl #2
+      40: ebfffffe     	bl	0x40 <ZB_copyFrameBuffer+0x40> @ imm = #-0x8
+			00000040:  R_ARM_CALL	memcpy
+      44: e5963024     	ldr	r3, [r6, #0x24]
+      48: e1540003     	cmp	r4, r3
+      4c: bafffff3     	blt	0x20 <ZB_copyFrameBuffer+0x20> @ imm = #-0x34
+      50: e8bd81f0     	pop	{r4, r5, r6, r7, r8, pc}
+
+Disassembly of section .text.ZB_clear:
+
+00000000 <ZB_clear>:
+       0: e59fc204     	ldr	r12, [pc, #0x204]       @ 0x20c <ZB_clear+0x20c>
+       4: e92d40f0     	push	{r4, r5, r6, r7, lr}
+       8: e1a04000     	mov	r4, r0
+       c: e59fe1fc     	ldr	lr, [pc, #0x1fc]        @ 0x210 <ZB_clear+0x210>
+      10: e24dd014     	sub	sp, sp, #20
+      14: e08fc00c     	add	r12, pc, r12
+      18: e1a06001     	mov	r6, r1
+      1c: e1a05002     	mov	r5, r2
+      20: e1a07003     	mov	r7, r3
+      24: e79cc00e     	ldr	r12, [r12, lr]
+      28: e59cc000     	ldr	r12, [r12]
+      2c: e35c0000     	cmp	r12, #0
+      30: 1a000060     	bne	0x1b8 <ZB_clear+0x1b8>  @ imm = #0x180
+      34: e3560000     	cmp	r6, #0
+      38: 0a00002d     	beq	0xf4 <ZB_clear+0xf4>    @ imm = #0xb4
+      3c: e5942020     	ldr	r2, [r4, #0x20]
+      40: e3550000     	cmp	r5, #0
+      44: e5943024     	ldr	r3, [r4, #0x24]
+      48: e5940000     	ldr	r0, [r4]
+      4c: e0020293     	mul	r2, r3, r2
+      50: 0a000063     	beq	0x1e4 <ZB_clear+0x1e4>  @ imm = #0x18c
+      54: e6ff1075     	uxth	r1, r5
+      58: e30f3fff     	movw	r3, #0xffff
+      5c: e1510003     	cmp	r1, r3
+      60: 0a000065     	beq	0x1fc <ZB_clear+0x1fc>  @ imm = #0x194
+      64: e1a0e1c2     	asr	lr, r2, #3
+      68: e35e0000     	cmp	lr, #0
+      6c: da00000c     	ble	0xa4 <ZB_clear+0xa4>    @ imm = #0x30
+      70: e2800010     	add	r0, r0, #16
+      74: e1851805     	orr	r1, r5, r5, lsl #16
+      78: e080c20e     	add	r12, r0, lr, lsl #4
+      7c: e1a03000     	mov	r3, r0
+      80: e5031010     	str	r1, [r3, #-0x10]
+      84: e2833010     	add	r3, r3, #16
+      88: e503101c     	str	r1, [r3, #-0x1c]
+      8c: e5031018     	str	r1, [r3, #-0x18]
+      90: e5031014     	str	r1, [r3, #-0x14]
+      94: e153000c     	cmp	r3, r12
+      98: 1afffff8     	bne	0x80 <ZB_clear+0x80>    @ imm = #-0x20
+      9c: e24ee001     	sub	lr, lr, #1
+      a0: e080020e     	add	r0, r0, lr, lsl #4
+      a4: e2123007     	ands	r3, r2, #7
+      a8: 0a000011     	beq	0xf4 <ZB_clear+0xf4>    @ imm = #0x44
+      ac: e3120006     	tst	r2, #6
+      b0: e1c050b0     	strh	r5, [r0]
+      b4: 0a00000e     	beq	0xf4 <ZB_clear+0xf4>    @ imm = #0x38
+      b8: e3530002     	cmp	r3, #2
+      bc: e1c050b2     	strh	r5, [r0, #2]
+      c0: da00000b     	ble	0xf4 <ZB_clear+0xf4>    @ imm = #0x2c
+      c4: e3120004     	tst	r2, #4
+      c8: e1c050b4     	strh	r5, [r0, #4]
+      cc: 0a000008     	beq	0xf4 <ZB_clear+0xf4>    @ imm = #0x20
+      d0: e3530004     	cmp	r3, #4
+      d4: e1c050b6     	strh	r5, [r0, #6]
+      d8: da000005     	ble	0xf4 <ZB_clear+0xf4>    @ imm = #0x14
+      dc: e3530005     	cmp	r3, #5
+      e0: e1c050b8     	strh	r5, [r0, #8]
+      e4: 0a000002     	beq	0xf4 <ZB_clear+0xf4>    @ imm = #0x8
+      e8: e3530007     	cmp	r3, #7
+      ec: e1c050ba     	strh	r5, [r0, #10]
+      f0: 01c050bc     	strheq	r5, [r0, #12]
+      f4: e3570000     	cmp	r7, #0
+      f8: 0a00002a     	beq	0x1a8 <ZB_clear+0x1a8>  @ imm = #0xa8
+      fc: e5943024     	ldr	r3, [r4, #0x24]
+     100: e3530000     	cmp	r3, #0
+     104: da000027     	ble	0x1a8 <ZB_clear+0x1a8>  @ imm = #0x9c
+     108: e59d302c     	ldr	r3, [sp, #0x2c]
+     10c: e3a05000     	mov	r5, #0
+     110: e594e004     	ldr	lr, [r4, #0x4]
+     114: e1a02443     	asr	r2, r3, #8
+     118: e59d3028     	ldr	r3, [sp, #0x28]
+     11c: e2022cff     	and	r2, r2, #65280
+     120: e20318ff     	and	r1, r3, #16711680
+     124: e59d3030     	ldr	r3, [sp, #0x30]
+     128: e1822001     	orr	r2, r2, r1
+     12c: e7e73853     	ubfx	r3, r3, #0x10, #0x8
+     130: e1822003     	orr	r2, r2, r3
+     134: e594c020     	ldr	r12, [r4, #0x20]
+     138: e1a0014c     	asr	r0, r12, #2
+     13c: e3500000     	cmp	r0, #0
+     140: da00001a     	ble	0x1b0 <ZB_clear+0x1b0>  @ imm = #0x68
+     144: e28e3010     	add	r3, lr, #16
+     148: e3a01000     	mov	r1, #0
+     14c: e2811001     	add	r1, r1, #1
+     150: e5032010     	str	r2, [r3, #-0x10]
+     154: e1500001     	cmp	r0, r1
+     158: e503200c     	str	r2, [r3, #-0xc]
+     15c: e5032008     	str	r2, [r3, #-0x8]
+     160: e2833010     	add	r3, r3, #16
+     164: e5032014     	str	r2, [r3, #-0x14]
+     168: 1afffff7     	bne	0x14c <ZB_clear+0x14c>  @ imm = #-0x24
+     16c: e08e0200     	add	r0, lr, r0, lsl #4
+     170: e21c3003     	ands	r3, r12, #3
+     174: 0a000005     	beq	0x190 <ZB_clear+0x190>  @ imm = #0x14
+     178: e31c0002     	tst	r12, #2
+     17c: e5802000     	str	r2, [r0]
+     180: 0a000002     	beq	0x190 <ZB_clear+0x190>  @ imm = #0x8
+     184: e3530003     	cmp	r3, #3
+     188: e5802004     	str	r2, [r0, #0x4]
+     18c: 05802008     	streq	r2, [r0, #0x8]
+     190: e5941024     	ldr	r1, [r4, #0x24]
+     194: e2855001     	add	r5, r5, #1
+     198: e5943028     	ldr	r3, [r4, #0x28]
+     19c: e1510005     	cmp	r1, r5
+     1a0: e08ee003     	add	lr, lr, r3
+     1a4: caffffe2     	bgt	0x134 <ZB_clear+0x134>  @ imm = #-0x78
+     1a8: e28dd014     	add	sp, sp, #20
+     1ac: e8bd80f0     	pop	{r4, r5, r6, r7, pc}
+     1b0: e1a0000e     	mov	r0, lr
+     1b4: eaffffed     	b	0x170 <ZB_clear+0x170>  @ imm = #-0x4c
+     1b8: e59dc030     	ldr	r12, [sp, #0x30]
+     1bc: e58dc008     	str	r12, [sp, #0x8]
+     1c0: e59dc02c     	ldr	r12, [sp, #0x2c]
+     1c4: e58dc004     	str	r12, [sp, #0x4]
+     1c8: e59dc028     	ldr	r12, [sp, #0x28]
+     1cc: e58dc000     	str	r12, [sp]
+     1d0: ebfffffe     	bl	0x1d0 <ZB_clear+0x1d0>  @ imm = #-0x8
+			000001d0:  R_ARM_CALL	zz_clear_buffers
+     1d4: e3500000     	cmp	r0, #0
+     1d8: 0affff95     	beq	0x34 <ZB_clear+0x34>    @ imm = #-0x1ac
+     1dc: e28dd014     	add	sp, sp, #20
+     1e0: e8bd80f0     	pop	{r4, r5, r6, r7, pc}
+     1e4: e1a02082     	lsl	r2, r2, #1
+     1e8: e1a01005     	mov	r1, r5
+     1ec: ebfffffe     	bl	0x1ec <ZB_clear+0x1ec>  @ imm = #-0x8
+			000001ec:  R_ARM_CALL	memset
+     1f0: e3570000     	cmp	r7, #0
+     1f4: 0affffeb     	beq	0x1a8 <ZB_clear+0x1a8>  @ imm = #-0x54
+     1f8: eaffffbf     	b	0xfc <ZB_clear+0xfc>    @ imm = #-0x104
+     1fc: e1a02082     	lsl	r2, r2, #1
+     200: e3a010ff     	mov	r1, #255
+     204: ebfffffe     	bl	0x204 <ZB_clear+0x204>  @ imm = #-0x8
+			00000204:  R_ARM_CALL	memset
+     208: eaffffb9     	b	0xf4 <ZB_clear+0xf4>    @ imm = #-0x11c
+     20c: f0 01 00 00  	.word	0x000001f0
+			0000020c:  R_ARM_BASE_PREL	_GLOBAL_OFFSET_TABLE_
+     210: 00 00 00 00  	.word	0x00000000
+			00000210:  R_ARM_GOT_BREL	zz_tgl_clear

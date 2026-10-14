@@ -1,0 +1,21 @@
+PASS guest memory command/ACK sequence 11 requests
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0
+PASS guest memory command/ACK sequence 1 requests
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 4 dispatches 0 heap 3841152
+PASS profile publication and exclusive totals fixture unwound 0
+PASS memory pause cancellation and owned-resource cleanup
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 27438 heap 3906816
+PASS profile publication and exclusive totals copy-stop unwound 1
+PASS cancellation during framebuffer write revokes mapping
+PASS guest memory command/ACK sequence 3 requests
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 16 dispatches 616 heap 3906816
+PASS profile publication and exclusive totals memory-smc unwound 0
+PASS external paused edit invalidates translated x86 code and executes replacement
+PASS memory linked model tests

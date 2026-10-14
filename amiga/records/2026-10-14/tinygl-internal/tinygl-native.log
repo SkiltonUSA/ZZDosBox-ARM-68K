@@ -1,0 +1,4 @@
+PASS scene 0 identical colour/depth; profiled and untimed
+PASS scene 1 identical colour/depth; profiled and untimed
+PASS scene 2 identical colour/depth; profiled and untimed
+PASS 1000 matrix/vertex cases, lighting fallback, constant/perspective W, cleanup

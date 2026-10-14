@@ -1,0 +1,66 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=0acb913a
+BOOTSTRAP amiga=40c58e00 arm=00e48e00 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+DISPLAY_CONFIG mode=fullscreen fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+FULLSCREEN_BITMAP allocated=0886c8dc screen=0919a188 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=0af777fc/40f93600 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+VIDEO adapter=0 source=320x400 monochrome=0
+JIT magic=4a495431 commits=30 witness=1 dispatches=283883 cache_bytes=4194304 heap_peak=3906816
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+TGLBENCH magic=54474c31 errors=0 count=3 quick=0
+TGLBENCH case=0 n=1024 repeats=16 hash=88b1e9f7 scalar=0000000001eab17a neon=0000000001ed206c
+TGLPROFILE case=0 method=0 t0=00000000002eacd2 t1=00000000000d28e2 t2=0000000000026b05 t3=00000000000c360c t4=00000000000617a1 t5=00000000000ccb3e
+TGLPROFILE case=0 method=1 t0=00000000002e3784 t1=00000000000cbb19 t2=0000000000026a2a t3=00000000000c4222 t4=000000000006287c t5=00000000000ca7a3
+TGLBENCH case=1 n=128 repeats=16 hash=0628ae41 scalar=0000000001544a37 neon=0000000001544d19
+TGLPROFILE case=1 method=0 t0=000000000017b14b t1=000000000001babb t2=0000000000015b93 t3=00000000000ca361 t4=00000000000629e0 t5=000000000001cdbc
+TGLPROFILE case=1 method=1 t0=000000000017e25a t1=000000000001ad5f t2=000000000001551d t3=00000000000cee72 t4=00000000000623b5 t5=000000000001cdb7
+TGLBENCH case=2 n=32 repeats=16 hash=88077dd1 scalar=0000000018a98769 neon=0000000018aae8c7
+TGLPROFILE case=2 method=0 t0=00000000018b5e8f t1=000000000000a930 t2=00000000000038a8 t3=0000000001832d2f t4=00000000000638fa t5=000000000001168e
+TGLPROFILE case=2 method=1 t0=00000000018bc4e4 t1=000000000000a3f0 t2=0000000000003968 t3=0000000001839923 t4=0000000000063680 t5=00000000000117e9
+SCANLINES magic=53434e31 frames=17 rendered_rows=8160 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=3000
+PRESENT magic=50525331 source=17 shown=17 skipped=0 divisor=1 changes=0 mode=0 hz=60 work_ticks=6862781 copy_ticks=1484725 total_copy=000000001a69f72f
+ARM_FPS tenths=0
+PC frames=17 emulated_ms=274 wall_ms=5725 timed_done=0
+POLL ms=1 calls=2954 wait_us=3820372 max_us=14465
+SHELL result=0 guest_exit=0 slices=100611 bytes=304 hash=97312e96 mismatches=0
+DosBox ZZ9000 project                         0.11.0-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>EGATEST.COM
+EGA/PIT PASS
+
+C:\>exit
+
+
+SHELL PASS mode=0
+FILES requests=14 read=32113 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=17 flips=17 wait_us=164420
+COPY observed_us=57715 max_us=5824
+PIPELINE enabled=1 overlaps=0 releases=17
+LAUNCHER exit=0; owned memory released

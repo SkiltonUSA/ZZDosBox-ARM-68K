@@ -1,0 +1,3 @@
+PASS A9 scaler model: all 1024 widths, four output widths, both formats, exact pixels and guards; styles=True
+PASS A9 direct NEON scaler: all widths 1..1024, 1x/2x, formats and alignments; dispatch=True
+PASS A9 NEON black-row fill: widths 1..960, exact zeros and guards

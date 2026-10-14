@@ -64,7 +64,7 @@ Those features are not automatically included in this Amiga port.
 
 | Area | Current ZZDosBox implementation |
 | --- | --- |
-| CPU | 32-bit, 386-class x86 interpreter on ARM Core1; no enabled dynarec or x87 FPU. |
+| CPU | 32-bit, 386-class x86 emulation on ARM Core1; current Direct runtime uses ARMv7 dynamic recompilation. The separate Windows build uses the interpreter. No x87 FPU. |
 | Display | ARM renders into ZZ9000 buffers; 68K coordinates fullscreen presentation or Workbench window blits. |
 | Frontend | Native MUI profiles and DOS terminal, rather than RetroArch core options. |
 | MIDI | External CAMD output; upstream Munt/FluidSynth/BASSMIDI backends are not ported. |

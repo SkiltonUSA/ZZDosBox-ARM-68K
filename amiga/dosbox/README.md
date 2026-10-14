@@ -3,8 +3,8 @@
 DOSBox for the Amiga and ZZ9000 Cortex-A9, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 
-**0.10.1-dev** includes a MUI launcher, program profiles, optional LOADFIX,
-selectable/editable AUTOEXEC.BAT and CONFIG.SYS, terminal colours, 1–8 MB guest RAM and VGA/EGA/CGA.
+**0.11.0-dev** includes a MUI launcher, program profiles, optional LOADFIX,
+selectable/editable AUTOEXEC.BAT and CONFIG.SYS, terminal colours, 1–8 MB guest RAM and VGA/EGA/CGA/S3-VESA/Tandy/PCjr/Hercules graphics.
 Choose a Workbench window or fullscreen, embedded DOS 5 or installed MS-DOS
 6.22 on the DOS terminal tab, with an optional ARM-rendered FPS counter in Settings.
 Window sizes are 320×240, 640×480 and 960×720; the Workbench resize gadget
@@ -12,8 +12,28 @@ adjusts the window between these limits, keeping the picture at 4:3.
 A coloured DOS welcome panel shows the version, project link and controls.
 Alt+Return switches window/fullscreen; Ctrl+minus/plus adjusts CPU cycles.
 The DOS terminal also accepts ISO images or a mounted Amiga data CD as D:.
+Settings offers **Normal / Adaptive** presentation per program, with Normal as
+the default. Adaptive reduces frame-copy work without changing guest CPU speed.
+S3 provides 1 MB of emulated video RAM, with modes up to 1024×768 at
+256 colours or 800×600 at 16-bit colour, scaled to the existing display.
+Windows S3 drivers and high-resolution game performance need further testing.
+Hercules offers White, Amber, Green and Paperwhite in Settings.
+Settings provides **Direct / OpenGL (experimental)**, saved per program.
+Direct is the native RTG renderer and remains the default. The experimental
+TinyGL renderer runs on the A9 and supports a partial fixed-function OpenGL API, without GLSL
+shaders or guest OpenGL acceleration. A matched Doom test measured 7.00 FPS
+Direct versus 4.72 FPS OpenGL; keep Direct for speed.
+Software scanlines offer Off, Classic, Soft and Gradient in fullscreen with
+the FPS overlay off.
 Settings includes external MT-32/General MIDI through CAMD and a CAMD/AHI/
 ZZ9000AX driver check. MIDI needs CAMD and a connected external synthesizer.
+
+The local **0.11.1-dev** launcher adds a Developer tab: trace logging, CPU/video
+profiling, cooperative frame breakpoints, display handoff and host polling.
+It warns that diagnostics affect performance; options reset when the launcher
+closes. Trace/checkpoint controls require the matching optional Trace runtime.
+Direct/OpenGL checkpoint and lifecycle checks passed on the A4000TX.
+This development build is staged separately; it is not installed or released.
 
 Requires **MUI 3.8 or later** and XACP on the ZZ9000; tested with XX19c firmware.
 AHI and ZZ9000AX are currently detected only; PCM output is not implemented.
@@ -21,7 +41,7 @@ AHI and ZZ9000AX are currently detected only; PCM output is not implemented.
 [Features and compatibility](../../docs/amiga-dosbox-features.md) ·
 [Amiga requirements](../../docs/amiga-dosbox-requirements.md) · [Changelog](CHANGELOG.md)
 
-The A9 runs the x86 interpreter and draws directly into the ZZ9000 framebuffer;
+The A9 runs the x86 dynamic recompiler and draws directly into the ZZ9000 framebuffer;
 the Amiga handles files, input and display coordination. A writable Amiga
 drawer serves as DOS drive C:, including subdirectories. Read-only 1.44 MB
 floppy boot and a writable 32 MB BIOS hard disk are also available.
@@ -46,3 +66,31 @@ Credits: DOSBox team, libretro contributors, MUI by Stefan Stuntz, and Xani's
 [XACP](https://github.com/Xanxi-Amiga/XACP-ZZ9000) platform.
 
 Build and test notes are in [the development record](../../docs/amiga-dosbox-feasibility.md).
+
+## Optimisation history
+
+Oldest to newest. Percentages compare each change with its own measured
+baseline; they are **not cumulative**. Keen/Vette figures are startup
+throughput, while Doom figures are real Demo3 game FPS. Most earlier comparisons
+are single runs; the latest VFP result uses two runs per build.
+
+- **Direct — ARM-to-ZZ9000 framebuffer output:** pixels are written directly into the display card's framebuffer. **Standalone percentage gain not isolated**; this is the rendering foundation for the comparisons below. [Architecture](pc/direct.cpp)
+- **Host scheduling — 1 ms timer polling:** replace tick-based waits with a 1 ms timer — **+116.2% Keen / +66.7% Vette** startup throughput. [Results](../records/2026-10-12/dosbox-scheduling/comparison.json)
+- **Scalar pixel scaling — specialised 1×/2× row copies:** **+14.4% Keen / +10.0% Vette**. [Results](../records/2026-10-12/dosbox-scaler/README.md)
+- **Framebuffer pipelining — copy/PAN overlap prototype:** **+0.1–0.4% observed; no established gain** in the startup tests. [Results](../records/2026-10-12/dosbox-pipeline/README.md)
+- **Compiler optimisation — x86 interpreter `-O2`:** **+7.7% Keen / +4.2% Vette**. [Results](../records/2026-10-12/dosbox-cpu-o2/README.md)
+- **Lookup tables — RGB565 colour conversion:** **+16.3% Keen / +14.3% Vette**; exact colours preserved. [Results](../records/2026-10-12/dosbox-profile/README.md)
+- **Compiler optimisation — PIC/VGA handlers `-O2`:** **+2.3% Keen / +6.2% Vette**. [Results](../records/2026-10-12/dosbox-events/README.md)
+- **Division-free generic scaling and BIOS disk read-ahead:** **hardware gain not isolated**; retained as research, not a measured speed claim. [Evidence](../records/2026-10-13/dosbox-optimisation/artifacts.json)
+- **JIT / dynrec — x86-to-ARMv7 dynamic recompilation:** **+124% Doom**, 3.10 → 6.94 FPS, replacing repeated x86 interpretation with cached ARM code. [Results](../records/2026-10-13/dosbox-dynrec/method.md)
+- **Framebuffer pipelining — bounded overlap with dynrec:** **+0.24% observed; no established gain**, 6.944 → 6.961 FPS. [Results](../records/2026-10-13/dosbox-tuning/results.json)
+- **JIT code caching — increase from 1 to 4 MiB:** **+0.10% observed; no established gain**, 6.961 → 6.967 FPS. [Results](../records/2026-10-13/dosbox-tuning/results.json)
+- **SIMD / NEON — vectorised pixel processing:** **+4.6% Doom**, 6.97 → 7.29 FPS versus the same 4 MiB/overlap build. [Results](../records/2026-10-13/dosbox-tuning/method.md)
+- **Scanline masking — skip black-row framebuffer writes:** **+3.7% Doom**, 7.33 → 7.60 FPS; optional visual trade-off, not a general rendering gain. [Results](../records/2026-10-13/dosbox-scanlines/method.md)
+- **Adaptive — reduce frame presentation frequency:** **+13.5% Doom**, 7.27 → 8.25 FPS; optional, achieved by presenting fewer frames. Normal remains the default. [Results](../records/2026-10-13/dosbox-presentation/results.json)
+- **OpenGL — experimental TinyGL software rendering on the A9:** **−32.5% Doom versus Direct**, 7.00 → 4.72 FPS in one matched pair with profiling enabled. This adds a software rendering stage; it is not FPGA 3D acceleration. Direct remains the default. [Results](../records/2026-10-13/dosbox-opengl/method.md)
+- **VFP — hardware floating-point PIC event scheduling:** **+4.7% Doom**, 7.29 → 7.64 FPS averaged across two runs per build, with no skipped frames. [Report](../../docs/amiga-dosbox-pic-vfp.md)
+
+These techniques use the existing XACP application/host execution model;
+none required a firmware change. Future firmware work should preserve the
+Core1, framebuffer-handoff and processor-state restoration contracts.

@@ -1,0 +1,105 @@
+{
+  "doom": [
+    {
+      "run": "doom-a1",
+      "frames": 2134,
+      "seconds": 279.48502260948504,
+      "fps": 7.635471769024868
+    },
+    {
+      "run": "doom-b1",
+      "frames": 2134,
+      "seconds": 279.672044802672,
+      "fps": 7.63036577898118
+    },
+    {
+      "run": "doom-b2",
+      "frames": 2134,
+      "seconds": 279.6086948406087,
+      "fps": 7.63209456421407
+    },
+    {
+      "run": "doom-a2",
+      "frames": 2134,
+      "seconds": 279.7374337867374,
+      "fps": 7.628582171190185
+    }
+  ],
+  "baseline_mean": 7.6320269701075265,
+  "candidate_mean": 7.631230171597625,
+  "percent": -0.010440195154204357,
+  "cached_ram_kernels": [
+    {
+      "width": 320,
+      "target": 320,
+      "format": 3,
+      "rows": 2048,
+      "baseline_us": 1.291705079416705,
+      "candidate_us": 1.1671435558546437,
+      "throughput_percent": 10.672339571017986
+    },
+    {
+      "width": 320,
+      "target": 320,
+      "format": 4,
+      "rows": 2048,
+      "baseline_us": 1.1731713878919214,
+      "candidate_us": 1.1881201183756203,
+      "throughput_percent": -1.2581834321715224
+    },
+    {
+      "width": 320,
+      "target": 640,
+      "format": 3,
+      "rows": 2048,
+      "baseline_us": 3.0422622100735124,
+      "candidate_us": 2.6716186550153687,
+      "throughput_percent": 13.873370526229213
+    },
+    {
+      "width": 320,
+      "target": 640,
+      "format": 4,
+      "rows": 2048,
+      "baseline_us": 2.8007373074882373,
+      "candidate_us": 2.7886494168511495,
+      "throughput_percent": 0.43346756189730495
+    },
+    {
+      "width": 640,
+      "target": 640,
+      "format": 3,
+      "rows": 2048,
+      "baseline_us": 2.5517431666142434,
+      "candidate_us": 2.3071801780884305,
+      "throughput_percent": 10.600081902941838
+    },
+    {
+      "width": 640,
+      "target": 640,
+      "format": 4,
+      "rows": 2048,
+      "baseline_us": 2.313104006219354,
+      "candidate_us": 2.3281274437343775,
+      "throughput_percent": -0.6453013367225924
+    },
+    {
+      "width": 640,
+      "target": 1280,
+      "format": 3,
+      "rows": 2048,
+      "baseline_us": 6.0421054747921055,
+      "candidate_us": 5.322168462353419,
+      "throughput_percent": 13.527136871581424
+    },
+    {
+      "width": 640,
+      "target": 1280,
+      "format": 4,
+      "rows": 2048,
+      "baseline_us": 5.5606230524356235,
+      "candidate_us": 5.55914941962165,
+      "throughput_percent": 0.026508242587830466
+    }
+  ]
+}

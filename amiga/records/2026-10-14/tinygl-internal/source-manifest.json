@@ -1,0 +1,19 @@
+{
+  "amiga/dosbox/tinygl_bench/experiment.h": "7e2c20ada4407415d508b1092b866cca8fd3bae7db2eb7cdb68e2d5c496ef01d",
+  "amiga/dosbox/tinygl_bench/scene.c": "b3315e3dd047e4812b8e894213c9c03b4a0a92bbda278b7a5f0f2cb4c58a3e65",
+  "amiga/dosbox/tinygl_bench/profile.c": "27ea5021cfab2046e7caddf7289516b2e0ae0505b652170ee57cf7f9c48b3a0c",
+  "amiga/dosbox/tinygl_bench/bench.cpp": "074bf7b280d3ff7dc6ccd1345d641ce90e70798dfd1b47bff4afc08306d536ac",
+  "amiga/dosbox/matrix/kernels.h": "b67dac77bb5e7a7a48ba4f3e3e883825d8171ffb331a978e05a7247397a6ac78",
+  "amiga/dosbox/matrix/neon.c": "5fb6823ce9972b21f7afb4c1cdf9fe99334f434d7f05a3b9eb8beabc0d87c3e2",
+  "amiga/dosbox/matrix/scalar.c": "391aeed6b0a84dea3fb702fa81b2473377115fd9baa0de527f59cf95ffb2781b",
+  "scripts/build_dosbox_dos_arm.py": "e2845212f269382bfd1a43079bc1dd949d81fe059531e021d16104e52ae43959",
+  "scripts/prepare_dosbox_tinygl_bench.py": "8404941c33c940aa3bbe95f4e87879f0bcef997c094e0271119836bcdc016316",
+  "scripts/prepare_dosbox_matrix.py": "c33c6ccb8cfe88b25a8d534956da398537e92f17c436ba4c16a8dd9ed8585f0a",
+  "scripts/prepare_dosbox_opengl.py": "dd67ebcb17ad83b1544f9c8e78f69e77fa38b84da846d2b86aec50f64c9ca86c",
+  "scripts/test_dosbox_tinygl_bench.py": "8830fe081b0ee64bc23c2f233f2507703e648f458b7222d3472f66b16f7d7487",
+  "scripts/measure_dosbox_tinygl.py": "263e7fba85a432149443206e7fdfc2aaa2878287b9e8a71a3207b5cf6b8f0d4c",
+  "scripts/analyse_dosbox_tinygl.py": "89031a9c362752d0dad9bdd85c0f13a46f3d8a7a85363c05fef85eb481c90ee4",
+  "tests/amiga/dosbox/tinygl_internal.c": "a5847393ad60407f5f812feb35eabf4b16e2c569fa0a2a52aac84f6a7f384bd3",
+  "tests/amiga/dosbox/check_tinygl_arm.py": "426ac4d8757d57ca010705fdbd694dbf411408315f907726ad41143d3c465d22",
+  "tests/amiga/dosbox/check_pc_arm.py": "f0d62a6a5a295661806d06da4b5e5db732213411ea50eb01f08eca02a83001e0"
+}

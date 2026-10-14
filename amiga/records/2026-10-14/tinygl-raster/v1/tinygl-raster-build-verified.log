@@ -1,0 +1,73 @@
+PASS: 16384 allocation alignments; private/shared/table/boundary permissions; L2 and unrelated RAM unmapped
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp: In function 'Bit8u VESA_GetSVGAModeInformation(Bit16u, Bit16u, Bit16u)':
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:152:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  152 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth/8);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:160:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  160 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:169:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  169 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth*2);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:186:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  186 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth*2);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:201:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  201 |                 var_write(&minfo.BytesPerScanLine,mblock->swidth*4);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:218:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  218 |                 var_write(&minfo.BytesPerScanLine, mblock->twidth * 2);
+      |                           ^~~~~~~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:241:19: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  241 |         var_write(&minfo.ModeAttributes, modeAttributes);
+      |                   ^~~~~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:245:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  245 |                 var_write(&minfo.WinGranularity,32);
+      |                           ^~~~~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:246:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  246 |                 var_write(&minfo.WinSize,32);
+      |                           ^~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:247:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  247 |                 var_write(&minfo.WinASegment,0xb800);
+      |                           ^~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:248:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  248 |                 var_write(&minfo.XResolution,mblock->twidth);
+      |                           ^~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:249:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  249 |                 var_write(&minfo.YResolution,mblock->theight);
+      |                           ^~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:251:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  251 |                 var_write(&minfo.WinGranularity,64);
+      |                           ^~~~~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:252:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  252 |                 var_write(&minfo.WinSize,64);
+      |                           ^~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:253:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  253 |                 var_write(&minfo.WinASegment,0xa000);
+      |                           ^~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:254:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  254 |                 var_write(&minfo.XResolution,mblock->swidth);
+      |                           ^~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:255:27: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  255 |                 var_write(&minfo.YResolution,mblock->sheight);
+      |                           ^~~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:257:19: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  257 |         var_write(&minfo.WinFuncPtr,int10.rom.set_window);
+      |                   ^~~~~~~~~~~~~~~~~
+/work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/src/ints/int10_vesa.cpp:262:46: warning: taking address of packed member of 'MODE_INFO' may result in an unaligned pointer value [-Waddress-of-packed-member]
+  262 |         if (modeAttributes & 0x80) var_write(&minfo.PhysBasePtr,S3_LFB_BASE);
+      |                                              ^~~~~~~~~~~~~~~~~~
+/work/.context/amiga/ffmpeg-bench/picolibc-1.8.12/libc/stdlib/srandom.c:55:9: warning: '_DEFAULT_SOURCE' redefined
+   55 | #define _DEFAULT_SOURCE
+      |         ^~~~~~~~~~~~~~~
+In file included from /usr/arm-none-eabi/include/machine/ieeefp.h:12,
+                 from /usr/arm-none-eabi/include/sys/config.h:32,
+                 from /usr/arm-none-eabi/include/sys/cdefs.h:45,
+                 from /work/amiga/pocketsnes/libc_config.h:2,
+                 from <command-line>:
+/usr/arm-none-eabi/include/sys/features.h:162:9: note: this is the location of the previous definition
+  162 | #define _DEFAULT_SOURCE 1
+      |         ^~~~~~~~~~~~~~~
+/usr/bin/arm-none-eabi-ld: warning: /work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/dosbox.elf has a LOAD segment with RWX permissions
+/usr/bin/arm-none-eabi-ld: warning: /work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/mapping.elf has a LOAD segment with RWX permissions
+Built /Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/ZZDosBox-Dynrec 1170488 bytes; ARM image 881928 relocations 2299

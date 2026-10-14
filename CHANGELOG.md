@@ -1,5 +1,15 @@
 # ZZDosBox changelog
 
+## TinyGL research backup
+
+- Preserve internal-transform, exact NEON raster/clear and compiler experiments,
+  diagnostic executables, source snapshots, validation logs and physical results.
+- Add isolated O3/automatic-vectorisation build profiles; retain O2 default after
+  measured regressions. Installed Direct runtime is unchanged.
+- Credit jserv/TinyGL and document the pinned software renderer on the main page.
+- Back up current DOSBox developer/memory and matrix research sources and records.
+
+
 Amiga-specific development history, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 These are development milestones, not upstream DOSBox release numbers.
