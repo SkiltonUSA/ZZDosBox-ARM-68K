@@ -1,0 +1,4 @@
+PASS: 16384 allocation alignments; private/shared/table/boundary permissions; L2 and unrelated RAM unmapped
+/usr/bin/arm-none-eabi-ld: warning: /work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/dosbox.elf has a LOAD segment with RWX permissions
+/usr/bin/arm-none-eabi-ld: warning: /work/.context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/mapping.elf has a LOAD segment with RWX permissions
+Built .context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-matrix-bench-tinygl-internal-raster/ZZDosBox-Dynrec 1173720 bytes; ARM image 885160 relocations 2299

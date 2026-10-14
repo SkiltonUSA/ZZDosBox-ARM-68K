@@ -18,7 +18,12 @@ a=p.parse_args();a.build=a.build.resolve()
 assert re.fullmatch('[a-z0-9-]+',a.label)
 OUT=ROOT/'.context/amiga/dosbox-tinygl-raster';OUT.mkdir(parents=True,exist_ok=True)
 BASE='RAM:ZZRaster';binary=a.build/'ZZDosBox-Dynrec'
-assert json.loads((a.build/'build.json').read_text())['tinygl_raster']
+metadata=json.loads((a.build/'build.json').read_text())
+assert metadata['tinygl_raster']
+new_report=metadata['tinygl']['raster_experiment']['revision']>=3
+report_marker='RASTERBENCH magic=52535432 errors=0 count=8 quick=0' if new_report else 'RASTERBENCH magic=52535431 errors=0 count=7 quick=0'
+
+if metadata['tinygl']['raster_experiment']['revision']>=4:report_marker='RASTERBENCH magic=52535433 errors=0 count=8 quick=0'
 
 async def main():
     async with streamablehttp_client('http://127.0.0.1:55010/mcp') as(r,w,_):
@@ -66,7 +71,7 @@ async def main():
             log=OUT/(a.label+'.log')
             await call('amiga_pull_file',dict(amiga_path=BASE+'/'+a.label+'.log',local_path=str(log)))
             text=log.read_text()
-            for marker in ('SHELL PASS','EGA/PIT PASS','guest_exit=0','context_equal=1','register_mismatches=00000000','witness_bad=0','LAUNCHER exit=0; owned memory released','RASTERBENCH magic=52535431 errors=0 count=7 quick=0'):
+            for marker in ('SHELL PASS','EGA/PIT PASS','guest_exit=0','context_equal=1','register_mismatches=00000000','witness_bad=0','LAUNCHER exit=0; owned memory released',report_marker):
                 assert marker in text,marker
             after=await call('amiga_checksum',dict(path=installed));assert before==after,'Installed runtime changed unexpectedly'
             print('PASS',a.label,'closed log, exact outputs, restoration, memory release; installed runtime unchanged',flush=True)

@@ -1,0 +1,185 @@
+{
+  "scope": "Dedicated private 640x480 native TinyGL builds, original clear, O2; no game/display FPS claim",
+  "method": "Mean of four equal-repeat columns per run, then median of three physical runs per build",
+  "changed_objects": [
+    "109-ztriangle.arm.o"
+  ],
+  "summary": [
+    {
+      "name": "geometry",
+      "hash": "88b1e9f7",
+      "median_us": {
+        "scalar": 6340.859209465859,
+        "hybrid": 6523.735881523736
+      },
+      "per_run_us": {
+        "scalar": [
+          6340.859209465859,
+          6345.475787595476,
+          6339.867568839867
+        ],
+        "hybrid": [
+          6523.735881523736,
+          6519.811225269811,
+          6528.181365903181
+        ]
+      },
+      "throughput_gain_percent": -2.8032507044899346,
+      "time_reduction_percent": -2.8840992366597984
+    },
+    {
+      "name": "clipping",
+      "hash": "0628ae41",
+      "median_us": {
+        "scalar": 4253.324301128324,
+        "hybrid": 4379.267770004268
+      },
+      "per_run_us": {
+        "scalar": [
+          4248.942051123942,
+          4253.324301128324,
+          4257.359394882359
+        ],
+        "hybrid": [
+          4379.521551254522,
+          4379.267770004268,
+          4374.265879374266
+        ]
+      },
+      "throughput_gain_percent": -2.8759024451208925,
+      "time_reduction_percent": -2.9610596314636473
+    },
+    {
+      "name": "fill",
+      "hash": "88077dd1",
+      "median_us": {
+        "scalar": 77599.11579634911,
+        "hybrid": 75419.66609104467
+      },
+      "per_run_us": {
+        "scalar": [
+          77593.62528071864,
+          77660.44976516045,
+          77599.11579634911
+        ],
+        "hybrid": [
+          75423.64268479864,
+          75404.33205977934,
+          75419.66609104467
+        ]
+      },
+      "throughput_gain_percent": 2.8897631324348083,
+      "time_reduction_percent": 2.808601210127426
+    },
+    {
+      "name": "occluded-fill",
+      "hash": "ccddff61",
+      "median_us": {
+        "scalar": 40596.81050934681,
+        "hybrid": 27560.014293185013
+      },
+      "per_run_us": {
+        "scalar": [
+          40863.759087738756,
+          40596.81050934681,
+          40540.86622804087
+        ],
+        "hybrid": [
+          27560.014293185013,
+          27552.506746302504,
+          27636.726355761726
+        ]
+      },
+      "throughput_gain_percent": 47.30329990933826,
+      "time_reduction_percent": 32.112858258065046
+    },
+    {
+      "name": "clear-zero",
+      "hash": "ee731dc5",
+      "median_us": {
+        "scalar": 1228.2182766188432,
+        "hybrid": 1226.0695031791945
+      },
+      "per_run_us": {
+        "scalar": [
+          1228.3987629471487,
+          1228.2182766188432,
+          1227.9992824779993
+        ],
+        "hybrid": [
+          1225.9907004447407,
+          1226.0695031791945,
+          1226.0903273979654
+        ]
+      },
+      "throughput_gain_percent": 0.17525706610244107,
+      "time_reduction_percent": 0.17495045307126533
+    },
+    {
+      "name": "clear-arbitrary",
+      "hash": "88c99dc5",
+      "median_us": {
+        "scalar": 1083.8612999119864,
+        "hybrid": 1082.7197647545947
+      },
+      "per_run_us": {
+        "scalar": [
+          1084.1007784278509,
+          1083.8612999119864,
+          1083.8241631931992
+        ],
+        "hybrid": [
+          1083.3746553802496,
+          1082.7197647545947,
+          1082.672866317048
+        ]
+      },
+      "throughput_gain_percent": 0.10543218980123559,
+      "time_reduction_percent": 0.10532114740920973
+    },
+    {
+      "name": "clear-colour-only",
+      "hash": "90e05dc5",
+      "median_us": {
+        "scalar": 724.973010490598,
+        "hybrid": 724.9001257249001
+      },
+      "per_run_us": {
+        "scalar": [
+          725.1804323658055,
+          724.973010490598,
+          724.7131647872131
+        ],
+        "hybrid": [
+          724.5687604901938,
+          724.9001257249001,
+          724.9846589281096
+        ]
+      },
+      "throughput_gain_percent": 0.010054456208696827,
+      "time_reduction_percent": 0.0100534453894352
+    },
+    {
+      "name": "mixed-fill",
+      "hash": "6e9cefb9",
+      "median_us": {
+        "scalar": 63625.4038292504,
+        "hybrid": 56409.13060328413
+      },
+      "per_run_us": {
+        "scalar": [
+          63660.39207928539,
+          63590.653610465655,
+          63625.4038292504
+        ],
+        "hybrid": [
+          56422.55133767255,
+          56382.34636888235,
+          56409.13060328413
+        ]
+      },
+      "throughput_gain_percent": 12.792739666060605,
+      "time_reduction_percent": 11.341811276094004
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+PASS 206080 span cases across five modes and random/rejected/equal/mixed depth, exact integer recurrence, depth variants, alignments and untouched tails
+PASS clears: 536 tail/alignment cases, 560 pitched/masked/nonzero comparisons
+SCENE flags=0 kind=0 hash=76c52ead
+SCENE flags=0 kind=1 hash=f1fe6df7
+SCENE flags=0 kind=2 hash=96d08120
+SCENE flags=0 kind=3 hash=98953355
+SCENE flags=0 kind=4 hash=8a1ea180
+SCENE flags=0 kind=5 hash=90ed9520
+SCENE flags=0 kind=6 hash=27194d37
+SCENE flags=0 kind=7 hash=4656b804
+SCENE flags=1 kind=0 hash=76c52ead
+SCENE flags=1 kind=1 hash=f1fe6df7
+SCENE flags=1 kind=2 hash=96d08120
+SCENE flags=1 kind=3 hash=98953355
+SCENE flags=1 kind=4 hash=8a1ea180
+SCENE flags=1 kind=5 hash=90ed9520
+SCENE flags=1 kind=6 hash=27194d37
+SCENE flags=1 kind=7 hash=4656b804
+SCENE flags=2 kind=0 hash=88b1e9f7
+SCENE flags=2 kind=1 hash=0628ae41
+SCENE flags=2 kind=2 hash=88077dd1
+SCENE flags=2 kind=3 hash=a29c4415
+SCENE flags=2 kind=4 hash=4b2ca271
+SCENE flags=2 kind=5 hash=af292228
+SCENE flags=2 kind=6 hash=96cdca5f
+SCENE flags=2 kind=7 hash=2c105c3c
+SCENE flags=3 kind=0 hash=88b1e9f7
+SCENE flags=3 kind=1 hash=0628ae41
+SCENE flags=3 kind=2 hash=88077dd1
+SCENE flags=3 kind=3 hash=ccddff61
+SCENE flags=3 kind=4 hash=4b2ca271
+SCENE flags=3 kind=5 hash=b51db76e
+SCENE flags=3 kind=6 hash=a7843612
+SCENE flags=3 kind=7 hash=6e9cefb9
+PASS 32 complete scene/depth combinations, 6 methods, exact colour/depth buffers, cleanup

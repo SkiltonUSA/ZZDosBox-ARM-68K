@@ -1,5 +1,13 @@
 # ZZDosBox changelog
 
+## TinyGL rejection, packing and triangle dispatch
+
+- Preserve the hidden-pixel rejection experiment and its dedicated physical comparisons.
+- Add unguarded NEON packing, per-triangle scalar/NEON selection and textured scene controls.
+- Publish four exact builds, twelve physical runs, sixteen ARM lifecycle checks and native image/sanitizer evidence.
+- Document measured gains and remaining limits; installed DOSBox remains unchanged.
+- Review DOSBox-X CPU settings against the port’s fixed-cycle controls.
+
 ## TinyGL research backup
 
 - Preserve internal-transform, exact NEON raster/clear and compiler experiments,

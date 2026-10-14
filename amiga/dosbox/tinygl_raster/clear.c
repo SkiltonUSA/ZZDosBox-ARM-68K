@@ -36,10 +36,12 @@ int zz_clear_buffers(ZBuffer *zb,int clear_z,int z,int clear_color,int r,int g,i
 #include "span.h"
 unsigned zz_raster_selftest(void) {
     uint32_t p[48],ref[48];uint16_t z[48],zr[48];unsigned errors=0;
-    for(unsigned n=0;n<=40;n++)for(unsigned off=0;off<4;off++)for(unsigned flags=0;flags<4;flags++) {
+    for(unsigned mode=1;mode<=5;mode++)for(unsigned pattern=0;pattern<4;pattern++)for(unsigned n=0;n<=40;n++)for(unsigned off=0;off<4;off++)for(unsigned flags=0;flags<4;flags++) {
         for(unsigned i=0;i<48;i++){p[i]=ref[i]=0x95345678u+i;z[i]=zr[i]=(i%4==0?65535:i%4==1?0:12345);}
         uint32_t vz=0xfffffff0u,vr=0xffff0000u,vg=0x7fffffff, vb=0x12ffff;
         int dz=0x1234567,dr=-54321,dg=76543,db=-99887;
+        zz_tgl_raster=mode;
+        if(pattern){vz=100u<<14;dz=0;for(unsigned i=0;i<48;i++)z[i]=zr[i]=pattern==1?101:pattern==2?100:((i&4)?101:99);}
         unsigned done=zz_span4(p+off,z+off,n,vz,vr,vg,vb,dz,dr,dg,db,flags&1,flags>>1);
         if(done!=(n&~3u))errors++;
         for(unsigned i=0;i<done;i++){
@@ -54,5 +56,5 @@ unsigned zz_raster_selftest(void) {
             if(p[i]!=ref[i]||z[i]!=zr[i])errors++;
         }
     }
-    return errors;
+    zz_tgl_raster=0;return errors;
 }

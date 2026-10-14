@@ -1,0 +1,768 @@
+{
+  "report_revision": 2,
+  "timer_hz": 333333333,
+  "scope": "private 640x480 native TinyGL; scalar transforms; profiler disabled; no DOS game/display FPS inference",
+  "runs": [
+    {
+      "log": ".context/amiga/dosbox-tinygl-raster/rejection-v1-1.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "ticks": {
+            "baseline": 34607141,
+            "revision2-neon": 34611498,
+            "guarded-neon": 34626005,
+            "scalar-prefix-neon": 34636874
+          },
+          "us": {
+            "baseline": 6488.838943988839,
+            "revision2-neon": 6489.655881489656,
+            "guarded-neon": 6492.375943992376,
+            "scalar-prefix-neon": 6494.413881494414
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "ticks": {
+            "baseline": 23461129,
+            "revision2-neon": 23611488,
+            "guarded-neon": 23479259,
+            "scalar-prefix-neon": 23473340
+          },
+          "us": {
+            "baseline": 4398.961691898961,
+            "revision2-neon": 4427.154004427154,
+            "guarded-neon": 4402.361066902361,
+            "scalar-prefix-neon": 4401.251254401251
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "ticks": {
+            "baseline": 419837203,
+            "revision2-neon": 417532502,
+            "guarded-neon": 383504500,
+            "scalar-prefix-neon": 386945791
+          },
+          "us": {
+            "baseline": 78719.47564121948,
+            "revision2-neon": 78287.34420328734,
+            "guarded-neon": 71907.0938219071,
+            "scalar-prefix-neon": 72552.33588505234
+          }
+        },
+        "3": {
+          "name": "occluded-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "ccddff61",
+          "ticks": {
+            "baseline": 219301581,
+            "revision2-neon": 351310615,
+            "guarded-neon": 240547638,
+            "scalar-prefix-neon": 147587655
+          },
+          "us": {
+            "baseline": 41119.04647861905,
+            "revision2-neon": 65870.74037837074,
+            "guarded-neon": 45102.68217010268,
+            "scalar-prefix-neon": 27672.685340172684
+          }
+        },
+        "4": {
+          "name": "clear-zero",
+          "triangles": 0,
+          "repeats": 128,
+          "hash": "ee731dc5",
+          "ticks": {
+            "baseline": 52453156,
+            "revision2-neon": 52420723,
+            "guarded-neon": 52436689,
+            "scalar-prefix-neon": 52402541
+          },
+          "us": {
+            "baseline": 1229.3708449793708,
+            "revision2-neon": 1228.6106965411109,
+            "guarded-neon": 1228.984899666485,
+            "scalar-prefix-neon": 1228.1845559156845
+          }
+        },
+        "5": {
+          "name": "clear-arbitrary",
+          "triangles": 0,
+          "repeats": 128,
+          "hash": "88c99dc5",
+          "ticks": {
+            "baseline": 46250597,
+            "revision2-neon": 46133790,
+            "guarded-neon": 46236042,
+            "scalar-prefix-neon": 46220337
+          },
+          "us": {
+            "baseline": 1083.9983682714985,
+            "revision2-neon": 1081.2607042062607,
+            "guarded-neon": 1083.6572354586572,
+            "scalar-prefix-neon": 1083.2891495207891
+          }
+        },
+        "6": {
+          "name": "clear-colour-only",
+          "triangles": 0,
+          "repeats": 128,
+          "hash": "90e05dc5",
+          "ticks": {
+            "baseline": 30917741,
+            "revision2-neon": 30957983,
+            "guarded-neon": 30935261,
+            "scalar-prefix-neon": 30918897
+          },
+          "us": {
+            "baseline": 724.6345554121345,
+            "revision2-neon": 725.5777272880778,
+            "guarded-neon": 725.0451804125452,
+            "scalar-prefix-neon": 724.6616491621617
+          }
+        },
+        "7": {
+          "name": "mixed-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "6e9cefb9",
+          "ticks": {
+            "baseline": 344212933,
+            "revision2-neon": 404635050,
+            "guarded-neon": 333276157,
+            "scalar-prefix-neon": 293179341
+          },
+          "us": {
+            "baseline": 64539.92500203992,
+            "revision2-neon": 75869.07195086907,
+            "guarded-neon": 62489.27949998928,
+            "scalar-prefix-neon": 54971.12649247113
+          }
+        }
+      }
+    },
+    {
+      "log": ".context/amiga/dosbox-tinygl-raster/rejection-v1-2.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "ticks": {
+            "baseline": 34593634,
+            "revision2-neon": 34621085,
+            "guarded-neon": 34612443,
+            "scalar-prefix-neon": 34624562
+          },
+          "us": {
+            "baseline": 6486.306381486307,
+            "revision2-neon": 6491.453443991453,
+            "guarded-neon": 6489.833068989833,
+            "scalar-prefix-neon": 6492.105381492105
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "ticks": {
+            "baseline": 23450407,
+            "revision2-neon": 23507657,
+            "guarded-neon": 23435837,
+            "scalar-prefix-neon": 23473079
+          },
+          "us": {
+            "baseline": 4396.951316896951,
+            "revision2-neon": 4407.685691907685,
+            "guarded-neon": 4394.21944189422,
+            "scalar-prefix-neon": 4401.202316901202
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "ticks": {
+            "baseline": 420038917,
+            "revision2-neon": 417454833,
+            "guarded-neon": 383518340,
+            "scalar-prefix-neon": 386874112
+          },
+          "us": {
+            "baseline": 78757.29701625729,
+            "revision2-neon": 78272.78126577278,
+            "guarded-neon": 71909.68882190969,
+            "scalar-prefix-neon": 72538.8960725389
+          }
+        },
+        "3": {
+          "name": "occluded-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "ccddff61",
+          "ticks": {
+            "baseline": 219218854,
+            "revision2-neon": 351300179,
+            "guarded-neon": 241204835,
+            "scalar-prefix-neon": 147346090
+          },
+          "us": {
+            "baseline": 41103.53516610354,
+            "revision2-neon": 65868.7836283688,
+            "guarded-neon": 45225.906607725905,
+            "scalar-prefix-neon": 27627.39190262739
+          }
+        },
+        "4": {
+          "name": "clear-zero",
+          "triangles": 0,
+          "repeats": 128,
+          "hash": "ee731dc5",
+          "ticks": {
+            "baseline": 52439414,
+            "revision2-neon": 52352080,
+            "guarded-neon": 52333048,
+            "scalar-prefix-neon": 52393418
+          },
+          "us": {
+            "baseline": 1229.0487668540488,
+            "revision2-neon": 1227.001876227002,
+            "guarded-neon": 1226.5558137265557,
+            "scalar-prefix-neon": 1227.9707356029708
+          }
+        },
+        "5": {
+          "name": "clear-arbitrary",
+          "triangles": 0,
+          "repeats": 128,
+          "hash": "88c99dc5",
+          "ticks": {
+            "baseline": 46224141,
+            "revision2-neon": 46200959,
+            "guarded-neon": 46331647,
+            "scalar-prefix-neon": 46250216
+          },
+          "us": {
+            "baseline": 1083.3783057708783,
+            "revision2-neon": 1082.834977645335,
+            "guarded-neon": 1085.897977648398,
+            "scalar-prefix-neon": 1083.9894385839896
+          }
+        },
+        "6": {
+          "name": "clear-colour-only",
+          "triangles": 0,
+          "repeats": 128,
+          "hash": "90e05dc5",
+          "ticks": {
+            "baseline": 30932078,
+            "revision2-neon": 30938417,
+            "guarded-neon": 30968688,
+            "scalar-prefix-neon": 30977430
+          },
+          "us": {
+            "baseline": 724.9705788499706,
+            "revision2-neon": 725.1191491626192,
+            "guarded-neon": 725.8286257258287,
+            "scalar-prefix-neon": 726.0335163510335
+          }
+        },
+        "7": {
+          "name": "mixed-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "6e9cefb9",
+          "ticks": {
+            "baseline": 344133177,
+            "revision2-neon": 404802463,
+            "guarded-neon": 333724789,
+            "scalar-prefix-neon": 293186622
+          },
+          "us": {
+            "baseline": 64524.97075202497,
+            "revision2-neon": 75900.46188840046,
+            "guarded-neon": 62573.3980000734,
+            "scalar-prefix-neon": 54972.491679972496
+          }
+        }
+      }
+    },
+    {
+      "log": ".context/amiga/dosbox-tinygl-raster/rejection-v1-3.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "ticks": {
+            "baseline": 34623561,
+            "revision2-neon": 34610011,
+            "guarded-neon": 34594383,
+            "scalar-prefix-neon": 34646428
+          },
+          "us": {
+            "baseline": 6491.917693991918,
+            "revision2-neon": 6489.377068989377,
+            "guarded-neon": 6486.446818986447,
+            "scalar-prefix-neon": 6496.205256496205
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "ticks": {
+            "baseline": 23480910,
+            "revision2-neon": 23587648,
+            "guarded-neon": 23503539,
+            "scalar-prefix-neon": 23534862
+          },
+          "us": {
+            "baseline": 4402.670629402671,
+            "revision2-neon": 4422.684004422684,
+            "guarded-neon": 4406.913566906914,
+            "scalar-prefix-neon": 4412.786629412787
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "ticks": {
+            "baseline": 419915329,
+            "revision2-neon": 417488158,
+            "guarded-neon": 383715728,
+            "scalar-prefix-neon": 386916580
+          },
+          "us": {
+            "baseline": 78734.12426623412,
+            "revision2-neon": 78279.02970327903,
+            "guarded-neon": 71946.6990719467,
+            "scalar-prefix-neon": 72546.85882254686
+          }
+        },
+        "3": {
+          "name": "occluded-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "ccddff61",
+          "ticks": {
+            "baseline": 219245215,
+            "revision2-neon": 351377966,
+            "guarded-neon": 240352810,
+            "scalar-prefix-neon": 147341162
+          },
+          "us": {
+            "baseline": 41108.47785360848,
+            "revision2-neon": 65883.36869088336,
+            "guarded-neon": 45066.15192006616,
+            "scalar-prefix-neon": 27626.467902626468
+          }
+        },
+        "4": {
+          "name": "clear-zero",
+          "triangles": 0,
+          "repeats": 128,
+          "hash": "ee731dc5",
+          "ticks": {
+            "baseline": 52297673,
+            "revision2-neon": 52451271,
+            "guarded-neon": 52426060,
+            "scalar-prefix-neon": 52408624
+          },
+          "us": {
+            "baseline": 1225.7267121632267,
+            "revision2-neon": 1229.3266652918267,
+            "guarded-neon": 1228.7357824787357,
+            "scalar-prefix-neon": 1228.327126228327
+          }
+        },
+        "5": {
+          "name": "clear-arbitrary",
+          "triangles": 0,
+          "repeats": 128,
+          "hash": "88c99dc5",
+          "ticks": {
+            "baseline": 46219903,
+            "revision2-neon": 46232525,
+            "guarded-neon": 46229696,
+            "scalar-prefix-neon": 46219035
+          },
+          "us": {
+            "baseline": 1083.278977645779,
+            "revision2-neon": 1083.5748057710748,
+            "guarded-neon": 1083.5085010835085,
+            "scalar-prefix-neon": 1083.2586338957587
+          }
+        },
+        "6": {
+          "name": "clear-colour-only",
+          "triangles": 0,
+          "repeats": 128,
+          "hash": "90e05dc5",
+          "ticks": {
+            "baseline": 30909655,
+            "revision2-neon": 30952833,
+            "guarded-neon": 30911340,
+            "scalar-prefix-neon": 30944329
+          },
+          "us": {
+            "baseline": 724.445039786945,
+            "revision2-neon": 725.457024162957,
+            "guarded-neon": 724.4845319744845,
+            "scalar-prefix-neon": 725.2577116627576
+          }
+        },
+        "7": {
+          "name": "mixed-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "6e9cefb9",
+          "ticks": {
+            "baseline": 344040448,
+            "revision2-neon": 404876148,
+            "guarded-neon": 333292181,
+            "scalar-prefix-neon": 293245181
+          },
+          "us": {
+            "baseline": 64507.58406450759,
+            "revision2-neon": 75914.27782591428,
+            "guarded-neon": 62492.28399999229,
+            "scalar-prefix-neon": 54983.47149248347
+          }
+        }
+      }
+    }
+  ],
+  "summary": [
+    {
+      "name": "geometry",
+      "hash": "88b1e9f7",
+      "triangles": 1024,
+      "median_us": {
+        "baseline": 6488.838943988839,
+        "revision2-neon": 6489.655881489656,
+        "guarded-neon": 6489.833068989833,
+        "scalar-prefix-neon": 6494.413881494414
+      },
+      "range_us": {
+        "baseline": [
+          6486.306381486307,
+          6491.917693991918
+        ],
+        "revision2-neon": [
+          6489.377068989377,
+          6491.453443991453
+        ],
+        "guarded-neon": [
+          6486.446818986447,
+          6492.375943992376
+        ],
+        "scalar-prefix-neon": [
+          6492.105381492105,
+          6496.205256496205
+        ]
+      },
+      "throughput_gain_percent": {
+        "revision2-neon": -0.012588302303473409,
+        "guarded-neon": -0.01531819062873252,
+        "scalar-prefix-neon": -0.0858420422120143
+      },
+      "time_reduction_percent": {
+        "revision2-neon": -0.012589887156533308,
+        "guarded-neon": -0.015320537457852446,
+        "scalar-prefix-neon": -0.08591579408423478
+      }
+    },
+    {
+      "name": "clipping",
+      "hash": "0628ae41",
+      "triangles": 128,
+      "median_us": {
+        "baseline": 4398.961691898961,
+        "revision2-neon": 4422.684004422684,
+        "guarded-neon": 4402.361066902361,
+        "scalar-prefix-neon": 4401.251254401251
+      },
+      "range_us": {
+        "baseline": [
+          4396.951316896951,
+          4402.670629402671
+        ],
+        "revision2-neon": [
+          4407.685691907685,
+          4427.154004427154
+        ],
+        "guarded-neon": [
+          4394.21944189422,
+          4406.913566906914
+        ],
+        "scalar-prefix-neon": [
+          4401.202316901202,
+          4412.786629412787
+        ]
+      },
+      "throughput_gain_percent": {
+        "revision2-neon": -0.5363781925183941,
+        "guarded-neon": -0.0772170876431888,
+        "scalar-prefix-neon": -0.05202071797195673
+      },
+      "time_reduction_percent": {
+        "revision2-neon": -0.5392707230756022,
+        "guarded-neon": -0.07727675850552895,
+        "scalar-prefix-neon": -0.05204779360787892
+      }
+    },
+    {
+      "name": "fill",
+      "hash": "88077dd1",
+      "triangles": 32,
+      "median_us": {
+        "baseline": 78734.12426623412,
+        "revision2-neon": 78279.02970327903,
+        "guarded-neon": 71909.68882190969,
+        "scalar-prefix-neon": 72546.85882254686
+      },
+      "range_us": {
+        "baseline": [
+          78719.47564121948,
+          78757.29701625729
+        ],
+        "revision2-neon": [
+          78272.78126577278,
+          78287.34420328734
+        ],
+        "guarded-neon": [
+          71907.0938219071,
+          71946.6990719467
+        ],
+        "scalar-prefix-neon": [
+          72538.8960725389,
+          72552.33588505234
+        ]
+      },
+      "throughput_gain_percent": {
+        "revision2-neon": 0.5813748135102825,
+        "guarded-neon": 9.490286435845551,
+        "scalar-prefix-neon": 8.528646924357709
+      },
+      "time_reduction_percent": {
+        "revision2-neon": 0.5780143834663409,
+        "guarded-neon": 8.667697149012632,
+        "scalar-prefix-neon": 7.858429240624365
+      }
+    },
+    {
+      "name": "occluded-fill",
+      "hash": "ccddff61",
+      "triangles": 32,
+      "median_us": {
+        "baseline": 41108.47785360848,
+        "revision2-neon": 65870.74037837074,
+        "guarded-neon": 45102.68217010268,
+        "scalar-prefix-neon": 27627.39190262739
+      },
+      "range_us": {
+        "baseline": [
+          41103.53516610354,
+          41119.04647861905
+        ],
+        "revision2-neon": [
+          65868.7836283688,
+          65883.36869088336
+        ],
+        "guarded-neon": [
+          45066.15192006616,
+          45225.906607725905
+        ],
+        "scalar-prefix-neon": [
+          27626.467902626468,
+          27672.685340172684
+        ]
+      },
+      "throughput_gain_percent": {
+        "revision2-neon": -37.59220312770795,
+        "guarded-neon": -8.855802192495432,
+        "scalar-prefix-neon": 48.79608613978152
+      },
+      "time_reduction_percent": {
+        "revision2-neon": -60.236388739430424,
+        "guarded-neon": -9.716254468769137,
+        "scalar-prefix-neon": 32.79393121532892
+      }
+    },
+    {
+      "name": "clear-zero",
+      "hash": "ee731dc5",
+      "triangles": 0,
+      "median_us": {
+        "baseline": 1229.0487668540488,
+        "revision2-neon": 1228.6106965411109,
+        "guarded-neon": 1228.7357824787357,
+        "scalar-prefix-neon": 1228.1845559156845
+      },
+      "range_us": {
+        "baseline": [
+          1225.7267121632267,
+          1229.3708449793708
+        ],
+        "revision2-neon": [
+          1227.001876227002,
+          1229.3266652918267
+        ],
+        "guarded-neon": [
+          1226.5558137265557,
+          1228.984899666485
+        ],
+        "scalar-prefix-neon": [
+          1227.9707356029708,
+          1228.327126228327
+        ]
+      },
+      "throughput_gain_percent": {
+        "revision2-neon": 0.0356557462971141,
+        "guarded-neon": 0.02547206484715403,
+        "scalar-prefix-neon": 0.0703649084497604
+      },
+      "time_reduction_percent": {
+        "revision2-neon": 0.035643037506094544,
+        "guarded-neon": 0.025465578238548225,
+        "scalar-prefix-neon": 0.0703154310610743
+      }
+    },
+    {
+      "name": "clear-arbitrary",
+      "hash": "88c99dc5",
+      "triangles": 0,
+      "median_us": {
+        "baseline": 1083.3783057708783,
+        "revision2-neon": 1082.834977645335,
+        "guarded-neon": 1083.6572354586572,
+        "scalar-prefix-neon": 1083.2891495207891
+      },
+      "range_us": {
+        "baseline": [
+          1083.278977645779,
+          1083.9983682714985
+        ],
+        "revision2-neon": [
+          1081.2607042062607,
+          1083.5748057710748
+        ],
+        "guarded-neon": [
+          1083.5085010835085,
+          1085.897977648398
+        ],
+        "scalar-prefix-neon": [
+          1083.2586338957587,
+          1083.9894385839896
+        ]
+      },
+      "throughput_gain_percent": {
+        "revision2-neon": 0.05017644763609663,
+        "guarded-neon": -0.025739659982126906,
+        "scalar-prefix-neon": 0.008230143367415899
+      },
+      "time_reduction_percent": {
+        "revision2-neon": 0.05015128350358555,
+        "guarded-neon": -0.02574628698885917,
+        "scalar-prefix-neon": 0.008229466070563962
+      }
+    },
+    {
+      "name": "clear-colour-only",
+      "hash": "90e05dc5",
+      "triangles": 0,
+      "median_us": {
+        "baseline": 724.6345554121345,
+        "revision2-neon": 725.457024162957,
+        "guarded-neon": 725.0451804125452,
+        "scalar-prefix-neon": 725.2577116627576
+      },
+      "range_us": {
+        "baseline": [
+          724.445039786945,
+          724.9705788499706
+        ],
+        "revision2-neon": [
+          725.1191491626192,
+          725.5777272880778
+        ],
+        "guarded-neon": [
+          724.4845319744845,
+          725.8286257258287
+        ],
+        "scalar-prefix-neon": [
+          724.6616491621617,
+          726.0335163510335
+        ]
+      },
+      "throughput_gain_percent": {
+        "revision2-neon": -0.11337249808442973,
+        "guarded-neon": -0.056634401759203534,
+        "scalar-prefix-neon": -0.08592204406822068
+      },
+      "time_reduction_percent": {
+        "revision2-neon": -0.11350117720438924,
+        "guarded-neon": -0.05666649448936578,
+        "scalar-prefix-neon": -0.08599593353213475
+      }
+    },
+    {
+      "name": "mixed-fill",
+      "hash": "6e9cefb9",
+      "triangles": 32,
+      "median_us": {
+        "baseline": 64524.97075202497,
+        "revision2-neon": 75900.46188840046,
+        "guarded-neon": 62492.28399999229,
+        "scalar-prefix-neon": 54972.491679972496
+      },
+      "range_us": {
+        "baseline": [
+          64507.58406450759,
+          64539.92500203992
+        ],
+        "revision2-neon": [
+          75869.07195086907,
+          75914.27782591428
+        ],
+        "guarded-neon": [
+          62489.27949998928,
+          62573.3980000734
+        ],
+        "scalar-prefix-neon": [
+          54971.12649247113,
+          54983.47149248347
+        ]
+      },
+      "throughput_gain_percent": {
+        "revision2-neon": -14.987380647434446,
+        "guarded-neon": 3.252700368629413,
+        "scalar-prefix-neon": 17.376834813424736
+      },
+      "time_reduction_percent": {
+        "revision2-neon": -17.629595184308535,
+        "guarded-neon": 3.1502327367872396,
+        "scalar-prefix-neon": 14.804313679991388
+      }
+    }
+  ]
+}

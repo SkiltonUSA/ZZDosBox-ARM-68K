@@ -12,11 +12,13 @@ uint64_t zz_tgl_clock(void){static uint64_t t;return t+=37;}
 static unsigned seed=8454;
 static unsigned rnd(void){seed=seed*1664525+1013904223;return seed;}
 static void span_tests(void){
- for(unsigned n=0;n<=643;n++)for(unsigned align=0;align<4;align++)for(unsigned flags=0;flags<4;flags++){
+ for(unsigned mode=1;mode<=5;mode++)for(unsigned pattern=0;pattern<4;pattern++)for(unsigned n=0;n<=643;n++)for(unsigned align=0;align<4;align++)for(unsigned flags=0;flags<4;flags++){
     unsigned bytes=(n+align)*4,zbytes=(n+align)*2;uint32_t *a=malloc(bytes),*b=malloc(bytes);uint16_t *za=malloc(zbytes),*zb=malloc(zbytes);
     for(unsigned i=0;i<n+align;i++){a[i]=b[i]=rnd();za[i]=zb[i]=rnd();}
     /* Exact unsigned recurrence exercises wrap, equality, pass, fail and >16-bit depth. */
     uint32_t z=rnd(),r=rnd(),g=rnd(),blue=rnd();int dz=(int)rnd(),dr=(int)rnd(),dg=(int)rnd(),db=(int)rnd();
+    zz_tgl_raster=mode;
+    if(pattern){z=100u<<14;dz=0;for(unsigned i=0;i<n+align;i++)za[i]=zb[i]=pattern==1?101:pattern==2?100:((i&4)?101:99);}
     unsigned done=zz_span4(a+align,za+align,n,z,r,g,blue,dz,dr,dg,db,flags&1,flags>>1);assert(done==(n&~3u));
     for(unsigned i=0;i<done;i++){
         unsigned zz=z>>14;if(!(flags&1)||zz>=zb[i+align]){b[i+align]=(r&0xff0000)|((g>>8)&0xff00)|((blue>>16)&0xff);if(flags>>1)zb[i+align]=(uint16_t)zz;}
@@ -24,7 +26,7 @@ static void span_tests(void){
     }
     assert(!memcmp(a,b,bytes)&&!memcmp(za,zb,zbytes));free(a);free(b);free(za);free(zb);
  }
- puts("PASS 10304 span cases, exact integer recurrence, depth variants, alignments and untouched tails");
+ puts("PASS 206080 span cases across five modes and random/rejected/equal/mixed depth, exact integer recurrence, depth variants, alignments and untouched tails");
 }
 static void clear_tests(void){
  for(unsigned n=0;n<67;n++)for(unsigned off=0;off<8;off++){
@@ -44,16 +46,26 @@ static void clear_tests(void){
  puts("PASS clears: 536 tail/alignment cases, 560 pitched/masked/nonzero comparisons");
 }
 int main(void){
- assert(!zz_raster_selftest());span_tests();clear_tests();assert(zz_matrix_scene_open());const unsigned counts[]={1024,128,32,32};zz_tgl_neon=zz_tgl_profile=0;
- for(unsigned flags=0;flags<4;flags++)for(unsigned c=0;c<4;c++){
+ assert(!zz_raster_selftest());span_tests();clear_tests();assert(zz_matrix_scene_open());const unsigned counts[]={1024,128,32,32,32,32,32,32},kinds[]={0,1,2,3,4,5,6,7};zz_tgl_neon=zz_tgl_profile=0;
+ for(unsigned flags=0;flags<4;flags++)for(unsigned c=0;c<8;c++){
     if(flags&1)glEnable(GL_DEPTH_TEST);else glDisable(GL_DEPTH_TEST);glDepthMask((flags>>1)?GL_TRUE:GL_FALSE);
-    zz_tgl_scene_prepare(c,counts[c]);zz_tgl_raster=zz_tgl_clear=0;zz_matrix_scene_draw(c,counts[c]);
+    zz_tgl_scene_prepare(kinds[c],counts[c]);zz_tgl_raster=zz_tgl_clear=0;zz_matrix_scene_draw(kinds[c],counts[c]);
     GLContext *g=gl_get_context();unsigned bytes=g->zb->linesize*480,zbytes=640*480*2;void *color=malloc(bytes),*depth=malloc(zbytes);memcpy(color,g->zb->pbuf,bytes);memcpy(depth,g->zb->zbuf,zbytes);
-    for(unsigned m=1;m<4;m++){
-        zz_tgl_raster=m&1;zz_tgl_clear=m>>1;zz_matrix_scene_draw(c,counts[c]);
+    for(unsigned m=1;m<6;m++){
+        zz_tgl_raster=m;zz_tgl_clear=0;zz_matrix_scene_draw(kinds[c],counts[c]);
         assert(!memcmp(color,g->zb->pbuf,bytes)&&!memcmp(depth,g->zb->zbuf,zbytes));
+    }
+    printf("SCENE flags=%u kind=%u hash=%08x\n",flags,kinds[c],zz_matrix_scene_hash());
+    const char *preview=getenv("ZZ_TGL_PREVIEW");
+    if(preview && flags==3 && kinds[c]==6){
+        FILE *f=fopen(preview,"wb");assert(f);fprintf(f,"P6\n640 480\n255\n");
+        for(unsigned y=0;y<480;y++)for(unsigned x=0;x<640;x++){
+            unsigned pixel=((unsigned*)((unsigned char*)g->zb->pbuf+y*g->zb->linesize))[x];
+            unsigned char rgb[]={pixel>>16,pixel>>8,pixel};assert(fwrite(rgb,1,3,f)==3);
+        }
+        assert(!fclose(f));
     }
     free(color);free(depth);
  }
- zz_matrix_scene_close();puts("PASS 16 complete scene/depth combinations, 4 methods, exact colour/depth buffers, cleanup");
+ zz_matrix_scene_close();puts("PASS 32 complete scene/depth combinations, 6 methods, exact colour/depth buffers, cleanup");
 }

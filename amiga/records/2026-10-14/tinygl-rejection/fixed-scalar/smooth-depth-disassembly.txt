@@ -1,0 +1,620 @@
+
+/work/amiga/records/2026-10-14/tinygl-rejection/fixed-scalar/dosbox.elf:     file format elf32-littlearm
+
+
+Disassembly of section .entry:
+
+Disassembly of section .text:
+
+000b2d60 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1>:
+   b2d60:	e92d4ff0 	push	{r4, r5, r6, r7, r8, r9, sl, fp, lr}
+   b2d64:	e1a08003 	mov	r8, r3
+   b2d68:	ed2d8b06 	vpush	{d8-d10}
+   b2d6c:	e24dd0fc 	sub	sp, sp, #252	@ 0xfc
+   b2d70:	e592c004 	ldr	ip, [r2, #4]
+   b2d74:	e5913004 	ldr	r3, [r1, #4]
+   b2d78:	e58d0088 	str	r0, [sp, #136]	@ 0x88
+   b2d7c:	e5980004 	ldr	r0, [r8, #4]
+   b2d80:	e15c0003 	cmp	ip, r3
+   b2d84:	a1a0e003 	movge	lr, r3
+   b2d88:	b1a0e00c 	movlt	lr, ip
+   b2d8c:	a1a0300c 	movge	r3, ip
+   b2d90:	a1a07001 	movge	r7, r1
+   b2d94:	b1a07002 	movlt	r7, r2
+   b2d98:	a1a01002 	movge	r1, r2
+   b2d9c:	e150000e 	cmp	r0, lr
+   b2da0:	e1a0c00e 	mov	ip, lr
+   b2da4:	e58d10d8 	str	r1, [sp, #216]	@ 0xd8
+   b2da8:	ba000006 	blt	b2dc8 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x68>
+   b2dac:	e1500003 	cmp	r0, r3
+   b2db0:	aa000232 	bge	b3680 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x920>
+   b2db4:	e1a02008 	mov	r2, r8
+   b2db8:	e1a0c000 	mov	ip, r0
+   b2dbc:	e1a08007 	mov	r8, r7
+   b2dc0:	e1a0000e 	mov	r0, lr
+   b2dc4:	e1a07002 	mov	r7, r2
+   b2dc8:	e0433000 	sub	r3, r3, r0
+   b2dcc:	e5982000 	ldr	r2, [r8]
+   b2dd0:	e59d60d8 	ldr	r6, [sp, #216]	@ 0xd8
+   b2dd4:	ee073a90 	vmov	s15, r3
+   b2dd8:	e59d30d8 	ldr	r3, [sp, #216]	@ 0xd8
+   b2ddc:	eef86ae7 	vcvt.f32.s32	s13, s15
+   b2de0:	e5984014 	ldr	r4, [r8, #20]
+   b2de4:	e5933000 	ldr	r3, [r3]
+   b2de8:	e598e018 	ldr	lr, [r8, #24]
+   b2dec:	e598101c 	ldr	r1, [r8, #28]
+   b2df0:	e0433002 	sub	r3, r3, r2
+   b2df4:	ee073a90 	vmov	s15, r3
+   b2df8:	e04c3000 	sub	r3, ip, r0
+   b2dfc:	ee073a10 	vmov	s14, r3
+   b2e00:	e5973000 	ldr	r3, [r7]
+   b2e04:	eef87ae7 	vcvt.f32.s32	s15, s15
+   b2e08:	eeb87ac7 	vcvt.f32.s32	s14, s14
+   b2e0c:	e0433002 	sub	r3, r3, r2
+   b2e10:	e5982008 	ldr	r2, [r8, #8]
+   b2e14:	ee053a90 	vmov	s11, r3
+   b2e18:	ee278a27 	vmul.f32	s16, s14, s15
+   b2e1c:	eef85ae5 	vcvt.f32.s32	s11, s11
+   b2e20:	e5963014 	ldr	r3, [r6, #20]
+   b2e24:	ee158aa6 	vnmls.f32	s16, s11, s13
+   b2e28:	e0433004 	sub	r3, r3, r4
+   b2e2c:	eeb58a40 	vcmp.f32	s16, #0.0
+   b2e30:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+   b2e34:	1eb76a00 	vmovne.f32	s12, #112	@ 0x3f800000  1.0
+   b2e38:	1e868a08 	vdivne.f32	s16, s12, s16
+   b2e3c:	ee063a10 	vmov	s12, r3
+   b2e40:	e5963018 	ldr	r3, [r6, #24]
+   b2e44:	eef83ac6 	vcvt.f32.s32	s7, s12
+   b2e48:	e043300e 	sub	r3, r3, lr
+   b2e4c:	ee063a10 	vmov	s12, r3
+   b2e50:	e596301c 	ldr	r3, [r6, #28]
+   b2e54:	eeb84ac6 	vcvt.f32.s32	s8, s12
+   b2e58:	e0433001 	sub	r3, r3, r1
+   b2e5c:	ee063a10 	vmov	s12, r3
+   b2e60:	e5963008 	ldr	r3, [r6, #8]
+   b2e64:	eef84ac6 	vcvt.f32.s32	s9, s12
+   b2e68:	ee287a07 	vmul.f32	s14, s16, s14
+   b2e6c:	e0433002 	sub	r3, r3, r2
+   b2e70:	ee686a26 	vmul.f32	s13, s16, s13
+   b2e74:	ee687a27 	vmul.f32	s15, s16, s15
+   b2e78:	ee063a10 	vmov	s12, r3
+   b2e7c:	e5973014 	ldr	r3, [r7, #20]
+   b2e80:	eeb85ac6 	vcvt.f32.s32	s10, s12
+   b2e84:	ee672a23 	vmul.f32	s5, s14, s7
+   b2e88:	e0433004 	sub	r3, r3, r4
+   b2e8c:	ee685a25 	vmul.f32	s11, s16, s11
+   b2e90:	ee272a04 	vmul.f32	s4, s14, s8
+   b2e94:	ee063a10 	vmov	s12, r3
+   b2e98:	e5973018 	ldr	r3, [r7, #24]
+   b2e9c:	eeb86ac6 	vcvt.f32.s32	s12, s12
+   b2ea0:	ee273a24 	vmul.f32	s6, s14, s9
+   b2ea4:	e043300e 	sub	r3, r3, lr
+   b2ea8:	ee277a05 	vmul.f32	s14, s14, s10
+   b2eac:	eeb58ac0 	vcmpe.f32	s16, #0.0
+   b2eb0:	ee562a86 	vnmls.f32	s5, s13, s12
+   b2eb4:	ee276a86 	vmul.f32	s12, s15, s12
+   b2eb8:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+   b2ebc:	ee156aa3 	vnmls.f32	s12, s11, s7
+   b2ec0:	eef03a42 	vmov.f32	s7, s4
+   b2ec4:	eebd6ac6 	vcvt.s32.f32	s12, s12
+   b2ec8:	eeb09a46 	vmov.f32	s18, s12
+   b2ecc:	ee063a10 	vmov	s12, r3
+   b2ed0:	e597301c 	ldr	r3, [r7, #28]
+   b2ed4:	eeb86ac6 	vcvt.f32.s32	s12, s12
+   b2ed8:	e0433001 	sub	r3, r3, r1
+   b2edc:	e59d1088 	ldr	r1, [sp, #136]	@ 0x88
+   b2ee0:	ee563a86 	vnmls.f32	s7, s13, s12
+   b2ee4:	ee276a86 	vmul.f32	s12, s15, s12
+   b2ee8:	ee156a84 	vnmls.f32	s12, s11, s8
+   b2eec:	eeb04a43 	vmov.f32	s8, s6
+   b2ef0:	eebd6ac6 	vcvt.s32.f32	s12, s12
+   b2ef4:	eef09a46 	vmov.f32	s19, s12
+   b2ef8:	ee063a10 	vmov	s12, r3
+   b2efc:	e5973008 	ldr	r3, [r7, #8]
+   b2f00:	eeb86ac6 	vcvt.f32.s32	s12, s12
+   b2f04:	e0433002 	sub	r3, r3, r2
+   b2f08:	ee164a86 	vnmls.f32	s8, s13, s12
+   b2f0c:	ee276a86 	vmul.f32	s12, s15, s12
+   b2f10:	ee156aa4 	vnmls.f32	s12, s11, s9
+   b2f14:	eebd6ac6 	vcvt.s32.f32	s12, s12
+   b2f18:	eeb0aa46 	vmov.f32	s20, s12
+   b2f1c:	ee063a10 	vmov	s12, r3
+   b2f20:	e5913020 	ldr	r3, [r1, #32]
+   b2f24:	eeb86ac6 	vcvt.f32.s32	s12, s12
+   b2f28:	e0000093 	mul	r0, r3, r0
+   b2f2c:	e5913004 	ldr	r3, [r1, #4]
+   b2f30:	ee677a86 	vmul.f32	s15, s15, s12
+   b2f34:	ee167a86 	vnmls.f32	s14, s13, s12
+   b2f38:	e0833100 	add	r3, r3, r0, lsl #2
+   b2f3c:	ee557a85 	vnmls.f32	s15, s11, s10
+   b2f40:	e58d3058 	str	r3, [sp, #88]	@ 0x58
+   b2f44:	e5913000 	ldr	r3, [r1]
+   b2f48:	e0833080 	add	r3, r3, r0, lsl #1
+   b2f4c:	eefd7ae7 	vcvt.s32.f32	s15, s15
+   b2f50:	e58d305c 	str	r3, [sp, #92]	@ 0x5c
+   b2f54:	eef08a67 	vmov.f32	s17, s15
+   b2f58:	eefd7ae2 	vcvt.s32.f32	s15, s5
+   b2f5c:	edcd7a0c 	vstr	s15, [sp, #48]	@ 0x30
+   b2f60:	eefd7ae3 	vcvt.s32.f32	s15, s7
+   b2f64:	e59d1030 	ldr	r1, [sp, #48]	@ 0x30
+   b2f68:	edcd7a37 	vstr	s15, [sp, #220]	@ 0xdc
+   b2f6c:	eefd7ac4 	vcvt.s32.f32	s15, s8
+   b2f70:	e1a04081 	lsl	r4, r1, #1
+   b2f74:	e59d30dc 	ldr	r3, [sp, #220]	@ 0xdc
+   b2f78:	e58d4098 	str	r4, [sp, #152]	@ 0x98
+   b2f7c:	edcd7a38 	vstr	s15, [sp, #224]	@ 0xe0
+   b2f80:	e59d00e0 	ldr	r0, [sp, #224]	@ 0xe0
+   b2f84:	e1a05103 	lsl	r5, r3, #2
+   b2f88:	eefd7ac7 	vcvt.s32.f32	s15, s14
+   b2f8c:	e1a0e083 	lsl	lr, r3, #1
+   b2f90:	e58de094 	str	lr, [sp, #148]	@ 0x94
+   b2f94:	e08e3003 	add	r3, lr, r3
+   b2f98:	e1a09080 	lsl	r9, r0, #1
+   b2f9c:	ee172a90 	vmov	r2, s15
+   b2fa0:	e58d9090 	str	r9, [sp, #144]	@ 0x90
+   b2fa4:	e1a0a082 	lsl	sl, r2, #1
+   b2fa8:	e58d5008 	str	r5, [sp, #8]
+   b2fac:	e1a05101 	lsl	r5, r1, #2
+   b2fb0:	e58d30a0 	str	r3, [sp, #160]	@ 0xa0
+   b2fb4:	e0843001 	add	r3, r4, r1
+   b2fb8:	e58d500c 	str	r5, [sp, #12]
+   b2fbc:	e1a05100 	lsl	r5, r0, #2
+   b2fc0:	e58d30a4 	str	r3, [sp, #164]	@ 0xa4
+   b2fc4:	e0893000 	add	r3, r9, r0
+   b2fc8:	e58d5010 	str	r5, [sp, #16]
+   b2fcc:	e1a05102 	lsl	r5, r2, #2
+   b2fd0:	e58da0a8 	str	sl, [sp, #168]	@ 0xa8
+   b2fd4:	e58d309c 	str	r3, [sp, #156]	@ 0x9c
+   b2fd8:	da0001af 	ble	b369c <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x93c>
+   b2fdc:	e5963004 	ldr	r3, [r6, #4]
+   b2fe0:	e1a00006 	mov	r0, r6
+   b2fe4:	e58d70f0 	str	r7, [sp, #240]	@ 0xf0
+   b2fe8:	e5981004 	ldr	r1, [r8, #4]
+   b2fec:	e3a0b000 	mov	fp, #0
+   b2ff0:	e1a04008 	mov	r4, r8
+   b2ff4:	e1a0a00b 	mov	sl, fp
+   b2ff8:	e58db084 	str	fp, [sp, #132]	@ 0x84
+   b2ffc:	e04c9001 	sub	r9, ip, r1
+   b3000:	e0431001 	sub	r1, r3, r1
+   b3004:	e3a03001 	mov	r3, #1
+   b3008:	e1a06009 	mov	r6, r9
+   b300c:	e58d3048 	str	r3, [sp, #72]	@ 0x48
+   b3010:	e1a09007 	mov	r9, r7
+   b3014:	e1a03002 	mov	r3, r2
+   b3018:	e58db0d4 	str	fp, [sp, #212]	@ 0xd4
+   b301c:	e58d5064 	str	r5, [sp, #100]	@ 0x64
+   b3020:	e58d80f4 	str	r8, [sp, #244]	@ 0xf4
+   b3024:	e594c000 	ldr	ip, [r4]
+   b3028:	e3510000 	cmp	r1, #0
+   b302c:	e58dc054 	str	ip, [sp, #84]	@ 0x54
+   b3030:	da00017a 	ble	b3620 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x8c0>
+   b3034:	e5902000 	ldr	r2, [r0]
+   b3038:	e58d3000 	str	r3, [sp]
+   b303c:	e042200c 	sub	r2, r2, ip
+   b3040:	e1a00802 	lsl	r0, r2, #16
+   b3044:	fa0030f9 	blx	bf430 <__divsi3>
+   b3048:	e6ff3070 	uxth	r3, r0
+   b304c:	e1a02840 	asr	r2, r0, #16
+   b3050:	ee181a90 	vmov	r1, s17
+   b3054:	e58d308c 	str	r3, [sp, #140]	@ 0x8c
+   b3058:	e59d3000 	ldr	r3, [sp]
+   b305c:	e59d0030 	ldr	r0, [sp, #48]	@ 0x30
+   b3060:	e58d20d0 	str	r2, [sp, #208]	@ 0xd0
+   b3064:	e0211392 	mla	r1, r2, r3, r1
+   b3068:	e58d10c0 	str	r1, [sp, #192]	@ 0xc0
+   b306c:	ee191a10 	vmov	r1, s18
+   b3070:	e0211092 	mla	r1, r2, r0, r1
+   b3074:	e59d00dc 	ldr	r0, [sp, #220]	@ 0xdc
+   b3078:	e58d10c4 	str	r1, [sp, #196]	@ 0xc4
+   b307c:	ee191a90 	vmov	r1, s19
+   b3080:	e0211092 	mla	r1, r2, r0, r1
+   b3084:	e59d00e0 	ldr	r0, [sp, #224]	@ 0xe0
+   b3088:	e58d10c8 	str	r1, [sp, #200]	@ 0xc8
+   b308c:	ee1a1a10 	vmov	r1, s20
+   b3090:	e0211092 	mla	r1, r2, r0, r1
+   b3094:	e2822001 	add	r2, r2, #1
+   b3098:	e58d20bc 	str	r2, [sp, #188]	@ 0xbc
+   b309c:	e58d10cc 	str	r1, [sp, #204]	@ 0xcc
+   b30a0:	e59d2048 	ldr	r2, [sp, #72]	@ 0x48
+   b30a4:	e3520000 	cmp	r2, #0
+   b30a8:	e5942008 	ldr	r2, [r4, #8]
+   b30ac:	e58d2044 	str	r2, [sp, #68]	@ 0x44
+   b30b0:	e5942014 	ldr	r2, [r4, #20]
+   b30b4:	e58d2020 	str	r2, [sp, #32]
+   b30b8:	e5942018 	ldr	r2, [r4, #24]
+   b30bc:	e58d2000 	str	r2, [sp]
+   b30c0:	e594201c 	ldr	r2, [r4, #28]
+   b30c4:	e58d2024 	str	r2, [sp, #36]	@ 0x24
+   b30c8:	1a000178 	bne	b36b0 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x950>
+   b30cc:	e3560000 	cmp	r6, #0
+   b30d0:	da000119 	ble	b353c <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x7dc>
+   b30d4:	e59d20c0 	ldr	r2, [sp, #192]	@ 0xc0
+   b30d8:	e59d10c4 	ldr	r1, [sp, #196]	@ 0xc4
+   b30dc:	e59db0dc 	ldr	fp, [sp, #220]	@ 0xdc
+   b30e0:	e0832002 	add	r2, r3, r2
+   b30e4:	e58da0e8 	str	sl, [sp, #232]	@ 0xe8
+   b30e8:	e58d20ac 	str	r2, [sp, #172]	@ 0xac
+   b30ec:	e59d2030 	ldr	r2, [sp, #48]	@ 0x30
+   b30f0:	e58d604c 	str	r6, [sp, #76]	@ 0x4c
+   b30f4:	e58d60e4 	str	r6, [sp, #228]	@ 0xe4
+   b30f8:	e0822001 	add	r2, r2, r1
+   b30fc:	e59d10cc 	ldr	r1, [sp, #204]	@ 0xcc
+   b3100:	e58d20b0 	str	r2, [sp, #176]	@ 0xb0
+   b3104:	e59d20c8 	ldr	r2, [sp, #200]	@ 0xc8
+   b3108:	e58d90ec 	str	r9, [sp, #236]	@ 0xec
+   b310c:	e08b2002 	add	r2, fp, r2
+   b3110:	e58d20b4 	str	r2, [sp, #180]	@ 0xb4
+   b3114:	e59d20e0 	ldr	r2, [sp, #224]	@ 0xe0
+   b3118:	e0821001 	add	r1, r2, r1
+   b311c:	e1a0a002 	mov	sl, r2
+   b3120:	e58d10b8 	str	r1, [sp, #184]	@ 0xb8
+   b3124:	e59d10d4 	ldr	r1, [sp, #212]	@ 0xd4
+   b3128:	e58d1050 	str	r1, [sp, #80]	@ 0x50
+   b312c:	e59d204c 	ldr	r2, [sp, #76]	@ 0x4c
+   b3130:	e59d1050 	ldr	r1, [sp, #80]	@ 0x50
+   b3134:	e59d6044 	ldr	r6, [sp, #68]	@ 0x44
+   b3138:	e2422001 	sub	r2, r2, #1
+   b313c:	e58d204c 	str	r2, [sp, #76]	@ 0x4c
+   b3140:	e59d2054 	ldr	r2, [sp, #84]	@ 0x54
+   b3144:	e062e841 	rsb	lr, r2, r1, asr #16
+   b3148:	e59d1058 	ldr	r1, [sp, #88]	@ 0x58
+   b314c:	e35e0002 	cmp	lr, #2
+   b3150:	e0815102 	add	r5, r1, r2, lsl #2
+   b3154:	e59d105c 	ldr	r1, [sp, #92]	@ 0x5c
+   b3158:	e0812082 	add	r2, r1, r2, lsl #1
+   b315c:	e1a01006 	mov	r1, r6
+   b3160:	da00010f 	ble	b35a4 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x844>
+   b3164:	e24e1003 	sub	r1, lr, #3
+   b3168:	e2820008 	add	r0, r2, #8
+   b316c:	e1a01121 	lsr	r1, r1, #2
+   b3170:	e2822010 	add	r2, r2, #16
+   b3174:	e2857010 	add	r7, r5, #16
+   b3178:	e59d9000 	ldr	r9, [sp]
+   b317c:	e1a0c181 	lsl	ip, r1, #3
+   b3180:	e58d0060 	str	r0, [sp, #96]	@ 0x60
+   b3184:	e59d8020 	ldr	r8, [sp, #32]
+   b3188:	e3a04000 	mov	r4, #0
+   b318c:	e082500c 	add	r5, r2, ip
+   b3190:	e59d2090 	ldr	r2, [sp, #144]	@ 0x90
+   b3194:	e58d501c 	str	r5, [sp, #28]
+   b3198:	e59d50a8 	ldr	r5, [sp, #168]	@ 0xa8
+   b319c:	e58d7068 	str	r7, [sp, #104]	@ 0x68
+   b31a0:	e58d406c 	str	r4, [sp, #108]	@ 0x6c
+   b31a4:	e0860005 	add	r0, r6, r5
+   b31a8:	e59d5094 	ldr	r5, [sp, #148]	@ 0x94
+   b31ac:	e58d0004 	str	r0, [sp, #4]
+   b31b0:	e58db070 	str	fp, [sp, #112]	@ 0x70
+   b31b4:	e0895005 	add	r5, r9, r5
+   b31b8:	e58da074 	str	sl, [sp, #116]	@ 0x74
+   b31bc:	e58d5014 	str	r5, [sp, #20]
+   b31c0:	e59d5098 	ldr	r5, [sp, #152]	@ 0x98
+   b31c4:	e58de078 	str	lr, [sp, #120]	@ 0x78
+   b31c8:	e58dc07c 	str	ip, [sp, #124]	@ 0x7c
+   b31cc:	e0885005 	add	r5, r8, r5
+   b31d0:	e58d1080 	str	r1, [sp, #128]	@ 0x80
+   b31d4:	e58d5038 	str	r5, [sp, #56]	@ 0x38
+   b31d8:	e59d5024 	ldr	r5, [sp, #36]	@ 0x24
+   b31dc:	e0852002 	add	r2, r5, r2
+   b31e0:	e085000a 	add	r0, r5, sl
+   b31e4:	e58d2034 	str	r2, [sp, #52]	@ 0x34
+   b31e8:	e59d20a0 	ldr	r2, [sp, #160]	@ 0xa0
+   b31ec:	e58d002c 	str	r0, [sp, #44]	@ 0x2c
+   b31f0:	e1a00008 	mov	r0, r8
+   b31f4:	e0892002 	add	r2, r9, r2
+   b31f8:	e089900b 	add	r9, r9, fp
+   b31fc:	e58d2018 	str	r2, [sp, #24]
+   b3200:	e59d20a4 	ldr	r2, [sp, #164]	@ 0xa4
+   b3204:	e0882002 	add	r2, r8, r2
+   b3208:	e59d8030 	ldr	r8, [sp, #48]	@ 0x30
+   b320c:	e58d2040 	str	r2, [sp, #64]	@ 0x40
+   b3210:	e59d209c 	ldr	r2, [sp, #156]	@ 0x9c
+   b3214:	e0800008 	add	r0, r0, r8
+   b3218:	e59d8004 	ldr	r8, [sp, #4]
+   b321c:	e58d0028 	str	r0, [sp, #40]	@ 0x28
+   b3220:	e1a00004 	mov	r0, r4
+   b3224:	e0855002 	add	r5, r5, r2
+   b3228:	e58d9004 	str	r9, [sp, #4]
+   b322c:	e58d503c 	str	r5, [sp, #60]	@ 0x3c
+   b3230:	e1a05004 	mov	r5, r4
+   b3234:	e59d2060 	ldr	r2, [sp, #96]	@ 0x60
+   b3238:	e59d9064 	ldr	r9, [sp, #100]	@ 0x64
+   b323c:	e59d1000 	ldr	r1, [sp]
+   b3240:	e1a0c726 	lsr	ip, r6, #14
+   b3244:	e152e0b8 	ldrh	lr, [r2, #-8]
+   b3248:	e086a003 	add	sl, r6, r3
+   b324c:	e1a0a72a 	lsr	sl, sl, #14
+   b3250:	e0866009 	add	r6, r6, r9
+   b3254:	e0811000 	add	r1, r1, r0
+   b3258:	e1a01441 	asr	r1, r1, #8
+   b325c:	e15e000c 	cmp	lr, ip
+   b3260:	e2011cff 	and	r1, r1, #65280	@ 0xff00
+   b3264:	8a000009 	bhi	b3290 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x530>
+   b3268:	e59de024 	ldr	lr, [sp, #36]	@ 0x24
+   b326c:	e08ee004 	add	lr, lr, r4
+   b3270:	e7e7e85e 	ubfx	lr, lr, #16, #8
+   b3274:	e181100e 	orr	r1, r1, lr
+   b3278:	e59de020 	ldr	lr, [sp, #32]
+   b327c:	e08ee005 	add	lr, lr, r5
+   b3280:	e20ee8ff 	and	lr, lr, #16711680	@ 0xff0000
+   b3284:	e181100e 	orr	r1, r1, lr
+   b3288:	e5071010 	str	r1, [r7, #-16]
+   b328c:	e142c0b8 	strh	ip, [r2, #-8]
+   b3290:	e59dc014 	ldr	ip, [sp, #20]
+   b3294:	e59db008 	ldr	fp, [sp, #8]
+   b3298:	e59d1004 	ldr	r1, [sp, #4]
+   b329c:	e08ce000 	add	lr, ip, r0
+   b32a0:	e59dc018 	ldr	ip, [sp, #24]
+   b32a4:	e1a0e44e 	asr	lr, lr, #8
+   b32a8:	e0811000 	add	r1, r1, r0
+   b32ac:	e08cc000 	add	ip, ip, r0
+   b32b0:	e080000b 	add	r0, r0, fp
+   b32b4:	e152b0b6 	ldrh	fp, [r2, #-6]
+   b32b8:	e1a01441 	asr	r1, r1, #8
+   b32bc:	e1a0c44c 	asr	ip, ip, #8
+   b32c0:	e20eecff 	and	lr, lr, #65280	@ 0xff00
+   b32c4:	e2011cff 	and	r1, r1, #65280	@ 0xff00
+   b32c8:	e15b000a 	cmp	fp, sl
+   b32cc:	e20cccff 	and	ip, ip, #65280	@ 0xff00
+   b32d0:	8a000009 	bhi	b32fc <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x59c>
+   b32d4:	e59db02c 	ldr	fp, [sp, #44]	@ 0x2c
+   b32d8:	e08bb004 	add	fp, fp, r4
+   b32dc:	e7e7b85b 	ubfx	fp, fp, #16, #8
+   b32e0:	e181100b 	orr	r1, r1, fp
+   b32e4:	e59db028 	ldr	fp, [sp, #40]	@ 0x28
+   b32e8:	e08bb005 	add	fp, fp, r5
+   b32ec:	e20bb8ff 	and	fp, fp, #16711680	@ 0xff0000
+   b32f0:	e181100b 	orr	r1, r1, fp
+   b32f4:	e507100c 	str	r1, [r7, #-12]
+   b32f8:	e142a0b6 	strh	sl, [r2, #-6]
+   b32fc:	e152b0b4 	ldrh	fp, [r2, #-4]
+   b3300:	e1a0a728 	lsr	sl, r8, #14
+   b3304:	e0881003 	add	r1, r8, r3
+   b3308:	e1a01721 	lsr	r1, r1, #14
+   b330c:	e0888009 	add	r8, r8, r9
+   b3310:	e15b000a 	cmp	fp, sl
+   b3314:	8a000009 	bhi	b3340 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x5e0>
+   b3318:	e59db034 	ldr	fp, [sp, #52]	@ 0x34
+   b331c:	e08bb004 	add	fp, fp, r4
+   b3320:	e7e7b85b 	ubfx	fp, fp, #16, #8
+   b3324:	e18ee00b 	orr	lr, lr, fp
+   b3328:	e59db038 	ldr	fp, [sp, #56]	@ 0x38
+   b332c:	e08bb005 	add	fp, fp, r5
+   b3330:	e20bb8ff 	and	fp, fp, #16711680	@ 0xff0000
+   b3334:	e18ee00b 	orr	lr, lr, fp
+   b3338:	e507e008 	str	lr, [r7, #-8]
+   b333c:	e142a0b4 	strh	sl, [r2, #-4]
+   b3340:	e152e0b2 	ldrh	lr, [r2, #-2]
+   b3344:	e15e0001 	cmp	lr, r1
+   b3348:	8a000009 	bhi	b3374 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x614>
+   b334c:	e59de03c 	ldr	lr, [sp, #60]	@ 0x3c
+   b3350:	e08ee004 	add	lr, lr, r4
+   b3354:	e7e7e85e 	ubfx	lr, lr, #16, #8
+   b3358:	e18cc00e 	orr	ip, ip, lr
+   b335c:	e59de040 	ldr	lr, [sp, #64]	@ 0x40
+   b3360:	e08ee005 	add	lr, lr, r5
+   b3364:	e20ee8ff 	and	lr, lr, #16711680	@ 0xff0000
+   b3368:	e18cc00e 	orr	ip, ip, lr
+   b336c:	e507c004 	str	ip, [r7, #-4]
+   b3370:	e14210b2 	strh	r1, [r2, #-2]
+   b3374:	e59d100c 	ldr	r1, [sp, #12]
+   b3378:	e2822008 	add	r2, r2, #8
+   b337c:	e2877010 	add	r7, r7, #16
+   b3380:	e0855001 	add	r5, r5, r1
+   b3384:	e59d101c 	ldr	r1, [sp, #28]
+   b3388:	e1510002 	cmp	r1, r2
+   b338c:	e59d1010 	ldr	r1, [sp, #16]
+   b3390:	e0844001 	add	r4, r4, r1
+   b3394:	1affffa8 	bne	b323c <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x4dc>
+   b3398:	e59dc07c 	ldr	ip, [sp, #124]	@ 0x7c
+   b339c:	e59d2060 	ldr	r2, [sp, #96]	@ 0x60
+   b33a0:	e59d4030 	ldr	r4, [sp, #48]	@ 0x30
+   b33a4:	e59da074 	ldr	sl, [sp, #116]	@ 0x74
+   b33a8:	e08c2002 	add	r2, ip, r2
+   b33ac:	e59dc028 	ldr	ip, [sp, #40]	@ 0x28
+   b33b0:	e59d002c 	ldr	r0, [sp, #44]	@ 0x2c
+   b33b4:	e59d1080 	ldr	r1, [sp, #128]	@ 0x80
+   b33b8:	e59db070 	ldr	fp, [sp, #112]	@ 0x70
+   b33bc:	e08cc084 	add	ip, ip, r4, lsl #1
+   b33c0:	e59d9004 	ldr	r9, [sp, #4]
+   b33c4:	e080008a 	add	r0, r0, sl, lsl #1
+   b33c8:	e59d6064 	ldr	r6, [sp, #100]	@ 0x64
+   b33cc:	e08cc004 	add	ip, ip, r4
+   b33d0:	e59d4010 	ldr	r4, [sp, #16]
+   b33d4:	e080000a 	add	r0, r0, sl
+   b33d8:	e59de078 	ldr	lr, [sp, #120]	@ 0x78
+   b33dc:	e089908b 	add	r9, r9, fp, lsl #1
+   b33e0:	e0200194 	mla	r0, r4, r1, r0
+   b33e4:	e59d400c 	ldr	r4, [sp, #12]
+   b33e8:	e089900b 	add	r9, r9, fp
+   b33ec:	e24ee004 	sub	lr, lr, #4
+   b33f0:	e02cc491 	mla	ip, r1, r4, ip
+   b33f4:	e59d4008 	ldr	r4, [sp, #8]
+   b33f8:	e04ee101 	sub	lr, lr, r1, lsl #2
+   b33fc:	e0299491 	mla	r9, r1, r4, r9
+   b3400:	e59d4068 	ldr	r4, [sp, #104]	@ 0x68
+   b3404:	e0845201 	add	r5, r4, r1, lsl #4
+   b3408:	e59d4044 	ldr	r4, [sp, #68]	@ 0x44
+   b340c:	e0844006 	add	r4, r4, r6
+   b3410:	e0214196 	mla	r1, r6, r1, r4
+   b3414:	e35e0000 	cmp	lr, #0
+   b3418:	a082708e 	addge	r7, r2, lr, lsl #1
+   b341c:	a2424002 	subge	r4, r2, #2
+   b3420:	ba000012 	blt	b3470 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x710>
+   b3424:	e1f480b2 	ldrh	r8, [r4, #2]!
+   b3428:	e1a06721 	lsr	r6, r1, #14
+   b342c:	e1a0e449 	asr	lr, r9, #8
+   b3430:	e7e72850 	ubfx	r2, r0, #16, #8
+   b3434:	e0811003 	add	r1, r1, r3
+   b3438:	e1580006 	cmp	r8, r6
+   b343c:	e20eecff 	and	lr, lr, #65280	@ 0xff00
+   b3440:	e18e2002 	orr	r2, lr, r2
+   b3444:	920ce8ff 	andls	lr, ip, #16711680	@ 0xff0000
+   b3448:	9182200e 	orrls	r2, r2, lr
+   b344c:	e089900b 	add	r9, r9, fp
+   b3450:	95852000 	strls	r2, [r5]
+   b3454:	e080000a 	add	r0, r0, sl
+   b3458:	e59d2030 	ldr	r2, [sp, #48]	@ 0x30
+   b345c:	e2855004 	add	r5, r5, #4
+   b3460:	91c460b0 	strhls	r6, [r4]
+   b3464:	e1570004 	cmp	r7, r4
+   b3468:	e08cc002 	add	ip, ip, r2
+   b346c:	1affffec 	bne	b3424 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x6c4>
+   b3470:	e59d2048 	ldr	r2, [sp, #72]	@ 0x48
+   b3474:	e59d108c 	ldr	r1, [sp, #140]	@ 0x8c
+   b3478:	e0822001 	add	r2, r2, r1
+   b347c:	e3520000 	cmp	r2, #0
+   b3480:	e58d2048 	str	r2, [sp, #72]	@ 0x48
+   b3484:	da000031 	ble	b3550 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x7f0>
+   b3488:	e59d2048 	ldr	r2, [sp, #72]	@ 0x48
+   b348c:	e59d10bc 	ldr	r1, [sp, #188]	@ 0xbc
+   b3490:	e2422801 	sub	r2, r2, #65536	@ 0x10000
+   b3494:	e58d2048 	str	r2, [sp, #72]	@ 0x48
+   b3498:	e59d2054 	ldr	r2, [sp, #84]	@ 0x54
+   b349c:	e0822001 	add	r2, r2, r1
+   b34a0:	e59d10ac 	ldr	r1, [sp, #172]	@ 0xac
+   b34a4:	e58d2054 	str	r2, [sp, #84]	@ 0x54
+   b34a8:	e59d2044 	ldr	r2, [sp, #68]	@ 0x44
+   b34ac:	e0822001 	add	r2, r2, r1
+   b34b0:	e59d10b0 	ldr	r1, [sp, #176]	@ 0xb0
+   b34b4:	e58d2044 	str	r2, [sp, #68]	@ 0x44
+   b34b8:	e59d2020 	ldr	r2, [sp, #32]
+   b34bc:	e0822001 	add	r2, r2, r1
+   b34c0:	e59d10b4 	ldr	r1, [sp, #180]	@ 0xb4
+   b34c4:	e58d2020 	str	r2, [sp, #32]
+   b34c8:	e59d2000 	ldr	r2, [sp]
+   b34cc:	e0822001 	add	r2, r2, r1
+   b34d0:	e59d10b8 	ldr	r1, [sp, #184]	@ 0xb8
+   b34d4:	e58d2000 	str	r2, [sp]
+   b34d8:	e59d2024 	ldr	r2, [sp, #36]	@ 0x24
+   b34dc:	e0822001 	add	r2, r2, r1
+   b34e0:	e58d2024 	str	r2, [sp, #36]	@ 0x24
+   b34e4:	e59d204c 	ldr	r2, [sp, #76]	@ 0x4c
+   b34e8:	e59d1084 	ldr	r1, [sp, #132]	@ 0x84
+   b34ec:	e3520000 	cmp	r2, #0
+   b34f0:	e59d2050 	ldr	r2, [sp, #80]	@ 0x50
+   b34f4:	e0822001 	add	r2, r2, r1
+   b34f8:	e59d1058 	ldr	r1, [sp, #88]	@ 0x58
+   b34fc:	e58d2050 	str	r2, [sp, #80]	@ 0x50
+   b3500:	e59d2088 	ldr	r2, [sp, #136]	@ 0x88
+   b3504:	e5922020 	ldr	r2, [r2, #32]
+   b3508:	e0811102 	add	r1, r1, r2, lsl #2
+   b350c:	e58d1058 	str	r1, [sp, #88]	@ 0x58
+   b3510:	e59d105c 	ldr	r1, [sp, #92]	@ 0x5c
+   b3514:	e0812082 	add	r2, r1, r2, lsl #1
+   b3518:	e58d205c 	str	r2, [sp, #92]	@ 0x5c
+   b351c:	1affff02 	bne	b312c <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x3cc>
+   b3520:	e59d20d4 	ldr	r2, [sp, #212]	@ 0xd4
+   b3524:	e59d60e4 	ldr	r6, [sp, #228]	@ 0xe4
+   b3528:	e59d1084 	ldr	r1, [sp, #132]	@ 0x84
+   b352c:	e59da0e8 	ldr	sl, [sp, #232]	@ 0xe8
+   b3530:	e59d90ec 	ldr	r9, [sp, #236]	@ 0xec
+   b3534:	e0222196 	mla	r2, r6, r1, r2
+   b3538:	e58d20d4 	str	r2, [sp, #212]	@ 0xd4
+   b353c:	e35a0001 	cmp	sl, #1
+   b3540:	1a00001b 	bne	b35b4 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x854>
+   b3544:	e28dd0fc 	add	sp, sp, #252	@ 0xfc
+   b3548:	ecbd8b06 	vpop	{d8-d10}
+   b354c:	e8bd8ff0 	pop	{r4, r5, r6, r7, r8, r9, sl, fp, pc}
+   b3550:	e59d2054 	ldr	r2, [sp, #84]	@ 0x54
+   b3554:	e59d10d0 	ldr	r1, [sp, #208]	@ 0xd0
+   b3558:	e0822001 	add	r2, r2, r1
+   b355c:	e59d10c0 	ldr	r1, [sp, #192]	@ 0xc0
+   b3560:	e58d2054 	str	r2, [sp, #84]	@ 0x54
+   b3564:	e59d2044 	ldr	r2, [sp, #68]	@ 0x44
+   b3568:	e0822001 	add	r2, r2, r1
+   b356c:	e59d10c4 	ldr	r1, [sp, #196]	@ 0xc4
+   b3570:	e58d2044 	str	r2, [sp, #68]	@ 0x44
+   b3574:	e59d2020 	ldr	r2, [sp, #32]
+   b3578:	e0822001 	add	r2, r2, r1
+   b357c:	e59d10c8 	ldr	r1, [sp, #200]	@ 0xc8
+   b3580:	e58d2020 	str	r2, [sp, #32]
+   b3584:	e59d2000 	ldr	r2, [sp]
+   b3588:	e0822001 	add	r2, r2, r1
+   b358c:	e59d10cc 	ldr	r1, [sp, #204]	@ 0xcc
+   b3590:	e58d2000 	str	r2, [sp]
+   b3594:	e59d2024 	ldr	r2, [sp, #36]	@ 0x24
+   b3598:	e0822001 	add	r2, r2, r1
+   b359c:	e58d2024 	str	r2, [sp, #36]	@ 0x24
+   b35a0:	eaffffcf 	b	b34e4 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x784>
+   b35a4:	e59d0024 	ldr	r0, [sp, #36]	@ 0x24
+   b35a8:	e59d9000 	ldr	r9, [sp]
+   b35ac:	e59dc020 	ldr	ip, [sp, #32]
+   b35b0:	eaffff97 	b	b3414 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x6b4>
+   b35b4:	e59d00d8 	ldr	r0, [sp, #216]	@ 0xd8
+   b35b8:	e5992004 	ldr	r2, [r9, #4]
+   b35bc:	eeb58ac0 	vcmpe.f32	s16, #0.0
+   b35c0:	e5901004 	ldr	r1, [r0, #4]
+   b35c4:	eef1fa10 	vmrs	APSR_nzcv, fpscr
+   b35c8:	e0411002 	sub	r1, r1, r2
+   b35cc:	e2816001 	add	r6, r1, #1
+   b35d0:	da00001c 	ble	b3648 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x8e8>
+   b35d4:	e3510000 	cmp	r1, #0
+   b35d8:	e5994000 	ldr	r4, [r9]
+   b35dc:	e3a05001 	mov	r5, #1
+   b35e0:	da00001d 	ble	b365c <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x8fc>
+   b35e4:	e59d20d8 	ldr	r2, [sp, #216]	@ 0xd8
+   b35e8:	e58d90f4 	str	r9, [sp, #244]	@ 0xf4
+   b35ec:	e58d20f0 	str	r2, [sp, #240]	@ 0xf0
+   b35f0:	e58d3004 	str	r3, [sp, #4]
+   b35f4:	e1a0a005 	mov	sl, r5
+   b35f8:	e59d30f0 	ldr	r3, [sp, #240]	@ 0xf0
+   b35fc:	e5930000 	ldr	r0, [r3]
+   b3600:	e0400004 	sub	r0, r0, r4
+   b3604:	e1a00800 	lsl	r0, r0, #16
+   b3608:	fa002f88 	blx	bf430 <__divsi3>
+   b360c:	e59d3004 	ldr	r3, [sp, #4]
+   b3610:	e58d0084 	str	r0, [sp, #132]	@ 0x84
+   b3614:	e1a02804 	lsl	r2, r4, #16
+   b3618:	e58d20d4 	str	r2, [sp, #212]	@ 0xd4
+   b361c:	eafffeaa 	b	b30cc <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x36c>
+   b3620:	e3a02000 	mov	r2, #0
+   b3624:	e3a01001 	mov	r1, #1
+   b3628:	e58d208c 	str	r2, [sp, #140]	@ 0x8c
+   b362c:	ed8daa33 	vstr	s20, [sp, #204]	@ 0xcc
+   b3630:	edcd9a32 	vstr	s19, [sp, #200]	@ 0xc8
+   b3634:	ed8d9a31 	vstr	s18, [sp, #196]	@ 0xc4
+   b3638:	edcd8a30 	vstr	s17, [sp, #192]	@ 0xc0
+   b363c:	e58d10bc 	str	r1, [sp, #188]	@ 0xbc
+   b3640:	e58d20d0 	str	r2, [sp, #208]	@ 0xd0
+   b3644:	eafffe95 	b	b30a0 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x340>
+   b3648:	e58da048 	str	sl, [sp, #72]	@ 0x48
+   b364c:	e1a04009 	mov	r4, r9
+   b3650:	e59d00d8 	ldr	r0, [sp, #216]	@ 0xd8
+   b3654:	e3a0a001 	mov	sl, #1
+   b3658:	eafffe71 	b	b3024 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x2c4>
+   b365c:	e3560000 	cmp	r6, #0
+   b3660:	daffffb7 	ble	b3544 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x7e4>
+   b3664:	e1a02804 	lsl	r2, r4, #16
+   b3668:	e58da084 	str	sl, [sp, #132]	@ 0x84
+   b366c:	e58d90f4 	str	r9, [sp, #244]	@ 0xf4
+   b3670:	e1a0a005 	mov	sl, r5
+   b3674:	e58d20d4 	str	r2, [sp, #212]	@ 0xd4
+   b3678:	e58d00f0 	str	r0, [sp, #240]	@ 0xf0
+   b367c:	eafffe94 	b	b30d4 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x374>
+   b3680:	e1a0c003 	mov	ip, r3
+   b3684:	e58d80d8 	str	r8, [sp, #216]	@ 0xd8
+   b3688:	e1a03000 	mov	r3, r0
+   b368c:	e1a08007 	mov	r8, r7
+   b3690:	e1a0000e 	mov	r0, lr
+   b3694:	e1a07001 	mov	r7, r1
+   b3698:	eafffdca 	b	b2dc8 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x68>
+   b369c:	e59d10d8 	ldr	r1, [sp, #216]	@ 0xd8
+   b36a0:	e1a0300c 	mov	r3, ip
+   b36a4:	e1a00007 	mov	r0, r7
+   b36a8:	e58d10f0 	str	r1, [sp, #240]	@ 0xf0
+   b36ac:	eafffe4d 	b	b2fe8 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x288>
+   b36b0:	e59d20f0 	ldr	r2, [sp, #240]	@ 0xf0
+   b36b4:	e59d00f4 	ldr	r0, [sp, #244]	@ 0xf4
+   b36b8:	e5921004 	ldr	r1, [r2, #4]
+   b36bc:	e5902004 	ldr	r2, [r0, #4]
+   b36c0:	e5904000 	ldr	r4, [r0]
+   b36c4:	e0411002 	sub	r1, r1, r2
+   b36c8:	e3510000 	cmp	r1, #0
+   b36cc:	c3a02000 	movgt	r2, #0
+   b36d0:	c1a0500a 	movgt	r5, sl
+   b36d4:	c58d2048 	strgt	r2, [sp, #72]	@ 0x48
+   b36d8:	caffffc4 	bgt	b35f0 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x890>
+   b36dc:	e3a02000 	mov	r2, #0
+   b36e0:	e58d2048 	str	r2, [sp, #72]	@ 0x48
+   b36e4:	e58d2084 	str	r2, [sp, #132]	@ 0x84
+   b36e8:	eaffffc9 	b	b3614 <ZB_fillTriangleSmoothNOBLEND_DT1_DW1+0x8b4>

@@ -1,0 +1,37 @@
+{
+  "url": "https://github.com/jserv/tinygl.git",
+  "revision": "c2e48591a6bfba1a85f1b87a78dcf1abf7dff57a",
+  "patch_sha256": "e085c96a6bb7a90af9e6a15502549805a89fa4c0281e931e6a0abd68b8b95e26",
+  "scope": "partial fixed-function API, software only; no GLSL",
+  "matrix_benchmark_patch": "Replace two negative signed edge shifts with bounded multiplication; only diagnostic scene build",
+  "matrix_benchmark_patch_sha256": "27fb5b3db04e0105534ab39e1441d24e1d5bc83b070bebf9cfec6699f468543e",
+  "internal_transform_experiment": {
+    "scope": "unlit vertices and gl_M4_Mul; lighting keeps upstream implementation; cached matrix columns; exclusive stage profiling separately enabled",
+    "source_hashes": {
+      "vertex.c": "0b9ee5dce3329dd176dfe8a3a0762ab93cf2b74b2589e9774fdb59e4f4efba7e",
+      "zmath.c": "8fa79ac646fa8c9644bcf53f06a98a831dd9ff4d42c976aec94a1a472eb610ad",
+      "clip.c": "7011254c320569e821abdbe810e9d0f556937f4d24bf1d1391f8f22c3e558144"
+    }
+  },
+  "raster_experiment": {
+    "scope": "32-bit smooth untextured no-blend spans, all four depth variants; scalar tails/short spans/stipple fallback; separate row-aware NEON clears",
+    "minimum_span": 32,
+    "revision": 4,
+    "zero_clear_only": true,
+    "span_modes": [
+      "scalar",
+      "revision2-neon",
+      "guarded-neon",
+      "scalar-prefix-neon",
+      "prefix-unguarded-neon",
+      "triangle-dispatch"
+    ],
+    "mixed_scene": 7,
+    "fixed_mode": "dispatch",
+    "patched_source_sha256": {
+      "ztriangle.c": "644e43e7c038db09ac595e0f6f3476ce5212b3f07545c618a200c001fc61fa68",
+      "ztriangle.h": "702442d57191623b07aff619d7f77af527c60b0de46133481da13ec93b3c948f",
+      "zbuffer.c": "81caf355ae5fc039dbb0e6adcf97bf85eda0191dc115eaab4e74ddeda73a6c09"
+    }
+  }
+}

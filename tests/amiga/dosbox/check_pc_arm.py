@@ -438,10 +438,12 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
     assert values[0]==sum(values[1:]) and all(values),values
   print('PASS TinyGL internal A/B image/depth hashes, stage accounting, cleanup; model timings only',flush=True)
  if json.loads((OUT/'build.json').read_text()).get('tinygl_raster') and mode not in ('neon-denied','invalid-options'):
-  assert (get(0x188e00),get(0x188e04),get(0x188e08),get(0x188e0c))==(0x52535431,0,7,1),[hex(get(0x188e00+i*4)) for i in range(4)]
-  for i,n in enumerate((1024,128,32,32,0,0,0)):
+  revision=json.loads((OUT/'build.json').read_text())['tinygl']['raster_experiment']['revision']
+  revised=revision>=3
+  assert (get(0x188e00),get(0x188e04),get(0x188e08),get(0x188e0c))==((0x52535433,0,8,1) if revision>=4 else (0x52535432,0,8,1) if revised else (0x52535431,0,7,1)),[hex(get(0x188e00+i*4)) for i in range(4)]
+  for i,n in enumerate((1024,128,32,32,32,32,32,32) if revision>=4 else (1024,128,32,32,0,0,0)+((32,) if revised else ())):
    o=0x188e10+i*48
-   assert (get(o),get(o+4),get(o+8))==(i,n,2) and get(o+12)
+   assert (get(o),get(o+4),get(o+8))==(i,n,1 if revision>=4 else 2) and get(o+12)
    for m in range(4):assert get(o+16+m*8) or get(o+20+m*8)
   print('PASS TinyGL raster/clear kernel self-checks, four-method colour/depth hashes, cleanup; model timing only',flush=True)
  if json.loads((OUT/'build.json').read_text()).get('pixel_bench') and mode!='neon-denied':

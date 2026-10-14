@@ -1,0 +1,3 @@
+PASS 123648 span cases across three modes and random/rejected/equal/mixed depth, exact integer recurrence, depth variants, alignments and untouched tails
+PASS clears: 536 tail/alignment cases, 560 pitched/masked/nonzero comparisons
+PASS 20 complete scene/depth combinations, 4 methods, exact colour/depth buffers, cleanup

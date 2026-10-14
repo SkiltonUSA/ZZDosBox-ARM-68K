@@ -16,7 +16,7 @@
     "clock": "emulated guest clock; not physical CPU speed equivalence"
   },
   "latest_backup": "2026-10-14",
-  "latest_scope": "Current DOSBox sources/tests, developer and native TinyGL/matrix research, exact diagnostic binaries and physical evidence; installed Direct runtime unchanged",
+  "latest_scope": "TinyGL hidden-pixel rejection, unguarded packing, triangle dispatch and textured controls; exact diagnostic builds, native/ARM/physical evidence and CPU-settings review; installed Direct runtime unchanged",
   "current_dos_runtime_sha256": "cccfd75208ea662f0ce8036d8ab1cbccfde8ac2846715ddfd0d338272d5a6aa0",
   "scanline_experiment_sha256": "02442db69194befb55f8644c61badc01655bcc493d63adc11a3051ef75d89144",
   "tinygl_revision": "c2e48591a6bfba1a85f1b87a78dcf1abf7dff57a"

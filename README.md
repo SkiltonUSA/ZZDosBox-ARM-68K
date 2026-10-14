@@ -157,11 +157,15 @@ raster paths. Our integration adds bounded memory allocation, pixel presentation
 and experimental A9 NEON routines. It is software rendering, not FPGA 3D acceleration.
 Direct remains the default renderer.
 
-Native TinyGL tests measured **+22.93% visible-fill throughput** and **+7.75%
-zero-clear throughput**, but NEON lost **18.66%** on mostly hidden triangles.
-A separate compiler comparison found `-O3` **14% lower throughput** than
-`-O2` on original visible fill. These are offscreen native-rendering results,
-not DOS game FPS gains; the experimental changes are not promoted.
+The latest native TinyGL experiment measured **+28.59% visible fill**,
+**+49.00% hidden fill** and **+33.37% mixed colour fill** using
+scalar rejection, unguarded NEON packing and per-triangle dispatch. Small triangles
+and clipping stay within 1% of scalar speed. Mixed textured scenes gain
+**5.20%**; pure texture paths are unchanged. These are offscreen
+native-rendering results, not DOS game FPS gains; the changes remain experimental.
+
+[Packing, dispatch and textured results](docs/amiga-tinygl-packing-experiment.md) ·
+[Hidden-pixel rejection](docs/amiga-tinygl-rejection-experiment.md)
 
 [Raster results](docs/amiga-tinygl-raster-experiment.md) ·
 [Compiler comparison and C-Chads review](docs/amiga-tinygl-compiler-experiment.md) ·
@@ -190,10 +194,16 @@ are single runs; the latest VFP result uses two runs per build.
 - **Adaptive — reduce frame presentation frequency:** **+13.5% Doom**, 7.27 → 8.25 FPS; optional, achieved by presenting fewer frames. Normal remains the default. [Results](amiga/records/2026-10-13/dosbox-presentation/results.json)
 - **OpenGL — experimental TinyGL software rendering on the A9:** **−32.5% Doom versus Direct**, 7.00 → 4.72 FPS in one matched pair with profiling enabled. This adds a software rendering stage; it is not FPGA 3D acceleration. Direct remains the default. [Results](amiga/records/2026-10-13/dosbox-opengl/method.md)
 - **VFP — hardware floating-point PIC event scheduling:** **+4.7% Doom**, 7.29 → 7.64 FPS averaged across two runs per build, with no skipped frames. [Report](docs/performance-pic-vfp.md)
+- **TinyGL SIMD / NEON — exact integer colour spans and zero clearing:** **+22.93% visible fill / +7.75% zero clear**, but **−18.66% mostly hidden fill**. Native offscreen scenes, not DOS game FPS; experimental. [Report](docs/amiga-tinygl-raster-experiment.md)
+- **Compiler selection — retain O2:** O3 and automatic vectorisation gave **about 14% lower original-fill throughput**. Native TinyGL, three runs per build. [Report](docs/amiga-tinygl-compiler-experiment.md)
+- **Scalar rejection + NEON — skip hidden span prefixes:** **+47.30% mostly hidden fill / +12.79% mixed fill / +2.89% visible fill**, with about **3% lower small-triangle throughput**. Dedicated native builds, three runs each; experimental. [Report](docs/amiga-tinygl-rejection-experiment.md)
+- **Scalar/NEON triangle dispatch + unguarded packing:** **+28.59% visible fill / +49.00% hidden fill / +33.37% mixed colour fill**; small geometry/clipping within 1% of scalar. Mixed textured scenes **+5.20%**, pure textures unchanged. Native research only, three runs per build. [Report](docs/amiga-tinygl-packing-experiment.md)
 
 These techniques use the existing XACP application/host execution model;
 none required a firmware change. Future firmware work should preserve the
 Core1, framebuffer-handoff and processor-state restoration contracts.
+
+CPU cycles are a fixed workload budget; see the [CPU settings review](docs/amiga-dosbox-cpu-settings-review.md) for supported controls and the next measurement plan.
 
 ## Windows measurements
 

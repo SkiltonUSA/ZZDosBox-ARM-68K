@@ -1,0 +1,706 @@
+{
+  "fixed_mode": "dispatch",
+  "build_crc32": "95C0D0E8",
+  "report_revision": 3,
+  "timer_hz": 333333333,
+  "scope": "private 640x480 native TinyGL; scalar transforms; profiler disabled; no DOS game/display FPS inference",
+  "runs": [
+    {
+      "log": "amiga/records/2026-10-14/tinygl-packing/dispatch/packing-dispatch-1.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "ticks": {
+            "repeat-0": 36846036,
+            "repeat-1": 36820457,
+            "repeat-2": 36790642,
+            "repeat-3": 36850855
+          },
+          "us": {
+            "repeat-0": 6908.631756908631,
+            "repeat-1": 6903.835694403835,
+            "repeat-2": 6898.245381898246,
+            "repeat-3": 6909.535319409535
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "ticks": {
+            "repeat-0": 23350389,
+            "repeat-1": 23323196,
+            "repeat-2": 23256196,
+            "repeat-3": 23316238
+          },
+          "us": {
+            "repeat-0": 4378.197941878198,
+            "repeat-1": 4373.099254373099,
+            "repeat-2": 4360.536754360537,
+            "repeat-3": 4371.794629371794
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "ticks": {
+            "repeat-0": 322001045,
+            "repeat-1": 321943480,
+            "repeat-2": 321981073,
+            "repeat-3": 322036958
+          },
+          "us": {
+            "repeat-0": 60375.1959978752,
+            "repeat-1": 60364.402560364404,
+            "repeat-2": 60371.45124787145,
+            "repeat-3": 60381.92968538193
+          }
+        },
+        "3": {
+          "name": "occluded-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "ccddff61",
+          "ticks": {
+            "repeat-0": 145267836,
+            "repeat-1": 145295411,
+            "repeat-2": 145535768,
+            "repeat-3": 145411523
+          },
+          "us": {
+            "repeat-0": 27237.71927723772,
+            "repeat-1": 27242.88958974289,
+            "repeat-2": 27287.956527287955,
+            "repeat-3": 27264.66058976466
+          }
+        },
+        "4": {
+          "name": "texture-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "4b2ca271",
+          "ticks": {
+            "repeat-0": 1147203641,
+            "repeat-1": 1147644926,
+            "repeat-2": 1147281361,
+            "repeat-3": 1147263218
+          },
+          "us": {
+            "repeat-0": 215100.68290260067,
+            "repeat-1": 215183.42384018344,
+            "repeat-2": 215115.25540261526,
+            "repeat-3": 215111.85359011183
+          }
+        },
+        "5": {
+          "name": "texture-hidden",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "b51db76e",
+          "ticks": {
+            "repeat-0": 317847765,
+            "repeat-1": 318036035,
+            "repeat-2": 317903485,
+            "repeat-3": 317979633
+          },
+          "us": {
+            "repeat-0": 59596.455997096455,
+            "repeat-1": 59631.756622131754,
+            "repeat-2": 59606.9034971069,
+            "repeat-3": 59621.18124712118
+          }
+        },
+        "6": {
+          "name": "texture-mixed",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "a7843612",
+          "ticks": {
+            "repeat-0": 690611988,
+            "repeat-1": 690676568,
+            "repeat-2": 690809308,
+            "repeat-3": 690668244
+          },
+          "us": {
+            "repeat-0": 129489.74787948975,
+            "repeat-1": 129501.85662950187,
+            "repeat-2": 129526.74537952674,
+            "repeat-3": 129500.29587950029
+          }
+        },
+        "7": {
+          "name": "mixed-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "6e9cefb9",
+          "ticks": {
+            "repeat-0": 254602767,
+            "repeat-1": 254613303,
+            "repeat-2": 254515699,
+            "repeat-3": 254612587
+          },
+          "us": {
+            "repeat-0": 47738.01886023802,
+            "repeat-1": 47739.994360239994,
+            "repeat-2": 47721.69361022169,
+            "repeat-3": 47739.86011023986
+          }
+        }
+      }
+    },
+    {
+      "log": "amiga/records/2026-10-14/tinygl-packing/dispatch/packing-dispatch-2.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "ticks": {
+            "repeat-0": 36840981,
+            "repeat-1": 36838559,
+            "repeat-2": 36837086,
+            "repeat-3": 36850106
+          },
+          "us": {
+            "repeat-0": 6907.683944407683,
+            "repeat-1": 6907.229819407229,
+            "repeat-2": 6906.953631906953,
+            "repeat-3": 6909.394881909395
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "ticks": {
+            "repeat-0": 23314379,
+            "repeat-1": 23308210,
+            "repeat-2": 23285093,
+            "repeat-3": 23340340
+          },
+          "us": {
+            "repeat-0": 4371.446066871446,
+            "repeat-1": 4370.289379370289,
+            "repeat-2": 4365.954941865955,
+            "repeat-3": 4376.313754376314
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "ticks": {
+            "repeat-0": 322035650,
+            "repeat-1": 321978919,
+            "repeat-2": 321920366,
+            "repeat-3": 321984946
+          },
+          "us": {
+            "repeat-0": 60381.684435381685,
+            "repeat-1": 60371.04737287105,
+            "repeat-2": 60360.06868536007,
+            "repeat-3": 60372.17743537218
+          }
+        },
+        "3": {
+          "name": "occluded-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "ccddff61",
+          "ticks": {
+            "repeat-0": 145371823,
+            "repeat-1": 145231819,
+            "repeat-2": 145567109,
+            "repeat-3": 145188945
+          },
+          "us": {
+            "repeat-0": 27257.216839757217,
+            "repeat-1": 27230.966089730966,
+            "repeat-2": 27293.832964793834,
+            "repeat-3": 27222.927214722928
+          }
+        },
+        "4": {
+          "name": "texture-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "4b2ca271",
+          "ticks": {
+            "repeat-0": 1147402899,
+            "repeat-1": 1147425896,
+            "repeat-2": 1147511241,
+            "repeat-3": 1147480794
+          },
+          "us": {
+            "repeat-0": 215138.04377763803,
+            "repeat-1": 215142.35571514236,
+            "repeat-2": 215158.35790265835,
+            "repeat-3": 215152.64909015264
+          }
+        },
+        "5": {
+          "name": "texture-hidden",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "b51db76e",
+          "ticks": {
+            "repeat-0": 317815036,
+            "repeat-1": 317915716,
+            "repeat-2": 317800839,
+            "repeat-3": 317878060
+          },
+          "us": {
+            "repeat-0": 59590.31930959032,
+            "repeat-1": 59609.196809609195,
+            "repeat-2": 59587.657372087655,
+            "repeat-3": 59602.13630960214
+          }
+        },
+        "6": {
+          "name": "texture-mixed",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "a7843612",
+          "ticks": {
+            "repeat-0": 690915854,
+            "repeat-1": 690812072,
+            "repeat-2": 690866054,
+            "repeat-3": 690867433
+          },
+          "us": {
+            "repeat-0": 129546.72275454673,
+            "repeat-1": 129527.26362952727,
+            "repeat-2": 129537.3852545374,
+            "repeat-3": 129537.64381703764
+          }
+        },
+        "7": {
+          "name": "mixed-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "6e9cefb9",
+          "ticks": {
+            "repeat-0": 254574351,
+            "repeat-1": 254552256,
+            "repeat-2": 254544958,
+            "repeat-3": 254549717
+          },
+          "us": {
+            "repeat-0": 47732.690860232695,
+            "repeat-1": 47728.548047728545,
+            "repeat-2": 47727.17967272718,
+            "repeat-3": 47728.07198522807
+          }
+        }
+      }
+    },
+    {
+      "log": "amiga/records/2026-10-14/tinygl-packing/dispatch/packing-dispatch-3.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "ticks": {
+            "repeat-0": 36823925,
+            "repeat-1": 36845045,
+            "repeat-2": 36848963,
+            "repeat-3": 36895963
+          },
+          "us": {
+            "repeat-0": 6904.485944404486,
+            "repeat-1": 6908.445944408446,
+            "repeat-2": 6909.18056940918,
+            "repeat-3": 6917.993069417993
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "ticks": {
+            "repeat-0": 23291143,
+            "repeat-1": 23316931,
+            "repeat-2": 23267457,
+            "repeat-3": 23312887
+          },
+          "us": {
+            "repeat-0": 4367.089316867089,
+            "repeat-1": 4371.924566871924,
+            "repeat-2": 4362.648191862649,
+            "repeat-3": 4371.166316871167
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "ticks": {
+            "repeat-0": 322153857,
+            "repeat-1": 322223293,
+            "repeat-2": 322112399,
+            "repeat-3": 322204914
+          },
+          "us": {
+            "repeat-0": 60403.84824790384,
+            "repeat-1": 60416.867497916865,
+            "repeat-2": 60396.074872896075,
+            "repeat-3": 60413.421435413424
+          }
+        },
+        "3": {
+          "name": "occluded-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "ccddff61",
+          "ticks": {
+            "repeat-0": 145179053,
+            "repeat-1": 145233582,
+            "repeat-2": 145247103,
+            "repeat-3": 145116787
+          },
+          "us": {
+            "repeat-0": 27221.072464721074,
+            "repeat-1": 27231.296652231296,
+            "repeat-2": 27233.83183973383,
+            "repeat-3": 27209.3975897094
+          }
+        },
+        "4": {
+          "name": "texture-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "4b2ca271",
+          "ticks": {
+            "repeat-0": 1147484224,
+            "repeat-1": 1147359701,
+            "repeat-2": 1147295565,
+            "repeat-3": 1147181285
+          },
+          "us": {
+            "repeat-0": 215153.29221515328,
+            "repeat-1": 215129.94415262996,
+            "repeat-2": 215117.91865261793,
+            "repeat-3": 215096.49115259649
+          }
+        },
+        "5": {
+          "name": "texture-hidden",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "b51db76e",
+          "ticks": {
+            "repeat-0": 317964318,
+            "repeat-1": 317823965,
+            "repeat-2": 317970843,
+            "repeat-3": 317882256
+          },
+          "us": {
+            "repeat-0": 59618.30968461831,
+            "repeat-1": 59591.99349709199,
+            "repeat-2": 59619.53312211953,
+            "repeat-3": 59602.92305960292
+          }
+        },
+        "6": {
+          "name": "texture-mixed",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "a7843612",
+          "ticks": {
+            "repeat-0": 690624577,
+            "repeat-1": 690614160,
+            "repeat-2": 690769767,
+            "repeat-3": 690501622
+          },
+          "us": {
+            "repeat-0": 129492.10831699212,
+            "repeat-1": 129490.15512949016,
+            "repeat-2": 129519.33144201932,
+            "repeat-3": 129469.05425446905
+          }
+        },
+        "7": {
+          "name": "mixed-fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "6e9cefb9",
+          "ticks": {
+            "repeat-0": 254668138,
+            "repeat-1": 254701875,
+            "repeat-2": 254743846,
+            "repeat-3": 254517756
+          },
+          "us": {
+            "repeat-0": 47750.275922750276,
+            "repeat-1": 47756.60161025661,
+            "repeat-2": 47764.471172764475,
+            "repeat-3": 47722.07929772208
+          }
+        }
+      }
+    }
+  ],
+  "summary": [
+    {
+      "name": "geometry",
+      "hash": "88b1e9f7",
+      "triangles": 1024,
+      "median_us": {
+        "repeat-0": 6907.683944407683,
+        "repeat-1": 6907.229819407229,
+        "repeat-2": 6906.953631906953,
+        "repeat-3": 6909.535319409535
+      },
+      "range_us": {
+        "repeat-0": [
+          6904.485944404486,
+          6908.631756908631
+        ],
+        "repeat-1": [
+          6903.835694403835,
+          6908.445944408446
+        ],
+        "repeat-2": [
+          6898.245381898246,
+          6909.18056940918
+        ],
+        "repeat-3": [
+          6909.394881909395,
+          6917.993069417993
+        ]
+      },
+      "throughput_gain_percent": {},
+      "time_reduction_percent": {}
+    },
+    {
+      "name": "clipping",
+      "hash": "0628ae41",
+      "triangles": 128,
+      "median_us": {
+        "repeat-0": 4371.446066871446,
+        "repeat-1": 4371.924566871924,
+        "repeat-2": 4362.648191862649,
+        "repeat-3": 4371.794629371794
+      },
+      "range_us": {
+        "repeat-0": [
+          4367.089316867089,
+          4378.197941878198
+        ],
+        "repeat-1": [
+          4370.289379370289,
+          4373.099254373099
+        ],
+        "repeat-2": [
+          4360.536754360537,
+          4365.954941865955
+        ],
+        "repeat-3": [
+          4371.166316871167,
+          4376.313754376314
+        ]
+      },
+      "throughput_gain_percent": {},
+      "time_reduction_percent": {}
+    },
+    {
+      "name": "fill",
+      "hash": "88077dd1",
+      "triangles": 32,
+      "median_us": {
+        "repeat-0": 60381.684435381685,
+        "repeat-1": 60371.04737287105,
+        "repeat-2": 60371.45124787145,
+        "repeat-3": 60381.92968538193
+      },
+      "range_us": {
+        "repeat-0": [
+          60375.1959978752,
+          60403.84824790384
+        ],
+        "repeat-1": [
+          60364.402560364404,
+          60416.867497916865
+        ],
+        "repeat-2": [
+          60360.06868536007,
+          60396.074872896075
+        ],
+        "repeat-3": [
+          60372.17743537218,
+          60413.421435413424
+        ]
+      },
+      "throughput_gain_percent": {},
+      "time_reduction_percent": {}
+    },
+    {
+      "name": "occluded-fill",
+      "hash": "ccddff61",
+      "triangles": 32,
+      "median_us": {
+        "repeat-0": 27237.71927723772,
+        "repeat-1": 27231.296652231296,
+        "repeat-2": 27287.956527287955,
+        "repeat-3": 27222.927214722928
+      },
+      "range_us": {
+        "repeat-0": [
+          27221.072464721074,
+          27257.216839757217
+        ],
+        "repeat-1": [
+          27230.966089730966,
+          27242.88958974289
+        ],
+        "repeat-2": [
+          27233.83183973383,
+          27293.832964793834
+        ],
+        "repeat-3": [
+          27209.3975897094,
+          27264.66058976466
+        ]
+      },
+      "throughput_gain_percent": {},
+      "time_reduction_percent": {}
+    },
+    {
+      "name": "texture-fill",
+      "hash": "4b2ca271",
+      "triangles": 32,
+      "median_us": {
+        "repeat-0": 215138.04377763803,
+        "repeat-1": 215142.35571514236,
+        "repeat-2": 215117.91865261793,
+        "repeat-3": 215111.85359011183
+      },
+      "range_us": {
+        "repeat-0": [
+          215100.68290260067,
+          215153.29221515328
+        ],
+        "repeat-1": [
+          215129.94415262996,
+          215183.42384018344
+        ],
+        "repeat-2": [
+          215115.25540261526,
+          215158.35790265835
+        ],
+        "repeat-3": [
+          215096.49115259649,
+          215152.64909015264
+        ]
+      },
+      "throughput_gain_percent": {},
+      "time_reduction_percent": {}
+    },
+    {
+      "name": "texture-hidden",
+      "hash": "b51db76e",
+      "triangles": 32,
+      "median_us": {
+        "repeat-0": 59596.455997096455,
+        "repeat-1": 59609.196809609195,
+        "repeat-2": 59606.9034971069,
+        "repeat-3": 59602.92305960292
+      },
+      "range_us": {
+        "repeat-0": [
+          59590.31930959032,
+          59618.30968461831
+        ],
+        "repeat-1": [
+          59591.99349709199,
+          59631.756622131754
+        ],
+        "repeat-2": [
+          59587.657372087655,
+          59619.53312211953
+        ],
+        "repeat-3": [
+          59602.13630960214,
+          59621.18124712118
+        ]
+      },
+      "throughput_gain_percent": {},
+      "time_reduction_percent": {}
+    },
+    {
+      "name": "texture-mixed",
+      "hash": "a7843612",
+      "triangles": 32,
+      "median_us": {
+        "repeat-0": 129492.10831699212,
+        "repeat-1": 129501.85662950187,
+        "repeat-2": 129526.74537952674,
+        "repeat-3": 129500.29587950029
+      },
+      "range_us": {
+        "repeat-0": [
+          129489.74787948975,
+          129546.72275454673
+        ],
+        "repeat-1": [
+          129490.15512949016,
+          129527.26362952727
+        ],
+        "repeat-2": [
+          129519.33144201932,
+          129537.3852545374
+        ],
+        "repeat-3": [
+          129469.05425446905,
+          129537.64381703764
+        ]
+      },
+      "throughput_gain_percent": {},
+      "time_reduction_percent": {}
+    },
+    {
+      "name": "mixed-fill",
+      "hash": "6e9cefb9",
+      "triangles": 32,
+      "median_us": {
+        "repeat-0": 47738.01886023802,
+        "repeat-1": 47739.994360239994,
+        "repeat-2": 47727.17967272718,
+        "repeat-3": 47728.07198522807
+      },
+      "range_us": {
+        "repeat-0": [
+          47732.690860232695,
+          47750.275922750276
+        ],
+        "repeat-1": [
+          47728.548047728545,
+          47756.60161025661
+        ],
+        "repeat-2": [
+          47721.69361022169,
+          47764.471172764475
+        ],
+        "repeat-3": [
+          47722.07929772208,
+          47739.86011023986
+        ]
+      },
+      "throughput_gain_percent": {},
+      "time_reduction_percent": {}
+    }
+  ]
+}

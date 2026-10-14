@@ -1,5 +1,8 @@
 # TinyGL NEON spans and buffer clears
 
+Follow-up: [hidden-pixel rejection and dedicated-build measurements](amiga-tinygl-rejection-experiment.md).
+The revision 1/2 results below are preserved as historical evidence.
+
 This follow-up targets the triangle-drawing bottleneck identified by the
 [internal-transform experiment](amiga-tinygl-internal-transforms.md). It is a
 separate native A9 diagnostic. It does not intercept DOS game geometry or

@@ -46,3 +46,16 @@ The backup operation did not rerun hardware workloads or replace the installed
 Direct executable. Exact diagnostic binaries and original source snapshots are
 preserved under `amiga/records/2026-10-14/`; the export build script retains its
 configurable `DOSBOX_ARM_COMMAND` adaptation. No release tag was created.
+
+## TinyGL rejection and packing follow-up
+
+Standalone `make test-host` and dispatch ASan/UBSan/exact-image tests passed.
+Four dedicated builds passed sixteen linked ARM lifecycle checks and twelve
+physical runs; only their ztriangle ARM object differs. Every physical scene
+matches its native colour/depth hash. The separate earlier rejection experiment
+and its nine physical runs are also preserved. These are native private-buffer
+results, not DOS FPS gains. The installed executable remains unchanged.
+
+Exact sources, binaries, tests and checksums are in the dated rejection/packing
+records. Local workspace prefixes in text evidence are normalised; binary bytes
+and hardware report values are unchanged. No release tag was created.
