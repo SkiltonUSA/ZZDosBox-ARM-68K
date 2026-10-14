@@ -23,6 +23,8 @@ static struct dl_session settings;
 static int configured;
 static char boot_name[FS_NAME_SIZE],hdd_name[FS_NAME_SIZE];
 static unsigned memory_override;
+static int machine_override=-1;
+static unsigned monochrome;
 struct Device *TimerBase;
 static volatile uint8_t *shared;
 static const struct ad_io *syncio;
@@ -32,6 +34,13 @@ static struct DbWindow *deferred_console;
 void pc_console_cleanup(void){db_window_close(deferred_console);deferred_console=NULL;}
 static int testmode;
 static int profiling;
+#ifdef DB_VIDEO_TRACE
+#include "../launcher/developer.h"
+static unsigned trace_enabled,break_phase,break_frame;
+#endif
+#ifdef DB_PRESENT_TEST
+static unsigned present_mode,present_hz=60;
+#endif
 static ULONG duration=8000;
 /* Keep the original tick wait available for controlled A/B measurements. */
 static ULONG poll_ms=1;
@@ -54,19 +63,56 @@ int db_arguments(int argc,char **argv){
   else if(!strcmp(argv[i],"--window-size")&&i+1<argc){const char *n=argv[++i];if(strlen(n)!=1||!strchr("012",*n))return -1;settings.size=*n-'0';}
   else if(!strcmp(argv[i],"--fps"))settings.fps=1;
   else if(!strcmp(argv[i],"--memory")&&i+1<argc){const char *m=argv[++i];if(strlen(m)!=1||!strchr("1248",*m))return -1;memory_override=*m-'0';}
+  else if(!strcmp(argv[i],"--monochrome")&&i+1<argc){static const char*names[]={"white","amber","green","paperwhite"};const char*m=argv[++i];for(monochrome=0;monochrome<4&&strcmp(m,names[monochrome]);monochrome++){}if(monochrome==4)return -1;}
+  else if(!strcmp(argv[i],"--machine")&&i+1<argc){
+   static const char*names[]={"vga","ega","cga","s3","tandy","pcjr","hercules"};unsigned n;const char*m=argv[++i];
+   for(n=0;n<PC_ADAPTER_COUNT&&strcmp(m,names[n]);n++){}if(n==PC_ADAPTER_COUNT)return -1;machine_override=n;
+  }
   else if(!strcmp(argv[i],"--hdd")&&i+1<argc){unsigned j;const char *name=argv[++i];if(strlen(name)>=sizeof(hdd_name))return -1;strcpy(hdd_name,name);for(j=0;hdd_name[j];j++)if(hdd_name[j]>='a'&&hdd_name[j]<='z')hdd_name[j]-=32;if(!fs_name_valid(hdd_name))return -1;duration=0;}
   else if(!strcmp(argv[i],"--boot")&&i+1<argc){unsigned j;const char *name=argv[++i];if(strlen(name)>=sizeof(boot_name))return -1;strcpy(boot_name,name);for(j=0;boot_name[j];j++)if(boot_name[j]>='a'&&boot_name[j]<='z')boot_name[j]-=32;if(!fs_name_valid(boot_name))return -1;duration=0;}
   else if(!strcmp(argv[i],"--selftest"))testmode=1;
   else if(!strcmp(argv[i],"--cancel-read"))testmode=2;
   else if(!strcmp(argv[i],"--serial-video"))pc_display_pipeline(0);
   else if(!strcmp(argv[i],"--pipeline-video"))pc_display_pipeline(1);
+#ifdef DB_PRESENT_TEST
+  else if(!strcmp(argv[i],"--presentation")&&i+1<argc){
+   const char*m=argv[++i];
+   if(!strcmp(m,"off"))present_mode=0;
+   else if(!strcmp(m,"adaptive"))present_mode=1;
+   else if(strlen(m)==1&&strchr("234",*m))present_mode=*m-'0';
+   else return -1;
+  }
+  else if(!strcmp(argv[i],"--present-hz")&&i+1<argc){
+   const char*m=argv[++i];
+   if(!strcmp(m,"30"))present_hz=30;
+   else if(!strcmp(m,"50"))present_hz=50;
+   else if(!strcmp(m,"60"))present_hz=60;
+   else return -1;
+  }
+#endif
 #ifdef DB_SCANLINE_TEST
+  else if(!strcmp(argv[i],"--scanlines")&&i+1<argc){
+   const char*m=argv[++i];
+   if(!strcmp(m,"off"))pc_display_scanlines(0);
+   else if(!strcmp(m,"classic"))pc_display_scanlines(2);
+   else if(!strcmp(m,"soft"))pc_display_scanlines(3);
+   else if(!strcmp(m,"gradient"))pc_display_scanlines(4);
+   else return -1;
+  }
   else if(!strcmp(argv[i],"--scanline-copy")&&i+1<argc){
    const char *m=argv[++i];
    if(!strcmp(m,"off"))pc_display_scanlines(0);
    else if(!strcmp(m,"full"))pc_display_scanlines(1);
    else if(!strcmp(m,"skip"))pc_display_scanlines(2);
    else return -1;
+  }
+#endif
+#ifdef DB_VIDEO_TRACE
+  else if(!strcmp(argv[i],"--trace-video"))trace_enabled=1;
+  else if((!strcmp(argv[i],"--break-before")||!strcmp(argv[i],"--break-after"))&&i+1<argc){
+   if(break_phase)return -1;
+   break_phase=!strcmp(argv[i],"--break-before")?1:2;
+   if(!dl_dev_frame(argv[++i],&break_frame))return -1;
   }
 #endif
   else if(!strcmp(argv[i],"--profile"))profiling=1;
@@ -84,6 +130,7 @@ int db_arguments(int argc,char **argv){
   }
   else {puts("Usage: ZZDosBox [--drive drawer] [--boot FLOPPY.IMG] [--hdd HDD.IMG] [--command command] [--poll-ms 1|4|20] [--serial-video|--pipeline-video] [--profile] [--selftest|--cancel-read]");return -1;}
  }
+ if(machine_override>=0){settings.machine=machine_override;configured=1;}
  if(memory_override){settings.memory=memory_override;configured=1;}
  if(!configured&&!testmode&&!auto_command[0]&&!boot_name[0]&&!hdd_name[0]){puts("PC prototype requires --command; use the Shell build for an interactive prompt.");return -1;}
  return 1;
@@ -123,9 +170,16 @@ static int drain(struct DbWindow *console){
  if(n&&console&&!db_window_write(console,data,n))return 0;
  publish(DB_TX_READ,r+n);return 1;
 }
+#ifdef DB_VIDEO_TRACE
+#include "video_trace_host.h"
+#include "video_debug_host.h"
+#endif
 static int run(struct DbWindow *console){
  ULONG start=us(),stop_time=0;int sent=0,stopping=0,forced=0,transport_ok=1;
  ULONG token=(sequence+1)^ad_get(shared,ZZ_CONTROL);UBYTE keys[64];
+#ifdef DB_VIDEO_TRACE
+ trace_seen=0;puts("VIDEO_TRACE diagnostic build; timings are not benchmarks");fflush(stdout);
+#endif
  memset(transcript,0,sizeof(transcript));received=mismatch=0;hash=2166136261u;
  /* Deliberately cross uint32 wrap in automated tests. */
  publish(DB_RX_WRITE,testmode?0xfffffffcu:0);publish(DB_RX_READ,testmode?0xfffffffcu:0);
@@ -133,8 +187,15 @@ static int run(struct DbWindow *console){
  publish(MB_HOST+8,token);publish(MB_HOST+MB_OP,MB_VERIFY);publish(MB_HOST+MB_SEQ,++sequence);
  for(;;){
   ULONG ack,error;int want_stop=0,midi_result;
+#ifdef DB_VIDEO_TRACE
+  if(trace_enabled&&!pc_display_locked()&&!pc_display_pending())video_trace_poll();
+#endif
   if(receive(PC_CONSOLE_WAIT)&&!pc_display_locked()&&!pc_display_pending())pc_display_console(1);
   if(!stopping){int display_result=pc_display_service();if(display_result<=0){if(!display_result)transport_ok=0;want_stop=1;}}
+#ifdef DB_VIDEO_TRACE
+  {int debug_result=video_debug_service(stopping);
+   if(debug_result<=0){want_stop=1;if(debug_result<0)transport_ok=0;}}
+#endif
   if(!(midi_result=db_midi_host_service())){transport_ok=0;want_stop=1;}
   if(!db_fs_service()){transport_ok=0;want_stop=1;}
   if(!drain(pc_display_locked()?NULL:console)){transport_ok=0;want_stop=1;}
@@ -161,10 +222,21 @@ static int run(struct DbWindow *console){
   syncio->pull(shared+MB_REPLY,320,NULL);ack=ad_get(shared+MB_REPLY,MB_ACK);error=ad_get(shared+MB_REPLY,MB_ERROR);
   if(ack==sequence&&(midi_result!=2||stopping||!transport_ok)&&(!pc_display_pending()||stopping||!transport_ok)){
    int ok=transport_ok&&ad_get(shared+MB_REPLY,68)==(token^ZZ_XOR);
+#ifdef DB_VIDEO_TRACE
+   if(trace_enabled&&!pc_display_locked()&&!pc_display_pending())video_trace_poll();
+#endif
    if(!drain(pc_display_locked()?NULL:console))ok=0;
    if(*boot_name||*hdd_name){syncio->pull(shared+PC_BOOT_TEXT,2004,NULL);if(ad_get(shared,PC_BOOT_TEXT+2000)==0x424f4f54){unsigned row,col;char text[81];puts("BOOT TEXT:");for(row=0;row<25;row++){for(col=0;col<80;col++)text[col]=shared[PC_BOOT_TEXT+row*80+col];text[80]=0;puts(text);}}}
    if(error&&error!=2)printf("DOS error: %.*s\n",159,(const char *)(shared+MB_REPLY+128));
+#ifdef DB_OPENGL
+   {unsigned o=PC_VIDEO+0xde0u;syncio->pull(shared+o,28,NULL);printf("OPENGL magic=%08x frames=%u ticks_hi=%u ticks_lo=%u closed=%u direct=%u fallback=%u\n",ad_get(shared,o),ad_get(shared,o+4),ad_get(shared,o+8),ad_get(shared,o+12),ad_get(shared,o+16),ad_get(shared,o+20),ad_get(shared,o+24));}
+#endif
+   printf("VIDEO adapter=%u source=%ux%u monochrome=%u\n",settings.machine,receive(PC_VIDEO+4),receive(PC_VIDEO+8),monochrome);
    printf("CPU_CYCLES applied=%u\n",receive(PC_CYCLE_APPLIED));
+#ifdef DB_PRESENT_TEST
+   {unsigned o=PC_PRESENT_REPORT;syncio->pull(shared+o,PC_PRESENT_SIZE,NULL);
+    printf("PRESENT magic=%08x source=%u shown=%u skipped=%u divisor=%u changes=%u mode=%u hz=%u work_ticks=%u copy_ticks=%u total_copy=%08x%08x\n",ad_get(shared,o),ad_get(shared,o+4),ad_get(shared,o+8),ad_get(shared,o+12),ad_get(shared,o+16),ad_get(shared,o+20),ad_get(shared,o+24),ad_get(shared,o+28),ad_get(shared,o+32),ad_get(shared,o+36),ad_get(shared,o+40),ad_get(shared,o+44));}
+#endif
    printf("ARM_FPS tenths=%u\n",receive(PC_FPS_TENTHS));
    printf("PC frames=%u emulated_ms=%u wall_ms=%u timed_done=%u\n",value(9),value(10),(ULONG)(us()-start)/1000u,receive(PC_DONE));
    if(profiling){
@@ -185,7 +257,11 @@ static int run(struct DbWindow *console){
   }
   if(testmode==2&&received>=7&&(ULONG)(us()-start)>250000u){want_stop=1;forced=1;}
   if(SetSignal(0,SIGBREAKF_CTRL_C)&SIGBREAKF_CTRL_C)want_stop=1;
-  if(duration&&(testmode||auto_command[0])&&(ULONG)(us()-start)>90000000u){want_stop=1;transport_ok=0;}
+  if(duration&&(testmode||auto_command[0])
+#ifdef DB_VIDEO_TRACE
+     &&!break_phase
+#endif
+     &&(ULONG)(us()-start)>90000000u){want_stop=1;transport_ok=0;}
   if(want_stop&&!stopping){stopping=1;stop_time=us();publish(ZZ_STOP,1);}
   if(stopping&&(ULONG)(us()-stop_time)>3000000u){puts("Console stop timeout");return 20;}
   if(!poll_wait()){
@@ -213,16 +289,27 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected){
  pc_display_mode(settings.display);pc_display_size(settings.size);
  printf("DISPLAY_CONFIG mode=%s fps=%u system=%s\n",settings.display?"fullscreen":"window",settings.fps,(*hdd_name||*boot_name)?"booted DOS":"embedded DOS 5");
  publish(PC_OPTIONS,0);publish(PC_KEY_WRITE,0);publish(PC_KEY_READ,0);publish(PC_MOUSE_WRITE,0);publish(PC_MOUSE_READ,0);publish(PC_CONSOLE_WAIT,0);
- if(configured){publish(PC_OPTIONS+4,settings.memory);publish(PC_OPTIONS+8,settings.machine);publish(PC_OPTIONS+12,settings.cycles);publish(PC_OPTIONS,PC_OPTIONS_MAGIC);printf("SETTINGS memory_mb=%u machine=%u cycles=%u live=%u\n",settings.memory,settings.machine,settings.cycles,settings.live);}
+ if(configured){publish(PC_OPTIONS+4,settings.memory);publish(PC_OPTIONS+8,settings.machine);publish(PC_OPTIONS+12,settings.cycles);publish(PC_OPTIONS+16,monochrome);publish(PC_OPTIONS,PC_OPTIONS_MAGIC);printf("SETTINGS memory_mb=%u machine=%u cycles=%u live=%u\n",settings.memory,settings.machine,settings.cycles,settings.live);}
  publish(PC_CYCLE_REQUEST,configured?settings.cycles:3000);publish(PC_CYCLE_APPLIED,0);
  publish(PC_DURATION,duration);publish(PC_DONE,0);
  publish(PC_PROFILE,profiling);publish(PC_PROFILE+4,0);
+#ifdef DB_VIDEO_TRACE
+ publish(PC_TRACE,0);publish(PC_DEV_TRACE,trace_enabled);
+ publish(PC_DEV_PHASE,break_phase);publish(PC_DEV_FRAME,break_frame);
+ publish(PC_DEV_RESUME,0);publish(PC_DEV_PAUSED,0);
+#endif
+#ifdef DB_PRESENT_TEST
+ publish(PC_PRESENT_MODE,present_mode);publish(PC_PRESENT_HZ,present_hz);publish(PC_PRESENT_REPORT,0);
+#endif
  publish(PC_VIDEO+944,0);
  if(settings.cd_mode){ULONG count=db_cd_host_open(settings.cd_mode,settings.cd_path);if(!count){puts("Cannot mount CD: select a readable ISO9660 image or mounted CD device");goto done;}publish(PC_VIDEO+944,count);}
  if(!db_midi_host_open(base,io,settings.midi,settings.midi_port)){puts("Cannot connect selected CAMD MIDI output");goto done;}
  if(!pc_display_open(base,io)){puts("Cannot open PC display");goto done;}
  rc=run(console);
 done:
+#ifdef DB_VIDEO_TRACE
+ video_debug_close();
+#endif
  db_midi_host_close();db_cd_host_close();db_fs_close();
  if(pc_display_locked()){puts("Display lock retained for reset");}
  deferred_console=console;

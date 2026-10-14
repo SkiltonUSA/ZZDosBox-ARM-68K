@@ -1,0 +1,65 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 61042 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 21 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 61042 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 21 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0
+PASS identical PIC scheduling, guest output/time and pixels: fixture 500
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x150020c0 fixture requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x150020c0 fixture requests 15 read 32113 written 0 rc 0
+PASS identical PIC scheduling, guest output/time and pixels: fixture 3000
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 1034503 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 1034503 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0
+PASS identical PIC scheduling, guest output/time and pixels: fixture 10000
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 324277 heap 3906816
+PASS profile publication and exclusive totals speed unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry speed
+PASS ARM shell 0x150020c0 speed requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 324277 heap 3906816
+PASS profile publication and exclusive totals speed unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry speed
+PASS ARM shell 0x150020c0 speed requests 15 read 32113 written 0 rc 0
+PASS identical PIC scheduling, guest output/time and pixels: speed 6000
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 3906816
+PASS profile publication and exclusive totals smc unwound 0
+PASS ARM JIT guest self-modification / invalidation
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 22 dispatches 21 heap 4064576
+PASS profile publication and exclusive totals paging unwound 0
+PASS ARM protected-mode demand-page fault, full decoder and resume
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 30 dispatches 32 heap 3818816
+PASS profile publication and exclusive totals boot unwound 0
+PASS ARM BIOS boot/read/bounds, A20 aliasing, ROM protection and timed stop
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 27438 heap 3906816
+PASS profile publication and exclusive totals copy-stop unwound 1
+PASS cancellation during framebuffer write revokes mapping
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 4 dispatches 0 heap 3841216
+PASS profile publication and exclusive totals fs-stop unwound 0
+PASS ARM cancellation fs-stop
+PASS denied firmware SIMD access fails without executing NEON

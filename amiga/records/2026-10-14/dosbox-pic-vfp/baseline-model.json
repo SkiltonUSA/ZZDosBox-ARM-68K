@@ -1,0 +1,58 @@
+[
+  {
+    "mode": "fixture",
+    "cycles": 500,
+    "scheduler": {
+      "digest": "5013d46c5da4609ec11c3603a0ef1860a2fafbc6fe341a1c655c1b878f40c72a",
+      "calls": 37015
+    },
+    "result": {
+      "source": 21,
+      "guest_ms": 329,
+      "output": "DosBox ZZ9000 project                         0.11.0-dev\r\nAmigaOS - 32-bit | DOSBox / libretro\r\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\r\n\r\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\r\nF10: close session             HELP: DOS commands\r\n\r\nC:\\>egatest\r\nEGA/PIT PASS\r\n\r\nC:\\>exit\r\n\r\n",
+      "shown": 21
+    }
+  },
+  {
+    "mode": "fixture",
+    "cycles": 3000,
+    "scheduler": {
+      "digest": "a666224dd4fcb7ed6f85863cce56da6b8aaf81711d4dbe2196d1fc53f28f7805",
+      "calls": 115810
+    },
+    "result": {
+      "source": 18,
+      "guest_ms": 274,
+      "output": "DosBox ZZ9000 project                         0.11.0-dev\r\nAmigaOS - 32-bit | DOSBox / libretro\r\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\r\n\r\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\r\nF10: close session             HELP: DOS commands\r\n\r\nC:\\>egatest\r\nEGA/PIT PASS\r\n\r\nC:\\>exit\r\n\r\n",
+      "shown": 18
+    }
+  },
+  {
+    "mode": "fixture",
+    "cycles": 10000,
+    "scheduler": {
+      "digest": "1eb5ce00f6720e0f684573c9b53322e99daefc46eac57721e37bbb917f83976a",
+      "calls": 358022
+    },
+    "result": {
+      "source": 18,
+      "guest_ms": 274,
+      "output": "DosBox ZZ9000 project                         0.11.0-dev\r\nAmigaOS - 32-bit | DOSBox / libretro\r\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\r\n\r\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\r\nF10: close session             HELP: DOS commands\r\n\r\nC:\\>egatest\r\nEGA/PIT PASS\r\n\r\nC:\\>exit\r\n\r\n",
+      "shown": 18
+    }
+  },
+  {
+    "mode": "speed",
+    "cycles": 6000,
+    "scheduler": {
+      "digest": "e3141d9f7abb9722e9700bbb6c87ad6de05f5c36d37378e9707c05f4ff104c63",
+      "calls": 121196
+    },
+    "result": {
+      "source": 18,
+      "guest_ms": 274,
+      "output": "DosBox ZZ9000 project                         0.11.0-dev\r\nAmigaOS - 32-bit | DOSBox / libretro\r\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\r\n\r\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\r\nF10: close session             HELP: DOS commands\r\n\r\nC:\\>egatest\r\nEGA/PIT PASS\r\n\r\nC:\\>exit\r\n\r\n",
+      "shown": 18
+    }
+  }
+]

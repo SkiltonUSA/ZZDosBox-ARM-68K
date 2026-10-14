@@ -88,9 +88,9 @@ INT33/PS2 fixture; the older Windows experiment predates this fixture.
 `python3 scripts/build_dosbox_pc.py --sanitize --game mouse` runs the native
 mouse test after preparing the pinned source. No licensed media is needed.
 
-## Current dynrec and scanline backups
+## Historical dynrec and scanline backups
 
-The current DOS executable is `artifacts/development/neon-dynrec/pc/ZZDosBox-Dynrec`.
+The earlier DOS executable is `artifacts/development/neon-dynrec/pc/ZZDosBox-Dynrec`.
 The optional scanline test is in `artifacts/experiments/scanline-copy/pc/`.
 Both retain ELF symbols, build metadata and integration patches. The normal
 launcher installation uses the filename `ZZDosBox`; the scanline build is
@@ -116,3 +116,11 @@ python tests/amiga/dosbox/check_dynrec_arm.py \
 
 Normal tuned output uses `.context/amiga/dosbox-dynrec-4m-neon-pipe` instead.
 These flags do not install files or run anything on the Amiga.
+
+## Current Direct runtime: PIC VFP
+
+The current measured runtime is in `artifacts/development/pic-vfp/pc`.
+Restore it with `python3 scripts/restore_build_inputs.py --pic-vfp-build`, then
+use `make build-current` with the toolchain configured above. The explicit
+`--pc-pic-vfp` flag preserves the old soft-float control when omitted.
+[Measurements, safety contract and model checks](performance-pic-vfp.md).

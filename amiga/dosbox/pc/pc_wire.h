@@ -4,6 +4,12 @@
 #define PC_VIDEO 0x188000u
 #define PC_DURATION (PC_VIDEO+64u)
 #define PC_DONE (PC_VIDEO+68u)
+/* Optional presentation experiment: immutable host config, ARM-only report.
+ * d00/d40/d60/d80 are Doom/JIT/NEON/scanline reports; mouse ends at c80. */
+#define PC_PRESENT_MODE (PC_VIDEO+72u)
+#define PC_PRESENT_HZ (PC_VIDEO+76u)
+#define PC_PRESENT_REPORT (PC_VIDEO+0xda0u)
+#define PC_PRESENT_SIZE 64u
 /* Optional profile result, published before the worker completion ACK. */
 #define PC_PROFILE (PC_VIDEO+128u)
 #define PC_PROFILE_MAGIC 0x50524631u
@@ -25,6 +31,9 @@
 #define PC_BOOT_NAME (PC_VIDEO+576u) /* 13-byte 8.3 name; empty = embedded DOS. */
 #define PC_HDD_NAME (PC_VIDEO+640u) /* 13-byte 8.3 name; fixed 32 MiB HDD. */
 #define PC_BOOT_TEXT 0x189000u /* Final colour text page, then completion magic. */
+#if PC_PRESENT_REPORT+PC_PRESENT_SIZE > PC_BOOT_TEXT
+#error Presentation report overlaps boot text
+#endif
 
 #define PC_UI_FLAGS (PC_VIDEO+704u) /* bit 0: FPS; bit 1: VGA shell */
 #define PC_FPS_TENTHS (PC_VIDEO+708u) /* ARM rolling completed-frame rate */

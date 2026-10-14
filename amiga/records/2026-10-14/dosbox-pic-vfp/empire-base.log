@@ -1,0 +1,53 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=09fddefa
+BOOTSTRAP amiga=40c58e00 arm=00e48e00 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+DISPLAY_CONFIG mode=fullscreen fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=0
+FULLSCREEN_BITMAP allocated=08864744 screen=091fd698 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=0a19fbec/40cbda00 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+VIDEO adapter=0 source=640x400 monochrome=0
+JIT magic=4a495431 commits=3195 witness=1 dispatches=3744346 cache_bytes=4194304 heap_peak=3923200
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=558 rendered_rows=267840 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+DOOMCLOCK magic=44424d31 signature=0 rejected=0 first=0 last=0 sim_first=0 sim_last=0 start=0000000000000000 end=0000000000000000
+CPU_CYCLES applied=3000
+PRESENT magic=50525331 source=558 shown=558 skipped=0 divisor=1 changes=0 mode=0 hz=60 work_ticks=5537826 copy_ticks=1447479 total_copy=0000000049ab2d7e
+ARM_FPS tenths=0
+PC frames=558 emulated_ms=8000 wall_ms=20356 timed_done=1
+POLL ms=1 calls=10679 wait_us=13502774 max_us=12763
+SHELL result=2 guest_exit=0 slices=340039 bytes=275 hash=208aee55 mismatches=0
+DosBox ZZ9000 project                         0.11.0-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>EMPIRE.EXE
+
+SHELL PASS mode=0
+FILES requests=3157 read=327394 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=558 flips=558 wait_us=5287500
+COPY observed_us=2343527 max_us=11799
+PIPELINE enabled=1 overlaps=32 releases=526
+LAUNCHER exit=0; owned memory released

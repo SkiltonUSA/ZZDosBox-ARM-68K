@@ -2,6 +2,7 @@
  * No read beyond the source row, including unaligned RGB565/32-bit input. */
 #include <arm_neon.h>
 #include <stdint.h>
+#include "scanline_plan.h"
 
 extern "C" void pc_neon_black(volatile uint32_t *out,unsigned width){
  uint32_t *dst=const_cast<uint32_t *>(out);unsigned x=0;
@@ -35,17 +36,24 @@ extern "C" void pc_neon_capture(uint32_t *dst,const uint8_t *src,unsigned n,unsi
  }
 }
 
-extern "C" void pc_neon_scale(volatile uint32_t *out,const uint32_t *src,unsigned n,unsigned format,unsigned target){
+static inline void scale(volatile uint32_t *out,const uint32_t *src,unsigned n,unsigned format,unsigned target,unsigned level){
  uint32_t *dst=const_cast<uint32_t *>(out);unsigned x=0;
  const bool twice=target==n*2,swap=format!=3;
  for(;x+4<=n;x+=4){
   uint32x4_t p=vld1q_u32(src+x);
+  if(level!=8){
+   uint8x16_t bytes=vreinterpretq_u8_u32(p);uint8x8_t factor=vdup_n_u8(level);
+   p=vreinterpretq_u32_u8(vcombine_u8(vshrn_n_u16(vmull_u8(vget_low_u8(bytes),factor),3),vshrn_n_u16(vmull_u8(vget_high_u8(bytes),factor),3)));
+  }
   if(swap)p=vreinterpretq_u32_u8(vrev32q_u8(vreinterpretq_u8_u32(p)));
   if(twice){uint32x4x2_t d=vzipq_u32(p,p);vst1q_u32(dst+x*2,d.val[0]);vst1q_u32(dst+x*2+4,d.val[1]);}
   else vst1q_u32(dst+x,p);
  }
  for(;x<n;x++){
-  uint32_t p=swap?__builtin_bswap32(src[x]):src[x];
+  uint32_t p=level==8?src[x]:pc_scan_dim_pixel(src[x],level);if(swap)p=__builtin_bswap32(p);
   if(twice){dst[x*2]=p;dst[x*2+1]=p;}else dst[x]=p;
  }
 }
+
+extern "C" void pc_neon_scale(volatile uint32_t *out,const uint32_t *src,unsigned n,unsigned format,unsigned target){scale(out,src,n,format,target,8);}
+extern "C" void pc_neon_scale_dim(volatile uint32_t *out,const uint32_t *src,unsigned n,unsigned format,unsigned target,unsigned level){scale(out,src,n,format,target,level);}

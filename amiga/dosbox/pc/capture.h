@@ -25,6 +25,12 @@ static inline bool pc_capture_row(uint32_t *dst,const uint8_t *src,
  case 8:
   for(unsigned x=0;x<width;x++)dst[x]=palette[src[x]];
   return true;
+ case 15:
+  for(unsigned x=0;x<width;x++){
+   unsigned v=src[x*2]|((unsigned)src[x*2+1]<<8),r=(v>>10)&31,g=(v>>5)&31,b=v&31;
+   dst[x]=(((r<<3)|(r>>2))<<16)|(((g<<3)|(g>>2))<<8)|(b<<3)|(b>>2);
+  }
+  return true;
  case 16:
   for(unsigned x=0;x<width;x++)dst[x]=pc_rgb565.low[src[x*2]]|pc_rgb565.high[src[x*2+1]];
   return true;

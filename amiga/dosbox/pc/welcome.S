@@ -17,7 +17,13 @@ _start:
  mov byte ptr [dosminor+1],ah
  mov ax,3
  int 0x10
+ mov ah,0x0f
+ int 0x10
+ cmp al,7
  mov ax,0xb800
+ jne color_text
+ mov ax,0xb000
+color_text:
  mov es,ax
  cld
  xor di,di
@@ -89,7 +95,7 @@ lines:
  .word 7*160+12
  .asciz "ZZZZ ZZZZ DDD   OOO  SSSS  BBB   OOO  X   X"
  .word 9*160+12
- .asciz "DosBox ZZ9000 project                         0.10.1-dev"
+ .asciz "DosBox ZZ9000 project                         0.11.0-dev"
  .word 10*160+12
  .asciz "AmigaOS / 32-bit Cortex-A9 / XACP"
  .word 11*160+12

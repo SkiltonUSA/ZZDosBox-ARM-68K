@@ -4,7 +4,7 @@
 Instruction-model evidence only. AmigaDOS backend and physical lifecycle must
 be verified separately. Uses an original EGA/PIT fixture, no game data.
 """
-import argparse,importlib.util,struct,subprocess,re,json
+import argparse,importlib.util,struct,subprocess,re,json,hashlib
 from pathlib import Path
 from unicorn import Uc,UC_ARCH_ARM,UC_MODE_ARM,UC_HOOK_MEM_READ,UC_HOOK_MEM_WRITE,UC_HOOK_CODE
 from unicorn.arm_const import *
@@ -14,13 +14,19 @@ RXW,RXR,TXW,TXR=0x184000,0x184040,0x184080,0x1840c0
 RX,TX,CMD,REPLY,NAME,NAME2,DATA=0x184400,0x185000,0x186000,0x186040,0x186080,0x186090,0x187000
 pattern=bytes(i%251 for i in range(100003))
 commands=b'dir /b\rtype readme.txt\recho saved text > SAVED.TXT\rtype saved.txt\rfiletest\rexetest\rcopy LARGE.BIN LARGE2.BIN\rren LARGE2.BIN RENAMED.BIN\rdir /b\rexit\r'
-def run(base,mode,profile=False,options=None):
+def scan_row(data,mode,y):
+ factor=(0 if y%2 else 8) if mode in (1,2) else (5 if y%2 else 8) if mode==3 else (8,6,4,6)[y%4] if mode==4 else 8
+ return bytes(c*factor//8 for c in data)
+def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000):
  image,rel,_=pack.unpack((OUT/'dosbox.elf').read_bytes())
  for off in rel:struct.pack_into('<I',image,off,struct.unpack_from('<I',image,off)[0]+base)
  symbols={}
  for line in subprocess.check_output(['/opt/homebrew/opt/llvm/bin/llvm-nm','-n',str(OUT/'dosbox.elf')],text=True).splitlines():
   f=line.split()
   if len(f)==3:symbols[f[2]]=int(f[0],16)+base
+ trace_build=json.loads((OUT/'build.json').read_text()).get('video_trace',False)
+ present_build=json.loads((OUT/'build.json').read_text()).get('presentation_test',False)
+ if presentation is not None:assert present_build
  jit='db_dynrec_commit' in symbols
  neon='db_neon_begin' in symbols
  jit_mib=json.loads((OUT/'build.json').read_text()).get('jit_mib',1) if jit else 1
@@ -28,11 +34,47 @@ def run(base,mode,profile=False,options=None):
  if neon and mode!='neon-denied':
   u.reg_write(UC_ARM_REG_C1_C0_2,0x00f00000);u.reg_write(UC_ARM_REG_FPEXC,0x40000000)
   for i in range(32):u.reg_write(globals()['UC_ARM_REG_D'+str(i)],0xa5a5000000000000+i)
-  u.reg_write(UC_ARM_REG_FPSCR,0x01000000)
+  u.reg_write(UC_ARM_REG_FPSCR,inherited_fpscr)
  u.mem_map(base&~4095,0x2002000);u.mem_write(base,bytes(image));u.mem_write(symbols['_ZL6shared'],struct.pack('<I',base))
+ scheduler_digest=hashlib.sha256();scheduler_count=[0]
+ if scheduler_trace is not None:
+  names={address:name for name,address in symbols.items()}
+  # Hash actual queue/callback/cycle decisions, normalising relocated pointers.
+  def scheduler_event(u,address,size,data):
+   name=names[address];record=[name]
+   if name=='_Z12PIC_RunQueuev':
+    for field in ('CPU_Cycles','CPU_CycleLeft','CPU_CycleMax','PIC_Ticks'):
+     record.append(struct.unpack('<I',u.mem_read(symbols[field],4))[0])
+   else:
+    record.extend([names.get(u.reg_read(UC_ARM_REG_R0),'unknown-handler'),u.reg_read(UC_ARM_REG_R1),u.reg_read(UC_ARM_REG_R2)])
+    # RemoveEvents has only one argument; unused registers are not semantic.
+    if name.startswith('_Z16PIC_RemoveEvents'):record=record[:2]
+    elif name.startswith('_Z24PIC_RemoveSpecificEvents'):record=record[:3]
+   scheduler_digest.update((repr(record)+'\n').encode());scheduler_count[0]+=1
+  for name,address in symbols.items():
+   if name=='_Z12PIC_RunQueuev' or name.startswith(('_Z12PIC_AddEvent','_Z16PIC_RemoveEvents','_Z24PIC_RemoveSpecificEvents')):
+    u.hook_add(UC_HOOK_CODE,scheduler_event,begin=address,end=address)
+  if json.loads((OUT/'build.json').read_text()).get('pic_vfp'):
+   def ieee_policy(u,address,size,data):
+    control=(3<<22)|(1<<24)|(1<<25)|(7<<16)|(3<<20)|0x9f00
+    assert not u.reg_read(UC_ARM_REG_FPSCR)&control,'PIC inherited a non-IEEE floating-point policy'
+   address=symbols['_Z12PIC_RunQueuev'];u.hook_add(UC_HOOK_CODE,ieee_policy,begin=address,end=address)
  def put(off,n):u.mem_write(base+off,struct.pack('>I',n&0xffffffff))
  def get(off):return struct.unpack('>I',u.mem_read(base+off,4))[0]
- if profile or mode=="vga-shell":
+ trace_records=[]
+ if trace_build:
+  put(0x188fa0,0 if developer and not developer.get('trace',True) else 1)
+  if developer:
+   put(0x188fa4,developer['phase']);put(0x188fa8,2)
+  def trace_commit(u,kind,address,size,value,data):
+   # ad_put publishes an aligned BE word after committing the slot.
+   if address+size!=base+0x188e04:return
+   serial=len(trace_records)+1;o=0x188e10+((serial-1)&15)*24
+   record=struct.unpack('>6I',u.mem_read(base+o,24))
+   assert record[0]==serial,record
+   trace_records.append(record)
+  u.hook_add(UC_HOOK_MEM_WRITE,trace_commit,begin=base+0x188e00,end=base+0x188e03)
+ if profile or mode=="vga-shell" or present_build or trace_build:
   # Synthetic clock for accounting checks only, never a speed measurement.
   u.mem_map(0xf8f00000,4096);timer=[0xfffffff0]
   u.mem_write(0xf8f00200,struct.pack('<Q',timer[0]))
@@ -41,6 +83,22 @@ def run(base,mode,profile=False,options=None):
     timer[0]+=37;u.mem_write(0xf8f00200,struct.pack('<Q',timer[0]))
   u.hook_add(UC_HOOK_MEM_READ,timer_read,begin=0xf8f00200,end=0xf8f00207)
   put(0x188080,int(profile))
+ if presentation is not None:
+  put(0x188048,presentation);put(0x18804c,60)
+  def present_enter(u,address,size,data):
+   timer[0]+=3333333 # Synthetic 10 ms of non-presentation work per frame.
+   u.mem_write(0xf8f00200,struct.pack('<Q',timer[0]))
+  addr=symbols['_Z16db_video_presentv']
+  u.hook_add(UC_HOOK_CODE,present_enter,begin=addr,end=addr)
+  if mode=='present-stop':
+   def stop_skipped(u,address,size,data):
+    # First frame increments the grant sequence. First skipped frame does
+    # not; cancel from its explicit poll, before another bitmap is requested.
+    generated=struct.unpack('<I',u.mem_read(symbols['db_frames'],4))[0]
+    if generated>get(0x188000):
+     put(0x180080,1);u.mem_write(base+0x1d0008,struct.pack('<I',1))
+   addr=symbols['_Z13db_shell_pollv']
+   u.hook_add(UC_HOOK_CODE,stop_skipped,begin=addr,end=addr)
  for off in [RXW,RXR,TXW,TXR]:put(off,0xfffffffc)
  u.mem_write(base+0x1d0000,bytes.fromhex('00009fe51eff2fe100000000'));u.mem_write(base+0x1d0100,bytes.fromhex('0100a0e31eff2fe1'))
  bad=[]
@@ -48,7 +106,7 @@ def run(base,mode,profile=False,options=None):
   if not base<=address<=base+0x2000000-size or (size>1 and address%size):bad.append((hex(address),size,hex(u.reg_read(UC_ARM_REG_PC)-base)));u.emu_stop()
  u.hook_add(UC_HOOK_MEM_READ|UC_HOOK_MEM_WRITE,access,begin=base&~4095,end=base-1)
  u.hook_add(UC_HOOK_MEM_READ|UC_HOOK_MEM_WRITE,access,begin=base+0x2000000,end=(base&~4095)+0x2002000-1)
- scan_test=mode in ("scan-full","scan-skip","scan-transition","scan-stop")
+ scan_test=mode in ("scan-full","scan-skip","scan-transition","scan-stop","scan-soft","scan-gradient")
  scan_mask=0;scan_epoch=0;scan_checked=set();scan_buffers=set()
  width,height=640,480
  frame=0x00fff040;pitch=3840 if mode=="resize" else 2560;span=(height-1)*pitch+width*4;fmt=3 if base==0x12000040 else 4
@@ -71,6 +129,11 @@ def run(base,mode,profile=False,options=None):
  frame_seq=0;captured=None
  for reg,val in [(UC_ARM_REG_SP,base+0x1fffff0),(UC_ARM_REG_LR,base+0x1ff0000),(UC_ARM_REG_R0,1),(UC_ARM_REG_R1,base+0x1e0000),(UC_ARM_REG_R2,base+0x1d0000),(UC_ARM_REG_R3,base+0x1d0100)]:u.reg_write(reg,val)
  files={'EGATEST.COM':(OUT/'EGATEST.COM').read_bytes()};keys=b'egatest\rexit\r'
+ if presentation is not None:
+  fixture=files['EGATEST.COM'];assert fixture.count(bytes.fromhex('83fa05'))==1
+  files['EGATEST.COM']=fixture.replace(bytes.fromhex('83fa05'),bytes.fromhex('83fa0a'))
+ if adapter:
+  file=adapter[0]+'.COM';files={file:(OUT/file).read_bytes()};keys=file.encode()+b'\rexit\r'
  if mode=='vga-shell':
   keys=b'';put(0x1882c0,3);put(0x1882c8,7);put(0x188040,0)
  if mode in ('cga','keyboard'):
@@ -124,6 +187,8 @@ def run(base,mode,profile=False,options=None):
    u.reg_write(UC_ARM_REG_R1,u.reg_read(UC_ARM_REG_C1_C0_2))
    u.reg_write(UC_ARM_REG_PC,address+4)
   u.hook_add(UC_HOOK_CODE,cpacr_read,begin=symbols['db_neon_available'],end=symbols['db_neon_available'])
+ pause_actions=list(developer['actions']) if developer else []
+ pause_seen=[];pause_hold=None
  pc=symbols['mesen_test']
  for tick in range(50000):
   # Preserve Thumb state when resuming a quantum inside the soft-float library.
@@ -153,6 +218,9 @@ def run(base,mode,profile=False,options=None):
   vseq=get(0x188000)
   if vseq!=frame_seq:
    assert vseq==frame_seq+1
+   if presentation is not None:
+    timer[0]+=6666666 # Synthetic 20 ms presentation pressure, no FPS claim.
+    u.mem_write(0xf8f00200,struct.pack('<Q',timer[0]))
    if mode=="speed":put(0x1883c4,4000 if vseq<4 else 2500)
    if mode=="resize":
     width,height=[(320,240),(960,720),(508,381),(640,480)][(vseq-1)%4]
@@ -160,8 +228,8 @@ def run(base,mode,profile=False,options=None):
     put(0x18802c,width);put(0x188030,height)
    if scan_test:
     frame=0x00fff040+((vseq-1)%3)*0x140000
-    scan_epoch=(vseq-1)//6+1 if mode=='scan-transition' else 1
-    scan_mask=1 if mode=='scan-full' else (0 if mode=='scan-transition' and scan_epoch%2==0 else 2)
+    scan_epoch=(vseq-1)//3+1 if mode=='scan-transition' else 1
+    scan_mask=1 if mode=='scan-full' else 3 if mode=='scan-soft' else 4 if mode=='scan-gradient' else [2,3,4,0,2,0][(scan_epoch-1)%6] if mode=='scan-transition' else 2
     put(0x188034,scan_mask);put(0x188038,scan_epoch)
     sw=struct.unpack('<I',u.mem_read(symbols['db_width'],4))[0]
     sh=struct.unpack('<I',u.mem_read(symbols['db_height'],4))[0]
@@ -171,7 +239,7 @@ def run(base,mode,profile=False,options=None):
      line=source[sy*sw*4:(sy+1)*sw*4]
      pixels=[line[(x*sw//width)*4:(x*sw//width)*4+4] for x in range(width)]
      rows.append(b''.join(pixels if fmt==3 else [p[::-1] for p in pixels]))
-    scan_expected=b''.join((bytes(width*4) if scan_mask and y%2 else rows[y*sh//height])+(bytes(pitch-width*4) if y<height-1 else b'') for y in range(height))
+    scan_expected=b''.join(scan_row(rows[y*sh//height],scan_mask,y)+(bytes(pitch-width*4) if y<height-1 else b'') for y in range(height))
     if frame not in scan_buffers:
      u.mem_write(frame,b'\xa5'*span+b'\0'*4);scan_buffers.add(frame)
    nonce=vseq^0x12345678
@@ -186,9 +254,28 @@ def run(base,mode,profile=False,options=None):
    if scan_test and not get(0x188028) and frame_seq not in scan_checked:
     scan_checked.add(frame_seq)
     assert captured==scan_expected,('per-frame scanline pixels',mode,frame_seq,scan_mask)
-    if scan_mask:
+    if scan_mask in (1,2):
      for y in range(1,height,2):assert captured[y*pitch:y*pitch+width*4]==bytes(width*4),(mode,frame_seq,y)
 
+  if developer:
+   token=get(0x188fb0)
+   if token and token!=get(0x188fac) and not stopping:
+    target,phase=get(0x188fb4),get(0x188fb8)
+    assert phase==developer['phase'] and target==get(0x188fa8)
+    for section in range(frame>>20,((frame+span-1)>>20)+1):
+     assert struct.unpack('<I',u.mem_read(l1+section*4,4))[0]==0,'paused with active RTG map'
+    snapshot=(token,target,phase,get(0x188000),get(0x188024),len(trace_records))
+    if pause_hold is None:pause_hold=snapshot
+    else:
+     assert pause_hold==snapshot,'worker advanced while paused'
+     assert token==len(pause_seen)+1
+     pause_seen.append((target,phase));pause_hold=None
+     action=pause_actions.pop(0)
+     if action=='stop':stopping=True
+     else:
+      if action=='next':put(0x188fa8,target+1)
+      else:assert action=='continue';put(0x188fa4,0)
+      put(0x188fac,token)
   seq=get(CMD)
   if seq!=get(REPLY):
    assert seq==seen_request+1 or (mode=='fs-stop' and seq==seen_request);seen_request=seq
@@ -248,6 +335,7 @@ def run(base,mode,profile=False,options=None):
   if pc==base+0x1ff0000:break
  else:raise AssertionError(('worker timeout',output[-200:],hex(pc-base)))
  result=struct.unpack('<11I',u.mem_read(base+0x1e0000,44));rc=u.reg_read(UC_ARM_REG_R0)
+ if scheduler_trace is not None:scheduler_trace.update(digest=scheduler_digest.hexdigest(),calls=scheduler_count[0])
  if mode=='neon-denied':
   assert rc==1 and get(0x188d68)==0
   detail=bytes(u.mem_read(base+0x180900+128,160)).split(b'\0')[0]
@@ -256,8 +344,42 @@ def run(base,mode,profile=False,options=None):
  if neon and mode!='invalid-options':
   assert get(0x188d60)==0x4e454f31 and get(0x188d64)==42 and get(0x188d68)==1,(rc,[hex(get(0x188d60+i*4)) for i in range(7)],bytes(u.mem_read(base+0x180980,160)))
   for i in range(32):assert u.reg_read(globals()['UC_ARM_REG_D'+str(i)])==0xa5a5000000000000+i
-  assert u.reg_read(UC_ARM_REG_FPSCR)==0x01000000
+  assert u.reg_read(UC_ARM_REG_FPSCR)==inherited_fpscr
   print('PASS NEON execution witness, all 32 SIMD registers and FPSCR restored',flush=True)
+ if developer:
+  assert not pause_actions and len(pause_seen)==len(developer['actions'])
+  assert get(0x188fb0)==0,'paused status not cleared on exit'
+  if not developer.get('trace',True):assert not trace_records
+  print('PASS cooperative breakpoints: unmapped pause, resume/step/stop',pause_seen,developer['actions'],flush=True)
+ if trace_build and trace_records:
+  groups={}
+  for serial,phase,frame,detail,hi,lo in trace_records:
+   assert 1<=phase<=10 and (frame>=1 or phase==10)
+   if phase!=10:groups.setdefault(frame,[]).append((phase,detail))
+  for frame,records in groups.items():
+   phases=[p for p,d in records]
+   expected=[1,2,3,4,8,9] if mode=='badnonce' else list(range(1,10))
+   assert phases==expected,(mode,frame,records)
+   errors=[d for p,d in records if p in (7,8,9)]
+   expected_error=7 if mode=='badnonce' else 2 if mode in ('copy-stop','scan-stop') else 0
+   assert errors and all(d==expected_error for d in errors),(mode,errors)
+  # Ring has overwritten old entries, but each retained slot is committed.
+  last=len(trace_records)
+  for serial in range(max(1,last-15),last+1):
+   o=0x188e10+((serial-1)&15)*24
+   assert tuple(struct.unpack('>6I',u.mem_read(base+o,24)))==trace_records[serial-1]
+  assert get(0x188e00)==last
+  if 'zz_gl_render' in symbols:assert trace_records[-1][1]==10
+  print('PASS diagnostic phase ordering, error cleanup and ring wrap',len(trace_records),'records',flush=True)
+ if 'zz_gl_render' in symbols and mode not in ('neon-denied','invalid-options'):
+  assert get(0x188de0)==0x474c3031 and get(0x188df0)==1
+  # Rendering now follows a validated grant; an invalid nonce never renders.
+  assert get(0x188de4)==frame_seq-(1 if mode=='badnonce' else 0)
+  assert get(0x188df4)+get(0x188df8)==get(0x188de4)
+  if mode=='resize':assert get(0x188df4)>0 and get(0x188df8)>0
+  if mode in ('fixture','adapter'):assert get(0x188df4)==frame_seq and get(0x188df8)==0
+  assert get(0x188d54)<10*1024*1024
+  print('PASS TinyGL execution report and context cleanup',get(0x188de4),'frames',flush=True)
  if jit and mode!='invalid-options':
   assert get(0x188d40)==0x4a495431 and get(0x188d48)==1 and get(0x188d44)>3
   # Cancellation at the initial prompt can precede the first guest dispatch.
@@ -277,6 +399,9 @@ def run(base,mode,profile=False,options=None):
  if mode=='mouse-invalid':
   assert rc==1 and b'Mouse event bound' in detail,(rc,result,detail)
   print('PASS ARM malformed mouse event rejected',flush=True);return
+ if developer and developer['actions'][-1]=='stop':
+  assert rc==2 and result[4]==3 and stopping and not handles,(rc,result,detail)
+  print('PASS checkpoint cancellation and resource cleanup',flush=True);return
  if mode=='mouse-stop':
   assert rc==2 and result[4]==3 and stopping,(rc,result,detail)
   print('PASS ARM cancellation with pending mouse input',flush=True);return
@@ -303,6 +428,11 @@ def run(base,mode,profile=False,options=None):
  if mode in ('read-stop','fs-stop'):
   assert rc==2 and result[4]==3 and stopping,(mode,rc,result,detail)
   print('PASS ARM cancellation',mode,flush=True);return
+ if mode=='present-stop':
+  assert rc==2 and result[4]==3 and frame_seq==1,(rc,result,detail,frame_seq)
+  assert get(0x188da0)==0x50525331 and get(0x188dac)==1
+  for section in range(frame>>20,((frame+span-1)>>20)+1):assert struct.unpack('<I',u.mem_read(l1+section*4,4))[0]==0
+  print('PASS cancellation on skipped frame without another grant or mapping',flush=True);return
  if mode in ('copy-stop','scan-stop'):
   assert rc==2 and result[4]==3 and copy_stopped[0],(rc,result,detail)
   assert get(0x188024)==1 and get(0x188028)==2
@@ -323,6 +453,15 @@ def run(base,mode,profile=False,options=None):
   assert rc==1 and b'Invalid PC options' in detail and frame_seq==0,(rc,result,detail)
   print('PASS rejected invalid PC settings',flush=True);return
  assert rc==0 and result[4]==0,(rc,result,detail,output)
+ if adapter:
+  assert b'ADAPTER PASS' in output and b'ADAPTER FAIL' not in output and frame_seq>=10 and captured,(rc,detail,output)
+  actual=[struct.unpack('<I',u.mem_read(symbols[n],4))[0] for n in ('db_width','db_height','db_bpp')]
+  assert actual==list(adapter[1:4]),(actual,adapter)
+  pixel=struct.pack('<I' if fmt==3 else '>I',adapter[4]);assert captured==pixel*(width*height),(mode,adapter)
+  for section in range(frame>>20,(frame+span-1>>20)+1):assert struct.unpack('<I',u.mem_read(l1+section*4,4))[0]==0
+  assert not handles
+  print('PASS ARM adapter bank/LFB, pixels, mapping revoke',adapter[0],actual,'frames',frame_seq,flush=True)
+  return
  if mode=='vga-shell':
   assert b'DOSBox version' in output and b'C:\\>' in output and raw_sent and frame_seq>=2 and captured,(output,frame_seq)
   assert get(0x188180)==18
@@ -345,16 +484,25 @@ def run(base,mode,profile=False,options=None):
   for section in range(frame>>20,(frame+span-1>>20)+1):assert struct.unpack('<I',u.mem_read(l1+section*4,4))[0]==0
   print('PASS ARM x86 arithmetic/memory, DOS files and MZ relocation',hex(base),flush=True)
   return
- assert b'EGA/PIT PASS' in output and frame_seq>=10 and captured,output
+ assert b'EGA/PIT PASS' in output and frame_seq>=(4 if presentation else 10) and captured,output
+ if presentation is not None:
+  assert get(0x188da0)==0x50525331
+  generated,shown,skipped,divisor,changes=[get(0x188da4+i*4) for i in range(5)]
+  assert generated==shown+skipped and shown==frame_seq and generated==result[9]
+  assert get(0x188db8)==presentation and get(0x188dbc)==60
+  assert (skipped==0 and divisor==1) if presentation==0 else (skipped>0 and divisor>1)
+  if presentation==1:assert changes>0
+  print('PASS presentation counters',presentation,'source',generated,'shown',shown,'skipped',skipped,'divisor',divisor,'changes',changes,flush=True)
  colors=[0x000000,0x0000ad,0x00aa00,0x00aaad,0xad0000,0xad00ad,0xad5500,0xadaaad,0x525552,0x5255ff,0x52ff52,0x52ffff,0xff5552,0xff55ff,0xffff52,0xffffff]
  expected=b''.join(b''.join(struct.pack('<I' if fmt==3 else '>I',colors[x*4//width+(y*4//height)*4]) for x in range(width))+ (bytes(pitch-width*4) if y<height-1 else b'') for y in range(height))
  if scan_test:
-  if scan_mask:
-   expected=bytearray(expected)
-   for y in range(1,height,2):expected[y*pitch:y*pitch+width*4]=bytes(width*4)
+  expected=bytearray(expected)
+  for y in range(height):expected[y*pitch:y*pitch+width*4]=scan_row(expected[y*pitch:y*pitch+width*4],scan_mask,y)
   assert get(0x188d80)==0x53434e31
-  assert get(0x188d88)>0 and get(0x188d8c)>0
-  if mode!='scan-full':assert get(0x188d90)>0
+  assert get(0x188d88)>0
+  if mode not in ('scan-soft','scan-gradient'):assert get(0x188d8c)>0
+  else:assert get(0x188d8c)==get(0x188d90)==get(0x188d94)==0
+  if mode=='scan-skip':assert get(0x188d90)>0
   assert len(scan_buffers)==3 and len(scan_checked)>=10
   print('PASS scanline masks, three preserved slots, nonce repair and row guards',mode,'frames checked',len(scan_checked),flush=True)
  assert captured==expected,'EGA colour/presentation mismatch'
@@ -363,6 +511,7 @@ def run(base,mode,profile=False,options=None):
  print('PASS ARM EGA/PIT/direct framebuffer',hex(base),'format',fmt,'frames',frame_seq,'pixels',width*height,'geometry',mode,flush=True)
  (OUT/f'model-{mode}.txt').write_bytes(output+b'\n'+detail+b'\n')
  print('PASS ARM shell',hex(base),mode,'requests',calls,'read',read,'written',written,'rc',rc,flush=True)
+ return {'source':result[9],'guest_ms':result[10],'output':bytes(output),'shown':frame_seq}
 if __name__=='__main__':
  for base in [0x12000040,0x150020c0]:
   run(base,'fixture',base==0x150020c0);run(base,'cpu')

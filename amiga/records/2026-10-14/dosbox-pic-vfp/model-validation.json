@@ -1,0 +1,7 @@
+{
+  "differential": "PASS four matched cases",
+  "lifecycle": "PASS smc/paging/boot/copy-stop/fs-stop/neon-denied",
+  "baseline_elf": "ada3c1b25f0e9f0e712b5e11f454f59eaf1c698e5138ea7a84a07870301ee44c",
+  "candidate_elf": "2090e16765308d699e81680903560c4a743bd60814fc4da94054e93cffb76696",
+  "hardware": "NOT RUN"
+}

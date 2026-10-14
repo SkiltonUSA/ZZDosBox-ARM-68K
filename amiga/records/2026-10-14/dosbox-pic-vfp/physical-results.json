@@ -1,0 +1,115 @@
+{
+  "measurement": "Doom Demo3 game-tic interval / A9 global timer (333333333 Hz)",
+  "settings": "8 MiB guest; 10000 cycles; Direct; Normal presentation; no profiling, trace, overlay or scanlines",
+  "runs": [
+    {
+      "run": "doom-base-1",
+      "variant": "baseline",
+      "game_tics": 2134,
+      "seconds": 293.9473178039473,
+      "game_fps": 7.2598042939902045,
+      "clean_teardown": true,
+      "profiling": false,
+      "workload": {
+        "source_frames": 13008,
+        "emulated_ms": 185650,
+        "jit_commits": 9644,
+        "jit_dispatches": 24811193,
+        "guest_slices": 7511513,
+        "guest_output_hash": "d2c91d68"
+      }
+    },
+    {
+      "run": "doom-base-2",
+      "variant": "baseline",
+      "game_tics": 2134,
+      "seconds": 291.17001145817,
+      "game_fps": 7.329051468291659,
+      "clean_teardown": true,
+      "profiling": false,
+      "workload": {
+        "source_frames": 13011,
+        "emulated_ms": 185696,
+        "jit_commits": 9666,
+        "jit_dispatches": 24814242,
+        "guest_slices": 7513472,
+        "guest_output_hash": "1ad44621"
+      }
+    },
+    {
+      "run": "doom-vfp-1",
+      "variant": "pic_vfp",
+      "game_tics": 2134,
+      "seconds": 279.4189066954189,
+      "game_fps": 7.6372784692274625,
+      "clean_teardown": true,
+      "profiling": false,
+      "workload": {
+        "source_frames": 13008,
+        "emulated_ms": 185650,
+        "jit_commits": 9644,
+        "jit_dispatches": 24811193,
+        "guest_slices": 7511513,
+        "guest_output_hash": "d2c91d68"
+      }
+    },
+    {
+      "run": "doom-vfp-2",
+      "variant": "pic_vfp",
+      "game_tics": 2134,
+      "seconds": 279.52347891652346,
+      "game_fps": 7.634421295383545,
+      "clean_teardown": true,
+      "profiling": false,
+      "workload": {
+        "source_frames": 13008,
+        "emulated_ms": 185650,
+        "jit_commits": 9644,
+        "jit_dispatches": 24811193,
+        "guest_slices": 7511513,
+        "guest_output_hash": "d2c91d68"
+      }
+    }
+  ],
+  "mean_game_fps": {
+    "baseline": 7.2944278811409315,
+    "pic_vfp": 7.635849882305504
+  },
+  "workload_counters_identical": false,
+  "mean_gain_percent": 4.680586424704902,
+  "paired_gain_percent": {
+    "1": 5.1995089667876915,
+    "2": 4.166566825366624
+  },
+  "startup_checks": [
+    {
+      "run": "vette-base",
+      "emulated_ms": 8000,
+      "wall_seconds": 16.718,
+      "display_frames": 558,
+      "clean_timed_cancellation": true
+    },
+    {
+      "run": "vette-vfp",
+      "emulated_ms": 8000,
+      "wall_seconds": 16.095,
+      "display_frames": 558,
+      "clean_timed_cancellation": true
+    },
+    {
+      "run": "empire-base",
+      "emulated_ms": 8000,
+      "wall_seconds": 20.356,
+      "display_frames": 558,
+      "clean_timed_cancellation": true
+    },
+    {
+      "run": "empire-vfp",
+      "emulated_ms": 8000,
+      "wall_seconds": 20.382,
+      "display_frames": 559,
+      "clean_timed_cancellation": true
+    }
+  ],
+  "startup_scope": "Timed startup and cancellation only; no gameplay FPS, driving or Empire combat validation"
+}

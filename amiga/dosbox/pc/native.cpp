@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <fstream>
 #include <assert.h>
+#include <cstdlib>
 #include "console_io.h"
 #include "pc.h"
 #include "dosbox.h"
@@ -30,7 +31,7 @@ static std::string input,output,boot_text;static unsigned pos;static unsigned li
 static int read(void*){return pos<input.size()?(uint8_t)input[pos++]:-1;}
 static int ready(void*){return pos<input.size();}
 static int write(void*,const uint8_t*p,unsigned n){output.append((const char*)p,n);return 1;}
-static int stop(){if((boot_mode||welcome_mode)&&PIC_Ticks>=limit_ms&&boot_text.empty()){welcome_border=mem_readw(0xb8000+162);for(unsigned i=0;i<80*25;i++)boot_text+=(char)mem_readb(0xb8000+i*2);}return PIC_Ticks>=limit_ms;}
+static int stop(){if((boot_mode||welcome_mode)&&PIC_Ticks>=limit_ms&&boot_text.empty()){welcome_border=mem_readw((machine==MCH_HERC?0xb0000:0xb8000)+162);for(unsigned i=0;i<80*25;i++)boot_text+=(char)mem_readb((machine==MCH_HERC?0xb0000:0xb8000)+i*2);}return PIC_Ticks>=limit_ms;}
 #include "../../../tests/amiga/dosbox/native_interactive.inc"
 void db_pc_tick(){
  if(mouse_mode){unsigned stage=mem_readb(0x500);if(stage&&stage<5&&stage!=mouse_stage){
@@ -47,7 +48,7 @@ void db_pc_tick(){
  if(!interactive&&PIC_Ticks==4100)KEYBOARD_AddKey(KBD_enter,false);
 }
 int main(int argc,char**argv){
- assert(argc==2);std::string game=argv[1],root=".context/amiga/dosbox-pc/game-"+(game=="hdd-install"?"hdd":game);
+ assert(argc==2);if(const char*m=getenv("ZZ_TEST_MONO")){db_monochrome=strtoul(m,nullptr,10);assert(db_monochrome<4);}if(const char*m=getenv("ZZ_TEST_MACHINE")){db_machine_option=strtoul(m,nullptr,10);assert(db_machine_option<7);}std::string game=argv[1],root=".context/amiga/dosbox-pc/game-"+(game=="hdd-install"?"hdd":game);
  std::filesystem::create_directories(root);
  std::string from=game=="keen"?"Games/KEEN6":game=="vette"?"Games/VETTE":game=="elite"?"Games/ELITE":"CDrive";
  if(game!="boot"&&game!="hdd"&&game!="hdd-install")for(auto &p:std::filesystem::directory_iterator(".context/amiga/dosbox-shell/"+from))std::filesystem::copy_file(p.path(),root+"/"+p.path().filename().string(),std::filesystem::copy_options::overwrite_existing);
@@ -84,6 +85,15 @@ int main(int argc,char**argv){
   unsigned sectors=db_cd_host_open(1,".context/amiga/wfw311/INSTALL.ISO");assert(sectors);ad_put(shared,PC_VIDEO+944,sectors);
   interactive_start=std::chrono::steady_clock::now();
  }
+ unsigned adapter_w=0,adapter_h=0,adapter_bpp=0;
+ if(game=="adapters"){
+  char fixture[20];const char*spec=getenv("ZZ_ADAPTER_TEST");if(!spec)spec="3 S3V101 640 480 8";
+  assert(sscanf(spec,"%u %19s %u %u %u",&db_machine_option,fixture,&adapter_w,&adapter_h,&adapter_bpp)==5);
+  assert(db_machine_option>=3&&db_machine_option<=6);db_memory_mb=8;
+  std::string name=std::string(fixture)+".COM";
+  std::filesystem::copy_file(".context/amiga/dosbox-pc/"+name,root+"/"+name,std::filesystem::copy_options::overwrite_existing);
+  input=name+"\rexit\r";
+ }
  ad_io sync{sync_range,sync_range,barrier,barrier,nullptr};assert(db_fs_open(shared,&sync,root.c_str()));
  DbConsoleIO io{nullptr,read,ready,write};DosboxResult result{};int rc=db_run_io(nullptr,0,interactive?0xffffffffu:20000000,&result,stop,&io);db_native_midi_service();db_fs_close();db_cd_host_close();
  printf("PC rc=%d fault=%u detail=%s slices=%u ticks=%u frames=%u size=%ux%u bpp=%u\n%s\n",rc,result.fault,result.text,result.slices,(unsigned)PIC_Ticks,db_frames,db_width,db_height,db_bpp,output.c_str());
@@ -105,6 +115,15 @@ int main(int argc,char**argv){
   assert(!memcmp(midi_bytes.data()+5000,tail,sizeof(tail)));puts("PASS MPU-401 version/UART, MIDI running status/SysEx bytes, queue wrap/backpressure");
  }
  if(game=="mouse"){printf("Mouse stage=%u host=%u\n",mem_readb(0x500),mouse_stage);fflush(stdout);assert(rc==0&&mem_readb(0x500)==5&&output.find("DOS mouse + PS2 IRQ12 PASS")!=std::string::npos);puts("PASS mouse queue wrap, scaled position, 3 buttons, focus release, BIOS PS2 callback");}
+ if(game=="adapters"){
+  assert(rc==0&&result.exit_code==0&&output.find("ADAPTER PASS")!=std::string::npos&&output.find("ADAPTER FAIL")==std::string::npos);
+  assert(db_frames>=10&&db_width==adapter_w&&db_height==adapter_h&&db_bpp==adapter_bpp);
+  unsigned nonzero=0;for(unsigned i=0;i<db_width*db_height;i++)nonzero+=db_pixels[i]!=0;
+  unsigned wanted=db_machine_option==6?0xaaaaaa:db_machine_option==4||db_machine_option==5?0xaa00aa:adapter_bpp==15||adapter_bpp==16?0x00ff00:0xffffff;
+  if(db_machine_option==6){static const unsigned expect[]={0xaaaaaa,0xaa7f00,0x22aa22,0xaaa18f};wanted=expect[db_monochrome];}
+  for(unsigned i=0;i<db_width*db_height;i++)assert(db_pixels[i]==wanted);
+  printf("PASS adapter=%u geometry=%ux%u bpp=%u nonzero=%u pixel=%08x\n",db_machine_option,db_width,db_height,db_bpp,nonzero,db_pixels[db_width*db_height/2]);
+ }
  if(game=="fixture"){
   const uint32_t colors[]={0x000000,0x0000ad,0x00aa00,0x00aaad,0xad0000,0xad00ad,0xad5500,0xadaaad,0x525552,0x5255ff,0x52ff52,0x52ffff,0xff5552,0xff55ff,0xffff52,0xffffff};
   assert(rc==0&&db_frames>=10&&db_width==320&&db_height==400);

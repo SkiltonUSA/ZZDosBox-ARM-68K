@@ -4,6 +4,18 @@ Amiga-specific development history, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 These are development milestones, not upstream DOSBox release numbers.
 
+## PIC hardware floating point — 14 October 2026
+
+- Promote the measured Direct runtime using A9 VFP for PIC event scheduling;
+  keep the same queue algorithm, guest cycles and framebuffer handoff.
+- Save/normalise/restore SIMD and FPSCR state using the existing firmware guard.
+- Doom Demo3 averages 7.2944 → 7.6358 FPS (+4.68%), two runs per build,
+  with no frame skipping. Vette startup improves slightly; Empire is unchanged.
+- Physical EGA/PIT and startup/cancellation checks pass, including the installed
+  path. Preserve the previous Direct runtime for rollback.
+- Publish the measured executable, symbols, regression evidence and chronological
+  optimisation history. OpenGL, Developer MUI and Windows runtimes are unchanged.
+
 ## ARMv7 dynrec, NEON and scanline experiments — 13 October 2026
 
 - Integrated the existing ARMv7 dynamic recompiler with owned executable memory

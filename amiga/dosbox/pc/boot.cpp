@@ -46,7 +46,7 @@ void db_boot_start(){
 void db_boot_close(){
 #ifndef DB_NATIVE
  if(loaded){volatile uint8_t *p=db_shared()+PC_BOOT_TEXT;
-  for(unsigned i=0;i<2000;i++){unsigned c=mem_readb(0xb8000+i*2);p[i]=c>=32&&c<127?c:32;}
+  for(unsigned i=0;i<2000;i++){unsigned c=mem_readb((machine==MCH_HERC?0xb0000:0xb8000)+i*2);p[i]=c>=32&&c<127?c:32;}
   __asm__ volatile("dsb sy":::"memory");ad_put(db_shared(),PC_BOOT_TEXT+2000,0x424f4f54);
  }
 #endif

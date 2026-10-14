@@ -1,5 +1,14 @@
 # ZZDosBox development handoff
 
+## Current Direct runtime — 14 October 2026
+
+The measured PIC VFP runtime is installed and passed its installed-path
+EGA/PIT check. The previous Direct runtime is retained for rollback. The
+MUI launcher, OpenGL and Windows executables are unchanged by this update.
+[Report, measurements and reproduction](performance-pic-vfp.md).
+The sections below are earlier development history.
+
+
 ## ZZDosBox software scanline experiment — 13 October 2026
 
 Separate `RAM:ZZScanBench` implements a Classic software mask in the final ARM

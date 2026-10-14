@@ -1,0 +1,10 @@
+{
+  "native_tests": "PASS make test-host in standalone export",
+  "restored_arm_runs": 14,
+  "paired_scheduler_cases": 4,
+  "candidate_lifecycle_cases": 6,
+  "installed_hardware": "PASS EGA/PIT; SIMD/MMU/cache restoration and owned-memory release",
+  "runtime_sha256": "cccfd75208ea662f0ce8036d8ab1cbccfde8ac2846715ddfd0d338272d5a6aa0",
+  "previous_runtime_retained": true,
+  "no_new_simd_library_code": true
+}

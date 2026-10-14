@@ -19,6 +19,7 @@
 #include "bios.h"
 #include "int10.h"
 #include "profile.h"
+#include "adapters.h"
 #ifndef DB_NATIVE
 #include "pc_wire.h"
 extern "C" volatile uint8_t *db_shared();
@@ -27,7 +28,7 @@ static void console_wait(int on){ad_put(db_shared(),PC_CONSOLE_WAIT,on);__asm__ 
 static void console_wait(int){}
 #endif
 static uint8_t ram[8*1024*1024];
-unsigned db_memory_mb=2,db_machine_option=0,db_cpu_cycles=3000;
+unsigned db_memory_mb=2,db_machine_option=0,db_cpu_cycles=3000,db_monochrome=0;
 bool db_vga_console=false;unsigned db_text_attr=7;
 static unsigned ansi_bytes;static int extended_key=-1;
 HostPt MemBase=ram;
@@ -70,10 +71,20 @@ public:
 };
 static RomPage rom_page;
 static PageHandler *handlers[2048];
-PageHandler *MEM_GetPageHandler(Bitu page){if(page>=2048)E_Exit("Guest page bound %x at %x:%x ss:sp=%x:%x",(unsigned)page,SegValue(cs),reg_eip,SegValue(ss),reg_esp);return handlers[page]?handlers[page]:&ram_page;}
+static Bitu lfb_page,lfb_pages;
+static PageHandler *lfb_handler,*lfb_mmio;
+PageHandler *MEM_GetPageHandler(Bitu page){
+ if(page>=2048&&lfb_pages){
+  if(page>=lfb_page&&page-lfb_page<lfb_pages)return lfb_handler;
+  if(page>=lfb_page+4096&&page-(lfb_page+4096)<16)return lfb_mmio;
+ }
+ if(page>=2048)E_Exit("Guest page bound %x at %x:%x ss:sp=%x:%x",(unsigned)page,SegValue(cs),reg_eip,SegValue(ss),reg_esp);return handlers[page]?handlers[page]:&ram_page;}
 void MEM_SetPageHandler(Bitu page,Bitu pages,PageHandler *h){if(page>2048||pages>2048-page)E_Exit("Page handler bound");for(Bitu i=0;i<pages;i++)handlers[page+i]=h;PAGING_ClearTLB();}
 void MEM_ResetPageHandler(Bitu p,Bitu n){MEM_SetPageHandler(p,n,nullptr);}
-void MEM_SetLFB(Bitu,Bitu,PageHandler*,PageHandler*){E_Exit("SVGA LFB not supported");}
+void MEM_SetLFB(Bitu page,Bitu pages,PageHandler*h,PageHandler*mmio){
+ if(pages>PC_S3_VRAM_BYTES/4096||page>0x100000u-4096u-16u||!h||!mmio)E_Exit("SVGA mapping bound");
+ lfb_page=page;lfb_pages=pages;lfb_handler=h;lfb_mmio=mmio;PAGING_ClearTLB();
+}
 static bool a20;
 bool MEM_A20_Enabled(){return a20;}
 void MEM_A20_Enable(bool on){a20=on;for(unsigned i=0;i<16;i++)PAGING_MapPage(0x100+i,on?0x100+i:i);}
@@ -172,7 +183,10 @@ static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,Dosbox
 #ifdef DB_NEON
  db_neon_begin();
 #endif
- machine=db_machine_option==1?MCH_EGA:db_machine_option==2?MCH_CGA:MCH_VGA;
+ if(db_machine_option>=PC_ADAPTER_COUNT)E_Exit("Unknown video adapter");
+ const MachineType adapters[]={MCH_VGA,MCH_EGA,MCH_CGA,MCH_VGA,MCH_TANDY,MCH_PCJR,MCH_HERC};
+ machine=adapters[db_machine_option];svgaCard=db_machine_option==PC_ADAPTER_S3?SVGA_S3Trio:SVGA_None;
+ lfb_page=lfb_pages=0;lfb_handler=lfb_mmio=nullptr;
  memset(ram,0,sizeof(ram));memset(&cpu_regs,0,sizeof(cpu_regs));memset(&cpu,0,sizeof(cpu));memset(&Segs,0,sizeof(Segs));
  zz_dosbox_paging_init();CPU_ArchitectureType=CPU_ARCHTYPE_386SLOW;CPU_Core_Normal_Init();cpudecoder=CPU_Core_Normal_Run;
  for(unsigned seg=0;seg<6;seg++)SegSet16(seg,0x1000);
@@ -232,6 +246,9 @@ extern "C" int db_run_io(const uint8_t *program,unsigned bytes,unsigned limit,Do
  db_pc_close();
  db_unmount();db_cd_close();
  for(unsigned i=0;i<CB_MAX;i++){delete[] CallBack_Description[i];CallBack_Description[i]=nullptr;}
+#ifdef DB_OPENGL
+ extern void db_gl_shutdown();db_gl_shutdown();
+#endif
 #ifdef DB_NEON
  db_neon_finish();
 #endif

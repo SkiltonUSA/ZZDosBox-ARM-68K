@@ -19,6 +19,12 @@
 extern "C" void db_runtime_init();
 extern "C" void db_output(const char*);
 extern "C" volatile uint8_t *db_shared();
+#ifdef DB_VIDEO_TRACE
+extern "C" void db_video_debug_end();
+#endif
+#ifdef DB_PRESENT_TEST
+extern void db_presentation_report();
+#endif
 extern "C" const DbConsoleIO *db_stream(int (*)());
 static unsigned boot_pos;static bool boot_prompt;static char boot_command[160];
 static void boot_keys(){
@@ -26,7 +32,7 @@ static void boot_keys(){
  if(!boot_prompt){
   unsigned cur=mem_readw(0x450),row=cur>>8,col=cur&255;
   if(row<25&&col>=4&&col<=80){
-   const char *prompt="C:\\>";unsigned at=0xb8000+(row*80+col-4)*2,i;
+   const char *prompt="C:\\>";unsigned at=(machine==MCH_HERC?0xb0000:0xb8000)+(row*80+col-4)*2,i;
    for(i=0;i<4&&mem_readb(at+i*2)==(unsigned)prompt[i];i++){}
    if(i==4)boot_prompt=true;
   }
@@ -57,8 +63,8 @@ extern "C" int mesen_test(int verify,MesenResult*out,int(*halt)(),uint32_t(*cloc
  db_runtime_init();host_stop=halt;memset(out,0,sizeof(*out));DosboxResult r{};
  volatile uint8_t *b=db_shared();
  if(ad_get(b,PC_OPTIONS)==PC_OPTIONS_MAGIC){
-  db_memory_mb=ad_get(b,PC_OPTIONS+4);db_machine_option=ad_get(b,PC_OPTIONS+8);db_cpu_cycles=ad_get(b,PC_OPTIONS+12);
-  if(!pc_options_valid(db_memory_mb,db_machine_option,db_cpu_cycles)){db_output("Invalid PC options");return 1;}
+  db_memory_mb=ad_get(b,PC_OPTIONS+4);db_machine_option=ad_get(b,PC_OPTIONS+8);db_cpu_cycles=ad_get(b,PC_OPTIONS+12);db_monochrome=ad_get(b,PC_OPTIONS+16);
+  if(db_monochrome>3||!pc_options_valid(db_memory_mb,db_machine_option,db_cpu_cycles)){db_output("Invalid PC options");return 1;}
  }
  for(unsigned i=0;i<13;i++)db_boot_name[i]=b[PC_BOOT_NAME+i];
  if(*db_boot_name&&!fs_name_valid(db_boot_name)){db_output("Invalid boot image name");return 1;}
@@ -71,7 +77,13 @@ extern "C" int mesen_test(int verify,MesenResult*out,int(*halt)(),uint32_t(*cloc
  for(unsigned i=0;boot_command[i];i++)if((unsigned char)boot_command[i]<32||(unsigned char)boot_command[i]>=127){db_output("Invalid boot command");return 1;}
  pc_prof_start();
  uint32_t start=clock();int rc=db_run_io(nullptr,0,ad_get(b,PC_DURATION)?10000000:0xffffffffu,&r,stop,db_stream(stop));
+#ifdef DB_VIDEO_TRACE
+ db_video_debug_end();
+#endif
  pc_prof_finish();
+#ifdef DB_PRESENT_TEST
+ db_presentation_report();
+#endif
  out->ticks=clock()-start;out->checked=verify;out->cycles=r.slices;out->errors=r.fault;out->actual_pc=r.exit_code;out->expected_pc=r.bytes;out->actual_regs=db_frames;out->expected_regs=PIC_Ticks;
  db_output(r.text);return rc;
 }

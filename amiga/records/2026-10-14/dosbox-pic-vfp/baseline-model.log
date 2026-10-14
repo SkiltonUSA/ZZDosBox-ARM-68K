@@ -1,0 +1,20 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 61042 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 21 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 308219 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x150020c0 fixture requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 1034503 heap 3906816
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 15 read 32113 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 324277 heap 3906816
+PASS profile publication and exclusive totals speed unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry speed
+PASS ARM shell 0x150020c0 speed requests 15 read 32113 written 0 rc 0

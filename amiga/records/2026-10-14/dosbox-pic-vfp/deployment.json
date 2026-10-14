@@ -1,0 +1,8 @@
+{
+  "status": "installed after user review",
+  "runtime_sha256": "cccfd75208ea662f0ce8036d8ab1cbccfde8ac2846715ddfd0d338272d5a6aa0",
+  "crc32": "5C74FFFC",
+  "previous_crc32": "D1EBF6F8",
+  "installed_fixture": "PASS",
+  "mui_opengl_windows_unchanged": true
+}

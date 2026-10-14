@@ -4,7 +4,7 @@ import argparse,difflib,hashlib,shutil,subprocess,re,json
 from pathlib import Path
 import build_dosbox_shell as shell
 ROOT=shell.ROOT;OUT=ROOT/'.context/amiga/dosbox-pc';SRC=ROOT/'amiga/dosbox/pc';UP=shell.UP
-HW=['iohandler','pic','timer','keyboard','cmos','mpu401','vga','vga_attr','vga_crtc','vga_dac','vga_draw','vga_gfx','vga_other','vga_memory','vga_misc','vga_seq','vga_xga']
+HW=['iohandler','pic','timer','keyboard','cmos','mpu401','vga','vga_attr','vga_crtc','vga_dac','vga_draw','vga_gfx','vga_other','vga_memory','vga_misc','vga_seq','vga_xga','vga_s3']
 INTS=['mouse','bios','bios_disk','bios_keyboard','int10','int10_char','int10_memory','int10_misc','int10_modes','int10_vesa','int10_pal','int10_put_pixel','int10_video_state','int10_vptable']
 def prepare():
  shell.OUT=OUT;sources=shell.prepare();patch=[]
@@ -15,6 +15,9 @@ def prepare():
  for name in ['keytest','cgatest','boottest','pagingtest','hddtest','badmem','miditest','welcome','mousetst','smctest']:
   subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/(name+'.S')),'-o',name+'.o'],cwd=OUT,check=True)
   subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x7c00' if name=='pagingtest' else '0x100','--oformat=binary',name+'.o','-o',name.upper()+'.COM'],cwd=OUT,check=True)
+ for name,adapter,mode,bpp in [('S3V101',3,0x101,8),('S3V103',3,0x103,8),('S3V105',3,0x105,8),('S3V110',3,0x110,15),('S3V111',3,0x111,16),('S3V114',3,0x114,16),('S3V10F',3,0x10f,32),('TANTEST',4,9,4),('JRTTEST',5,9,4),('HERCTEST',6,0,1)]:
+  subprocess.run(['clang','--target=i386-none-elf',f'-DTEST_ADAPTER={adapter}',f'-DTEST_MODE={mode}',f'-DTEST_BPP={bpp}','-c',str(SRC/'adaptertest.S'),'-o',str(OUT/(name+'.o'))],check=True)
+  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x100','--oformat=binary',str(OUT/(name+'.o')),'-o',str(OUT/(name+'.COM'))],check=True)
  (OUT/'ZZHELLO.COM').write_bytes((OUT/'WELCOME.COM').read_bytes())
  (OUT/'welcome-build.json').write_text(json.dumps({'source_sha256':hashlib.sha256((SRC/'welcome.S').read_bytes()).hexdigest(),'bytes':(OUT/'ZZHELLO.COM').stat().st_size,'sha256':hashlib.sha256((OUT/'ZZHELLO.COM').read_bytes()).hexdigest()},indent=2)+'\n')
  (OUT/'BOOTTEST.IMG').write_bytes((OUT/'BOOTTEST.COM').read_bytes()+bytes([0x39,0x5a])+bytes(1440*1024-514))
@@ -66,7 +69,23 @@ __attribute__((noinline)) tlb_entry *PAGING_GetHighTLBEntry(PhysPt address) {
  # Preserve the nonzero segment/offset expected by older DOS applications.
  change('src/ints/mouse.cpp',lambda s:s.replace('RealMake(DOS_GetMemory(0x1)-1,0x10)', 'RealMake(CB_SEG+1,CB_SOFFSET+(call_int33*CB_SIZE)-0x10)')+"\nextern \"C\" bool db_mouse_relative(){return useps2callback;}\n")
  change('src/hardware/iohandler.cpp',lambda s:s.replace('../src/cpu/lazyflags.h','../cpu/lazyflags.h'))
- change('src/hardware/vga.cpp',lambda s:s[:s.index('void SVGA_Setup_Driver(void) {')]+'void SVGA_Setup_Driver(void) { memset(&svga,0,sizeof(svga));vga.vmemsize=vga.vmemwrap=256*1024; }\n')
+ change('src/hardware/vga.cpp',lambda s:s[:s.index('void SVGA_Setup_Driver(void) {')]+'''
+#include "adapters.h"
+void SVGA_Setup_Driver(void) {
+ memset(&svga,0,sizeof(svga));vga.vmemsize=vga.vmemwrap=256*1024;
+ if(svgaCard==SVGA_S3Trio){vga.vmemsize=PC_S3_VRAM_BYTES;SVGA_Setup_S3Trio();}
+}
+''')
+ # Advertise only modes inside both the private capture and video RAM bounds.
+ # S3 register/VBE discovery works without emulating a PCI bus.
+ def s3(text):
+  text=text.replace('return VideoModeMemSize(mode) < vga.vmemsize;','''for(unsigned i=0;ModeList_VGA[i].mode!=0xffff;i++){
+   const VideoModeBlock&m=ModeList_VGA[i];
+   if(m.mode==mode)return m.swidth<=PC_VIDEO_MAX_WIDTH&&m.sheight<=PC_VIDEO_MAX_HEIGHT&&VideoModeMemSize(mode)<=vga.vmemsize;
+  }
+  return false;''').replace('PCI_AddSVGAS3_Device();','/* No emulated PCI bus: BIOS/register detection only. */')
+  return '#include "adapters.h"\n'+text.replace('#include "mem.h"','#include "mem.h"\n#include "int10.h"')
+ change('src/hardware/vga_s3.cpp',s3)
  change('src/hardware/vga_memory.cpp',lambda s:s+'\nvoid zz_vga_memory_close(){VGA_Memory_ShutDown(nullptr);}\n')
  change('src/ints/bios_keyboard.cpp',lambda s:s.replace('#include "SDL.h"','#define SDL_VERSION_ATLEAST(a,b,c) 0'))
  def bios(s):
@@ -103,7 +122,7 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
  # This port has its own controls; do not advertise unsupported upstream menus.
  def welcome(text):
   messages={
-   'SHELL_STARTUP_BEGIN':"DosBox ZZ9000 project                         0.10.1-dev\nAmigaOS - 32-bit | DOSBox / libretro\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\n\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\nF10: close session             HELP: DOS commands\n\n",
+   'SHELL_STARTUP_BEGIN':"DosBox ZZ9000 project                         0.11.0-dev\nAmigaOS - 32-bit | DOSBox / libretro\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\n\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\nF10: close session             HELP: DOS commands\n\n",
    'SHELL_STARTUP_END':'', 'SHELL_STARTUP_CGA':'', 'SHELL_STARTUP_HERC':'', 'SHELL_STARTUP_DEBUG':''}
   messages['SHELL_STARTUP_SUB']=messages['SHELL_STARTUP_BEGIN']
   for key,value in messages.items():
@@ -136,7 +155,7 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
  return sources
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse'],default='fixture');args=p.parse_args();sources=prepare()
+ p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse','adapters'],default='fixture');args=p.parse_args();sources=prepare()
  if args.prepare_only:return
  flags=['-std=c++17','-O2','-g','-fno-exceptions','-fno-rtti','-ffunction-sections','-fdata-sections','-Wno-format','-Wno-deprecated-declarations','-DZZ_CONTROL=0x180000','-DDB_NATIVE','-DZZ_PC_CD',*['-I'+str(x) for x in [SRC,shell.SRC,ROOT/'amiga/dosbox/dos',ROOT/'amiga/dosbox/console',OUT,OUT/'include',OUT/'src/cpu',OUT/'src/ints',ROOT/'amiga/dosbox',ROOT/'amiga/mesen_bench',ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']]]
  if args.sanitize:flags+=['-fsanitize=address','-fno-omit-frame-pointer']

@@ -26,3 +26,9 @@ test-host:
 	.context/tests/dynrec
 test-model:
 	$(PYTHON) tests/amiga/dosbox/check_pc_arm.py
+
+.PHONY: build-current
+build-current:
+	$(PYTHON) scripts/build_dosbox_dos_arm.py --pc --pc-dynrec --pc-jit-mib 4 \
+	  --pc-neon --pc-pipeline --pc-scanlines --pc-presentation --pc-adapters \
+	  --pc-doom-clock --pc-pic-vfp

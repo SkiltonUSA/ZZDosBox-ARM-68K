@@ -1,4 +1,4 @@
-/* GPL-3.0-or-later. Experimental software Classic mask, independent of FPGA.
+/* GPL-3.0-or-later. Software scanline modes, independent of FPGA.
  * Every entry refers to a validated, currently locked, owned framebuffer.
  * An epoch change invalidates all three slots after a display/mode transition. */
 #pragma once
@@ -35,4 +35,18 @@ static inline void pc_scan_black(volatile uint32_t *row,unsigned width){
 #else
  for(unsigned x=0;x<width;x++)row[x]=0;
 #endif
+}
+
+/* Internal modes: 0 off, 1 Classic rewrite benchmark, 2 Classic preserved,
+ * 3 Soft (5/8), 4 Gradient (8/8, 6/8, 4/8, 6/8). Per output row. */
+static inline unsigned pc_scan_level(unsigned mode,unsigned row){
+ if(mode==1||mode==2)return (row&1)?0:8;
+ if(mode==3)return (row&1)?5:8;
+ if(mode==4){const unsigned levels[4]={8,6,4,6};return levels[row&3];}
+ return 8;
+}
+static inline uint32_t pc_scan_dim_pixel(uint32_t p,unsigned level){
+ uint32_t lo=(((p&0x00ff00ffu)*level)>>3)&0x00ff00ffu;
+ uint32_t hi=(((((p>>8)&0x00ff00ffu)*level)>>3)&0x00ff00ffu)<<8;
+ return lo|hi;
 }

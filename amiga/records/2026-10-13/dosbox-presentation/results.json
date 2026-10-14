@@ -1,0 +1,187 @@
+[
+  {
+    "run": "adaptive-no-profile",
+    "seconds": 258.6696023286696,
+    "game_fps": 8.249906370090237,
+    "presentation": {
+      "source": 13011,
+      "shown": 3315,
+      "skipped": 9696,
+      "divisor": 4,
+      "changes": 6,
+      "mode": 1,
+      "hz": 60,
+      "work_ticks": 5989172,
+      "copy_ticks": 1813028,
+      "total_copy": 4230640476
+    },
+    "whole_session_wall_seconds": 272.967,
+    "profile": {},
+    "profiling": false,
+    "clean_teardown": true,
+    "gain_percent_vs_matched_off": 13.544526819397507
+  },
+  {
+    "run": "adaptive",
+    "seconds": 270.17061532817064,
+    "game_fps": 7.8987124392039245,
+    "presentation": {
+      "source": 13011,
+      "shown": 3316,
+      "skipped": 9695,
+      "divisor": 4,
+      "changes": 6,
+      "mode": 1,
+      "hz": 60,
+      "work_ticks": 6191998,
+      "copy_ticks": 1973675,
+      "total_copy": 4242117140
+    },
+    "whole_session_wall_seconds": 284.713,
+    "profile": {
+      "other": {
+        "seconds": 18.499374129499373,
+        "calls": 0
+      },
+      "cpu": {
+        "seconds": 169.33631273833632,
+        "calls": 7327872
+      },
+      "events": {
+        "seconds": 67.38936472338936,
+        "calls": 7513568
+      },
+      "capture": {
+        "seconds": 16.7667996467668,
+        "calls": 5204660
+      },
+      "grant": {
+        "seconds": 5.094006638094006,
+        "calls": 3316
+      },
+      "copy": {
+        "seconds": 7.623940480623941,
+        "calls": 3316
+      }
+    },
+    "profiling": true,
+    "clean_teardown": true,
+    "gain_percent_vs_matched_off": 12.504643205089948
+  },
+  {
+    "run": "fixed2",
+    "seconds": 281.62743807262746,
+    "game_fps": 7.577386687193716,
+    "presentation": {
+      "source": 13008,
+      "shown": 6517,
+      "skipped": 6491,
+      "divisor": 2,
+      "changes": 0,
+      "mode": 2,
+      "hz": 60,
+      "work_ticks": 6206605,
+      "copy_ticks": 1924555,
+      "total_copy": 7815952956
+    },
+    "whole_session_wall_seconds": 296.08,
+    "profile": {
+      "other": {
+        "seconds": 17.867724998867725,
+        "calls": 0
+      },
+      "cpu": {
+        "seconds": 170.91794712891794,
+        "calls": 7325863
+      },
+      "events": {
+        "seconds": 67.14298825914298,
+        "calls": 7511513
+      },
+      "capture": {
+        "seconds": 16.717674301717675,
+        "calls": 5203703
+      },
+      "grant": {
+        "seconds": 8.697867416697868,
+        "calls": 6517
+      },
+      "copy": {
+        "seconds": 14.733516893733517,
+        "calls": 6517
+      }
+    },
+    "profiling": true,
+    "clean_teardown": true,
+    "gain_percent_vs_matched_off": 7.927867007606393
+  },
+  {
+    "run": "off-no-profile",
+    "seconds": 293.7051759897052,
+    "game_fps": 7.265789555151728,
+    "presentation": {
+      "source": 13008,
+      "shown": 13008,
+      "skipped": 0,
+      "divisor": 1,
+      "changes": 0,
+      "mode": 0,
+      "hz": 60,
+      "work_ticks": 5977789,
+      "copy_ticks": 2186240,
+      "total_copy": 15625217203
+    },
+    "whole_session_wall_seconds": 308.459,
+    "profile": {},
+    "profiling": false,
+    "clean_teardown": true,
+    "gain_percent_vs_matched_off": 0.0
+  },
+  {
+    "run": "off",
+    "seconds": 303.95448681995447,
+    "game_fps": 7.020787955217985,
+    "presentation": {
+      "source": 13011,
+      "shown": 13011,
+      "skipped": 0,
+      "divisor": 1,
+      "changes": 0,
+      "mode": 0,
+      "hz": 60,
+      "work_ticks": 6190369,
+      "copy_ticks": 1940127,
+      "total_copy": 15564778776
+    },
+    "whole_session_wall_seconds": 318.909,
+    "profile": {
+      "other": {
+        "seconds": 18.252976497252977,
+        "calls": 0
+      },
+      "cpu": {
+        "seconds": 169.78154583478155,
+        "calls": 7327872
+      },
+      "events": {
+        "seconds": 67.44457876944458,
+        "calls": 7513568
+      },
+      "capture": {
+        "seconds": 16.76783873276784,
+        "calls": 5204660
+      },
+      "grant": {
+        "seconds": 17.272973717272972,
+        "calls": 13011
+      },
+      "copy": {
+        "seconds": 29.387013446387012,
+        "calls": 13011
+      }
+    },
+    "profiling": true,
+    "clean_teardown": true,
+    "gain_percent_vs_matched_off": 0.0
+  }
+]

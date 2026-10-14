@@ -11,12 +11,16 @@ def main():
  group.add_argument("--mouse-build",action="store_true")
  group.add_argument("--neon-build",action="store_true")
  group.add_argument("--scanline-build",action="store_true")
+ group.add_argument("--pic-vfp-build",action="store_true")
  args=parser.parse_args()
  pc_source="artifacts/development/mouse/pc" if args.mouse_build else "artifacts/experiments/wfw311-small-tlb/pc" if args.windows_experiment else "artifacts/0.8.0-dev/pc"
  pc_target=".context/amiga/dosbox-pc"
  if args.neon_build or args.scanline_build:
   pc_source="artifacts/experiments/scanline-copy/pc" if args.scanline_build else "artifacts/development/neon-dynrec/pc"
   pc_target=".context/amiga/dosbox-dynrec-4m-neon-pipe"+("-scan" if args.scanline_build else "")
+ if args.pic_vfp_build:
+  pc_source="artifacts/development/pic-vfp/pc"
+  pc_target=".context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp"
  verify()
  checkout=ROOT/'.context/research/dosbox-libretro';checkout.parent.mkdir(parents=True,exist_ok=True)
  pin=json.loads((ROOT/'amiga/dosbox/upstream.json').read_text())
@@ -36,6 +40,11 @@ def main():
  base=ROOT/'.context/amiga/ffmpeg-bench'
  if not (base/'picolibc-1.8.12').exists():
   with tarfile.open(ROOT/'sources/picolibc_1.8.12.orig.tar.gz') as archive:archive.extractall(base,filter='data')
+ if args.pic_vfp_build:
+  out=ROOT/'.context/amiga/dosbox-pic-vfp-baseline';out.mkdir(parents=True,exist_ok=True)
+  for p in (ROOT/'artifacts/development/pic-vfp/baseline').iterdir():
+   q=out/p.name
+   if not q.exists():shutil.copy2(p,q)
  drive=ROOT/'.context/amiga/dosbox-shell/CDrive';drive.mkdir(parents=True,exist_ok=True)
  for name in ['Diagnostic.com','FileTest.com','ExeTest.exe','INPUT.TXT']:
   target=drive/name.upper()

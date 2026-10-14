@@ -8,7 +8,11 @@ extern "C" void fb_heap_init(void *,size_t);
 #ifndef DB_JIT_MIB
 #define DB_JIT_MIB 1
 #endif
+#ifdef DB_OPENGL
+alignas(64) static uint8_t heap[10*1024*1024];
+#else
 alignas(64) static uint8_t heap[(DB_JIT_MIB==4?8:4)*1024*1024];
+#endif
 #else
 alignas(64) static uint8_t heap[2*1024*1024];
 #endif

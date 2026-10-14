@@ -15,8 +15,8 @@ static int display_hotkey(UWORD raw,UWORD qualifiers){
 #ifdef DB_SCANLINE_TEST
  if(key==0x58){
   if(down&&!(qualifiers&IEQUALIFIER_REPEAT)){
-   pc_display_scanlines((scan_mode+1)%3);
-   printf("SCANLINE_MODE requested=%u epoch=%u (0=off 1=full 2=skip)\n",scan_mode,scan_epoch);
+   pc_display_scanlines(scan_mode==0?2:scan_mode==1?2:scan_mode==2?3:scan_mode==3?4:0);
+   printf("SCANLINE_MODE requested=%u epoch=%u (0=off 1=classic-rewrite 2=classic 3=soft 4=gradient)\n",scan_mode,scan_epoch);
   }
   return 1;
  }

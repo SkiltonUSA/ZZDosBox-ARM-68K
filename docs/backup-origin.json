@@ -15,8 +15,8 @@
     "graphics_winmark_pixels_per_second": 1923752,
     "clock": "emulated guest clock; not physical CPU speed equivalence"
   },
-  "latest_backup": "2026-10-13",
-  "latest_scope": "Current DOSBox sources, NEON/dynrec executable, separate scanline executable, test evidence and DOSBox-only handoff",
-  "current_dos_runtime_sha256": "55085f15f23bc3fc077498e2b2cd9bf3770558a9706147ece163240ac73dcb7d",
+  "latest_backup": "2026-10-14",
+  "latest_scope": "Measured Direct PIC VFP runtime, runtime sources, regression evidence and optimisation history",
+  "current_dos_runtime_sha256": "cccfd75208ea662f0ce8036d8ab1cbccfde8ac2846715ddfd0d338272d5a6aa0",
   "scanline_experiment_sha256": "02442db69194befb55f8644c61badc01655bcc493d63adc11a3051ef75d89144"
 }

@@ -1,6 +1,15 @@
 #include "scanline_plan.h"
 #include <cassert>
 int main(){
+ for(unsigned mode=0;mode<=4;mode++)for(unsigned y=0;y<16;y++){
+  unsigned expected=mode==1||mode==2?(y%2?0:8):mode==3?(y%2?5:8):mode==4?(y%4==0?8:y%4==2?4:6):8;
+  assert(pc_scan_level(mode,y)==expected);
+ }
+ for(unsigned c=0;c<256;c++)for(unsigned level=0;level<=8;level++){
+  uint32_t p=c|((255-c)<<8)|(((c*3)&255)<<16)|(((c*7)&255)<<24),expected=0;
+  for(unsigned k=0;k<4;k++)expected|=((((p>>(k*8))&255)*level)/8)<<(k*8);
+  assert(pc_scan_dim_pixel(p,level)==expected);
+ }
  pc_scan_state s={};
  for(unsigned pass=0;pass<5;pass++)for(unsigned slot=0;slot<3;slot++)
   assert(pc_scan_begin(&s,2,1,0x200000+slot*0x140000,2560,640,480,3)==(pass==0));
