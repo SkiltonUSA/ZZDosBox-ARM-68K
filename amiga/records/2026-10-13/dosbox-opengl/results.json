@@ -1,0 +1,64 @@
+[
+  {
+    "test": "physical-direct-doom",
+    "heap_peak": 3906944,
+    "clean_exit": true,
+    "doom_signature": "1",
+    "game_seconds": 304.75904924275903,
+    "game_fps": 7.002253108816269,
+    "percent_vs_direct": 0.0
+  },
+  {
+    "test": "physical-gl-doom",
+    "gl_frames": 13008,
+    "gl_ms_total": 131733.42309273343,
+    "gl_ms_per_frame": 10.127108171335596,
+    "gl_closed": 1,
+    "heap_peak": 6082048,
+    "clean_exit": true,
+    "doom_signature": "1",
+    "game_seconds": 451.6842162376842,
+    "game_fps": 4.724539674587724,
+    "percent_vs_direct": -32.52829337689555
+  },
+  {
+    "test": "physical-gl-hercules",
+    "gl_frames": 11,
+    "gl_ms_total": 313.03934131303936,
+    "gl_ms_per_frame": 28.458121937549034,
+    "gl_closed": 1,
+    "heap_peak": 6024576,
+    "clean_exit": true,
+    "doom_signature": "0"
+  },
+  {
+    "test": "physical-gl-opt-hercules",
+    "gl_frames": 11,
+    "gl_ms_total": 119.06078411906078,
+    "gl_ms_per_frame": 10.823707647187344,
+    "gl_closed": 1,
+    "heap_peak": 6024576,
+    "clean_exit": true,
+    "doom_signature": "0"
+  },
+  {
+    "test": "physical-gl-opt-s3",
+    "gl_frames": 19,
+    "gl_ms_total": 228.48782722848784,
+    "gl_ms_per_frame": 12.025675117288834,
+    "gl_closed": 1,
+    "heap_peak": 8204032,
+    "clean_exit": true,
+    "doom_signature": "0"
+  },
+  {
+    "test": "physical-gl-s3",
+    "gl_frames": 20,
+    "gl_ms_total": 570.9683345709684,
+    "gl_ms_per_frame": 28.54841672854842,
+    "gl_closed": 1,
+    "heap_peak": 8204032,
+    "clean_exit": true,
+    "doom_signature": "0"
+  }
+]
