@@ -17,7 +17,7 @@ commands=b'dir /b\rtype readme.txt\recho saved text > SAVED.TXT\rtype saved.txt\
 def scan_row(data,mode,y):
  factor=(0 if y%2 else 8) if mode in (1,2) else (5 if y%2 else 8) if mode==3 else (8,6,4,6)[y%4] if mode==4 else 8
  return bytes(c*factor//8 for c in data)
-def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000,memory_requests=None,memory_stop=False,matrix_stop=False):
+def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000,memory_requests=None,memory_stop=False,matrix_stop=False,disk_mib=32,paging_fixture=None,paging_faults=1,network=None):
  image,rel,_=pack.unpack((OUT/'dosbox.elf').read_bytes())
  for off in rel:struct.pack_into('<I',image,off,struct.unpack_from('<I',image,off)[0]+base)
  symbols={}
@@ -35,6 +35,8 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   u.reg_write(UC_ARM_REG_C1_C0_2,0x00f00000);u.reg_write(UC_ARM_REG_FPEXC,0x40000000)
   for i in range(32):u.reg_write(globals()['UC_ARM_REG_D'+str(i)],0xa5a5000000000000+i)
   u.reg_write(UC_ARM_REG_FPSCR,inherited_fpscr)
+  # Reserved/unsupported exception-enable bits may be read-as-zero.
+  inherited_fpscr=u.reg_read(UC_ARM_REG_FPSCR)
  u.mem_map(base&~4095,0x2002000);u.mem_write(base,bytes(image));u.mem_write(symbols['_ZL6shared'],struct.pack('<I',base))
  if 'zz_matrix_quick' in symbols:u.mem_write(symbols['zz_matrix_quick'],struct.pack('<I',1)) # correctness only; shorten microbenchmark repetition
  scheduler_digest=hashlib.sha256();scheduler_count=[0]
@@ -60,6 +62,21 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
     control=(3<<22)|(1<<24)|(1<<25)|(7<<16)|(3<<20)|0x9f00
     assert not u.reg_read(UC_ARM_REG_FPSCR)&control,'PIC inherited a non-IEEE floating-point policy'
    address=symbols['_Z12PIC_RunQueuev'];u.hook_add(UC_HOOK_CODE,ieee_policy,begin=address,end=address)
+ math_calls=[0]
+ if mode=='pit-math':
+  def math_call(u,address,size,data):
+   assert not u.reg_read(UC_ARM_REG_FPSCR)&((3<<22)|(1<<24)|(1<<25)|(7<<16)|(3<<20)|0x9f00),'Library math inherited non-IEEE control state'
+   math_calls[0]+=1
+  for address in {symbols[n] for n in ('fmod','fmodl') if n in symbols}:
+   u.hook_add(UC_HOOK_CODE,math_call,begin=address,end=address)
+ if jit and mode=='paging' and 'db_dynrec_paged_fallbacks' in symbols:
+  paged=[False];dispatches=[0]
+  def paging_policy(u,address,size,data):paged[0]=bool(u.reg_read(UC_ARM_REG_R0))
+  address=symbols['_Z13PAGING_Enableb'];u.hook_add(UC_HOOK_CODE,paging_policy,begin=address,end=address)
+  def jit_dispatch(u,kind,address,size,value,data):
+   assert not paged[0],'JIT dispatched while 386 paging was enabled'
+   dispatches[0]+=1
+  address=symbols['db_dynrec_dispatches'];u.hook_add(UC_HOOK_MEM_WRITE,jit_dispatch,begin=address,end=address+3)
  def put(off,n):u.mem_write(base+off,struct.pack('>I',n&0xffffffff))
  def get(off):return struct.unpack('>I',u.mem_read(base+off,4))[0]
  matrix_closed=[]
@@ -143,6 +160,8 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   files['EGATEST.COM']=fixture.replace(bytes.fromhex('83fa05'),bytes.fromhex('83fa0a'))
  if adapter:
   file=adapter[0]+'.COM';files={file:(OUT/file).read_bytes()};keys=file.encode()+b'\rexit\r'
+ if mode=='pit-math':
+  files={'PITMATH.COM':(OUT/'PITMATH.COM').read_bytes()};keys=b'pitmath\rexit\r'
  if mode=='vga-shell':
   keys=b'';put(0x1882c0,3);put(0x1882c8,7);put(0x188040,0)
  if mode in ('cga','keyboard'):
@@ -165,10 +184,18 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   files={'BOOTTEST.IMG':(OUT/'BOOTTEST.IMG').read_bytes()};keys=b''
   u.mem_write(base+0x188240,b'BOOTTEST.IMG\0');put(0x188040,100)
  if mode=='paging':
-  files={'PAGING.IMG':(OUT/'PAGINGTEST.COM').read_bytes()+bytes(1440*1024-512)};keys=b''
+  files={'PAGING.IMG':(Path(paging_fixture) if paging_fixture else OUT/'PAGINGTEST.COM').read_bytes()+bytes(1440*1024-512)};keys=b''
   u.mem_write(base+0x188240,b'PAGING.IMG\0');put(0x188040,100)
  if mode=='hdd':
-  files={'HDD.IMG':(OUT/'HDDTEST.COM').read_bytes()+bytes(32*1024*1024-512)};keys=b''
+  assert disk_mib in (32,64,128,256)
+  boot=bytearray((OUT/'HDDTEST.COM').read_bytes());cylinders=disk_mib*4
+  # Patch fixture constants only; geometry is supplied by actual linked BIOS.
+  boot=boot.replace(bytes.fromhex('80fd7f'),bytes([0x80,0xfd,(cylinders-1)&255]))
+  boot=boot.replace(bytes.fromhex('80f920'),bytes([0x80,0xf9,32|(((cylinders-1)>>8)<<6)]))
+  boot=boot.replace(bytes.fromhex('b9207f'),bytes([0xb9,32|(((cylinders-1)>>8)<<6),(cylinders-1)&255]))
+  # Test the next sector beyond the last track, including 1024-cylinder limit.
+  boot=boot.replace(bytes.fromhex('b90180'),bytes([0xb9,33|(((cylinders-1)>>8)<<6),(cylinders-1)&255]))
+  files={'HDD.IMG':bytes(boot)+bytes(disk_mib*1024*1024-512)};keys=b""
   u.mem_write(base+0x188280,b'HDD.IMG\0');put(0x188040,100)
  if mode=='cd':
   from make_cd_fixture import make
@@ -180,6 +207,11 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   files={'MOUSETST.COM':(OUT/'MOUSETST.COM').read_bytes()};keys=b'mousetst\rexit\r'
   put(0x188400,0xfffffffe);put(0x188440,0xfffffffe)
  mouse_stage=0
+ if network is not None:
+  assert json.loads((OUT/'build.json').read_text()).get('network')
+  assert memory_requests is None
+  files=dict(network.files);keys=network.keys
+  put(0x18c000,0x4e455431);put(0x188040,0)
  midi_bytes=bytearray()
  raw_sent=False
  disk_open=False
@@ -215,6 +247,7 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
 
  pc=symbols['mesen_test']
  for tick in range(50000):
+  if network is not None:network.service(u,base,put,get)
   if mode=='memory-smc' and not memory_requests and tick>100:
    data=bytes(u.mem_read(symbols['_ZL3ram']+0x500,8))
    if data[4:]==b'MEM1':
@@ -328,9 +361,9 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
      assert mode=='cd' and n==1 and pos<len(cd_image)//2048
      u.mem_write(base+DATA,cd_image[pos*2048:(pos+1)*2048]);result=n;read+=2048
     elif op==15:
-     assert path=='HDD.IMG' and not disk_open;disk_open=True;result=65536
+     assert path=='HDD.IMG' and not disk_open;disk_open=True;result=len(files['HDD.IMG'])//512
     elif op in (17,18):
-     assert disk_open and 1<=n<=8 and pos<65536 and pos+n<=65536
+     assert disk_open and 1<=n<=8 and pos<len(files['HDD.IMG'])//512 and pos+n<=len(files['HDD.IMG'])//512
      at=pos*512;count=n*512
      if op==17:u.mem_write(base+DATA,files['HDD.IMG'][at:at+count]);read+=count
      else:
@@ -496,19 +529,26 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   assert rc==0 and b'MPU401 intelligent/UART PASS' in output,(rc,result,detail,output[-300:])
   assert midi_bytes==bytes([0xf8])*5000+bytes([0x91,60,64,62,65,0xf8,0x81,60,0,0xf0,0x7d,1,2,3,0xf7])
   print('PASS ARM MPU-401 and bounded MIDI stream/wrap',flush=True);return
+ if mode=='pit-math':
+  assert rc==0 and b'PIT math PASS' in output and math_calls[0]>0,(rc,result,output,math_calls[0])
+  print('PASS PIT library math with IEEE policy and full SIMD state restoration; calls',math_calls[0],flush=True);return
  if mode=='boot':
   marker=struct.unpack('<H',u.mem_read(symbols['_ZL3ram']+0x500,2))[0]
   assert rc==2 and result[4]==3 and marker==0xb007 and not handles,(rc,result,hex(marker),detail)
   print('PASS ARM BIOS boot/read/bounds, A20 aliasing, ROM protection and timed stop',flush=True);return
  if mode=='paging':
   marker,faults=struct.unpack('<II',u.mem_read(symbols['_ZL3ram']+0x500,8))
-  assert rc==2 and result[4]==3 and marker==0xfa17 and faults==1 and not handles,(rc,result,hex(marker),faults,detail)
-  print('PASS ARM protected-mode demand-page fault, full decoder and resume',flush=True);return
+  assert rc==2 and result[4]==3 and marker==0xfa17 and faults==paging_faults and not handles,(rc,result,hex(marker),faults,detail)
+  if jit and 'db_dynrec_paged_fallbacks' in symbols:
+   assert get(0x188d58)>0 and dispatches[0]>0,'Missing interpreter fallback or initial JIT execution'
+   print('PASS JIT before paging; interpreter exclusively during paging; fallback calls',get(0x188d58),flush=True)
+  assert get(0x1897d0)==0,'Paged shutdown must not publish a BIOS text dump'
+  print('PASS ARM paging fixture',str(paging_fixture or 'demand-page'), 'faults',faults,'and shutdown with unmapped text aperture',flush=True);return
  if mode=='hdd':
   marker=struct.unpack('<H',u.mem_read(symbols['_ZL3ram']+0x500,2))[0]
   assert rc==2 and result[4]==3 and marker==0xd007 and written==1536,(rc,result,hex(marker),detail,written)
   assert files['HDD.IMG'][32*512:32*512+2]==bytes.fromhex('1827')
-  print('PASS ARM HDD BIOS geometry, cross-track read/write and end bounds',flush=True);return
+  print('PASS ARM HDD BIOS geometry, cross-track read/write and end bounds',disk_mib,'MiB',flush=True);return
  if mode in ('read-stop','fs-stop'):
   assert rc==2 and result[4]==3 and stopping,(mode,rc,result,detail)
   print('PASS ARM cancellation',mode,flush=True);return
@@ -540,6 +580,12 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   assert rc==1 and b'Invalid PC options' in detail and frame_seq==0,(rc,result,detail)
   print('PASS rejected invalid PC settings',flush=True);return
  assert rc==0 and result[4]==0,(rc,result,detail,output)
+ if network is not None:
+  assert not handles
+  (OUT/'model-network.txt').write_bytes(output+b'\n'+detail+b'\n')
+  network.check(bytes(output),files)
+  print('PASS ARM guest NE2000, packet queues and clean shell exit',flush=True)
+  return
  if adapter:
   assert b'ADAPTER PASS' in output and b'ADAPTER FAIL' not in output and frame_seq>=10 and captured,(rc,detail,output)
   actual=[struct.unpack('<I',u.mem_read(symbols[n],4))[0] for n in ('db_width','db_height','db_bpp')]

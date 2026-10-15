@@ -1,5 +1,47 @@
 # ZZDosBox changelog
 
+## 0.17.0-dev — experimental Network tab
+
+- Add per-program DHCP/manual IPv4, private subnet/gateway, DNS, hostname,
+  MTU and DHCP timeout/retry settings.
+- Add a network terminal, DHCP acquisition, saved-lease release, guest ping
+  and DNS lookup, live counters and cooperative Disconnect.
+- Share Roadshow's existing route using NE2000 and libslirp NAT.
+- Validate settings and migrate older profiles with networking disabled.
+- Keep networking opt-in in a separate interpreter runtime; reject
+  incompatible renderer/core/debugger combinations. Windows networking and
+  IPX remain pending. Release clears the saved guest lease, not Roadshow's IP.
+
+## 0.16.0-dev — on-demand reports and Windows disk cache
+
+- Load selected compatibility details from `Compatibility.dat`; reduce the launcher executable by 73.3%.
+- Validate data headers, indexes, record bounds and checksums; recover when a missing file is restored.
+- Add configurable build-time BIOS image cache capacity. The measured 1 MiB Windows candidate cuts startup elapsed time by 14.3% versus 128 KiB.
+- Limit CAMD cache maintenance to consumed MIDI spans while preserving pacing and MT-32 SysEx delays.
+- Preserve SIMD/FPSCR state in scalar PC builds too: linked library math can use VFP independently of pixel settings.
+- Add paging/remapping/fault regression fixtures. Keep the production paged-JIT fallback.
+- Add acknowledgement counters and elapsed time to fullscreen failure diagnostics.
+- Keep indexed-pixel capture unrolling experimental; a failed fullscreen run is excluded from performance results.
+
+
+## 0.15.2-dev — complete-discussion topic overviews
+
+- Index all 6,999 cached comments across 2,428 discussions, including older replies.
+- Show contributor counts, date range and automatic topic counts in the right pane.
+- Count unclassified comments explicitly; topic mentions are not verified fixes.
+- Keep the latest excerpt separately labelled and retain original-report links.
+- Expand the scrolling discussion area and bundle updated Markdown details.
+
+## 0.15.1-dev — offline compatibility reference
+
+- Add Compatibility to the MUI launcher: A–Z/0–9 filters, title search and report links.
+- Place games on the left and per-game details on the right: aligned metadata,
+  a DOSBox version/status/rating table, and a separate scrolling comment preview.
+- Include 3,937 upstream DOSBox reports covering 3,932 games, with tested versions and ratings.
+- Include per-game publisher/tester details, 8,709 recorded version ratings and 2,428 brief comment previews.
+- Bundle summary and detailed Markdown references; keep CSV/JSON exports and reproducible scrapers.
+- Clearly distinguish upstream reports from verified ZZDosBox results.
+
 ## PIC hardware floating point — 14 October 2026
 
 - Promote the measured Direct runtime using A9 VFP for PIC event scheduling;

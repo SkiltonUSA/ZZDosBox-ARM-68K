@@ -6,6 +6,7 @@ from pathlib import Path
 from amiga import PIN,container_command
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'.context/amiga/dosbox-launcher';OUT.mkdir(exist_ok=True,parents=True)
+subprocess.run(['python3',str(ROOT/'scripts/build_dosbox_compatibility_details.py')],check=True,cwd=ROOT)
 disasm=prepare(OUT)
 subprocess.run(['python3',str(ROOT/'scripts/prepare_dosbox_icon.py')],check=True,cwd=ROOT)
 subprocess.run([*container_command(),'run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-fstack-usage','-Wall','-Wextra','-Werror','-Wno-unused-function','-Wno-misleading-indentation','-fwrapv','-Iamiga/dosbox/developer','amiga/dosbox/launcher/main.c','amiga/dosbox/pc/cd_host.c',str(disasm.relative_to(ROOT)),'-lamiga','-o','.context/amiga/dosbox-launcher/ZZDosBox-Launcher'],check=True,cwd=ROOT)
@@ -15,9 +16,16 @@ subprocess.run([*container_command(),'run','--rm','--platform','linux/amd64','-v
 (ROOT/'cd_host.su').replace(OUT/'cd-stack.su')
 (ROOT/'disk.su').replace(OUT/'disk-stack.su')
 p=OUT/'ZZDosBox-Launcher';assert p.read_bytes()[:4]==bytes.fromhex('000003f3')
-record={'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'sources':{str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest() for f in (ROOT/'amiga/dosbox/launcher').glob('*') if f.is_file()}}
+record={'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'sources':{str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest() for f in [*(ROOT/'amiga/dosbox/launcher').glob('*'), ROOT/'amiga/dosbox/compatibility/data.h', ROOT/'amiga/dosbox/compatibility/details_meta.h', ROOT/'amiga/dosbox/network/config.h', ROOT/'amiga/dosbox/network/control.h'] if f.is_file()}}
 (OUT/'launcher-build.json').write_text(json.dumps(record,indent=2)+'\n');print(record['bytes'],record['sha256'])
 
 import shutil
 shutil.copy2(ROOT/".context/amiga/dosbox-pc/ZZDOSCD.SYS",OUT/"ZZDOSCD.SYS")
 shutil.copy2(ROOT/".context/amiga/dosbox-pc/ZZHELLO.COM",OUT/"ZZHELLO2.COM")
+
+(OUT/"Compatibility.md").write_text((ROOT/"docs/amiga-dosbox-compatibility.md").read_text().replace("amiga-dosbox-game-details.md", "Compatibility-Details.md"))
+
+(OUT/"Compatibility-Details.md").write_text((ROOT/"docs/amiga-dosbox-game-details.md").read_text().replace("amiga-dosbox-compatibility.md", "Compatibility.md"))
+
+record['assets']={name:{'bytes':(OUT/name).stat().st_size,'sha256':hashlib.sha256((OUT/name).read_bytes()).hexdigest()} for name in ['Compatibility.dat','Compatibility.md','Compatibility-Details.md']}
+(OUT/'launcher-build.json').write_text(json.dumps(record,indent=2)+'\n')

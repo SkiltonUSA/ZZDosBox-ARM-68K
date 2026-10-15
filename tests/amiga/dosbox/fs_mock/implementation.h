@@ -42,9 +42,10 @@ BPTR Open(STRPTR name,LONG mode){char path[1200];pathof(path,name);
  if(mode==MODE_NEWFILE&&ftruncate(fd,0)){close(fd);return 0;}FILE*f=fdopen(fd,"r+b");if(!f)close(fd);return (BPTR)f;
 }
 LONG Close(BPTR h){return fclose((FILE*)h)==0;}
-LONG Read(BPTR h,void*p,ULONG n){return fread(p,1,n,(FILE*)h);}
+static unsigned mock_seek_calls,mock_short_read;
+LONG Read(BPTR h,void*p,ULONG n){if(mock_short_read){mock_short_read=0;n/=2;}return fread(p,1,n,(FILE*)h);}
 LONG Write(BPTR h,const void*p,ULONG n){return fwrite(p,1,n,(FILE*)h);}
-LONG Seek(BPTR h,LONG pos,LONG whence){FILE*f=(FILE*)h;long old=ftell(f);return fseek(f,pos,whence==OFFSET_BEGINNING?SEEK_SET:whence==OFFSET_CURRENT?SEEK_CUR:SEEK_END)?-1:old;}
+LONG Seek(BPTR h,LONG pos,LONG whence){mock_seek_calls++;FILE*f=(FILE*)h;long old=ftell(f);return fseek(f,pos,whence==OFFSET_BEGINNING?SEEK_SET:whence==OFFSET_CURRENT?SEEK_CUR:SEEK_END)?-1:old;}
 LONG SetFileSize(BPTR h,LONG pos,LONG whence){FILE*f=(FILE*)h;assert(whence==OFFSET_CURRENT);LONG size=ftell(f)+pos;fflush(f);return ftruncate(fileno(f),size)?-1:size;}
 LONG DeleteFile(STRPTR n){char p[1200];struct stat st;pathof(p,n);if(lstat(p,&st))return 0;return !(S_ISDIR(st.st_mode)?rmdir(p):unlink(p));}
 LONG Rename(STRPTR a,STRPTR b){char x[1200],y[1200];pathof(x,a);pathof(y,b);return !rename(x,y);}

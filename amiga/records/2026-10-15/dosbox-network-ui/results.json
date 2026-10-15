@@ -1,0 +1,44 @@
+{
+  "ui-dhcp.log": {
+    "tx": 2,
+    "rx": 2,
+    "drops": 0,
+    "errors": 0,
+    "clean_teardown": true
+  },
+  "ui-dns.log": {
+    "tx": 5,
+    "rx": 4,
+    "drops": 0,
+    "errors": 0,
+    "clean_teardown": true
+  },
+  "ui-dhcp-ping.log": {
+    "tx": 8,
+    "rx": 7,
+    "drops": 0,
+    "errors": 0,
+    "clean_teardown": true
+  },
+  "ui-static-ping.log": {
+    "tx": 6,
+    "rx": 5,
+    "drops": 0,
+    "errors": 0,
+    "clean_teardown": true
+  },
+  "ui-disconnect.log": {
+    "tx": 0,
+    "rx": 0,
+    "drops": 0,
+    "errors": 0,
+    "clean_teardown": true
+  },
+  "ui-normal-launch.log": {
+    "tx": 5,
+    "rx": 4,
+    "drops": 0,
+    "errors": 0,
+    "clean_teardown": true
+  }
+}

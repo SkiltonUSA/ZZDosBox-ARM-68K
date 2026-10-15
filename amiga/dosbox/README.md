@@ -3,6 +3,27 @@
 DOSBox for the Amiga and ZZ9000 Cortex-A9, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 
+Launcher **0.17.0-dev** adds an experimental **Network** tab: DHCP/manual IPv4,
+DNS, MTU, renew, saved-lease release, ping, DNS lookup, live counters and
+Disconnect. It shares Roadshow through a separate NE2000/NAT interpreter
+runtime. Windows networking and IPX remain pending.
+[Network settings and requirements](../../docs/amiga-dosbox-network-ui.md).
+
+The offline **Compatibility** tab provides title search,
+A–Z/0–9 browsing, per-game publisher/tester details, version history, comment
+previews and original report links. Games appear on the left, with a wider
+details pane on the right. Game metadata uses labelled rows; version, status
+and rating appear in a three-column table, with discussion overviews below.
+The overviews index all 6,999 cached comments, showing contributors, dates and
+automatic topic counts. Mentions do not establish successful fixes; full text
+remains available through the original report link. The [Markdown reference](../../docs/amiga-dosbox-compatibility.md)
+covers 3,932 games; the [per-game details](../../docs/amiga-dosbox-game-details.md)
+include 8,709 version-specific ratings. These are upstream reports, not verified
+ZZDosBox compatibility or speed measurements.
+
+Keep `Compatibility.dat` beside the launcher. Reports now load on demand,
+reducing the compatibility browser's contribution to the executable size.
+
 **0.11.0-dev** includes a MUI launcher, program profiles, optional LOADFIX,
 selectable/editable AUTOEXEC.BAT and CONFIG.SYS, terminal colours, 1–8 MB guest RAM and VGA/EGA/CGA/S3-VESA/Tandy/PCjr/Hercules graphics.
 Choose a Workbench window or fullscreen, embedded DOS 5 or installed MS-DOS
@@ -90,6 +111,11 @@ are single runs; the latest VFP result uses two runs per build.
 - **Adaptive — reduce frame presentation frequency:** **+13.5% Doom**, 7.27 → 8.25 FPS; optional, achieved by presenting fewer frames. Normal remains the default. [Results](../records/2026-10-13/dosbox-presentation/results.json)
 - **OpenGL — experimental TinyGL software rendering on the A9:** **−32.5% Doom versus Direct**, 7.00 → 4.72 FPS in one matched pair with profiling enabled. This adds a software rendering stage; it is not FPGA 3D acceleration. Direct remains the default. [Results](../records/2026-10-13/dosbox-opengl/method.md)
 - **VFP — hardware floating-point PIC event scheduling:** **+4.7% Doom**, 7.29 → 7.64 FPS averaged across two runs per build, with no skipped frames. [Report](../../docs/amiga-dosbox-pic-vfp.md)
+
+- **Disk caching — 1 MiB Windows image cache:** **14.3% less startup elapsed time** (77.48 → 66.41 s), equivalent to **+16.7% workload throughput**, with synchronous writes. Two runs per cache size; not a general Windows FPS claim. [Report](../../docs/amiga-dosbox-optimisation-round2.md)
+- **On-demand data — indexed compatibility reports:** **73.3% smaller launcher executable** (1.84 MB → 493 KB); one selected report loaded at a time. This is a size reduction, not an emulation speed measurement. [Report](../../docs/amiga-dosbox-optimisation-round2.md)
+
+- **SIMD/VFP context isolation — library math in scalar PC builds:** save and restore all 32 D registers and FPSCR even with scalar pixels. **Correctness fix; no speedup claimed.** [Regression and evidence](../../docs/amiga-dosbox-optimisation-round2.md)
 
 These techniques use the existing XACP application/host execution model;
 none required a firmware change. Future firmware work should preserve the

@@ -94,9 +94,25 @@ PCM output are not implemented. Munt and SoundFont synthesizers are not bundled.
 | Oregon Trail Deluxe | Title/menu and mouse-operated Options page on the Amiga, using the 16-colour VGA option. Full-game compatibility is not established. |
 | Vette / Elite | Startup with LOADFIX and return to Workbench. Full-game compatibility is not established. |
 
-Installing a game does not make it a verified compatibility result. Joystick,
-guest networking and Windows audio remain unavailable. The mouse build has
+Installing a game does not make it a verified compatibility result. Joystick and Windows audio remain unavailable. The mouse build has
 passed native and ARM tests; Oregon Trail menu interaction is verified on the
 Amiga. Windows pointer movement and double-click launch of Write also passed
 on hardware using the Microsoft/IBM PS/2 driver. Pointer capture/warping for games requiring continuous relative movement is
 not implemented. Third-party DOS mouse-driver compatibility is not fully tested.
+
+## Experimental networking — launcher 0.17.0-dev
+
+The Network tab provides per-program DHCP or manual IPv4, subnet/gateway,
+upstream DNS, hostname, MTU and DHCP timing controls. Diagnostics include
+ping, DNS lookup, live counters, log viewing and cooperative disconnect.
+It requires a running Roadshow connection, `bsdsocket.library`, the separate
+`ZZDosBox-Net` interpreter runtime and staged NE2000/mTCP guest utilities.
+libslirp is linked into the host; no separate Amiga libslirp installation is needed.
+
+Embedded DOS with Direct/Normal presentation is supported. Networking is off
+by default; explicit dynamic-core, scanline, OpenGL and debug-runtime combinations
+are rejected. Windows/MS-DOS image networking, IPX, IPv6 and port forwarding
+remain pending. Renew obtains a fresh guest lease; Release saved lease clears
+local guest configuration, not the Amiga's address or an on-wire DHCP lease.
+
+[Network controls, validation and limitations](amiga-dosbox-network-ui.md).

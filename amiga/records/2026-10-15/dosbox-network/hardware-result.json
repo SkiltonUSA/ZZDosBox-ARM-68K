@@ -1,0 +1,7 @@
+{
+  "pass": true,
+  "http_bytes": 4099,
+  "sha256": "5bfe486adf0afd901e2fb5cc72f10fa382239697a82f04e2e8de9b3d789b5771",
+  "dhcp": "10.0.2.15",
+  "scope": "Physical ZZ9000 ARM x86/NE2000 guest -> shared queues -> 68k NAT -> Roadshow -> LAN HTTP; clean shutdown"
+}

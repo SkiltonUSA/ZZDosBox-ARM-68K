@@ -13,6 +13,8 @@ and display coordination through [Xani's XACP platform](https://github.com/Xanxi
 
 This is development software. Builds and research artifacts are kept separately:
 
+- [Network launcher 0.17.0-dev and interpreter runtime](artifacts/development/network-0.17.0):
+  optional guest IPv4 networking through the existing Amiga connection.
 - [Current measured Direct runtime](artifacts/development/pic-vfp): ARMv7 JIT,
   4 MiB code cache, NEON pixels and VFP event scheduling.
 - [Windows/mouse development build](artifacts/development/mouse): Windows for
@@ -37,13 +39,25 @@ This is development software. Builds and research artifacts are kept separately:
 | Startup files | Editable AUTOEXEC.BAT and CONFIG.SYS with Default / Edited / File selection; optional LOADFIX helper. |
 | MIDI | External Roland MT-32 or General MIDI through CAMD. |
 | Windows | Windows for Workgroups 3.11 and WinBench verified in the separate Windows build. |
+| Networking (experimental) | Per-program DHCP/manual IPv4, DNS, MTU, ping, lease controls and cooperative disconnect through Roadshow NAT. Embedded DOS only; separate interpreter runtime. |
 | Developer tools | Separate development build with tracing, frame checkpoints, guest memory viewer/scanner and x86 disassembly. |
 
-PCM sound-card audio, joystick input, emulator save states and guest networking
-are not implemented. Embedded DOS does not load CONFIG.SYS device drivers.
+PCM sound-card audio, joystick input and emulator save states are not implemented.
+Windows networking and IPX remain pending. Embedded DOS does not load CONFIG.SYS device drivers.
 See [features and compatibility](docs/features.md) for per-build limitations.
 
 ![ZZDosBox DOS welcome screen](docs/screenshots/dos-welcome.png)
+
+## Networking
+
+The optional Network tab shares the Amiga’s existing connection through an
+emulated NE2000 adapter and libslirp IPv4 NAT. DHCP, manual addressing, DNS,
+ping and clean disconnect passed physical A4000TX tests. Networking is off
+by default and currently uses a separate interpreter runtime.
+
+[Settings, requirements and test results](docs/amiga-dosbox-network-ui.md)
+
+![ZZDosBox Network tab](docs/screenshots/network-tab.png)
 
 ## Dependencies
 
@@ -66,6 +80,8 @@ allocation. Other 68K configurations and firmware versions remain unverified.
 
 | Dependency | Version / configuration | Provides | Required when |
 |---|---|---|---|
+| Roadshow | Running TCP/IP stack with `bsdsocket.library` and a working route | Host sockets for IPv4 NAT | Guest networking only |
+| NE2000 packet driver + mTCP | Pinned guest utilities, staged separately | DOS packet driver, DHCP, ping and DNS tools | Guest networking only |
 | CAMD | `camd.library` v37+, working output driver and external MIDI instrument | MT-32 / General MIDI output | External MIDI is selected |
 | AHI | v4+ supported by the detector | Driver discovery only | Using the audio-driver checker; does not enable PCM playback |
 | ZZ9000AX | Installed AHI modes | Optional mode discovery | Using AX detection; not needed to run the emulator |
@@ -95,6 +111,7 @@ DOSBox Staging audio/network libraries are not dependencies of this port.
 | ImageMagick | `magick` command | Workbench icon conversion | Launcher/icon builds |
 | jserv TinyGL | Pinned [`c2e4859`](https://github.com/jserv/tinygl/tree/c2e48591a6bfba1a85f1b87a78dcf1abf7dff57a); source archive included | Experimental software OpenGL and native scene tests | Optional |
 | ARM CMSIS-DSP | Pinned [`83a2d7b`](https://github.com/ARM-software/CMSIS-DSP/tree/83a2d7bc98c81b4bbe4a6f48b1f2ecf179868a0b) | Standalone matrix comparison | Matrix experiment only |
+| libslirp + DOSBox-X NE2000 | libslirp 4.9.5 and pinned Bochs-derived NIC; [source pins](amiga/dosbox/network/upstream.json) | IPv4 NAT and emulated Ethernet | Network build only |
 | Unicorn | Python package `unicorn==2.1.4` | Linked ARM instruction-model tests | Model tests only |
 | Python MCP SDK + Amiga-Bridge MCP | Working bridge connection and Roadshow or compatible Amiga TCP stack | Scripted hardware transfer and measurements | Remote development only |
 
@@ -234,6 +251,7 @@ A9 timings; instruction-model timing is not hardware performance evidence.
 - [DOSBox team and libretro contributors](https://github.com/libretro/dosbox-libretro): emulation engine.
 - [Xani / Xanxi](https://github.com/Xanxi-Amiga/XACP-ZZ9000): XACP platform and application execution model.
 - [jserv](https://github.com/jserv/tinygl), Fabrice Bellard, C-Chads and TinyGL contributors: software OpenGL renderer.
+- [libslirp contributors](https://gitlab.freedesktop.org/slirp/libslirp), DOSBox-X/Bochs, Crynwr and Michael B. Brutman (mTCP): networking components and guest tools.
 - Stefan Stuntz: MUI.
 - ARM CMSIS-DSP, Picolibc and GCC contributors: retained component acknowledgements in [licence notices](licenses/README.md).
 

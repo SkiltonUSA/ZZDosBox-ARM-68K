@@ -73,15 +73,44 @@ int main(void){struct dl_session s,t;static struct dl_library a,b;char tmp[]="/t
  }
  a.p[0].renderer=2;assert(!dl_library_write(tmp,&a));a.p[0].renderer=0;
  a.p[0].monochrome=4;assert(!dl_library_write(tmp,&a));a.p[0].monochrome=0;
+ /* Categories persist and filtering maps rows to stable profile indices. */
+ for(unsigned c=0;c<DL_CATEGORIES;c++){
+  a.p[0].category=c;assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b));
+  assert(!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
+ }
+ a.p[0].category=DL_CATEGORIES;assert(!dl_library_write(tmp,&a));
+ a.p[0].category=dl_legacy_category(&a.p[0]);
  assert(dl_library_write(tmp,&a));f=fopen(tmp,"rb");n=fread(out,1,sizeof(out)-1,f);fclose(f);
- assert(n>16&&!memcmp(out+n-8,"0\n0\n0\n0\n",8));
- for(unsigned v=5;v<=8;v++){
-  size_t len=n-(9-v)*2;out[8]='0'+v;f=fopen(tmp,"wb");assert(fwrite(out,1,len,f)==len);fclose(f);
+ assert(n>18&&!memcmp(out,"ZZDOSLIB12",10));
+ /* Remove the appended network record to exercise v5-v11 migrations. */
+ out[n]=0;char *netrecord=strstr(out,"ZZNET1\n");assert(netrecord);size_t full_n=n;n=(size_t)(netrecord-out);out[9]='1';
+ f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fclose(f);assert(dl_library_read(tmp,&b)&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
+ /* Strip only the fields absent from each old format; the two-digit header
+    shrinks by one byte. All launch settings must survive migration. */
+ for(unsigned v=5;v<=10;v++){
+  f=fopen(tmp,"wb");fprintf(f,"ZZDOSLIB%u",v);
+  assert(fwrite(out+10,1,n-11-(10-v)*2,f)==n-11-(10-v)*2);fclose(f);
   assert(dl_library_read(tmp,&b)&&b.count==1&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
  }
- out[8]='9';f=fopen(tmp,"wb");assert(fwrite(out,1,n-2,f)==n-2);fclose(f);assert(!dl_library_read(tmp,&b));
- for(unsigned offset=2;offset<=8;offset+=2){
-  out[n-offset]=(offset==2||offset==6)?'2':'4';f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fclose(f);assert(!dl_library_read(tmp,&b));out[n-offset]='0';
- }
+ out[9]='2';n=full_n;
+ f=fopen(tmp,"wb");assert(fwrite(out,1,n-2,f)==n-2);fclose(f);assert(!dl_library_read(tmp,&b));
+ out[n-3]='!';f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fclose(f);assert(!dl_library_read(tmp,&b));out[n-3]='o';
  f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fputs("extra\n",f);fclose(f);assert(!dl_library_read(tmp,&b));
+ a.count=4;a.p[0].category=DL_GAMES;a.p[1]=a.p[2]=a.p[3]=a.p[0];
+ a.p[1].category=DL_APPLICATIONS;a.p[3].category=DL_OS;
+ assert(dl_category_index(&a,DL_GAMES,0)==0&&dl_category_index(&a,DL_GAMES,1)==2);
+ assert(dl_category_index(&a,DL_APPLICATIONS,0)==1&&dl_category_index(&a,DL_OS,0)==3);
+ assert(dl_category_index(&a,DL_GAMES,2)==-1&&dl_category_index(&a,DL_OS,-1)==-1);
+ a.p[0].category=DL_APPLICATIONS;
+ assert(dl_category_index(&a,DL_GAMES,0)==2&&dl_category_index(&a,DL_APPLICATIONS,1)==1);
+ memmove(a.p,a.p+1,3*sizeof(a.p[0]));a.count--;
+ assert(dl_category_index(&a,DL_GAMES,0)==1&&dl_category_index(&a,DL_OS,0)==2);
+ dl_defaults(&s);strcpy(s.drive,"SD:Apps");s.system=2;strcpy(s.image,"APPS.IMG");s.machine=0;s.midi=0;s.cd_mode=0;
+ assert(dl_session_write(tmp,&s)&&dl_session_read(tmp,&t)&&!memcmp(&s,&t,sizeof(s)));
+ strcpy(s.image,"APPS2026.IMG");assert(dl_session_write(tmp,&s)&&dl_session_read(tmp,&t)&&!strcmp(t.image,s.image));
+ strcpy(s.image,"../BAD");assert(!dl_session_write(tmp,&s));
+ a.count=1;a.last=0;dl_profile_default(&a.p[0]);strcpy(a.p[0].title,"Windows");strcpy(a.p[0].drive,"SD:Apps");a.p[0].system=2;strcpy(a.p[0].image,"APPS.IMG");
+ assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
+ a.p[0].network.enabled=1;a.p[0].network.manual=1;a.p[0].network.mtu=1200;strcpy(a.p[0].network.ip,"10.0.2.42");strcpy(a.p[0].network.dns,"10.0.0.1");
+ assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
  unlink(tmp);puts("PASS profiles/sessions, adapter/colour/renderer migration and validation");return 0;}

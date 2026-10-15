@@ -1,5 +1,5 @@
 /* GPL-3.0-or-later. Refuse unavailable SIMD; never change CPACR/FPEXC.
- * Optional PIC VFP uses the same saved state and base calling convention. */
+ * Library math and optional PIC VFP share this saved state. */
 .syntax unified
 .arm
 .fpu neon
@@ -57,11 +57,9 @@ db_neon_witness:
  vadd.i32 q0,q0,q0
  vmov r0,s0
  bx lr
-#ifdef DB_PIC_VFP
 .global db_neon_ieee_begin
 .hidden db_neon_ieee_begin
 db_neon_ieee_begin:
  mov r0,#0
  vmsr fpscr,r0
  bx lr
-#endif

@@ -36,11 +36,11 @@ extern "C" void db_dynrec_preflight() {
  }
  selftest=1;
 }
-extern unsigned db_dynrec_dispatches;
+extern unsigned db_dynrec_dispatches,db_dynrec_paged_fallbacks;
 extern "C" void db_dynrec_report() {
  volatile uint8_t *p=db_shared()+PC_VIDEO+0xd40;
  ad_put(p,0,0x4a495431u);ad_put(p,4,commits);ad_put(p,8,selftest);
  ad_put(p,12,db_dynrec_dispatches);ad_put(p,16,DB_JIT_CACHE);
- ad_put(p,20,(unsigned)fb_heap_peak());
+ ad_put(p,20,(unsigned)fb_heap_peak());ad_put(p,24,db_dynrec_paged_fallbacks);
  __asm__ volatile("dsb sy":::"memory");
 }

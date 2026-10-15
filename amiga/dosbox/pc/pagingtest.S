@@ -62,6 +62,11 @@ pages:
  mov cr3,ecx
  cmp eax,dword ptr [0xff000000]
  jne fail
+ /* Leave the BIOS text aperture unmapped at stop, like a paged OS may.
+  * Teardown must not invoke a guest fault after its escape frame unwinds. */
+ mov dword ptr [0x112e0],0
+ mov eax,cr3
+ mov cr3,eax
  mov word ptr [0x500],0xfa17
  jmp idle
 fail:

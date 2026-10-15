@@ -7,6 +7,7 @@ extern struct Device *TimerBase;
 #include <stdio.h>
 #include <string.h>
 #include "midi_host.h"
+#include "midi_copy_plan.h"
 struct Library *CamdBase;
 static struct MidiNode *node;
 static struct MidiLink *link;
@@ -36,7 +37,10 @@ int db_midi_host_service(void){
  if(n>PC_MIDI_SIZE||!MidiLinkConnected(link))return 0;
  if(!n)return 1;
  if(n>sizeof(data))n=sizeof(data);
- syncio->pull(shared+PC_MIDI_DATA,PC_MIDI_SIZE,NULL);
+ {struct pc_midi_span spans[2];unsigned j,parts=pc_midi_spans(r,n,PC_MIDI_SIZE,spans);
+  if(!parts)return 0;
+  for(j=0;j<parts;j++)syncio->pull(shared+PC_MIDI_DATA+spans[j].offset,spans[j].size,NULL);
+ }
  for(i=0;i<n;i++){
   UBYTE b=shared[PC_MIDI_DATA+((r+i)&(PC_MIDI_SIZE-1))];data[i]=b;
   if(b==0xf0)sysex_bytes=1;else if(sysex_bytes&&b<0xf8){if(++sysex_bytes>8192)return 0;if(b==0xf7){delay=sysex_bytes*320u+(active==1?300000u:0);sysex_bytes=0;n=i+1;break;}}

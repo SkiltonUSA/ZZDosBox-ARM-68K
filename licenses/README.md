@@ -8,3 +8,12 @@ TinyGL: pinned jserv source is retained in `sources/tinygl-c2e4859.tar.gz`; see
 `TinyGL-LICENSE`. Credits: jserv, Fabrice Bellard, C-Chads and TinyGL contributors.
 Experimental raster, matrix and compiler work is documented separately from
 the installed Direct runtime.
+
+Networking: libslirp 4.9.5 sources and per-file notices are preserved in
+`sources/libslirp-4.9.5.tar.bz2` (BSD-3-Clause and component notices).
+The pinned DOSBox-X/Bochs-derived NE2000 sources are in `sources/ne2000/`
+with their original LGPL-2.0-or-later headers. Portability transformations
+are recorded in `scripts/prepare_dosbox_network.py`.
+Optional mTCP and Crynwr packet-driver binaries are supplied separately by
+the user through the hash-checked staging script; their notices are retained
+when staged. They are not included in this development artifact.

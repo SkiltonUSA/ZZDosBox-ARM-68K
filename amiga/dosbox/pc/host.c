@@ -19,6 +19,13 @@
 #include "profile_plan.h"
 #include "options.h"
 #include "../launcher/session.h"
+#ifdef DB_NETWORK
+#include "../network/host.h"
+#include "../network/control_host.h"
+static int network_enabled;
+static const char *network_dns;
+static struct dn_config network_config;
+#endif
 static struct dl_session settings;
 static int configured;
 static char boot_name[FS_NAME_SIZE],hdd_name[FS_NAME_SIZE];
@@ -41,7 +48,7 @@ static unsigned trace_enabled,break_phase,break_frame;
 #ifdef DB_PRESENT_TEST
 static unsigned present_mode,present_hz=60;
 #endif
-static ULONG duration=8000;
+static ULONG duration=8000,wall_limit_us=90000000u;
 /* Keep the original tick wait available for controlled A/B measurements. */
 static ULONG poll_ms=1;
 static struct timerequest *poll_timer;
@@ -50,15 +57,23 @@ static char auto_command[176];
 static const char commands[]="dir /b\rtype readme.txt\recho saved text > SAVED.TXT\rtype saved.txt\rfiletest\rexetest\rcopy LARGE.BIN LARGE2.BIN\rren LARGE2.BIN RENAMED.BIN\rdir /b\rexit\r";
 static char transcript[8192];
 int db_arguments(int argc,char **argv){
- int i;if(argc==0)return 0;dl_defaults(&settings);settings.display=1;
+ unsigned test_ms=0;int i;if(argc==0)return 0;dl_defaults(&settings);settings.display=1;
  for(i=1;i<argc;i++){
   if(!strcmp(argv[i],"--session")&&i+1<argc){
    if(!dl_session_read(argv[++i],&settings)){puts("Invalid launcher session");return -1;}
    configured=1;drive=settings.drive;duration=settings.live?0:8000;
-   if(settings.system){strcpy(hdd_name,"DOS622.IMG");duration=0;}
+   if(settings.system){strcpy(hdd_name,settings.system==2?settings.image:"DOS622.IMG");duration=0;}
    if(*settings.command&&!settings.system)snprintf(auto_command,sizeof(auto_command),"%s\r%s",settings.command,settings.terminal?"":"exit\r");
   }
   else if(!strcmp(argv[i],"--window"))settings.display=0;
+#ifdef DB_NETWORK
+  else if(!strcmp(argv[i],"--network"))network_enabled=1;
+  else if(!strcmp(argv[i],"--network-config")&&i+1<argc){
+   if(!dn_file_read(argv[++i],&network_config)||!zz_net_configure(&network_config)){puts("Invalid network configuration");return -1;}
+   network_enabled=network_config.enabled;
+  }
+  else if(!strcmp(argv[i],"--dns")&&i+1<argc)network_dns=argv[++i];
+#endif
   else if(!strcmp(argv[i],"--fullscreen"))settings.display=1;
   else if(!strcmp(argv[i],"--window-size")&&i+1<argc){const char *n=argv[++i];if(strlen(n)!=1||!strchr("012",*n))return -1;settings.size=*n-'0';}
   else if(!strcmp(argv[i],"--fps"))settings.fps=1;
@@ -115,6 +130,11 @@ int db_arguments(int argc,char **argv){
    if(!dl_dev_frame(argv[++i],&break_frame))return -1;
   }
 #endif
+  else if(!strcmp(argv[i],"--test-ms")&&i+1<argc){
+   const char *v=argv[++i];char *end;unsigned long n=strtoul(v,&end,10);
+   if(!*v||*end||n<1||n>60000)return -1;
+   test_ms=(unsigned)n;
+  }
   else if(!strcmp(argv[i],"--profile"))profiling=1;
   else if(!strcmp(argv[i],"--command")&&i+1<argc){
    const char *s=argv[++i];if(strlen(s)>140)return -1;
@@ -128,8 +148,9 @@ int db_arguments(int argc,char **argv){
    else if(!strcmp(s,"20"))poll_ms=20;
    else {puts("--poll-ms requires 1, 4 or 20");return -1;}
   }
-  else {puts("Usage: ZZDosBox [--drive drawer] [--boot FLOPPY.IMG] [--hdd HDD.IMG] [--command command] [--poll-ms 1|4|20] [--serial-video|--pipeline-video] [--profile] [--selftest|--cancel-read]");return -1;}
+  else {puts("Usage: ZZDosBox [--drive drawer] [--boot FLOPPY.IMG] [--hdd HDD.IMG] [--command command] [--poll-ms 1|4|20] [--serial-video|--pipeline-video] [--profile] [--test-ms 1..60000] [--selftest|--cancel-read]");return -1;}
  }
+ if(test_ms){duration=test_ms;if(test_ms>4500)wall_limit_us=test_ms*20000u;}
  if(machine_override>=0){settings.machine=machine_override;configured=1;}
  if(memory_override){settings.memory=memory_override;configured=1;}
  if(!configured&&!testmode&&!auto_command[0]&&!boot_name[0]&&!hdd_name[0]){puts("PC prototype requires --command; use the Shell build for an interactive prompt.");return -1;}
@@ -177,8 +198,25 @@ static int drain(struct DbWindow *console){
 #ifdef DB_MEMORY_DEBUG
 #include "memory_host.h"
 #endif
+/* Bounded session I/O timing: saturated totals rather than wrap after 71 min. */
+static ULONG fs_read_us,fs_write_us,fs_other_us,fs_max_us,fs_timed_calls;
+static ULONG add_us(ULONG a,ULONG b){return b>~(ULONG)0-a?~(ULONG)0:a+b;}
+static int timed_fs_service(void){
+ ULONG op,start,elapsed;int ok;
+ /* Requests arriving after this check are serviced on the next poll.
+  * Only service inside the timed region, so no transfers escape accounting. */
+ if(receive(FS_CMD)==receive(FS_REPLY))return 1;
+ op=receive(FS_CMD+4);start=us();ok=db_fs_service();elapsed=us()-start;
+ if(op==FS_DISK_READ||op==FS_READ)fs_read_us=add_us(fs_read_us,elapsed);
+ else if(op==FS_DISK_WRITE||op==FS_WRITE)fs_write_us=add_us(fs_write_us,elapsed);
+ else fs_other_us=add_us(fs_other_us,elapsed);
+ if(elapsed>fs_max_us){fs_max_us=elapsed;}
+ fs_timed_calls++;
+ return ok;
+}
 static int run(struct DbWindow *console){
  ULONG start=us(),stop_time=0;int sent=0,stopping=0,forced=0,transport_ok=1;
+ fs_read_us=fs_write_us=fs_other_us=fs_max_us=fs_timed_calls=0;
  ULONG token=(sequence+1)^ad_get(shared,ZZ_CONTROL);UBYTE keys[64];
 #ifdef DB_VIDEO_TRACE
  trace_seen=0;puts("VIDEO_TRACE diagnostic build; timings are not benchmarks");fflush(stdout);
@@ -203,7 +241,11 @@ static int run(struct DbWindow *console){
    if(debug_result<=0){want_stop=1;if(debug_result<0)transport_ok=0;}}
 #endif
   if(!(midi_result=db_midi_host_service())){transport_ok=0;want_stop=1;}
-  if(!db_fs_service()){transport_ok=0;want_stop=1;}
+#ifdef DB_NETWORK
+  if(!db_net_host_service()){transport_ok=0;want_stop=1;}
+  if(dn_control_poll(0))want_stop=1;
+#endif
+  if(!timed_fs_service()){transport_ok=0;want_stop=1;}
   if(!drain(pc_display_locked()?NULL:console)){transport_ok=0;want_stop=1;}
   if((testmode==1||auto_command[0])&&received>=7&&!sent){
    const UBYTE *testkeys=(const UBYTE *)(auto_command[0]?auto_command:commands);
@@ -263,13 +305,13 @@ static int run(struct DbWindow *console){
   }
   if(testmode==2&&received>=7&&(ULONG)(us()-start)>250000u){want_stop=1;forced=1;}
   if(SetSignal(0,SIGBREAKF_CTRL_C)&SIGBREAKF_CTRL_C)want_stop=1;
-  if(duration&&(testmode||auto_command[0])
+  if(duration&&(testmode||auto_command[0]||boot_name[0]||hdd_name[0])
 #ifdef DB_VIDEO_TRACE
      &&!break_phase
 #endif
-     &&(ULONG)(us()-start)>90000000u){want_stop=1;transport_ok=0;}
+     &&(ULONG)(us()-start)>wall_limit_us){want_stop=1;transport_ok=0;}
   if(want_stop&&!stopping){stopping=1;stop_time=us();publish(ZZ_STOP,1);}
-  if(stopping&&(ULONG)(us()-stop_time)>3000000u){puts("Console stop timeout");return 20;}
+  if(stopping&&(ULONG)(us()-stop_time)>3000000u){printf("Console stop timeout fs_seq=%u fs_ack=%u video_req=%u video_done=%u\n",receive(FS_CMD),receive(FS_REPLY),receive(PC_VIDEO),receive(PC_VIDEO+36));return 20;}
   if(!poll_wait()){
    puts("Poll timer failed");transport_ok=0;
    if(!stopping){stopping=1;stop_time=us();publish(ZZ_STOP,1);}
@@ -310,19 +352,28 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected){
  publish(PC_VIDEO+944,0);
  if(settings.cd_mode){ULONG count=db_cd_host_open(settings.cd_mode,settings.cd_path);if(!count){puts("Cannot mount CD: select a readable ISO9660 image or mounted CD device");goto done;}publish(PC_VIDEO+944,count);}
  if(!db_midi_host_open(base,io,settings.midi,settings.midi_port)){puts("Cannot connect selected CAMD MIDI output");goto done;}
+#ifdef DB_NETWORK
+ if(!db_net_host_open(base,io,network_enabled,network_dns)){puts("Cannot open Roadshow network sharing");goto done;}
+ if(network_enabled&&!dn_control_open()){puts("Network control port unavailable");goto done;}
+ if(network_enabled)puts("NETWORK NE2000 io=300 irq=3 active (private IPv4 NAT)");
+#endif
  if(!pc_display_open(base,io)){puts("Cannot open PC display");goto done;}
 #ifdef DB_MEMORY_DEBUG
  if(!memory_host_open()){puts("Guest memory debug port unavailable");goto done;}
 #endif
  rc=run(console);
 done:
+#ifdef DB_NETWORK
+ dn_control_close();db_net_host_close();
+#endif
 #ifdef DB_MEMORY_DEBUG
  memory_host_close();
 #endif
 #ifdef DB_VIDEO_TRACE
  video_debug_close();
 #endif
- db_midi_host_close();db_cd_host_close();db_fs_close();
+ db_midi_host_close();db_cd_host_close();printf("FILES_TIME calls=%u read_us=%u write_us=%u other_us=%u max_us=%u (totals saturate at 4294967295)\n",fs_timed_calls,fs_read_us,fs_write_us,fs_other_us,fs_max_us);
+ db_fs_close();
  if(pc_display_locked()){puts("Display lock retained for reset");}
  deferred_console=console;
  poll_timer=NULL;

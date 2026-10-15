@@ -68,7 +68,7 @@ Those features are not automatically included in this Amiga port.
 | Display | ARM renders into ZZ9000 buffers; 68K coordinates fullscreen presentation or Workbench window blits. |
 | Frontend | Native MUI profiles and DOS terminal, rather than RetroArch core options. |
 | MIDI | External CAMD output; upstream Munt/FluidSynth/BASSMIDI backends are not ported. |
-| Other features | Joystick, emulator save states, guest networking, CD audio/CUE and Voodoo emulation remain unavailable. |
+| Other features | Joystick, emulator save states, CD audio/CUE and Voodoo emulation remain unavailable. |
 
 Upstream host build instructions and key bindings are not ZZDosBox installation
 instructions. Use the Amiga controls: **Alt+Return** changes window/fullscreen,
@@ -76,3 +76,20 @@ instructions. Use the Amiga controls: **Alt+Return** changes window/fullscreen,
 normally to DOS before closing the emulator.
 
 The mouse build uses the normal Amiga pointer. Windows 3.1 needs its Microsoft/IBM PS/2 mouse driver selected; it was previously installed with no mouse. No extra Amiga mouse library is required.
+
+## Experimental networking — launcher 0.17.0-dev
+
+The Network tab provides per-program DHCP or manual IPv4, subnet/gateway,
+upstream DNS, hostname, MTU and DHCP timing controls. Diagnostics include
+ping, DNS lookup, live counters, log viewing and cooperative disconnect.
+It requires a running Roadshow connection, `bsdsocket.library`, the separate
+`ZZDosBox-Net` interpreter runtime and staged NE2000/mTCP guest utilities.
+libslirp is linked into the host; no separate Amiga libslirp installation is needed.
+
+Embedded DOS with Direct/Normal presentation is supported. Networking is off
+by default; explicit dynamic-core, scanline, OpenGL and debug-runtime combinations
+are rejected. Windows/MS-DOS image networking, IPX, IPv6 and port forwarding
+remain pending. Renew obtains a fresh guest lease; Release saved lease clears
+local guest configuration, not the Amiga's address or an on-wire DHCP lease.
+
+[Network controls, validation and limitations](amiga-dosbox-network-ui.md).

@@ -188,7 +188,7 @@ extern void zz_dosbox_paging_init();
 extern void CPU_Core_Normal_Init();
 extern void CALLBACK_Init(Section*);
 extern void db_cd_setup(),db_cd_mount(),db_cd_close();
-#ifdef DB_NEON
+#if defined(DB_SIMD_CONTEXT) || defined(DB_NEON)
 extern "C" void db_neon_begin(),db_neon_finish();
 #endif
 #ifdef DB_DYNREC
@@ -203,7 +203,7 @@ static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,Dosbox
  memory_debug_reset();
 #endif
  int jumped=setjmp(escape);if(jumped)return jumped==2?2:1;
-#ifdef DB_NEON
+#if defined(DB_SIMD_CONTEXT) || defined(DB_NEON)
  db_neon_begin();
 #ifdef DB_PIXEL_BENCH
  extern void pc_pixel_benchmark();
@@ -282,7 +282,7 @@ extern "C" int db_run_io(const uint8_t *program,unsigned bytes,unsigned limit,Do
 #ifdef DB_OPENGL
  extern void db_gl_shutdown();db_gl_shutdown();
 #endif
-#ifdef DB_NEON
+#if defined(DB_SIMD_CONTEXT) || defined(DB_NEON)
  db_neon_finish();
 #endif
  result=nullptr;console_io=nullptr;

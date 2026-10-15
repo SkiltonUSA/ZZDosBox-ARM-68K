@@ -1,0 +1,87 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=09734e45
+BOOTSTRAP amiga=4060c700 arm=007fc700 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+DISPLAY_CONFIG mode=window fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+NETWORK NE2000 io=300 irq=3 active (private IPv4 NAT)
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+VIDEO adapter=0 source=720x400 monochrome=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+CPU_CYCLES applied=3000
+ARM_FPS tenths=0
+PC frames=577 emulated_ms=8264 wall_ms=21735 timed_done=0
+POLL ms=1 calls=8808 wait_us=12084306 max_us=12755
+SHELL result=0 guest_exit=0 slices=250989 bytes=1471 hash=778f3ea4 mismatches=0
+DosBox ZZ9000 project                         0.11.0-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>C:\ZZNET\ACTION.BAT
+Packet driver for NE2000, version 11.4.3
+Packet driver skeleton copyright 1988-93, Crynwr Software.
+This program is freely copyable; source must be available; NO WARRANTY.
+See the file COPYING.DOC for details; send FAX to +1-315-268-9201 for a copy.
+
+System: [345]86 processor, ISA bus, Two 8259s
+Packet driver software interrupt is 0x60 (96)
+Interrupt number 0x3 (3)
+I/O port 0x300 (768)
+My Ethernet address is 02:5A:5A:00:00:01
+
+mTCP Ping by M Brutman (mbbrutman@gmail.com) (C)opyright 2009-2026
+Version: Oct 10 2026
+
+Sending ICMP packets to 10.0.2.2
+ICMP Packet payload is 32 bytes.
+
+Packet sequence number 0 received from 10.0.2.2 in 1.4 ms, ttl=255
+Packet sequence number 1 received from 10.0.2.2 in 2.4 ms, ttl=255
+Packet sequence number 2 received from 10.0.2.2 in 4.4 ms, ttl=255
+Packet sequence number 3 received from 10.0.2.2 in 1.4 ms, ttl=255
+
+Packets sent: 4, Replies received: 4, Replies lost: 0
+Round trip time min / avg / max = 1.4 / 2.4 / 4.4
+# ZZDosBox generated network settings
+packetint 0x60
+hostname zzdosbox
+mtu 1200
+IPADDR 10.0.2.42
+NETMASK 255.255.255.0
+GATEWAY 10.0.2.2
+NAMESERVER 10.0.2.3
+Network command completed
+C:\>exit
+
+
+SHELL PASS mode=0
+NETWORK frames_tx=6 frames_rx=5 dropped=0 errors=0 closed
+FILES_TIME calls=839 read_us=534038 write_us=0 other_us=124592 max_us=7877 (totals saturate at 4294967295)
+DISK host_seeks=0
+FILES requests=839 read=54111 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=577 flips=0 wait_us=0
+COPY observed_us=3298744 max_us=10343
+PIPELINE enabled=0 overlaps=0 releases=577
+LAUNCHER exit=0; owned memory released

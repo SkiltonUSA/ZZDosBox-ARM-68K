@@ -124,3 +124,27 @@ Restore it with `python3 scripts/restore_build_inputs.py --pic-vfp-build`, then
 use `make build-current` with the toolchain configured above. The explicit
 `--pc-pic-vfp` flag preserves the old soft-float control when omitted.
 [Measurements, safety contract and model checks](performance-pic-vfp.md).
+
+## Network launcher 0.17.0-dev
+
+The measured incremental update is in `artifacts/development/network-0.17.0`.
+See its README before installing. Existing Direct and Windows binaries remain
+separate. No personal profiles or licensed guest software are included.
+
+For source builds, restore the normal build inputs first. The network source
+preparer fetches and verifies libslirp and NE2000 pins. For offline preparation,
+copy `sources/libslirp-4.9.5.tar.bz2` to
+`.context/amiga/dosbox-network/libslirp.tar.bz2` and the two files in
+`sources/ne2000/` to that same directory as `upstream-ne2000.cpp` and
+`upstream-ne2000.h`.
+
+```sh
+make test-network
+python3 scripts/build_dosbox_dos_arm.py --pc --pc-network --pc-disk-cache-kib 1024
+python3 scripts/build_dosbox_launcher.py
+```
+
+Configure the ARM and 68K containers as described above. The dedicated NAT
+backend builder currently retains the original Podman connection name; adapt
+that invocation for your host. Build outputs are local and never deploy automatically.
+Use the [Network guide](amiga-dosbox-network-ui.md) to stage optional guest tools.

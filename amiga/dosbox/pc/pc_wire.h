@@ -29,7 +29,7 @@
 #define PC_CONSOLE_WAIT (PC_VIDEO+512u)
 
 #define PC_BOOT_NAME (PC_VIDEO+576u) /* 13-byte 8.3 name; empty = embedded DOS. */
-#define PC_HDD_NAME (PC_VIDEO+640u) /* 13-byte 8.3 name; fixed 32 MiB HDD. */
+#define PC_HDD_NAME (PC_VIDEO+640u) /* 13-byte 8.3 name; 32–256 MiB HDD. */
 #define PC_BOOT_TEXT 0x189000u /* Final colour text page, then completion magic. */
 #if PC_PRESENT_REPORT+PC_PRESENT_SIZE > PC_BOOT_TEXT
 #error Presentation report overlaps boot text

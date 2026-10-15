@@ -26,15 +26,15 @@ static void full_unlock(void){
  if(direct_locked){p96UnlockBitMap(direct_bitmap,direct_lock);direct_locked=0;}
 }
 static int full_poll(void){
- int status;
+ int status;UWORD observed;
  if(full_slots.pending<0)return !full_fault;
- status=nf_ack(&full_slots,full_ack_count());
+ observed=full_ack_count();status=nf_ack(&full_slots,observed);
  if(status==1){full_wait_us+=us()-full_pending_us;return 1;}
  if(status<0 || (ULONG)(us()-full_pending_us)>100000u){
   /* A second copy may still own slot zero. Cancel pending, retain the lock,
    * and restore the origin only in cleanup after synchronous Core1 reset. */
   full_write(0x44,2);full_slots.pending=-1;full_fault=1;
-  puts("FULLSCREEN flip ACK failed; pending cancelled");return 0;
+  printf("FULLSCREEN flip ACK failed; pending cancelled: status=%ld previous=%lu observed=%lu elapsed_us=%lu\n",(long)status,(unsigned long)full_slots.ack,(unsigned long)observed,(unsigned long)(us()-full_pending_us));return 0;
  }
  return 1;
 }

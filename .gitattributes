@@ -8,3 +8,7 @@ amiga/dosbox/pc/devices.cpp whitespace=-blank-at-eof
 
 # Preserve the checksum-pinned upstream disassembler verbatim.
 amiga/dosbox/developer/vendor/debug_disasm.cpp -whitespace
+
+# Preserve generated CSV CRLF and intentional Markdown hard line breaks.
+amiga/dosbox/compatibility/*.csv whitespace=cr-at-eol
+docs/amiga-dosbox-game-details.md whitespace=-blank-at-eol

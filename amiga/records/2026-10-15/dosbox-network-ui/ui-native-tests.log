@@ -1,0 +1,9 @@
+NETWORK frames_tx=0 frames_rx=0 dropped=0 errors=0 closed
+NETWORK frames_tx=0 frames_rx=0 dropped=0 errors=0 closed
+NETWORK frames_tx=0 frames_rx=0 dropped=0 errors=0 closed
+NETWORK frames_tx=0 frames_rx=0 dropped=0 errors=0 closed
+NETWORK frames_tx=0 frames_rx=0 dropped=0 errors=0 closed
+NETWORK frames_tx=0 frames_rx=0 dropped=0 errors=0 closed
+PASS network queues: separate cache views, packet bytes, wrap, backpressure, corrupt indices/length, backend failures, disabled state
+PASS network IPC: bounded poll, counters, cooperative stop, malformed messages, pending close and reopen
+PASS IPv4/subnet/DNS/MTU validation, config roundtrip, DHCP/static generation and failure branches

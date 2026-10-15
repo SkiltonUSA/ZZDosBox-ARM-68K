@@ -27,6 +27,18 @@ int main(void){
  assert(call(FS_DISK_OPEN,0,0,0,0,"HDD.IMG",NULL)==5);
  assert(!call(FS_CLOSE,held,0,0,0,NULL,NULL));
  assert(!call(FS_DISK_OPEN,0,0,0,0,"HDD.IMG",NULL));assert(ad_get(memory,FS_REPLY+8)==FS_DISK_SECTORS);
+ /* Sequential disk transfers skip only redundant seeks. A short transfer
+  * invalidates the cursor even if the next request matches its old position. */
+ unsigned seeks=mock_seek_calls;
+ assert(!call(FS_DISK_READ,0,8,0,0,NULL,NULL));assert(mock_seek_calls==seeks+1);
+ assert(!call(FS_DISK_READ,0,8,8,0,NULL,NULL));assert(mock_seek_calls==seeks+1);
+ memset(memory+FS_DATA,0x6b,512);
+ assert(!call(FS_DISK_WRITE,0,1,16,0,NULL,NULL));assert(mock_seek_calls==seeks+1);
+ assert(!call(FS_DISK_READ,0,1,17,0,NULL,NULL));assert(mock_seek_calls==seeks+1);
+ mock_short_read=1;assert(call(FS_DISK_READ,0,8,18,0,NULL,NULL)==5);
+ assert(!call(FS_DISK_READ,0,8,18,0,NULL,NULL));assert(mock_seek_calls==seeks+2);
+ assert(!call(FS_DISK_READ,0,1,16,0,NULL,NULL));assert(mock_seek_calls==seeks+3);
+ for(unsigned k=0;k<512;k++)assert(memory[FS_DATA+k]==0x6b);
  assert(call(FS_OPEN,0,0,0,0,"HDD.IMG",NULL)!=0);
  assert(call(FS_CREATE,0,0,0,0,"HDD.IMG",NULL)!=0);
  assert(call(FS_DISK_OPEN,0,0,0,0,"HDD.IMG",NULL)==5);
@@ -41,6 +53,20 @@ int main(void){
  assert(!call(FS_DISK_READ,0,1,FS_DISK_SECTORS-1,0,NULL,NULL));for(unsigned k=0;k<512;k++)assert(memory[FS_DATA+k]==0x73);
  assert(!call(FS_DISK_CLOSE,0,0,0,0,NULL,NULL));assert(call(FS_DISK_READ,0,1,0,0,NULL,NULL)==6);
  assert(!unlink(linkpath));
+ /* Larger images retain per-file bounds and reject invalid geometry. */
+ for(unsigned sectors=FS_DISK_SECTORS*2;sectors<=FS_DISK_MAX_SECTORS;sectors*=2){
+  int large=open(linkpath,O_CREAT|O_EXCL|O_RDWR,0600);assert(large>=0);assert(!ftruncate(large,(off_t)sectors*512));close(large);
+  assert(!call(FS_DISK_OPEN,0,0,0,0,"HDD.IMG",NULL));assert(ad_get(memory,FS_REPLY+8)==sectors);
+  memset(memory+FS_DATA,0xa5,512);assert(!call(FS_DISK_WRITE,0,1,sectors-1,0,NULL,NULL));
+  assert(call(FS_DISK_READ,0,2,sectors-1,0,NULL,NULL)==5);assert(call(FS_DISK_WRITE,0,1,sectors,0,NULL,NULL)==5);
+  memset(memory+FS_DATA,0,512);assert(!call(FS_DISK_READ,0,1,sectors-1,0,NULL,NULL));for(unsigned k=0;k<512;k++)assert(memory[FS_DATA+k]==0xa5);
+  assert(!call(FS_DISK_CLOSE,0,0,0,0,NULL,NULL));assert(!unlink(linkpath));
+ }
+ const unsigned invalid_sizes[]={FS_DISK_BYTES-512,FS_DISK_BYTES+1,FS_DISK_BYTES+512,FS_DISK_MAX_SECTORS*512u+262144u};
+ for(unsigned i=0;i<sizeof(invalid_sizes)/sizeof(*invalid_sizes);i++){
+  int invalid=open(linkpath,O_CREAT|O_EXCL|O_RDWR,0600);assert(invalid>=0);assert(!ftruncate(invalid,invalid_sizes[i]));close(invalid);
+  assert(call(FS_DISK_OPEN,0,0,0,0,"HDD.IMG",NULL)==5);assert(!unlink(linkpath));
+ }
  const char *bad[]={"../SECRET","SYS:STARTUP","A/B","A\\B","..","A.","TOOLONG99.TXT","NAME.LONG","*","#?","lower.txt","ABCDEFGHIJKLM"};
  for(unsigned i=0;i<sizeof(bad)/sizeof(*bad);i++)assert(call(FS_CREATE,0,0,0,0,bad[i],NULL)==5);
  snprintf(linkpath,sizeof(linkpath),"%s/LINK.TXT",tmp);assert(!symlink("/etc/hosts",linkpath));assert(call(FS_OPEN,0,0,0,0,"LINK.TXT",NULL)==5);assert(call(FS_CREATE,0,0,0,0,"LINK.TXT",NULL)==5);

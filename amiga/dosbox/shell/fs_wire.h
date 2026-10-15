@@ -15,10 +15,12 @@
 /* Command: seq, operation, handle/index, count/flags, position, whence.
  * Reply: ack, DOS error, result, size, attributes, DOS date, DOS time. */
 enum { FS_OPEN=1,FS_CREATE,FS_CLOSE,FS_READ,FS_WRITE,FS_SEEK,FS_STAT,FS_LIST,FS_DELETE,FS_RENAME,FS_SPACE,FS_MKDIR,FS_RMDIR,FS_TESTDIR,FS_DISK_OPEN,FS_DISK_CLOSE,FS_DISK_READ,FS_DISK_WRITE,FS_CD_READ };
-/* Initial BIOS HDD geometry: 128 cylinders, 16 heads, 32 sectors (32 MiB).
+/* BIOS HDD geometry: 16 heads, 32 sectors, 128..1024 cylinders (32..256 MiB).
  * Disk RPCs use a dedicated exclusive handle, sector index and 1..8 sectors. */
 #define FS_DISK_SECTORS 65536u
 #define FS_DISK_BYTES (FS_DISK_SECTORS*512u)
+#define FS_DISK_MAX_SECTORS 524288u
+static inline int fs_disk_sectors_valid(unsigned n){return n>=FS_DISK_SECTORS && n<=FS_DISK_MAX_SECTORS && !(n%512u);}
 /* DOS 8.3 path components. No path separator, device, parent, or wildcard. */
 static inline int fs_name_valid(const char *s){
  unsigned i,stem=0,ext=0,dot=0;

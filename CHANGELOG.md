@@ -1,26 +1,46 @@
 # ZZDosBox changelog
 
-## TinyGL rejection, packing and triangle dispatch
+## 0.17.0-dev — experimental Network tab
 
-- Preserve the hidden-pixel rejection experiment and its dedicated physical comparisons.
-- Add unguarded NEON packing, per-triangle scalar/NEON selection and textured scene controls.
-- Publish four exact builds, twelve physical runs, sixteen ARM lifecycle checks and native image/sanitizer evidence.
-- Document measured gains and remaining limits; installed DOSBox remains unchanged.
-- Review DOSBox-X CPU settings against the port’s fixed-cycle controls.
+- Add per-program DHCP/manual IPv4, private subnet/gateway, DNS, hostname,
+  MTU and DHCP timeout/retry settings.
+- Add a network terminal, DHCP acquisition, saved-lease release, guest ping
+  and DNS lookup, live counters and cooperative Disconnect.
+- Share Roadshow's existing route using NE2000 and libslirp NAT.
+- Validate settings and migrate older profiles with networking disabled.
+- Keep networking opt-in in a separate interpreter runtime; reject
+  incompatible renderer/core/debugger combinations. Windows networking and
+  IPX remain pending. Release clears the saved guest lease, not Roadshow's IP.
 
-## TinyGL research backup
+## 0.16.0-dev — on-demand reports and Windows disk cache
 
-- Preserve internal-transform, exact NEON raster/clear and compiler experiments,
-  diagnostic executables, source snapshots, validation logs and physical results.
-- Add isolated O3/automatic-vectorisation build profiles; retain O2 default after
-  measured regressions. Installed Direct runtime is unchanged.
-- Credit jserv/TinyGL and document the pinned software renderer on the main page.
-- Back up current DOSBox developer/memory and matrix research sources and records.
+- Load selected compatibility details from `Compatibility.dat`; reduce the launcher executable by 73.3%.
+- Validate data headers, indexes, record bounds and checksums; recover when a missing file is restored.
+- Add configurable build-time BIOS image cache capacity. The measured 1 MiB Windows candidate cuts startup elapsed time by 14.3% versus 128 KiB.
+- Limit CAMD cache maintenance to consumed MIDI spans while preserving pacing and MT-32 SysEx delays.
+- Preserve SIMD/FPSCR state in scalar PC builds too: linked library math can use VFP independently of pixel settings.
+- Add paging/remapping/fault regression fixtures. Keep the production paged-JIT fallback.
+- Add acknowledgement counters and elapsed time to fullscreen failure diagnostics.
+- Keep indexed-pixel capture unrolling experimental; a failed fullscreen run is excluded from performance results.
 
 
-Amiga-specific development history, based on
-[dosbox-libretro](https://github.com/libretro/dosbox-libretro).
-These are development milestones, not upstream DOSBox release numbers.
+## 0.15.2-dev — complete-discussion topic overviews
+
+- Index all 6,999 cached comments across 2,428 discussions, including older replies.
+- Show contributor counts, date range and automatic topic counts in the right pane.
+- Count unclassified comments explicitly; topic mentions are not verified fixes.
+- Keep the latest excerpt separately labelled and retain original-report links.
+- Expand the scrolling discussion area and bundle updated Markdown details.
+
+## 0.15.1-dev — offline compatibility reference
+
+- Add Compatibility to the MUI launcher: A–Z/0–9 filters, title search and report links.
+- Place games on the left and per-game details on the right: aligned metadata,
+  a DOSBox version/status/rating table, and a separate scrolling comment preview.
+- Include 3,937 upstream DOSBox reports covering 3,932 games, with tested versions and ratings.
+- Include per-game publisher/tester details, 8,709 recorded version ratings and 2,428 brief comment previews.
+- Bundle summary and detailed Markdown references; keep CSV/JSON exports and reproducible scrapers.
+- Clearly distinguish upstream reports from verified ZZDosBox results.
 
 ## PIC hardware floating point — 14 October 2026
 
@@ -33,6 +53,71 @@ These are development milestones, not upstream DOSBox release numbers.
   path. Preserve the previous Direct runtime for rollback.
 - Publish the measured executable, symbols, regression evidence and chronological
   optimisation history. OpenGL, Developer MUI and Windows runtimes are unchanged.
+
+## 0.11.1-dev — Developer controls (hardware checked; not installed)
+
+- Added a Developer MUI tab with a development-only performance caution.
+- Added optional trace logging, CPU/video profiling, display handoff and polling controls.
+- Added before/after-frame cooperative checkpoints with Continue, Next frame and Stop.
+- Added Open log; developer preferences reset at launcher exit.
+- Fixed MultiView lookup to include its standard `SYS:Utilities` location.
+- Physical Hercules checks passed Direct/OpenGL frame stepping, Continue,
+  Stop, clean teardown, option reset and the completed-log viewer.
+- Separate Direct/OpenGL Trace executables; normal installed runtimes remain unchanged.
+- Checkpoints run outside the ARM framebuffer mapping. The host drains display
+  completion before opening nonblocking controls and continues servicing transport.
+
+## Direct-target OpenGL experiment — 14 October 2026 (not installed)
+
+- Render eligible 640×480 frames into the validated XACP back buffer; retain
+  the existing path for resized windows and scanline masks.
+- Measured 5.06 FPS OpenGL versus 6.94 FPS Direct in Doom Demo3. Previous GL
+  measured 4.72 FPS; the historical comparison suggests about 7% improvement.
+- A subsequent loop refinement passed software tests but the Amiga froze
+  during its first hardware test. Withdrawn; exact cause remains unresolved.
+- Source restored to the first tested variant. Installed runtimes unchanged.
+- Keep Settings choices Direct / OpenGL (experimental), saved per program.
+
+[Test and failure record](amiga/records/2026-10-14/dosbox-gl-direct/method.md).
+
+## 0.11.0-dev — graphics adapters and rendering
+
+- Added per-program Hercules monochrome colours: White, Amber, Green, Paperwhite.
+- Added an optional A9 TinyGL software renderer; Direct remains the default.
+  No GLSL or guest OpenGL driver.
+- Added S3/VESA, Tandy, PCjr and Hercules to the per-program video selector.
+- Added bounded S3 banked/linear framebuffer mapping and RGB555 capture.
+- Limited S3 to 1 MB VRAM and capture dimensions up to 1024×768.
+- Retained Normal/Adaptive, scanlines, NEON conversion and the 4 MiB JIT cache.
+- Corrected Hercules welcome/boot text addressing. A separate welcome helper preserves existing copies.
+- Tandy/PCjr sound and Windows S3 driver compatibility are not included in the verified feature set.
+
+## 0.10.3-dev launcher — 13 October 2026
+
+- Added Normal / Adaptive presentation to Settings, saved per program; Normal default.
+- Installed the optional adaptive runtime and Off/Classic/Soft/Gradient scanline choices.
+- Preserved existing profiles; verified migration, save/reopen and physical launch/exit.
+- Verified the low-stack guard and 64 KiB Workbench icon stack.
+
+## Adaptive presentation experiment (now optional in MUI)
+
+- Optional fixed or adaptive frame presentation; guest CPU/timing stays unchanged.
+- Counts generated, displayed and skipped frames separately; FPS overlay follows presentation count.
+- Separate experimental executable; default remains Off. Physical Doom Demo3: 7.27 to 8.25 real FPS (+13.5%) in a matched pair with profiling disabled. Five complete timedemos passed cleanup; visual smoothness remains unassessed.
+
+
+Amiga-specific development history, based on
+[dosbox-libretro](https://github.com/libretro/dosbox-libretro).
+These are development milestones, not upstream DOSBox release numbers.
+
+## Earlier scanline-style launcher candidate (superseded above)
+
+- Added per-program Off, Classic, Soft and Gradient choices in MUI Settings.
+  Fullscreen with Show FPS off; existing profiles default to Off.
+- Classic preserves black rows; Soft/Gradient fuse dimming with ARM scaling.
+  The separate optional runtime leaves normal launches unchanged.
+- Added a 64 KiB launcher stack guard after a staged CLI launch faulted with
+  a 16 KiB stack. Subsequent physical verification and installation are recorded above.
 
 ## ARMv7 dynrec, NEON and scanline experiments — 13 October 2026
 

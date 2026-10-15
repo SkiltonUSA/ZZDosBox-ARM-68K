@@ -1,0 +1,17 @@
+{
+  "libslirp": {
+    "version": "4.9.5",
+    "url": "https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v4.9.5/libslirp-v4.9.5.tar.bz2",
+    "sha256": "4f59df896cb345ea76d7f68b1e820872feaa9d8255a6761f6bf8a0f2d5144bcd",
+    "license": "BSD-3-Clause and per-file notices"
+  },
+  "ne2000": {
+    "repository": "https://github.com/joncampbell123/dosbox-x",
+    "revision": "378e6f8a25768594df87c9f5c99b5df9b3f6a8b0",
+    "license": "LGPL-2.0-or-later (Bochs-derived NE2000), retain source notices",
+    "sha256": {
+      "src/hardware/ne2000.cpp": "307700fb185f46c26c739d1353272b7d8f2b032668fd601b73d8d7bb9e004c3c",
+      "include/ne2000.h": "3524b83cd8d81023d7779bc209fee954514deb5854d2e68cb1fc1fee3bc5b503"
+    }
+  }
+}

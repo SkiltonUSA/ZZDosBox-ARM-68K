@@ -12,7 +12,7 @@
 static volatile uint8_t *shared;
 static const struct ad_io *syncio;
 static BPTR root,working,disk,handles[FS_HANDLES];
-static unsigned access_mode[FS_HANDLES];
+static unsigned access_mode[FS_HANDLES],disk_sectors,disk_position=~0u,disk_seeks;
 static ULONG sequence,requests,read_bytes,written_bytes;
 static struct FileInfoBlock fib;
 static int leap(unsigned y){return !(y%4)&&(y%100||!(y%400));}
@@ -55,7 +55,7 @@ static BPTR directory(const char *path){
 static ULONG attributes(void){return fib.fib_DirEntryType==ST_USERDIR?16:(fib.fib_Protection&FIBF_WRITE)?1:32;}
 static ULONG error(void){LONG n=IoErr();return n==ERROR_OBJECT_NOT_FOUND?2:n==ERROR_DISK_FULL?112:5;}
 int db_fs_open(volatile uint8_t *base,const struct ad_io *io,const char *path){
- shared=base;syncio=io;sequence=requests=read_bytes=written_bytes=0;memset(handles,0,sizeof(handles));
+ shared=base;syncio=io;sequence=requests=read_bytes=written_bytes=disk_seeks=0;disk_position=~0u;memset(handles,0,sizeof(handles));
  root=Lock((STRPTR)path,ACCESS_READ);if(!root)return 0;
  if(!Examine(root,&fib)||fib.fib_DirEntryType<=0){UnLock(root);root=0;return 0;}
  return 1;
@@ -87,18 +87,20 @@ int db_fs_service(void){
   if(disk||*dir||entry(name,0,0)!=1||fib.fib_DirEntryType!=ST_FILE){err=5;break;}
   /* OpenFromLock preserves exclusivity without truncating the image. */
   lock=Lock((STRPTR)fib.fib_FileName,EXCLUSIVE_LOCK);if(!lock){err=5;break;}
-  if(!Examine(lock,&fib)||fib.fib_DirEntryType!=ST_FILE||fib.fib_Size!=FS_DISK_BYTES){UnLock(lock);err=5;break;}
-  disk=OpenFromLock(lock);if(!disk){UnLock(lock);err=5;break;}result=FS_DISK_SECTORS;break;
+  if(!Examine(lock,&fib)||fib.fib_DirEntryType!=ST_FILE||fib.fib_Size<0||(fib.fib_Size%512)||!fs_disk_sectors_valid((unsigned)fib.fib_Size/512u)){UnLock(lock);err=5;break;}
+  disk=OpenFromLock(lock);if(!disk){UnLock(lock);err=5;break;}disk_sectors=(unsigned)fib.fib_Size/512u;disk_position=~0u;result=disk_sectors;break;
  }
  case FS_DISK_CLOSE:
   if(!disk){err=6;break;}
   if(!Flush(disk))err=5;
   if(!Close(disk))err=5;
-  disk=0;break;
+  disk=0;disk_sectors=0;disk_position=~0u;break;
  case FS_DISK_READ:case FS_DISK_WRITE:
   if(!disk){err=6;break;}
-  if(!n||n>FS_CHUNK/512||pos>=FS_DISK_SECTORS||n>FS_DISK_SECTORS-pos){err=5;break;}
-  if(Seek(disk,pos*512u,OFFSET_BEGINNING)<0){err=5;break;}
+  if(!n||n>FS_CHUNK/512||pos>=disk_sectors||n>disk_sectors-pos){err=5;break;}
+  if(disk_position!=pos*512u){disk_seeks++;disk_position=~0u;if(Seek(disk,pos*512u,OFFSET_BEGINNING)<0){err=5;break;}}
+  /* Short/error transfers leave the file position uncertain. */
+  disk_position=~0u;
   n*=512;
   if(op==FS_DISK_READ){
    value=Read(disk,data,n);if(value!=(LONG)n){err=5;break;}
@@ -107,7 +109,7 @@ int db_fs_service(void){
   }else{
    syncio->pull(shared+FS_DATA,n,NULL);for(i=0;i<n;i++)data[i]=shared[FS_DATA+i];
    value=Write(disk,data,n);if(value!=(LONG)n||!Flush(disk)){err=5;break;}written_bytes+=n;
-  }result=n/512;break;
+  }disk_position=pos*512u+n;result=n/512;break;
  case FS_OPEN:case FS_CREATE:
   if(op==FS_OPEN&&n>2){err=12;break;}
   found=entry(name,0,0);if(found<0||(found&&fib.fib_DirEntryType!=ST_FILE)){err=5;break;}if(found)strcpy(name,(const char*)fib.fib_FileName);if(!found&&op==FS_OPEN){err=2;break;}
@@ -171,6 +173,8 @@ reply:
 }
 void db_fs_close(void){
  unsigned i;if(disk){int ok=Flush(disk);if(!Close(disk))ok=0;disk=0;printf("BIOS HDD close=%s\n",ok?"ok":"FAILED");}for(i=0;i<FS_HANDLES;i++)if(handles[i]){Close(handles[i]);handles[i]=0;}
+ disk_sectors=0;disk_position=~0u;
  if(root){UnLock(root);root=0;}
+ printf("DISK host_seeks=%u\n",disk_seeks);
  printf("FILES requests=%u read=%u written=%u; handles closed\n",requests,read_bytes,written_bytes);
 }

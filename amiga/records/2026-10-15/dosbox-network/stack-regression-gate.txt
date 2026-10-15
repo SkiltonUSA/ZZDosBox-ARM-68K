@@ -1,0 +1,1 @@
+.context/amiga/dosbox-network/stack-audit/slirp-regression.c:1458:1: error: the frame size of 65644 bytes is larger than 8192 bytes [-Werror=frame-larger-than=]

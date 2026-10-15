@@ -51,5 +51,33 @@ int main(){
   if((rng&31)==0){memset(buffer+1,rng>>24,512);assert(cache.access(sector,buffer+1,true,total,transfer));}
   else read(sector);
  }
+ // A write to another block must preserve hot metadata.
+ cache.reset();read(0);read(16);before=calls;
+ memset(buffer+1,0x61,512);assert(cache.access(17,buffer+1,true,total,transfer));
+ read(0);assert(calls==before+1);read(17);assert(calls==before+2);
+ // Failed speculative reads away from a block boundary retry the requested sector.
+ cache.reset();fail_batch=true;before=calls;read(7);assert(calls==before+2);
+ read(7);assert(calls==before+2);fail_batch=false;
+ // Exercise more blocks than the whole cache and same-set conflicts.
+ {
+  constexpr unsigned blocks=DbDiskCache::sets*DbDiskCache::ways*2+1;
+  constexpr unsigned large_total=blocks*8;
+  DbDiskCache big;unsigned transfers=0;uint8_t data[512];
+  auto tx=[&](unsigned sector,unsigned n,void *p,bool w){
+   assert(!w&&n&&n<=8&&sector+n<=large_total);transfers++;
+   for(unsigned i=0;i<n*512;i++)((uint8_t*)p)[i]=(sector+i/512)*29+(i%512)%251;
+   return true;
+  };
+  auto check=[&](unsigned sector){
+   assert(big.access(sector,data,false,large_total,tx));
+   for(unsigned i=0;i<512;i++)assert(data[i]==(uint8_t)(sector*29+i%251));
+  };
+  for(unsigned round=0;round<20;round++)for(unsigned block=0;block<blocks;block++)check(block*8+round%8);
+  assert(big.misses>blocks); // Replacement really occurred at this capacity.
+  big.reset();transfers=0;
+  for(unsigned round=0;round<100;round++)for(unsigned block=0;block<16;block++)check(block*8+round%8);
+  assert(transfers==16&&big.hits==1584&&big.misses==16);
+  printf("PASS synthetic 16-block alternating workload: 1600 reads / %u transfers (not a Windows FPS benchmark)\n",transfers);
+ }
  printf("PASS disk cache: 19 sequential sectors / %u transfers; random reads/writes, EOF, reopen, errors, guards\n",sequential_calls);
 }

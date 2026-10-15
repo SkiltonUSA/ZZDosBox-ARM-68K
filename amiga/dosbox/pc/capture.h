@@ -22,9 +22,19 @@ static inline bool pc_capture_row(uint32_t *dst,const uint8_t *src,
  if(bpp==16||bpp==32){pc_neon_capture(dst,src,width,bpp);return true;}
 #endif
  switch(bpp){
- case 8:
-  for(unsigned x=0;x<width;x++)dst[x]=palette[src[x]];
-  return true;
+ case 8:{
+  unsigned x=0;
+#ifdef DB_CAPTURE_UNROLL
+  /* Independent palette loads expose A9 instruction-level parallelism.
+   * Every batch stays wholly inside the input/output scanline. */
+  for(;x+4<=width;x+=4){
+   uint32_t a=palette[src[x]],b=palette[src[x+1]],c=palette[src[x+2]],d=palette[src[x+3]];
+   dst[x]=a;dst[x+1]=b;dst[x+2]=c;dst[x+3]=d;
+  }
+#endif
+  for(;x<width;x++)dst[x]=palette[src[x]];
+  return true;}
+
  case 15:
   for(unsigned x=0;x<width;x++){
    unsigned v=src[x*2]|((unsigned)src[x*2+1]<<8),r=(v>>10)&31,g=(v>>5)&31,b=v&31;

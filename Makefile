@@ -32,3 +32,8 @@ build-current:
 	$(PYTHON) scripts/build_dosbox_dos_arm.py --pc --pc-dynrec --pc-jit-mib 4 \
 	  --pc-neon --pc-pipeline --pc-scanlines --pc-presentation --pc-adapters \
 	  --pc-doom-clock --pc-pic-vfp
+
+.PHONY: test-network
+test-network:
+	$(PYTHON) scripts/test_dosbox_network.py
+	$(PYTHON) scripts/test_dosbox_developer.py

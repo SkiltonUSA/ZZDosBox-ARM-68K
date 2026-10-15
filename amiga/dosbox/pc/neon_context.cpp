@@ -5,20 +5,16 @@
 #include <string.h>
 extern "C" volatile uint8_t *db_shared();
 extern "C" unsigned db_neon_available(uint32_t *),db_neon_witness();
-#ifdef DB_PIC_VFP
 extern "C" void db_neon_ieee_begin();
-#endif
 extern "C" void db_neon_snapshot(uint32_t *),db_neon_restore(const uint32_t *);
 alignas(8) static uint32_t before[65],after[65],policy[4],restored_policy[4];
 static unsigned active,witness;
 extern "C" void db_neon_begin(){
  if(!db_neon_available(policy))E_Exit("NEON unavailable under firmware policy");
  db_neon_snapshot(before);active=1;
-#ifdef DB_PIC_VFP
- /* Match the software scheduler's round-to-nearest IEEE arithmetic. Keep
+ /* Library math can use VFP even when pixel conversion is scalar. Keep
   * denormals, disable exception traps and restore inherited FPSCR at exit. */
  db_neon_ieee_begin();
-#endif
  witness=db_neon_witness();
  if(witness!=42)E_Exit("NEON execution witness failed");
 }

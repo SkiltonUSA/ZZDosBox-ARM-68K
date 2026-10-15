@@ -1,6 +1,7 @@
 /* GPL-2.0-or-later. BIOS floppy cache and exclusive, bounded host HDD I/O. */
 #include "dosbox.h"
 #include "cpu.h"
+#include "paging.h"
 #include "bios_disk.h"
 #include "callback.h"
 #include <string.h>
@@ -10,6 +11,7 @@ extern "C" volatile uint8_t *db_shared();
 #endif
 char db_boot_name[13],db_hdd_name[13];
 extern bool db_disk_open(const char*);
+extern unsigned db_disk_size();
 extern bool db_disk_sector(unsigned,void*,bool);
 static uint8_t floppy[1440*1024];
 static bool loaded;
@@ -30,9 +32,9 @@ void db_boot_start(){
  }
  uint8_t mbr[512];
  if(*db_hdd_name){
-  if(!db_disk_open(db_hdd_name))E_Exit("HDD needs an unmounted, writable 32 MiB image");
-  imageDiskList[2]=new imageDisk(nullptr,db_hdd_name,32768,true);
-  imageDiskList[2]->Set_Geometry(16,128,32,512);updateDPT();mem_writeb(BIOS_HARDDISK_COUNT,1);
+  if(!db_disk_open(db_hdd_name))E_Exit("HDD needs an unmounted, writable 32..256 MiB image");
+  imageDiskList[2]=new imageDisk(nullptr,db_hdd_name,db_disk_size()/2,true);
+  imageDiskList[2]->Set_Geometry(16,db_disk_size()/512,32,512);updateDPT();mem_writeb(BIOS_HARDDISK_COUNT,1);
  }
  if(!*db_boot_name){
   if(!*db_hdd_name||!db_disk_sector(0,mbr,false)||mbr[510]!=0x55||mbr[511]!=0xaa)E_Exit("HDD boot sector missing");
@@ -45,7 +47,10 @@ void db_boot_start(){
 }
 void db_boot_close(){
 #ifndef DB_NATIVE
- if(loaded){volatile uint8_t *p=db_shared()+PC_BOOT_TEXT;
+ /* Guest execution has unwound. Never fault back into the guest while
+  * collecting optional diagnostics: Windows may unmap the text aperture.
+  * Only a real-mode, non-paged session has a meaningful BIOS text dump. */
+ if(loaded&&!cpu.pmode&&!paging.enabled){volatile uint8_t *p=db_shared()+PC_BOOT_TEXT;
   for(unsigned i=0;i<2000;i++){unsigned c=mem_readb((machine==MCH_HERC?0xb0000:0xb8000)+i*2);p[i]=c>=32&&c<127?c:32;}
   __asm__ volatile("dsb sy":::"memory");ad_put(db_shared(),PC_BOOT_TEXT+2000,0x424f4f54);
  }
