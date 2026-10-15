@@ -49,8 +49,8 @@ Direct is the native RTG renderer and remains the default. The experimental
 TinyGL renderer runs on the A9 and supports a partial fixed-function OpenGL API, without GLSL
 shaders or guest OpenGL acceleration. A matched Doom test measured 7.00 FPS
 Direct versus 4.72 FPS OpenGL; keep Direct for speed.
-Software scanlines offer Off, Classic, Soft and Gradient in fullscreen with
-the FPS overlay off.
+Built-in ZZDosBox ARM software scanlines offer Off, Classic, Soft and Gradient
+in fullscreen with the FPS overlay off. No external scanline utility is required.
 Settings includes external MT-32/General MIDI through CAMD and a CAMD/AHI/
 ZZ9000AX driver check. MIDI needs CAMD and a connected external synthesizer.
 
