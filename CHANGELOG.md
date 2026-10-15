@@ -47,6 +47,9 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — runtime review cleanup
 
+- Document ZZDosBox DHCP/manual IPv4 and IPX setup, with the supported subset
+  of DOSBox-X networking and the absence of PCAP/raw Ethernet bridging.
+
 - Share the three-buffer ownership plan through `amiga/common/flip_plan.h`.
 - Synchronize only occupied console-ring spans across PC, shell and console hosts.
   Preserve consumption only after successful output; skip empty payload ranges.

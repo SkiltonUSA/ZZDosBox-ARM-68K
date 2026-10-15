@@ -1,5 +1,8 @@
 # ZZDosBox Network settings
 
+For installation and everyday use, start with the
+[ZZDosBox networking setup guide](amiga-dosbox-network-setup.md).
+
 The **Network** sidebar section configures the selected program's TCP/IP or IPX wrapper.
 Networking is experimental and off by default. TCP/IP uses NE2000/IPv4 NAT;
 IPX uses DOSBox-compatible UDP tunnelling over the existing Roadshow route. It does not reconfigure X-Surf100,

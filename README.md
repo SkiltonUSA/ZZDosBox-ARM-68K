@@ -7,7 +7,7 @@ and display coordination through [Xani's XACP platform](https://github.com/Xanxi
 
 [Development builds](#development-builds) · [Changelog](CHANGELOG.md) · [Features](#features) ·
 [Technical specifications](#technical-specifications) · [Research](#research-and-academic-references) ·
-[Dependencies](#dependencies) · [Build instructions](#build-instructions) ·
+[Dependencies](#dependencies) · [Networking](#networking) · [Build instructions](#build-instructions) ·
 [Performance](#optimisation-history) · [Credits](#credits-and-licences)
 
 ## Development builds
@@ -125,7 +125,11 @@ DNS, ping, IPX transport and clean disconnect passed bounded physical tests.
 Release clears saved guest lease configuration; it does not release the Amiga's
 IP address or send an on-wire DHCP release.
 
-[Network settings and test scope](docs/amiga-dosbox-network-ui.md)
+PCAP/raw Ethernet bridging is not implemented. Configure networking in the
+MUI sidebar; DOSBox-X network configuration blocks are not accepted.
+
+[Networking setup: DHCP, manual IPv4 and IPX](docs/amiga-dosbox-network-setup.md) ·
+[Detailed settings and test scope](docs/amiga-dosbox-network-ui.md)
 
 ## Dependencies
 
