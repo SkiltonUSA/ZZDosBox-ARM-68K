@@ -443,7 +443,7 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
   Child,dev_log=ui_button("Open log"),Child,VSpace(0),End,
   Child,memory_page(),Child,conf_page(),End,End,
  Child,compat_page(),
- Child,VGroup,UI_PAGE,Child,label("DosBox ZZ9000 project"),Child,label(ZZ_LAUNCHER_VERSION " - AmigaOS - 32-bit"),Child,github=ui_button("GitHub"),Child,label("DOSBox / libretro contributors"),Child,label("XACP / Xani - ZZ9000 Cortex-A9"),Child,label("MUI - Stefan Stuntz"),Child,label("TinyGL - Fabrice Bellard and contributors"),Child,label("Development: Codex assisted, Amiga-Bridge MCP"),
+ Child,VGroup,UI_PAGE,Child,label("DosBox ZZ9000 project"),Child,label(ZZ_LAUNCHER_VERSION " - AmigaOS - 32-bit"),Child,github=ui_button("GitHub"),Child,label("DOSBox / libretro contributors"),Child,label("XACP / Xanai - ZZ9000 Cortex-A9"),Child,label("MUI - Stefan Stuntz"),Child,label("TinyGL - Fabrice Bellard and contributors"),Child,label("Development: Codex assisted, Amiga-Bridge MCP"),
   Child,VGroup,UI_PANEL("Changelog"),Child,ListviewObject,MUIA_CycleChain,1,MUIA_Listview_Input,FALSE,
    MUIA_Listview_List,FloattextObject,ReadListFrame,MUIA_Font,ui_font(),
     MUIA_Floattext_Text,(ULONG)dl_changelog_text,End,End,End,End,

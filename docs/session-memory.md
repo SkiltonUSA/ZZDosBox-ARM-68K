@@ -200,7 +200,7 @@ GitHub publishing was not requested in this session; these changes are local.
 ## ZZDosBox software scanline experiment — 13 October 2026
 
 Separate `RAM:ZZScanBench` implements a Classic software mask in the final ARM
-copy. F9 cycles Off/Full/Skip. It is independent of XANI's Workbench FPGA
+copy. F9 cycles Off/Full/Skip. It is independent of Xanai's Workbench FPGA
 controls; no firmware change. Fullscreen 640x480 only; window/overlay output
 is unmasked. Normal runtime and launcher settings remain unchanged.
 
@@ -833,7 +833,7 @@ and waiting for outstanding input before closing the device/window. The ARM
 transport uses 256-byte RX and 4096-byte TX rings inside the existing uncached
 shared region. Counter wrap, backpressure and blocked cancellation are tested.
 
-Xani's guidance (relayed by owner) supports preserving the PicoDrive-style
+Xanai's guidance (relayed by owner) supports preserving the PicoDrive-style
 execution model for XACP 1.8+. It does not prove our extra MMU/debugger paths
 on later firmware or our own 68030 compatibility. Future audio should measure
 AHI servicing/synchronization and batch exchanges, not just lower sample rate.

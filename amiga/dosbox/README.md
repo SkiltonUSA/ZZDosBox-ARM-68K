@@ -90,7 +90,7 @@ editor/export reference there. Booted MS-DOS runs the configuration and
 drivers on its disk and can use its own HIMEM driver. `DOS=HIGH` and EMM386
 are not supported in the supplied configuration.
 
-Credits: DOSBox team, libretro contributors, MUI by Stefan Stuntz, and Xani's
+Credits: DOSBox team, libretro contributors, MUI by Stefan Stuntz, and Xanai's
 [XACP](https://github.com/Xanxi-Amiga/XACP-ZZ9000) platform.
 
 Build and test notes are in [the development record](../../docs/amiga-dosbox-feasibility.md).
