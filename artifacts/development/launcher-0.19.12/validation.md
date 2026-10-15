@@ -8,7 +8,8 @@
 - Host review tests pass: bounded console synchronization, receive queue handling,
   presentation/flip ownership and latency schedules. Developer/profile tests pass.
 - Native DOSBox executes the rebuilt DOS welcome program. The ASCII cells use
-  yellow-on-blue attribute 0x1e; Ctrl+F5 is present and the GitHub URL is absent.
+  yellow-on-blue attribute 0x1e; all four shortcut labels render in bright red
+  while descriptions remain white. Ctrl+F5 is present and the GitHub URL is absent.
   DOS version, coloured border and return to prompt pass. The PNG is that native
   execution, not an Amiga screenshot.
 - Welcome file tests pass: known-version upgrade, original backup, repeat launch,

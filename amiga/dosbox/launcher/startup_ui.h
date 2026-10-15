@@ -1,13 +1,13 @@
 /* GPL-3.0-or-later. Workbench ownership surrounds all startup-file changes. */
 #include "startup.h"
 #include "../pc/cd_host.h"
-/* CRCs of the shipped 0.10.1 (colour/Hercules) and 0.11.0 helpers.
+/* CRCs of shipped 0.10.1, 0.11.0 and the first 0.19.12 welcome helpers.
  * Only these exact-size versions are replaced; unknown same-name files remain untouched. */
 static int welcome_legacy(FILE *f){
  uint32_t crc=~0u;unsigned count=0,bit;int c;rewind(f);
  while((c=fgetc(f))!=EOF){crc^=(unsigned char)c;for(bit=0;bit<8;bit++)crc=(crc>>1)^(0xedb88320u&-(crc&1));count++;}
  if(ferror(f))return 0;crc=~crc;
- return (count==654&&crc==0x0e8a118au)||(count==665&&(crc==0x9fcb96f1u||crc==0xeb86f804u));
+ return (count==654&&crc==0x0e8a118au)||(count==665&&(crc==0x9fcb96f1u||crc==0xeb86f804u))||(count==660&&crc==0x37255885u);
 }
 static int welcome_support(const char*root){
  char source[DL_PATH],dest[DL_PATH],tmp[DL_PATH],backup[DL_PATH];FILE*a,*b;unsigned char data[512],check[512];size_t n;int ok=1,upgrade=0;

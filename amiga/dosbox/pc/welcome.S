@@ -70,10 +70,8 @@ line:
  cmp ax,0xffff
  je done
  mov di,ax
- mov ah,0x1f
- cmp di,8*160
- jae chars
- mov ah,0x1e
+ lodsb
+ mov ah,al
 chars:
  lodsb
  test al,al
@@ -89,30 +87,54 @@ done:
  int 0x21
 lines:
  .word 3*160+12
+ .byte 0x1e /* bright yellow on blue */
  .asciz "ZZZZ ZZZZ DDD   OOO   SSS  BBB   OOO  X   X"
  .word 4*160+12
+ .byte 0x1e /* bright yellow on blue */
  .asciz "  Z    Z  D  D O   O S     B  B O   O  X X"
  .word 5*160+12
+ .byte 0x1e /* bright yellow on blue */
  .asciz " Z    Z   D  D O   O  SSS  BBB  O   O   X"
  .word 6*160+12
+ .byte 0x1e /* bright yellow on blue */
  .asciz "Z    Z    D  D O   O     S B  B O   O  X X"
  .word 7*160+12
+ .byte 0x1e /* bright yellow on blue */
  .asciz "ZZZZ ZZZZ DDD   OOO  SSSS  BBB   OOO  X   X"
  .word 9*160+12
+ .byte 0x1f /* white on blue */
  .ascii "DosBox ZZ9000 project                         "
  .asciz ZZ_LAUNCHER_VERSION
  .word 10*160+12
+ .byte 0x1f /* white on blue */
  .asciz "AmigaOS / 32-bit Cortex-A9 / XACP"
  .word 11*160+12
+ .byte 0x1f /* white on blue */
  .ascii "DOS "
 dosmajor: .ascii "0."
 dosminor: .asciz "00"
  .word 14*160+12
- .asciz "Alt+Return       Window / fullscreen"
+ .byte 0x1c /* bright red on blue */
+ .asciz "Alt+Return"
+ .word 14*160+46
+ .byte 0x1f
+ .asciz "Window / fullscreen"
  .word 15*160+12
- .asciz "Ctrl+- / Ctrl++  CPU speed"
+ .byte 0x1c /* bright red on blue */
+ .asciz "Ctrl+- / Ctrl++"
+ .word 15*160+46
+ .byte 0x1f
+ .asciz "CPU speed"
  .word 16*160+12
- .asciz "Ctrl+F5          Capture screenshot"
+ .byte 0x1c /* bright red on blue */
+ .asciz "Ctrl+F5"
+ .word 16*160+46
+ .byte 0x1f
+ .asciz "Capture screenshot"
  .word 17*160+12
- .asciz "F10              Return to Workbench"
+ .byte 0x1c /* bright red on blue */
+ .asciz "F10"
+ .word 17*160+46
+ .byte 0x1f
+ .asciz "Return to Workbench"
  .word 0xffff

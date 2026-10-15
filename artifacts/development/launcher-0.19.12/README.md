@@ -23,7 +23,8 @@ IMG/VHD guidance and the footer revision. Hover over Delete for its footer help.
 See [launcher controls](../../../docs/amiga-dosbox-launcher-navigation.md) and
 [disk formats](../../../docs/amiga-dosbox-disk-images.md).
 
-The DOS welcome panel has a yellow ASCII title, current version and Ctrl+F5
+The DOS welcome panel has a yellow ASCII title, red shortcut labels, white
+descriptions, current version and Ctrl+F5
 instructions. Known older ZZHELLO2.COM helpers upgrade on next launch, retaining
 one `.BAK`; unrelated same-name files are left alone.
 

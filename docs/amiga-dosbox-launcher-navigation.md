@@ -165,6 +165,7 @@ Workbench-window captures use the owned player bitmap, without desktop windows
 or the Workbench pointer. The preview is 240 × 180; the file retains the player's
 rendered dimensions (640 × 480 in fullscreen, up to 960 × 720 in a window).
 
-The DOS welcome screen uses a yellow ASCII ZZDOSBox title and lists Ctrl+F5
+The DOS welcome screen uses a yellow ASCII ZZDOSBox title, red shortcut keys
+and white descriptions. It lists Ctrl+F5
 for screenshots, Alt+Return for display mode, CPU speed controls and F10 to exit.
 Its version follows the launcher.
