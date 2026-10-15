@@ -8,9 +8,10 @@
 struct dn_config {
  unsigned enabled,manual,mtu,retries,timeout;
  char ip[16],mask[16],gateway[16],dns[16],hostname[32];
+ unsigned protocol,ipx_port;char ipx_server[16]; /* 0: TCP/IP NAT, 1: DOSBox IPX/UDP client */
 };
 static inline void dn_defaults(struct dn_config*c){
- memset(c,0,sizeof(*c));c->mtu=1500;c->retries=3;c->timeout=10;
+ memset(c,0,sizeof(*c));c->mtu=1500;c->retries=3;c->timeout=10;c->ipx_port=213;
  strcpy(c->ip,"10.0.2.15");strcpy(c->mask,"255.255.255.0");strcpy(c->gateway,"10.0.2.2");strcpy(c->hostname,"zzdosbox");
 }
 static inline int dn_ipv4(const char*s,uint32_t*out){
@@ -27,6 +28,8 @@ static inline int dn_host(const char*s){unsigned n=0;if(!*s||*s=='-')return 0;fo
 static inline int dn_unicast(uint32_t n){return (n>>24)!=0&&(n>>24)!=127&&(n>>24)<224;}
 static inline const char*dn_error(const struct dn_config*c){
  uint32_t ip,mask,gw,dns,net,end,inv;
+ if(c->protocol>1||!c->ipx_port||c->ipx_port>65535)return "Invalid protocol or IPX UDP port (1-65535).";
+ if((*c->ipx_server|| (c->enabled&&c->protocol))&&(!dn_ipv4(c->ipx_server,&dns)||!dn_unicast(dns)))return "IPX server must be a unicast IPv4 address.";
  if(c->enabled>1||c->manual>1)return "Invalid network mode.";
  if(!dn_ipv4(c->ip,&ip)||!dn_ipv4(c->mask,&mask)||!dn_ipv4(c->gateway,&gw))return "Enter dotted IPv4 addresses and a subnet mask.";
  inv=~mask;if(!mask||(inv&(inv+1))||inv<255)return "Use a contiguous subnet mask, /24 or larger network.";
@@ -43,14 +46,18 @@ static inline const char*dn_error(const struct dn_config*c){
 static inline uint32_t dn_network(const struct dn_config*c){uint32_t g=0,m=0;dn_ipv4(c->gateway,&g);dn_ipv4(c->mask,&m);return g&m;}
 static inline int dn_write(FILE*f,const struct dn_config*c){
  if(dn_error(c))return 0;
- return fprintf(f,"ZZNET1\n%u %u %u %u %u\n%s\n%s\n%s\n%s\n%s\n",c->enabled,c->manual,c->mtu,c->retries,c->timeout,c->ip,c->mask,c->gateway,c->dns,c->hostname)>0;
+ return fprintf(f,"ZZNET2\n%u %u %u %u %u\n%s\n%s\n%s\n%s\n%s\n%u %u\n%s\n",c->enabled,c->manual,c->mtu,c->retries,c->timeout,c->ip,c->mask,c->gateway,c->dns,c->hostname,c->protocol,c->ipx_port,c->ipx_server)>0;
 }
 static inline int dn_line(FILE*f,char*s,size_t cap){size_t n;if(!fgets(s,cap,f))return 0;n=strlen(s);if(!n||s[n-1]!='\n')return 0;s[--n]=0;if(n&&s[n-1]=='\r')s[n-1]=0;return 1;}
 /* Reads one record; the enclosing profile reader owns its EOF check. */
-static inline int dn_read(FILE*f,struct dn_config*c){char b[96],extra;struct dn_config next;
+static inline int dn_read(FILE*f,struct dn_config*c){char b[96],extra;struct dn_config next;int v;
  dn_defaults(&next);
- if(!dn_line(f,b,sizeof(b))||strcmp(b,"ZZNET1")||!dn_line(f,b,sizeof(b))||sscanf(b,"%u %u %u %u %u %c",&next.enabled,&next.manual,&next.mtu,&next.retries,&next.timeout,&extra)!=5)return 0;
- if(!dn_line(f,next.ip,sizeof(next.ip))||!dn_line(f,next.mask,sizeof(next.mask))||!dn_line(f,next.gateway,sizeof(next.gateway))||!dn_line(f,next.dns,sizeof(next.dns))||!dn_line(f,next.hostname,sizeof(next.hostname))||dn_error(&next))return 0;
+ if(!dn_line(f,b,sizeof(b)))return 0;
+ v=!strcmp(b,"ZZNET2")?2:!strcmp(b,"ZZNET1")?1:0;
+ if(!v||!dn_line(f,b,sizeof(b))||sscanf(b,"%u %u %u %u %u %c",&next.enabled,&next.manual,&next.mtu,&next.retries,&next.timeout,&extra)!=5)return 0;
+ if(!dn_line(f,next.ip,sizeof(next.ip))||!dn_line(f,next.mask,sizeof(next.mask))||!dn_line(f,next.gateway,sizeof(next.gateway))||!dn_line(f,next.dns,sizeof(next.dns))||!dn_line(f,next.hostname,sizeof(next.hostname)))return 0;
+ if(v==2&&(!dn_line(f,b,sizeof(b))||sscanf(b,"%u %u %c",&next.protocol,&next.ipx_port,&extra)!=2||!dn_line(f,next.ipx_server,sizeof(next.ipx_server))))return 0;
+ if(dn_error(&next))return 0;
  *c=next;return 1;
 }
 static inline int dn_file_read(const char*path,struct dn_config*c){FILE*f=fopen(path,"r");int ok;if(!f)return 0;ok=dn_read(f,c)&&fgetc(f)==EOF;fclose(f);return ok;}
@@ -61,6 +68,7 @@ static inline int dn_mtcp(FILE*f,const struct dn_config*c){char dns[16];if(dn_er
 }
 /* Commands always use our managed subdirectory; no user text enters a shell. */
 static inline int dn_start(FILE*f,const struct dn_config*c){if(dn_error(c))return 0;
+ if(c->protocol)return fputs("IPXNET CONNECT\r\nif errorlevel 1 goto ZZNETFAIL\r\n",f)!=EOF;
  if(fputs("C:\\ZZNET\\NE2000.COM 0x60 3 0x300\r\nif errorlevel 1 goto ZZNETFAIL\r\nset MTCPCFG=C:\\ZZNET\\MTCP.CFG\r\n",f)==EOF)return 0;
  if(!c->manual&&fprintf(f,"C:\\ZZNET\\DHCP.EXE -retries %u -timeout %u\r\nif errorlevel 1 goto ZZNETFAIL\r\n",c->retries,c->timeout)<0)return 0;
  return !ferror(f);

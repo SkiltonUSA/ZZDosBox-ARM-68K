@@ -4,6 +4,10 @@
 #include "pc_wire.h"
 #define NET_CONTROL 0x18c000u
 #define NET_MAGIC 0x4e455431u
+#define NET_PROTOCOL (NET_CONTROL+4u) /* host: 0 Ethernet/NAT, 1 IPX/UDP */
+#define NET_SERVER (NET_CONTROL+8u) /* host: IPv4 in canonical integer order */
+#define NET_PORT (NET_CONTROL+12u) /* host: UDP port */
+#define NET_IPX_CONNECTED (NET_CONTROL+320u) /* ARM only, separate cache line */
 #define NET_ENABLED (NET_CONTROL+0u)
 #define NET_TX_WRITE (NET_CONTROL+64u) /* ARM */
 #define NET_TX_READ (NET_CONTROL+128u) /* host */

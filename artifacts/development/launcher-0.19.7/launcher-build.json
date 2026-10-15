@@ -1,0 +1,57 @@
+{
+  "bytes": 585740,
+  "sha256": "4f03afdf9e497056b3b81415e2f68a16244a0398d8d6d78d362abac14134663a",
+  "sources": {
+    "amiga/dosbox/launcher/compatibility.h": "65220c6564bfe428016da8acd8c0d2c1fc6d5b8ee6c684f1bf4b085caf6256c0",
+    "amiga/dosbox/launcher/disk_ui.h": "86a0ba5b1548ceaf8b70309bd5beef9d74f42ae67ebf2a0472c3ad00a0f67e8a",
+    "amiga/dosbox/launcher/version.h": "666213f52aa446d3ab915d1c56e9ae84e2941d447920fbd603562fe8d1b8e6bc",
+    "amiga/dosbox/launcher/image_mount.h": "9384c2734186f65a1979301f75b42a063f2e55379059f3aac5a6165f2e8d3e92",
+    "amiga/dosbox/launcher/compatibility_store.h": "835a7940e41a1d95d154ec89e3821297b8456560e2ae55f3db5e65ab6fecb435",
+    "amiga/dosbox/launcher/developer.h": "e1498d646eef06663e31c14ab1f632c5402cef1a726e0e5cbf1f1100280b60ca",
+    "amiga/dosbox/launcher/style.h": "e45cb1af68ba427d887b228024ba82287695e17e720a7625d03116c818cca73a",
+    "amiga/dosbox/launcher/conf.h": "bc0feb18c82ff2eaf21a6db8b8929ef09c5f8ec9c09837be4ccdc6a4f0deb80d",
+    "amiga/dosbox/launcher/create_disk.c": "969b91ec8c742a3082243d6681d6f353ffe60bb19c477a534578abd3bccbb57f",
+    "amiga/dosbox/launcher/audio_detect.h": "cbfe27788e3907bea313a9f3b580c39cce2cf87f663daeaaf89fe61920d6159a",
+    "amiga/dosbox/launcher/image_create.h": "8e99e88bd63da75cb66699e3e7f423f05f1e87c6196af4b1432b99fcf9416967",
+    "amiga/dosbox/launcher/startup.h": "bb810f64aaff1eaddb37122e2950d0b106efa08a1ab53291204388550aa96afe",
+    "amiga/dosbox/launcher/network_ui.h": "9ab96ae8d7918ffd5fc5bdc7c2313450b73aaf1549050f1ece58639254ed1923",
+    "amiga/dosbox/launcher/splash.h": "a207afde03d7ea066d76c00b0ef64b7ceb5b3a83810d755609e4adadcf5cdfb9",
+    "amiga/dosbox/launcher/session.h": "884500243b2578da9f6b064519ebc016e515df02bede4aa0d9a493181d4449b7",
+    "amiga/dosbox/launcher/main.c": "40a62760fff5d0fe6221fa7c3ba09473cfe988567e7c3592ee54443931d6d962",
+    "amiga/dosbox/launcher/memory_ui.h": "624f38e8cbc68c903f2fd49e4074949e5e1220f90f99976288e7f3a693e5811e",
+    "amiga/dosbox/launcher/compatibility_ui.h": "744630f7fbca62a12683287a58da1c21c9c8b6a92086ec7e4c78253dee0971b7",
+    "amiga/dosbox/launcher/model.h": "c45b07a3c116a9071d4a21abeca5ec9b30b11769c2e38d861d4648335d91f3f5",
+    "amiga/dosbox/launcher/image_source.h": "5ac180b1c6a613723d3171c386bf8af745f1407327800cf5efe70ba877e464d7",
+    "amiga/dosbox/launcher/icon.c": "60744c0206ce3b9c6ded94e1d72b717bd24efe8e96883270a789b3ac3540f93d",
+    "amiga/dosbox/launcher/disk.c": "64bdffc30ef010af78a249786f59f77d917abe901f6abfafe4e0913ccaaa35e4",
+    "amiga/dosbox/launcher/startup_ui.h": "2a5c229a2c6a606b410136a77de6afeda2b724208f9bab0787c1e0ef99a84431",
+    "amiga/dosbox/assets/zzdosbox-logo.png": "e71a32e81577c7ebc134c50fd49c369b8e2e60157bd608df303d784ec71cff77",
+    "scripts/prepare_dosbox_icon.py": "e799726fb5b5bf360aed6edd0c6fcdce7c35b249190942b87a377419d6caa88a",
+    "amiga/dosbox/compatibility/data.h": "e22eb0074902d0da07ae56044d1912e51b8445e2173196ba8d7f5742281c1e3d",
+    "amiga/dosbox/compatibility/details_meta.h": "b07926d8fbf810f44bec66ebc94556d14624f36f9ec7dfe4817ebf26e3220181",
+    "amiga/dosbox/network/config.h": "13f1a16be083bb8dc901b2906fddb50d8b8937e5461d04a8e5df30ef6fe4f1d9",
+    "amiga/dosbox/network/control.h": "694ee47876374440324d9851a0d5554c33f027e99df4a919958f03b29e8311fd"
+  },
+  "assets": {
+    "Compatibility.dat": {
+      "bytes": 1347821,
+      "sha256": "701196220a008ee6441831076e87267bff1fed0afdf2f8c5881592cf44507584"
+    },
+    "Compatibility.md": {
+      "bytes": 364997,
+      "sha256": "ed21c2689dd75bb817ba94572544186b032bb01f7bed3093dedbfc929cfa9ed3"
+    },
+    "Compatibility-Details.md": {
+      "bytes": 2484632,
+      "sha256": "5331bd37dbbdc179ef00ef138b082bcb71433e5d1487dc6efc0e017ee24c7c12"
+    },
+    "ZZDosDisk": {
+      "bytes": 34092,
+      "sha256": "ab82722af6e07a1e639ff7fe364e6fc01286c2eb1c308b0a92fa8860a4afe302"
+    },
+    "ZZDosCreate": {
+      "bytes": 57732,
+      "sha256": "fef740ed643c04147dbfcb92a2306731f1de51b18ccaa620c6275e17ee00b670"
+    }
+  }
+}

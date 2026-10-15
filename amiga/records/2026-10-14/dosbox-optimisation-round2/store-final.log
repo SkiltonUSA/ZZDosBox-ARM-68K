@@ -1,0 +1,1 @@
+PASS every record equals source; missing/truncated/stale/corrupt stores, retry, close and bounded lookup

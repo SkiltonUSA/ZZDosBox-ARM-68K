@@ -85,7 +85,7 @@ static int dc_apply(const struct dc_config*c,const struct dl_profile*base,struct
  for(k=0;k<DC_COUNT;k++)if(c->set[k]&&dc_keys[k].offset>=0){char*at=(char*)out+dc_keys[k].offset;if(dc_keys[k].cap)strcpy(at,c->text[k]);else *(unsigned*)at=c->value[k];}
  if(!dl_profile_valid(out)){snprintf(error,cap,"dosbox.conf conflicts with program settings (colours, paths or startup files).");return 0;}
  if(out->scanlines&&!dl_scanlines_available(out->display,out->fps)&&(c->set[DC_SCANLINES]||c->set[DC_FULLSCREEN]||c->set[DC_FPS])){snprintf(error,cap,"Scanlines require fullscreen and FPS off.");return 0;}
- if(out->system&&(c->set[DC_FG]||c->set[DC_BG]||(c->set[DC_LIVE]&&!out->live))){snprintf(error,cap,"Booted DOS controls its own colours and runs until closed.");return 0;}
+ if((out->system==1||out->system==2)&&(c->set[DC_FG]||c->set[DC_BG]||(c->set[DC_LIVE]&&!out->live))){snprintf(error,cap,"Booted DOS controls its own colours and runs until closed.");return 0;}
  if(out->system==2){
   if((c->set[DC_RENDERER]&&out->renderer)||(c->set[DC_PRESENTATION]&&out->presentation)||(c->set[DC_SCANLINES]&&out->scanlines)||c->set[DC_AUTO_MODE]||c->set[DC_AUTO_FILE]||c->set[DC_CONFIG_MODE]||c->set[DC_CONFIG_FILE]||c->set[DC_FG]||c->set[DC_BG]||(c->set[DC_LIVE]&&!out->live)){
    snprintf(error,cap,"Image sessions use disk startup files, guest colours and Direct presentation.");return 0;
@@ -100,7 +100,7 @@ static const char *dc_runtime(const struct dc_config*c,const struct dl_profile*p
  if(memory&&(p->renderer||trace||point)){snprintf(error,cap,"Memory tools require Direct with trace and frame breakpoints off.");return NULL;}
  if(p->system==2){if(trace||point||memory){snprintf(error,cap,"Image sessions do not support trace, breakpoints or memory tools.");return NULL;}return core==2?"ZZDosBox-Windows-Dynamic":"ZZDosBox-Windows";}
  if(core==1){if(p->renderer||p->presentation||p->scanlines||trace||point||memory){snprintf(error,cap,"core=normal requires Direct/Normal, scanlines off and no trace or memory tools.");return NULL;}return "ZZDosBox-Windows";}
- if(p->system&&core==2){if(p->renderer||p->presentation||p->scanlines||trace||point||memory){snprintf(error,cap,"Guarded boot JIT requires Direct/Normal with no scanlines, trace or memory tools.");return NULL;}return "ZZDosBox-Windows-Dynamic";}
+ if(p->system==1&&core==2){if(p->renderer||p->presentation||p->scanlines||trace||point||memory){snprintf(error,cap,"Guarded boot JIT requires Direct/Normal with no scanlines, trace or memory tools.");return NULL;}return "ZZDosBox-Windows-Dynamic";}
  if(memory)return "ZZDosBox-Memory";
  return dl_dev_runtime(dl_profile_player(p),trace,point);
 }

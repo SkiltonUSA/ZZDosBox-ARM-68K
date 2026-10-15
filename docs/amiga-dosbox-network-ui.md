@@ -1,9 +1,35 @@
-# ZZDosBox Network tab
+# ZZDosBox Network settings
 
-The **Network** tab configures the selected program's emulated NE2000 adapter.
-Networking is experimental and off by default. It shares the Amiga's existing
-Roadshow connection through IPv4 NAT. It does not reconfigure X-Surf100,
+The **Network** sidebar section configures the selected program's TCP/IP or IPX wrapper.
+Networking is experimental and off by default. TCP/IP uses NE2000/IPv4 NAT;
+IPX uses DOSBox-compatible UDP tunnelling over the existing Roadshow route. It does not reconfigure X-Surf100,
 ZZ9000 Ethernet, Roadie, or the Amiga's own IP address.
+
+## Protocol
+
+Choose **TCP/IP** or **IPX wrapper (UDP)**. Settings are saved per program.
+IPX uses the DOSBox guest IPX API and a UDP socket on the Amiga; it does not
+run an NE2000 driver, mTCP or DHCP. Set the relay server’s numeric IPv4 address
+and UDP port (default 213). TCP/IP fields and DHCP/DNS buttons are disabled
+when IPX is selected; their saved values are retained.
+
+Start a compatible relay on another computer with `IPXNET STARTSERVER 19900`,
+then select that computer’s address and port 19900 in MUI. **Open network
+terminal** connects to it. Normal Launch also connects before running the game.
+The server can be any compatible host; a Mac is not specifically required.
+
+The embedded shell offers `IPXNET CONNECT`, `STATUS`, `PING` and `DISCONNECT`.
+CONNECT uses the MUI endpoint. Ping requests replies from other clients; a
+relay with no other clients may produce no replies despite a working connection.
+MUI **Disconnect** closes the DOS session cooperatively; shell DISCONNECT
+leaves DOS running. Neither command changes Roadshow.
+
+This is a client implementation, not a native LAN IPX/SPX stack. Relay hosting,
+Windows IPX drivers, hostname resolution for relay addresses and simultaneous
+TCP/IP plus IPX modes are not provided. Per-game multiplayer compatibility
+requires game-specific testing.
+
+[Protocol reference](https://www.dosbox.com/wiki/Connectivity).
 
 ## TCP/IP
 
@@ -28,10 +54,10 @@ one upstream DNS resolver; secondary DNS and automatic Roadshow resolver
 discovery are not implemented.
 
 **Save settings** stores these options per program. Existing launcher profiles
-migrate with networking disabled. `Launcher.cfg` is now version 12; preserve
+migrate with networking disabled. `Launcher.cfg` is now version 13 (version 12 and earlier remain readable); preserve
 the pre-upgrade profile backup when reverting to an older launcher.
 
-## Controls
+## TCP/IP controls
 
 - **Open network terminal** starts an embedded DOS session with the packet
   driver and mTCP configuration installed. The launcher stays responsive.
@@ -63,14 +89,14 @@ combinations are rejected, rather than silently downgraded. A default game
 with networking disabled continues to use its existing runtime.
 
 Windows/MS-DOS disk-image networking still needs guest-specific driver and
-TCP/IP configuration and is not enabled by this tab. IPX, IPv6, PCAP bridging,
+TCP/IP configuration and is not enabled by this tab. IPv6, PCAP bridging,
 port forwarding, incoming LAN discovery and a persistent background guest
 TCP/IP service are not provided. libslirp allocator/fatal-error recovery
 remains a production-hardening item.
 
 The launcher uses its own marked `ZZNET` subdirectory in the selected C:
-drawer. It installs NE2000/mTCP utilities and regenerates `MTCP.CFG` before
-each network session. It refuses to take over an unmarked existing directory.
+drawer. TCP/IP installs NE2000/mTCP utilities and regenerates `MTCP.CFG` before
+each network session. IPX generates only its connection batch, without those utilities. It refuses to take over an unmarked existing directory.
 Temporary network settings and session files remain in the launcher drawer.
 Neither host startup files nor user AUTOEXEC/CONFIG.SYS files are rewritten.
 
@@ -99,7 +125,7 @@ the guide's PCAP, configurable NIC resources and forwarding options are not
 automatically available in ZZDosBox. The hardware adapter remains I/O `0x300`,
 IRQ 3, MAC `02:5A:5A:00:00:01`.
 
-## Physical acceptance — 15 October 2026
+## TCP/IP physical acceptance — 15 October 2026
 
 - MUI DHCP acquisition: `10.0.2.15`, 2 TX / 2 RX, normal exit.
 - MUI DNS lookup through the LAN resolver: successful, 5 TX / 4 RX.
@@ -117,7 +143,7 @@ IRQ 3, MAC `02:5A:5A:00:00:01`.
   migration/roundtrip check with networking disabled.
 
 Evidence: `amiga/records/2026-10-15/dosbox-network-ui/`. Initial UI tests ran
-from RAM; the installed launcher is **0.17.0-dev**. Previous launcher and
+from RAM; that test installed launcher **0.17.0-dev**. Previous launcher and
 settings are preserved with `.pre017` suffixes. The network build remains
 experimental despite these successful bounded checks.
 
@@ -138,3 +164,49 @@ source links, and writes the seven files required in `Network/` beside the
 launcher. The NE2000/mTCP binaries are optional guest utilities; they are not
 system-wide Amiga libraries. Roadshow must already be running. MUI 3.8 or
 later and the normal ZZDosBox/ZZ9000 requirements still apply.
+
+## IPX implementation and test scope
+
+The pinned dosbox-libretro IPX driver runs inside the ARM guest emulator. A
+small source-level UDP adapter replaces SDL_net; there is no SDL runtime
+requirement. The 68K owns one connected, nonblocking Roadshow UDP socket.
+The existing bounded queues carry packets of 30–1,424 bytes, with validated
+IPX lengths. Packets from another UDP endpoint are filtered by the socket.
+The INT 2F multiplex chain accommodates both MSCDEX and IPX.
+
+Native tests cover malformed/truncated/oversized datagrams, exact byte transfer,
+peer filtering and repeated socket close/reopen. The ARM test uses an original
+DOS program and the **unmodified pinned upstream DOSBox relay**, with a second
+independent test peer. Model tests do not establish physical Amiga execution or
+full game compatibility. The linked ARM test passed discovery, registration,
+socket open/close, a broadcast with an exact reply delivered through a guest ESR callback, peer
+ping and disconnect (3 packets each direction). Cancellation during connection
+and the MSCDEX CD regression also passed. The TCP/IP regression acquired a
+custom-subnet DHCP lease and transferred 4,099 exact bytes through HTTP.
+
+```sh
+python3 scripts/test_dosbox_network.py
+python3 scripts/test_dosbox_developer.py
+python3 scripts/build_dosbox_network.py --native --model-library
+python3 scripts/build_dosbox_ipx_relay_test.py
+# Use your Mac's local IPv4 address, and a Python environment with Unicorn:
+python3 tests/amiga/dosbox/network/ipx_backend_test.py --bind <local-ip>
+python3 tests/amiga/dosbox/network/ipx_model_test.py --bind <local-ip> --upstream
+```
+
+## IPX physical acceptance — 15 October 2026
+
+On the A4000TX, the original DOS test program passed IPX discovery, socket
+creation, broadcast, an exact reply delivered through the guest ESR callback,
+peer ping and disconnect through the unmodified upstream DOSBox relay.
+Three packets were sent and received, with zero network drops or errors.
+
+The MUI network terminal connected automatically; MUI Disconnect returned
+cleanly. The Diagnostics Ping action received a peer reply (2 TX / 2 RX).
+Switching TCP/IP → IPX retained both protocols' settings; saving and reading
+back the isolated profile produced identical bytes. Completed physical runs
+restored SIMD/FPSCR, MMU/register/cache witnesses and released owned memory.
+
+These tests establish the IPX transport and guest API on physical hardware.
+A multiplayer game session against another DOSBox player remains untested.
+Evidence: `amiga/records/2026-10-15/dosbox-ipx/`.

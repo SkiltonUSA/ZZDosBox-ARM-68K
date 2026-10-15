@@ -45,6 +45,8 @@ static inline unsigned pc_scan_level(unsigned mode,unsigned row){
  if(mode==4){const unsigned levels[4]={8,6,4,6};return levels[row&3];}
  return 8;
 }
+/* The fourth byte is unused by the supported P96 scanout formats.
+ * This scales it too; an alpha-consuming format needs a different operation. */
 static inline uint32_t pc_scan_dim_pixel(uint32_t p,unsigned level){
  uint32_t lo=(((p&0x00ff00ffu)*level)>>3)&0x00ff00ffu;
  uint32_t hi=(((((p>>8)&0x00ff00ffu)*level)>>3)&0x00ff00ffu)<<8;

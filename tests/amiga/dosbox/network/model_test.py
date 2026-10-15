@@ -37,8 +37,8 @@ class Network:
   subnet='192.168.77' if args.custom_subnet else '10.0.2'
   self.ip=subnet+('.42' if args.manual else '.15')
   class Config(ctypes.Structure):
-   _fields_=[(n,ctypes.c_uint) for n in ('enabled','manual','mtu','retries','timeout')]+[(n,ctypes.c_char*16) for n in ('ip','mask','gateway','dns')]+[('hostname',ctypes.c_char*32)]
-  c=Config(1,int(args.manual),1500,3,10,self.ip.encode(),b'255.255.255.0',(subnet+'.2').encode(),b'',b'zzdosbox')
+   _fields_=[(n,ctypes.c_uint) for n in ('enabled','manual','mtu','retries','timeout')]+[(n,ctypes.c_char*16) for n in ('ip','mask','gateway','dns')]+[('hostname',ctypes.c_char*32),('protocol',ctypes.c_uint),('ipx_port',ctypes.c_uint),('ipx_server',ctypes.c_char*16)]
+  c=Config(1,int(args.manual),1500,3,10,self.ip.encode(),b'255.255.255.0',(subnet+'.2').encode(),b'',b'zzdosbox',0,213,b'')
   self.lib.zz_net_configure.argtypes=[ctypes.POINTER(Config)]
   assert self.lib.zz_net_configure(ctypes.byref(c))
   s=(ROOT/'.context/research/dosbox-x/src/builtin/ne2000bin.cpp').read_text()

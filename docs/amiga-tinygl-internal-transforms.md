@@ -165,3 +165,11 @@ The [NEON span and zero-clear experiment](amiga-tinygl-raster-experiment.md)
 subsequently measured 22.93% more visible-fill throughput, but 18.66% less
 throughput for mostly occluded fill. Zero clearing improved 7.75%. These remain
 separate native TinyGL diagnostics; the span candidate is not enabled globally.
+
+## hlsl++ follow-up
+
+The [hlsl++ comparison](amiga-hlslpp-benchmark.md) reproduced exact output on the
+physical A9 but measured only 0.19% more geometry throughput than scalar TinyGL
+and 0.71% more than the internal NEON candidate, with no material clipping/fill
+gain. Its generic matrix/vertex routines were slower than the specialised NEON
+kernels. hlsl++ remains confined to the benchmark; the installed renderer is unchanged.

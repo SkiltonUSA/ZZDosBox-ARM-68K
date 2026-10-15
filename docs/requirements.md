@@ -13,9 +13,10 @@ and Amiga-Bridge are not required to run the supplied Amiga executable.
 | Amiga | A Zorro III Amiga with a ZZ9000. Physically tested on an A4000TX with TF4060/68060; other CPU configurations have not been validated by this project. |
 | 68K CPU | Executables target the 68020 instruction set. This is a build baseline, not a tested minimum-speed claim. A TF4060 is not explicitly required by the code. |
 | AmigaOS | Tested with AmigaOS 3.2.3. The launcher requires `workbench.library` v44+, `asl.library` v38+ and the MUI library. Compatibility with older OS installations is unverified. |
-| ZZ9000 firmware | Tested **XX19c / XACP 1.7**. Later firmware has not yet been tested here. Close other applications using ARM Core1 before starting. |
+| ZZ9000 firmware | Tested **XX19c / XACP 1.7**. Later firmware has not yet been tested here. Close other applications using ARM Core1 before starting. Current PC builds require firmware-permitted SIMD access even with scalar pixels, because linked library routines can use VFP/NEON; the worker checks permission and preserves the state. |
 | ZZ9000 RAM | Enable the card's **256 MB Zorro III Fast RAM**. The player needs a **32 MB contiguous free block** in that RAM, plus memory for AmigaOS, the launcher and display buffers. |
 | Graphics | Working ZZ9000 Picasso96 driver and `Picasso96API.library` v2+. Window mode requires a supported **32-bit RTG Workbench**; fullscreen requires an existing **640×480 32-bit RTG mode**. The guest can still use CGA/EGA or 16-colour VGA. |
+| Compatibility browser | Keep the matching `Compatibility.dat` beside `ZZDosBox-Launcher` (0.16.0-dev onward). Missing data disables report details, not the emulator. |
 | MUI | **MUI 3.8 or later** for the launcher. No additional custom MUI classes are required. |
 | Stack and storage | Use a **65536-byte stack** for the player/launcher and a writable application drawer. Allow space for your programs and any disk images. |
 
@@ -45,13 +46,22 @@ Sound Blaster, AdLib/OPL and PC-speaker PCM audio remain unimplemented.
 
 - Embedded DOS 5 does not need Microsoft DOS disks. Programs can use a writable
   Amiga drawer as C:, with subdirectories and the port's restricted DOS 8.3 names.
-- Booted MS-DOS 6.22 needs your own media. The current BIOS hard-disk layout is
-  32 MB; read-only 1.44 MB floppy boot is also supported.
+- Booted MS-DOS 6.22 needs your own media. Supported BIOS hard-disk images are
+  32–256 MiB; read-only 1.44 MB floppy boot is also supported.
+- **Disks → New hard disk** creates 32, 64, 128 or 256 MiB images.
+  **DOSBox DOS 5** is the default and needs no Microsoft files. The launcher
+  mounts this image as C: for its embedded DOS, then ejects it after the session.
+  This mode requires diskimage.device and fat95; CONFIG.SYS drivers are not loaded.
+  **MS-DOS 6.22** is offered when the installed DOS622.IMG exists and copies
+  its boot code and DOS files into a separately bootable image. No Microsoft
+  files are bundled. New images receive AUTOEXEC.BAT, CONFIG.SYS and an OS entry.
+- The Disks page can mount and open raw MBR FAT hard-disk `.IMG` files
+  (32–256 MiB) in Workbench. Microsoft `.VHD` containers are not supported.
 - Eject an image from Workbench before booting it in DOSBox. Do not mount one
   writable image in both systems at once.
 - The Windows development build has completed Windows for Workgroups 3.11
   startup, WinBench 3.11 Graphics WinMark and shutdown on the A9. It uses standard
-  VGA and keyboard input. Windows and WinBench must be supplied separately.
+  VGA, keyboard and PS/2 mouse input. Windows and WinBench must be supplied separately.
 - Embedded DOS runs AUTOEXEC.BAT but does not load CONFIG.SYS device drivers.
   Booted DOS uses its disk configuration and can load HIMEM. EMM386 and DOS=HIGH
   are not supported by the tested configuration.
@@ -77,19 +87,26 @@ normally to DOS before closing the emulator.
 
 The mouse build uses the normal Amiga pointer. Windows 3.1 needs its Microsoft/IBM PS/2 mouse driver selected; it was previously installed with no mouse. No extra Amiga mouse library is required.
 
-## Experimental networking — launcher 0.17.0-dev
+The optional OpenGL experiment bundles TinyGL in the ARM payload; no separate
+Amiga OpenGL library is required. It provides a partial software fixed-function
+renderer, not GLSL support. MUI requirements remain unchanged.
 
-The Network tab provides per-program DHCP or manual IPv4, subnet/gateway,
-upstream DNS, hostname, MTU and DHCP timing controls. Diagnostics include
-ping, DNS lookup, live counters, log viewing and cooperative disconnect.
-It requires a running Roadshow connection, `bsdsocket.library`, the separate
-`ZZDosBox-Net` interpreter runtime and staged NE2000/mTCP guest utilities.
-libslirp is linked into the host; no separate Amiga libslirp installation is needed.
+## Experimental networking — TCP/IP and IPX
 
-Embedded DOS with Direct/Normal presentation is supported. Networking is off
-by default; explicit dynamic-core, scanline, OpenGL and debug-runtime combinations
-are rejected. Windows/MS-DOS image networking, IPX, IPv6 and port forwarding
-remain pending. Renew obtains a fresh guest lease; Release saved lease clears
-local guest configuration, not the Amiga's address or an on-wire DHCP lease.
+The Network page provides per-program TCP/IP or DOSBox-compatible IPX-over-UDP.
+TCP/IP uses NE2000/libslirp NAT over the existing Roadshow connection, with
+DHCP/manual IPv4, subnet, gateway, DNS, hostname and MTU controls. Diagnostics
+include ping, DNS lookup, counters, logs and cooperative disconnect. IPX uses
+a compatible UDP relay with address/port, connect/status/ping/disconnect controls.
+
+Both require `bsdsocket.library` and the separate `ZZDosBox-Net` interpreter.
+TCP/IP additionally needs staged NE2000/mTCP guest utilities. libslirp is linked
+into the host; no separate Amiga installation is needed. Embedded DOS with
+Direct/Normal presentation is supported; networking is off by default.
+Dynamic-core, scanline, OpenGL and debug-runtime combinations are rejected.
+Windows/MS-DOS image networking, IPv6 and port forwarding remain pending.
+IPX transport passed hardware checks; multiplayer games remain untested.
+Renew obtains a fresh guest lease; Release clears saved guest configuration,
+not the Amiga's address or an on-wire DHCP lease.
 
 [Network controls, validation and limitations](amiga-dosbox-network-ui.md).

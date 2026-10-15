@@ -12,6 +12,13 @@ def prepare(out):
         s='#include "dynrec_plan.h"\n'+s
         s=s.replace('(1024*1024*8)','DB_JIT_CACHE').replace('(128*1024)','(8*1024*DB_JIT_MIB)').replace('#define CACHE_PAGES\t\t(512)','#define CACHE_PAGES\t\t(128)')
         s=s.replace('Bits CPU_Core_Dynrec_Run(void)', 'unsigned db_dynrec_dispatches;\nBits CPU_Core_Dynrec_Run(void)')
+        # DOSBox-X also falls back for 386 paging: recursive guest page faults
+        # are unsafe in dynrec. Check every dispatcher iteration, including
+        # immediately after a block that enabled paging (not just on entry).
+        s=s.replace('unsigned db_dynrec_dispatches;', 'unsigned db_dynrec_dispatches,db_dynrec_paged_fallbacks;')
+        old='Bits CPU_Core_Dynrec_Run(void) {\n\tfor (;;) {'
+        assert old in s
+        s=s.replace(old,old+'\n\t\tif(paging.enabled){db_dynrec_paged_fallbacks++;return CPU_Core_Normal_Run();}')
         s=s.replace('BlockReturn ret=core_dynrec.runcode(block->cache.start);','db_dynrec_dispatches++;\n\t\tBlockReturn ret=core_dynrec.runcode(block->cache.start);')
         return s
     change('src/cpu/core_dynrec.cpp',core)

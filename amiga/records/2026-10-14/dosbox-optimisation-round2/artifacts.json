@@ -1,0 +1,22 @@
+{
+  "launcher": {
+    "bytes": 493068,
+    "crc32": "871A954D",
+    "sha256": "fed3a1fb7527f6e2d2a0388b7e563bbfc6e9d188c554d134853502604d54f91c"
+  },
+  "compatibility_data": {
+    "bytes": 1347821,
+    "crc32": "04E035D8",
+    "sha256": "701196220a008ee6441831076e87267bff1fed0afdf2f8c5881592cf44507584"
+  },
+  "windows_interpreter": {
+    "bytes": 994256,
+    "crc32": "BBD57DD4",
+    "sha256": "89f23df98c4be654aa08f155da9c96da1e671181248bce09aeb7c4fbf4a12e33"
+  },
+  "windows_guarded_jit": {
+    "bytes": 1086484,
+    "crc32": "E82462F1",
+    "sha256": "4df7efabca0277d5440b9a90ed8342db07eeb1379ee23fefa86ec57fe0c04728"
+  }
+}

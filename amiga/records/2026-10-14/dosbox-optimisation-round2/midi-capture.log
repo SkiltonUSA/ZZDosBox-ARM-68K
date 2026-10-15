@@ -1,0 +1,3 @@
+CAPTURE ready: ZZDosBox.test (internal only)
+CAPTURE messages=5005 expected=5005 errors=0
+CAPTURE PASS

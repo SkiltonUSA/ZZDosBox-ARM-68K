@@ -13,6 +13,7 @@ static int db_net_host_open(volatile uint8_t*b,const struct ad_io *io,int enable
  if(!enabled)return 1;
  if(!zz_net_open(dns))return 0;
  net_active=1;
+ {struct dn_config c;uint32_t address=0;zz_net_configuration(&c);dn_ipv4(c.ipx_server,&address);ad_put(b,NET_PROTOCOL,c.protocol);ad_put(b,NET_SERVER,address);ad_put(b,NET_PORT,c.ipx_port);io->push(b+NET_PROTOCOL,12,NULL);io->barrier(NULL);}
  ad_put(b,NET_ENABLED,NET_MAGIC);io->push(b+NET_ENABLED,4,NULL);io->barrier(NULL);return 1;
 }
 static int db_net_host_service(void){

@@ -1,0 +1,32 @@
+{
+  "render-base-a": {
+    "frames": 2134,
+    "seconds": 285.29786097029785,
+    "fps": 7.479901856755138,
+    "accepted": true
+  },
+  "render-capture-a": {
+    "frames": 2134,
+    "seconds": 285.6612187176612,
+    "fps": 7.470387508600459,
+    "accepted": false
+  },
+  "render-capture-b": {
+    "frames": 2134,
+    "seconds": 284.9614800179615,
+    "fps": 7.488731458951895,
+    "accepted": true
+  },
+  "render-base-b": {
+    "frames": 2134,
+    "seconds": 284.3485966913486,
+    "fps": 7.5048726275811015,
+    "accepted": true
+  },
+  "summary": {
+    "baseline_mean_fps": 7.492387242168119,
+    "accepted_candidate_fps": 7.488731458951895,
+    "observed_pct": -0.04879330309636165,
+    "decision": "No established improvement; leave rendering candidate uninstalled. First candidate run rejected due to flip ACK failure."
+  }
+}

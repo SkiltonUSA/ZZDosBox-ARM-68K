@@ -1,0 +1,7 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 13 dispatches 13 heap 3906816
+PASS PIT library math with IEEE policy and full SIMD state restoration; calls 104
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 13 dispatches 13 heap 3906816
+PASS PIT library math with IEEE policy and full SIMD state restoration; calls 104
+PASS denied firmware SIMD access fails without executing NEON

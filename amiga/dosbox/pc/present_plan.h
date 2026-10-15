@@ -1,6 +1,6 @@
 /* GPL-3.0-or-later. Host copy/PAN ownership, independent of OS and hardware. */
 #pragma once
-#include "flip_plan.h"
+#include "../../common/flip_plan.h"
 struct pc_flow { unsigned copying,ready,grants,limit; };
 static inline void pc_flow_init(struct pc_flow *p,unsigned limit){
  p->copying=p->ready=p->grants=0;p->limit=limit;

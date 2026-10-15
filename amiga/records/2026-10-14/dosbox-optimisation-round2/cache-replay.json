@@ -1,0 +1,45 @@
+{
+  "source": "Private Windows startup sector trace replay; not physical timing",
+  "results": [
+    {
+      "kib": 128,
+      "hits": 4882,
+      "misses": 923,
+      "requests": 947,
+      "sectors_read": 7384,
+      "writes": 24
+    },
+    {
+      "kib": 256,
+      "hits": 5066,
+      "misses": 739,
+      "requests": 763,
+      "sectors_read": 5912,
+      "writes": 24
+    },
+    {
+      "kib": 512,
+      "hits": 5163,
+      "misses": 642,
+      "requests": 666,
+      "sectors_read": 5136,
+      "writes": 24
+    },
+    {
+      "kib": 1024,
+      "hits": 5223,
+      "misses": 582,
+      "requests": 606,
+      "sectors_read": 4656,
+      "writes": 24
+    },
+    {
+      "kib": 2048,
+      "hits": 5263,
+      "misses": 542,
+      "requests": 566,
+      "sectors_read": 4336,
+      "writes": 24
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "launcher_version": "0.18.0-dev",
+  "files": {
+    "ZZDosBox-Launcher": {
+      "bytes": 538256,
+      "crc32": "C879CBDE",
+      "sha256": "21e23012d310431bb8457f7ee29673a3fe0163dde3b9647eeb8d4da2457a4cc7"
+    },
+    "ZZDosBox-Net": {
+      "bytes": 1109492,
+      "crc32": "CC4526AD",
+      "sha256": "85e4751436a50b5a3465314cecbb72c3afe1816f09f3f371ee7c3d45769d418c"
+    }
+  },
+  "profiles_migrated": 21,
+  "profile_migration_byte_exact": true,
+  "normal_runtimes_unchanged": true,
+  "physical_ipx_fixture": "pass",
+  "physical_mui_ping": "pass",
+  "physical_mui_disconnect": "pass",
+  "physical_game_multiplayer": "not tested",
+  "arm_ipx_model": "pass",
+  "arm_connect_cancel": "pass",
+  "arm_cd_regression": "pass",
+  "arm_tcp_dhcp_http_regression": "pass"
+}

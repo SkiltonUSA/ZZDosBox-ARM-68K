@@ -1,0 +1,90 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=0f58c84a
+BOOTSTRAP amiga=40d95000 arm=00f85000 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+DISPLAY_CONFIG mode=fullscreen fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=0 cycles=10000 live=1
+FULLSCREEN_BITMAP allocated=0b03fc54 screen=0b098c08 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=109ae0f4/40df1dc0 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+VIDEO adapter=0 source=720x400 monochrome=0
+JIT magic=4a495431 commits=9668 witness=1 dispatches=24813756 cache_bytes=4194304 heap_peak=3906944
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=13011 rendered_rows=6245280 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+DOOMCLOCK magic=44424d31 signature=1 rejected=0 first=0 last=2134 sim_first=1996 sim_last=184777 start=00000f36251970e7 end=00000f4c42c67a4e
+CPU_CYCLES applied=10000
+PRESENT magic=50525331 source=13011 shown=13011 skipped=0 divisor=1 changes=0 mode=0 hz=60 work_ticks=5858536 copy_ticks=1843509 total_copy=0000000420a0b314
+ARM_FPS tenths=0
+PC frames=13011 emulated_ms=185700 wall_ms=300038 timed_done=0
+POLL ms=1 calls=187952 wait_us=243888884 max_us=112882
+SHELL result=0 guest_exit=0 slices=7514038 bytes=1391 hash=d2c91d68 mismatches=0
+DosBox ZZ9000 project                         0.11.0-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>DOOM.EXE -timedemo demo3
+DOS/4GW Professional Protected Mode Run-time  Version 1.95
+Copyright (c) Rational Systems, Inc. 1990-1993
+
+P_Init: Checking cmd-line parameters...
+Playing demo demo3.lmp.
+V_Init: allocate screens.
+M_LoadDefaults: Load system defaults.
+Z_Init: Init zone memory allocation daemon. 
+DPMI memory: 0x5e2000, 0x5c2000 allocated for zone
+W_Init: Init WADfiles.
+	adding doom1.wad
+	couldn't open demo3.lmp
+	shareware version.
+M_Init: Init miscellaneous info.
+R_Init: Init DOOM refresh daemon - [                   ]...................
+P_Init: Init Playloop state.
+I_Init: Setting up machine state.
+I_StartupDPMI
+I_StartupMouse
+Mouse: detected
+CyberMan: Wrong mouse driver - no SWIFT support (AX=53c1).
+I_StartupJoystick
+I_StartupKeyboard
+I_StartupSound
+I_StartupTimer()
+  calling DMX_Init
+D_CheckNetGame: Checking network game status.
+startskill 2  deathmatch: 0  startmap: 1  startepisode: 1
+player 1 of 1 (1 nodes)
+S_Init: Setting up sound.
+HU_Init: Setting up heads up display.
+ST_Init: Init status bar.
+timed 2134 gametics in 6400 realtics
+
+C:\>exit
+
+
+SHELL PASS mode=0
+DISK host_seeks=0
+FILES requests=2383 read=2628831 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=102f4000 restored=102f4000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000001 restored=00000001
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=13011 flips=13011 wait_us=121368267
+COPY observed_us=39410289 max_us=108610
+PIPELINE enabled=1 overlaps=217 releases=12794
+LAUNCHER exit=0; owned memory released

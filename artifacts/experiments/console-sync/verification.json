@@ -1,0 +1,27 @@
+{
+  "scope": "console synchronization, common flip header, network oversized receive policy",
+  "hardware_candidate": "RAM:ZZReview/ZZDosBox-Review",
+  "installed_runtime_changed": false,
+  "checks": {
+    "tests.log": "930a6d2e3c9f75c551896d40f1b7a98ca168d7ffbd85e16d619b46de751fd365",
+    "network-tests.log": "f3faa3ff479135198dad96beeb5d8b5cd95994ff23260f1bab083d994761fec1",
+    "console-build.log": "181d03da02addfcf2d8cbe07a98f9552f498bd6c8b7efec4db34b9df1b4c7cd6",
+    "shell-build.log": "07bbd3a3853d924590ec07c8e441435e9550442788dd85250b7b7f05959b31fc",
+    "pc-build.log": "96208abccb283da99a7b28c886eae580431ada3c427732cdccd97cbdf8d7979c",
+    "network-build.log": "3922c52e384bfc222d4b860ed25e8cf87e618067a51636b1c42fbe2cc51e5859",
+    "console-model.log": "afedd1fee74cbf94705f985b0eca95750e2b0d469a62cf0ebbf7bdd699d5fed1"
+  },
+  "binary_sha256": "1512c8dc5752741a4671908b14150cca4b3d948149f3956643cfa5fee610e9ed",
+  "physical": {
+    "baseline_wall_ms": 19918,
+    "candidate_wall_ms": 20534,
+    "frames_each": 559,
+    "emulated_ms_each": 8000,
+    "transcript_bytes_each": 5932,
+    "transcript_hash_each": "6d85b2f0",
+    "all_120_lines_equal": true,
+    "restoration_passed": true,
+    "speed_gain_established": false,
+    "note": "One baseline/candidate pair; installed and rebuilt worker provenance differ. Not a controlled host-only speed comparison."
+  }
+}

@@ -11,9 +11,16 @@ extern bool db_cd_sector(unsigned,void*);
 extern void MSCDEX_Init(Section*),MSCDEX_ShutDown(Section*);
 static unsigned cd_sectors;
 static bool mscdex_open;
-static MultiplexHandler *cd_multiplex;
-void DOS_AddMultiplexHandler(MultiplexHandler *handler){if(cd_multiplex)E_Exit("Duplicate CD multiplexer");cd_multiplex=handler;}
-static Bitu cd_int2f(){if(cd_multiplex)cd_multiplex();return CBRET_NONE;}
+/* Shared INT 2F chain: MSCDEX and IPX must coexist and unregister cleanly. */
+static MultiplexHandler *multiplex[4];static unsigned multiplex_count;static bool multiplex_installed;
+static Bitu cd_int2f(){for(unsigned i=multiplex_count;i;i--)if(multiplex[i-1]())break;return CBRET_NONE;}
+void DOS_AddMultiplexHandler(MultiplexHandler*h){
+ if(!h||multiplex_count==4)E_Exit("DOS multiplexer limit");
+ for(unsigned i=0;i<multiplex_count;i++)if(multiplex[i]==h)E_Exit("Duplicate DOS multiplexer");
+ if(!multiplex_installed){Bitu cb=CALLBACK_Allocate();CALLBACK_Setup(cb,cd_int2f,CB_IRET,"DOS multiplex");RealSetVec(0x2f,CALLBACK_RealPointer(cb));multiplex_installed=true;}
+ multiplex[multiplex_count++]=h;
+}
+void DOS_DelMultiplexHandler(MultiplexHandler*h){for(unsigned i=0;i<multiplex_count;i++)if(multiplex[i]==h){for(unsigned j=i+1;j<multiplex_count;j++)multiplex[j-1]=multiplex[j];--multiplex_count;return;}}
 CDROM_Interface_Image *CDROM_Interface_Image::images[8];
 static TMSF msf(unsigned frames){TMSF p={(Bit8u)(frames/4500),(Bit8u)(frames/75%60),(Bit8u)(frames%75)};return p;}
 bool CDROM_Interface_Image::SetDevice(char*,int){return cd_sectors!=0;}
@@ -67,14 +74,13 @@ static Bitu driver_request(){
  mem_writew(req+3,0x100|(error?0x8000|error:0));CALLBACK_SCF(false);return CBRET_NONE;
 }
 void db_cd_setup(){
- cd_sectors=ad_get(db_shared(),PC_VIDEO+944);mscdex_open=false;cd_multiplex=nullptr;
+ cd_sectors=ad_get(db_shared(),PC_VIDEO+944);mscdex_open=false;multiplex_count=0;multiplex_installed=false;
  if(!cd_sectors)return;
  if(cd_sectors<18||cd_sectors>0x7fffffffu/2048)E_Exit("Invalid CD sector count");
  Bitu cb=CALLBACK_Allocate();CALLBACK_Setup(cb,driver_request,CB_IRET,"ZZDosBox CD-ROM driver");RealSetVec(0x60,CALLBACK_RealPointer(cb));
 }
 void db_cd_mount(){
  if(!cd_sectors)return;
- Bitu cb=CALLBACK_Allocate();CALLBACK_Setup(cb,cd_int2f,CB_IRET,"MSCDEX");RealSetVec(0x2f,CALLBACK_RealPointer(cb));
  MSCDEX_Init(nullptr);mscdex_open=true;int error=0;
  Drives[3]=new isoDrive('D',"ZZCD",0xf8,error);if(error)E_Exit("CD-ROM ISO mount error %d",error);
 }

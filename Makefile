@@ -8,15 +8,15 @@ test-host:
 	mkdir -p .context/tests
 	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/launcher tests/amiga/dosbox/launcher.c -o .context/tests/launcher
 	.context/tests/launcher
-	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/present_plan.c -o .context/tests/present
+	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/present_plan.c -o .context/tests/present
 	.context/tests/present
-	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/direct_plan.c -o .context/tests/direct
+	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/direct_plan.c -o .context/tests/direct
 	.context/tests/direct
-	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/profile.c -o .context/tests/profile
+	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/profile.c -o .context/tests/profile
 	.context/tests/profile
-	clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/capture.cpp -o .context/tests/capture
+	clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/capture.cpp -o .context/tests/capture
 	.context/tests/capture
-	clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/mesen_nes tests/amiga/dosbox/scale.cpp -o .context/tests/scale
+	clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/scale.cpp -o .context/tests/scale
 	.context/tests/scale
 	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc tests/amiga/dosbox/mouse_geometry.c -o .context/tests/mouse
 	.context/tests/mouse
@@ -37,3 +37,7 @@ build-current:
 test-network:
 	$(PYTHON) scripts/test_dosbox_network.py
 	$(PYTHON) scripts/test_dosbox_developer.py
+
+.PHONY: test-host-review
+test-host-review:
+	$(PYTHON) scripts/test_dosbox_host_review.py

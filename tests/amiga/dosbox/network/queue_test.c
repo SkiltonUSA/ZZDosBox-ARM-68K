@@ -23,6 +23,7 @@ static void begin(unsigned seq){
  for(unsigned i=0;i<4;i++){ad_put(host,indices[i],seq);ad_put(arm,indices[i],seq);}
 }
 static void enqueue(unsigned n){unsigned w=ad_get(arm,NET_TX_WRITE);for(unsigned i=0;i<n;i++){unsigned o=net_slot(NET_TX_DATA,w+i);ad_put(arm,o,64);for(unsigned j=0;j<64;j++)arm[o+4+j]=(uint8_t)(sent+i+j);}ad_put(arm,NET_TX_WRITE,w+n);}
+void zz_net_configuration(struct dn_config*c){dn_defaults(c);}
 int main(void){
  assert(net_pending(0,UINT32_MAX)==1);assert(net_pending(0,1)==-1);
  begin(UINT32_MAX-1);enqueue(4);available=9;

@@ -1,6 +1,6 @@
 # ZZDosBox features and compatibility
 
-This describes the **0.11.0-dev launcher/DOS runtime** and the separate **Windows/mouse development build**.
+This describes the **0.19.7-dev launcher and installed DOS runtime** and the separate **Windows/mouse development build**.
 It is the implemented Amiga feature set, not the complete feature list of
 [upstream dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 
@@ -8,8 +8,9 @@ It is the implemented Amiga feature set, not the complete feature list of
 
 | Feature | Support |
 | --- | --- |
-| Native interface | MUI launcher with Programs, DOS terminal, Settings, Disks and About pages. |
-| Program library | Up to 32 saved profiles, each with its own program, C: drawer and emulator settings. |
+| Native interface | MUI sidebar navigation with Load Program, DOS terminal, display/audio settings, Disks, Network, Compatibility, Developer and About pages. Load Program contains All, Games, Applications and OS lists, with saved category tags. |
+| Configuration | Developer → dosbox.conf: validated editor for 29 supported global overrides, including core selection and exact CPU cycles. [Settings reference](amiga-dosbox-conf.md). |
+| Program library | Up to 256 saved profiles, each with its own program, C: drawer and emulator settings. |
 | Compatibility helper | Optional LOADFIX per profile for programs needing a different conventional-memory load address. |
 | DOS choice | Embedded DOS 5 or booted, separately supplied MS-DOS 6.22. |
 | Startup editing | AUTOEXEC.BAT and CONFIG.SYS tabs with Default / Edited / File choices, line editing and import/export. |
@@ -60,7 +61,11 @@ not yet been verified; it should not be presented as a completed hardware test.
 | Worker ownership | One application owns Core1. Runtime mapping and buffer checks, bounded memory, cancellation and register/cache restoration protect the application's lifecycle. |
 
 Protected-mode support does not establish compatibility with every DOS extender
-or Windows application. The DOS runtime includes JIT; the separate Windows executable is unchanged.
+or Windows application. The DOS runtime includes JIT; the separate Windows
+executable uses the interpreter with a 1 MiB disk read cache and redundant-seek
+avoidance. A paging-guarded JIT candidate gave no additional improvement in the
+matched Windows startup test and remains experimental. Disk writes remain
+synchronous. See [the optimization report](amiga-dosbox-optimisation-round2.md) for measurements.
 x87 FPU and 64-bit x86 guest support are not enabled. The owned allocation and checks are not a general security sandbox
 for untrusted programs.
 
@@ -71,8 +76,9 @@ for untrusted programs.
 | Shared C: drawer | Read/write access to an Amiga directory, including nested directories and the port's restricted DOS 8.3 names. |
 | Game saves | Normal files written by the game persist. Emulator snapshots/save states are not implemented. |
 | Floppy boot | Read-only 1.44 MB BIOS disk images. |
-| Hard-disk boot | Writable 32 MB BIOS disk image, with bounds checking and persistent writes. |
-| Workbench access | Mount/eject controls using diskimage.device and fat95. Eject before the emulator takes writable ownership. |
+| Hard-disk boot | The Windows/image runtime supports writable 32–256 MiB BIOS disk images, in 256 KiB increments, with bounds checking and persistent writes. Each image profile chooses its disk and startup command. |
+| New hard disk | Create a 32, 64, 128 or 256 MiB raw FAT16 `.IMG`, with startup files and an OS library entry. DOSBox DOS 5 is the default; optional MS-DOS 6.22 uses the installed system files. Existing images are never replaced. |
+| Workbench access | Choose, mount, open and eject raw FAT images using diskimage.device and fat95. DOSBox DOS 5 image profiles mount automatically as C: and eject after the session. Booted MS-DOS/Windows requires an ejected image. |
 | Data CDs | Read-only ISO9660 images or an already-mounted Amiga data CD, exposed as D:. |
 | MS-DOS CD driver | Original ZZDOSCD.SYS gateway with the user's licensed MSCDEX.EXE. |
 
@@ -102,8 +108,7 @@ PCM output are not implemented. Munt and SoundFont synthesizers are not bundled.
 | Oregon Trail Deluxe | Title/menu and mouse-operated Options page on the Amiga, using the 16-colour VGA option. Full-game compatibility is not established. |
 | Vette / Elite | Startup with LOADFIX and return to Workbench. Full-game compatibility is not established. |
 
-Installing a game does not make it a verified compatibility result. Joystick,
-guest networking and Windows audio remain unavailable. The mouse build has
+Installing a game does not make it a verified compatibility result. Joystick and Windows audio remain unavailable. The mouse build has
 passed native and ARM tests; Oregon Trail menu interaction is verified on the
 Amiga. Windows pointer movement and double-click launch of Write also passed
 on hardware using the Microsoft/IBM PS/2 driver. Pointer capture/warping for games requiring continuous relative movement is
@@ -121,3 +126,23 @@ A9. Direct rendering remains the default. No GLSL shaders, guest OpenGL driver
 or FPGA 3D acceleration are included. It renders a 640×480 intermediate picture
 before the normal XACP handoff; higher-resolution sources are downscaled.
 See [the experiment](../amiga/dosbox/opengl/README.md).
+
+## Experimental networking — TCP/IP and IPX
+
+The Network page provides per-program TCP/IP or DOSBox-compatible IPX-over-UDP.
+TCP/IP uses NE2000/libslirp NAT over the existing Roadshow connection, with
+DHCP/manual IPv4, subnet, gateway, DNS, hostname and MTU controls. Diagnostics
+include ping, DNS lookup, counters, logs and cooperative disconnect. IPX uses
+a compatible UDP relay with address/port, connect/status/ping/disconnect controls.
+
+Both require `bsdsocket.library` and the separate `ZZDosBox-Net` interpreter.
+TCP/IP additionally needs staged NE2000/mTCP guest utilities. libslirp is linked
+into the host; no separate Amiga installation is needed. Embedded DOS with
+Direct/Normal presentation is supported; networking is off by default.
+Dynamic-core, scanline, OpenGL and debug-runtime combinations are rejected.
+Windows/MS-DOS image networking, IPv6 and port forwarding remain pending.
+IPX transport passed hardware checks; multiplayer games remain untested.
+Renew obtains a fresh guest lease; Release clears saved guest configuration,
+not the Amiga's address or an on-wire DHCP lease.
+
+[Network controls, validation and limitations](amiga-dosbox-network-ui.md).

@@ -1,0 +1,92 @@
+{
+  "128": {
+    "runs": [
+      {
+        "label": "cache-base-a2",
+        "frames": 772,
+        "guest_ms": 12000,
+        "wall_ms": 77579,
+        "requests": 948,
+        "read_bytes": 3780608,
+        "write_bytes": 12288,
+        "read_us": 20037949,
+        "write_us": 513503
+      },
+      {
+        "label": "cache-base-b",
+        "frames": 772,
+        "guest_ms": 12000,
+        "wall_ms": 77379,
+        "requests": 948,
+        "read_bytes": 3780608,
+        "write_bytes": 12288,
+        "read_us": 19746762,
+        "write_us": 384795
+      }
+    ],
+    "mean_wall_ms": 77479,
+    "mean_read_us": 19892355.5,
+    "elapsed_reduction_pct": 0.0,
+    "throughput_gain_pct": 0.0
+  },
+  "512": {
+    "runs": [
+      {
+        "label": "cache512-a",
+        "frames": 772,
+        "guest_ms": 12000,
+        "wall_ms": 68349,
+        "requests": 667,
+        "read_bytes": 2629632,
+        "write_bytes": 12288,
+        "read_us": 11169112,
+        "write_us": 449727
+      },
+      {
+        "label": "cache512-b",
+        "frames": 772,
+        "guest_ms": 12000,
+        "wall_ms": 68244,
+        "requests": 667,
+        "read_bytes": 2629632,
+        "write_bytes": 12288,
+        "read_us": 11261638,
+        "write_us": 403731
+      }
+    ],
+    "mean_wall_ms": 68296.5,
+    "mean_read_us": 11215375,
+    "elapsed_reduction_pct": 11.851598497657434,
+    "throughput_gain_pct": 13.44505208905289
+  },
+  "1024": {
+    "runs": [
+      {
+        "label": "cache1024-a",
+        "frames": 772,
+        "guest_ms": 12000,
+        "wall_ms": 66377,
+        "requests": 607,
+        "read_bytes": 2383872,
+        "write_bytes": 12288,
+        "read_us": 9651905,
+        "write_us": 387586
+      },
+      {
+        "label": "cache1024-b",
+        "frames": 772,
+        "guest_ms": 12000,
+        "wall_ms": 66442,
+        "requests": 607,
+        "read_bytes": 2383872,
+        "write_bytes": 12288,
+        "read_us": 9636160,
+        "write_us": 417200
+      }
+    ],
+    "mean_wall_ms": 66409.5,
+    "mean_read_us": 9644032.5,
+    "elapsed_reduction_pct": 14.28709714890486,
+    "throughput_gain_pct": 16.66854892748779
+  }
+}

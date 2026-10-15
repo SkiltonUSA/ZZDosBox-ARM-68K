@@ -1,0 +1,7 @@
+MIDI CAMD=test MPU401=uart port=330 enabled
+MIDI bytes=64 closed
+MIDI CAMD=test MPU401=intelligent port=330 enabled
+MIDI bytes=9 closed
+MIDI CAMD=test MPU401=uart port=330 enabled
+MIDI bytes=0 closed
+PASS real CAMD service: byte identity, counter/ring wrap, 16-byte pacing, SysEx gap, off/disconnect/overflow

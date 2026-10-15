@@ -3,11 +3,11 @@
 Status: experimental TCP/IP proof passed on the physical ZZ9000 after the
 portability/stack fixes. The 0.17.0-dev launcher now offers opt-in networking;
 see [Network tab](amiga-dosbox-network-ui.md) for current controls and limits. TCP/IP is first;
-IPX multiplayer is a separate follow-up.
+IPX multiplayer is a separate follow-up. The user selected both.
 
 ## Architecture
 
-DOS NE2000 guest adapter → ARM packet queues → 68k libslirp NAT →
+DOS/Windows NE2000 guest adapter → ARM packet queues → 68k libslirp NAT →
 Roadshow `bsdsocket.library` → the Amiga's configured network interface.
 
 This shares the existing X-Surf100 connection. It can also use ZZ9000 Ethernet

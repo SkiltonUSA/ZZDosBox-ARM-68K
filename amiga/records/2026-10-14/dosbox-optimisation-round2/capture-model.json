@@ -1,0 +1,26 @@
+[
+  {
+    "result": {
+      "source": 18,
+      "guest_ms": 274,
+      "output": "DosBox ZZ9000 project                         0.11.0-dev\r\nAmigaOS - 32-bit | DOSBox / libretro\r\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\r\n\r\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\r\nF10: close session             HELP: DOS commands\r\n\r\nC:\\>egatest\r\nEGA/PIT PASS\r\n\r\nC:\\>exit\r\n\r\n",
+      "shown": 18
+    },
+    "scheduler": {
+      "digest": "1eb5ce00f6720e0f684573c9b53322e99daefc46eac57721e37bbb917f83976a",
+      "calls": 358022
+    }
+  },
+  {
+    "result": {
+      "source": 18,
+      "guest_ms": 274,
+      "output": "DosBox ZZ9000 project                         0.11.0-dev\r\nAmigaOS - 32-bit | DOSBox / libretro\r\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\r\n\r\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\r\nF10: close session             HELP: DOS commands\r\n\r\nC:\\>egatest\r\nEGA/PIT PASS\r\n\r\nC:\\>exit\r\n\r\n",
+      "shown": 18
+    },
+    "scheduler": {
+      "digest": "1eb5ce00f6720e0f684573c9b53322e99daefc46eac57721e37bbb917f83976a",
+      "calls": 358022
+    }
+  }
+]

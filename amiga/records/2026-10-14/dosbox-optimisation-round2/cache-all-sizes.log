@@ -1,0 +1,15 @@
+PASS synthetic 16-block alternating workload: 1600 reads / 16 transfers (not a Windows FPS benchmark)
+PASS disk cache: 19 sequential sectors / 3 transfers; random reads/writes, EOF, reopen, errors, guards
+PASS cache capacity 128 KiB
+PASS synthetic 16-block alternating workload: 1600 reads / 16 transfers (not a Windows FPS benchmark)
+PASS disk cache: 19 sequential sectors / 3 transfers; random reads/writes, EOF, reopen, errors, guards
+PASS cache capacity 256 KiB
+PASS synthetic 16-block alternating workload: 1600 reads / 16 transfers (not a Windows FPS benchmark)
+PASS disk cache: 19 sequential sectors / 3 transfers; random reads/writes, EOF, reopen, errors, guards
+PASS cache capacity 512 KiB
+PASS synthetic 16-block alternating workload: 1600 reads / 16 transfers (not a Windows FPS benchmark)
+PASS disk cache: 19 sequential sectors / 3 transfers; random reads/writes, EOF, reopen, errors, guards
+PASS cache capacity 1024 KiB
+PASS synthetic 16-block alternating workload: 1600 reads / 16 transfers (not a Windows FPS benchmark)
+PASS disk cache: 19 sequential sectors / 3 transfers; random reads/writes, EOF, reopen, errors, guards
+PASS cache capacity 2048 KiB

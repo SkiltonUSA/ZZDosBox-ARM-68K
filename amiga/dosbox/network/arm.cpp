@@ -3,7 +3,7 @@
 #include "net_wire.h"
 #include "dosbox.h"
 extern "C" volatile uint8_t *db_shared();
-bool db_net_enabled(){return ad_get(db_shared(),NET_ENABLED)==NET_MAGIC;}
+bool db_net_enabled(){return ad_get(db_shared(),NET_ENABLED)==NET_MAGIC&&ad_get(db_shared(),NET_PROTOCOL)==0;}
 void db_net_send(const uint8_t *p,unsigned n){
  volatile uint8_t*b=db_shared();unsigned w=ad_get(b,NET_TX_WRITE),r=ad_get(b,NET_TX_READ);
  __asm__ volatile("dsb sy":::"memory");int pending=net_pending(w,r);

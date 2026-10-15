@@ -1,0 +1,3 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS linked ARM/x86 IPX discovery, registration, socket, broadcast, receive ESR, peer ping and disconnect: 3 3
+PASS ARM guest IPX/UDP, packet queues and clean shell exit

@@ -1,0 +1,11 @@
+{
+  "unchanged": {
+    "ZZDosBox": "File: <application>/ZZDosBox\nCRC32: 5C74FFFC\nSize: 1088832 bytes",
+    "ZZDosBox-Windows": "File: <application>/ZZDosBox-Windows\nCRC32: 61417418\nSize: 991108 bytes",
+    "ZZDosBox-Launcher": "File: <application>/ZZDosBox-Launcher\nCRC32: A7213AB2\nSize: 258972 bytes",
+    "Launcher.cfg": "File: <application>/Launcher.cfg\nCRC32: B6AC5D3D\nSize: 10536 bytes",
+    "dosbox.conf": "File: <application>/dosbox.conf\nCRC32: C8D74CE8\nSize: 1536 bytes"
+  },
+  "core1_owner_absent": true,
+  "software_failure_absent": true
+}

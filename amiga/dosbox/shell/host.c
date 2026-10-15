@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "wire.h"
-#include "stream.h"
+#include "stream_host.h"
 #include "window.h"
 #include "fs_host.h"
 #include "mmu.h"
@@ -39,23 +39,20 @@ static ULONG value(unsigned field){return ad_get(shared+MB_REPLY,MB_RESULT+field
 static void publish(unsigned offset,ULONG n){ad_put(shared,offset,n);syncio->push(shared+offset,4,NULL);syncio->barrier(NULL);}
 static ULONG receive(unsigned offset){syncio->pull(shared+offset,4,NULL);return ad_get(shared,offset);}
 static int input(const UBYTE *p,unsigned n){
- ULONG w=ad_get(shared,DB_RX_WRITE),r=receive(DB_RX_READ),used=w-r;unsigned i;
- if(used>DB_RX_SIZE||n>DB_RX_SIZE-used)return 0;
- for(i=0;i<n;i++)shared[DB_RX_DATA+((w+i)&(DB_RX_SIZE-1))]=p[i];
- syncio->push(shared+DB_RX_DATA,DB_RX_SIZE,NULL);publish(DB_RX_WRITE,w+n);return 1;
+ return db_stream_input(shared,syncio,p,n);
 }
 static ULONG received,hash,mismatch;
 static int drain(struct DbWindow *console){
- ULONG r=ad_get(shared,DB_TX_READ),w=receive(DB_TX_WRITE),n=w-r,i;UBYTE data[DB_TX_SIZE];
- if(n>DB_TX_SIZE)return 0;
- syncio->pull(shared+DB_TX_DATA,DB_TX_SIZE,NULL);
- for(i=0;i<n;i++){
-  UBYTE c=shared[DB_TX_DATA+((r+i)&(DB_TX_SIZE-1))];data[i]=c;
+ UBYTE data[DB_TX_SIZE];unsigned i;
+ int n=db_stream_peek(shared,syncio,data);
+ if(n<0)return 0;
+ for(i=0;i<(unsigned)n;i++){
+  UBYTE c=data[i];
   if(received<sizeof(transcript)-1)transcript[received]=c;
   received++;hash=(hash^c)*16777619u;
  }
  if(n&&console&&!db_window_write(console,data,n))return 0;
- publish(DB_TX_READ,r+n);return 1;
+ db_stream_consume(shared,syncio,(unsigned)n);return 1;
 }
 static int run(struct DbWindow *console){
  ULONG start=us(),stop_time=0;int sent=0,stopping=0,forced=0,transport_ok=1;

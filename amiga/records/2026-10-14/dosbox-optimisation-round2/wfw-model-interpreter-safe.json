@@ -1,0 +1,23 @@
+{
+  "variant": "interpreter-safe",
+  "frames": 279,
+  "paged_dispatches": 0,
+  "fallbacks": 0,
+  "result": [
+    1,
+    0,
+    1536775,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0,
+    279,
+    4000
+  ],
+  "frame_sha256": "96f0bfa3c4d37f921a5a5ca20a49ca7f7417943520be33aa3f469e3497b7b0ac",
+  "requests": 289,
+  "read": 1175552,
+  "written": 512
+}

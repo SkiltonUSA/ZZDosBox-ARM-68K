@@ -235,7 +235,11 @@ static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,Dosbox
  CALLBACK_Init(nullptr);db_pc_init();db_cd_setup();ansi_bytes=0;extended_key=-1;
  if(db_vga_console)INT10_ScrollWindow(0,0,24,79,0,db_text_attr,0);
  if(*db_boot_name||*db_hdd_name){db_boot_start();DOSBOX_RunMachine();return 0;}
- zz_dos_init();dos.echo=false;db_mount(program,bytes);db_cd_mount();
+ zz_dos_init();
+#ifdef DB_NETWORK
+ extern void db_ipx_open();db_ipx_open();
+#endif
+ dos.echo=false;db_mount(program,bytes);db_cd_mount();
  // Parent PSP lives in DOSBox's reserved shell region. EXEC is invoked
  // through the real INT21 entry, so its RETF/IRET and parent restoration run.
  const Bit16u pspseg=DOS_FIRST_SHELL;

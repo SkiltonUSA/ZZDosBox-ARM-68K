@@ -1,0 +1,36 @@
+{
+  "bytes": 493068,
+  "sha256": "fed3a1fb7527f6e2d2a0388b7e563bbfc6e9d188c554d134853502604d54f91c",
+  "sources": {
+    "amiga/dosbox/launcher/compatibility.h": "65220c6564bfe428016da8acd8c0d2c1fc6d5b8ee6c684f1bf4b085caf6256c0",
+    "amiga/dosbox/launcher/compatibility_store.h": "835a7940e41a1d95d154ec89e3821297b8456560e2ae55f3db5e65ab6fecb435",
+    "amiga/dosbox/launcher/developer.h": "e1498d646eef06663e31c14ab1f632c5402cef1a726e0e5cbf1f1100280b60ca",
+    "amiga/dosbox/launcher/conf.h": "12e35e0ea340e03765edcb7472cfa67732f429ce23d727a1beecedef13490d3a",
+    "amiga/dosbox/launcher/audio_detect.h": "cbfe27788e3907bea313a9f3b580c39cce2cf87f663daeaaf89fe61920d6159a",
+    "amiga/dosbox/launcher/startup.h": "bb810f64aaff1eaddb37122e2950d0b106efa08a1ab53291204388550aa96afe",
+    "amiga/dosbox/launcher/session.h": "884500243b2578da9f6b064519ebc016e515df02bede4aa0d9a493181d4449b7",
+    "amiga/dosbox/launcher/main.c": "3592b4f50e15df30bd277af881a0d32e9ffdc2d7337a3594d9950344614a38e4",
+    "amiga/dosbox/launcher/memory_ui.h": "2c56081edd146925c24949d8fa8ec79c35d34eba4577b622e51615afef8b3506",
+    "amiga/dosbox/launcher/compatibility_ui.h": "eade254f496f657d2c3150a03f864fb6068b71683915b7f13c52f2d86efd3f2e",
+    "amiga/dosbox/launcher/model.h": "9b4e97e4fbde99c62ca7b107ef4ee82d74a6959160f3ca639e50dac2df4b2ecf",
+    "amiga/dosbox/launcher/icon.c": "60744c0206ce3b9c6ded94e1d72b717bd24efe8e96883270a789b3ac3540f93d",
+    "amiga/dosbox/launcher/disk.c": "30def43be864fd589afb0396287292fc7740b1cc059f659ee48be552f6054e7b",
+    "amiga/dosbox/launcher/startup_ui.h": "7d21ab8670847b50ba7476b01d08383531d12f86c06a130e10da3031ed2d85c4",
+    "amiga/dosbox/compatibility/data.h": "e22eb0074902d0da07ae56044d1912e51b8445e2173196ba8d7f5742281c1e3d",
+    "amiga/dosbox/compatibility/details_meta.h": "b07926d8fbf810f44bec66ebc94556d14624f36f9ec7dfe4817ebf26e3220181"
+  },
+  "assets": {
+    "Compatibility.dat": {
+      "bytes": 1347821,
+      "sha256": "701196220a008ee6441831076e87267bff1fed0afdf2f8c5881592cf44507584"
+    },
+    "Compatibility.md": {
+      "bytes": 364997,
+      "sha256": "ed21c2689dd75bb817ba94572544186b032bb01f7bed3093dedbfc929cfa9ed3"
+    },
+    "Compatibility-Details.md": {
+      "bytes": 2484632,
+      "sha256": "5331bd37dbbdc179ef00ef138b082bcb71433e5d1487dc6efc0e017ee24c7c12"
+    }
+  }
+}

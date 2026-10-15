@@ -47,12 +47,13 @@ def check(fn,m,v,n,matrix):
         assert bytes(u.mem_read(addr+len(data),16))==b'\x95'*16
         if i!=2:assert bytes(u.mem_read(addr,len(data)))==data
     calls+=1
+methods=('scalar','hlsl','neon') if json.loads((a.build/'build.json').read_text()).get('hlslpp') else ('scalar','cmsis','neon')
 for _ in range(100):
     m,v=floats(16),floats(16)
-    for method in ('scalar','cmsis','neon'):check('zz_mat_'+method,m,v,4,True)
+    for method in methods:check('zz_mat_'+method,m,v,4,True)
 for n in (0,1,2,3,4,5,7,8,9,15,16,17,31,32,33,127,256,1023,1024,1025,3072,4096):
     m,v=floats(16),floats(n*4)
-    for method in ('scalar','cmsis','neon'):check('zz_vec_'+method,m,v,n,False)
+    for method in methods:check('zz_vec_'+method,m,v,n,False)
 print('PASS',calls,'ARM matrix/vector calls; finite f32 accuracy vs double oracle; strict read/write bounds, immutable inputs, guards; max scaled error',largest,flush=True)
 if a.lifecycle:
     import check_pc_arm as pc

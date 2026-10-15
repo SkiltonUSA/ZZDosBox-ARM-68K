@@ -1,7 +1,6 @@
 # ZZDosBox features and compatibility
 
-This describes the current **Direct development runtime** and the separate
-**Windows/mouse development build**; individual options depend on the chosen build.
+This describes the **0.19.7-dev launcher and installed DOS runtime** and the separate **Windows/mouse development build**.
 It is the implemented Amiga feature set, not the complete feature list of
 [upstream dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 
@@ -9,8 +8,9 @@ It is the implemented Amiga feature set, not the complete feature list of
 
 | Feature | Support |
 | --- | --- |
-| Native interface | MUI launcher with Programs, DOS terminal, Settings, Disks and About pages. |
-| Program library | Up to 32 saved profiles, each with its own program, C: drawer and emulator settings. |
+| Native interface | MUI sidebar navigation with Load Program, DOS terminal, display/audio settings, Disks, Network, Compatibility, Developer and About pages. Load Program contains All, Games, Applications and OS lists, with saved category tags. |
+| Configuration | Developer → dosbox.conf: validated editor for 29 supported global overrides, including core selection and exact CPU cycles. [Settings reference](amiga-dosbox-conf.md). |
+| Program library | Up to 256 saved profiles, each with its own program, C: drawer and emulator settings. |
 | Compatibility helper | Optional LOADFIX per profile for programs needing a different conventional-memory load address. |
 | DOS choice | Embedded DOS 5 or booted, separately supplied MS-DOS 6.22. |
 | Startup editing | AUTOEXEC.BAT and CONFIG.SYS tabs with Default / Edited / File choices, line editing and import/export. |
@@ -27,13 +27,22 @@ load its device drivers. Booted MS-DOS processes the files on its own disk.
 
 | Feature | Support |
 | --- | --- |
-| PC adapters | VGA, EGA, CGA, S3/VESA, Tandy, PCjr and Hercules selections. Broader high-resolution compatibility needs testing. |
+| PC adapters | CGA, EGA, VGA, S3/VESA, Tandy, PCjr and Hercules selections, saved per program. |
+| S3/VESA | S3 Trio register and VBE graphics with 1 MB emulated VRAM; banked and linear framebuffer access. Modes are bounded to 1024×768 and available VRAM. |
+| Legacy adapters | Tandy/PCjr 16-colour graphics and Hercules monochrome graphics/text. Tandy/PCjr sound is not implemented. |
 | Fullscreen | Dedicated 640×480 true-colour RTG screen with XACP buffer presentation. |
 | Workbench window | ARM rendering into an owned ZZ9000 bitmap, followed by an AmigaOS-clipped blit into the window. |
 | Window sizes | 320×240, 640×480 and 960×720 presets. Native resize handling within those limits. |
 | Aspect ratio | Centred 4:3 output with black margins when the window shape differs. |
 | Display switching | Change window/fullscreen while running. Both modes and repeated switches have passed physical tests. |
+| Presentation | Normal / Adaptive, saved per program. Adaptive skips final frame copies without changing guest execution or its selected CPU cycles. Normal is the default. |
+| Software scanlines | Off / Classic / Soft / Gradient, saved per program; active in fullscreen with FPS overlay off. Independent of the Workbench FPGA scanline controls. |
 | FPS overlay | Optional ARM-rendered counter in Settings. Measures completed display refreshes, not unique game frames or emulated CPU MHz. |
+
+S3 currently exposes BIOS/register discovery, without an emulated PCI bus.
+Windows S3 display-driver compatibility and game performance at higher
+resolutions need separate testing. Output remains scaled to the existing
+Workbench window or 640×480 fullscreen display.
 
 Presets and changing render geometry are tested. Physical drag-resizing has
 not yet been verified; it should not be presented as a completed hardware test.
@@ -42,7 +51,7 @@ not yet been verified; it should not be presented as a completed hardware test.
 
 | Feature | Support |
 | --- | --- |
-| Execution | 32-bit ARM Cortex-A9 Core1 runs 386-class x86 emulation. Current Direct builds use ARMv7 dynamic recompilation; the separate Windows build retains the interpreter. The 68K handles AmigaOS services. |
+| Execution | 32-bit ARM Cortex-A9 Core1 runs an ARMv7 x86 dynamic recompiler with a 4 MiB code cache and a 386-class CPU configuration. The 68K handles AmigaOS services. |
 | Real mode | DOS shell, COM/EXE programs and BIOS-based DOS boot. |
 | Protected mode | The Windows build includes 386 paging, nested page-fault recovery and sparse high-address mappings. Verified with Windows 3.11 and an original page-fault test. |
 | A20 and ROM | Windows build implements fast-A20 port 0x92, proper initial aliasing, and write protection for BIOS/VGA ROM. |
@@ -52,8 +61,12 @@ not yet been verified; it should not be presented as a completed hardware test.
 | Worker ownership | One application owns Core1. Runtime mapping and buffer checks, bounded memory, cancellation and register/cache restoration protect the application's lifecycle. |
 
 Protected-mode support does not establish compatibility with every DOS extender
-or Windows application. The current Direct runtime enables ARMv7 dynarec/JIT. No x87 FPU or
-64-bit x86 guest support is enabled. The owned allocation and checks are not a general security sandbox
+or Windows application. The DOS runtime includes JIT; the separate Windows
+executable uses the interpreter with a 1 MiB disk read cache and redundant-seek
+avoidance. A paging-guarded JIT candidate gave no additional improvement in the
+matched Windows startup test and remains experimental. Disk writes remain
+synchronous. See [the optimization report](amiga-dosbox-optimisation-round2.md) for measurements.
+x87 FPU and 64-bit x86 guest support are not enabled. The owned allocation and checks are not a general security sandbox
 for untrusted programs.
 
 ## Files and media
@@ -63,8 +76,9 @@ for untrusted programs.
 | Shared C: drawer | Read/write access to an Amiga directory, including nested directories and the port's restricted DOS 8.3 names. |
 | Game saves | Normal files written by the game persist. Emulator snapshots/save states are not implemented. |
 | Floppy boot | Read-only 1.44 MB BIOS disk images. |
-| Hard-disk boot | Writable 32 MB BIOS disk image, with bounds checking and persistent writes. |
-| Workbench access | Mount/eject controls using diskimage.device and fat95. Eject before the emulator takes writable ownership. |
+| Hard-disk boot | The Windows/image runtime supports writable 32–256 MiB BIOS disk images, in 256 KiB increments, with bounds checking and persistent writes. Each image profile chooses its disk and startup command. |
+| New hard disk | Create a 32, 64, 128 or 256 MiB raw FAT16 `.IMG`, with startup files and an OS library entry. DOSBox DOS 5 is the default; optional MS-DOS 6.22 uses the installed system files. Existing images are never replaced. |
+| Workbench access | Choose, mount, open and eject raw FAT images using diskimage.device and fat95. DOSBox DOS 5 image profiles mount automatically as C: and eject after the session. Booted MS-DOS/Windows requires an ejected image. |
 | Data CDs | Read-only ISO9660 images or an already-mounted Amiga data CD, exposed as D:. |
 | MS-DOS CD driver | Original ZZDOSCD.SYS gateway with the user's licensed MSCDEX.EXE. |
 
@@ -100,19 +114,35 @@ Amiga. Windows pointer movement and double-click launch of Write also passed
 on hardware using the Microsoft/IBM PS/2 driver. Pointer capture/warping for games requiring continuous relative movement is
 not implemented. Third-party DOS mouse-driver compatibility is not fully tested.
 
-## Experimental networking — launcher 0.17.0-dev
+### Monochrome colours and software OpenGL
 
-The Network tab provides per-program DHCP or manual IPv4, subnet/gateway,
-upstream DNS, hostname, MTU and DHCP timing controls. Diagnostics include
-ping, DNS lookup, live counters, log viewing and cooperative disconnect.
-It requires a running Roadshow connection, `bsdsocket.library`, the separate
-`ZZDosBox-Net` interpreter runtime and staged NE2000/mTCP guest utilities.
-libslirp is linked into the host; no separate Amiga libslirp installation is needed.
+Hercules supports White, Amber, Green and Paperwhite in Settings. These are
+our RGB palette approximations, applied when the palette changes; they do not
+add a per-pixel filter. Other adapters retain their colour palettes. The
+existing DOS terminal text/background controls are separate.
 
-Embedded DOS with Direct/Normal presentation is supported. Networking is off
-by default; explicit dynamic-core, scanline, OpenGL and debug-runtime combinations
-are rejected. Windows/MS-DOS image networking, IPX, IPv6 and port forwarding
-remain pending. Renew obtains a fresh guest lease; Release saved lease clears
-local guest configuration, not the Amiga's address or an on-wire DHCP lease.
+The optional TinyGL renderer runs a partial fixed-function OpenGL API on the
+A9. Direct rendering remains the default. No GLSL shaders, guest OpenGL driver
+or FPGA 3D acceleration are included. It renders a 640×480 intermediate picture
+before the normal XACP handoff; higher-resolution sources are downscaled.
+See [the experiment](../amiga/dosbox/opengl/README.md).
+
+## Experimental networking — TCP/IP and IPX
+
+The Network page provides per-program TCP/IP or DOSBox-compatible IPX-over-UDP.
+TCP/IP uses NE2000/libslirp NAT over the existing Roadshow connection, with
+DHCP/manual IPv4, subnet, gateway, DNS, hostname and MTU controls. Diagnostics
+include ping, DNS lookup, counters, logs and cooperative disconnect. IPX uses
+a compatible UDP relay with address/port, connect/status/ping/disconnect controls.
+
+Both require `bsdsocket.library` and the separate `ZZDosBox-Net` interpreter.
+TCP/IP additionally needs staged NE2000/mTCP guest utilities. libslirp is linked
+into the host; no separate Amiga installation is needed. Embedded DOS with
+Direct/Normal presentation is supported; networking is off by default.
+Dynamic-core, scanline, OpenGL and debug-runtime combinations are rejected.
+Windows/MS-DOS image networking, IPv6 and port forwarding remain pending.
+IPX transport passed hardware checks; multiplayer games remain untested.
+Renew obtains a fresh guest lease; Release clears saved guest configuration,
+not the Amiga's address or an on-wire DHCP lease.
 
 [Network controls, validation and limitations](amiga-dosbox-network-ui.md).

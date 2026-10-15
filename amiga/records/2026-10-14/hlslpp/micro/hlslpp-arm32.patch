@@ -1,0 +1,324 @@
+--- a/include/hlsl++/platforms/neon.h
++++ b/include/hlsl++/platforms/neon.h
+@@ -161,7 +161,7 @@
+ 	template<int X, int Y, int Z, int W>
+ 	hlslpp_inline float32x4_t permute_float(const float32x4_t x)
+ 	{
+-		uint8x8x2_t tbl = { { vget_low_f32(x), vget_high_f32(x) } }; // Get floats
++		uint8x8x2_t tbl = { { vreinterpret_u8_f32(vget_low_f32(x)), vreinterpret_u8_f32(vget_high_f32(x)) } }; // Get floats
+ 
+ 		const uint8x8_t idxL = vcreate_u8(((uint64_t)hlslpp::ControlMask[X]) | (((uint64_t)hlslpp::ControlMask[Y]) << 32));
+ 		const uint8x8_t rL = vtbl2_u8(tbl, idxL);
+@@ -169,7 +169,7 @@
+ 		const uint8x8_t idxH = vcreate_u8(((uint64_t)hlslpp::ControlMask[Z]) | (((uint64_t)hlslpp::ControlMask[W]) << 32));
+ 		const uint8x8_t rH = vtbl2_u8(tbl, idxH);
+ 
+-		return vcombine_f32(rL, rH);
++		return vcombine_f32(vreinterpret_f32_u8(rL), vreinterpret_f32_u8(rH));
+ 	}
+ 
+ 	template<>
+@@ -181,7 +181,7 @@
+ 	template<int X, int Y, int Z, int W>
+ 	hlslpp_inline int32x4_t permute_int(const int32x4_t x)
+ 	{
+-		uint8x8x2_t tbl = { { vget_low_s32(x), vget_high_s32(x) } }; // Get ints
++		uint8x8x2_t tbl = { { vreinterpret_u8_s32(vget_low_s32(x)), vreinterpret_u8_s32(vget_high_s32(x)) } }; // Get ints
+ 
+ 		const uint8x8_t idxL = vcreate_u8(((uint64_t)hlslpp::ControlMask[X]) | (((uint64_t)hlslpp::ControlMask[Y]) << 32));
+ 		const uint8x8_t rL = vtbl2_u8(tbl, idxL);
+@@ -189,7 +189,7 @@
+ 		const uint8x8_t idxH = vcreate_u8(((uint64_t)hlslpp::ControlMask[Z]) | (((uint64_t)hlslpp::ControlMask[W]) << 32));
+ 		const uint8x8_t rH = vtbl2_u8(tbl, idxH);
+ 
+-		return vcombine_s32(rL, rH);
++		return vcombine_s32(vreinterpret_s32_u8(rL), vreinterpret_s32_u8(rH));
+ 	}
+ 
+ 	template<>
+@@ -201,7 +201,7 @@
+ 	template<int X, int Y, int Z, int W>
+ 	hlslpp_inline uint32x4_t permute_uint(const uint32x4_t x)
+ 	{
+-		uint8x8x2_t tbl = { { vget_low_u32(x), vget_high_u32(x) } }; // Get ints
++		uint8x8x2_t tbl = { { vreinterpret_u8_u32(vget_low_u32(x)), vreinterpret_u8_u32(vget_high_u32(x)) } }; // Get ints
+ 
+ 		const uint8x8_t idxL = vcreate_u8(((uint64_t)hlslpp::ControlMask[X]) | (((uint64_t)hlslpp::ControlMask[Y]) << 32));
+ 		const uint8x8_t rL = vtbl2_u8(tbl, idxL);
+@@ -209,7 +209,7 @@
+ 		const uint8x8_t idxH = vcreate_u8(((uint64_t)hlslpp::ControlMask[Z]) | (((uint64_t)hlslpp::ControlMask[W]) << 32));
+ 		const uint8x8_t rH = vtbl2_u8(tbl, idxH);
+ 
+-		return vcombine_u32(rL, rH);
++		return vcombine_u32(vreinterpret_u32_u8(rL), vreinterpret_u32_u8(rH));
+ 	}
+ 
+ 	template<>
+@@ -221,7 +221,7 @@
+ 
+ hlslpp_inline float32x4_t vshufq_f32(const float32x4_t x, const float32x4_t y, const uint32_t X0, const uint32_t Y0, const uint32_t X1, const uint32_t Y1)
+ {
+-	uint8x8x4_t tbl = { { vget_low_f32(x), vget_high_f32(x), vget_low_f32(y), vget_high_f32(y) } };
++	uint8x8x4_t tbl = { { vreinterpret_u8_f32(vget_low_f32(x)), vreinterpret_u8_f32(vget_high_f32(x)), vreinterpret_u8_f32(vget_low_f32(y)), vreinterpret_u8_f32(vget_high_f32(y)) } };
+ 
+ 	const uint8x8_t idxL = vcreate_u8(((uint64_t)hlslpp::ControlMaskX[X0]) | (((uint64_t)hlslpp::ControlMaskX[Y0]) << 32));
+ 	const uint8x8_t rL = vtbl4_u8(tbl, idxL);
+@@ -229,12 +229,12 @@
+ 	const uint8x8_t idxH = vcreate_u8(((uint64_t)hlslpp::ControlMaskY[X1]) | (((uint64_t)hlslpp::ControlMaskY[Y1]) << 32));
+ 	const uint8x8_t rH = vtbl4_u8(tbl, idxH);
+ 
+-	return vcombine_f32(rL, rH);
++	return vcombine_f32(vreinterpret_f32_u8(rL), vreinterpret_f32_u8(rH));
+ }
+ 
+ hlslpp_inline int32x4_t vshufq_s32(const int32x4_t x, const int32x4_t y, const uint32_t X0, const uint32_t Y0, const uint32_t X1, const uint32_t Y1)
+ {
+-	uint8x8x4_t tbl = { { vget_low_s32(x), vget_high_s32(x), vget_low_s32(y), vget_high_s32(y) } };
++	uint8x8x4_t tbl = { { vreinterpret_u8_s32(vget_low_s32(x)), vreinterpret_u8_s32(vget_high_s32(x)), vreinterpret_u8_s32(vget_low_s32(y)), vreinterpret_u8_s32(vget_high_s32(y)) } };
+ 
+ 	const uint8x8_t idxL = vcreate_u8(((uint64_t)hlslpp::ControlMaskX[X0]) | (((uint64_t)hlslpp::ControlMaskX[Y0]) << 32));
+ 	const uint8x8_t rL = vtbl4_u8(tbl, idxL);
+@@ -242,12 +242,12 @@
+ 	const uint8x8_t idxH = vcreate_u8(((uint64_t)hlslpp::ControlMaskY[X1]) | (((uint64_t)hlslpp::ControlMaskY[Y1]) << 32));
+ 	const uint8x8_t rH = vtbl4_u8(tbl, idxH);
+ 
+-	return vcombine_s32(rL, rH);
+-}
+-
+-hlslpp_inline uint32x4_t vshufq_u32(const uint32x4_t x, const int32x4_t y, const uint32_t X0, const uint32_t Y0, const uint32_t X1, const uint32_t Y1)
+-{
+-	uint8x8x4_t tbl = { { vget_low_u32(x), vget_high_u32(x), vget_low_u32(y), vget_high_u32(y) } };
++	return vcombine_s32(vreinterpret_s32_u8(rL), vreinterpret_s32_u8(rH));
++}
++
++hlslpp_inline uint32x4_t vshufq_u32(const uint32x4_t x, const uint32x4_t y, const uint32_t X0, const uint32_t Y0, const uint32_t X1, const uint32_t Y1)
++{
++	uint8x8x4_t tbl = { { vreinterpret_u8_u32(vget_low_u32(x)), vreinterpret_u8_u32(vget_high_u32(x)), vreinterpret_u8_u32(vget_low_u32(y)), vreinterpret_u8_u32(vget_high_u32(y)) } };
+ 
+ 	const uint8x8_t idxL = vcreate_u8(((uint64_t)hlslpp::ControlMaskX[X0]) | (((uint64_t)hlslpp::ControlMaskX[Y0]) << 32));
+ 	const uint8x8_t rL = vtbl4_u8(tbl, idxL);
+@@ -255,7 +255,7 @@
+ 	const uint8x8_t idxH = vcreate_u8(((uint64_t)hlslpp::ControlMaskY[X1]) | (((uint64_t)hlslpp::ControlMaskY[Y1]) << 32));
+ 	const uint8x8_t rH = vtbl4_u8(tbl, idxH);
+ 
+-	return vcombine_u32(rL, rH);
++	return vcombine_u32(vreinterpret_u32_u8(rL), vreinterpret_u32_u8(rH));
+ }
+ 
+ 
+@@ -276,8 +276,8 @@
+ {
+ 	float32x4_t ones = vmovq_n_f32(1.0f);
+ 	float32x4_t trnc = vcvtq_f32_s32(vcvtq_s32_f32(x)); // Truncate
+-	float32x4_t tgtx = vcgtq_f32(trnc, x);
+-	return vsubq_f32(trnc, vandq_u32(tgtx, ones)); // Subtract one if trnc greater than x
++	uint32x4_t tgtx = vcgtq_f32(trnc, x);
++	return vsubq_f32(trnc, vreinterpretq_f32_u32(vandq_u32(tgtx, vreinterpretq_u32_f32(ones)))); // Subtract one if trnc greater than x
+ }
+ #endif
+ 
+@@ -286,8 +286,8 @@
+ {
+ 	float32x4_t ones = vmovq_n_f32(1.0f);
+ 	float32x4_t trnc = vcvtq_f32_s32(vcvtq_s32_f32(x)); // Truncate
+-	float32x4_t tgtx = vcltq_f32(trnc, x);
+-	return vaddq_f32(trnc, vandq_u32(tgtx, ones)); // Subtract one if trnc greater than x
++	uint32x4_t tgtx = vcltq_f32(trnc, x);
++	return vaddq_f32(trnc, vreinterpretq_f32_u32(vandq_u32(tgtx, vreinterpretq_u32_f32(ones)))); // Subtract one if trnc greater than x
+ }
+ #endif
+ 
+@@ -366,7 +366,7 @@
+ 
+ #define _hlslpp_rcp_ps(x)						vrcpq_f32((x))
+ 
+-#define _hlslpp_neg_ps(x)						veorq_u32(vreinterpretq_u32_f32((x)), vmovq_n_u32(0x80000000u))
++#define _hlslpp_neg_ps(x)						vreinterpretq_f32_u32(veorq_u32(vreinterpretq_u32_f32((x)), vmovq_n_u32(0x80000000u)))
+ 
+ #define _hlslpp_madd_ps(x, y, z)				vmlaq_f32((z), (x), (y)) // x * y + z but vmlaq_f32 does y * z + x
+ #define _hlslpp_msub_ps(x, y, z)				_hlslpp_neg_ps(vmlsq_f32((z), (x), (y))) // x * y - z but vmlsq_f32 does z - x * y
+@@ -377,19 +377,19 @@
+ #define _hlslpp_sqrt_ps(x)						vsqrtq_f32((x))
+ #define _hlslpp_rsqrt_ps(x)						vrsqrtq_f32((x))
+ 
+-#define _hlslpp_cmpeq_ps(x, y)					vceqq_f32((x), (y))
+-#define _hlslpp_cmpneq_ps(x, y)					veorq_u32(vreinterpretq_u32_f32(vceqq_f32((x), (y))), vmovq_n_u32(0xffffffffu))
+-
+-#define _hlslpp_cmpgt_ps(x, y)					vcgtq_f32((x), (y))
+-#define _hlslpp_cmpge_ps(x, y)					vcgeq_f32((x), (y))
+-
+-#define _hlslpp_cmplt_ps(x, y)					vcltq_f32((x), (y))
+-#define _hlslpp_cmple_ps(x, y)					vcleq_f32((x), (y))
++#define _hlslpp_cmpeq_ps(x, y)					vreinterpretq_f32_u32(vceqq_f32((x), (y)))
++#define _hlslpp_cmpneq_ps(x, y)					vreinterpretq_f32_u32(vmvnq_u32(vceqq_f32((x), (y))))
++
++#define _hlslpp_cmpgt_ps(x, y)					vreinterpretq_f32_u32(vcgtq_f32((x), (y)))
++#define _hlslpp_cmpge_ps(x, y)					vreinterpretq_f32_u32(vcgeq_f32((x), (y)))
++
++#define _hlslpp_cmplt_ps(x, y)					vreinterpretq_f32_u32(vcltq_f32((x), (y)))
++#define _hlslpp_cmple_ps(x, y)					vreinterpretq_f32_u32(vcleq_f32((x), (y)))
+ 
+ #define _hlslpp_max_ps(x, y)					vmaxq_f32((x), (y))
+ #define _hlslpp_min_ps(x, y)					vminq_f32((x), (y))
+ 
+-#define _hlslpp_sel_ps(x, y, mask)				vbslq_f32((mask), (y), (x))
++#define _hlslpp_sel_ps(x, y, mask)				vbslq_f32(vreinterpretq_u32_f32(mask), (y), (x))
+ 
+ // We decompose the mask and turn it into 4 floats
+ // The input mask follows the format for SSE
+@@ -439,15 +439,15 @@
+ 
+ //https://stackoverflow.com/questions/15389539/fastest-way-to-test-a-128-bit-neon-register-for-a-value-of-0-using-intrinsics
+ 
+-#define _hlslpp_any1_ps(x)						_hlslpp_any1_epi32(vreinterpretq_u32_f32(x))
+-#define _hlslpp_any2_ps(x)						_hlslpp_any2_epi32(vreinterpretq_u32_f32(x))
+-#define _hlslpp_any3_ps(x)						_hlslpp_any3_epi32(vreinterpretq_u32_f32(x))
+-#define _hlslpp_any4_ps(x)						_hlslpp_any4_epi32(vreinterpretq_u32_f32(x))
+-
+-#define _hlslpp_all1_ps(x)						_hlslpp_all1_epi32(vreinterpretq_u32_f32(x))
+-#define _hlslpp_all2_ps(x)						_hlslpp_all2_epi32(vreinterpretq_u32_f32(x))
+-#define _hlslpp_all3_ps(x)						_hlslpp_all3_epi32(vreinterpretq_u32_f32(x))
+-#define _hlslpp_all4_ps(x)						_hlslpp_all4_epi32(vreinterpretq_u32_f32(x))
++#define _hlslpp_any1_ps(x)						_hlslpp_any1_epi32(vreinterpretq_s32_f32(x))
++#define _hlslpp_any2_ps(x)						_hlslpp_any2_epi32(vreinterpretq_s32_f32(x))
++#define _hlslpp_any3_ps(x)						_hlslpp_any3_epi32(vreinterpretq_s32_f32(x))
++#define _hlslpp_any4_ps(x)						_hlslpp_any4_epi32(vreinterpretq_s32_f32(x))
++
++#define _hlslpp_all1_ps(x)						_hlslpp_all1_epi32(vreinterpretq_s32_f32(x))
++#define _hlslpp_all2_ps(x)						_hlslpp_all2_epi32(vreinterpretq_s32_f32(x))
++#define _hlslpp_all3_ps(x)						_hlslpp_all3_epi32(vreinterpretq_s32_f32(x))
++#define _hlslpp_all4_ps(x)						_hlslpp_all4_epi32(vreinterpretq_s32_f32(x))
+ 
+ //-----------------
+ // Float Store/Load
+@@ -592,18 +592,21 @@
+ 
+ hlslpp_inline bool _hlslpp_any1_epi32(n128i x)
+ {
+-	return vget_lane_u32(vget_low_u32(x), 0) != 0;
++	uint32x4_t ux=vreinterpretq_u32_s32(x);
++	return vget_lane_u32(vget_low_u32(ux), 0) != 0;
+ }
+ 
+ hlslpp_inline bool _hlslpp_any2_epi32(n128i x)
+ {
+-	uint32x2_t low = vget_low_u32(x);
++	uint32x4_t ux=vreinterpretq_u32_s32(x);
++	uint32x2_t low = vget_low_u32(ux);
+ 	return vget_lane_u32(vpmax_u32(low, low), 0) != 0;
+ }
+ 
+ hlslpp_inline bool _hlslpp_any3_epi32(n128i x)
+ {
+-	uint32x4_t maskw = vsetq_lane_u32(0, x, 3); // set w to minimum value
++	uint32x4_t ux=vreinterpretq_u32_s32(x);
++	uint32x4_t maskw = vsetq_lane_u32(0, ux, 3); // set w to minimum value
+ #if defined(HLSLPP_ARM64)
+ 	return vmaxvq_u32(maskw) != 0;
+ #else
+@@ -614,28 +617,32 @@
+ 
+ hlslpp_inline bool _hlslpp_any4_epi32(n128i x)
+ {
++	uint32x4_t ux=vreinterpretq_u32_s32(x);
+ #if defined(HLSLPP_ARM64)
+-	return vmaxvq_u32(x) != 0;
++	return vmaxvq_u32(ux) != 0;
+ #else
+-	uint32x2_t tmp = vorr_u32(vget_low_u32(x), vget_high_u32(x));
++	uint32x2_t tmp = vorr_u32(vget_low_u32(ux), vget_high_u32(ux));
+ 	return vget_lane_u32(vpmax_u32(tmp, tmp), 0) != 0;
+ #endif
+ }
+ 
+ hlslpp_inline bool _hlslpp_all1_epi32(n128i x)
+ {
+-	return vget_lane_u32(vget_low_u32(x), 0) != 0;
++	uint32x4_t ux=vreinterpretq_u32_s32(x);
++	return vget_lane_u32(vget_low_u32(ux), 0) != 0;
+ }
+ 
+ hlslpp_inline bool _hlslpp_all2_epi32(n128i x)
+ {
+-	uint32x2_t low = vget_low_u32(x);
++	uint32x4_t ux=vreinterpretq_u32_s32(x);
++	uint32x2_t low = vget_low_u32(ux);
+ 	return vget_lane_u32(vpmin_u32(low, low), 0) != 0;
+ }
+ 
+ hlslpp_inline bool _hlslpp_all3_epi32(n128i x)
+ {
+-	uint32x4_t maskw = vsetq_lane_u32(0xffffffff, x, 3); // set w to maximum value
++	uint32x4_t ux=vreinterpretq_u32_s32(x);
++	uint32x4_t maskw = vsetq_lane_u32(0xffffffff, ux, 3); // set w to maximum value
+ #if defined(HLSLPP_ARM64)
+ 	return vminvq_u32(maskw) != 0;
+ #else
+@@ -646,10 +653,11 @@
+ 
+ hlslpp_inline bool _hlslpp_all4_epi32(n128i x)
+ {
++	uint32x4_t ux=vreinterpretq_u32_s32(x);
+ #if defined(HLSLPP_ARM64)
+-	return vminvq_u32(x) != 0;
++	return vminvq_u32(ux) != 0;
+ #else
+-	uint32x2_t minlohi = vpmin_u32(vget_low_u32(x), vget_high_u32(x));
++	uint32x2_t minlohi = vpmin_u32(vget_low_u32(ux), vget_high_u32(ux));
+ 	return vget_lane_u32(vpmin_u32(minlohi, minlohi), 0) != 0;
+ #endif
+ }
+@@ -793,13 +801,13 @@
+ 
+ hlslpp_inline void _hlslpp_load2_epu32(n128u& dst, const uint32_t* src)
+ {
+-	int32x2_t t = vld1_u32(src); // Load the two values
++	uint32x2_t t = vld1_u32(src); // Load the two values
+ 	dst = vcombine_u32(t, t); // Replicate in the other two to create a float32x4_t
+ }
+ 
+ hlslpp_inline void _hlslpp_load3_epu32(n128u& dst, const uint32_t* src)
+ {
+-	int32x2_t t = vld1_u32(src); // Load the two values
++	uint32x2_t t = vld1_u32(src); // Load the two values
+ 	dst = vcombine_u32(t, t); // Replicate in the other two to create a float32x4_t
+ 	dst = vld1q_lane_u32(src + 2, dst, 2);
+ }
+@@ -1031,24 +1039,24 @@
+ {
+ 	float32x4_t v255f = vmlaq_f32(vmovq_n_f32(0.5f), v, vmovq_n_f32(255.0f));
+ 	uint32x4_t v255i = vcvtq_u32_f32(v255f);
+-	uint16x4_t conv16 = vqmovun_s32(v255i);
++	uint16x4_t conv16 = vqmovun_s32(vreinterpretq_s32_u32(v255i));
+ 	uint8x8_t conv8 = vqmovn_u16(vcombine_u16(conv16, conv16));
+ 	return vget_lane_u32(vget_low_u32(vreinterpretq_u32_u8(vcombine_u8(conv8, conv8))), 0);
+ }
+ 
+ hlslpp_inline float32x4_t _hlslpp_unpack_rgba8_unorm_epu32(uint32_t p)
+ {
+-	uint8x16_t packed8 = vmovq_n_u32(p);
++	uint8x16_t packed8 = vreinterpretq_u8_u32(vmovq_n_u32(p));
+ 	uint16x8_t packed16 = vmovl_u8(vget_low_u8(packed8));
+ 	uint32x4_t packed32 = vmovl_u16(vget_low_u16(packed16));
+-	float32x4_t t = vcvtq_f32_s32(packed32);
++	float32x4_t t = vcvtq_f32_s32(vreinterpretq_s32_u32(packed32));
+ 	return vmulq_f32(t, vmovq_n_f32(1.0f / 255.0f));
+ }
+ 
+ hlslpp_inline uint32_t _hlslpp_pack_epu32_rgba8_snorm(float32x4_t v)
+ {
+ 	// Copy sign from x to 0.5
+-	float32x4_t vbias = vorrq_f32(vmovq_n_f32(0.5f), vandq_f32(v, vreinterpretq_u32_f32(vmovq_n_s32(0x80000000u))));
++	float32x4_t vbias = vorrq_f32(vmovq_n_f32(0.5f), vandq_f32(v, vreinterpretq_f32_u32(vmovq_n_u32(0x80000000u))));
+ 	float32x4_t v127f = vmlaq_f32(vbias, v, vmovq_n_f32(127.0f));
+ 	int32x4_t v127i = vcvtq_s32_f32(v127f);
+ 	int16x4_t conv16 = vqmovn_s32(v127i);
+@@ -1058,7 +1066,7 @@
+ 
+ hlslpp_inline float32x4_t _hlslpp_unpack_rgba8_snorm_epu32(uint32_t p)
+ {
+-	int8x16_t packed8 = vmovq_n_s32(p);
++	int8x16_t packed8 = vreinterpretq_s8_s32(vmovq_n_s32(p));
+ 	int16x8_t packed16 = vmovl_s8(vget_low_s8(packed8));
+ 	int32x4_t packed32 = vmovl_s16(vget_low_s16(packed16));
+ 	float32x4_t t = vcvtq_f32_s32(packed32);

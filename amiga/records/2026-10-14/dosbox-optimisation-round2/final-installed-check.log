@@ -1,0 +1,66 @@
+[OK]
+Process  1: stk  4000, gv 150, pri   0 Loaded as command: TCP/IP Superserver
+Process  2: stk 16384, gv 150, pri   0 Loaded as command: Status
+Process  3: stk 32768, gv 150, pri   0 Loaded as command: SD032G:amiga-bridge/amiga-bridge
+Process  4: stk  4096, gv 150, pri   0 Loaded as command: SYS:C/TitleShadow
+Process  5: stk  4096, gv 150, pri   0 Loaded as command: MagicMenu
+Process  6: stk 32768, gv 150, pri  -5 Loaded as command: C:bridge-netwatch
+Process  7: stk  8000, gv 150, pri   1 Loaded as command: Workbench
+Process  8: stk  4000, gv 150, pri   2 Loaded as command: ToolsDaemon
+Process  9: stk 65536, gv 150, pri   0 Loaded as command: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher
+Public Message Ports (24):
+  TSPORT
+  WORKBENCH
+  DEFICONS
+  ToolsDaemon 2.1a © Nico François
+  REXX
+  AREXX
+  MagicMenu
+  SIXIES.BRIDGE.NETWATCH
+  AssignWedge.port
+  ZZScanlines.Menu.1
+  ZZTemperature.1
+  NewMeter
+  POPO.1
+  QDock
+  ROADIE
+  TCP/IP Control
+  AMIGABRIDGE
+  ZZSNES_LIBRARY_PREVIEW
+  ZZSNES.1
+  ZZDOS_LAUNCHER
+  ZZDOSBOX.1
+  ConClip.rendezvous
+  lowlevel.library
+  deficons
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher
+CRC32: 871A954D
+Size: 493068 bytes
+File: SD032G:Dev/ZZDosBox/PC/Compatibility.dat
+CRC32: 04E035D8
+Size: 1347821 bytes
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Windows
+CRC32: BBD57DD4
+Size: 994256 bytes
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Windows-Dynamic
+CRC32: E82462F1
+Size: 1086484 bytes
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox
+CRC32: 5C74FFFC
+Size: 1088832 bytes
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Launcher.pre016
+CRC32: 97947DDA
+Size: 1844592 bytes
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Windows.pre016
+CRC32: 61417418
+Size: 991108 bytes
+File: SD032G:Dev/ZZDosBox/PC/ZZDosBox-Windows-Dynamic.pre016
+CRC32: 3B8F2BCE
+Size: 1083320 bytes
+File: SD032G:Dev/ZZDosBox/PC/Launcher.cfg
+CRC32: B6AC5D3D
+Size: 10536 bytes
+File: SD032G:Dev/ZZDosBox/PC/dosbox.conf
+CRC32: C8D74CE8
+Size: 1536 bytes
+PASS installed files, previous backups, unchanged settings, idle Core1 and responsive bridge/Roadie

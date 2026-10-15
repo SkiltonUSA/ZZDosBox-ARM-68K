@@ -81,9 +81,9 @@ int main(void){struct dl_session s,t;static struct dl_library a,b;char tmp[]="/t
  a.p[0].category=DL_CATEGORIES;assert(!dl_library_write(tmp,&a));
  a.p[0].category=dl_legacy_category(&a.p[0]);
  assert(dl_library_write(tmp,&a));f=fopen(tmp,"rb");n=fread(out,1,sizeof(out)-1,f);fclose(f);
- assert(n>18&&!memcmp(out,"ZZDOSLIB12",10));
+ assert(n>18&&!memcmp(out,"ZZDOSLIB14",10));
  /* Remove the appended network record to exercise v5-v11 migrations. */
- out[n]=0;char *netrecord=strstr(out,"ZZNET1\n");assert(netrecord);size_t full_n=n;n=(size_t)(netrecord-out);out[9]='1';
+ out[n]=0;char *netrecord=strstr(out,"ZZNET2\n");assert(netrecord);size_t full_n=n;n=(size_t)(netrecord-out);out[9]='1';
  f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fclose(f);assert(dl_library_read(tmp,&b)&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
  /* Strip only the fields absent from each old format; the two-digit header
     shrinks by one byte. All launch settings must survive migration. */
@@ -92,7 +92,7 @@ int main(void){struct dl_session s,t;static struct dl_library a,b;char tmp[]="/t
   assert(fwrite(out+10,1,n-11-(10-v)*2,f)==n-11-(10-v)*2);fclose(f);
   assert(dl_library_read(tmp,&b)&&b.count==1&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
  }
- out[9]='2';n=full_n;
+ out[9]='3';n=full_n;
  f=fopen(tmp,"wb");assert(fwrite(out,1,n-2,f)==n-2);fclose(f);assert(!dl_library_read(tmp,&b));
  out[n-3]='!';f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fclose(f);assert(!dl_library_read(tmp,&b));out[n-3]='o';
  f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fputs("extra\n",f);fclose(f);assert(!dl_library_read(tmp,&b));
@@ -113,4 +113,13 @@ int main(void){struct dl_session s,t;static struct dl_library a,b;char tmp[]="/t
  assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
  a.p[0].network.enabled=1;a.p[0].network.manual=1;a.p[0].network.mtu=1200;strcpy(a.p[0].network.ip,"10.0.2.42");strcpy(a.p[0].network.dns,"10.0.0.1");
  assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
+ a.p[0].system=3;assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
+ *a.p[0].image=0;assert(!dl_library_write(tmp,&a));
+ /* Large libraries retain every profile and category index beyond the old 32 limit. */
+ memset(&a,0,sizeof(a));a.count=DL_MAX;a.last=DL_MAX-1;
+ for(unsigned i=0;i<DL_MAX;i++){dl_profile_default(&a.p[i]);snprintf(a.p[i].title,sizeof(a.p[i].title),"Program %u",i);strcpy(a.p[i].drive,"Games:Test");a.p[i].category=i%DL_CATEGORIES;}
+ assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&!memcmp(&a,&b,sizeof(a)));
+ assert(dl_category_index(&b,(DL_MAX-1)%DL_CATEGORIES,(DL_MAX-1)/DL_CATEGORIES)==DL_MAX-1);
+ a.count=DL_MAX+1;assert(!dl_library_write(tmp,&a));
+ f=fopen(tmp,"w");fprintf(f,"ZZDOSLIB13\n%u 0\n",DL_MAX+1);fclose(f);assert(!dl_library_read(tmp,&b));
  unlink(tmp);puts("PASS profiles/sessions, adapter/colour/renderer migration and validation");return 0;}

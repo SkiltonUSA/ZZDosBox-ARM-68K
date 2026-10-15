@@ -14,3 +14,6 @@ subprocess.run([str(exe)],check=True)
 exe=out/'config-test'
 subprocess.run(['clang','-std=c99','-g','-fsanitize=address,undefined','-fno-sanitize-recover=all','-I'+str(root/'amiga/dosbox/launcher'),str(root/'tests/amiga/dosbox/network/config_test.c'),'-o',str(exe)],check=True)
 subprocess.run([str(exe)],check=True)
+exe=out/'ipx-packet-test'
+subprocess.run(['clang','-std=c99','-Wall','-Wextra','-Werror','-fsanitize=address,undefined','-fno-sanitize-recover=all','-I'+str(root/'amiga/dosbox/network'),str(root/'tests/amiga/dosbox/network/ipx_packet_test.c'),'-o',str(exe)],check=True)
+subprocess.run([str(exe)],check=True)

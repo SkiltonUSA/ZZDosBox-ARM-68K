@@ -80,6 +80,7 @@ def prepare_ne2000(output):
         s=cache.read_text()
         if source.endswith('.cpp'):
             s='#include <stdarg.h>\n'+s
+            s=s.replace('# if C_IPX','# if 0 /* Separate DOSBox IPX driver, no Ethernet redirection. */')
             s=s.replace('LOG(LOG_MISC,LOG_DEBUG)', 'LOG(LOG_MISC,LOG_NORMAL)')
             s=s.replace('#include "hardware.h"','').replace('#include "ethernet.h"','#include "ethernet_arm.h"')
             s='\n'.join(line for line in s.splitlines() if 'CaptureState & CAPTURE_NETWORK' not in line)+'\n'

@@ -16,7 +16,7 @@ extern void IO_Destroy(Section*),PIC_Destroy(Section*),TIMER_Destroy(Section*),C
 bool startup_state_numlock=false,startup_state_capslock=false;
 extern void db_midi_setup(),MPU401_Init(Section*),MPU401_Destroy(Section*);
 #ifdef DB_NETWORK
-extern void db_net_device_open(),db_net_device_close();
+extern void db_net_device_open(),db_net_device_close(),db_ipx_close();
 #endif
 static bool initialized;
 static unsigned a20_control;
@@ -35,7 +35,7 @@ void db_pc_init(){
 }
 void db_pc_close(){if(!initialized)return;
 #ifdef DB_NETWORK
- db_net_device_close();
+ db_ipx_close();db_net_device_close();
 #endif
  MPU401_Destroy(nullptr);BIOS_Destroy(nullptr);TIMER_Destroy(nullptr);CMOS_Destroy(nullptr);PIC_Destroy(nullptr);zz_vga_memory_close();IO_Destroy(nullptr);initialized=false;}
 bool SB_Get_Address(Bitu&,Bitu&,Bitu&){return false;}

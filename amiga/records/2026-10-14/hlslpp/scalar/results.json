@@ -1,0 +1,553 @@
+{
+  "methods": [
+    "scalar",
+    "hlsl"
+  ],
+  "timer_hz": 333333333.0,
+  "scope": "private 640x480 offscreen native TinyGL, no DOS/game/scanout FPS claim",
+  "profiling_caveat": "Exclusive stages include timer/hook overhead; totals are measured separately with profiling disabled. Raw stage percentages are not unbiased production shares.",
+  "runs": [
+    {
+      "log": ".context/amiga/dosbox-tinygl/hlsl-scalar-1.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "scalar_us": 6097.194006097194,
+          "hlsl_us": 6075.444193575444,
+          "profile": {
+            "scalar": {
+              "wall_us": 9142.941009142942,
+              "stages_us": {
+                "transform": 2479.5630024795632,
+                "clip": 468.79800046879797,
+                "raster": 2437.23000243723,
+                "clear": 1152.96000115296,
+                "other": 2604.3900026043902
+              },
+              "shares_percent": {
+                "transform": 27.119971571510742,
+                "clip": 5.127431096842908,
+                "raster": 26.65695863070756,
+                "clear": 12.610384339131139,
+                "other": 28.485254361807648
+              },
+              "instrumentation_slowdown": 1.4995325718683055
+            },
+            "hlsl": {
+              "wall_us": 8941.989008941988,
+              "stages_us": {
+                "transform": 2359.44000235944,
+                "clip": 475.14000047513997,
+                "raster": 2397.864002397864,
+                "clear": 1152.2370011522369,
+                "other": 2557.308002557308
+              },
+              "shares_percent": {
+                "transform": 26.386075849567696,
+                "clip": 5.313582917626045,
+                "raster": 26.81577890556564,
+                "clear": 12.885690197113863,
+                "other": 28.59887213012675
+              },
+              "instrumentation_slowdown": 1.4718247298523142
+            }
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "scalar_us": 4137.075754137076,
+          "hlsl_us": 4143.327191643328,
+          "profile": {
+            "scalar": {
+              "wall_us": 4607.2050046072045,
+              "stages_us": {
+                "transform": 329.28000032927997,
+                "clip": 265.122000265122,
+                "raster": 2492.802002492802,
+                "clear": 1149.993001149993,
+                "other": 370.008000370008
+              },
+              "shares_percent": {
+                "transform": 7.147066388406855,
+                "clip": 5.7545084275607445,
+                "raster": 54.10660042259895,
+                "clear": 24.960751692186477,
+                "other": 8.031073069246974
+              },
+              "instrumentation_slowdown": 1.1136380570261493
+            },
+            "hlsl": {
+              "wall_us": 4584.816004584816,
+              "stages_us": {
+                "transform": 314.184000314184,
+                "clip": 266.14500026614496,
+                "raster": 2480.271002480271,
+                "clear": 1152.354001152354,
+                "other": 371.862000371862
+              },
+              "shares_percent": {
+                "transform": 6.852706847995645,
+                "clip": 5.804922160453113,
+                "raster": 54.09750358574913,
+                "clear": 25.134138425620574,
+                "other": 8.110728980181538
+              },
+              "instrumentation_slowdown": 1.1065541755504915
+            }
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "scalar_us": 77514.96382751496,
+          "hlsl_us": 77495.21632749522,
+          "profile": {
+            "scalar": {
+              "wall_us": 77628.62107762862,
+              "stages_us": {
+                "transform": 131.676000131676,
+                "clip": 46.167000046167004,
+                "raster": 76074.36307607435,
+                "clear": 1155.825001155825,
+                "other": 220.59000022059
+              },
+              "shares_percent": {
+                "transform": 0.1696230054118828,
+                "clip": 0.05947162194211849,
+                "raster": 97.99782866167364,
+                "clear": 1.488916053268549,
+                "other": 0.2841606577038126
+              },
+              "instrumentation_slowdown": 1.0014662620544668
+            },
+            "hlsl": {
+              "wall_us": 77808.82507780883,
+              "stages_us": {
+                "transform": 143.658000143658,
+                "clip": 46.368000046368,
+                "raster": 76233.52207623352,
+                "clear": 1155.3660011553661,
+                "other": 229.911000229911
+              },
+              "shares_percent": {
+                "transform": 0.18462944273994628,
+                "clip": 0.05959221206591926,
+                "raster": 97.97541859808318,
+                "clear": 1.4848778400136489,
+                "other": 0.29548190709729905
+              },
+              "instrumentation_slowdown": 1.0040468143090058
+            }
+          }
+        }
+      }
+    },
+    {
+      "log": ".context/amiga/dosbox-tinygl/hlsl-scalar-2.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "scalar_us": 6090.115693590116,
+          "hlsl_us": 6092.399631092399,
+          "profile": {
+            "scalar": {
+              "wall_us": 9147.870009147871,
+              "stages_us": {
+                "transform": 2480.91000248091,
+                "clip": 471.48600047148597,
+                "raster": 2449.377002449377,
+                "clear": 1148.7150011487151,
+                "other": 2597.382002597382
+              },
+              "shares_percent": {
+                "transform": 27.120083691613456,
+                "clip": 5.15405225478718,
+                "raster": 26.775380498411106,
+                "clear": 12.557185443168736,
+                "other": 28.393298112019522
+              },
+              "instrumentation_slowdown": 1.502084766431623
+            },
+            "hlsl": {
+              "wall_us": 8914.548008914548,
+              "stages_us": {
+                "transform": 2357.7000023576998,
+                "clip": 469.155000469155,
+                "raster": 2373.8700023738697,
+                "clear": 1149.231001149231,
+                "other": 2564.592002564592
+              },
+              "shares_percent": {
+                "transform": 26.44777951725651,
+                "clip": 5.262801882944598,
+                "raster": 26.629168411006372,
+                "clear": 12.891635111505373,
+                "other": 28.768615077287148
+              },
+              "instrumentation_slowdown": 1.463224435150214
+            }
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "scalar_us": 4141.718629141718,
+          "hlsl_us": 4139.25037913925,
+          "profile": {
+            "scalar": {
+              "wall_us": 4590.444004590444,
+              "stages_us": {
+                "transform": 326.98500032698496,
+                "clip": 266.76600026676596,
+                "raster": 2476.332002476332,
+                "clear": 1149.549001149549,
+                "other": 370.812000370812
+              },
+              "shares_percent": {
+                "transform": 7.1231671707573385,
+                "clip": 5.8113332827935595,
+                "raster": 53.945369990353875,
+                "clear": 25.042218138376153,
+                "other": 8.07791141771907
+              },
+              "instrumentation_slowdown": 1.1083427957397758
+            },
+            "hlsl": {
+              "wall_us": 4638.714004638714,
+              "stages_us": {
+                "transform": 317.907000317907,
+                "clip": 265.668000265668,
+                "raster": 2526.771002526771,
+                "clear": 1154.388001154388,
+                "other": 373.98000037398
+              },
+              "shares_percent": {
+                "transform": 6.85334340509029,
+                "clip": 5.727190768820841,
+                "raster": 54.471368573272684,
+                "clear": 24.88594899362194,
+                "other": 8.06214825919425
+              },
+              "instrumentation_slowdown": 1.120665236395612
+            }
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "scalar_us": 77507.21257750722,
+          "hlsl_us": 77493.96363999396,
+          "profile": {
+            "scalar": {
+              "wall_us": 77594.34607759434,
+              "stages_us": {
+                "transform": 132.95400013295398,
+                "clip": 45.063000045063,
+                "raster": 76030.95607603095,
+                "clear": 1157.937001157937,
+                "other": 227.436000227436
+              },
+              "shares_percent": {
+                "transform": 0.17134495856180038,
+                "clip": 0.058075107688903,
+                "raster": 97.9851753631637,
+                "clear": 1.492295585557226,
+                "other": 0.2931089850283679
+              },
+              "instrumentation_slowdown": 1.0011241986028072
+            },
+            "hlsl": {
+              "wall_us": 77712.16507771217,
+              "stages_us": {
+                "transform": 140.91000014091,
+                "clip": 46.206000046206,
+                "raster": 76138.53607613854,
+                "clear": 1161.7140011617141,
+                "other": 224.799000224799
+              },
+              "shares_percent": {
+                "transform": 0.18132296275621712,
+                "clip": 0.05945787252227499,
+                "raster": 97.97505448471291,
+                "clear": 1.4948933670809454,
+                "other": 0.28927131292764785
+              },
+              "instrumentation_slowdown": 1.0028157217345584
+            }
+          }
+        }
+      }
+    },
+    {
+      "log": ".context/amiga/dosbox-tinygl/hlsl-scalar-3.log",
+      "cases": {
+        "0": {
+          "name": "geometry",
+          "triangles": 1024,
+          "repeats": 16,
+          "hash": "88b1e9f7",
+          "scalar_us": 6091.143193591143,
+          "hlsl_us": 6079.635568579635,
+          "profile": {
+            "scalar": {
+              "wall_us": 9149.916009149916,
+              "stages_us": {
+                "transform": 2479.656002479656,
+                "clip": 472.167000472167,
+                "raster": 2456.922002456922,
+                "clear": 1140.246001140246,
+                "other": 2600.925002600925
+              },
+              "shares_percent": {
+                "transform": 27.1003143635417,
+                "clip": 5.160342455602871,
+                "raster": 26.85185306619208,
+                "clear": 12.461819321620002,
+                "other": 28.425670793043345
+              },
+              "instrumentation_slowdown": 1.5021672809756124
+            },
+            "hlsl": {
+              "wall_us": 8951.055008951054,
+              "stages_us": {
+                "transform": 2359.839002359839,
+                "clip": 471.504000471504,
+                "raster": 2395.959002395959,
+                "clear": 1150.989001150989,
+                "other": 2572.764002572764
+              },
+              "shares_percent": {
+                "transform": 26.363808511957533,
+                "clip": 5.267580190268075,
+                "raster": 26.767336364260974,
+                "clear": 12.858696544708975,
+                "other": 28.742578388804446
+              },
+              "instrumentation_slowdown": 1.4723012437145568
+            }
+          }
+        },
+        "1": {
+          "name": "clipping",
+          "triangles": 128,
+          "repeats": 16,
+          "hash": "0628ae41",
+          "scalar_us": 4145.416691645417,
+          "hlsl_us": 4148.798441648799,
+          "profile": {
+            "scalar": {
+              "wall_us": 4598.769004598769,
+              "stages_us": {
+                "transform": 327.162000327162,
+                "clip": 265.236000265236,
+                "raster": 2481.7650024817654,
+                "clear": 1154.058001154058,
+                "other": 370.548000370548
+              },
+              "shares_percent": {
+                "transform": 7.11412119199725,
+                "clip": 5.767543444778375,
+                "raster": 53.96585477548448,
+                "clear": 25.094933013595593,
+                "other": 8.057547574144298
+              },
+              "instrumentation_slowdown": 1.10936230219438
+            },
+            "hlsl": {
+              "wall_us": 4573.779004573779,
+              "stages_us": {
+                "transform": 318.093000318093,
+                "clip": 265.569000265569,
+                "raster": 2473.266002473266,
+                "clear": 1150.95000115095,
+                "other": 365.90100036590104
+              },
+              "shares_percent": {
+                "transform": 6.954708568122771,
+                "clip": 5.806336510793372,
+                "raster": 54.07489080692355,
+                "clear": 25.164092974321672,
+                "other": 7.999971139838633
+              },
+              "instrumentation_slowdown": 1.1024346130336682
+            }
+          }
+        },
+        "2": {
+          "name": "fill",
+          "triangles": 32,
+          "repeats": 16,
+          "hash": "88077dd1",
+          "scalar_us": 77539.94670253994,
+          "hlsl_us": 77571.57532757157,
+          "profile": {
+            "scalar": {
+              "wall_us": 77696.58007769659,
+              "stages_us": {
+                "transform": 132.135000132135,
+                "clip": 46.794000046794004,
+                "raster": 76128.35107612835,
+                "clear": 1163.478001163478,
+                "other": 225.822000225822
+              },
+              "shares_percent": {
+                "transform": 0.17006540056203245,
+                "clip": 0.06022658912400006,
+                "raster": 97.98159841784542,
+                "clear": 1.4974635949227109,
+                "other": 0.2906459975458379
+              },
+              "instrumentation_slowdown": 1.0020200345991666
+            },
+            "hlsl": {
+              "wall_us": 77753.87707775387,
+              "stages_us": {
+                "transform": 140.373000140373,
+                "clip": 45.684000045684,
+                "raster": 76182.61507618261,
+                "clear": 1155.912001155912,
+                "other": 229.293000229293
+              },
+              "shares_percent": {
+                "transform": 0.18053504907543066,
+                "clip": 0.05875462647348119,
+                "raster": 97.97918501221488,
+                "clear": 1.4866294062738505,
+                "other": 0.2948959059623483
+              },
+              "instrumentation_slowdown": 1.0023501101970984
+            }
+          }
+        }
+      }
+    }
+  ],
+  "summary": [
+    {
+      "name": "geometry",
+      "triangles": 1024,
+      "hash": "88b1e9f7",
+      "scalar_us": 6091.143193591143,
+      "hlsl_us": 6079.635568579635,
+      "throughput_gain_percent": 0.18928149363064417,
+      "time_reduction_percent": 0.18892389565912104,
+      "scalar_range_us": [
+        6090.115693590116,
+        6097.194006097194
+      ],
+      "hlsl_range_us": [
+        6075.444193575444,
+        6092.399631092399
+      ],
+      "profile_median_us": {
+        "scalar": {
+          "transform": 2479.656002479656,
+          "clip": 471.48600047148597,
+          "raster": 2449.377002449377,
+          "clear": 1148.7150011487151,
+          "other": 2600.925002600925
+        },
+        "hlsl": {
+          "transform": 2359.44000235944,
+          "clip": 471.504000471504,
+          "raster": 2395.959002395959,
+          "clear": 1150.989001150989,
+          "other": 2564.592002564592
+        }
+      },
+      "profile_slowdown": {
+        "scalar": 1.502084766431623,
+        "hlsl": 1.4718247298523142
+      }
+    },
+    {
+      "name": "clipping",
+      "triangles": 128,
+      "hash": "0628ae41",
+      "scalar_us": 4141.718629141718,
+      "hlsl_us": 4143.327191643328,
+      "throughput_gain_percent": -0.038822965872786774,
+      "time_reduction_percent": -0.03883804395332646,
+      "scalar_range_us": [
+        4137.075754137076,
+        4145.416691645417
+      ],
+      "hlsl_range_us": [
+        4139.25037913925,
+        4148.798441648799
+      ],
+      "profile_median_us": {
+        "scalar": {
+          "transform": 327.162000327162,
+          "clip": 265.236000265236,
+          "raster": 2481.7650024817654,
+          "clear": 1149.993001149993,
+          "other": 370.548000370548
+        },
+        "hlsl": {
+          "transform": 317.907000317907,
+          "clip": 265.668000265668,
+          "raster": 2480.271002480271,
+          "clear": 1152.354001152354,
+          "other": 371.862000371862
+        }
+      },
+      "profile_slowdown": {
+        "scalar": 1.10936230219438,
+        "hlsl": 1.1065541755504915
+      }
+    },
+    {
+      "name": "fill",
+      "triangles": 32,
+      "hash": "88077dd1",
+      "scalar_us": 77514.96382751496,
+      "hlsl_us": 77495.21632749522,
+      "throughput_gain_percent": 0.02548221807174844,
+      "time_reduction_percent": 0.025475726291612766,
+      "scalar_range_us": [
+        77507.21257750722,
+        77539.94670253994
+      ],
+      "hlsl_range_us": [
+        77493.96363999396,
+        77571.57532757157
+      ],
+      "profile_median_us": {
+        "scalar": {
+          "transform": 132.135000132135,
+          "clip": 46.167000046167004,
+          "raster": 76074.36307607435,
+          "clear": 1157.937001157937,
+          "other": 225.822000225822
+        },
+        "hlsl": {
+          "transform": 140.91000014091,
+          "clip": 46.206000046206,
+          "raster": 76182.61507618261,
+          "clear": 1155.912001155912,
+          "other": 229.293000229293
+        }
+      },
+      "profile_slowdown": {
+        "scalar": 1.0014662620544668,
+        "hlsl": 1.0028157217345584
+      }
+    }
+  ]
+}

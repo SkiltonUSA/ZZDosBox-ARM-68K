@@ -1,7 +1,7 @@
 /* GPL-3.0-or-later. Independent implementation of the XX19c deferred-PAN
  * handoff demonstrated by XANI's ZZPicoDriveMD. See zzpicodrive-review.md.
  * Included by host.c after its timer helpers. No PicoDrive source reused. */
-#include "flip_plan.h"
+#include "../../common/flip_plan.h"
 static struct Screen *full_screen;
 static struct BitMap *full_allocation;
 static volatile UBYTE *full_board;

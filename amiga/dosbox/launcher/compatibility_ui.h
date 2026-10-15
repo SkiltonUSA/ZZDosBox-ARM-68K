@@ -83,12 +83,12 @@ static void compat_filter(void){
  set(compat_list,MUIA_List_Active,compat_visible_count?0:MUIV_List_Active_Off);compat_select();
 }
 static Object *compat_page(void){
- return VGroup,
+ return VGroup,UI_PAGE,
   Child,label("DOSBox community reports - not verified ZZDosBox results."),
   Child,HGroup,Child,compat_letter=cycle(compat_letters),Child,compat_query=str(128),
    Child,TextObject,ButtonFrame,MUIA_InputMode,MUIV_InputMode_RelVerify,MUIA_Background,MUII_ButtonBack,MUIA_Text_Contents,(ULONG)"Search",MUIA_UserData,ID_COMPAT_FILTER,End,End,
   Child,HGroup,
-  Child,ListviewObject,MUIA_HorizWeight,35,MUIA_Listview_List,compat_list=ListObject,InputListFrame,MUIA_List_ConstructHook,MUIV_List_ConstructHook_String,MUIA_List_DestructHook,MUIV_List_DestructHook_String,End,End,
+  Child,ListviewObject,MUIA_HorizWeight,35,MUIA_Listview_List,compat_list=ListObject,MUIA_Font,ui_font(),InputListFrame,MUIA_List_ConstructHook,MUIV_List_ConstructHook_String,MUIA_List_DestructHook,MUIV_List_DestructHook_String,End,End,
   Child,VGroup,MUIA_HorizWeight,65,
    Child,ColGroup(2),
     Child,fieldlabel("Game"),Child,compat_title=label(""),
@@ -96,14 +96,14 @@ static Object *compat_page(void){
     Child,fieldlabel("Publisher"),Child,compat_publisher=label(""),
     Child,fieldlabel("Tested by"),Child,compat_tester=label(""),End,
    Child,ListviewObject,MUIA_VertWeight,45,MUIA_Listview_Input,FALSE,
-    MUIA_Listview_List,compat_versions=ListObject,ReadListFrame,
+    MUIA_Listview_List,compat_versions=ListObject,MUIA_Font,ui_font(),ReadListFrame,
      MUIA_List_Title,TRUE,MUIA_List_Format,(ULONG)"BAR,BAR,",
      MUIA_List_DisplayHook,(ULONG)&compat_version_hook,End,End,
-   Child,ListviewObject,MUIA_VertWeight,55,MUIA_Listview_Input,FALSE,MUIA_Listview_List,compat_info=ListObject,ReadListFrame,MUIA_List_ConstructHook,MUIV_List_ConstructHook_String,MUIA_List_DestructHook,MUIV_List_DestructHook_String,End,End,
+   Child,ListviewObject,MUIA_VertWeight,55,MUIA_Listview_Input,FALSE,MUIA_Listview_List,compat_info=ListObject,MUIA_Font,ui_font(),ReadListFrame,MUIA_List_ConstructHook,MUIV_List_ConstructHook_String,MUIA_List_DestructHook,MUIV_List_DestructHook_String,End,End,
   End,
   End,
   Child,compat_count=label(""),Child,compat_url=label(""),
-  Child,compat_report=SimpleButton("Original report"),End;
+  Child,compat_report=ui_button("Original report"),End;
 }
 static void compat_init(void){
  set(compat_letter,MUIA_Cycle_Active,1);

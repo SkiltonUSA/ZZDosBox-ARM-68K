@@ -1,0 +1,11 @@
+{
+  "amiga/dosbox/hlslpp/kernels.h": "e6d596673c7ab3570973ea9f51da9a782f0891e0e2ca82627ef50f7c7e46cba4",
+  "amiga/dosbox/hlslpp/kernels.cpp": "2b3be540362f5c15899b982f0ca36ce6c8cbf2955d8c8b10e2add315416ddd68",
+  "scripts/prepare_dosbox_hlslpp.py": "059128a1d9cd4f279a722b5eda663992e432c4061edb05750c334ecea44bf9d0",
+  "scripts/test_dosbox_hlslpp.py": "d9f857057e2f9a601a05f449ff497b7e0b9c6d71ba15a1c97ba58391931a93b7",
+  "scripts/build_dosbox_dos_arm.py": "210f50d405687c32551b602b7e6941da858521de30873367e561cea5dba6ee35",
+  "scripts/analyse_dosbox_tinygl.py": "73cf3d64ecc4fe97eeb3cbf342d19fe99a1110be76f5d00050f86eb3968743df",
+  "scripts/analyse_dosbox_matrix.py": "4b2920f5a0d1ed12208222064c4a27a500321c5d807ed8f7ad702496ed3cb126",
+  "tests/amiga/dosbox/hlslpp.cpp": "591aa0a3e49b53b5ce362ca8d77c90aacc7a0d07010ade4493b0495bcbd9e670",
+  "tests/amiga/dosbox/check_matrix_arm.py": "92efba72da3a6f0f818e8be452963ac928295349a27442c9ea22215088d26fe1"
+}

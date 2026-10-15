@@ -1,0 +1,11 @@
+START pit-math
+Traceback (most recent call last):
+  File ".context/amiga/windows-opt/test-arm.py", line 6, in <module>
+    print('START',mode,flush=True);m.run(0x12000040,mode,options=(8,0,3000))
+                                   ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "tests/amiga/dosbox/check_pc_arm.py", line 261, in run
+    u.emu_start(pc | (1 if u.reg_read(UC_ARM_REG_CPSR)&32 else 0),base+0x1ff0000,count=100000);pc=u.reg_read(UC_ARM_REG_PC);assert not bad,bad
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<home>/.cache/uv/archive-v0/F-9BYtIwTAFRcSw8/lib/python3.13/site-packages/unicorn/unicorn_py3/unicorn.py", line 766, in emu_start
+    raise UcError(status)
+unicorn.unicorn_py3.unicorn.UcError: Invalid instruction (UC_ERR_INSN_INVALID)

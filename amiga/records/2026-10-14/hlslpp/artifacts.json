@@ -1,0 +1,23 @@
+{
+  "micro": {
+    "bytes": 1163800,
+    "crc32": "81F62A11",
+    "sha256": "943dd6724f70bb9cdd4ab41d696d90a6e4f267bead68c9b09050d79a63ac996f",
+    "elf_sha256": "5e34cdeadb3b5ddfe7cc4f171f56f7311635e34d7e927ffb39adc1cbd2a9a001",
+    "runs": 3
+  },
+  "scalar": {
+    "bytes": 1165124,
+    "crc32": "B95A7723",
+    "sha256": "259d0d269672ab983a68d4e751e2f5dd2c671494da663c8e937bc733a6501bf0",
+    "elf_sha256": "b293a5918094060f6f1ff64f4a50d9bfcd5b7630ff03e5411c50995820bd191d",
+    "runs": 3
+  },
+  "neon": {
+    "bytes": 1165124,
+    "crc32": "6F1B985C",
+    "sha256": "9a90ecf7f18ad5a42615441681795e5301a78b3124ef718ba71a76098bb9b9f8",
+    "elf_sha256": "4ba1448b59f2205db6a75cacaa4bac3e3536b15bce5af228c81edc4f79083451",
+    "runs": 3
+  }
+}

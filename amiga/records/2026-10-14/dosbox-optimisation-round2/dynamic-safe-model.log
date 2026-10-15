@@ -1,0 +1,17 @@
+START hdd
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 34 dispatches 44 heap 3818816
+PASS ARM HDD BIOS geometry, cross-track read/write and end bounds 32 MiB
+START paging
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 4064576
+PASS JIT before paging; interpreter exclusively during paging; fallback calls 2
+PASS ARM paging fixture demand-page faults 1 and shutdown with unmapped text aperture
+START fs-stop
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 4 dispatches 0 heap 3841216
+PASS ARM cancellation fs-stop
+START copy-stop
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 27438 heap 3906816
+PASS cancellation during framebuffer write revokes mapping

@@ -3,13 +3,18 @@
 DOSBox for the Amiga and ZZ9000 Cortex-A9, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 
-Launcher **0.17.0-dev** adds an experimental **Network** tab: DHCP/manual IPv4,
+Launcher **0.19.3-dev** provides icon sidebar navigation, clearer typography and
+aligned settings panels, with separate **CPU & memory**, **Display** and **Audio** pages. A brief startup splash displays the ZZDosBox logo and version.
+[Navigation guide](../../docs/amiga-dosbox-launcher-navigation.md).
+
+The experimental **Network** section provides: DHCP/manual IPv4,
 DNS, MTU, renew, saved-lease release, ping, DNS lookup, live counters and
 Disconnect. It shares Roadshow through a separate NE2000/NAT interpreter
-runtime. Windows networking and IPX remain pending.
+runtime. IPX wrapper mode adds a DOSBox-compatible UDP client with server
+IPv4/port settings. Windows networking and IPX relay hosting remain pending.
 [Network settings and requirements](../../docs/amiga-dosbox-network-ui.md).
 
-The offline **Compatibility** tab provides title search,
+The offline **Compatibility** section provides title search,
 A–Z/0–9 browsing, per-game publisher/tester details, version history, comment
 previews and original report links. Games appear on the left, with a wider
 details pane on the right. Game metadata uses labelled rows; version, status

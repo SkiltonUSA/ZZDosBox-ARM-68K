@@ -23,6 +23,10 @@ static int startup_disk(int mount){char helper_path[DL_PATH],quoted[DL_PATH*2+3]
 static int startup_read_default(unsigned n,char *out){
  char file[DL_PATH];int ok;
  if(!val(system_choice,MUIA_Cycle_Active)){strcpy(out,n?dl_default_config:dl_default_autoexec);return 1;}
+ if(val(system_choice,MUIA_Cycle_Active)==3){char image[DL_PATH];
+  if(selected<0||!dl_join(image,sizeof(image),library.p[selected].drive,(char*)val(disk_image,MUIA_String_Contents))||!disk_image_control("mount",image))return 0;
+  ok=dl_join(file,sizeof(file),"ZZIMAGE:",dl_start_names[n])&&dl_read_text(file,out);if(!disk_image_control("eject",image))ok=0;return ok;
+ }
  if(FindPort("Sixies.ARM.Debug.Owner")||!hdd_available()||!startup_disk(1))return 0;
  ok=dl_startup_restore("DOSHD:")&&dl_join(file,sizeof(file),"DOSHD:",dl_start_names[n]);
  if(ok){if(exists(file))ok=dl_read_text(file,out);else *out=0;}

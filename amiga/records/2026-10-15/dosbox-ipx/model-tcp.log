@@ -1,0 +1,4 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS mTCP DHCP 192.168.77.15 packets TX/RX 13 10
+PASS mTCP HTTP transfer: 4099 exact bytes through emulated x86/ARM NE2000 and native NAT
+PASS ARM guest NE2000, packet queues and clean shell exit

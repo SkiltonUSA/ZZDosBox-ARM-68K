@@ -1,0 +1,12 @@
+START WINDOWS MODEL interpreter-safe
+PROGRESS 0 frames 0 paged False
+PROGRESS 10000 frames 32 paged False
+PROGRESS 20000 frames 65 paged False
+PROGRESS 30000 frames 98 paged False
+PROGRESS 40000 frames 131 paged False
+PROGRESS 50000 frames 172 paged False
+PROGRESS 60000 frames 218 paged True
+PROGRESS 70000 frames 264 paged True
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+MODEL WINDOWS PASS {'variant': 'interpreter-safe', 'frames': 279, 'paged_dispatches': 0, 'fallbacks': 0, 'result': [1, 0, 1536775, 0, 3, 0, 0, 0, 0, 279, 4000], 'frame_sha256': '96f0bfa3c4d37f921a5a5ca20a49ca7f7417943520be33aa3f469e3497b7b0ac', 'requests': 289, 'read': 1175552, 'written': 512}
+Model wall seconds (not A9 performance) 244.4612647909671

@@ -23,5 +23,10 @@ int main(void){struct dn_config c,d;uint32_t n;FILE*f;char b[4096];
  strcpy(c.gateway,"8.8.8.2");assert(dn_error(&c));dn_defaults(&c);c.enabled=1;
  f=tmpfile();assert(dn_write(f,&c));fputs("extra\n",f);rewind(f);assert(dn_read(f,&d)&&fgetc(f)!=EOF);fclose(f);
  f=tmpfile();fputs("ZZNET1\n1 0 1500 3 10\n10.0.2.15\n255.255.255.0\n10.0.2.2\n\n",f);rewind(f);assert(!dn_read(f,&d));fclose(f);
+ dn_defaults(&c);c.protocol=1;c.enabled=1;assert(dn_error(&c));strcpy(c.ipx_server,"192.168.1.9");c.ipx_port=19900;assert(!dn_error(&c));
+ f=tmpfile();assert(dn_write(f,&c));rewind(f);assert(dn_read(f,&d)&&!memcmp(&c,&d,sizeof(c)));fclose(f);
+ f=tmpfile();assert(dn_start(f,&c));readall(f,b);assert(strstr(b,"IPXNET CONNECT")&&!strstr(b,"DHCP")&&!strstr(b,"NE2000"));fclose(f);
+ c.ipx_port=65536;assert(dn_error(&c));c.ipx_port=213;strcpy(c.ipx_server,"255.255.255.255");assert(dn_error(&c));
+ f=tmpfile();fputs("ZZNET1\n1 0 1500 3 10\n10.0.2.15\n255.255.255.0\n10.0.2.2\n\nlegacy\n",f);rewind(f);assert(dn_read(f,&d)&&d.enabled&&!d.protocol&&d.ipx_port==213&&!*d.ipx_server);fclose(f);
  puts("PASS IPv4/subnet/DNS/MTU validation, config roundtrip, DHCP/static generation and failure branches");return 0;
 }

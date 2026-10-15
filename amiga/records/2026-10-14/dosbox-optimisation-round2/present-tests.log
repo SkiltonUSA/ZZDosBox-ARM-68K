@@ -1,0 +1,1 @@
+PASS 98 latency schedules, 168000 frames, ACK wrap, slot exclusivity, bounded batches, timeout/stop lock retention

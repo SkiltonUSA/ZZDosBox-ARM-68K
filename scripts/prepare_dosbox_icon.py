@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Convert the supplied DOSBox artwork to a classic 64px Workbench image.
+"""Convert the ZZDosBox artwork to a classic 64px Workbench image.
 
-Requires ImageMagick. Source ICO remains the master; generated data stays local.
+Requires ImageMagick. Source PNG remains the master; generated data stays local.
 Palette indices: Workbench background, black, white. Selected appearance is
 handled by Workbench, and launcher/icon.c preserves existing launch metadata.
 """
@@ -10,7 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / '.context/amiga/dosbox-launcher'
-SOURCE = ROOT / 'amiga/dosbox/assets/dosbox.ico'
+SOURCE = ROOT / 'amiga/dosbox/assets/zzdosbox-logo.png'
 
 
 def prepare():
@@ -34,7 +34,29 @@ def prepare():
         text += ','.join(f'0x{v:04x}' for v in planes[i:i+8]) + ',\n'
     text += '};\n'
     (OUT / 'icon-art.h').write_text(text)
-    print('Prepared 64x64 DOSBox Workbench artwork')
+    # Row-interleaved, uncompressed ILBM BODY for MUI's native Bodychunk class.
+    # Embed the startup artwork so it cannot go missing after installation.
+    size = 128
+    rgba = subprocess.check_output([
+        'magick', str(SOURCE) + '[0]', '-resize', f'{size}x{size}!',
+        '-depth', '8', 'rgba:-',
+    ])
+    assert len(rgba) == size * size * 4
+    body = bytearray(size * (size // 8) * 2)
+    for y in range(size):
+        for x in range(size):
+            r, g, b, a = rgba[(y * size + x) * 4:(y * size + x + 1) * 4]
+            colour = 0 if a < 128 else 1 if r + g + b < 384 else 2
+            for plane in range(2):
+                if colour & (1 << plane):
+                    body[(y * 2 + plane) * (size // 8) + x // 8] |= 1 << (7 - x % 8)
+    text = '/* Generated from assets/zzdosbox-logo.png; do not edit. */\n'
+    text += 'static const UBYTE splash_body[] = {\n'
+    for i in range(0, len(body), 16):
+        text += ','.join(f'0x{v:02x}' for v in body[i:i+16]) + ',\n'
+    text += '};\n'
+    (OUT / 'splash-art.h').write_text(text)
+    print('Prepared 64x64 Workbench icon and 128x128 startup logo')
 
 
 if __name__ == '__main__':

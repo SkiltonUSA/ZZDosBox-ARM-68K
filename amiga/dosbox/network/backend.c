@@ -1,11 +1,13 @@
 /* GPL-3.0-or-later. Socket ownership stays on the Amiga task; no blocking I/O. */
 #include "backend.h"
+#include "ipx_packet.h"
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>
 #include <sys/time.h>
 #include <sys/socket.h>
+#include <sys/ioctl.h>
 #include "libslirp.h"
 #ifdef __amigaos__
 #include <exec/execbase.h>
@@ -20,12 +22,16 @@ static struct MsgPort *timer_port;
 static struct timerequest *timer_io;
 #else
 #include <unistd.h>
+#include <fcntl.h>
 #endif
 struct in_addr zz_net_dns;
 static Slirp *net;
+static int ipx_socket=-1;
+static uint8_t ipx_packet[ZZ_NET_MTU+1];
 static struct dn_config configuration;
 static int configured;
-int zz_net_configure(const struct dn_config *c){if(net||!c||dn_error(c))return 0;configuration=*c;configured=1;return 1;}
+int zz_net_configure(const struct dn_config *c){if(net||ipx_socket>=0||!c||dn_error(c))return 0;configuration=*c;configured=1;return 1;}
+void zz_net_configuration(struct dn_config *c){if(!configured)dn_defaults(&configuration);*c=configuration;}
 static struct zz_net_stats stats;
 static unsigned head,tail,polls,fault;
 static uint8_t frames[ZZ_NET_QUEUE][ZZ_NET_MTU];
@@ -73,6 +79,22 @@ int zz_net_open(const char *dns) {
  if(OpenDevice(TIMERNAME,UNIT_MICROHZ,(struct IORequest*)timer_io,0))goto bad;
  NetTimerBase=timer_io->tr_node.io_Device;
 #endif
+ if(configuration.protocol){
+  struct sockaddr_in peer;memset(&peer,0,sizeof(peer));peer.sin_family=AF_INET;
+#ifdef __amigaos__
+  peer.sin_len=sizeof(peer);
+#endif
+  peer.sin_port=htons(configuration.ipx_port);
+  if(!inet_aton(configuration.ipx_server,&peer.sin_addr))goto bad;
+  ipx_socket=socket(AF_INET,SOCK_DGRAM,0);if(ipx_socket<0||ipx_socket>=FD_SETSIZE)goto bad;
+#ifdef __amigaos__
+  {unsigned long on=1;if(IoctlSocket(ipx_socket,FIONBIO,(char*)&on))goto bad;}
+#else
+  {int flags=fcntl(ipx_socket,F_GETFL,0);if(flags<0||fcntl(ipx_socket,F_SETFL,flags|O_NONBLOCK))goto bad;}
+#endif
+  if(connect(ipx_socket,(struct sockaddr*)&peer,sizeof(peer)))goto bad;
+  return 1;
+ }
  SlirpConfig c;memset(&c,0,sizeof(c));c.version=6;c.in_enabled=true;c.disable_host_loopback=true;
  if(!dns)dns=configuration.dns;
  if(dns&&*dns){uint32_t address;if(!dn_ipv4(dns,&address)||!dn_unicast(address)||!inet_aton(dns,&zz_net_dns))goto bad;}else zz_net_dns.s_addr=0;
@@ -88,6 +110,14 @@ int zz_net_open(const char *dns) {
 bad:zz_net_close();return 0;
 }
 void zz_net_close(void) {
+ if(ipx_socket>=0){
+#ifdef __amigaos__
+  CloseSocket(ipx_socket);
+#else
+  close(ipx_socket);
+#endif
+  ipx_socket=-1;
+ }
  if(net){slirp_cleanup(net);net=NULL;}
 #ifdef __amigaos__
  if(NetTimerBase){CloseDevice((struct IORequest*)timer_io);NetTimerBase=NULL;}
@@ -98,12 +128,27 @@ void zz_net_close(void) {
  head=tail=0;
 }
 int zz_net_input(const uint8_t *frame,unsigned size) {
+ if(ipx_socket>=0){
+  if(!zz_ipx_valid(frame,size)){stats.dropped++;return 1;}
+  int n=send(ipx_socket,(const void*)frame,size,0);
+  if(n==(int)size){stats.sent++;return 1;}
+  if(n<0&&(errno==EWOULDBLOCK||errno==EAGAIN||errno==EINTR)){stats.dropped++;return 1;}
+  stats.errors++;return 0;
+ }
  if(!net||fault||!frame||size<14||size>ZZ_NET_MTU)return 0;
  /* IPv4 and ARP only; IPv6/NC-SI/VLAN are not exposed by this backend. */
  if(!(frame[12]==8&&(frame[13]==0||frame[13]==6))){stats.dropped++;return 1;}
  slirp_input(net,frame,size);stats.sent++;return !fault;
 }
 int zz_net_poll(void) {
+ if(ipx_socket>=0){
+  for(unsigned i=0;i<ZZ_NET_QUEUE;i++){
+   int n=recv(ipx_socket,(void*)ipx_packet,sizeof(ipx_packet),0);
+   if(n<0){if(errno==EWOULDBLOCK||errno==EAGAIN||errno==EINTR)return 1;stats.errors++;return 0;}
+   if(!zz_ipx_valid(ipx_packet,(unsigned)n)){stats.dropped++;continue;}
+   output(ipx_packet,(unsigned)n,NULL);
+  }return 1;
+ }
  if(!net||fault)return 0;uint32_t timeout=0;polls=0;maxfd=-1;FD_ZERO(&rd);FD_ZERO(&wr);FD_ZERO(&ex);
  slirp_pollfds_fill_socket(net,&timeout,add_poll,NULL);if(fault)return 0;
  struct timeval t={0,0};
@@ -115,7 +160,14 @@ int zz_net_poll(void) {
  slirp_pollfds_poll(net,n<0,get_events,NULL);if(n<0&&errno!=EINTR){stats.errors++;return 0;}return !fault;
 }
 unsigned zz_net_receive(uint8_t *frame,unsigned capacity) {
- if(head==tail||!frame)return 0;unsigned i=tail%ZZ_NET_QUEUE,n=lengths[i];if(capacity<n)return 0;
- memcpy(frame,frames[i],n);tail++;return n;
+ if(!frame)return 0;
+ while(head!=tail){
+  unsigned i=tail%ZZ_NET_QUEUE,n=lengths[i];
+  tail++;
+  if(n>capacity){stats.dropped++;continue;}
+  memcpy(frame,frames[i],n);
+  return n;
+ }
+ return 0;
 }
 struct zz_net_stats zz_net_statistics(void){return stats;}

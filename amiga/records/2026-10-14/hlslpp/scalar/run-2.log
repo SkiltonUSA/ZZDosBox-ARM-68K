@@ -1,0 +1,69 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=0c8a46ef
+BOOTSTRAP amiga=40d7c880 arm=00f6c880 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+DISPLAY_CONFIG mode=fullscreen fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=1
+FULLSCREEN_BITMAP allocated=0afcba7c screen=0b08a908 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=0f2c8744/40e23200 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+VIDEO adapter=0 source=320x400 monochrome=0
+JIT magic=4a495431 commits=30 witness=1 dispatches=283807 cache_bytes=4194304 heap_peak=3906816 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+TGLBENCH magic=54474c31 errors=0 count=3 quick=0
+TGLBENCH case=0 n=1024 repeats=16 hash=88b1e9f7 scalar=0000000001ef9d69 hlsl=0000000001efccfe
+TGLPROFILE case=0 method=0 t0=00000000002e874a t1=00000000000c9e5a t2=00000000000265ea t3=00000000000c754b t4=000000000005d7b9 t5=00000000000d3602
+TGLPROFILE case=0 method=1 t0=00000000002d577c t1=00000000000bfdec t2=00000000000262e1 t3=00000000000c12fa t4=000000000005d865 t5=00000000000d0b50
+TGLBENCH case=1 n=128 repeats=16 hash=0628ae41 scalar=0000000001510dce hlsl=000000000150da62
+TGLPROFILE case=1 method=0 t0=0000000000175924 t1=000000000001a9c3 t2=0000000000015b5a t3=00000000000c9864 t4=000000000005d8cf t5=000000000001e2d4
+TGLPROFILE case=1 method=1 t0=00000000001797fe t1=0000000000019df1 t2=00000000000159ec t3=00000000000cda11 t4=000000000005df1c t5=000000000001e6f4
+TGLBENCH case=2 n=32 repeats=16 hash=88077dd1 scalar=0000000018a38d98 hlsl=0000000018a27993
+TGLPROFILE case=2 method=0 t0=00000000018aaa4e t1=000000000000ad1e t2=0000000000003aad t3=000000000182b6a4 t4=000000000005e3bb t5=0000000000012824
+TGLPROFILE case=2 method=1 t0=00000000018b43b7 t1=000000000000b77a t2=0000000000003c2a t3=00000000018342b8 t4=000000000005e8a6 t5=00000000000124b5
+HLSLPP mode=scalar revision=3d9af2e77a89ddd645928f1600a0688dc898dedc
+SCANLINES magic=53434e31 frames=17 rendered_rows=8160 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=3000
+PRESENT magic=50525331 source=17 shown=17 skipped=0 divisor=1 changes=0 mode=0 hz=60 work_ticks=6831255 copy_ticks=1176138 total_copy=000000001b323ddb
+ARM_FPS tenths=0
+PC frames=17 emulated_ms=274 wall_ms=5760 timed_done=0
+POLL ms=1 calls=2913 wait_us=3778007 max_us=15385
+SHELL result=0 guest_exit=0 slices=100583 bytes=304 hash=97312e96 mismatches=0
+DosBox ZZ9000 project                         0.11.0-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>EGATEST.COM
+EGA/PIT PASS
+
+C:\>exit
+
+
+SHELL PASS mode=0
+FILES_TIME calls=14 read_us=17752 write_us=0 other_us=3947 max_us=3185 (totals saturate at 4294967295)
+DISK host_seeks=0
+FILES requests=14 read=32113 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=102f4000 restored=102f4000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000001 restored=00000001
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=17 flips=17 wait_us=162363
+COPY observed_us=56001 max_us=5540
+PIPELINE enabled=1 overlaps=0 releases=17
+LAUNCHER exit=0; owned memory released

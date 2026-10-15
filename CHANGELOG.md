@@ -1,5 +1,138 @@
 # ZZDosBox changelog
 
+Version history from **0.1.0-dev** through **0.19.7-dev**, newest first.
+Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
+Launcher and ARM runtimes can carry different version strings; experiments
+without a new version are recorded separately below. Historical validation and
+installation statements describe that milestone, not the current default.
+
+Reconstructed from retained source, build metadata and development reports.
+No distinct 0.10.2 milestone was established from those records; the earlier
+scanline candidate is retained in the experiment notes rather than assigned one.
+
+| Version | Main change |
+|---|---|
+| [0.19.7-dev](#v0-19-7) | create hard disks |
+| [0.19.6-dev](#v0-19-6) | disk browsing and settings help |
+| [0.19.5-dev](#v0-19-5) | larger libraries |
+| [0.19.4-dev](#v0-19-4) | library capacity |
+| [0.19.3-dev](#v0-19-3) | ZZDosBox identity |
+| [0.19.2-dev](#v0-19-2) | startup and loading splashes |
+| [0.19.1-dev](#v0-19-1) | launcher presentation |
+| [0.19.0-dev](#v0-19-0) | sidebar navigation |
+| [0.18.0-dev](#v0-18-0) | IPX wrapper client |
+| [0.17.0-dev](#v0-17-0) | experimental Network tab |
+| [0.16.0-dev](#v0-16-0) | on-demand reports and Windows disk cache |
+| [0.15.2-dev](#v0-15-2) | complete-discussion topic overviews |
+| [0.15.1-dev](#v0-15-1) | offline compatibility reference |
+| [0.15.0-dev](#v0-15-0) | initial compatibility browser |
+| [0.14.0-dev](#v0-14-0) | dosbox.conf editor |
+| [0.13.0-dev](#v0-13-0) | program categories |
+| [0.12.0-dev](#v0-12-0) | memory development tools |
+| [0.11.1-dev](#v0-11-1) | Developer controls (hardware checked; not installed) |
+| [0.11.0-dev](#v0-11-0) | graphics adapters and rendering |
+| [0.10.3-dev](#v0-10-3) | Adaptive presentation and scanline options |
+| [0.10.1-dev](#v0-10-1) | Welcome screen, live controls, startup/CD/MIDI |
+| [0.10.0-dev](#v0-10-0) | startup files, CD and MIDI |
+| [0.9.1-dev](#v0-9-1) | Window sizes and resize handling |
+| [0.9.0-dev](#v0-9-0) | Workbench windows and DOS selection |
+| [0.8.0-dev](#v0-8-0) | Writable hard disks |
+| [0.7.0-dev](#v0-7-0) | Directories, floppy boot and guest RAM |
+| [0.6.0-dev](#v0-6-0) | MUI launcher and live input |
+| [0.5.0-dev](#v0-5-0) | PC devices and direct graphics |
+| [0.4.0-dev](#v0-4-0) | DOS shell and live files |
+| [0.3.0-dev](#v0-3-0) | interactive console |
+| [0.2.0-dev](#v0-2-0) | DOS kernel |
+| [0.1.0-dev](#v0-1-0) | first ARM execution prototype |
+
+## Unreleased — runtime review cleanup
+
+- Share the three-buffer ownership plan through `amiga/common/flip_plan.h`.
+- Synchronize only occupied console-ring spans across PC, shell and console hosts.
+  Preserve consumption only after successful output; skip empty payload ranges.
+- Drop/count oversized receive packets and continue to the next fitting packet.
+- Document the unused fourth byte in scanline pixel formats.
+- Add sanitizer tests for ring publication, wrapping and receive recovery.
+- RAM-only hardware correctness check passed; no speed gain is established.
+
+<a id="v0-19-7"></a>
+
+## 0.19.7-dev — create hard disks
+
+- Create 32/64/128/256 MiB FAT16 raw images with startup files and OS profiles.
+- Default to embedded DOSBox DOS 5; optionally use installed MS-DOS 6.22 files.
+- Mount DOS 5 images as C: for a session and eject on return.
+
+<a id="v0-19-6"></a>
+
+## 0.19.6-dev — disk browsing and settings help
+
+- Select, mount, open and eject supported raw FAT images from the Disks page.
+- Explain scanline availability and related display options beside settings.
+
+<a id="v0-19-5"></a>
+
+## 0.19.5-dev — larger libraries
+
+- Increase saved-program capacity from 128 to 256 profiles.
+- Preserve existing categories, launch settings and selected entry; no ARM runtime change.
+
+<a id="v0-19-4"></a>
+
+## 0.19.4-dev — library capacity
+
+- Increase saved-program capacity from 32 to 128 profiles.
+- Validate full-capacity save/load, category indexes and excess-entry rejection.
+
+<a id="v0-19-3"></a>
+
+## 0.19.3-dev — ZZDosBox identity
+
+- Add the ZZDosBox box logo, with prominent ZZ lettering alongside DOS/BOX.
+- Use the same artwork for startup/loading splashes and Workbench icons.
+
+<a id="v0-19-2"></a>
+
+## 0.19.2-dev — startup and loading splashes
+
+- Show the DOSBox logo and launcher version at startup.
+- Continue automatically after two seconds, or dismiss the panel with a click.
+- Embed the artwork and share the version string with About.
+- Show a loading card before games/apps with fullscreen, exit and CPU-cycle shortcuts.
+
+<a id="v0-19-1"></a>
+
+## 0.19.1-dev — launcher presentation
+
+- Add readable proportional text, aligned icon/text navigation columns and framed page headings.
+- Standardize button spacing and settings groups while retaining the sidebar layout.
+- Align Screen and Rendering panel edges, label columns and controls.
+- Keep native MUI colour preferences and font fallbacks; no extra MUI classes.
+
+<a id="v0-19-0"></a>
+
+## 0.19.0-dev — sidebar navigation
+
+- Replace main tabs with a native MUI sidebar and selected-program heading.
+- Split Settings into CPU & memory, Display and Audio; consolidate window/fullscreen controls under Display.
+- Keep Save settings visible and preserve edits while navigating.
+- Synchronize category Edit and live Network/Developer sessions with the sidebar.
+- Retain MUI 3.8 support and existing profile/session formats.
+
+<a id="v0-18-0"></a>
+
+## 0.18.0-dev — IPX wrapper client
+
+- Add TCP/IP / IPX wrapper (UDP) selection and per-program server IPv4/port.
+- Port the pinned DOSBox IPX driver: discovery, sockets, ECB send/receive, ESR callbacks and IPXNET commands.
+- Carry IPX packets over bounded queues to a nonblocking Roadshow UDP socket.
+- Validate packet lengths and peer source; retain TCP/IP settings when switching protocols.
+- Upgrade profiles to version 13 while reading previous network records.
+- Verify IPX sockets, broadcast/reply callbacks, peer ping and clean disconnect on the A4000TX; retain passing TCP/IP and CD regression checks.
+- Client mode only; an external DOSBox-compatible relay is required. Windows IPX/SPX, Novell drivers and relay hosting are not implemented.
+
+<a id="v0-17-0"></a>
+
 ## 0.17.0-dev — experimental Network tab
 
 - Add per-program DHCP/manual IPv4, private subnet/gateway, DNS, hostname,
@@ -12,6 +145,8 @@
   incompatible renderer/core/debugger combinations. Windows networking and
   IPX remain pending. Release clears the saved guest lease, not Roadshow's IP.
 
+<a id="v0-16-0"></a>
+
 ## 0.16.0-dev — on-demand reports and Windows disk cache
 
 - Load selected compatibility details from `Compatibility.dat`; reduce the launcher executable by 73.3%.
@@ -23,6 +158,7 @@
 - Add acknowledgement counters and elapsed time to fullscreen failure diagnostics.
 - Keep indexed-pixel capture unrolling experimental; a failed fullscreen run is excluded from performance results.
 
+<a id="v0-15-2"></a>
 
 ## 0.15.2-dev — complete-discussion topic overviews
 
@@ -31,6 +167,8 @@
 - Count unclassified comments explicitly; topic mentions are not verified fixes.
 - Keep the latest excerpt separately labelled and retain original-report links.
 - Expand the scrolling discussion area and bundle updated Markdown details.
+
+<a id="v0-15-1"></a>
 
 ## 0.15.1-dev — offline compatibility reference
 
@@ -42,17 +180,38 @@
 - Bundle summary and detailed Markdown references; keep CSV/JSON exports and reproducible scrapers.
 - Clearly distinguish upstream reports from verified ZZDosBox results.
 
-## PIC hardware floating point — 14 October 2026
+<a id="v0-15-0"></a>
 
-- Promote the measured Direct runtime using A9 VFP for PIC event scheduling;
-  keep the same queue algorithm, guest cycles and framebuffer handoff.
-- Save/normalise/restore SIMD and FPSCR state using the existing firmware guard.
-- Doom Demo3 averages 7.2944 → 7.6358 FPS (+4.68%), two runs per build,
-  with no frame skipping. Vette startup improves slightly; Empire is unchanged.
-- Physical EGA/PIT and startup/cancellation checks pass, including the installed
-  path. Preserve the previous Direct runtime for rollback.
-- Publish the measured executable, symbols, regression evidence and chronological
-  optimisation history. OpenGL, Developer MUI and Windows runtimes are unchanged.
+## 0.15.0-dev — initial compatibility browser
+
+- Add the offline DOSBox compatibility index, title search and alphabet filters.
+- Retain links to upstream reports; these are community reports, not ZZDosBox test results.
+- Superseded by the right-pane details and tables in 0.15.1.
+
+<a id="v0-14-0"></a>
+
+## 0.14.0-dev — dosbox.conf editor
+
+- Add Developer → dosbox.conf with 29 validated global overrides, defaults, import/export and previous-file backup.
+- Select interpreter or dynamic core and exact CPU cycles without rewriting program profiles.
+- Route explicit dynamic disk-image launches to a separate guarded runtime; paging still falls back to interpretation.
+
+<a id="v0-13-0"></a>
+
+## 0.13.0-dev — program categories
+
+- Group All, Games, Applications and OS under Load Program.
+- Add a saved category selector with migration of existing profiles and category filtering.
+
+<a id="v0-12-0"></a>
+
+## 0.12.0-dev — memory development tools
+
+- Add paused guest-RAM hex/ASCII viewing, 8/16/32-bit edits and undo.
+- Add value scanning/refinement and 16/32-bit x86 disassembly.
+- Use separate diagnostic runtimes with cooperative pause/resume; these tools are not host-physical-memory access.
+
+<a id="v0-11-1"></a>
 
 ## 0.11.1-dev — Developer controls (hardware checked; not installed)
 
@@ -67,18 +226,7 @@
 - Checkpoints run outside the ARM framebuffer mapping. The host drains display
   completion before opening nonblocking controls and continues servicing transport.
 
-## Direct-target OpenGL experiment — 14 October 2026 (not installed)
-
-- Render eligible 640×480 frames into the validated XACP back buffer; retain
-  the existing path for resized windows and scanline masks.
-- Measured 5.06 FPS OpenGL versus 6.94 FPS Direct in Doom Demo3. Previous GL
-  measured 4.72 FPS; the historical comparison suggests about 7% improvement.
-- A subsequent loop refinement passed software tests but the Amiga froze
-  during its first hardware test. Withdrawn; exact cause remains unresolved.
-- Source restored to the first tested variant. Installed runtimes unchanged.
-- Keep Settings choices Direct / OpenGL (experimental), saved per program.
-
-[Test and failure record](amiga/records/2026-10-14/dosbox-gl-direct/method.md).
+<a id="v0-11-0"></a>
 
 ## 0.11.0-dev — graphics adapters and rendering
 
@@ -92,12 +240,150 @@
 - Corrected Hercules welcome/boot text addressing. A separate welcome helper preserves existing copies.
 - Tandy/PCjr sound and Windows S3 driver compatibility are not included in the verified feature set.
 
+<a id="v0-10-3"></a>
+
 ## 0.10.3-dev launcher — 13 October 2026
 
 - Added Normal / Adaptive presentation to Settings, saved per program; Normal default.
 - Installed the optional adaptive runtime and Off/Classic/Soft/Gradient scanline choices.
 - Preserved existing profiles; verified migration, save/reopen and physical launch/exit.
 - Verified the low-stack guard and 64 KiB Workbench icon stack.
+
+<a id="v0-10-1"></a>
+
+## 0.10.1-dev — 13 October 2026
+
+- Added the DOS welcome screen with version, project link and keyboard controls.
+- Added Alt+Return window/fullscreen switching and live Ctrl+minus/plus cycle
+  adjustment, including delayed window activation after display changes.
+- Added external MT-32/General MIDI through CAMD, plus CAMD, AHI and ZZ9000AX
+  driver detection. PCM sound remains pending.
+- Grouped AUTOEXEC.BAT, CONFIG.SYS and CD-ROM controls under DOS terminal.
+  Startup files support Default, Edited and File choices, with recovery of
+  temporary changes to the booted DOS disk.
+- Added read-only ISO9660 and mounted Amiga data-CD access, including the
+  original ZZDOSCD.SYS gateway for booted MS-DOS.
+- Verified display switching, MIDI capture, CD reads, startup-file restoration
+  and clean shutdown on hardware. External synthesizer audio remains untested.
+
+<a id="v0-10-0"></a>
+
+## 0.10.0-dev — startup files, CD and MIDI
+
+- Group AUTOEXEC.BAT, CONFIG.SYS and CD controls in DOS terminal.
+- Add startup-file selection/editing and restoration of temporary booted-DOS edits.
+- Add read-only ISO/mounted-CD access and the booted-DOS CD gateway.
+- Add external intelligent/UART MPU-401 transport through CAMD and audio-driver discovery; PCM remains unavailable.
+- Initial integration runtime; 0.10.1 adds the welcome screen and live display/cycle controls.
+
+<a id="v0-9-1"></a>
+
+## 0.9.1-dev — 13 October 2026
+
+- Added 320×240, 640×480 and 960×720 window presets on the DOS terminal tab.
+- Added Workbench resize handling with centred 4:3 output and black margins.
+- Moved Show FPS to Settings; preserved prior profile formats.
+
+<a id="v0-9-0"></a>
+
+## 0.9.0-dev — 13 October 2026
+
+- Added Workbench window output alongside fullscreen operation.
+- Added embedded DOS 5 / installed MS-DOS 6.22 selection.
+- Added the optional ARM-rendered display-refresh counter.
+
+<a id="v0-8-0"></a>
+
+## 0.8.0-dev — 13 October 2026
+
+- Added writable 32 MB BIOS hard-disk images and Workbench mount/eject controls.
+- Verified MS-DOS boot, persistent files and program-profile launches.
+- Recorded Keen startup throughput averaging 37.2 refreshes/sec across three
+  runs; this was a timed startup test, not a full-speed gameplay claim.
+
+<a id="v0-7-0"></a>
+
+## 0.7.0-dev — 12 October 2026
+
+- Added nested DOS directories and bounded host-file access.
+- Added read-only 1.44 MB BIOS floppy boot and guest RAM choices up to 8 MB.
+- Introduced the banked TLB to fit the interpreter within its owned allocation.
+- Compared selected behaviour with DOSBox-X; retained dosbox-libretro as the
+  source base.
+
+<a id="v0-6-0"></a>
+
+## 0.6.0-dev — 12 October 2026
+
+- Added the MUI program launcher, profiles, LOADFIX option, startup-file editors,
+  terminal colours, video choices and CPU-cycle presets.
+- Added live keyboard input and sessions that run until closed.
+
+<a id="v0-5-0"></a>
+
+## 0.5.0-dev — PC devices and direct graphics
+
+- Add PC BIOS, PIT and keyboard devices with CGA/EGA/VGA display integration.
+- Render on ARM into owned ZZ9000 buffers and coordinate presentation through the 68K.
+- Optimize host polling, scaling and pixel conversion through measured candidates; initially timed execution without live gameplay input.
+
+<a id="v0-4-0"></a>
+
+## 0.4.0-dev — DOS shell and live files
+
+- Integrate the upstream DOS shell and live writable C: drawer.
+- Support shell commands, COM/EXE execution and bounded host file requests.
+- Use LOADFIX for programs requiring a different conventional-memory load address.
+
+<a id="v0-3-0"></a>
+
+## 0.3.0-dev — interactive console
+
+- Add streaming text input/output between ARM and an Amiga console.
+- Use bounded shared rings and cooperative stop while waiting for input or output.
+
+<a id="v0-2-0"></a>
+
+## 0.2.0-dev — DOS kernel
+
+- Integrate upstream DOS services, COM/MZ loading and process/memory management.
+- Stage a private flat C: drive, execute programs and return file changes to the host.
+- This precedes the live host-backed filesystem and interactive shell.
+
+<a id="v0-1-0"></a>
+
+## 0.1.0-dev — first ARM execution prototype
+
+- Run the upstream x86 interpreter on application-owned Cortex-A9 Core1.
+- Verify an original arithmetic/memory diagnostic and minimal text/exit services.
+- Establish relocation, cancellation, processor-state restoration and owned-memory release; no full DOS shell or PC graphics yet.
+
+# Unversioned runtime and research milestones
+
+## PIC hardware floating point — 14 October 2026
+
+- Promote the measured Direct runtime using A9 VFP for PIC event scheduling;
+  keep the same queue algorithm, guest cycles and framebuffer handoff.
+- Save/normalise/restore SIMD and FPSCR state using the existing firmware guard.
+- Doom Demo3 averages 7.2944 → 7.6358 FPS (+4.68%), two runs per build,
+  with no frame skipping. Vette startup improves slightly; Empire is unchanged.
+- Physical EGA/PIT and startup/cancellation checks pass, including the installed
+  path. Preserve the previous Direct runtime for rollback.
+- Publish the measured executable, symbols, regression evidence and chronological
+  optimisation history. OpenGL, Developer MUI and Windows runtimes are unchanged.
+
+## Direct-target OpenGL experiment — 14 October 2026 (not installed)
+
+- Render eligible 640×480 frames into the validated XACP back buffer; retain
+  the existing path for resized windows and scanline masks.
+- Measured 5.06 FPS OpenGL versus 6.94 FPS Direct in Doom Demo3. Previous GL
+  measured 4.72 FPS; the historical comparison suggests about 7% improvement.
+- A subsequent loop refinement passed software tests but the Amiga froze
+  during its first hardware test. Withdrawn; exact cause remains unresolved.
+- Source restored to the first tested variant. Installed runtimes unchanged.
+- Keep Settings choices Direct / OpenGL (experimental), saved per program.
+
+[Test and failure record](amiga/records/2026-10-14/dosbox-gl-direct/method.md).
 
 ## Adaptive presentation experiment (now optional in MUI)
 
@@ -106,9 +392,7 @@
 - Separate experimental executable; default remains Off. Physical Doom Demo3: 7.27 to 8.25 real FPS (+13.5%) in a matched pair with profiling disabled. Five complete timedemos passed cleanup; visual smoothness remains unassessed.
 
 
-Amiga-specific development history, based on
-[dosbox-libretro](https://github.com/libretro/dosbox-libretro).
-These are development milestones, not upstream DOSBox release numbers.
+
 
 ## Earlier scanline-style launcher candidate (superseded above)
 
@@ -175,59 +459,3 @@ Separate experimental executable, still identifying as 0.10.1-dev.
   estimate use the emulated clock, not a proven real-PC speed equivalence.
 - Passed ARM regression tests for A20, ROM protection, page faults and sparse
   high-address mappings. Added physical screenshots and benchmark records.
-
-## 0.10.1-dev — 13 October 2026
-
-- Added the DOS welcome screen with version, project link and keyboard controls.
-- Added Alt+Return window/fullscreen switching and live Ctrl+minus/plus cycle
-  adjustment, including delayed window activation after display changes.
-- Added external MT-32/General MIDI through CAMD, plus CAMD, AHI and ZZ9000AX
-  driver detection. PCM sound remains pending.
-- Grouped AUTOEXEC.BAT, CONFIG.SYS and CD-ROM controls under DOS terminal.
-  Startup files support Default, Edited and File choices, with recovery of
-  temporary changes to the booted DOS disk.
-- Added read-only ISO9660 and mounted Amiga data-CD access, including the
-  original ZZDOSCD.SYS gateway for booted MS-DOS.
-- Verified display switching, MIDI capture, CD reads, startup-file restoration
-  and clean shutdown on hardware. External synthesizer audio remains untested.
-
-## 0.9.1-dev — 13 October 2026
-
-- Added 320×240, 640×480 and 960×720 window presets on the DOS terminal tab.
-- Added Workbench resize handling with centred 4:3 output and black margins.
-- Moved Show FPS to Settings; preserved prior profile formats.
-
-## 0.9.0-dev — 13 October 2026
-
-- Added Workbench window output alongside fullscreen operation.
-- Added embedded DOS 5 / installed MS-DOS 6.22 selection.
-- Added the optional ARM-rendered display-refresh counter.
-
-## 0.8.0-dev — 13 October 2026
-
-- Added writable 32 MB BIOS hard-disk images and Workbench mount/eject controls.
-- Verified MS-DOS boot, persistent files and program-profile launches.
-- Recorded Keen startup throughput averaging 37.2 refreshes/sec across three
-  runs; this was a timed startup test, not a full-speed gameplay claim.
-
-## 0.7.0-dev — 12 October 2026
-
-- Added nested DOS directories and bounded host-file access.
-- Added read-only 1.44 MB BIOS floppy boot and guest RAM choices up to 8 MB.
-- Introduced the banked TLB to fit the interpreter within its owned allocation.
-- Compared selected behaviour with DOSBox-X; retained dosbox-libretro as the
-  source base.
-
-## 0.6.0-dev — 12 October 2026
-
-- Added the MUI program launcher, profiles, LOADFIX option, startup-file editors,
-  terminal colours, video choices and CPU-cycle presets.
-- Added live keyboard input and sessions that run until closed.
-
-## Earlier prototypes — 12 October 2026
-
-- Established x86 interpreter execution on the application-owned A9 Core1.
-- Added the DOS kernel, COM/EXE loading, console, shell and writable C: drawer.
-- Added PC BIOS/PIT/keyboard devices and CGA/EGA/VGA display integration.
-- Tuned host polling, ARM scaling, conversion and compiler settings using
-  repeatable physical tests; retained rejected experiments separately.

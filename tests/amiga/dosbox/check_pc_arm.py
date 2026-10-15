@@ -212,6 +212,7 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   assert memory_requests is None
   files=dict(network.files);keys=network.keys
   put(0x18c000,0x4e455431);put(0x188040,0)
+  put(0x18c004,getattr(network,"protocol",0));put(0x18c008,getattr(network,"server",0));put(0x18c00c,getattr(network,"port",213))
  midi_bytes=bytearray()
  raw_sent=False
  disk_open=False
@@ -579,12 +580,15 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
  if mode=='invalid-options':
   assert rc==1 and b'Invalid PC options' in detail and frame_seq==0,(rc,result,detail)
   print('PASS rejected invalid PC settings',flush=True);return
+ if network is not None and getattr(network,'cancel',False):
+  assert rc==2 and result[4]==3 and not handles and get(0x18c140)==0,(rc,result,detail,output)
+  print('PASS IPX connection cancellation and cleanup',flush=True);return
  assert rc==0 and result[4]==0,(rc,result,detail,output)
  if network is not None:
   assert not handles
   (OUT/'model-network.txt').write_bytes(output+b'\n'+detail+b'\n')
   network.check(bytes(output),files)
-  print('PASS ARM guest NE2000, packet queues and clean shell exit',flush=True)
+  print('PASS ARM guest '+('IPX/UDP' if getattr(network,'protocol',0) else 'NE2000')+', packet queues and clean shell exit',flush=True)
   return
  if adapter:
   assert b'ADAPTER PASS' in output and b'ADAPTER FAIL' not in output and frame_seq>=10 and captured,(rc,detail,output)

@@ -64,6 +64,11 @@ Activate = 1
 Mask = 0x7ffffffe
 MaxTransfer = 0x1fe00
 """)
+    # Independent image viewer. FAT95 LowCyl=0 discovers the FAT partition;
+    # geometry placeholders do not constrain the image (fat95 readme.too).
+    (out/'ZZIMAGE').write_text((out/'DOSHD').read_text().replace(
+        'Unit = 5', 'Unit = 6').replace('Surfaces = 16', 'Surfaces = 1').replace(
+        'SectorsPerTrack = 32', 'SectorsPerTrack = 1').replace('HighCyl = 127', 'HighCyl = 1'))
     (out/'Mount-DOS-Disks').write_text('\n'.join(mount)+'\n')
     (out/'Eject-DOS-Disks').write_text('\n'.join(eject)+'\n')
 

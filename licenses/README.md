@@ -17,3 +17,8 @@ are recorded in `scripts/prepare_dosbox_network.py`.
 Optional mTCP and Crynwr packet-driver binaries are supplied separately by
 the user through the hash-checked staging script; their notices are retained
 when staged. They are not included in this development artifact.
+
+Research math dependencies: hlsl++ (MIT, `HLSLPP-LICENSE`) and ARM CMSIS-DSP
+(Apache-2.0, `CMSIS-DSP-LICENSE`). Pinned versions and the ARM32 hlsl++ patch
+are recorded with the matrix experiments. Neither is a production DOSBox
+dependency. The Simd library was reviewed as a reference, not imported.

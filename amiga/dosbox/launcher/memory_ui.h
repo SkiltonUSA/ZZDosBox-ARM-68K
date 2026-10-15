@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <errno.h>
 static Object *mem_enabled,*mem_address,*mem_width,*mem_value,*mem_watch,*mem_hex,*mem_state;
-static Object *mem_start,*mem_length,*mem_compare,*mem_matches,*mem_bits,*mem_asm,*main_tabs;
+static Object *mem_start,*mem_length,*mem_compare,*mem_matches,*mem_bits,*mem_asm;
 static struct MsgPort *mem_replies;
 static struct dm_message mem_packet;
 static unsigned mem_busy,mem_view,mem_total,mem_page,mem_valid,mem_undo_valid,mem_paused;
@@ -107,14 +107,14 @@ static void mem_action(unsigned id){
  }else return;
  mem_send(q,id==ID_MEM_UNDO?2:0);
 }
-static Object *mem_button(const char *s,unsigned id){Object *o=SimpleButton(s);set(o,MUIA_UserData,id);return o;}
+static Object *mem_button(const char *s,unsigned id){Object *o=ui_button(s);set(o,MUIA_UserData,id);return o;}
 static Object *mem_list(Object **list){return ListviewObject,MUIA_Listview_List,*list=ListObject,InputListFrame,MUIA_Font,MUIV_Font_Fixed,MUIA_List_ConstructHook,MUIV_List_ConstructHook_String,MUIA_List_DestructHook,MUIV_List_DestructHook_String,End,End;}
 static Object *memory_page(void){
  return VGroup,
  Child,HGroup,Child,mem_button("Pause",ID_MEM_PAUSE),Child,mem_button("Resume",ID_MEM_RESUME),Child,mem_button("Stop",ID_MEM_STOP),End,
  Child,mem_state=label("Guest physical RAM; video/ROM excluded."),
  Child,ColGroup(2),Child,fieldlabel("Address (hex)"),Child,mem_address=str(11),Child,fieldlabel("Value (decimal / 0x)"),Child,mem_value=str(16),Child,fieldlabel("Width"),Child,mem_width=cycle(mem_widths),End,
- Child,RegisterGroup(mem_tabs),
+ Child,RegisterGroup(mem_tabs),MUIA_Font,ui_font(),
  Child,VGroup,Child,mem_list(&mem_hex),Child,HGroup,Child,mem_button("Refresh",ID_MEM_REFRESH),Child,mem_watch=CheckMark(FALSE),Child,label("Monitor"),Child,mem_button("Write",ID_MEM_WRITE),Child,mem_button("Undo",ID_MEM_UNDO),End,End,
  Child,VGroup,Child,ColGroup(2),Child,fieldlabel("Start (hex)"),Child,mem_start=str(11),Child,fieldlabel("Bytes (max 65536)"),Child,mem_length=str(11),Child,fieldlabel("Comparison"),Child,mem_compare=cycle(mem_conditions),End,
  Child,mem_list(&mem_matches),Child,HGroup,Child,mem_button("New scan",ID_MEM_SCAN),Child,mem_button("Refine",ID_MEM_REFINE),Child,mem_button("Previous",ID_MEM_PREV),Child,mem_button("Next",ID_MEM_NEXT),End,End,
@@ -136,17 +136,18 @@ static void memory_player_worker(void){
 }
 static LONG player_run(const char *command,BPTR log){
  struct MsgPort *done;struct Process *process;ULONG signals,id,ticks=0;int finished=0,close_requested=0;
+ if(mem_busy)return 20;
+ if(!loading_splash())return 0;
  if(!val(mem_enabled,MUIA_Selected)&&!network_requested){
   LONG rc;set(win,MUIA_Window_Open,FALSE);rc=SystemTags((STRPTR)command,SYS_Input,0,SYS_Output,log,SYS_Asynch,FALSE,NP_StackSize,65536,TAG_DONE);set(win,MUIA_Window_Open,TRUE);return rc;
  }
- if(mem_busy)return 20;
  if(network_requested&&!network_live_begin())return 20;
  done=CreateMsgPort();if(!done){network_live_end();return 20;}
  memset(&mem_job,0,sizeof(mem_job));mem_job.done.mn_ReplyPort=done;mem_job.command=command;mem_job.log=log;
  mem_valid=mem_total=mem_undo_valid=mem_paused=mem_size=0;
  process=CreateNewProcTags(NP_Entry,(ULONG)memory_player_worker,NP_Name,(ULONG)"ZZDosBox session",NP_StackSize,65536,NP_Input,0,NP_Output,0,NP_CloseInput,FALSE,NP_CloseOutput,FALSE,TAG_DONE);
  if(!process){DeleteMsgPort(done);network_live_end();return 20;}
- set(main_tabs,MUIA_Group_ActivePage,network_running?PAGE_NETWORK:PAGE_DEVELOPER);note(network_running?"Network DOS session running.":"Developer session running.");
+ navigation_show(network_running?PAGE_NETWORK:PAGE_DEVELOPER);set(navigation_view,MUIA_Disabled,TRUE);note(network_running?"Network DOS session running.":"Developer session running.");
  while(!finished||mem_busy||network_busy){
   mem_poll();network_poll();if(GetMsg(done))finished=1;
   id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
@@ -158,5 +159,5 @@ static LONG player_run(const char *command,BPTR log){
   if(!network_running&&!finished&&!mem_busy&&val(mem_watch,MUIA_Selected)&&++ticks>=12){ticks=0;mem_read_page(0);}
   if(!finished||mem_busy||network_busy)Delay(1);
  }
- DeleteMsgPort(done);network_live_end();set(mem_state,MUIA_Text_Contents,(ULONG)"Session ended.");return mem_job.result;
+ set(navigation_view,MUIA_Disabled,FALSE);DeleteMsgPort(done);network_live_end();set(mem_state,MUIA_Text_Contents,(ULONG)"Session ended.");return mem_job.result;
 }

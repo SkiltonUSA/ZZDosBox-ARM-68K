@@ -1,5 +1,14 @@
 # ZZDosBox development handoff
 
+## Documentation and review backup — 15 October 2026
+
+Launcher 0.19.7-dev, TCP/IP/IPX interpreter artifacts and current sources are
+preserved with feature/specification tables and a 0.1.0–0.19.7 changelog.
+Matrix/hlsl++ and console synchronization evidence is included. The console
+candidate passed correctness checks but is not promoted; PIC/VFP remains the
+measured Direct default. Native host, image-creation, network and review tests
+passed from this standalone checkout. Earlier sections are historical records.
+
 ## TinyGL compiler profiles — 14 October 2026
 
 Nine fresh RAM-only physical runs (three each O2, O3, O3+automatic vectorisation)

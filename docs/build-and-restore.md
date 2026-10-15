@@ -1,6 +1,6 @@
 # Build and restore
 
-This backup contains current 0.10.1 development source, the historical 0.8
+This backup contains current development source and launcher 0.19.7-dev, the historical 0.8
 baseline and a separate experimental Windows build. The Windows build has
 passed physical desktop, Graphics WinMark and shutdown checks. See the per-artifact notes before deploying.
 The original 0.8 artifacts remain unchanged for recovery.
@@ -148,3 +148,13 @@ Configure the ARM and 68K containers as described above. The dedicated NAT
 backend builder currently retains the original Podman connection name; adapt
 that invocation for your host. Build outputs are local and never deploy automatically.
 Use the [Network guide](amiga-dosbox-network-ui.md) to stage optional guest tools.
+
+## Latest incremental artifacts
+
+[Launcher 0.19.7-dev](../artifacts/development/launcher-0.19.7/) adds disk creation
+and sidebar UI updates. [The TCP/IP/IPX runtime](../artifacts/development/network-0.18.0/)
+is a separate interpreter build. The [console-sync candidate](../artifacts/experiments/console-sync/)
+is preserved for review and has not replaced the measured Direct default.
+
+Run `make test-host-review` for console ring, presentation and network receive
+sanitizer checks. `python3 scripts/test_dosbox_image_create.py` checks image creation.

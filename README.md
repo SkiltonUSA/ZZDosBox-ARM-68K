@@ -5,7 +5,8 @@
 The ARM runs the emulated PC; the 68K handles the MUI interface, AmigaOS services
 and display coordination through [Xani's XACP platform](https://github.com/Xanxi-Amiga/XACP-ZZ9000).
 
-[Development builds](#development-builds) · [Features](#features) ·
+[Development builds](#development-builds) · [Changelog](CHANGELOG.md) · [Features](#features) ·
+[Technical specifications](#technical-specifications) · [Research](#research-and-academic-references) ·
 [Dependencies](#dependencies) · [Build instructions](#build-instructions) ·
 [Performance](#optimisation-history) · [Credits](#credits-and-licences)
 
@@ -13,8 +14,12 @@ and display coordination through [Xani's XACP platform](https://github.com/Xanxi
 
 This is development software. Builds and research artifacts are kept separately:
 
-- [Network launcher 0.17.0-dev and interpreter runtime](artifacts/development/network-0.17.0):
-  optional guest IPv4 networking through the existing Amiga connection.
+- [Launcher 0.19.7-dev](artifacts/development/launcher-0.19.7): sidebar navigation,
+  startup/loading screens, disk browsing and DOS hard-disk creation.
+- [TCP/IP + IPX interpreter runtime](artifacts/development/network-0.18.0):
+  optional guest networking through the existing Amiga connection.
+- [Console synchronization candidate](artifacts/experiments/console-sync):
+  tested in Amiga RAM; not a replacement for the measured default runtime.
 - [Current measured Direct runtime](artifacts/development/pic-vfp): ARMv7 JIT,
   4 MiB code cache, NEON pixels and VFP event scheduling.
 - [Windows/mouse development build](artifacts/development/mouse): Windows for
@@ -26,38 +31,101 @@ This is development software. Builds and research artifacts are kept separately:
 
 ## Features
 
-| Feature | Current support |
-|---|---|
-| Native interface | MUI program profiles, DOS terminal, Settings, disk controls and About page. |
-| DOS environments | Embedded DOS 5 or booted MS-DOS 6.22 using separately supplied media. |
-| Execution | 32-bit x86 emulation on A9 Core1; ARMv7 dynamic recompilation in the current Direct runtime. |
-| Display | Fullscreen or resizable Workbench window, three size presets, centred 4:3 output and optional FPS display. |
-| Graphics adapters | VGA, EGA, CGA, S3/VESA, Tandy, PCjr and Hercules selections; broader high-resolution compatibility needs testing. |
-| Presentation | Direct framebuffer output, optional scanline masks and Normal/Adaptive presentation. |
-| Input | Keyboard, DOS mouse and PS/2 mouse; live fullscreen/window and CPU-cycle controls. |
-| Storage | Amiga drawer as C:, BIOS floppy/hard-disk images, read-only ISO9660 or mounted data CDs. |
-| Startup files | Editable AUTOEXEC.BAT and CONFIG.SYS with Default / Edited / File selection; optional LOADFIX helper. |
-| MIDI | External Roland MT-32 or General MIDI through CAMD. |
-| Windows | Windows for Workgroups 3.11 and WinBench verified in the separate Windows build. |
-| Networking (experimental) | Per-program DHCP/manual IPv4, DNS, MTU, ping, lease controls and cooperative disconnect through Roadshow NAT. Embedded DOS only; separate interpreter runtime. |
-| Developer tools | Separate development build with tracing, frame checkpoints, guest memory viewer/scanner and x86 disassembly. |
+Features below span the current **0.19.7-dev launcher** and its separate DOS,
+Windows, network and developer runtimes. Experimental features are labelled;
+not every combination is supported.
 
-PCM sound-card audio, joystick input and emulator save states are not implemented.
-Windows networking and IPX remain pending. Embedded DOS does not load CONFIG.SYS device drivers.
-See [features and compatibility](docs/features.md) for per-build limitations.
+| Area | Features |
+|---|---|
+| Native launcher | MUI 3.8+ sidebar navigation, persistent settings, About/credits, ZZDosBox branding, startup and loading screens with shortcut reminders. |
+| Program library | Up to 256 profiles; All, Games, Applications and OS lists; add programs, category tags and per-program settings. |
+| DOS environments | Embedded DOSBox DOS 5 without installation disks; optional booted MS-DOS 6.22 from the user's installation. |
+| Execution | 386-class, 32-bit x86 emulation; ARMv7 dynamic recompiler with 4 MiB code cache for DOS; separate interpreter and paging-guarded Windows builds. |
+| CPU and memory | 1/2/4/8 MiB guest RAM; 1000/3000/6000 cycle presets; exact 500–10000 cycle overrides and live adjustment; timed tests or normal sessions. |
+| Windows/protected mode | Windows for Workgroups 3.11 tested; 386 paging, nested page-fault recovery, sparse mappings, A20 handling and BIOS/VGA ROM write protection. |
+| DOS terminal | Open terminal, run a command or batch file, text/background colours and a versioned welcome screen. |
+| Startup files | AUTOEXEC.BAT and CONFIG.SYS editors; Default/Edited/File selection, import/export and recovery of temporary booted-DOS edits. |
+| Compatibility helper | Per-profile LOADFIX for programs needing a different conventional-memory load address. |
+| Display modes | Fullscreen or resizable Workbench window; 320×240, 640×480 and 960×720 presets; centred 4:3 output and black margins. |
+| PC graphics | CGA, EGA, VGA, S3/VESA, Tandy, PCjr and Hercules; S3 exposes 1 MiB VRAM and modes bounded to 1024×768, scaled to the selected output. |
+| Rendering | Direct ARM-to-ZZ9000 bitmap output; optional experimental TinyGL software OpenGL. |
+| Presentation | Normal or Adaptive frame presentation; optional ARM-drawn FPS counter. |
+| Scanlines and colour | Off/Classic/Soft/Gradient software scanlines in fullscreen with FPS off; Hercules White/Amber/Green/Paperwhite palettes; contextual settings help. |
+| Keyboard and mouse | DOS INT33/BIOS PS/2 mouse, three buttons, scaled coordinates and button release on focus loss; Alt+Return display switching, Ctrl+minus/plus cycles, F10 exit. |
+| Shared files | Writable Amiga drawer as C:, nested directories, DOS 8.3 names and persistent game/application files. |
+| Disk images | BIOS floppy/hard-disk boot; select, mount, open and eject raw FAT images in Workbench. |
+| Create hard disk | 32/64/128/256 MiB raw FAT16 `.IMG`; startup files and OS library entry; DOSBox DOS 5 by default, optional MS-DOS 6.22 from installed files. |
+| Image-backed DOS 5 | Automatically mount the selected image as C: and eject after the session. |
+| CD-ROM | Read-only ISO9660 or mounted Amiga data CD; original ZZDOSCD.SYS gateway for booted DOS with the user's MSCDEX. |
+| External MIDI | MT-32 intelligent MPU-401 or General MIDI UART through CAMD; output selection and SysEx transport. |
+| Driver discovery | CAMD, AHI and ZZ9000AX detection; this does not provide PCM playback. |
+| TCP/IP networking — experimental | NE2000/libslirp IPv4 NAT over Roadshow; DHCP/manual addressing, subnet, gateway, DNS, MTU, hostname, ping, DNS lookup, lease controls, counters, logs and cooperative disconnect. |
+| IPX networking — experimental | DOSBox-compatible IPX-over-UDP client; relay address/port, connect/status/ping/disconnect. Transport verified on hardware; multiplayer game compatibility remains untested. |
+| Compatibility browser | Offline searchable DOSBox community reports, version/result tables and game details/comments in a reading pane. These are upstream reports, not ZZDosBox certification. |
+| Configuration | Developer → dosbox.conf editor with validated supported overrides, import/export and defaults; unsupported keys/combinations are reported. |
+| Developer tools — experimental | Trace logs, cooperative frame checkpoints, profiling and handoff/poll controls; guest-RAM hex/ASCII monitor, 8/16/32-bit edits with undo, value scanner/refinement and 16/32-bit x86 disassembly. Separate diagnostic runtimes required. |
+
+**Current limits:** PCM sound-card/AHI/HDMI playback, joystick input, emulator
+save states, x87 and 64-bit x86 guests are not implemented. Embedded DOS does
+not load CONFIG.SYS drivers. Windows networking, guest OpenGL/Direct3D drivers,
+GLSL and FPGA 3D acceleration are not provided. Physical drag-resizing and
+higher-resolution Windows display drivers still need testing.
+
+[Full feature and compatibility notes](docs/features.md) ·
+[Configuration reference](docs/amiga-dosbox-conf.md) ·
+[Developer memory tools](docs/amiga-dosbox-memory-tools.md)
 
 ![ZZDosBox DOS welcome screen](docs/screenshots/dos-welcome.png)
 
+## Technical specifications
+
+| Component | Implementation and scope |
+|---|---|
+| Platform | AmigaOS 3.x / Zorro III ZZ9000; physical development on A4000TX, TF4060/68060, AmigaOS 3.2.3, XX19c / XACP 1.7. Other configurations require validation. |
+| Processor split | One application-owned 32-bit Cortex-A9 Core1 worker, nominal 666 MHz; 68K provides AmigaOS files, input, MUI, CAMD, sockets and display coordination. |
+| Memory | 32 MiB contiguous owned ZZ9000 block for worker/guest/buffers; 1–8 MiB emulated PC RAM; 4 MiB translated-code cache in the DOS JIT build. |
+| Execution protocol | Xani's XACP/PicoDrive-style application model, runtime address mapping, cache/MMU ownership checks and processor-state restoration. |
+| JIT | x86-to-ARMv7 translation, cached blocks and instruction-cache synchronization; interpreter fallback where required, including paging in the guarded Windows build. |
+| Direct display | ARM writes owned ZZ9000 bitmaps; fullscreen uses acknowledged buffer handoffs, Workbench uses a clipped P96 blit. Frame pixels need not be read back to the 68K. |
+| SIMD / NEON | RGB565 conversion, 32-bit copies, 1×/2× scaling, byte swaps, black-row clearing and dimming; exact-output scalar fallbacks. These accelerate host routines, not arbitrary emulated x86 instructions. |
+| VFP | Hardware floating-point PIC event scheduling; SIMD/VFP permission checks and preservation of D registers/FPSCR across worker execution. |
+| Matrix math | Specialised ARMv7 NEON 4×4 products and batched vertex transforms; ARM CMSIS-DSP and hlsl++ comparisons. These are native research kernels, not production DOSBox dependencies. |
+| Software OpenGL | Pinned jserv TinyGL, partial fixed-function API compiled into an optional ARM payload; research covers transforms, clipping, colour/depth spans and per-triangle dispatch. |
+| Storage optimization | Read-ahead, redundant-seek avoidance and bounded write-through sector caching; measured Windows builds use a 1 MiB cache. Writes stay synchronous. |
+| Host servicing | Timer-based polling, bounded MIDI batches, single-producer/single-consumer queues and occupied-span console synchronization. Latest console cleanup remains a candidate with no measured speed gain. |
+| Implementation | C/C++, ARM/68K assembly and Python; pinned upstream sources, compiler metadata, native sanitizers, ARM instruction-model tests and physical target checks. |
+
+### Techniques demonstrated in development
+
+| Technique / theory | What the experiments established |
+|---|---|
+| Work partitioning and data locality | Keep CPU emulation and pixel work on A9; use XACP handoffs for control. Direct display avoids a framebuffer round trip through Zorro. |
+| Specialization and lookup tables | Fast 1×/2× copies, division-free generic horizontal scaling and RGB565 tables improved relevant workloads. |
+| Dynamic translation and code reuse | ARMv7 JIT raised measured Doom Demo3 from 3.10 to 6.94 FPS; larger code cache and overlap alone showed no clear additional gain. |
+| SIMD versus scalar arithmetic | NEON pixel routines gave about +4.6% Doom throughput; VFP event scheduling about +4.7%, each against its own baseline. |
+| Fewer final pixel writes | Adaptive presentation and black scanline preservation can improve speed with a visual trade-off; guest execution remains unchanged. |
+| Register reuse and batched matrix work | Specialised NEON reached 2.71× scalar-VFP 4×4-product throughput and 1.59× for 1024 vertex transforms. Whole-scene gains were only 0.2–0.5% in the initial offscreen test. |
+| General versus specialised math libraries | CMSIS-DSP improved the 1024-vertex batch by 28.38% but lost on the small 4×4 product; hlsl++ gave only 0.19% whole-scene geometry gain over scalar TinyGL. Neither became a production dependency. |
+| Early rejection before SIMD packing | TinyGL scalar rejection plus NEON packing/triangle dispatch gained 28.59% visible fill, 49.00% hidden fill and 5.20% mixed textured throughput in native offscreen scenes. |
+| Compiler choices and bottleneck analysis | O3/automatic vectorization, palette unrolling and row dispatch did not consistently improve the relevant application tests. Optimize measured stages rather than assume vector code wins. |
+| Cache locality and fewer host requests | A 1 MiB Windows disk cache reduced the measured startup workload's elapsed time by 14.29%. This is not a universal disk or Windows speedup. |
+| Correctness before throughput | Exact pixels/bytes, counter-wrap and ownership tests, bounded cancellation, ABBA comparisons and restoration checks accompany optimizations. Console cache-maintenance reduction has no demonstrated FPS gain. |
+
+Figures use different workloads and baselines and must not be added together.
+Native matrix/TinyGL results are not DOS-game speedups. See the linked
+[optimisation history](#optimisation-history) and reports for conditions.
+
 ## Networking
 
-The optional Network tab shares the Amiga’s existing connection through an
-emulated NE2000 adapter and libslirp IPv4 NAT. DHCP, manual addressing, DNS,
-ping and clean disconnect passed physical A4000TX tests. Networking is off
-by default and currently uses a separate interpreter runtime.
+TCP/IP and IPX share the Amiga's existing Roadshow route; they do not take over
+its Ethernet hardware or change its address. TCP/IP uses NE2000/libslirp NAT;
+IPX uses a compatible UDP relay. Both currently require the separate interpreter
+runtime and embedded DOS with Direct/Normal presentation. DHCP/manual IPv4,
+DNS, ping, IPX transport and clean disconnect passed bounded physical tests.
+Release clears saved guest lease configuration; it does not release the Amiga's
+IP address or send an on-wire DHCP release.
 
-[Settings, requirements and test results](docs/amiga-dosbox-network-ui.md)
-
-![ZZDosBox Network tab](docs/screenshots/network-tab.png)
+[Network settings and test scope](docs/amiga-dosbox-network-ui.md)
 
 ## Dependencies
 
@@ -80,8 +148,8 @@ allocation. Other 68K configurations and firmware versions remain unverified.
 
 | Dependency | Version / configuration | Provides | Required when |
 |---|---|---|---|
-| Roadshow | Running TCP/IP stack with `bsdsocket.library` and a working route | Host sockets for IPv4 NAT | Guest networking only |
-| NE2000 packet driver + mTCP | Pinned guest utilities, staged separately | DOS packet driver, DHCP, ping and DNS tools | Guest networking only |
+| Roadshow | Running TCP/IP stack with `bsdsocket.library` and a working route | Host sockets for IPv4 NAT or IPX UDP | Guest networking only |
+| NE2000 packet driver + mTCP | Pinned guest utilities, staged separately | DOS packet driver, DHCP, ping and DNS tools | TCP/IP networking only |
 | CAMD | `camd.library` v37+, working output driver and external MIDI instrument | MT-32 / General MIDI output | External MIDI is selected |
 | AHI | v4+ supported by the detector | Driver discovery only | Using the audio-driver checker; does not enable PCM playback |
 | ZZ9000AX | Installed AHI modes | Optional mode discovery | Using AX detection; not needed to run the emulator |
@@ -110,6 +178,7 @@ DOSBox Staging audio/network libraries are not dependencies of this port.
 | DOSBox / libretro | Pinned [`a563bb5`](https://github.com/libretro/dosbox-libretro/tree/a563bb5e9753f207d74e9d8c417d793b784fa4be); source bundle included | Emulation engine | Yes |
 | ImageMagick | `magick` command | Workbench icon conversion | Launcher/icon builds |
 | jserv TinyGL | Pinned [`c2e4859`](https://github.com/jserv/tinygl/tree/c2e48591a6bfba1a85f1b87a78dcf1abf7dff57a); source archive included | Experimental software OpenGL and native scene tests | Optional |
+| hlsl++ | Pinned [`3d9af2e`](https://github.com/redorav/hlslpp/tree/3d9af2e77a89ddd645928f1600a0688dc898dedc), with recorded ARM32 compatibility patch | Matrix/TinyGL comparison | Research only |
 | ARM CMSIS-DSP | Pinned [`83a2d7b`](https://github.com/ARM-software/CMSIS-DSP/tree/83a2d7bc98c81b4bbe4a6f48b1f2ecf179868a0b) | Standalone matrix comparison | Matrix experiment only |
 | libslirp + DOSBox-X NE2000 | libslirp 4.9.5 and pinned Bochs-derived NIC; [source pins](amiga/dosbox/network/upstream.json) | IPv4 NAT and emulated Ethernet | Network build only |
 | Unicorn | Python package `unicorn==2.1.4` | Linked ARM instruction-model tests | Model tests only |
@@ -188,6 +257,21 @@ native-rendering results, not DOS game FPS gains; the changes remain experimenta
 [Compiler comparison and C-Chads review](docs/amiga-tinygl-compiler-experiment.md) ·
 [Matrix/transform research](docs/amiga-tinygl-internal-transforms.md)
 
+## Research and academic references
+
+These informed the experiments; published speedups are not claimed as ZZDosBox
+results. Paper PDFs are linked rather than bundled.
+
+| Reference | Connection to this project |
+|---|---|
+| Kun Feng, Cheng Xu, Wei Wang, Zhibang Yang and Zheng Tian, **An Optimized Matrix Multiplication on ARMv7 Architecture**, *Journal of Convergence Information Technology* 7(10), 2012. [DOI: 10.4156/jcit.vol7.issue10.5](https://doi.org/10.4156/jcit.vol7.issue10.5) | Register reuse, independent accumulators, contiguous data and cache blocking informed the [matrix benchmark](docs/amiga-dosbox-matrix-benchmark.md). No paper implementation was copied. |
+| Gaurav Mitra, Beau Johnston, Alistair P. Rendell, Eric McCreath and Jun Zhou, **Use of SIMD Vector Operations to Accelerate Application Code Performance on Low-Powered ARM and Intel Platforms**, IPDPSW 2013, pp. 1107–1116. [DOI](https://doi.org/10.1109/IPDPSW.2013.207) · [Author PDF](https://users.cecs.anu.edu.au/~Eric.McCreath/papers/Use_of_SIMD_Vector_Operations_To_Accelerate_Application_Code_Performance_on_Low_Power_ARM_and_Intel_Platforms.pdf) | Intrinsics versus compiler vectorization and data-movement costs informed [pixel and stage profiling](docs/amiga-tinygl-rasterisation.md#simd-reference). The paper's older compiler results do not predict our GCC 15 build. |
+| Arm, **Cortex-A9 NEON Media Processing Engine Technical Reference Manual**, DDI0409I; [Arm documentation](https://support.arm.com/documentation/ddi0409/i/) | Architectural reference for ARMv7 SIMD/VFP work and context handling. A9 NEON vector floating-point arithmetic is single precision; it does not supply x87 emulation. |
+| [Xani's XACP framework](https://github.com/Xanxi-Amiga/XACP-ZZ9000) and [ZZPicoDrive](https://github.com/Xanxi-Amiga/XACP-ZZ9000/tree/main/applications/emulators/ZZPicodrive/ZZPicodriveMD) | Basis for the 68K/ARM split, application-owned Core1 and framebuffer execution model. |
+| [ARM CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP/tree/83a2d7bc98c81b4bbe4a6f48b1f2ecf179868a0b), [hlsl++](https://github.com/redorav/hlslpp/tree/3d9af2e77a89ddd645928f1600a0688dc898dedc) | Pinned math-library comparisons: [CMSIS/specialised NEON](docs/amiga-dosbox-matrix-benchmark.md), [hlsl++ results](docs/amiga-hlslpp-benchmark.md). |
+| [jserv TinyGL](https://github.com/jserv/tinygl/tree/c2e48591a6bfba1a85f1b87a78dcf1abf7dff57a) | Actual software-renderer dependency; [internal transforms](docs/amiga-tinygl-internal-transforms.md), [rasterization](docs/amiga-tinygl-raster-experiment.md) and [packing/dispatch](docs/amiga-tinygl-packing-experiment.md) experiments. |
+| [ermig1979/Simd](https://github.com/ermig1979/Simd/tree/69a630c5569e13a3fed3533f80e323186c904a64) | Reference review for NEON layout/dispatch ideas, not an imported runtime library. [Review](docs/amiga-dosbox-simd-review.md). |
+
 ## Optimisation history
 
 Oldest to newest. Percentages compare each change with its own measured
@@ -222,6 +306,11 @@ Core1, framebuffer-handoff and processor-state restoration contracts.
 
 CPU cycles are a fixed workload budget; see the [CPU settings review](docs/amiga-dosbox-cpu-settings-review.md) for supported controls and the next measurement plan.
 
+Latest follow-ups: [matrix results](docs/amiga-dosbox-matrix-benchmark.md),
+[hlsl++ comparison](docs/amiga-hlslpp-benchmark.md),
+[NEON row dispatch](docs/amiga-dosbox-pixel-dispatch.md), and
+[disk/cache, MIDI batching and console synchronization](docs/amiga-dosbox-optimisation-round2.md).
+
 ## Windows measurements
 
 Windows for Workgroups 3.11 booted on the real ZZ9000 A9. WinBench 3.11 completed
@@ -253,7 +342,7 @@ A9 timings; instruction-model timing is not hardware performance evidence.
 - [jserv](https://github.com/jserv/tinygl), Fabrice Bellard, C-Chads and TinyGL contributors: software OpenGL renderer.
 - [libslirp contributors](https://gitlab.freedesktop.org/slirp/libslirp), DOSBox-X/Bochs, Crynwr and Michael B. Brutman (mTCP): networking components and guest tools.
 - Stefan Stuntz: MUI.
-- ARM CMSIS-DSP, Picolibc and GCC contributors: retained component acknowledgements in [licence notices](licenses/README.md).
+- ARM CMSIS-DSP, hlsl++ contributors, Picolibc and GCC contributors: retained component acknowledgements in [licence notices](licenses/README.md).
 
 Development: **Codex assisted, Amiga-Bridge MCP**.
 
