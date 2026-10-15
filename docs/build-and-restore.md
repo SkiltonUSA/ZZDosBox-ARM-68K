@@ -44,10 +44,12 @@ python3 scripts/build_dosbox_launcher.py
 
 The launcher icon converter additionally needs ImageMagick (`magick`). The
 archived PIC soft-float libc is restored by the preparation script; its member
-sources and hashes are in `amiga/pocketsnes/libc-sources.json`. Rebuild it with
-`scripts/build_pocketsnes_libc.py` if needed. Historical shared-component paths
-are retained to preserve the source layout. Standalone export changes only
-container command configuration and two small imported build helpers.
+sources and hashes are in `amiga/common/libc/libc-sources.json`. Rebuild it with
+`scripts/build_dosbox_libc.py` if needed. Shared A9 support lives in
+`amiga/common/arm`, libc configuration in
+`amiga/common/libc`, and their native checks in `tests/amiga/common`.
+These are DOSBox build dependencies; no NES/SNES core or FFmpeg decoder is bundled.
+Archived build records retain their original source paths and hashes.
 
 Keep the default O2 CPU optimisation. O3 and the two scheduler-cache experiments
 showed no consistent gain; see the scheduler records. Early timing records measure startup refresh throughput. Later Doom Demo3

@@ -30,8 +30,9 @@ hover and runtime lifecycle checks remain pending.
 - Ctrl+F5 file creation and preview refresh on both fullscreen and windowed paths.
 - Footer hover behaviour, including leaving the Delete button.
 - Clean player exit and Core1 release for these relinked runtimes.
-- Final launcher/welcome installation. The currently transferred launcher is an
-  earlier diagnostic build, not the final binary in this directory.
+- Visual confirmation of the blank main title bar after reopening the launcher.
+  The final launcher and coloured welcome helper are now installed with matching
+  checksums; the existing game session was left running.
 
 Do not treat these binaries as a fully hardware-validated runtime replacement.
 No new benchmark result or FPS improvement is claimed.

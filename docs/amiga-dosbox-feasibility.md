@@ -99,11 +99,11 @@ this integer-only worker. Repeated guest initialization frees callback strings.
 ```sh
 python3 scripts/build_dosbox.py --sanitize
 python3 scripts/build_dosbox_arm.py --container-command '["podman","--connection","nuflix-converter-root"]'
-.context/amiga/mesen-bench/venv/bin/python tests/amiga/dosbox/check_arm.py
+.context/venv/bin/python tests/amiga/dosbox/check_arm.py
 ```
 
-Current build uses the existing `zzffmpeg-toolchain` container (GCC 15.3.1,
-picolibc 1.8.12), the PIC libc produced by `build_pocketsnes_libc.py`, and the
+Current build uses the existing `zzdosbox-toolchain` container (GCC 15.3.1,
+picolibc 1.8.12), the PIC libc produced by `build_dosbox_libc.py`, and the
 pinned Amiga cross-tool image. LLVM `clang`, `ld.lld` and `llvm-nm` are also
 required. A fresh-machine bootstrap is still to be packaged. Build artifacts
 and upstream staging remain below `.context/amiga/dosbox/`; builds never launch
@@ -177,7 +177,7 @@ These do not establish physical cache behaviour or DOS game compatibility.
 ```sh
 python3 scripts/build_dosbox_dos.py --sanitize
 python3 scripts/build_dosbox_dos_arm.py --container-command '["podman","--connection","nuflix-converter-root"]'
-.context/amiga/mesen-bench/venv/bin/python tests/amiga/dosbox/check_dos_arm.py
+.context/venv/bin/python tests/amiga/dosbox/check_dos_arm.py
 ```
 
 Artifacts are under `.context/amiga/dosbox-dos/`. The existing toolchain
@@ -261,7 +261,7 @@ change is part of this console build.
 ```sh
 python3 scripts/build_dosbox_dos.py --console --sanitize
 python3 scripts/build_dosbox_dos_arm.py --console --container-command '["podman","--connection","nuflix-converter-root"]'
-.context/amiga/mesen-bench/venv/bin/python tests/amiga/dosbox/check_console_arm.py
+.context/venv/bin/python tests/amiga/dosbox/check_console_arm.py
 ```
 
 Installed separately in `SD032G:Dev/ZZDosBox/Console/`. Run the demo with:
@@ -324,7 +324,7 @@ Build and local checks:
 ```sh
 python3 scripts/build_dosbox_shell.py --sanitize
 python3 scripts/build_dosbox_dos_arm.py --shell --container-command '["podman","--connection","nuflix-converter-root"]'
-.context/amiga/mesen-bench/venv/bin/python tests/amiga/dosbox/check_shell_arm.py
+.context/venv/bin/python tests/amiga/dosbox/check_shell_arm.py
 ```
 
 The native check runs the actual upstream shell under AddressSanitizer and
@@ -436,7 +436,7 @@ python3 scripts/build_dosbox_pc.py --sanitize --game keen
 python3 scripts/build_dosbox_pc.py --sanitize --game vette
 python3 scripts/build_dosbox_dos_arm.py --pc \
   --container-command '["podman", "--connection", "nuflix-converter-root"]'
-.context/amiga/mesen-bench/venv/bin/python tests/amiga/dosbox/check_pc_arm.py
+.context/venv/bin/python tests/amiga/dosbox/check_pc_arm.py
 clang -std=c11 -fsanitize=address,undefined -Iamiga/dosbox/pc \
   tests/amiga/dosbox/direct_plan.c -o .context/amiga/dosbox-pc/test-direct
 .context/amiga/dosbox-pc/test-direct
@@ -627,9 +627,9 @@ avoid adding any VFP/NEON context requirements.
 clang++ -std=c++17 -O2 -fsanitize=address,undefined -Iamiga/dosbox/pc \
   tests/amiga/dosbox/scale.cpp -o .context/amiga/dosbox-scale/test-scale
 .context/amiga/dosbox-scale/test-scale
-.context/amiga/mesen-bench/venv/bin/python tests/amiga/dosbox/check_scale_arm.py
+.context/venv/bin/python tests/amiga/dosbox/check_scale_arm.py
 # After the normal --pc component build:
-.context/amiga/mesen-bench/venv/bin/python tests/amiga/dosbox/check_pc_arm.py
+.context/venv/bin/python tests/amiga/dosbox/check_pc_arm.py
 ```
 
 Native ASan/UBSan and the compiled A9 row model each check all 1,024 input
@@ -836,7 +836,7 @@ Native ASan/UBSan and the isolated Cortex-A9 model pass all 65,536 RGB565
 colours and all 1,024 supported widths at 8/16/32 bpp. Native tests cover four
 source alignments; ARM sources end at an unmapped page boundary. Both check
 destination guards. The ARM harness must link the production scalar
-`amiga/mesen_snes/system/memory.c`; linking the libc archive's VFP memcpy was
+`amiga/common/arm/memory.c`; linking the libc archive's VFP memcpy was
 a harness error found and fixed during testing. No VFP support was enabled.
 
 ### Physical colour-converter comparison

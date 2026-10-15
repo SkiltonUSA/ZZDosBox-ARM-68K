@@ -64,7 +64,7 @@ def main():
  subprocess.run([str(OUT/'shell-test')],check=True)
  fs_flags=['-std=c11','-O1','-g','-Wno-deprecated-declarations','-DZZ_CONTROL=0x180000']
  if args.sanitize:fs_flags+=['-fsanitize=address,undefined']
- fs_dirs=[ROOT/'tests/amiga/dosbox/fs_mock',SRC,ROOT/'amiga/dosbox/console',ROOT/'amiga/dosbox/dos',ROOT/'amiga/mesen_bench',ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']
+ fs_dirs=[ROOT/'tests/amiga/dosbox/fs_mock',SRC,ROOT/'amiga/dosbox/console',ROOT/'amiga/dosbox/dos',ROOT/'amiga/common/arm',ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']
  subprocess.run(['clang',*fs_flags,*['-I'+str(x) for x in fs_dirs],str(SRC/'fs_host.c'),str(ROOT/'tests/amiga/dosbox/fs_host_test.c'),'-o',str(OUT/'fs-host-test')],check=True)
  subprocess.run([str(OUT/'fs-host-test')],check=True)
 if __name__=='__main__':main()

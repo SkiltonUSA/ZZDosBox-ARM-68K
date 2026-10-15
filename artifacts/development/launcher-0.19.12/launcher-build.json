@@ -1,6 +1,6 @@
 {
-  "bytes": 652172,
-  "sha256": "61d6c936fe4dfd803b27efd77f3f172df85caa61e6cf71d8c177ae186252b207",
+  "bytes": 652200,
+  "sha256": "d95963704a8f7eed8bffe7017f2dc53720388ce9933caa4bedd1bb367d651f2b",
   "sources": {
     "amiga/dosbox/launcher/compatibility.h": "65220c6564bfe428016da8acd8c0d2c1fc6d5b8ee6c684f1bf4b085caf6256c0",
     "amiga/dosbox/launcher/disk_ui.h": "71f964ca4d5c1eb2fe00cb85b9a2cd922e3534a9244ecfb293155071bc126b6b",
@@ -18,7 +18,7 @@
     "amiga/dosbox/launcher/network_ui.h": "433ee5ab64af9fafb41920d75d53c0389637d2c59f4aa8b5f94ffc526b8da65d",
     "amiga/dosbox/launcher/splash.h": "9fbe65d6e24ee64bf5aa32b91aa574f5b30397cd7b8f5876236c3c6c52b63fbe",
     "amiga/dosbox/launcher/session.h": "884500243b2578da9f6b064519ebc016e515df02bede4aa0d9a493181d4449b7",
-    "amiga/dosbox/launcher/main.c": "35d07d527cf8afcd1c1f74e3cedb603e03e4b0333e60ea0b5db60dcb3c72dfb2",
+    "amiga/dosbox/launcher/main.c": "038ff818d73c6258b68b5af3c5758ca44dfbf4012ebfa13bd10969f4ae36274e",
     "amiga/dosbox/launcher/memory_ui.h": "54e659325be50ab5605c2f638fd34a8e5b6e0ff4c6a8a430c74041c432290e52",
     "amiga/dosbox/launcher/compatibility_ui.h": "744630f7fbca62a12683287a58da1c21c9c8b6a92086ec7e4c78253dee0971b7",
     "amiga/dosbox/launcher/model.h": "c45b07a3c116a9071d4a21abeca5ec9b30b11769c2e38d861d4648335d91f3f5",
@@ -36,7 +36,7 @@
     "scripts/prepare_dosbox_network_guide.py": "316e70acfa6ecc70af1b4ad13933477a858fc85c7df54bc6276ad5340e9e444f",
     "docs/amiga-dosbox-network-setup.md": "d79df75568862dc06a4f9c1a3c1a1c384e283b250b539237eeb5652dd7cade8e",
     "scripts/prepare_dosbox_changelog.py": "7884f2cff91be415fc5f392e3fbc99eeaa1049138ed44c9971f83d328fa34047",
-    "amiga/dosbox/CHANGELOG.md": "3519f8a28a5403ee81344a5ee17bbe30f093d6a7ff32990734cd62fc3448d460",
+    "amiga/dosbox/CHANGELOG.md": "2534467971fffadc00f4f6409e72e92b9cc04d1a7a0011b3055bb18adebfb802",
     "amiga/dosbox/compatibility/data.h": "e22eb0074902d0da07ae56044d1912e51b8445e2173196ba8d7f5742281c1e3d",
     "amiga/dosbox/compatibility/details_meta.h": "b07926d8fbf810f44bec66ebc94556d14624f36f9ec7dfe4817ebf26e3220181",
     "amiga/dosbox/network/config.h": "13f1a16be083bb8dc901b2906fddb50d8b8937e5461d04a8e5df30ef6fe4f1d9",

@@ -9,11 +9,11 @@ OUT = ROOT / '.context/amiga/dosbox-review/tests'
 OUT.mkdir(parents=True, exist_ok=True)
 flags = ['-O1', '-g', '-fsanitize=address,undefined', '-fno-sanitize-recover=all']
 includes = ['amiga/dosbox/console', 'amiga/dosbox/dos', 'amiga/dosbox/pc',
-            'amiga/mesen_bench', 'amiga/arm_debug', 'amiga/arm_debug/zz9000']
+            'amiga/common/arm', 'amiga/arm_debug', 'amiga/arm_debug/zz9000']
 for name, source, extra in [
     ('stream', 'tests/amiga/dosbox/stream_host.c', []),
     ('present', 'tests/amiga/dosbox/present_plan.c', []),
-    ('flip', 'tests/amiga/mesen_nes/flip_plan.c', ['-Iamiga/mesen_nes']),
+    ('flip', 'tests/amiga/common/flip_plan.c', ['-Iamiga/common']),
 ]:
     exe = OUT / name
     subprocess.run(['clang', '-std=c99', '-Wall', '-Wextra', '-Werror', *flags,

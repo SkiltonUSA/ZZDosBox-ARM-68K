@@ -2,16 +2,16 @@
 """Rebuild selected existing picolibc archive members as PIC soft-float C."""
 from pathlib import Path
 import re,subprocess,shutil,hashlib,json
-root=Path(__file__).resolve().parents[1];out=root/'.context/amiga/pocketsnes';src=root/'.context/amiga/ffmpeg-bench/picolibc-1.8.12';objs=out/'libc';objs.mkdir(exist_ok=True)
+root=Path(__file__).resolve().parents[1];out=root/'.context/amiga/dosbox-libc';src=root/'.context/amiga/dosbox-toolchain/picolibc-1.8.12';objs=out/'libc';objs.mkdir(exist_ok=True)
 archive=out/'libc.a'
-if not archive.exists():shutil.copyfile(root/'.context/amiga/ffmpeg-bench/libc-pic.a',archive)
+if not archive.exists():shutil.copyfile(root/'.context/amiga/dosbox-toolchain/libc-pic.a',archive)
 files={str(p.relative_to(src)).replace('/','_')+'.o':p for p in src.rglob('*.c')}
-manifest=json.loads((root/'amiga/pocketsnes/libc-sources.json').read_text())['members']
+manifest=json.loads((root/'amiga/common/libc/libc-sources.json').read_text())['members']
 members=sorted(manifest)
 import os
-cmd=json.loads(os.environ.get('DOSBOX_ARM_COMMAND','["podman","--connection","nuflix-converter-root","exec","zzffmpeg-toolchain"]'))
+cmd=json.loads(os.environ.get('DOSBOX_ARM_COMMAND','["podman","--connection","nuflix-converter-root","exec","zzdosbox-toolchain"]'))
 def inside(p):return '/work/'+str(p.relative_to(root))
-flags=['-mcpu=cortex-a9','-marm','-mfloat-abi=soft','-mno-unaligned-access','-Os','-D_LIBC','-D_GNU_SOURCE','-U_FORTIFY_SOURCE','-fPIC','-fno-builtin','-ffunction-sections','-fdata-sections','-include','/work/amiga/pocketsnes/libc_config.h']
+flags=['-mcpu=cortex-a9','-marm','-mfloat-abi=soft','-mno-unaligned-access','-Os','-D_LIBC','-D_GNU_SOURCE','-U_FORTIFY_SOURCE','-fPIC','-fno-builtin','-ffunction-sections','-fdata-sections','-include','/work/amiga/common/libc/libc_config.h']
 flags+=['-I'+inside(src/p) for p in ['libc/tinystdio','libc/locale','libc/stdio','libc/stdlib','libm/common','libm/math']]
 for name in members:
  p=files.get(name)

@@ -66,6 +66,7 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 <a id="v0-19-12"></a>
 ## 0.19.12-dev — Library screenshots
 
+- Main window title bar has no text.
 - Screenshot previews sit beside All, Games, Applications and OS lists.
 - Capture launches the selected program. Ctrl+F5 saves a completed display frame;
   F10 returns to the library. A new capture replaces that entry's previous picture.

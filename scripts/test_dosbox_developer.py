@@ -8,7 +8,7 @@ OUT = ROOT/'.context/amiga/dosbox-video-trace'
 OUT.mkdir(parents=True, exist_ok=True)
 includes = ['tests/amiga/dosbox/debug_mock', 'amiga/dosbox/launcher',
             'amiga/dosbox/pc', 'amiga/dosbox/console', 'amiga/dosbox/dos',
-            'amiga/mesen_bench', 'amiga/arm_debug', 'amiga/arm_debug/zz9000']
+            'amiga/common/arm', 'amiga/arm_debug', 'amiga/arm_debug/zz9000']
 for name in ('developer', 'video_trace_host', 'video_debug_host', 'launcher'):
     binary = OUT/('test-'+name)
     subprocess.run(['clang', '-std=c99', '-fsanitize=address,undefined',

@@ -369,7 +369,7 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
  hover_help_class=MUI_CreateCustomClass(NULL,MUIC_Text,NULL,sizeof(struct hover_help_data),(APTR)hover_help_dispatch);if(!hover_help_class)return 0;
  program_list_class=MUI_CreateCustomClass(NULL,MUIC_Listview,NULL,sizeof(struct program_list_data),(APTR)program_list_dispatch);if(!program_list_class)return 0;
  app=ApplicationObject,MUIA_Application_Title,(ULONG)"ZZDosBox",MUIA_Application_Base,(ULONG)"ZZDOSBOX",MUIA_Application_Version,(ULONG)"$VER: ZZDosBox Launcher " ZZ_LAUNCHER_VERSION " (" ZZ_LAUNCHER_DATE ")",
- SubWindow,win=WindowObject,MUIA_Window_Title,(ULONG)"ZZDosBox Launcher",MUIA_Window_ID,0x5a444c31,MUIA_Window_Width,940,MUIA_Window_Height,500,
+ SubWindow,win=WindowObject,MUIA_Window_Title,(ULONG)"",MUIA_Window_ID,0x5a444c31,MUIA_Window_Width,940,MUIA_Window_Height,500,
  WindowContents,root=VGroup,MUIA_Font,ui_font(),MUIA_Group_Spacing,8,InnerSpacing(8,8),
  Child,HGroup,
  Child,VGroup,MUIA_HorizWeight,0,MUIA_Group_Spacing,8,

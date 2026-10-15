@@ -7,7 +7,7 @@ from build_zz9000_debug import unpack_elf
 from amiga import PIN,container_command
 ROOT=b.ROOT;OUT=b.OUT;SRC=b.SRC;BASE=ROOT/"amiga/dosbox"
 import os
-cmd=json.loads(os.environ.get('DOSBOX_ARM_COMMAND','["podman","--connection","nuflix-converter-root","exec","zzffmpeg-toolchain"]'))
+cmd=json.loads(os.environ.get('DOSBOX_ARM_COMMAND','["podman","--connection","nuflix-converter-root","exec","zzdosbox-toolchain"]'))
 def inside(p):return '/work/'+str(Path(p).relative_to(ROOT))
 def run(args):subprocess.run([*cmd,*map(str,args)],check=True)
 parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--container-command');parser.add_argument('--console',action='store_true');parser.add_argument('--shell',action='store_true');parser.add_argument('--pc',action='store_true');parser.add_argument('--pc-cpu-opt',choices=['Os','O2','O3'],help='PC interpreter optimisation level (default: O2 for PC)');parser.add_argument('--pc-hardware-opt',choices=['Os','O2'],help='PIC, VGA drawing and VGA memory optimisation level (default: O2 for PC)');parser.add_argument('--pc-doom-clock',action='store_true',help='Read-only observer for the supplied Doom 1.9 shareware benchmark');parser.add_argument('--pc-dynrec',action='store_true',help='Separate experimental ARMv7 JIT build');parser.add_argument('--pc-jit-mib',type=int,choices=(1,4),default=1);parser.add_argument('--pc-neon',action='store_true',help='NEON pixel kernels; all PC builds already preserve SIMD/FPSCR state');parser.add_argument('--pc-pipeline',action='store_true');parser.add_argument('--pc-scanlines',action='store_true');parser.add_argument('--pc-presentation',action='store_true');parser.add_argument('--pc-adapters',action='store_true');parser.add_argument('--pc-opengl',action='store_true');parser.add_argument('--pc-video-trace',action='store_true',help='Separate diagnostic build with live framebuffer phase records; not for benchmarking');parser.add_argument('--pc-pic-vfp',action='store_true',help='Experimental hardware floating-point PIC scheduler; requires NEON context preservation');parser.add_argument('--pc-neon-dispatch',action='store_true',help='Experimental per-row NEON scaler dispatch');parser.add_argument('--pc-pixel-bench',action='store_true',help='Private cached-RAM scaler microbenchmark; diagnostic only');parser.add_argument('--pc-memory-debug',action='store_true',help='Isolated guest RAM monitor/scanner build');parser.add_argument('--pc-matrix-bench',action='store_true',help='Isolated cached-RAM matrix and offscreen TinyGL benchmark');parser.add_argument('--pc-tinygl-bench',action='store_true',help='Internal TinyGL transform A/B and exclusive stage profiling');parser.add_argument('--pc-tinygl-raster',action='store_true',help='Isolated TinyGL NEON spans/clear benchmark');parser.add_argument('--pc-raster-compiler',choices=['baseline','o3','o3-vector'],default='baseline',help='Diagnostic-only optimisation of ztriangle.c, zbuffer.c and raster clear.c; requires --pc-tinygl-raster');parser.add_argument("--pc-raster-fixed",choices=["comparison","scalar","guarded","hybrid","unguarded","dispatch"],default="comparison",help="Diagnostic-only compile-time span selection for standalone comparison");parser.add_argument('--pc-hlslpp',choices=['micro','scalar','neon'],help='Isolated hlsl++ matrix or TinyGL A/B; requires --pc-matrix-bench');parser.add_argument('--pc-disk-cache-kib',type=int,choices=(128,256,512,1024,2048),default=128,help='Bounded write-through image sector cache; default 128 KiB');parser.add_argument('--pc-capture-unroll',action='store_true',help='Experimental indexed-pixel capture and video -O2');parser.add_argument('--pc-network',action='store_true',help='Isolated NE2000/Roadshow NAT build');args=parser.parse_args()
@@ -56,7 +56,7 @@ if args.shell:
  else:OUT=sb.OUT;b.OUT=OUT;sources=sb.prepare()
 else:sources=b.prepare()
 if args.console:b.console_fixtures()
-common=ROOT/'amiga/mesen_bench'
+common=ROOT/'amiga/common/arm'
 for name in ['worker.cpp','mmu.c','mmu.h','mmu_asm.S','mmu_plan.h']:
  s=(common/name).read_text()
  if name=='worker.cpp':
@@ -68,10 +68,10 @@ for name in ['worker.cpp','mmu.c','mmu.h','mmu_asm.S','mmu_plan.h']:
    s=s.replace('#include <stdint.h>', '#include <stdint.h>\n#include \"dynrec_plan.h\"')
    s=s.replace('if(page>=base+MB_TABLE_BEGIN)attr|=1u;', 'if(page>=base+MB_TABLE_BEGIN && !db_jit_page(base,page))attr|=1u;')
  (OUT/name).write_text(s)
-subprocess.run(['clang','-O2','-I'+str(OUT),'-I'+str(pc),*(['-DDB_DYNREC','-DDB_JIT_MIB='+str(args.pc_jit_mib)] if args.pc_dynrec else []),'-DMB_ALLOCATION=0x2000000u',str(ROOT/'tests/amiga/mesen/mmu_plan.c'),'-o',str(OUT/'test-mmu')],check=True)
+subprocess.run(['clang','-O2','-I'+str(OUT),'-I'+str(pc),*(['-DDB_DYNREC','-DDB_JIT_MIB='+str(args.pc_jit_mib)] if args.pc_dynrec else []),'-DMB_ALLOCATION=0x2000000u',str(ROOT/'tests/amiga/common/mmu_plan.c'),'-o',str(OUT/'test-mmu')],check=True)
 subprocess.run([str(OUT/'test-mmu')],check=True)
 flags=['-Os' ,'-mcpu=cortex-a9','-marm','-mfloat-abi=soft','-mno-unaligned-access','-ffreestanding','-fno-builtin','-fPIC','-fvisibility=hidden','-ffunction-sections','-fdata-sections','-fno-stack-protector','-DZZ_BLOCK_SIZE=0x2000000','-DZZ_CONTROL=0x180000','-DMB_MMU','-DMB_DCACHE','-DMB_ALLOCATION=0x2000000u',
- *['-I'+inside(p) for p in [OUT,OUT/'include',OUT/'src/cpu',SRC,console,shell,pc,OUT/'src/ints',BASE,common,ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']],'-include',inside(ROOT/'amiga/pocketsnes/libc_config.h')]
+ *['-I'+inside(p) for p in [OUT,OUT/'include',OUT/'src/cpu',SRC,console,shell,pc,OUT/'src/ints',BASE,common,ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']],'-include',inside(ROOT/'amiga/common/libc/libc_config.h')]
 if args.pc_dynrec:flags+=['-DDB_DYNREC','-DDB_JIT_MIB='+str(args.pc_jit_mib)]
 if args.pc_video_trace:flags+=['-DDB_VIDEO_TRACE']
 if args.pc:flags+=['-DDB_SIMD_CONTEXT']
@@ -82,7 +82,7 @@ if args.pc_neon_dispatch:flags+=['-DDB_NEON_DISPATCH']
 if args.pc_pixel_bench:flags+=['-DDB_PIXEL_BENCH'];sources.append(pc/'pixel_bench.cpp')
 if args.pc_scanlines:flags+=['-DDB_SCANLINE_TEST']
 if args.pc_presentation:flags+=['-DDB_PRESENT_TEST']
-sources += [SRC/'adapter.cpp',BASE/'runtime.cpp',console/'bench.cpp' if args.console else SRC/'bench.cpp',SRC/'drive.cpp',ROOT/'amiga/ffmpeg_bench/heap.c',ROOT/'amiga/mesen_snes/system/memory.c',OUT/'worker.cpp',OUT/'mmu.c',OUT/'mmu_asm.S',ROOT/'.context/amiga/ffmpeg-bench/picolibc-1.8.12/libc/machine/arm/setjmp.S',ROOT/'.context/amiga/ffmpeg-bench/picolibc-1.8.12/libc/stdlib/srandom.c',SRC/'platform_time.c']
+sources += [SRC/'adapter.cpp',BASE/'runtime.cpp',console/'bench.cpp' if args.console else SRC/'bench.cpp',SRC/'drive.cpp',ROOT/'amiga/common/arm/heap.c',ROOT/'amiga/common/arm/memory.c',OUT/'worker.cpp',OUT/'mmu.c',OUT/'mmu_asm.S',ROOT/'.context/amiga/dosbox-toolchain/picolibc-1.8.12/libc/machine/arm/setjmp.S',ROOT/'.context/amiga/dosbox-toolchain/picolibc-1.8.12/libc/stdlib/srandom.c',SRC/'platform_time.c']
 if args.console:sources.append(console/'transport.cpp')
 if args.shell:
  sources=[shell/p.name if p in (SRC/'adapter.cpp',console/'bench.cpp') else p for p in sources if p!=SRC/'drive.cpp']
@@ -169,8 +169,8 @@ for i,src in enumerate(sources):
  if not stamp.exists() or stamp.read_text()!=digest:
   run(['arm-none-eabi-g++' if cpp else 'arm-none-eabi-gcc',*flags,*extra,'-c',inside(src),'-o',inside(obj)])
   stamp.write_text(digest)
-libc=ROOT/'.context/amiga/pocketsnes/libc.a'
-assert libc.exists(),'Build PIC libc with scripts/build_pocketsnes_libc.py first'
+libc=ROOT/'.context/amiga/dosbox-libc/libc.a'
+assert libc.exists(),'Build PIC libc with scripts/build_dosbox_libc.py first'
 elf=OUT/'dosbox.elf'
 linker=BASE/'payload.ld'
 if args.pc_dynrec:
@@ -244,7 +244,7 @@ if args.pc_network:version+='-network-test'
 if args.pc_network:subprocess.run(['python3',str(ROOT/'scripts/build_dosbox_network.py'),'--library'],check=True,cwd=ROOT)
 subprocess.run([*host_command,'run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-Wall','-Wextra','-Werror',
  *(['-DDB_NETWORK'] if args.pc_network else []),*(['-DDB_MEMORY_DEBUG','-Iamiga/dosbox/developer'] if args.pc_memory_debug else []),*(['-DDB_VIDEO_TRACE'] if args.pc_video_trace else []),*(['-DDB_OPENGL'] if args.pc_opengl else []),*(['-DDB_SCANLINE_TEST'] if args.pc_scanlines else []),*(['-DDB_PRESENT_TEST'] if args.pc_presentation else []),*(['-DDB_PIPELINE_DEFAULT=1'] if args.pc_pipeline else []),*(['-DFF_DIRECT','-DZZ_PC_CD'] if args.pc else []),'-DZZ_HEADLESS_BENCH','-DZZ_RELEASE','-DZZ_BLOCK_SIZE=0x2000000','-DZZ_CONTROL=0x180000','-DMB_ALLOCATION=0x2000000u','-DZZ_APP_NAME="'+binary.name+'"','-DZZ_APP_VERSION="'+version+'"','-DZZ_MIN_STACK=65536','-DMB_MMU','-DMB_DCACHE','-DZZ_HEADLESS_MMU','-DZZ_HEADLESS_ICACHE',
- '-I'+str(relative),'-Iamiga/dosbox/pc','-Iamiga/arm_debug','-Iamiga/arm_debug/zz9000','-Iamiga/mesen_bench','-Iamiga/dosbox/dos','-Iamiga/dosbox/console','-Iamiga/dosbox/shell','-Iamiga/dosbox/pc',str(launcher.relative_to(ROOT)),str(relative/'host.c'),*(['amiga/dosbox/console/window.c'] if args.console else []),*(['amiga/dosbox/shell/fs_host.c'] if args.shell else []),*(['amiga/dosbox/pc/display.c','amiga/dosbox/pc/cd_host.c','amiga/dosbox/pc/midi_host.c'] if args.pc else []),*(['.context/amiga/dosbox-network/amiga/libzznetwork.a'] if args.pc_network else []),'-lamiga','-o',str(relative/binary.name)],cwd=ROOT,check=True)
+ '-I'+str(relative),'-Iamiga/dosbox/pc','-Iamiga/arm_debug','-Iamiga/arm_debug/zz9000','-Iamiga/common/arm','-Iamiga/dosbox/dos','-Iamiga/dosbox/console','-Iamiga/dosbox/shell','-Iamiga/dosbox/pc',str(launcher.relative_to(ROOT)),str(relative/'host.c'),*(['amiga/dosbox/console/window.c'] if args.console else []),*(['amiga/dosbox/shell/fs_host.c'] if args.shell else []),*(['amiga/dosbox/pc/display.c','amiga/dosbox/pc/cd_host.c','amiga/dosbox/pc/midi_host.c'] if args.pc else []),*(['.context/amiga/dosbox-network/amiga/libzznetwork.a'] if args.pc_network else []),'-lamiga','-o',str(relative/binary.name)],cwd=ROOT,check=True)
 assert binary.read_bytes()[:4]==b'\0\0\x03\xf3'
 record={'upstream':json.loads((BASE/'upstream.json').read_text()),'scope':('PC BIOS/PIT/keyboard/EGA, CD and external CAMD MIDI prototype; no PCM audio; no game-speed claim' if args.pc else 'Upstream DOS shell with live flat C drive; no VGA/audio/PC BIOS' if args.shell else 'Real DOS kernel, external COM/EXE loading and bounded private file drive; no VGA/audio/shell yet'), 'image_bytes':len(image),'relocations':len(rel),'allocation':0x2000000,
  'outputs':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [elf,binary,OUT/'integration.patch',OUT/'Diagnostic.com',OUT/'dos-integration.patch',OUT/'FileTest.com',OUT/'ExeTest.exe',OUT/'INPUT.TXT',*([OUT/'Echo.com',OUT/'IoTest.com'] if args.console else []),*([OUT/'shell-integration.patch',OUT/'LoadFix.com'] if args.shell else []),*([OUT/'pc-integration.patch',OUT/'EGATEST.COM'] if args.pc else []),*([OUT/'dynrec-integration.patch'] if args.pc_dynrec else [])]},'libc_sha256':hashlib.sha256(libc.read_bytes()).hexdigest(),

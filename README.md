@@ -302,6 +302,9 @@ make verify
 
 ## Build instructions
 
+Shared ARM and libc support lives in `amiga/common/`; this repository contains
+ZZDosBox and its dependencies.
+
 Start with [Build and restore](docs/build-and-restore.md). The repository preserves
 our development toolchain layout; it is not a turnkey SDK installer.
 

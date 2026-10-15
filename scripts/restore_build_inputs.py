@@ -34,10 +34,10 @@ def main():
   for p in (ROOT/source).iterdir():
    q=out/p.name
    if not q.exists():shutil.copy2(p,q)
- for source,target in [('libc.a','.context/amiga/pocketsnes/libc.a'),('libc-seed.a','.context/amiga/ffmpeg-bench/libc-pic.a')]:
+ for source,target in [('libc.a','.context/amiga/dosbox-libc/libc.a'),('libc-seed.a','.context/amiga/dosbox-toolchain/libc-pic.a')]:
   p=ROOT/target;p.parent.mkdir(parents=True,exist_ok=True)
   if not p.exists():shutil.copy2(ROOT/'artifacts/build-support'/source,p)
- base=ROOT/'.context/amiga/ffmpeg-bench'
+ base=ROOT/'.context/amiga/dosbox-toolchain'
  if not (base/'picolibc-1.8.12').exists():
   with tarfile.open(ROOT/'sources/picolibc_1.8.12.orig.tar.gz') as archive:archive.extractall(base,filter='data')
  if args.pic_vfp_build:

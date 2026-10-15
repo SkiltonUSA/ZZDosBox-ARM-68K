@@ -44,3 +44,6 @@ an incremental ZIP update with the matching compatibility data, disk helpers,
 Network guide and Workbench icon. Reproduce it with
 `python3 scripts/package_dosbox_candidate.py`. The application version remains
 0.19.12-dev; RC1 identifies this downloadable package.
+
+The current development launcher also removes the main window title text.
+This small follow-up is newer than the published RC1 package.

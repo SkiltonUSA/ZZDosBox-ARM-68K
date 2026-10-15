@@ -4,7 +4,7 @@ from pathlib import Path
 import subprocess
 root=Path(__file__).resolve().parents[1]
 out=root/'.context/amiga/dosbox-network/tests';out.mkdir(parents=True,exist_ok=True)
-inc=['amiga/dosbox/network','amiga/dosbox/pc','amiga/dosbox/console','amiga/dosbox/dos','amiga/mesen_bench','amiga/arm_debug','amiga/arm_debug/zz9000']
+inc=['amiga/dosbox/network','amiga/dosbox/pc','amiga/dosbox/console','amiga/dosbox/dos','amiga/common/arm','amiga/arm_debug','amiga/arm_debug/zz9000']
 exe=out/'queue-test'
 subprocess.run(['clang','-std=c99','-O1','-g','-Wall','-Wextra','-Werror','-Wno-pointer-to-int-cast','-fsanitize=address,undefined','-fno-sanitize-recover=all',*['-I'+str(root/p) for p in inc],str(root/'tests/amiga/dosbox/network/queue_test.c'),'-o',str(exe)],check=True)
 subprocess.run([str(exe)],check=True)

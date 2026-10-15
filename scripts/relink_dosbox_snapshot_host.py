@@ -25,7 +25,7 @@ for key, name in [('pc_network', 'DB_NETWORK'), ('pc_memory_debug', 'DB_MEMORY_D
     if flags[key]:
         defines.append('-D' + name)
 includes = [str(folder), 'amiga/dosbox/pc', 'amiga/arm_debug',
-            'amiga/arm_debug/zz9000', 'amiga/mesen_bench', 'amiga/dosbox/dos',
+            'amiga/arm_debug/zz9000', 'amiga/common/arm', 'amiga/dosbox/dos',
             'amiga/dosbox/console', 'amiga/dosbox/shell', 'amiga/dosbox/developer']
 sources = [str(folder / 'launcher.c'), str(folder / 'host.c'),
            'amiga/dosbox/console/window.c', 'amiga/dosbox/shell/fs_host.c',

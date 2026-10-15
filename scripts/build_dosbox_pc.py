@@ -157,7 +157,7 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
 def main():
  p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse','adapters'],default='fixture');args=p.parse_args();sources=prepare()
  if args.prepare_only:return
- flags=['-std=c++17','-O2','-g','-fno-exceptions','-fno-rtti','-ffunction-sections','-fdata-sections','-Wno-format','-Wno-deprecated-declarations','-DZZ_CONTROL=0x180000','-DDB_NATIVE','-DZZ_PC_CD',*['-I'+str(x) for x in [SRC,shell.SRC,ROOT/'amiga/dosbox/dos',ROOT/'amiga/dosbox/console',OUT,OUT/'include',OUT/'src/cpu',OUT/'src/ints',ROOT/'amiga/dosbox',ROOT/'amiga/mesen_bench',ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']]]
+ flags=['-std=c++17','-O2','-g','-fno-exceptions','-fno-rtti','-ffunction-sections','-fdata-sections','-Wno-format','-Wno-deprecated-declarations','-DZZ_CONTROL=0x180000','-DDB_NATIVE','-DZZ_PC_CD',*['-I'+str(x) for x in [SRC,shell.SRC,ROOT/'amiga/dosbox/dos',ROOT/'amiga/dosbox/console',OUT,OUT/'include',OUT/'src/cpu',OUT/'src/ints',ROOT/'amiga/dosbox',ROOT/'amiga/common/arm',ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']]]
  if args.sanitize:flags+=['-fsanitize=address','-fno-omit-frame-pointer']
  sources += [SRC/'adapter.cpp',OUT/'frontend.cpp',OUT/'native_drive.cpp',SRC/'devices.cpp',SRC/'cd.cpp',SRC/'midi.cpp',SRC/'boot.cpp',SRC/'video.cpp',SRC/'native.cpp']
  headers=b''.join(x.read_bytes() for d in [OUT/'include',SRC,shell.SRC,ROOT/'amiga/dosbox/dos'] for x in sorted(d.glob('*.h')))

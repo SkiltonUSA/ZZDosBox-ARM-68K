@@ -14,7 +14,7 @@ DISPATCH='--dispatch' in sys.argv
 assert not DISPATCH or NEON
 OUT=ROOT/('.context/amiga/dosbox-scale'+('-neon' if NEON else '')+('-dispatch' if DISPATCH else ''));OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'probe.cpp').write_text('#include "scanline_pixels.h"\nextern "C" void probe(volatile uint32_t*d,const uint32_t*s,unsigned w,unsigned packed){pc_scan_scale_row(d,s,w,packed&255,(packed>>8)&1023,packed>>20);}\n')
-cmd=['podman','--connection','nuflix-converter-root','exec','zzffmpeg-toolchain']
+cmd=['podman','--connection','nuflix-converter-root','exec','zzdosbox-toolchain']
 def run(*args):subprocess.run([*cmd,*args],check=True)
 p='/work/'+str(OUT.relative_to(ROOT))+'/'
 extra=[]

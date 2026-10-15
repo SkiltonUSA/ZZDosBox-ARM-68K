@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parents[3]
 NEON='--neon' in sys.argv
 OUT=ROOT/('.context/amiga/dosbox-capture'+('-neon' if NEON else ''));OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'probe.cpp').write_text('#include "capture.h"\nextern "C" bool probe(uint32_t*d,const uint8_t*s,unsigned w,unsigned b,const uint32_t*p){return pc_capture_row(d,s,w,b,p); }\n')
-cmd=['podman','--connection','nuflix-converter-root','exec','zzffmpeg-toolchain']
+cmd=['podman','--connection','nuflix-converter-root','exec','zzdosbox-toolchain']
 def run(*args):subprocess.run([*cmd,*args],check=True)
 p='/work/'+str(OUT.relative_to(ROOT))+'/'
 extra=[]
@@ -19,7 +19,7 @@ if NEON:
  run('arm-none-eabi-g++','-O2','-mcpu=cortex-a9','-marm','-mfloat-abi=softfp','-mfpu=neon','-ffreestanding','-fno-builtin','-fno-exceptions','-fno-rtti','-c','/work/amiga/dosbox/pc/pixels_neon.cpp','-o',p+'neon.o')
  extra=[p+'neon.o']
 run('arm-none-eabi-g++','-Os','-mcpu=cortex-a9','-marm','-mfloat-abi=soft','-mno-unaligned-access','-ffreestanding','-fno-builtin','-fPIC','-fno-exceptions','-fno-rtti','-I/work/amiga/dosbox/pc',*(['-DDB_NEON'] if NEON else []),'-c',p+'probe.cpp','-o',p+'probe.o')
-run('arm-none-eabi-gcc','-Os','-mcpu=cortex-a9','-marm','-mfloat-abi=soft','-mno-unaligned-access','-ffreestanding','-fno-builtin','-fPIC','-c','/work/amiga/mesen_snes/system/memory.c','-o',p+'memory.o')
+run('arm-none-eabi-gcc','-Os','-mcpu=cortex-a9','-marm','-mfloat-abi=soft','-mno-unaligned-access','-ffreestanding','-fno-builtin','-fPIC','-c','/work/amiga/common/arm/memory.c','-o',p+'memory.o')
 run('arm-none-eabi-ld','-Ttext=0x10000','-e','probe',p+'probe.o',*extra,p+'memory.o','-o',p+'probe.elf')
 run('arm-none-eabi-objcopy','-O','binary',p+'probe.elf',p+'probe.bin')
 symbols=subprocess.check_output([*cmd,'arm-none-eabi-nm',p+'probe.elf'],text=True)
