@@ -12,6 +12,10 @@ static void save_view(struct pc_saved_view *v){v->window=window;v->bitmap=direct
 static void load_view(const struct pc_saved_view *v){window=v->window;direct_bitmap=v->bitmap;direct_format=v->format;direct_native_format=v->native;}
 static int display_hotkey(UWORD raw,UWORD qualifiers){
  unsigned key=raw&127;int down=!(raw&128);
+ if(key==0x54&&(qualifiers&IEQUALIFIER_CONTROL)){
+  if(down&&!(qualifiers&IEQUALIFIER_REPEAT))screenshot_pending=1;
+  return 1;
+ }
 #ifdef DB_SCANLINE_TEST
  if(key==0x58){
   if(down&&!(qualifiers&IEQUALIFIER_REPEAT)){

@@ -63,11 +63,43 @@ The embedded ZZDosBox logo and launcher version appear for two seconds before
 the main window opens. Click the panel to continue immediately. The panel
 uses native MUI classes and needs no external image file.
 
-Launching a game, application or DOS session shows a four-second **LOADING**
-card before handing control to the runtime. Click to skip. It lists Alt+Return
-for window/fullscreen, F10 to return, Ctrl+= (the plus/equal key) for faster
-cycles, and Ctrl+- for slower cycles. This is a timed introduction, not a
-progress meter for disk reads or guest startup.
+Launching a game, application or DOS session keeps the **LOADING** card open
+while the runtime starts. It closes when the DOSBox display window opens, or
+if the player exits before opening a display. There is no four-second timeout
+or click-to-skip. It lists Alt+Return for window/fullscreen, F10 to return,
+Ctrl+= for faster cycles and Ctrl+- for slower cycles. Display readiness is
+the handoff: individual DOS programs may still show their own loading screens.
+The normal launcher sleeps after handoff and adds no gameplay polling loop.
+
+## Library controls — 0.19.11-dev
+
+**Rename** is available in All, Games, Applications and OS. It changes the
+selected library title only, with Rename/Cancel and Enter to accept. Executable
+names, disk images and save files stay unchanged when renaming. The revision
+appears at the bottom right of every main page.
+
+**Delete** removes a dedicated game/application installation folder, including
+its files, subfolders and saves, and then removes the library entry. A
+**Yes/No** confirmation shows the title and exact folder; **No** is the default.
+Deletion cannot be undone. Category pages use a compact Launch/Edit/Rename/Delete
+row. Hover over Delete to see its explanation in the bottom-left status bar;
+the revision stays on the right. Moving away restores the previous status.
+
+**The OS stays.** Delete is disabled for OS entries. DOS/Windows disk images,
+shared installations, volume roots and the launcher installation are protected.
+For an application inside a shared OS image, use its own uninstaller; the launcher
+does not erase the image or remove the entry while its files remain installed.
+This prevents one application's removal from destroying Windows or other apps.
+Only files in the confirmed dedicated folder are deleted, not files elsewhere.
+
+The folder is inspected before deletion. Protected/unreadable files or links
+stop that inspection without deleting anything. If a filesystem error occurs
+during deletion, the entry remains and the launcher reports incomplete deletion.
+
+Successfully mounted hard disk images appear under OS, reusing an existing
+image profile where possible. Eject bootable images from Workbench before
+launching. See [IMG versus VHD](amiga-dosbox-disk-images.md) for supported formats
+and the difference between DOSBox DOS 5 storage and bootable MS-DOS images.
 
 ## Design basis
 
@@ -114,3 +146,25 @@ Audio caption alignment were verified on the A4000TX. The staged save retained
 configuration checksums; installation preserved both configuration files
 byte-for-byte. Previous launcher/settings have `.pre0191` backups. Records:
 `amiga/records/2026-10-15/dosbox-polish/`.
+
+## Screenshots — 0.19.12-dev
+
+The library shows a screenshot beside the selected game, application or OS.
+Click **Capture...** to launch it, press **Ctrl+F5** at the desired screen, then
+**F10** to return. The picture appears in the library. Ctrl+F5 also works during
+a normal launch; capturing again replaces that entry's previous picture.
+
+Pictures are saved locally as PPM files in the launcher's `Snapshots` drawer.
+The program path identifies the picture, so Rename keeps it. Different programs
+in the same installation have separate pictures. Deleting a dedicated game/app
+also deletes its library picture. OS deletion remains disabled.
+
+Capture briefly pauses presentation while the completed display frame is read
+and saved. It has no continuous readback or screenshot polling. Fullscreen and
+Workbench-window captures use the owned player bitmap, without desktop windows
+or the Workbench pointer. The preview is 240 × 180; the file retains the player's
+rendered dimensions (640 × 480 in fullscreen, up to 960 × 720 in a window).
+
+The DOS welcome screen uses a yellow ASCII ZZDOSBox title and lists Ctrl+F5
+for screenshots, Alt+Return for display mode, CPU speed controls and F10 to exit.
+Its version follows the launcher.

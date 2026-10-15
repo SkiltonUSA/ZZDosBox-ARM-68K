@@ -1,5 +1,6 @@
 /* GPL-3.0-or-later. Native MUI startup/loading panels; no external image/datatype needed. */
 #include <devices/timer.h>
+#include <intuition/intuitionbase.h>
 #include "splash-art.h"
 enum {ID_SPLASH_DISMISS=700};
 static const ULONG splash_colours[]={
@@ -13,22 +14,16 @@ static void splash_clickable(Object *o){
  get(o,MUIA_Group_ChildList,&children);
  if(children){state=children->lh_Head;while((child=NextObject(&state)))splash_clickable(child);}
 }
-static int splash_show(int loading){
- Object *panel,*window,*copy;struct MsgPort *port;struct timerequest *timer;
- ULONG signals,id;int proceed=1;
- /* Failure to create this optional presentation must not prevent launching. */
- port=CreateMsgPort();if(!port)return 1;
- timer=(struct timerequest*)CreateIORequest(port,sizeof(*timer));
- if(!timer){DeleteMsgPort(port);return 1;}
- if(OpenDevice(TIMERNAME,UNIT_MICROHZ,(struct IORequest*)timer,0)){
-  DeleteIORequest((struct IORequest*)timer);DeleteMsgPort(port);return 1;
- }
+static Object *loading_window;
+static Object *splash_create(int loading){
+ Object *panel,*window,*copy;
  copy=loading?VGroup,MUIA_Font,ui_font(),MUIA_Group_Spacing,14,
   Child,VSpace(0),
   Child,TextObject,MUIA_Font,ui_title_font(),MUIA_Text_Contents,(ULONG)"LOADING",End,
   Child,ColGroup(2),MUIA_Group_HorizSpacing,18,MUIA_Group_VertSpacing,8,
    Child,label("Alt + Return"),Child,label("Fullscreen / window"),
    Child,label("F10"),Child,label("Exit to launcher"),
+   Child,label("Ctrl + F5"),Child,label("Capture screenshot"),
    Child,label("Ctrl + ="),Child,label("Faster CPU cycles"),
    Child,label("Ctrl + -"),Child,label("Slower CPU cycles"),End,
   Child,VSpace(0),End:
@@ -54,11 +49,28 @@ static int splash_show(int loading){
    Child,copy,End,End;
  if(window){
   DoMethod(app,OM_ADDMEMBER,(ULONG)window);
-  splash_clickable(panel);
-  notify(window,MUIA_Window_CloseRequest,TRUE,ID_SPLASH_DISMISS);
+  if(!loading){splash_clickable(panel);notify(window,MUIA_Window_CloseRequest,TRUE,ID_SPLASH_DISMISS);}
   set(window,MUIA_Window_Open,TRUE);
-  if(val(window,MUIA_Window_Open)){
-   timer->tr_node.io_Command=TR_ADDREQUEST;timer->tr_time.tv_secs=loading?4:2;timer->tr_time.tv_micro=0;
+ }
+ return window;
+}
+static void splash_close(Object *window){
+ if(!window)return;
+ set(window,MUIA_Window_Open,FALSE);
+ DoMethod(app,OM_REMMEMBER,(ULONG)window);MUI_DisposeObject(window);
+}
+static int startup_splash(void){
+ Object *window;struct MsgPort *port;struct timerequest *timer;
+ ULONG signals,id;int proceed=1;
+ port=CreateMsgPort();if(!port)return 1;
+ timer=(struct timerequest*)CreateIORequest(port,sizeof(*timer));
+ if(!timer){DeleteMsgPort(port);return 1;}
+ if(OpenDevice(TIMERNAME,UNIT_MICROHZ,(struct IORequest*)timer,0)){
+  DeleteIORequest((struct IORequest*)timer);DeleteMsgPort(port);return 1;
+ }
+ window=splash_create(0);
+ if(window&&val(window,MUIA_Window_Open)){
+   timer->tr_node.io_Command=TR_ADDREQUEST;timer->tr_time.tv_secs=2;timer->tr_time.tv_micro=0;
    SendIO((struct IORequest*)timer);
    for(;;){
     id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
@@ -72,15 +84,21 @@ static int splash_show(int loading){
    if(!CheckIO((struct IORequest*)timer))AbortIO((struct IORequest*)timer);
    WaitIO((struct IORequest*)timer);
   }
-  set(window,MUIA_Window_Open,FALSE);
-  DoMethod(app,OM_REMMEMBER,(ULONG)window);MUI_DisposeObject(window);
- }
+ splash_close(window);
  CloseDevice((struct IORequest*)timer);DeleteIORequest((struct IORequest*)timer);DeleteMsgPort(port);
  return proceed;
 }
 
-static int startup_splash(void){return splash_show(0);}
-static int loading_splash(void){
- int proceed;set(win,MUIA_Window_Sleep,TRUE);proceed=splash_show(1);
- set(win,MUIA_Window_Sleep,FALSE);return proceed;
+/* Runtime windows open after allocation/loading; no fixed loading timeout.
+ * Hold Intuition's lock only while reading its lists, never across MUI calls. */
+static int player_display_open(void){
+ struct Screen *screen;struct Window *window;ULONG lock;int found=0;
+ lock=LockIBase(0);
+ for(screen=IntuitionBase->FirstScreen;screen&&!found;screen=screen->NextScreen)
+  for(window=screen->FirstWindow;window;window=window->NextWindow)
+   if(window->Title&&!strcmp((char*)window->Title,"ZZDosBox - F10 closes")){found=1;break;}
+ UnlockIBase(lock);return found;
 }
+static void loading_begin(void){set(win,MUIA_Window_Sleep,TRUE);loading_window=splash_create(1);}
+static void loading_end(void){splash_close(loading_window);loading_window=NULL;set(win,MUIA_Window_Sleep,FALSE);}
+static int loading_poll(void){if(loading_window&&player_display_open())loading_end();return loading_window!=NULL;}

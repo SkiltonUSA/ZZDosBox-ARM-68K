@@ -49,7 +49,9 @@ static int switch_requested=-1;
 static int display_hotkey(UWORD,UWORD);
 static int display_switch(void);
 static void display_focus(void);
+static void screenshot_save(void);
 #include "windowed.h"
+#include "screenshot.h"
 #include "switch_view.h"
 void pc_display_size(unsigned preset){window_preset=preset<3?preset:1;}
 void pc_display_mode(int full){fullscreen=full!=0;}
@@ -88,6 +90,7 @@ int pc_display_service(void){
    if(cl==IDCMP_INACTIVEWINDOW){unsigned i;if(!mouse_release())return 0;for(i=0;i<128;i++)if(window_keys[i]&&!window_key(i|128))return 0;}
   }
  }
+ screenshot_save();
  if(switch_requested>=0)return display_switch();
  if(seq==complete||active||flow.ready)return 1;
  if(seq!=complete+1)return 0;

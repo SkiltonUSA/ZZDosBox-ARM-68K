@@ -26,12 +26,12 @@ static std::string midi_bytes;
 extern "C" void db_native_midi_service(){unsigned r=ad_get(shared,PC_MIDI_READ),w=ad_get(shared,PC_MIDI_WRITE);assert(w-r<=PC_MIDI_SIZE);while(r!=w)midi_bytes+=(char)shared[PC_MIDI_DATA+(r++&(PC_MIDI_SIZE-1))];ad_put(shared,PC_MIDI_READ,r);}
 static void sync_range(volatile void*,size_t,void*){}static void barrier(void*){}
 static bool mouse_mode;static unsigned mouse_stage;
-static bool boot_mode,cd_boot,welcome_mode;static unsigned welcome_border;
+static bool boot_mode,cd_boot,welcome_mode;static unsigned welcome_border,welcome_title;
 static std::string input,output,boot_text;static unsigned pos;static unsigned limit_ms=8000;
 static int read(void*){return pos<input.size()?(uint8_t)input[pos++]:-1;}
 static int ready(void*){return pos<input.size();}
 static int write(void*,const uint8_t*p,unsigned n){output.append((const char*)p,n);return 1;}
-static int stop(){if((boot_mode||welcome_mode)&&PIC_Ticks>=limit_ms&&boot_text.empty()){welcome_border=mem_readw((machine==MCH_HERC?0xb0000:0xb8000)+162);for(unsigned i=0;i<80*25;i++)boot_text+=(char)mem_readb((machine==MCH_HERC?0xb0000:0xb8000)+i*2);}return PIC_Ticks>=limit_ms;}
+static int stop(){if((boot_mode||welcome_mode)&&PIC_Ticks>=limit_ms&&boot_text.empty()){welcome_border=mem_readw((machine==MCH_HERC?0xb0000:0xb8000)+162);welcome_title=mem_readb((machine==MCH_HERC?0xb0000:0xb8000)+3*160+13);for(unsigned i=0;i<80*25;i++)boot_text+=(char)mem_readb((machine==MCH_HERC?0xb0000:0xb8000)+i*2);}return PIC_Ticks>=limit_ms;}
 #include "../../../tests/amiga/dosbox/native_interactive.inc"
 void db_pc_tick(){
  if(mouse_mode){unsigned stage=mem_readb(0x500);if(stage&&stage<5&&stage!=mouse_stage){
@@ -105,7 +105,7 @@ int main(int argc,char**argv){
   if(game=="hdd-install")assert(boot_text.find("System transferred")!=std::string::npos);
   else assert(boot_text.find("MS-DOS Version 6.22")!=std::string::npos);
  }
- if(game=="welcome"){assert(rc==2&&welcome_border==0x1bc9&&boot_text.find("DosBox ZZ9000 project")!=std::string::npos&&boot_text.find("DOS 5.00")!=std::string::npos&&boot_text.find("Return to Workbench")!=std::string::npos);puts("PASS welcome DOS version, coloured CP437 frame, BIOS cursor and prompt return");}
+ if(game=="welcome"){assert(rc==2&&welcome_border==0x1bc9&&welcome_title==0x1e&&boot_text.find("github.com")==std::string::npos&&boot_text.find("Ctrl+F5          Capture screenshot")!=std::string::npos&&boot_text.find("DosBox ZZ9000 project")!=std::string::npos&&boot_text.find("DOS 5.00")!=std::string::npos&&boot_text.find("Return to Workbench")!=std::string::npos);puts("PASS welcome yellow ASCII, capture shortcut, no URL, DOS version, border and prompt return");}
  if(game=="cd"){assert(rc==0&&output.find("ZZCD data read PASS")!=std::string::npos);std::ifstream f(root+"/CDLARGE.BIN",std::ios::binary);std::string bytes((std::istreambuf_iterator<char>(f)),{});assert(bytes.size()==5003);for(unsigned i=0;i<bytes.size();i++)assert((unsigned char)bytes[i]==i%251);assert(std::filesystem::exists(root+"/CDNEST.TXT"));puts("PASS ISO9660 D: read/copy/nested/cross-sector and write protection");}
  if(game=="cdboot"){printf("BOOT TEXT: %s\n",boot_text.c_str());assert(rc==2&&boot_text.find("ZZCD data read PASS")!=std::string::npos);puts("PASS real DOS6.22 ZZDOSCD.SYS + Microsoft MSCDEX read D:");}
  if(game=="midi"){

@@ -28,10 +28,13 @@ static int disk_open_drawer(const char*name){
  note("Opened in Workbench.");return 1;
 }
 static Object* disk_image_page(void){return VGroup,
- Child,ColGroup(2),UI_PANEL("Hard disk image"),
+ Child,VGroup,UI_PANEL("Hard disk image"),
+ Child,ColGroup(2),
   Child,fieldlabel("Image"),Child,disk_choice=cycle(disk_names),
   Child,fieldlabel("File"),Child,HGroup,Child,disk_path=str(DL_PATH),Child,disk_browse=ui_button("Browse..."),End,End,
  Child,HGroup,Child,disk_mount=ui_button("Mount"),Child,disk_open=ui_button("Open contents"),Child,disk_eject=ui_button("Eject"),Child,disk_files=ui_button("Show image files"),End,
+ Child,label(".IMG: raw disk sectors.  .VHD: container; convert to raw .IMG first.\nRenaming a .VHD file does not convert it."),
+ End,
  Child,VGroup,UI_PANEL("New hard disk"),
   Child,ColGroup(2),Child,fieldlabel("DOS"),Child,disk_os=cycle(exists(disk_paths[0])?disk_os_all:disk_os_builtin),
   Child,fieldlabel("Size"),Child,HGroup,Child,disk_size=cycle(disk_sizes),Child,disk_create=ui_button("Create hard disk..."),End,End,
@@ -78,6 +81,33 @@ static void disk_create_image(void){
  SetAttrs(disk_choice,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,i<disk_count?i:disk_count,TAG_DONE);set(disk_path,MUIA_String_Contents,(ULONG)dest);
  note(save()?"Hard disk ready. Launch it from OS, or open its contents here.":"Disk created; profile could not be saved. Use Save settings.");
 }
+/* A successful Workbench mount also creates a persistent OS library entry.
+ * Preserve existing per-image choices (notably DOSBox DOS 5 + image). */
+static int disk_register_os(const char *image,int normal){
+ unsigned i;char file[DL_PATH],name[13];struct dl_profile *p;
+ for(i=0;i<library.count;i++){
+  p=&library.p[i];
+  if(normal&&p->system==1)break;
+  if(p->system>=2&&dl_join(file,sizeof(file),p->drive,p->image)&&(!stricmp(file,image)||same_dir(file,image)))break;
+ }
+ if(i==library.count){
+  if(library.count==DL_MAX){note("Disk mounted; program list is full.");return 0;}
+  snprintf(name,sizeof(name),"%s",FilePart((STRPTR)image));
+  {unsigned j;for(j=0;name[j];j++)if(name[j]>='a'&&name[j]<='z')name[j]-=32;}
+  if(!normal&&(strlen(FilePart((STRPTR)image))>=sizeof(name)||!dl_image_valid(name))){note("Disk mounted; OS entry needs an 8.3 image filename.");return 0;}
+  p=&library.p[i];dl_profile_default(p);p->memory=8;
+  snprintf(p->title,sizeof(p->title),"%s",normal?"MS-DOS 6.22":(char*)FilePart((STRPTR)image));
+  strcpy(p->drive,image);*PathPart(p->drive)=0;p->system=normal?1:2;
+  if(!normal)strcpy(p->image,name);
+  library.count++;
+ }
+ library.p[i].category=DL_OS;library.last=i;refresh();
+ disk_choices_init();SetAttrs(disk_choice,MUIA_NoNotify,TRUE,MUIA_Cycle_Entries,(ULONG)disk_names,TAG_DONE);
+ for(i=0;i<disk_count;i++)if(!stricmp(disk_paths[i],image)||same_dir(disk_paths[i],image))break;
+ SetAttrs(disk_choice,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,i<disk_count?i:disk_count,TAG_DONE);
+ if(!save()){note("Disk mounted; OS entry could not be saved. Use Save settings.");return 0;}
+ return 1;
+}
 static void disk_action(unsigned id){
  char image[DL_PATH],tool[DL_PATH],qt[DL_PATH*2+3],qi[DL_PATH*2+3],cmd[DL_PATH*4+64];const char*root;LONG rc;int normal;
  if(id==ID_DISK_CREATE){disk_create_image();return;}
@@ -86,11 +116,13 @@ static void disk_action(unsigned id){
  snprintf(image,sizeof(image),"%s",(char*)val(disk_path,MUIA_String_Contents));if(!*image){note("Choose a disk image.");return;}
  if(id==ID_DISKS){*PathPart(image)=0;disk_open_drawer(image);return;}
  if(FindPort("Sixies.ARM.Debug.Owner")){note("Close DOSBox before mounting or ejecting an image.");return;}
+ if(id!=ID_EJECT_HD&&!store_selection())return;
  {struct Process*self=(struct Process*)FindTask(NULL);APTR old=self->pr_WindowPtr;self->pr_WindowPtr=(APTR)-1;normal=same_dir(image,disk_paths[0]);self->pr_WindowPtr=old;}root=normal?"DOSHD:":"ZZIMAGE:";
- if(normal&&id!=ID_EJECT_HD&&disk_exists(root)){if(id==ID_OPEN_HD)disk_open_drawer(root);else note("MS-DOS disk is already mounted.");return;}
+ if(normal&&id!=ID_EJECT_HD&&disk_exists(root)){if(!disk_register_os(image,normal))return;if(id==ID_OPEN_HD)disk_open_drawer(root);else note("MS-DOS disk is already mounted.");return;}
  path(tool,"ZZDosDisk");if(!dl_quote(qt,sizeof(qt),tool)||!dl_quote(qi,sizeof(qi),image))return;
  snprintf(cmd,sizeof(cmd),"%s %s%s%s",qt,id==ID_EJECT_HD?"eject":"mount",normal?"":" ",normal?"":qi);
  set(app,MUIA_Application_Sleep,TRUE);rc=SystemTags(cmd,SYS_Asynch,FALSE,NP_StackSize,32768,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);
  if(rc){note(rc==10?"Use a raw FAT .IMG disk (32-256 MB), not a VHD container.":"Disk unavailable; close DOSBox and any open disk files.");return;}
- if(id==ID_OPEN_HD)disk_open_drawer(root);else note(id==ID_EJECT_HD?"Disk ejected.":"Disk mounted in Workbench.");
+ if(id!=ID_EJECT_HD&&!disk_register_os(image,normal))return;
+ if(id==ID_OPEN_HD)disk_open_drawer(root);else note(id==ID_EJECT_HD?"Disk ejected.":"Disk mounted. Available under OS; eject before booting.");
 }

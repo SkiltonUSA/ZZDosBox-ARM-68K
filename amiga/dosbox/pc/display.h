@@ -9,6 +9,7 @@ void pc_display_pipeline(int enabled);
 #ifdef DB_SCANLINE_TEST
 void pc_display_scanlines(unsigned mode);
 #endif
+void pc_display_screenshot_path(const char *path);
 void pc_display_size(unsigned preset);
 void pc_display_mode(int fullscreen);
 void ff_cleanup(void);

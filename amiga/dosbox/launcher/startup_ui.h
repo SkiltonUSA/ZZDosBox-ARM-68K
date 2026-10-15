@@ -1,19 +1,32 @@
 /* GPL-3.0-or-later. Workbench ownership surrounds all startup-file changes. */
 #include "startup.h"
 #include "../pc/cd_host.h"
+/* CRCs of the shipped 0.10.1 (colour/Hercules) and 0.11.0 helpers.
+ * Only these exact-size versions are replaced; unknown same-name files remain untouched. */
+static int welcome_legacy(FILE *f){
+ uint32_t crc=~0u;unsigned count=0,bit;int c;rewind(f);
+ while((c=fgetc(f))!=EOF){crc^=(unsigned char)c;for(bit=0;bit<8;bit++)crc=(crc>>1)^(0xedb88320u&-(crc&1));count++;}
+ if(ferror(f))return 0;crc=~crc;
+ return (count==654&&crc==0x0e8a118au)||(count==665&&(crc==0x9fcb96f1u||crc==0xeb86f804u));
+}
 static int welcome_support(const char*root){
- char source[DL_PATH],dest[DL_PATH],tmp[DL_PATH];FILE*a,*b;unsigned char data[512],check[512];size_t n;int ok=1;
- path(source,"ZZHELLO2.COM");if(!dl_join(dest,sizeof(dest),root,"ZZHELLO2.COM")||!dl_join(tmp,sizeof(tmp),root,"ZZHELLO2.TMP"))return 0;
+ char source[DL_PATH],dest[DL_PATH],tmp[DL_PATH],backup[DL_PATH];FILE*a,*b;unsigned char data[512],check[512];size_t n;int ok=1,upgrade=0;
+ path(source,"ZZHELLO2.COM");if(!dl_join(dest,sizeof(dest),root,"ZZHELLO2.COM")||!dl_join(tmp,sizeof(tmp),root,"ZZHELLO2.TMP")||!dl_join(backup,sizeof(backup),root,"ZZHELLO2.BAK"))return 0;
  a=fopen(source,"rb");if(!a)return 0;
  if(exists(dest)){
   b=fopen(dest,"rb");if(!b){fclose(a);return 0;}
   while((n=fread(data,1,sizeof(data),a))>0)if(fread(check,1,n,b)!=n||memcmp(data,check,n)){ok=0;break;}
-  if(ferror(a)||ferror(b)||fgetc(b)!=EOF)ok=0;fclose(a);fclose(b);return ok;
+  if(ferror(a)||ferror(b)||fgetc(b)!=EOF)ok=0;
+  if(!ok)upgrade=welcome_legacy(b);fclose(b);
+  if(ok){fclose(a);return 1;}
+  if(!upgrade||exists(backup)){fclose(a);return 0;}rewind(a);ok=1;
  }
  if(exists(tmp)){fclose(a);return 0;}b=fopen(tmp,"wb");if(!b){fclose(a);return 0;}
  while((n=fread(data,1,sizeof(data),a))>0)if(fwrite(data,1,n,b)!=n){ok=0;break;}
  if(ferror(a))ok=0;fclose(a);if(fclose(b))ok=0;
- if(ok)ok=Rename(tmp,dest);if(!ok)DeleteFile(tmp);return ok;
+ if(ok&&upgrade)ok=Rename(dest,backup);
+ if(ok){ok=Rename(tmp,dest);if(!ok&&upgrade)Rename(backup,dest);}
+ if(!ok)DeleteFile(tmp);return ok;
 }
 static int startup_disk(int mount){char helper_path[DL_PATH],quoted[DL_PATH*2+3],cmd[DL_PATH*2+40];LONG rc;
  path(helper_path,"ZZDosDisk");if(!dl_quote(quoted,sizeof(quoted),helper_path))return 0;

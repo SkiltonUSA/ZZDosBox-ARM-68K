@@ -1,4 +1,5 @@
 /* Original ZZDosBox welcome panel. DOS 5/6 compatible; no ANSI.SYS or COLOR. */
+#include "../launcher/version.h"
 .intel_syntax noprefix
 .code16
 .global _start
@@ -69,12 +70,15 @@ line:
  cmp ax,0xffff
  je done
  mov di,ax
+ mov ah,0x1f
+ cmp di,8*160
+ jae chars
+ mov ah,0x1e
 chars:
  lodsb
  test al,al
  jz line
- mov byte ptr es:[di],al
- add di,2
+ stosw
  jmp chars
 done:
  mov ah,2
@@ -95,19 +99,20 @@ lines:
  .word 7*160+12
  .asciz "ZZZZ ZZZZ DDD   OOO  SSSS  BBB   OOO  X   X"
  .word 9*160+12
- .asciz "DosBox ZZ9000 project                         0.11.0-dev"
+ .ascii "DosBox ZZ9000 project                         "
+ .asciz ZZ_LAUNCHER_VERSION
  .word 10*160+12
  .asciz "AmigaOS / 32-bit Cortex-A9 / XACP"
  .word 11*160+12
  .ascii "DOS "
 dosmajor: .ascii "0."
 dosminor: .asciz "00"
- .word 13*160+12
- .asciz "https://github.com/SkiltonUSA/ZZDosBox-ARM-68K"
- .word 15*160+12
+ .word 14*160+12
  .asciz "Alt+Return       Window / fullscreen"
- .word 16*160+12
+ .word 15*160+12
  .asciz "Ctrl+- / Ctrl++  CPU speed"
+ .word 16*160+12
+ .asciz "Ctrl+F5          Capture screenshot"
  .word 17*160+12
  .asciz "F10              Return to Workbench"
  .word 0xffff

@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.19.10-dev**, newest first.
+Version history from **0.1.0-dev** through **0.19.12-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -12,6 +12,8 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 | Version | Main change |
 |---|---|
+| [0.19.12-dev](#v0-19-12) | Per-program screenshots and library previews |
+| [0.19.11-dev](#v0-19-11) | Loading handoff, Rename, OS images and footer revision |
 | [0.19.10-dev](#v0-19-10) | Program-list keyboard navigation |
 | [0.19.9-dev](#v0-19-9) | Explicit scanline / FPS help |
 | [0.19.8-dev](#v0-19-8) | Offline Network guide |
@@ -60,6 +62,35 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 - Document the unused fourth byte in scanline pixel formats.
 - Add sanitizer tests for ring publication, wrapping and receive recovery.
 - RAM-only hardware correctness check passed; no speed gain is established.
+
+<a id="v0-19-12"></a>
+## 0.19.12-dev — Library screenshots
+
+- Screenshot previews sit beside All, Games, Applications and OS lists.
+- Capture launches the selected program. Ctrl+F5 saves a completed display frame;
+  F10 returns to the library. A new capture replaces that entry's previous picture.
+- The loading screen lists Ctrl+F5 alongside fullscreen, exit and CPU controls.
+- DOS welcome uses a yellow ASCII title, current launcher version and Ctrl+F5
+  instructions, without a GitHub URL. Known older welcome helpers upgrade on launch.
+- Pictures stay local in Snapshots, retain their association after Rename, and
+  are refreshed when the player exits. Capturing briefly pauses presentation.
+- Capture uses the existing owned bitmap after rendering and flip completion;
+  the display lock is released before writing the PPM file.
+
+<a id="v0-19-11"></a>
+## 0.19.11-dev — Loading and library controls
+
+- Loading stays visible while the player starts, until its display window opens;
+  it also closes if startup fails. The launcher sleeps during normal gameplay.
+- Rename changes library titles. Four compact category buttons include Delete.
+- Delete removes dedicated game/application folders and their saves after a
+  Yes/No confirmation (No by default). OS entries/images and shared installations
+  are protected; shared-image apps require their own uninstaller.
+- Successfully mounted raw hard disk images appear in OS, reusing existing
+  profiles. Bootable images must be ejected from Workbench before launching.
+- The launcher revision is always visible at the bottom right. Delete help
+  appears on hover at the bottom left, restoring the status when the pointer leaves.
+- Hard-disk actions sit inside their frame; Disks explains IMG versus VHD.
 
 <a id="v0-19-10"></a>
 ## 0.19.10-dev

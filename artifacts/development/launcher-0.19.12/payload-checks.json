@@ -1,0 +1,30 @@
+[
+  {
+    "variant": "normal",
+    "arm_image_mapping_probe_and_relocations_unchanged": true
+  },
+  {
+    "variant": "scan",
+    "arm_image_mapping_probe_and_relocations_unchanged": true
+  },
+  {
+    "variant": "gl",
+    "arm_image_mapping_probe_and_relocations_unchanged": true
+  },
+  {
+    "variant": "windows",
+    "arm_image_mapping_probe_and_relocations_unchanged": true
+  },
+  {
+    "variant": "dynamic",
+    "arm_image_mapping_probe_and_relocations_unchanged": true
+  },
+  {
+    "variant": "network",
+    "arm_image_mapping_probe_and_relocations_unchanged": true
+  },
+  {
+    "variant": "memory",
+    "arm_image_mapping_probe_and_relocations_unchanged": true
+  }
+]

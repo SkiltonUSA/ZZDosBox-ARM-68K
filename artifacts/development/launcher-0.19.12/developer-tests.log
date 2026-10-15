@@ -1,0 +1,31 @@
+PASS Developer defaults, all control combinations, dispatch and input bounds
+VIDEO_TRACE serial=1 phase=render frame=1 detail=3 ticks=0000000000000025
+VIDEO_TRACE serial=2 phase=render frame=1 detail=3 ticks=000000000000004a
+VIDEO_TRACE lost=22
+VIDEO_TRACE serial=25 phase=render frame=1 detail=3 ticks=000000000000039d
+VIDEO_TRACE serial=26 phase=render frame=1 detail=3 ticks=00000000000003c2
+VIDEO_TRACE serial=27 phase=render frame=1 detail=3 ticks=00000000000003e7
+VIDEO_TRACE serial=28 phase=render frame=1 detail=3 ticks=000000000000040c
+VIDEO_TRACE serial=29 phase=render frame=1 detail=3 ticks=0000000000000431
+VIDEO_TRACE serial=30 phase=render frame=1 detail=3 ticks=0000000000000456
+VIDEO_TRACE serial=31 phase=render frame=1 detail=3 ticks=000000000000047b
+VIDEO_TRACE serial=32 phase=render frame=1 detail=3 ticks=00000000000004a0
+VIDEO_TRACE serial=33 phase=render frame=1 detail=3 ticks=00000000000004c5
+VIDEO_TRACE serial=34 phase=render frame=1 detail=3 ticks=00000000000004ea
+VIDEO_TRACE serial=35 phase=render frame=1 detail=3 ticks=000000000000050f
+VIDEO_TRACE serial=36 phase=render frame=1 detail=3 ticks=0000000000000534
+VIDEO_TRACE serial=37 phase=render frame=1 detail=3 ticks=0000000000000559
+VIDEO_TRACE serial=38 phase=render frame=1 detail=3 ticks=000000000000057e
+VIDEO_TRACE serial=39 phase=render frame=1 detail=3 ticks=00000000000005a3
+VIDEO_TRACE serial=40 phase=render frame=1 detail=3 ticks=00000000000005c8
+VIDEO_TRACE serial=41 phase=render frame=1 detail=3 ticks=00000000000005ed
+PASS trace reader: empty, commit, torn sample, overrun and recovery
+VIDEO_BREAK frame=2 phase=2 token=1
+VIDEO_BREAK frame=2 phase=2 token=2
+VIDEO_BREAK frame=2 phase=2 token=3
+VIDEO_BREAK frame=2 phase=2 token=4
+VIDEO_BREAK frame=2 phase=2 token=5
+Cannot open checkpoint controls
+Cannot open checkpoint controls
+PASS checkpoint UI: lock/flip drain, nonblocking controls, resume/step/stop, cleanup and allocation failure
+PASS profiles/sessions, adapter/colour/renderer migration and validation

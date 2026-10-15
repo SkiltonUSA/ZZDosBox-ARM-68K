@@ -65,6 +65,7 @@ int db_arguments(int argc,char **argv){
    if(settings.system){strcpy(hdd_name,settings.system==2?settings.image:"DOS622.IMG");duration=0;}
    if(*settings.command&&!settings.system)snprintf(auto_command,sizeof(auto_command),"%s\r%s",settings.command,settings.terminal?"":"exit\r");
   }
+  else if(!strcmp(argv[i],"--snapshot")&&i+1<argc){if(strlen(argv[i+1])>=256)return -1;pc_display_screenshot_path(argv[++i]);}
   else if(!strcmp(argv[i],"--window"))settings.display=0;
 #ifdef DB_NETWORK
   else if(!strcmp(argv[i],"--network"))network_enabled=1;

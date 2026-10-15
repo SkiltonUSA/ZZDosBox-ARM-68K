@@ -85,6 +85,7 @@ static int window_service(void){
   window_ready=1;paint_width=window_width;paint_height=window_height;window_paint();
  }
  if((event=window_events())<=0)return event;
+ screenshot_save();
  if(switch_requested>=0)return display_switch();
  if(active||seq==complete)return 1;
  if(seq!=complete+1)return 0;

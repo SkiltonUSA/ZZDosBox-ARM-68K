@@ -1,6 +1,6 @@
 # ZZDosBox features and compatibility
 
-This describes the **0.19.10-dev launcher and installed DOS runtime** and the separate **Windows/mouse development build**.
+This describes the **0.19.12-dev launcher and installed DOS runtime** and the separate **Windows/mouse development build**.
 It is the implemented Amiga feature set, not the complete feature list of
 [upstream dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 
@@ -10,7 +10,7 @@ It is the implemented Amiga feature set, not the complete feature list of
 | --- | --- |
 | Native interface | MUI sidebar navigation with Load Program, DOS terminal, display/audio settings, Disks, Network, Compatibility, Developer and About pages. Load Program contains All, Games, Applications and OS lists, with saved category tags. |
 | Configuration | Developer → dosbox.conf: validated editor for 29 supported global overrides, including core selection and exact CPU cycles. [Settings reference](amiga-dosbox-conf.md). |
-| Program library | Up to 256 saved profiles, each with its own program, C: drawer and emulator settings. Focus the program list and use Up/Down to select; A–Z or 0–9 jumps to the first matching title. |
+| Program library | Up to 256 saved profiles, each with its own program, C: drawer and emulator settings. Rename changes the library title. Delete removes a dedicated game/app folder and saves after Yes/No confirmation; OS and shared-image installations are protected. Focus the program list and use Up/Down to select; A–Z or 0–9 jumps to the first matching title. |
 | Compatibility helper | Optional LOADFIX per profile for programs needing a different conventional-memory load address. |
 | DOS choice | Embedded DOS 5 or booted, separately supplied MS-DOS 6.22. |
 | Startup editing | AUTOEXEC.BAT and CONFIG.SYS tabs with Default / Edited / File choices, line editing and import/export. |
@@ -74,11 +74,12 @@ for untrusted programs.
 | Feature | Support |
 | --- | --- |
 | Shared C: drawer | Read/write access to an Amiga directory, including nested directories and the port's restricted DOS 8.3 names. |
+| Screenshots | Ctrl+F5 saves the completed player display as a local PPM. Per-program previews appear beside the library list; Capture launches the selected entry. |
 | Game saves | Normal files written by the game persist. Emulator snapshots/save states are not implemented. |
 | Floppy boot | Read-only 1.44 MB BIOS disk images. |
 | Hard-disk boot | The Windows/image runtime supports writable 32–256 MiB BIOS disk images, in 256 KiB increments, with bounds checking and persistent writes. Each image profile chooses its disk and startup command. |
 | New hard disk | Create a 32, 64, 128 or 256 MiB raw FAT16 `.IMG`, with startup files and an OS library entry. DOSBox DOS 5 is the default; optional MS-DOS 6.22 uses the installed system files. Existing images are never replaced. |
-| Workbench access | Choose, mount, open and eject raw FAT images using diskimage.device and fat95. DOSBox DOS 5 image profiles mount automatically as C: and eject after the session. Booted MS-DOS/Windows requires an ejected image. |
+| Workbench access | Choose, mount, open and eject raw FAT images using diskimage.device and fat95. Mounted images are added to OS without duplicate profiles. See [IMG versus VHD](amiga-dosbox-disk-images.md). DOSBox DOS 5 image profiles mount automatically as C: and eject after the session. Booted MS-DOS/Windows requires an ejected image. |
 | Data CDs | Read-only ISO9660 images or an already-mounted Amiga data CD, exposed as D:. |
 | MS-DOS CD driver | Original ZZDOSCD.SYS gateway with the user's licensed MSCDEX.EXE. |
 

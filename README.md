@@ -15,9 +15,12 @@ and display coordination through [Xani's XACP platform](https://github.com/Xanxi
 
 This is development software. Builds and research artifacts are kept separately:
 
-- [Launcher 0.19.10-dev](artifacts/development/launcher-0.19.10): adds keyboard
-  program selection, a scrollable About changelog and the sidebar logo. Retains disk creation and the offline Network guide.
-  Requires the existing [0.19.7 support files](artifacts/development/launcher-0.19.7).
+- [Launcher 0.19.12-dev candidate](artifacts/development/launcher-0.19.12): keeps the loading
+  panel visible until the player display opens; adds Rename/Delete, mounted images in OS,
+  footer hover help and per-program screenshot previews. Ctrl+F5 captures during play. Includes keyboard navigation and the About changelog.
+  Screenshot capture and footer hover still need physical validation; see the [validation record](artifacts/development/launcher-0.19.12/validation.md).
+  The DOS welcome title is yellow and lists Ctrl+F5.
+  The included screenshot-enabled runtimes are test candidates. Requires the existing [0.19.7 support files](artifacts/development/launcher-0.19.7).
 - [TCP/IP + IPX interpreter runtime](artifacts/development/network-0.18.0):
   optional guest networking through the existing Amiga connection.
 - [Console synchronization candidate](artifacts/experiments/console-sync):
@@ -31,16 +34,18 @@ This is development software. Builds and research artifacts are kept separately:
 - [TinyGL diagnostic builds and measurements](amiga/records/2026-10-14/tinygl-compiler):
   experiments, not replacements for the normal runtime.
 
+Disk formats: [IMG versus VHD](docs/amiga-dosbox-disk-images.md).
+
 ## Features
 
-Features below span the current **0.19.10-dev launcher** and its separate DOS,
+Features below span the current **0.19.12-dev launcher** and its separate DOS,
 Windows, network and developer runtimes. Experimental features are labelled;
 not every combination is supported.
 
 | Area | Features |
 |---|---|
-| Native launcher | MUI 3.8+ sidebar navigation, persistent settings, About/credits and scrollable changelog, ZZDosBox branding, startup and loading screens with shortcut reminders. |
-| Program library | Up to 256 profiles; All, Games, Applications and OS lists; add programs, category tags and per-program settings. Up/Down selection and letter/number jump in the focused list. |
+| Native launcher | MUI 3.8+ sidebar navigation, persistent settings, About/credits and scrollable changelog, ZZDosBox branding, startup logo, loading screen held until display handoff, shortcut reminders and footer revision. |
+| Program library | Up to 256 profiles; All, Games, Applications and OS lists; add/rename entries, confirmed deletion of dedicated game/app folders, protected OS/shared disks, category tags and per-program settings. Up/Down selection and letter/number jump in the focused list. |
 | DOS environments | Embedded DOSBox DOS 5 without installation disks; optional booted MS-DOS 6.22 from the user's installation. |
 | Execution | 386-class, 32-bit x86 emulation; ARMv7 dynamic recompiler with 4 MiB code cache for DOS; separate interpreter and paging-guarded Windows builds. |
 | CPU and memory | 1/2/4/8 MiB guest RAM; 1000/3000/6000 cycle presets; exact 500–10000 cycle overrides and live adjustment; timed tests or normal sessions. |
@@ -81,7 +86,8 @@ higher-resolution Windows display drivers still need testing.
 
 ## Launcher screenshots
 
-Captured on the Amiga: Load program and About use **0.19.10-dev**; other pages
+Captured on the Amiga: Load program uses **0.19.12-dev**, About uses
+**0.19.10-dev**; other pages
 show **0.19.8-dev**. Expand a page to view it.
 
 <details open>

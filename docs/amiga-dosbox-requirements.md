@@ -56,7 +56,7 @@ Sound Blaster, AdLib/OPL and PC-speaker PCM audio remain unimplemented.
   its boot code and DOS files into a separately bootable image. No Microsoft
   files are bundled. New images receive AUTOEXEC.BAT, CONFIG.SYS and an OS entry.
 - The Disks page can mount and open raw MBR FAT hard-disk `.IMG` files
-  (32–256 MiB) in Workbench. Microsoft `.VHD` containers are not supported.
+  (32–256 MiB) in Workbench. Microsoft `.VHD` containers are not supported; see [IMG versus VHD](amiga-dosbox-disk-images.md).
 - Eject an image from Workbench before booting it in DOSBox. Do not mount one
   writable image in both systems at once.
 - The Windows development build has completed Windows for Workgroups 3.11

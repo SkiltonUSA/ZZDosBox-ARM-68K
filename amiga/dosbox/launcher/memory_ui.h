@@ -135,29 +135,46 @@ static void memory_player_worker(void){
  PutMsg(mem_job.done.mn_ReplyPort,&mem_job.done);
 }
 static LONG player_run(const char *command,BPTR log){
- struct MsgPort *done;struct Process *process;ULONG signals,id,ticks=0;int finished=0,close_requested=0;
+ struct MsgPort *done;struct Process *process;ULONG signals,id,ticks=0;
+ char shot[DL_PATH],quoted[DL_PATH*2+3];char *capture_command=NULL;BPTR dir;
+ int finished=0,close_requested=0,interactive=val(mem_enabled,MUIA_Selected)||network_requested;
  if(mem_busy)return 20;
- if(!loading_splash())return 0;
- if(!val(mem_enabled,MUIA_Selected)&&!network_requested){
-  LONG rc;set(win,MUIA_Window_Open,FALSE);rc=SystemTags((STRPTR)command,SYS_Input,0,SYS_Output,log,SYS_Asynch,FALSE,NP_StackSize,65536,TAG_DONE);set(win,MUIA_Window_Open,TRUE);return rc;
+ if(selected>=0){
+  path(shot,"Snapshots");dir=Lock(shot,ACCESS_READ);if(!dir)dir=CreateDir(shot);
+  if(!dir){note("Cannot create screenshot drawer.");return 20;}UnLock(dir);
+  if(!snapshot_path(&library.p[selected],shot)){note("Screenshot path is too long.");return 20;}
+  if(!dl_quote(quoted,sizeof(quoted),shot))return 20;
+  capture_command=AllocVec(strlen(command)+strlen(quoted)+16,MEMF_PUBLIC);if(!capture_command)return 20;
+  sprintf(capture_command,"%s --snapshot %s",command,quoted);command=capture_command;
  }
- if(network_requested&&!network_live_begin())return 20;
- done=CreateMsgPort();if(!done){network_live_end();return 20;}
+ if(network_requested&&!network_live_begin()){if(capture_command)FreeVec(capture_command);return 20;}
+ done=CreateMsgPort();if(!done){network_live_end();if(capture_command)FreeVec(capture_command);return 20;}
  memset(&mem_job,0,sizeof(mem_job));mem_job.done.mn_ReplyPort=done;mem_job.command=command;mem_job.log=log;
  mem_valid=mem_total=mem_undo_valid=mem_paused=mem_size=0;
+ loading_begin();
+ if(!interactive)set(win,MUIA_Window_Open,FALSE);
  process=CreateNewProcTags(NP_Entry,(ULONG)memory_player_worker,NP_Name,(ULONG)"ZZDosBox session",NP_StackSize,65536,NP_Input,0,NP_Output,0,NP_CloseInput,FALSE,NP_CloseOutput,FALSE,TAG_DONE);
- if(!process){DeleteMsgPort(done);network_live_end();return 20;}
- navigation_show(network_running?PAGE_NETWORK:PAGE_DEVELOPER);set(navigation_view,MUIA_Disabled,TRUE);note(network_running?"Network DOS session running.":"Developer session running.");
+ if(!process){loading_end();set(win,MUIA_Window_Open,TRUE);DeleteMsgPort(done);network_live_end();if(capture_command)FreeVec(capture_command);return 20;}
+ if(interactive){navigation_show(network_running?PAGE_NETWORK:PAGE_DEVELOPER);set(navigation_view,MUIA_Disabled,TRUE);note(network_running?"Network DOS session running.":"Developer session running.");}
  while(!finished||mem_busy||network_busy){
   mem_poll();network_poll();if(GetMsg(done))finished=1;
+  if(finished)loading_end();
+  /* Normal play sleeps once the display opens: no background polling cost. */
+  if(!interactive&&!loading_poll()){
+   if(!finished)Wait(1ul<<done->mp_SigBit);
+   continue;
+  }
+  loading_poll();
   id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
   if(network_running&&id)network_live_event(id);
   else if(id>=ID_MEM_PAUSE&&id<=ID_MEM_STOP)mem_action(id);
   else if(id==(ULONG)MUIV_Application_ReturnID_Quit)close_requested=1;
   else if(id)note("Stop the session before changing launch settings.");
   if(close_requested&&!finished&&!mem_busy&&!network_running){mem_action(ID_MEM_STOP);close_requested=0;}
-  if(!network_running&&!finished&&!mem_busy&&val(mem_watch,MUIA_Selected)&&++ticks>=12){ticks=0;mem_read_page(0);}
+  if(interactive&&!network_running&&!finished&&!mem_busy&&val(mem_watch,MUIA_Selected)&&++ticks>=12){ticks=0;mem_read_page(0);}
   if(!finished||mem_busy||network_busy)Delay(1);
  }
+ if(capture_command)FreeVec(capture_command);snapshot_refresh();
+ loading_end();set(win,MUIA_Window_Open,TRUE);
  set(navigation_view,MUIA_Disabled,FALSE);DeleteMsgPort(done);network_live_end();set(mem_state,MUIA_Text_Contents,(ULONG)"Session ended.");return mem_job.result;
 }
