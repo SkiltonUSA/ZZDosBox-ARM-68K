@@ -183,16 +183,17 @@ static void conf_log(BPTR log,const struct dl_session*s){
  static const char*cores[]={"auto","normal","dynamic"};
  FPrintf(log,"CONFIG core=%s runtime=%s cycles=%lu memory=%lu\n",cores[dc_get(&conf,DC_CORE,0)],active_runtime?active_runtime:"default",s->cycles,s->memory);Flush(log);
 }
-static void developer_log(void){
+static void open_document(const char *name,const char *missing){
  char p[DL_PATH],q[DL_PATH*2+3],cmd[DL_PATH*2+64];const char *viewer;
- path(p,last_log);
- if(!exists(p)){note("No completed log yet.");return;}
+ path(p,name);
+ if(!exists(p)){note(missing);return;}
  viewer=exists("SYS:Utilities/MultiView")?"SYS:Utilities/MultiView":
         exists("C:MultiView")?"C:MultiView":
         exists("SYS:System/MultiView")?"SYS:System/MultiView":NULL;
- if(!viewer){note("MultiView is required to open the log.");return;}
- if(dl_quote(q,sizeof(q),p)){snprintf(cmd,sizeof(cmd),"%s %s",viewer,q);if(SystemTags(cmd,SYS_Asynch,TRUE,NP_StackSize,16384,TAG_DONE)<0)note("Could not open the log viewer.");}
+ if(!viewer){note("MultiView is required to open this document.");return;}
+ if(dl_quote(q,sizeof(q),p)){snprintf(cmd,sizeof(cmd),"%s %s",viewer,q);if(SystemTags(cmd,SYS_Asynch,TRUE,NP_StackSize,16384,TAG_DONE)<0)note("Could not open the document viewer.");}
 }
+static void developer_log(void){open_document(last_log,"No completed log yet.");}
 #include "network_ui.h"
 static void launch_msdos(const struct dl_profile*p,unsigned mode,const char*doscommand){
  struct dl_session s;char session[DL_PATH],player[DL_PATH],qp[DL_PATH*2+3],qs[DL_PATH*2+3],cmd[DL_PATH*6+1200];BPTR log;LONG rc=20;int changed=0;
@@ -456,7 +457,7 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   case ID_BOOT_DISK:boot_disk();break;
   case ID_MOUNT_DISKS:case ID_EJECT_DISKS:{char quoted[DL_PATH*2+3],cmd[DL_PATH*2+32];path(p,id==ID_MOUNT_DISKS?"Disks/Mount-DOS-Disks":"Disks/Eject-DOS-Disks");if(dl_quote(quoted,sizeof(quoted),p)){LONG result;snprintf(cmd,sizeof(cmd),"Execute %s",quoted);set(app,MUIA_Application_Sleep,TRUE);result=SystemTags(cmd,SYS_Asynch,FALSE,NP_StackSize,16384,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);note(result==0?(id==ID_MOUNT_DISKS?"Disks mounted in Workbench.":"Disks ejected."):"Disk action failed.");}break;}
   case ID_BROWSE_DRAWER:if(browse(p,1,0,"Select C: drawer"))set(drawer,MUIA_String_Contents,(ULONG)p);break;
-  default:if(id>=ID_NET_MODE&&id<=ID_NET_DISCONNECT){network_action(id);break;}if(id>=ID_CAT_SELECT&&id<ID_CAT_SELECT+DL_CATEGORIES){unsigned c=id-ID_CAT_SELECT;if(!busy)select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active)));break;}
+  default:if(id>=ID_NET_MODE&&id<=ID_NET_GUIDE){network_action(id);break;}if(id>=ID_CAT_SELECT&&id<ID_CAT_SELECT+DL_CATEGORIES){unsigned c=id-ID_CAT_SELECT;if(!busy)select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active)));break;}
   if((id>=ID_CAT_RUN&&id<ID_CAT_RUN+DL_CATEGORIES)||(id>=ID_CAT_EDIT&&id<ID_CAT_EDIT+DL_CATEGORIES)){unsigned c=id>=(unsigned)ID_CAT_EDIT?id-ID_CAT_EDIT:id-ID_CAT_RUN;int n=dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active));if(select_profile(n)){if(id>=ID_CAT_EDIT){navigation_show(PAGE_LOAD);set(program_tabs,MUIA_Group_ActivePage,0);}else launch(0,NULL);}break;}
   if(id>=ID_MEM_PAUSE&&id<=ID_MEM_STOP){mem_action(id);break;}if(id>=ID_EDITOR&&id<ID_EDITOR+48)editor_action((id-ID_EDITOR)/16,(id-ID_EDITOR)%16);break;}
   if(running&&!id&&signals){if(Wait(signals|SIGBREAKF_CTRL_C|(mem_replies?1ul<<mem_replies->mp_SigBit:0))&SIGBREAKF_CTRL_C){if(!mem_busy&&store_selection()&&conf_save()&&save())running=0;}}

@@ -8,14 +8,16 @@ and display coordination through [Xani's XACP platform](https://github.com/Xanxi
 [Development builds](#development-builds) · [Changelog](CHANGELOG.md) · [Features](#features) ·
 [Technical specifications](#technical-specifications) · [Research](#research-and-academic-references) ·
 [Dependencies](#dependencies) · [Networking](#networking) · [Build instructions](#build-instructions) ·
+[Benchmarks](#benchmark-results) · [Screenshots](#launcher-screenshots) ·
 [Performance](#optimisation-history) · [Credits](#credits-and-licences)
 
 ## Development builds
 
 This is development software. Builds and research artifacts are kept separately:
 
-- [Launcher 0.19.7-dev](artifacts/development/launcher-0.19.7): sidebar navigation,
-  startup/loading screens, disk browsing and DOS hard-disk creation.
+- [Launcher 0.19.8-dev](artifacts/development/launcher-0.19.8): adds the offline
+  Network guide button to the sidebar launcher with disk creation.
+  Requires the existing [0.19.7 support files](artifacts/development/launcher-0.19.7).
 - [TCP/IP + IPX interpreter runtime](artifacts/development/network-0.18.0):
   optional guest networking through the existing Amiga connection.
 - [Console synchronization candidate](artifacts/experiments/console-sync):
@@ -31,7 +33,7 @@ This is development software. Builds and research artifacts are kept separately:
 
 ## Features
 
-Features below span the current **0.19.7-dev launcher** and its separate DOS,
+Features below span the current **0.19.8-dev launcher** and its separate DOS,
 Windows, network and developer runtimes. Experimental features are labelled;
 not every combination is supported.
 
@@ -76,6 +78,80 @@ higher-resolution Windows display drivers still need testing.
 [Developer memory tools](docs/amiga-dosbox-memory-tools.md)
 
 ![ZZDosBox DOS welcome screen](docs/screenshots/dos-welcome.png)
+
+## Launcher screenshots
+
+Captured on the Amiga with **0.19.8-dev**. Expand a page to view it.
+
+<details open>
+<summary>Load program</summary>
+
+![ZZDosBox — Load program](docs/screenshots/launcher/library.png)
+
+</details>
+
+<details>
+<summary>DOS terminal</summary>
+
+![ZZDosBox — DOS terminal](docs/screenshots/launcher/terminal.png)
+
+</details>
+
+<details>
+<summary>CPU & memory</summary>
+
+![ZZDosBox — CPU & memory](docs/screenshots/launcher/cpu.png)
+
+</details>
+
+<details>
+<summary>Display</summary>
+
+![ZZDosBox — Display](docs/screenshots/launcher/display.png)
+
+</details>
+
+<details>
+<summary>Audio</summary>
+
+![ZZDosBox — Audio](docs/screenshots/launcher/audio.png)
+
+</details>
+
+<details>
+<summary>Network</summary>
+
+![ZZDosBox — Network](docs/screenshots/launcher/network.png)
+
+</details>
+
+<details>
+<summary>Disks</summary>
+
+![ZZDosBox — Disks](docs/screenshots/launcher/disks.png)
+
+</details>
+
+<details>
+<summary>Developer</summary>
+
+![ZZDosBox — Developer](docs/screenshots/launcher/developer.png)
+
+</details>
+
+<details>
+<summary>Compatibility</summary>
+
+![ZZDosBox — Compatibility](docs/screenshots/launcher/compatibility.png)
+
+</details>
+
+<details>
+<summary>About</summary>
+
+![ZZDosBox — About](docs/screenshots/launcher/about.png)
+
+</details>
 
 ## Technical specifications
 
@@ -127,6 +203,7 @@ IP address or send an on-wire DHCP release.
 
 PCAP/raw Ethernet bridging is not implemented. Configure networking in the
 MUI sidebar; DOSBox-X network configuration blocks are not accepted.
+Click **Network guide** at the bottom of that page for the bundled offline help.
 
 [Networking setup: DHCP, manual IPv4 and IPX](docs/amiga-dosbox-network-setup.md) ·
 [Detailed settings and test scope](docs/amiga-dosbox-network-ui.md)
@@ -152,6 +229,7 @@ allocation. Other 68K configurations and firmware versions remain unverified.
 
 | Dependency | Version / configuration | Provides | Required when |
 |---|---|---|---|
+| MultiView / AmigaGuide datatype | Standard AmigaOS viewer | Offline Network guide and log viewing | Opening help/logs only |
 | Roadshow | Running TCP/IP stack with `bsdsocket.library` and a working route | Host sockets for IPv4 NAT or IPX UDP | Guest networking only |
 | NE2000 packet driver + mTCP | Pinned guest utilities, staged separately | DOS packet driver, DHCP, ping and DNS tools | TCP/IP networking only |
 | CAMD | `camd.library` v37+, working output driver and external MIDI instrument | MT-32 / General MIDI output | External MIDI is selected |
@@ -315,18 +393,40 @@ Latest follow-ups: [matrix results](docs/amiga-dosbox-matrix-benchmark.md),
 [NEON row dispatch](docs/amiga-dosbox-pixel-dispatch.md), and
 [disk/cache, MIDI batching and console synchronization](docs/amiga-dosbox-optimisation-round2.md).
 
-## Windows measurements
+## Benchmark results
 
-Windows for Workgroups 3.11 booted on the real ZZ9000 A9. WinBench 3.11 completed
-Graphics WinMark at **1,923,752 pixels/sec** (640×480, 16 colours, 8 MB guest RAM,
-3000 cycles/ms), followed by a clean exit to DOS and Workbench. Its score and
-“37 MHz 80386” label use the emulated PC clock and do not establish equivalent
-physical PC speed.
+### Doom Demo3 — 386DX-class performance
+
+Doom 1.9 shareware, 2,134 game tics and 10,000 cycles. ZZDosBox scores use
+measured A9 elapsed time; the display FPS overlay is a different counter.
+
+| Run / system | Doom Demo3 FPS |
+|---|---:|
+| ZZDosBox original interpreter | 3.10 |
+| ZZDosBox ARMv7 JIT | 6.94 |
+| ZZDosBox JIT + NEON pixels | 7.29 |
+| **ZZDosBox accepted VFP build, two-run mean** | **7.64** |
+| **ZZDosBox latest baseline check, two-run mean** | **7.49** |
+| Reference Intel 386DX-25 / OPTi | 4.58 |
+| Reference AMD 386DX-33 / ETEQ configurations | 6.89–7.47 |
+
+This places ZZDosBox broadly in the **386DX-25/33 class for Doom**, closest
+to the **386DX-33** results. PC scores come from [Thandor's benchmark](https://thandor.net/benchmark/32);
+graphics hardware and timing differ, so this is a workload comparison rather
+than a general CPU rating. [Run history and evidence](docs/amiga-dosbox-benchmarks.md#doom-19-shareware-demo3).
+
+### Ziff-Davis WinBench 3.11
+
+Latest completed recorded run: **1,923,752 pixels/sec Graphics WinMark**
+(13 October 2026), Windows for Workgroups 3.11, VGA 640×480 / 16 colours,
+8 MiB guest RAM and 3,000 cycles. WinBench uses the emulated clock; its
+“37 MHz 80386” label does not establish physical CPU equivalence. Later disk
+optimizations have not been remeasured with WinBench.
 
 ![WinBench running on the ZZ9000](docs/screenshots/windows311/winbench-results.png)
 
-[Windows screenshots](docs/screenshots/windows311/README.md) ·
-[Windows findings](amiga/records/2026-10-13/dosbox-wfw/findings.md)
+[WinBench subtests and run details](docs/amiga-dosbox-benchmarks.md#ziff-davis-winbench-311) ·
+[Windows screenshots](docs/screenshots/windows311/README.md)
 
 ## Documentation and contributions
 

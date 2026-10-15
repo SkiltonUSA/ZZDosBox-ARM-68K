@@ -8,7 +8,8 @@ static Object *net_mtu,*net_retries,*net_timeout,*net_target,*net_status,*net_de
 static char net_arguments[DL_PATH*2+48];
 static const char *net_modes[]={"DHCP","Manual IPv4",NULL};
 static const char *net_tabs[]={"Setup","Connection","Diagnostics",NULL};
-enum {ID_NET_MODE=600,ID_NET_REFRESH,ID_NET_RENEW,ID_NET_RELEASE,ID_NET_CONNECT,ID_NET_PING,ID_NET_DNS,ID_NET_LOG,ID_NET_DEFAULT,ID_NET_DISCONNECT};
+enum {ID_NET_MODE=600,ID_NET_REFRESH,ID_NET_RENEW,ID_NET_RELEASE,ID_NET_CONNECT,ID_NET_PING,ID_NET_DNS,ID_NET_LOG,ID_NET_DEFAULT,ID_NET_DISCONNECT,ID_NET_GUIDE};
+static void network_guide(void){open_document("Network.guide","Network.guide is missing from the launcher drawer.");}
 static void network_controls(void);
 static void network_refresh(void);
 static struct MsgPort *net_replies;
@@ -26,6 +27,7 @@ static void network_poll(void){if(!network_running)return;
  if(!network_busy&&(net_stop||++net_ticks>=50)){net_ticks=0;net_send(net_stop?DN_STOP:DN_STATUS);}
 }
 static void network_live_event(unsigned id){
+ if(id==ID_NET_GUIDE){network_guide();return;}
  if(id==ID_NET_DISCONNECT||id==(ULONG)MUIV_Application_ReturnID_Quit){net_stop=1;net_send(DN_STOP);note("Stopping DOS and releasing the network connection...");}
  else if(id==ID_NET_REFRESH)net_send(DN_STATUS);
  else if(id)note("Disconnect the DOS session before changing network settings.");
@@ -57,7 +59,7 @@ static void network_show(const struct dn_config*c){
  DoMethod(net_details,MUIM_List_Clear);set(net_status,MUIA_Text_Contents,(ULONG)"Idle - refresh for saved lease details.");
 }
 static Object *net_button(const char*text,unsigned id){Object*o=ui_button(text);set(o,MUIA_UserData,id);return o;}
-static Object *network_page(void){return RegisterGroup(net_tabs),MUIA_Font,ui_font(),
+static Object *network_page(void){return VGroup,Child,RegisterGroup(net_tabs),MUIA_Font,ui_font(),
  Child,VGroup,UI_PAGE,
  Child,HGroup,Child,net_enabled=CheckMark(FALSE),Child,label("Enable for this program (experimental)"),End,
  Child,HGroup,Child,fieldlabel("Protocol"),Child,net_protocol=cycle(net_protocols),End,
@@ -75,7 +77,8 @@ static Object *network_page(void){return RegisterGroup(net_tabs),MUIA_Font,ui_fo
  Child,HGroup,Child,net_button("Refresh",ID_NET_REFRESH),Child,net_disconnect=net_button("Disconnect",ID_NET_DISCONNECT),End,End,
  Child,VGroup,Child,ColGroup(2),Child,fieldlabel("Host / IPv4"),Child,net_target=str(64),End,
  Child,HGroup,Child,net_button("Ping",ID_NET_PING),Child,net_dns_button=net_button("DNS lookup",ID_NET_DNS),Child,net_button("Open log",ID_NET_LOG),End,
- Child,label("Diagnostics run inside DOS. Close the terminal with F10."),Child,VSpace(0),End,End;
+ Child,label("Diagnostics run inside DOS. Close the terminal with F10."),Child,VSpace(0),End,End,
+ Child,HGroup,Child,HSpace(0),Child,net_button("Network guide",ID_NET_GUIDE),End,End;
 }
 static void network_init(void){struct dn_config c;dn_defaults(&c);network_show(&c);
  set(net_disconnect,MUIA_Disabled,TRUE);
@@ -140,6 +143,7 @@ static void network_refresh(void){struct dn_config c;char b[256],ip[16],dns[16],
 }
 static int net_target_valid(const char*s){unsigned n=0;if(!*s||*s=='-')return 0;for(;*s;s++,n++)if(n>=63||!((*s>='a'&&*s<='z')||(*s>='A'&&*s<='Z')||(*s>='0'&&*s<='9')||*s=='.'||*s=='-'))return 0;return 1;}
 static void network_action(unsigned id){struct dl_profile p;struct dl_session s;char file[DL_PATH],session[DL_PATH],runtime[DL_PATH],qp[DL_PATH*2+3],qs[DL_PATH*2+3],cmd[DL_PATH*4+1200],target[64];FILE*f;BPTR log;int ok;LONG rc;
+ if(id==ID_NET_GUIDE){network_guide();return;}
  if(id==ID_NET_DISCONNECT){note("No network session is running.");return;}
  if(id==ID_NET_MODE){network_controls();return;}
  if(id==ID_NET_DEFAULT){struct dn_config c;dn_defaults(&c);network_show(&c);return;}

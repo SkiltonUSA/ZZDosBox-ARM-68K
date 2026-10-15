@@ -1,7 +1,9 @@
 # ZZDosBox Network settings
 
-For installation and everyday use, start with the
-[ZZDosBox networking setup guide](amiga-dosbox-network-setup.md).
+For installation and everyday use, click **Network guide** at the bottom of
+the Network page (launcher 0.19.8-dev). It opens the bundled `Network.guide`
+in MultiView without requiring a browser or an active network connection.
+The [web version](amiga-dosbox-network-setup.md) uses the same source.
 
 The **Network** sidebar section configures the selected program's TCP/IP or IPX wrapper.
 Networking is experimental and off by default. TCP/IP uses NE2000/IPv4 NAT;

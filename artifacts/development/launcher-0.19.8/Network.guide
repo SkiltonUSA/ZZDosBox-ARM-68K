@@ -1,0 +1,193 @@
+@database Network.guide
+@node MAIN "ZZDosBox networking"
+@{b}ZZDosBox networking@{ub}
+
+Use Network in the MUI sidebar to configure the selected program. Networking
+is experimental and off by default.
+
+Choose: Use
+
+TCP/IP: DOS networking through an emulated NE2000 and libslirp IPv4 NAT
+
+IPX wrapper (UDP): DOSBox-compatible IPX games through an external relay
+
+Both use the Amiga's existing Roadshow connection. Roadshow selects the
+physical interface, whether X-Surf100, ZZ9000 Ethernet or another supported
+adapter. ZZDosBox does not configure that adapter or change the Amiga's IP.
+
+@{"Requirements" link PAGE0}
+@{"TCP/IP: quick setup" link PAGE1}
+@{"IPX: quick setup" link PAGE2}
+@{"Connection controls" link PAGE3}
+@{"Differences from the DOSBox-X guide" link PAGE4}
+@{"If it does not connect" link PAGE5}
+@endnode
+@node PAGE0 "Requirements"
+@{b}Requirements@{ub}
+
+- Working Roadshow connection and bsdsocket.library.
+
+- Current MUI launcher and the separate ZZDosBox-Net runtime beside it.
+
+- Embedded DOS, Direct renderer, Normal presentation, scanlines off and
+developer trace/memory tools off. Keep core=auto or normal; networking uses
+the interpreter and rejects explicit core=dynamic.
+
+- For TCP/IP: the staged Network/ utility drawer beside the launcher,
+containing NE2000.COM, DHCP.EXE, PING.EXE, DNSTEST.EXE, HTGET.EXE,
+COPYING.TXT and SOURCES.TXT. See utility preparation.
+
+- For IPX: a reachable DOSBox-compatible relay. No NE2000 driver or mTCP is
+needed.
+
+@{"Contents" link MAIN}
+@endnode
+@node PAGE1 "TCP/IP: quick setup"
+@{b}TCP/IP: quick setup@{ub}
+
+1. Select a program with a writable C: drawer. Open Network, tick Enable for
+this program (experimental) and select TCP/IP.
+
+2. Select DHCP. Keep the defaults below unless the virtual subnet overlaps
+your physical LAN.
+
+3. Enter an Upstream DNS resolver reachable through Roadshow, such as your
+LAN's DNS server. This is not discovered automatically; blank disables DNS.
+
+4. Choose Save settings, then Open network terminal. The launcher installs
+the packet driver and acquires the guest lease automatically.
+
+5. Use Ping with a reachable IPv4 address, then DNS lookup with a hostname.
+Launch performs the same network setup before your program.
+
+Setting: Default / meaning
+
+Guest subnet: 10.0.2.0/24, mask 255.255.255.0
+
+NAT gateway: 10.0.2.2  -  the virtual gateway, not the LAN router
+
+DHCP guest address: Starts at 10.0.2.15
+
+Guest DNS proxy: 10.0.2.3, forwarding to the configured Upstream DNS
+
+MTU: 1500; supported range 576-1500
+
+DHCP retries / timeout: 3 attempts / 10 seconds per attempt
+
+The guest has a private address behind the Amiga's connection. Its DHCP
+server is libslirp, not your LAN router. No Mac proxy or physical NIC
+selection is needed.
+
+For Manual IPv4, use a free guest address such as 10.0.2.42, the same mask
+and NAT gateway, and your upstream DNS. The address belongs to the virtual
+subnet, not the Amiga's physical LAN. The launcher generates the mTCP
+settings; editing the managed C:\ZZNET\MTCP.CFG is unnecessary and changes
+are replaced at the next network launch. Custom subnets must be private,
+non-overlapping and pass the launcher's address validation.
+
+@{"Contents" link MAIN}
+@endnode
+@node PAGE2 "IPX: quick setup"
+@{b}IPX: quick setup@{ub}
+
+1. On another computer running a compatible DOSBox relay, enter IPXNET
+STARTSERVER 19900 and allow incoming UDP on that port.
+
+2. In ZZDosBox Network, enable networking and choose IPX wrapper (UDP).
+
+3. Enter that computer's numeric IPv4 address and UDP port 19900. The field
+defaults to 213, so change it to match the relay.
+
+4. Save, then Open network terminal or Launch. Connection is automatic.
+Other players must connect to the same relay.
+
+5. Use IPXNET STATUS or IPXNET PING in DOS to inspect the connection.
+
+A relay with no other clients may return no ping replies. This is a UDP
+tunnel, not native LAN IPX/SPX, a Novell client or a Windows network driver.
+Transport has passed physical tests; multiplayer game compatibility remains
+untested. ZZDosBox currently provides the client, not relay hosting.
+
+@{"Contents" link MAIN}
+@endnode
+@node PAGE3 "Connection controls"
+@{b}Connection controls@{ub}
+
+Control: Action
+
+Refresh: Show saved configuration while idle; live packet/error/drop
+  counters while running
+
+Renew DHCP: Open a short DOS session to acquire a fresh guest lease; not an
+  in-place game-session renewal
+
+Release saved lease: Clear saved guest configuration and disable networking
+  for the program; no DHCPRELEASE is transmitted
+
+Disconnect: Close the network DOS session cleanly; Roadshow stays connected
+
+Open log: Read the last diagnostic session's output
+
+In the IPX DOS terminal, IPXNET DISCONNECT disconnects the relay while
+keeping DOS open. DHCP and DNS controls apply only to TCP/IP.
+
+@{"Contents" link MAIN}
+@endnode
+@node PAGE4 "Differences from the DOSBox-X guide"
+@{b}Differences from the DOSBox-X guide@{ub}
+
+The DOSBox-X networking guide is useful background: it distinguishes raw
+Ethernet access through PCAP from SLIRP NAT and describes NE2000 guest
+drivers. Use the ZZDosBox controls above rather than copying its
+configuration blocks.
+
+DOSBox-X topic: ZZDosBox support
+
+backend=pcap, realnic, promiscuous mode: Not implemented; no raw Ethernet
+  bridge or NIC picker
+
+SLIRP NAT: Implemented through Roadshow; configured in MUI, not [ethernet,
+  slirp]
+
+NE2000 resources: Fixed I/O 0x300, IRQ 3, MAC 02:5A:5A:00:00:01; do not copy
+  the guide's IRQ 10 examples
+
+Guest packet driver / mTCP: Launcher loads NE2000.COM 0x60 3 0x300 and sets
+  up mTCP automatically
+
+IPX: Separate DOSBox-compatible UDP client, selected in MUI
+
+Port forwarding / incoming LAN connections: Not implemented
+
+Windows networking / NetBEUI / Novell clients: Not provided by this port
+
+DOSBox-X .conf network sections: Not accepted by the ZZDosBox configuration
+  editor; use Network settings
+
+@{"Contents" link MAIN}
+@endnode
+@node PAGE5 "If it does not connect"
+@{b}If it does not connect@{ub}
+
+- Missing tools: check ZZDosBox-Net and the seven TCP/IP utility files.
+
+- Configuration rejected: check interpreter/Direct/Normal settings, numeric
+addresses, matching subnet/gateway and a DNS resolver outside the guest
+subnet.
+
+- DHCP fails: inspect Open log for packet-driver or configuration errors;
+check that the virtual subnet does not overlap the LAN.
+
+- Lease succeeds but traffic fails: check Roadshow's route; a guest lease
+alone does not establish external connectivity.
+
+- IP works but names fail: enter a reachable Upstream DNS and retry DNS
+lookup.
+
+- IPX fails: check relay IPv4, matching UDP port, host firewall and a second
+connected client. Hostnames are not supported in the relay address field.
+
+Detailed settings and test evidence  Amiga requirements
+
+@{"Contents" link MAIN}
+@endnode
