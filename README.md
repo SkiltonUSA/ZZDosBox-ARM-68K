@@ -86,7 +86,7 @@ higher-resolution Windows display drivers still need testing.
 [Configuration reference](docs/amiga-dosbox-conf.md) ·
 [Developer memory tools](docs/amiga-dosbox-memory-tools.md)
 
-![ZZDosBox DOS welcome screen](docs/screenshots/dos-welcome.png)
+![ZZDosBox 0.19.12 welcome screen with yellow title and red shortcut keys](docs/screenshots/dos-welcome.png)
 
 ## Launcher screenshots
 
