@@ -15,8 +15,8 @@ and display coordination through [Xani's XACP platform](https://github.com/Xanxi
 
 This is development software. Builds and research artifacts are kept separately:
 
-- [Launcher 0.19.8-dev](artifacts/development/launcher-0.19.8): adds the offline
-  Network guide button to the sidebar launcher with disk creation.
+- [Launcher 0.19.10-dev](artifacts/development/launcher-0.19.10): adds keyboard
+  program selection, a scrollable About changelog and the sidebar logo. Retains disk creation and the offline Network guide.
   Requires the existing [0.19.7 support files](artifacts/development/launcher-0.19.7).
 - [TCP/IP + IPX interpreter runtime](artifacts/development/network-0.18.0):
   optional guest networking through the existing Amiga connection.
@@ -33,14 +33,14 @@ This is development software. Builds and research artifacts are kept separately:
 
 ## Features
 
-Features below span the current **0.19.8-dev launcher** and its separate DOS,
+Features below span the current **0.19.10-dev launcher** and its separate DOS,
 Windows, network and developer runtimes. Experimental features are labelled;
 not every combination is supported.
 
 | Area | Features |
 |---|---|
-| Native launcher | MUI 3.8+ sidebar navigation, persistent settings, About/credits, ZZDosBox branding, startup and loading screens with shortcut reminders. |
-| Program library | Up to 256 profiles; All, Games, Applications and OS lists; add programs, category tags and per-program settings. |
+| Native launcher | MUI 3.8+ sidebar navigation, persistent settings, About/credits and scrollable changelog, ZZDosBox branding, startup and loading screens with shortcut reminders. |
+| Program library | Up to 256 profiles; All, Games, Applications and OS lists; add programs, category tags and per-program settings. Up/Down selection and letter/number jump in the focused list. |
 | DOS environments | Embedded DOSBox DOS 5 without installation disks; optional booted MS-DOS 6.22 from the user's installation. |
 | Execution | 386-class, 32-bit x86 emulation; ARMv7 dynamic recompiler with 4 MiB code cache for DOS; separate interpreter and paging-guarded Windows builds. |
 | CPU and memory | 1/2/4/8 MiB guest RAM; 1000/3000/6000 cycle presets; exact 500–10000 cycle overrides and live adjustment; timed tests or normal sessions. |
@@ -81,7 +81,8 @@ higher-resolution Windows display drivers still need testing.
 
 ## Launcher screenshots
 
-Captured on the Amiga with **0.19.8-dev**. Expand a page to view it.
+Captured on the Amiga: Load program and About use **0.19.10-dev**; other pages
+show **0.19.8-dev**. Expand a page to view it.
 
 <details open>
 <summary>Load program</summary>
@@ -215,7 +216,7 @@ Click **Network guide** at the bottom of that page for the bundled offline help.
 | Dependency | Version / configuration | Provides | Required? |
 |---|---|---|---|
 | Zorro III Amiga + ZZ9000 | 68020 instruction target; physically validated with a 68060 | 68K host and Cortex-A9 worker | Yes |
-| AmigaOS | Tested on 3.2.3; `workbench.library` v44+, `asl.library` v38+, `graphics.library` v39+ | Workbench, requesters, graphics, Exec/DOS/Intuition/Expansion and timer.device | Yes |
+| AmigaOS | Tested on 3.2.3; `workbench.library` v44+, `asl.library` v38+, `graphics.library` v39+, `keymap.library` v37+ | Workbench, requesters, graphics, Exec/DOS/Intuition/Expansion and timer.device | Yes |
 | ZZ9000 firmware / XACP | Tested XX19c / XACP 1.7 | ARM execution and display handoff | Yes |
 | ZZ9000 Fast RAM | Card's 256 MB Zorro III RAM enabled; 32 MB contiguous free worker block, plus OS/display memory | Worker code, guest RAM and buffers | Yes |
 | Picasso96 and ZZ9000 RTG driver | `Picasso96API.library` v2+; supported 32-bit Workbench and 640×480 fullscreen mode | Window and fullscreen display | Yes |

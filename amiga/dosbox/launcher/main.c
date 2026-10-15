@@ -17,9 +17,14 @@
 #pragma GCC diagnostic ignored "-Wpointer-sign"
 #include "style.h"
 #include "version.h"
+#include "program_list.h"
+#include "changelog_text.h"
+#include "sidebar-art.h"
+static const ULONG sidebar_colours[]={0,0,0, 0,0,0, 0xffffffff,0xffffffff,0xffffffff, 0,0,0};
 struct Library *MUIMasterBase,*AslBase,*WorkbenchBase;
 static struct dl_library library;
 static Object *app,*win,*list,*title,*drawer,*program,*helper,*memory,*machine,*speed,*fg,*bg,*live,*status,*command,*bootdisk,*display,*window_size,*fps,*system_choice,*browse_button,*open_drawer,*terminal_reg,*cd_mode,*cd_path,*cd_browse;
+static Object *program_views[DL_CATEGORIES+1];
 static Object *editor_pages[2],*program_tabs,*disk_image,*category,*category_lists[DL_CATEGORIES],*category_run[DL_CATEGORIES],*category_edit[DL_CATEGORIES];
 static const char *categories[]={"Games","Applications","OS",NULL};
 enum {PAGE_LOAD,PAGE_TERMINAL,PAGE_CPU,PAGE_DISPLAY,PAGE_AUDIO,PAGE_NETWORK,PAGE_DISKS,PAGE_DEVELOPER,PAGE_COMPATIBILITY,PAGE_ABOUT,PAGE_COUNT};
@@ -47,7 +52,7 @@ static int selected=-1,busy;
 static char appdir[DL_PATH],configpath[DL_PATH],message[256];
 static const char *sections[]={"Load program","DOS terminal","CPU & memory","Display","Audio","Network","Disks","Developer","Compatibility","About",NULL};
 static Object *navigation,*navigation_view,*page_heading,*page_context,*main_pages;
-enum {ID_NAVIGATE=43};
+enum {ID_NAVIGATE=43,ID_PROGRAM_TAB=44};
 static char context_text[96];
 static Object *page_icon;
 static const ULONG section_icons[]={MUII_Drawer,MUII_PopFile,MUII_Chip,MUII_Chip,MUII_TapePlay,MUII_Network,MUII_HardDisk,MUII_Chip,MUII_PopFile,MUII_PopFile};
@@ -67,6 +72,11 @@ static const char *displays[]={"Workbench window","Fullscreen",NULL},*systems[]=
 static const char *memories[]={"1 MB","2 MB","4 MB","8 MB",NULL},*machines[]={"VGA","EGA","CGA","S3 / VESA","Tandy","PCjr","Hercules",NULL},*speeds[]={"Slow (1000)","Normal (3000)","Fast (6000)",NULL},*colours[]={"Black","Red","Green","Yellow","Blue","Magenta","Cyan","White",NULL},*lengths[]={"Startup test (8 seconds)","Until closed",NULL};
 enum {ID_SELECT=1,ID_ADD,ID_REMOVE,ID_SAVE,ID_RUN,ID_TERM,ID_COMMAND,ID_AUTO,ID_SCRIPT,ID_BROWSE_DRAWER,ID_OPEN_DRAWER,ID_DISKS,ID_MOUNT_DISKS,ID_EJECT_DISKS,ID_BOOT_DISK,ID_MOUNT_HD,ID_EJECT_HD,ID_OPEN_HD,ID_SYSTEM,ID_DISPLAY,ID_STARTMODE,ID_CD_MODE,ID_CD_BROWSE,ID_CD_CHECK,ID_TERMPAGE,ID_AUDIO_CHECK,ID_GITHUB,ID_DEV_CHANGE,ID_DEV_LOG,ID_CATEGORY,ID_CONF_VALIDATE,ID_DISK_SELECT,ID_DISK_BROWSE,ID_DISK_CREATE,ID_CAT_SELECT=50,ID_CAT_RUN=60,ID_CAT_EDIT=70,ID_EDITOR=100};
 static ULONG val(Object*o,ULONG a){ULONG v=0;get(o,a,&v);return v;}
+static void program_list_focus(void){
+ unsigned page=val(program_tabs,MUIA_Group_ActivePage);
+ if(val(main_pages,MUIA_Group_ActivePage)==PAGE_LOAD&&page<=DL_CATEGORIES)
+  set(win,MUIA_Window_ActiveObject,(ULONG)program_views[page]);
+}
 static void note(const char*s){snprintf(message,sizeof(message),"%s",s);set(status,MUIA_Text_Contents,(ULONG)message);}
 /* Navigation changes only the visible page. Unsaved controls remain alive. */
 static void navigation_show(unsigned page){
@@ -147,7 +157,7 @@ static void category_refresh(void){unsigned c,i;int row;
 static void refresh(void){unsigned i;busy=1;DoMethod(list,MUIM_List_Clear);for(i=0;i<library.count;i++)DoMethod(list,MUIM_List_InsertSingle,(ULONG)library.p[i].title,MUIV_List_Insert_Bottom);if(library.count){if(library.last>=library.count)library.last=0;SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,library.last,TAG_DONE);show_selection(library.last);}else selected=-1;category_refresh();navigation_show(val(main_pages,MUIA_Group_ActivePage));busy=0;}
 static int select_profile(int n){if(n<0||(unsigned)n>=library.count)return 0;if(n==selected)return 1;if(!store_selection())return 0;show_selection(n);SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,n,TAG_DONE);category_refresh();return 1;}
 static Object *category_page(unsigned c){return VGroup,UI_PAGE,
- Child,ListviewObject,MUIA_Listview_List,category_lists[c]=ListObject,MUIA_List_AutoVisible,TRUE,MUIA_Font,ui_font(),InputListFrame,MUIA_List_ConstructHook,MUIV_List_ConstructHook_String,MUIA_List_DestructHook,MUIV_List_DestructHook_String,End,End,
+ Child,program_views[c+1]=program_list_new(&category_lists[c]),
  Child,HGroup,Child,category_run[c]=ui_button("\33bLaunch"),Child,category_edit[c]=ui_button("Edit"),End,End;}
 static int browse(char*out,int onlydrawer,int saving,const char*caption){struct FileRequester*r;int ok=0;set(app,MUIA_Application_Sleep,TRUE);r=AllocAslRequestTags(ASL_FileRequest,ASLFR_TitleText,(ULONG)caption,ASLFR_InitialDrawer,(ULONG)(selected>=0?library.p[selected].drive:appdir),ASLFR_DrawersOnly,onlydrawer,ASLFR_DoSaveMode,saving,TAG_DONE);if(r){if(AslRequestTags(r,TAG_DONE)&&strlen(r->fr_Drawer)<DL_PATH){strcpy(out,r->fr_Drawer);ok=onlydrawer||AddPart(out,r->fr_File,DL_PATH);}FreeAslRequest(r);}set(app,MUIA_Application_Sleep,FALSE);return ok;}
 static void add(void){char p[DL_PATH];struct dl_profile*x;if(library.count==DL_MAX){note("Program list is full.");return;}if(!browse(p,0,0,"Add DOS program"))return;if(!store_selection())return;x=&library.p[library.count];dl_profile_default(x);snprintf(x->program,sizeof(x->program),"%s",FilePart(p));snprintf(x->title,sizeof(x->title),"%s",FilePart(p));*PathPart(p)=0;strcpy(x->drive,p);library.last=library.count++;refresh();if(!save())note("Could not save program list.");}
@@ -313,12 +323,18 @@ static void boot_disk(void){
 #include "compatibility_ui.h"
 static int build(void){Object *add,*remove,*save_button,*run,*term,*execute,*auto_run,*script,*mount_disks,*eject_disks,*boot_button,*cd_check,*audio_check,*github,*dev_log,*root;
  style_open();
+ program_list_class=MUI_CreateCustomClass(NULL,MUIC_Listview,NULL,sizeof(struct program_list_data),(APTR)program_list_dispatch);if(!program_list_class)return 0;
  app=ApplicationObject,MUIA_Application_Title,(ULONG)"ZZDosBox",MUIA_Application_Base,(ULONG)"ZZDOSBOX",MUIA_Application_Version,(ULONG)"$VER: ZZDosBox Launcher " ZZ_LAUNCHER_VERSION " (" ZZ_LAUNCHER_DATE ")",
  SubWindow,win=WindowObject,MUIA_Window_Title,(ULONG)"ZZDosBox Launcher",MUIA_Window_ID,0x5a444c31,MUIA_Window_Width,940,MUIA_Window_Height,500,
  WindowContents,root=VGroup,MUIA_Font,ui_font(),MUIA_Group_Spacing,8,InnerSpacing(8,8),
  Child,HGroup,
  Child,VGroup,MUIA_HorizWeight,0,MUIA_Group_Spacing,8,
-  Child,TextObject,TextFrame,MUIA_Font,ui_title_font(),MUIA_Background,MUII_ButtonBack,MUIA_Text_PreParse,(ULONG)"\33c",MUIA_Text_Contents,(ULONG)"ZZDosBox",InnerSpacing(8,10),End,
+  Child,HGroup,MUIA_VertWeight,0,InnerSpacing(0,4),Child,HSpace(0),
+   Child,BodychunkObject,MUIA_FixWidth,80,MUIA_FixHeight,80,
+    MUIA_Bitmap_Width,80,MUIA_Bitmap_Height,80,MUIA_Bodychunk_Depth,2,
+    MUIA_Bodychunk_Body,(ULONG)sidebar_body,MUIA_Bodychunk_Compression,0,
+    MUIA_Bodychunk_Masking,0,MUIA_Bitmap_SourceColors,(ULONG)sidebar_colours,
+    MUIA_Bitmap_Transparent,0,End,Child,HSpace(0),End,
   Child,navigation_view=ListviewObject,MUIA_CycleChain,1,MUIA_FixWidthTxt,(ULONG)"    Compatibility      ",
    MUIA_Listview_List,navigation=ListObject,MUIA_Font,ui_font(),InputListFrame,MUIA_List_MinLineHeight,30,
     MUIA_List_Format,(ULONG)"W=0 D=8,MAW=100",MUIA_List_DisplayHook,(ULONG)&navigation_hook,End,End,
@@ -331,7 +347,7 @@ static int build(void){Object *add,*remove,*save_button,*run,*term,*execute,*aut
   Child,main_pages=PageGroup,GroupFrame,MUIA_Background,MUII_GroupBack,InnerSpacing(10,10),
  Child,program_tabs=RegisterGroup(library_tabs),MUIA_Font,ui_font(),
  Child,VGroup,UI_PAGE,
-  Child,ListviewObject,MUIA_Listview_List,list=ListObject,MUIA_List_AutoVisible,TRUE,MUIA_Font,ui_font(),InputListFrame,MUIA_List_ConstructHook,MUIV_List_ConstructHook_String,MUIA_List_DestructHook,MUIV_List_DestructHook_String,End,End,
+  Child,program_views[0]=program_list_new(&list),
   Child,HGroup,Child,add=ui_button("Add program..."),Child,remove=ui_button("Remove"),End,
   Child,ColGroup(2),UI_PANEL("Program"),Child,fieldlabel("Name"),Child,title=str(64),Child,fieldlabel("Category"),Child,category=cycle(categories),Child,fieldlabel("DOSBox C:"),Child,HGroup,Child,drawer=str(DL_PATH),Child,browse_button=ui_button("Browse..."),End,Child,fieldlabel("Program"),Child,program=str(128),End,
   Child,HGroup,Child,helper=CheckMark(FALSE),Child,label("Low-memory compatibility (LOADFIX)"),End,
@@ -383,12 +399,16 @@ static int build(void){Object *add,*remove,*save_button,*run,*term,*execute,*aut
   Child,dev_log=ui_button("Open log"),Child,VSpace(0),End,
   Child,memory_page(),Child,conf_page(),End,End,
  Child,compat_page(),
- Child,VGroup,UI_PAGE,Child,label("DosBox ZZ9000 project"),Child,label(ZZ_LAUNCHER_VERSION " - AmigaOS - 32-bit"),Child,github=ui_button("GitHub"),Child,label("DOSBox / libretro contributors"),Child,label("XACP / Xani - ZZ9000 Cortex-A9"),Child,label("MUI - Stefan Stuntz"),Child,label("TinyGL - Fabrice Bellard and contributors"),Child,label("Development: Codex assisted, Amiga-Bridge MCP"),Child,VSpace(0),End,
+ Child,VGroup,UI_PAGE,Child,label("DosBox ZZ9000 project"),Child,label(ZZ_LAUNCHER_VERSION " - AmigaOS - 32-bit"),Child,github=ui_button("GitHub"),Child,label("DOSBox / libretro contributors"),Child,label("XACP / Xani - ZZ9000 Cortex-A9"),Child,label("MUI - Stefan Stuntz"),Child,label("TinyGL - Fabrice Bellard and contributors"),Child,label("Development: Codex assisted, Amiga-Bridge MCP"),
+  Child,VGroup,UI_PANEL("Changelog"),Child,ListviewObject,MUIA_CycleChain,1,MUIA_Listview_Input,FALSE,
+   MUIA_Listview_List,FloattextObject,ReadListFrame,MUIA_Font,ui_font(),
+    MUIA_Floattext_Text,(ULONG)dl_changelog_text,End,End,End,End,
  End,End,End,Child,status=TextObject,TextFrame,MUIA_Text_SetMin,FALSE,MUIA_Text_Contents,(ULONG)"",InnerSpacing(6,4),End,End,End,End;
  if(!app)return 0;
  {unsigned n;for(n=0;n<PAGE_COUNT;n++){snprintf(nav_entries[n].icon,sizeof(nav_entries[n].icon),"\33I[6:%lu]",(unsigned long)section_icons[n]);nav_entries[n].caption=sections[n];DoMethod(navigation,MUIM_List_InsertSingle,(ULONG)&nav_entries[n],MUIV_List_Insert_Bottom);}}
  set(navigation_view,MUIA_ShortHelp,(ULONG)"Choose a section. Use Up/Down when this list has keyboard focus.");
  notify(navigation,MUIA_List_Active,MUIV_EveryTime,ID_NAVIGATE);
+ notify(program_tabs,MUIA_Group_ActivePage,MUIV_EveryTime,ID_PROGRAM_TAB);
  memory_ui_init();compat_init();network_init();
  {unsigned c;for(c=0;c<DL_CATEGORIES;c++){notify(category_lists[c],MUIA_List_Active,MUIV_EveryTime,ID_CAT_SELECT+c);notify(category_run[c],MUIA_Pressed,FALSE,ID_CAT_RUN+c);notify(category_edit[c],MUIA_Pressed,FALSE,ID_CAT_EDIT+c);}}
  notify(category,MUIA_Cycle_Active,MUIV_EveryTime,ID_CATEGORY);
@@ -426,11 +446,12 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   for(i=0;i<library.count;i++)if(library.p[i].system)found=1;
   if(!found&&library.count<DL_MAX&&exists(p)){struct dl_profile*q=&library.p[library.count];dl_profile_default(q);strcpy(q->title,"MS-DOS 6.22");path(q->drive,"Disks");q->system=1;q->category=DL_OS;q->memory=8;library.last=library.count++;}
  }
- MUIMasterBase=OpenLibrary("muimaster.library",15);AslBase=OpenLibrary("asl.library",38);WorkbenchBase=OpenLibrary("workbench.library",44);if(!MUIMasterBase||!AslBase||!WorkbenchBase){puts("MUI 3.8 or later is required.");goto done;}
- disk_choices_init();if(!build())goto done;if(!conf_load())goto done;refresh();if(!startup_splash()){rc=0;goto done;}set(win,MUIA_Window_Open,TRUE);if(!val(win,MUIA_Window_Open))goto done;
+ MUIMasterBase=OpenLibrary("muimaster.library",15);AslBase=OpenLibrary("asl.library",38);WorkbenchBase=OpenLibrary("workbench.library",44);KeymapBase=OpenLibrary("keymap.library",37);if(!MUIMasterBase||!AslBase||!WorkbenchBase||!KeymapBase){puts("MUI 3.8 or later is required.");goto done;}
+ disk_choices_init();if(!build())goto done;if(!conf_load())goto done;refresh();if(!startup_splash()){rc=0;goto done;}set(win,MUIA_Window_Open,TRUE);if(!val(win,MUIA_Window_Open))goto done;program_list_focus();
  while(running){mem_poll();id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
   switch(id){case (ULONG)MUIV_Application_ReturnID_Quit:if(mem_busy){note("Wait for the pending memory request.");break;}if(!store_selection())break;if(!conf_save())break;if(!save()){note("Cannot save settings.");break;}running=0;break;
   case ID_NAVIGATE:navigation_show(val(navigation,MUIA_List_Active));break;
+  case ID_PROGRAM_TAB:program_list_focus();break;
   case ID_SELECT:if(!busy){int n=(LONG)val(list,MUIA_List_Active);if(n!=selected&&!select_profile(n))SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,selected,TAG_DONE);}break;
   case ID_CATEGORY:if(!busy&&selected>=0&&library.p[selected].category!=val(category,MUIA_Cycle_Active)){if(store_selection()){refresh();note(save()?"":"Could not save category.");}}break;
   case ID_ADD:add();break;case ID_REMOVE:if(selected>=0){unsigned n=selected;memmove(&library.p[n],&library.p[n+1],(--library.count-n)*sizeof(library.p[0]));library.last=0;refresh();save();}break;
@@ -462,7 +483,7 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   if(id>=ID_MEM_PAUSE&&id<=ID_MEM_STOP){mem_action(id);break;}if(id>=ID_EDITOR&&id<ID_EDITOR+48)editor_action((id-ID_EDITOR)/16,(id-ID_EDITOR)%16);break;}
   if(running&&!id&&signals){if(Wait(signals|SIGBREAKF_CTRL_C|(mem_replies?1ul<<mem_replies->mp_SigBit:0))&SIGBREAKF_CTRL_C){if(!mem_busy&&store_selection()&&conf_save()&&save())running=0;}}
  }rc=0;
-done:compat_store_close(&compat_database);if(mem_replies)DeleteMsgPort(mem_replies);if(app)MUI_DisposeObject(app);style_close();if(WorkbenchBase)CloseLibrary(WorkbenchBase);if(AslBase)CloseLibrary(AslBase);if(MUIMasterBase)CloseLibrary(MUIMasterBase);if(owner){RemPort(owner);DeleteMsgPort(owner);}return rc;
+done:compat_store_close(&compat_database);if(mem_replies)DeleteMsgPort(mem_replies);if(app)MUI_DisposeObject(app);if(program_list_class)MUI_DeleteCustomClass(program_list_class);if(KeymapBase)CloseLibrary(KeymapBase);style_close();if(WorkbenchBase)CloseLibrary(WorkbenchBase);if(AslBase)CloseLibrary(AslBase);if(MUIMasterBase)CloseLibrary(MUIMasterBase);if(owner){RemPort(owner);DeleteMsgPort(owner);}return rc;
 }
 
 /* Keep the entry frame small: reject undersized CLI stacks before entering

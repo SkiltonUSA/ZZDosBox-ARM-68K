@@ -1,6 +1,6 @@
 # ZZDosBox features and compatibility
 
-This describes the **0.19.7-dev launcher and installed DOS runtime** and the separate **Windows/mouse development build**.
+This describes the **0.19.10-dev launcher and installed DOS runtime** and the separate **Windows/mouse development build**.
 It is the implemented Amiga feature set, not the complete feature list of
 [upstream dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 
@@ -10,7 +10,7 @@ It is the implemented Amiga feature set, not the complete feature list of
 | --- | --- |
 | Native interface | MUI sidebar navigation with Load Program, DOS terminal, display/audio settings, Disks, Network, Compatibility, Developer and About pages. Load Program contains All, Games, Applications and OS lists, with saved category tags. |
 | Configuration | Developer → dosbox.conf: validated editor for 29 supported global overrides, including core selection and exact CPU cycles. [Settings reference](amiga-dosbox-conf.md). |
-| Program library | Up to 256 saved profiles, each with its own program, C: drawer and emulator settings. |
+| Program library | Up to 256 saved profiles, each with its own program, C: drawer and emulator settings. Focus the program list and use Up/Down to select; A–Z or 0–9 jumps to the first matching title. |
 | Compatibility helper | Optional LOADFIX per profile for programs needing a different conventional-memory load address. |
 | DOS choice | Embedded DOS 5 or booted, separately supplied MS-DOS 6.22. |
 | Startup editing | AUTOEXEC.BAT and CONFIG.SYS tabs with Default / Edited / File choices, line editing and import/export. |

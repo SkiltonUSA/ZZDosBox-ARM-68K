@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.19.9-dev**, newest first.
+Version history from **0.1.0-dev** through **0.19.10-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -12,6 +12,7 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 | Version | Main change |
 |---|---|
+| [0.19.10-dev](#v0-19-10) | Program-list keyboard navigation |
 | [0.19.9-dev](#v0-19-9) | Explicit scanline / FPS help |
 | [0.19.8-dev](#v0-19-8) | Offline Network guide |
 | [0.19.7-dev](#v0-19-7) | create hard disks |
@@ -59,6 +60,16 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 - Document the unused fourth byte in scanline pixel formats.
 - Add sanitizer tests for ring publication, wrapping and receive recovery.
 - RAM-only hardware correctness check passed; no speed gain is established.
+
+<a id="v0-19-10"></a>
+## 0.19.10-dev
+
+- Up/Down selects entries in the focused All, Games, Applications or OS list.
+- Letter and number keys jump to the first matching title, ignoring case.
+- Program lists join the Tab focus order; changing category focuses its list.
+- Text fields and sidebar retain their own keyboard controls.
+- About includes a scrollable version history generated from this changelog.
+- Replace the sidebar text block with the embedded ZZDosBox logo.
 
 <a id="v0-19-9"></a>
 ## 0.19.9-dev
@@ -404,7 +415,7 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 - Source restored to the first tested variant. Installed runtimes unchanged.
 - Keep Settings choices Direct / OpenGL (experimental), saved per program.
 
-[Test and failure record](amiga/records/2026-10-14/dosbox-gl-direct/method.md).
+[Test and failure record](../records/2026-10-14/dosbox-gl-direct/method.md).
 
 ## Adaptive presentation experiment (now optional in MUI)
 

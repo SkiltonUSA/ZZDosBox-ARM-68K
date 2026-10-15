@@ -21,13 +21,41 @@ selected program stays visible above its settings.
 **Save settings** stays below the sidebar; operation messages stay along the
 bottom. Navigation preserves in-progress edits. Category Edit returns to the
 program editor and keeps the sidebar in sync. Small secondary tab groups are
-retained only within their own section. No new custom MUI classes or MUI 4
-upgrade are required; the launcher retains its MUI 3.8 requirement.
+retained only within their own section. No separately installed custom MUI classes or MUI 4 upgrade are required;
+the launcher retains its MUI 3.8 requirement.
 
 During an active network/developer session, the launcher selects the relevant
 section and temporarily disables the sidebar. Its live controls remain
 available, including cooperative Disconnect/Stop. Navigation returns when the
 session ends. This change does not alter emulator execution or profile formats.
+
+## Program-list keyboard controls — 0.19.10-dev
+
+In **Load program**, click the right-hand program list or use Tab to focus it.
+The same controls work in **All**, **Games**, **Applications** and **OS**:
+
+- **Up / Down:** select the previous or next entry and scroll it into view.
+- **A–Z:** jump to the first visible-list title starting with that letter;
+  for example, **G** selects the first G title. Matching ignores case.
+- **0–9:** jump to the first title starting with that number.
+
+If nothing matches, the selection stays unchanged. Arrow keys stop at the
+first/last entry. A letter selects the first match each time; it does not
+cycle through matches or launch a program. Text fields and the left sidebar
+keep their normal keyboard behaviour. Switching program categories focuses
+their program list. Use **Launch** to start the selected program.
+
+The keyboard handler is built into the launcher and uses AmigaOS's keymap.
+It adds no external MUI class or emulator runtime dependency.
+
+The ZZDosBox logo sits above the navigation column, embedded in the launcher
+so no separate artwork file is needed.
+
+## About and version history
+
+About includes a scrollable changelog beneath the credits, newest version
+first. It contains every recorded numbered milestone from 0.1.0 onwards and
+is generated from the project changelog during the build.
 
 ## Startup
 
