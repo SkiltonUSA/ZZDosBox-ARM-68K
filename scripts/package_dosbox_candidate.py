@@ -70,7 +70,7 @@ https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.19.12-rc1
 https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/tree/v0.19.12-rc1
 
 CREDITS
-DOSBox/libretro contributors; Xanai/XACP; Stefan Stuntz/MUI;
+DOSBox/libretro contributors; Xanxi/XACP; Stefan Stuntz/MUI;
 TinyGL, libslirp and other contributors listed in Licenses/README.md.
 Development: Codex assisted, Amiga-Bridge MCP.
 No games, Microsoft software, personal profiles or third-party Amiga

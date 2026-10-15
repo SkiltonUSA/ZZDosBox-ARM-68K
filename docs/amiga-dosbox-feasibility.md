@@ -242,16 +242,16 @@ repeated initialization. Native tests also check that cancellation during an
 echoing read cannot leak echo state into the next run. The old bounded
 nonstreaming diagnostics retain their original API.
 
-### Architecture guidance from Xanai
+### Architecture guidance from Xanxi
 
-The owner relayed Xanai's review: the PicoDrive-style 68k/ARM split, framebuffer
+The owner relayed Xanxi's review: the PicoDrive-style 68k/ARM split, framebuffer
 handling and application-owned Core1 worker model will remain supported in
 XACP 1.8 and later. Preserve that model. This does not independently validate
 our additional MMU/cache/debugger code on later firmware, nor establish
 our own 68030 compatibility. Physical validation currently targets XX19c.
 
 For future audio, measure AHI servicing and synchronization frequency as well
-as PCM bandwidth. Xanai recommends reasonably large buffers and batching;
+as PCM bandwidth. Xanxi recommends reasonably large buffers and batching;
 reducing sample rate alone may miss the main 68k cost. No audio or firmware
 change is part of this console build.
 
@@ -1078,7 +1078,7 @@ do not alter an immutable boot image.
    full desktop DOSBox-X UI and its PC-98/Windows/peripheral surface.
 
 No DOSBox-X source has been merged into the runtime. Preserve DOSBox/libretro
-and Xanai/XACP attribution; any future copied DOSBox-X code must retain its
+and Xanxi/XACP attribution; any future copied DOSBox-X code must retain its
 component licence notices.
 
 Primary references: [DOSBox-X](https://github.com/joncampbell123/dosbox-x),

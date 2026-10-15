@@ -3,7 +3,7 @@
 **DOSBox for AmigaOS and the ZZ9000 Cortex-A9**, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 The ARM runs the emulated PC; the 68K handles the MUI interface, AmigaOS services
-and display coordination through [Xanai's XACP platform](https://github.com/Xanxi-Amiga/XACP-ZZ9000).
+and display coordination through [Xanxi's XACP platform](https://github.com/Xanxi-Amiga/XACP-ZZ9000).
 
 [Development builds](#development-builds) · [Changelog](CHANGELOG.md) · [Features](#features) ·
 [Technical specifications](#technical-specifications) · [Research](#research-and-academic-references) ·
@@ -171,7 +171,7 @@ show **0.19.8-dev**. Expand a page to view it.
 | Platform | AmigaOS 3.x / Zorro III ZZ9000; physical development on A4000TX, TF4060/68060, AmigaOS 3.2.3, XX19c / XACP 1.7. Other configurations require validation. |
 | Processor split | One application-owned 32-bit Cortex-A9 Core1 worker, nominal 666 MHz; 68K provides AmigaOS files, input, MUI, CAMD, sockets and display coordination. |
 | Memory | 32 MiB contiguous owned ZZ9000 block for worker/guest/buffers; 1–8 MiB emulated PC RAM; 4 MiB translated-code cache in the DOS JIT build. |
-| Execution protocol | Xanai's XACP/PicoDrive-style application model, runtime address mapping, cache/MMU ownership checks and processor-state restoration. |
+| Execution protocol | Xanxi's XACP/PicoDrive-style application model, runtime address mapping, cache/MMU ownership checks and processor-state restoration. |
 | JIT | x86-to-ARMv7 translation, cached blocks and instruction-cache synchronization; interpreter fallback where required, including paging in the guarded Windows build. |
 | Direct display | ARM writes owned ZZ9000 bitmaps; fullscreen uses acknowledged buffer handoffs, Workbench uses a clipped P96 blit. Frame pixels need not be read back to the 68K. |
 | SIMD / NEON | RGB565 conversion, 32-bit copies, 1×/2× scaling, byte swaps, black-row clearing and dimming; exact-output scalar fallbacks. These accelerate host routines, not arbitrary emulated x86 instructions. |
@@ -363,7 +363,7 @@ results. Paper PDFs are linked rather than bundled.
 | Kun Feng, Cheng Xu, Wei Wang, Zhibang Yang and Zheng Tian, **An Optimized Matrix Multiplication on ARMv7 Architecture**, *Journal of Convergence Information Technology* 7(10), 2012. [DOI: 10.4156/jcit.vol7.issue10.5](https://doi.org/10.4156/jcit.vol7.issue10.5) | Register reuse, independent accumulators, contiguous data and cache blocking informed the [matrix benchmark](docs/amiga-dosbox-matrix-benchmark.md). No paper implementation was copied. |
 | Gaurav Mitra, Beau Johnston, Alistair P. Rendell, Eric McCreath and Jun Zhou, **Use of SIMD Vector Operations to Accelerate Application Code Performance on Low-Powered ARM and Intel Platforms**, IPDPSW 2013, pp. 1107–1116. [DOI](https://doi.org/10.1109/IPDPSW.2013.207) · [Author PDF](https://users.cecs.anu.edu.au/~Eric.McCreath/papers/Use_of_SIMD_Vector_Operations_To_Accelerate_Application_Code_Performance_on_Low_Power_ARM_and_Intel_Platforms.pdf) | Intrinsics versus compiler vectorization and data-movement costs informed [pixel and stage profiling](docs/amiga-tinygl-rasterisation.md#simd-reference). The paper's older compiler results do not predict our GCC 15 build. |
 | Arm, **Cortex-A9 NEON Media Processing Engine Technical Reference Manual**, DDI0409I; [Arm documentation](https://support.arm.com/documentation/ddi0409/i/) | Architectural reference for ARMv7 SIMD/VFP work and context handling. A9 NEON vector floating-point arithmetic is single precision; it does not supply x87 emulation. |
-| [Xanai's XACP framework](https://github.com/Xanxi-Amiga/XACP-ZZ9000) and [ZZPicoDrive](https://github.com/Xanxi-Amiga/XACP-ZZ9000/tree/main/applications/emulators/ZZPicodrive/ZZPicodriveMD) | Basis for the 68K/ARM split, application-owned Core1 and framebuffer execution model. |
+| [Xanxi's XACP framework](https://github.com/Xanxi-Amiga/XACP-ZZ9000) and [ZZPicoDrive](https://github.com/Xanxi-Amiga/XACP-ZZ9000/tree/main/applications/emulators/ZZPicodrive/ZZPicodriveMD) | Basis for the 68K/ARM split, application-owned Core1 and framebuffer execution model. |
 | [ARM CMSIS-DSP](https://github.com/ARM-software/CMSIS-DSP/tree/83a2d7bc98c81b4bbe4a6f48b1f2ecf179868a0b), [hlsl++](https://github.com/redorav/hlslpp/tree/3d9af2e77a89ddd645928f1600a0688dc898dedc) | Pinned math-library comparisons: [CMSIS/specialised NEON](docs/amiga-dosbox-matrix-benchmark.md), [hlsl++ results](docs/amiga-hlslpp-benchmark.md). |
 | [jserv TinyGL](https://github.com/jserv/tinygl/tree/c2e48591a6bfba1a85f1b87a78dcf1abf7dff57a) | Actual software-renderer dependency; [internal transforms](docs/amiga-tinygl-internal-transforms.md), [rasterization](docs/amiga-tinygl-raster-experiment.md) and [packing/dispatch](docs/amiga-tinygl-packing-experiment.md) experiments. |
 | [ermig1979/Simd](https://github.com/ermig1979/Simd/tree/69a630c5569e13a3fed3533f80e323186c904a64) | Reference review for NEON layout/dispatch ideas, not an imported runtime library. [Review](docs/amiga-dosbox-simd-review.md). |
@@ -456,7 +456,7 @@ A9 timings; instruction-model timing is not hardware performance evidence.
 ## Credits and licences
 
 - [DOSBox team and libretro contributors](https://github.com/libretro/dosbox-libretro): emulation engine.
-- [Xanai / Xanxi](https://github.com/Xanxi-Amiga/XACP-ZZ9000): XACP platform and application execution model.
+- [Xanxi](https://github.com/Xanxi-Amiga/XACP-ZZ9000): XACP platform and application execution model.
 - [jserv](https://github.com/jserv/tinygl), Fabrice Bellard, C-Chads and TinyGL contributors: software OpenGL renderer.
 - [libslirp contributors](https://gitlab.freedesktop.org/slirp/libslirp), DOSBox-X/Bochs, Crynwr and Michael B. Brutman (mTCP): networking components and guest tools.
 - Stefan Stuntz: MUI.
