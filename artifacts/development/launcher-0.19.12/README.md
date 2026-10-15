@@ -38,3 +38,9 @@ To relink a variant without rebuilding ARM code, use
 For the network variant supply `--network-library` pointing to the included
 `relink-inputs/network/libzznetwork.a`. Requires the documented cross compiler
 container. Generated headers preserve the embedded ARM image and mapping probe.
+
+Packaged as [0.19.12 RC1](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.19.12-rc1),
+an incremental ZIP update with the matching compatibility data, disk helpers,
+Network guide and Workbench icon. Reproduce it with
+`python3 scripts/package_dosbox_candidate.py`. The application version remains
+0.19.12-dev; RC1 identifies this downloadable package.

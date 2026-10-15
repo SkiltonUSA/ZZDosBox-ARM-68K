@@ -13,6 +13,10 @@ and display coordination through [Xani's XACP platform](https://github.com/Xanxi
 
 ## Development builds
 
+Download the [0.19.12 RC1 update](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.19.12-rc1)
+for an existing installation. This prerelease includes the red shortcut labels and
+yellow welcome title; physical screenshot and lifecycle checks remain pending.
+
 This is development software. Builds and research artifacts are kept separately:
 
 - [Launcher 0.19.12-dev candidate](artifacts/development/launcher-0.19.12): keeps the loading
