@@ -52,7 +52,7 @@ not every combination is supported.
 | PC graphics | CGA, EGA, VGA, S3/VESA, Tandy, PCjr and Hercules; S3 exposes 1 MiB VRAM and modes bounded to 1024×768, scaled to the selected output. |
 | Rendering | Direct ARM-to-ZZ9000 bitmap output; optional experimental TinyGL software OpenGL. |
 | Presentation | Normal or Adaptive frame presentation; optional ARM-drawn FPS counter. |
-| Scanlines and colour | Built-in ZZDosBox ARM software scanlines: Off/Classic/Soft/Gradient in fullscreen with FPS off; no external scanline utility required; Hercules White/Amber/Green/Paperwhite palettes; contextual settings help. |
+| Scanlines and colour | Built-in ZZDosBox ARM software scanlines: Off/Classic/Soft/Gradient in fullscreen. **Scanlines and Show FPS cannot be used together**; turn Show FPS off to enable the selector. No external scanline utility required; Hercules White/Amber/Green/Paperwhite palettes; contextual settings help. |
 | Keyboard and mouse | DOS INT33/BIOS PS/2 mouse, three buttons, scaled coordinates and button release on focus loss; Alt+Return display switching, Ctrl+minus/plus cycles, F10 exit. |
 | Shared files | Writable Amiga drawer as C:, nested directories, DOS 8.3 names and persistent game/application files. |
 | Disk images | BIOS floppy/hard-disk boot; select, mount, open and eject raw FAT images in Workbench. |

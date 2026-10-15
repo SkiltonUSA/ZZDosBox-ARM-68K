@@ -36,7 +36,7 @@ load its device drivers. Booted MS-DOS processes the files on its own disk.
 | Aspect ratio | Centred 4:3 output with black margins when the window shape differs. |
 | Display switching | Change window/fullscreen while running. Both modes and repeated switches have passed physical tests. |
 | Presentation | Normal / Adaptive, saved per program. Adaptive skips final frame copies without changing guest execution or its selected CPU cycles. Normal is the default. |
-| Software scanlines | Off / Classic / Soft / Gradient, saved per program; active in fullscreen with FPS overlay off. Independent of the Workbench FPGA scanline controls. |
+| Software scanlines | Off / Classic / Soft / Gradient, saved per program; **requires Fullscreen and Show FPS off. Scanlines and the FPS overlay cannot be used together**; the scanline selector is greyed out when Show FPS is enabled or the display is windowed. Independent of the Workbench FPGA scanline controls. |
 | FPS overlay | Optional ARM-rendered counter in Settings. Measures completed display refreshes, not unique game frames or emulated CPU MHz. |
 
 S3 currently exposes BIOS/register discovery, without an emulated PCI bus.

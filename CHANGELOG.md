@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.19.8-dev**, newest first.
+Version history from **0.1.0-dev** through **0.19.9-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -12,6 +12,7 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 | Version | Main change |
 |---|---|
+| [0.19.9-dev](#v0-19-9) | Explicit scanline / FPS help |
 | [0.19.8-dev](#v0-19-8) | Offline Network guide |
 | [0.19.7-dev](#v0-19-7) | create hard disks |
 | [0.19.6-dev](#v0-19-6) | disk browsing and settings help |
@@ -58,6 +59,13 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 - Document the unused fourth byte in scanline pixel formats.
 - Add sanitizer tests for ring publication, wrapping and receive recovery.
 - RAM-only hardware correctness check passed; no speed gain is established.
+
+<a id="v0-19-9"></a>
+## 0.19.9-dev
+
+- Keep an explicit Display-page note visible: scanlines and Show FPS cannot be used together.
+- Clarify the fullscreen requirement and disabled selector in the feature documentation.
+- Help text only; rendering behaviour and saved profile format are unchanged.
 
 <a id="v0-19-8"></a>
 

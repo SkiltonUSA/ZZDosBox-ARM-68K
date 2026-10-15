@@ -358,7 +358,7 @@ static int build(void){Object *add,*remove,*save_button,*run,*term,*execute,*aut
    Child,label("Display\nWindow size sets the starting size.\nWorkbench windows remain resizable."),
    Child,label("Video adapter / monochrome\nChoose the graphics expected by the app.\nColour tints apply to Hercules only."),
    Child,label("Renderer\nDirect: standard display path.\nOpenGL: experimental software rendering."),
-   Child,label("Presentation / FPS\nAdaptive skips display updates if needed.\nFPS shows the displayed frame rate."),
+   Child,label("Presentation / FPS\nAdaptive skips display updates if needed.\nFPS shows the displayed frame rate.\nScanlines and Show FPS cannot be\nused together."),
    Child,VSpace(0),End,End,Child,VSpace(0),End,
  Child,VGroup,
   Child,ColGroup(2),UI_PANEL("MIDI output"),Child,fieldlabel("MIDI"),Child,midi=cycle(midi_choices),Child,fieldlabel("CAMD output"),Child,midi_port=str(64),End,
