@@ -223,6 +223,15 @@ Click **Network guide** at the bottom of that page for the bundled offline help.
 
 ### Amiga runtime
 
+**A TF4060 or 68060 accelerator is not required.** The host executables target
+the **68020 instruction set**; the ZZ9000 Cortex-A9 runs the DOSBox CPU engine.
+A faster 68k helps file and disk-image access, input, networking and window
+updates. It does not increase the ARM clock speed.
+
+The A4000TX/TF4060 is the **tested configuration**, not a mandatory accelerator.
+These builds have not yet been validated on a 68030; the compiler target alone
+does not establish a minimum usable CPU speed or equivalent benchmark results.
+
 | Dependency | Version / configuration | Provides | Required? |
 |---|---|---|---|
 | Zorro III Amiga + ZZ9000 | 68020 instruction target; physically validated with a 68060 | 68K host and Cortex-A9 worker | Yes |

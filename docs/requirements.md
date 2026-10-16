@@ -11,7 +11,7 @@ and Amiga-Bridge are not required to run the supplied Amiga executable.
 | Component | Requirement |
 | --- | --- |
 | Amiga | A Zorro III Amiga with a ZZ9000. Physically tested on an A4000TX with TF4060/68060; other CPU configurations have not been validated by this project. |
-| 68K CPU | Executables target the 68020 instruction set. This is a build baseline, not a tested minimum-speed claim. A TF4060 is not explicitly required by the code. |
+| 68K CPU | Executables target the 68020 instruction set. This is a build baseline, not a tested minimum-speed claim. No TF4060 or 68060 accelerator is required. |
 | AmigaOS | Tested with AmigaOS 3.2.3. The launcher requires `workbench.library` v44+, `asl.library` v38+ and the MUI library. Compatibility with older OS installations is unverified. |
 | ZZ9000 firmware | Tested **XX19c / XACP 1.7**. Later firmware has not yet been tested here. Close other applications using ARM Core1 before starting. Current PC builds require firmware-permitted SIMD access even with scalar pixels, because linked library routines can use VFP/NEON; the worker checks permission and preserves the state. |
 | ZZ9000 RAM | Enable the card's **256 MB Zorro III Fast RAM**. The player needs a **32 MB contiguous free block** in that RAM, plus memory for AmigaOS, the launcher and display buffers. |
@@ -23,6 +23,12 @@ and Amiga-Bridge are not required to run the supplied Amiga executable.
 Guest PC RAM is selectable as **1, 2, 4 or 8 MB**. It is included within the
 32 MB worker allocation; it is not an extra 8 MB allocation or a limit on the
 Amiga's total RAM. The current Windows test uses 8 MB guest RAM.
+
+A faster 68k can improve file and disk-image access, input, networking and
+Workbench window updates. CPU emulation runs on the ZZ9000 Cortex-A9.
+The TF4060 identifies the test system, not a required accelerator.
+A 68030 is a candidate for validation; this project has not established its
+minimum practical clock speed or measured these builds on it.
 
 ## MIDI, audio and optional components
 
