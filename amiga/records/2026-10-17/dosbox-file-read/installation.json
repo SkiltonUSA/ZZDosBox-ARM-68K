@@ -1,0 +1,27 @@
+{
+  "version": "0.22.2-dev",
+  "configuration_unchanged": true,
+  "files": {
+    "ZZDosBox-Net-JIT": {
+      "bytes": 1358716,
+      "sha256": "8838ec95c3f3b65c44ddff038961928a4e173dbd15c320c18919d1a77cc55b39"
+    },
+    "ZZDosBox-Compat": {
+      "bytes": 1253596,
+      "sha256": "b6eebc7306198cf633ee8a2dc1ce5a1bf70a457f0195fb7be7b9f122cb62cf66"
+    },
+    "ZZDosBox-Expanded": {
+      "bytes": 1334896,
+      "sha256": "b1ec2ed683b286b6537d6fc501a2c6808fd24b7e3593d4cc4417e18de9fd2d1c"
+    },
+    "ZZDosBox-Launcher": {
+      "bytes": 697328,
+      "sha256": "54a2e89ca98488430f195e36b06eaef3a4187f9f857395e242519fa1db0f175b"
+    },
+    "Network.guide": {
+      "bytes": 7007,
+      "sha256": "346fc846727fdc429994d2060f500dc969bf30219f30be0a3309f8f3d3f9848b"
+    }
+  },
+  "previous_binaries_retained": true
+}

@@ -23,11 +23,21 @@
 static const ULONG sidebar_colours[]={0,0,0, 0,0,0, 0xffffffff,0xffffffff,0xffffffff, 0,0,0};
 struct Library *MUIMasterBase,*AslBase,*WorkbenchBase;
 static struct dl_library library;
+static Object *joy_count,*joy_binding[4];
+static void joystick_controls(void);
+static void serial_controls(void);
+static void serial_detect(void);
+static void serial_show(const struct db_serial_config*);
+static int serial_store(struct db_serial_config*);
+static Object *ems,*soundcard,*pcspeaker,*cpu_model,*vcpi,*umb,*joystick,*extra_sound,*cycle_mode,*serial_mode,*serial_host,*serial_port,*paged_jit;
+static const char *serial_modes[]={"Disabled","COM1 TCP client","COM1 Hayes modem","Physical serial (Experimental)",NULL};
+static const char *cpu_models[]={"386","486","Pentium",NULL},*cycle_modes[]={"Fixed","Auto (up to 10000)","Max (up to 100000)",NULL},*extra_sounds[]={"Off","Gravis Ultrasound","Game Blaster / CMS","Tandy",NULL};
+static const char *soundcards[]={"Off","Sound Blaster 8-bit (Pro 2)","Sound Blaster 16-bit",NULL};
 static Object *app,*win,*list,*title,*drawer,*program,*helper,*memory,*machine,*speed,*fg,*bg,*live,*status,*command,*bootdisk,*display,*window_size,*fps,*system_choice,*browse_button,*open_drawer,*terminal_reg,*cd_mode,*cd_path,*cd_browse;
 static Object *program_views[DL_CATEGORIES+1];
 static Object *editor_pages[2],*program_tabs,*disk_image,*category,*category_lists[DL_CATEGORIES],*category_run[DL_CATEGORIES],*category_edit[DL_CATEGORIES],*category_rename[DL_CATEGORIES],*category_delete[DL_CATEGORIES];
 static const char *categories[]={"Games","Applications","OS",NULL};
-enum {PAGE_LOAD,PAGE_TERMINAL,PAGE_CPU,PAGE_DISPLAY,PAGE_AUDIO,PAGE_NETWORK,PAGE_DISKS,PAGE_DEVELOPER,PAGE_COMPATIBILITY,PAGE_ABOUT,PAGE_COUNT};
+enum {PAGE_LOAD,PAGE_TERMINAL,PAGE_CPU,PAGE_DISPLAY,PAGE_AUDIO,PAGE_NETWORK,PAGE_IO,PAGE_JOYSTICK,PAGE_DISKS,PAGE_DEVELOPER,PAGE_COMPATIBILITY,PAGE_ABOUT,PAGE_COUNT};
 static Object *midi,*midi_port,*scanlines,*presentation,*monochrome,*renderer,*scanline_help;
 static Object *dev_trace,*dev_profile,*dev_break,*dev_frame,*dev_handoff,*dev_poll;
 static char dev_arguments[192];
@@ -50,12 +60,12 @@ struct editor {Object *list,*line;char rows[128][256];unsigned count;};
 static struct editor editors[3];
 static int selected=-1,busy;
 static char appdir[DL_PATH],configpath[DL_PATH],message[256];
-static const char *sections[]={"Load program","DOS terminal","CPU & memory","Display","Audio","Network","Disks","Developer","Compatibility","About",NULL};
+static const char *sections[]={"Load program","DOS terminal","CPU & memory","Display","Audio","Network","I/O","Joystick","Disks","Developer","Compatibility","About",NULL};
 static Object *navigation,*navigation_view,*page_heading,*page_context,*main_pages;
-enum {ID_NAVIGATE=43,ID_PROGRAM_TAB=44};
+enum {ID_NAVIGATE=43,ID_PROGRAM_TAB=44,ID_JOY_COUNT=45};
 static char context_text[96];
 static Object *page_icon;
-static const ULONG section_icons[]={MUII_Drawer,MUII_PopFile,MUII_Chip,MUII_Chip,MUII_TapePlay,MUII_Network,MUII_HardDisk,MUII_Chip,MUII_PopFile,MUII_PopFile};
+static const ULONG section_icons[]={MUII_Drawer,MUII_PopFile,MUII_Chip,MUII_Chip,MUII_TapePlay,MUII_Network,MUII_Chip,MUII_Chip,MUII_HardDisk,MUII_Chip,MUII_PopFile,MUII_PopFile};
 /* Separate columns keep captions aligned even when stock icons differ in width.
  * Static entries outlive the list; HookEntry bridges MUI's register ABI. */
 struct nav_entry {char icon[32];const char *caption;};
@@ -69,7 +79,7 @@ static const char *terminal_tabs[]={"Terminal","AUTOEXEC.BAT","CONFIG.SYS","CD-R
 static const char *startup_choices[]={"Default","Edited","File",NULL},*cd_choices[]={"None","ISO image","Amiga CD-ROM",NULL};
 static const char *sizes[]={"320 x 240","640 x 480","960 x 720",NULL};
 static const char *displays[]={"Workbench window","Fullscreen",NULL},*systems[]={"DOSBox DOS 5","MS-DOS 6.22","Disk image (DOS / Windows)","DOSBox DOS 5 + image",NULL};
-static const char *memories[]={"1 MB","2 MB","4 MB","8 MB",NULL},*machines[]={"VGA","EGA","CGA","S3 / VESA","Tandy","PCjr","Hercules",NULL},*speeds[]={"Slow (1000)","Normal (3000)","Fast (6000)",NULL},*colours[]={"Black","Red","Green","Yellow","Blue","Magenta","Cyan","White",NULL},*lengths[]={"Startup test (8 seconds)","Until closed",NULL};
+static const char *memories[]={"1 MB","2 MB","4 MB","8 MB","16 MB","32 MB",NULL},*machines[]={"VGA","EGA","CGA","S3 / VESA","Tandy","PCjr","Hercules",NULL},*speeds[]={"Slow (1000)","Normal (3000)","Fast (6000)",NULL},*colours[]={"Black","Red","Green","Yellow","Blue","Magenta","Cyan","White",NULL},*lengths[]={"Startup test (8 seconds)","Until closed",NULL};
 enum {ID_SELECT=1,ID_ADD,ID_REMOVE,ID_SAVE,ID_RUN,ID_TERM,ID_COMMAND,ID_AUTO,ID_SCRIPT,ID_BROWSE_DRAWER,ID_OPEN_DRAWER,ID_DISKS,ID_MOUNT_DISKS,ID_EJECT_DISKS,ID_BOOT_DISK,ID_MOUNT_HD,ID_EJECT_HD,ID_OPEN_HD,ID_SYSTEM,ID_DISPLAY,ID_STARTMODE,ID_CD_MODE,ID_CD_BROWSE,ID_CD_CHECK,ID_TERMPAGE,ID_AUDIO_CHECK,ID_GITHUB,ID_DEV_CHANGE,ID_DEV_LOG,ID_CATEGORY,ID_CONF_VALIDATE,ID_DISK_SELECT,ID_DISK_BROWSE,ID_DISK_CREATE,ID_CAT_SELECT=50,ID_CAT_RUN=60,ID_CAT_EDIT=70,ID_CAT_RENAME=80,ID_CAT_DELETE=85,ID_RENAME=90,ID_EDITOR=100};
 static ULONG val(Object*o,ULONG a){ULONG v=0;get(o,a,&v);return v;}
 static void program_list_focus(void){
@@ -80,10 +90,12 @@ static void program_list_focus(void){
 #include "hover_help.h"
 static void note(const char*s){snprintf(message,sizeof(message),"%s",s);set(status,MUIA_Text_Contents,(ULONG)message);}
 /* Navigation changes only the visible page. Unsaved controls remain alive. */
+static void joystick_test_active(int active);
 static void navigation_show(unsigned page){
  if(page>=PAGE_COUNT)page=val(main_pages,MUIA_Group_ActivePage);
  SetAttrs(navigation,MUIA_NoNotify,TRUE,MUIA_List_Active,page,TAG_DONE);
  set(main_pages,MUIA_Group_ActivePage,page);
+ joystick_test_active(page==PAGE_JOYSTICK);if(page==PAGE_IO)serial_detect();
  set(page_heading,MUIA_Text_Contents,(ULONG)sections[page]);set(page_icon,MUIA_Image_Spec,section_icons[page]);
  snprintf(context_text,sizeof(context_text),"Program: %s",selected>=0?(char*)val(title,MUIA_String_Contents):"No program selected");
  set(page_context,MUIA_Text_Contents,(ULONG)context_text);
@@ -140,9 +152,9 @@ static int network_store(struct dn_config*);
 static void network_show(const struct dn_config*);
 static int network_options(const struct dl_profile*);
 #include "snapshot_ui.h"
-static int store_selection(void){char a[DL_TEXT],c[DL_TEXT];struct dl_profile*p;if(selected<0)return 1;if(!editor_read(0,a)||!editor_read(1,c)||!dl_text_valid(a)||!dl_text_valid(c)){note("Startup file is too long.");return 0;}p=&library.p[selected];if(!network_store(&p->network))return 0;p->category=val(category,MUIA_Cycle_Active);snprintf(p->title,sizeof(p->title),"%s",(char*)val(title,MUIA_String_Contents));snprintf(p->drive,sizeof(p->drive),"%s",(char*)val(drawer,MUIA_String_Contents));snprintf(p->program,sizeof(p->program),"%s",(char*)val(program,MUIA_String_Contents));p->helper=val(helper,MUIA_Selected);p->edited=val(startup_mode[0],MUIA_Cycle_Active);p->config_mode=val(startup_mode[1],MUIA_Cycle_Active);
+static int store_selection(void){char a[DL_TEXT],c[DL_TEXT];struct dl_profile*p;if(selected<0)return 1;if(!editor_read(0,a)||!editor_read(1,c)||!dl_text_valid(a)||!dl_text_valid(c)){note("Startup file is too long.");return 0;}p=&library.p[selected];if(!network_store(&p->network))return 0;p->category=val(category,MUIA_Cycle_Active);snprintf(p->title,sizeof(p->title),"%s",(char*)val(title,MUIA_String_Contents));snprintf(p->drive,sizeof(p->drive),"%s",(char*)val(drawer,MUIA_String_Contents));snprintf(p->program,sizeof(p->program),"%s",(char*)val(program,MUIA_String_Contents));p->paged_jit=val(paged_jit,MUIA_Selected);p->serial_mode=val(serial_mode,MUIA_Cycle_Active);snprintf(p->serial_host,sizeof(p->serial_host),"%s",(char*)val(serial_host,MUIA_String_Contents));p->serial_port=val(serial_port,MUIA_String_Integer);if(!serial_store(&p->serial))return 0;p->cpu_model=val(cpu_model,MUIA_Cycle_Active);p->vcpi=val(vcpi,MUIA_Selected);p->umb=val(umb,MUIA_Selected);p->joystick=val(joystick,MUIA_Selected);p->joy_buttons=val(joy_count,MUIA_Cycle_Active)+1;{unsigned j;for(j=0;j<4;j++)p->joy_keys[j]=val(joy_binding[j],MUIA_Cycle_Active);}p->extra_sound=val(extra_sound,MUIA_Cycle_Active);p->cycle_mode=val(cycle_mode,MUIA_Cycle_Active);p->ems=val(ems,MUIA_Selected);p->sound=val(soundcard,MUIA_Cycle_Active);p->speaker=val(pcspeaker,MUIA_Selected);p->helper=val(helper,MUIA_Selected);p->edited=val(startup_mode[0],MUIA_Cycle_Active);p->config_mode=val(startup_mode[1],MUIA_Cycle_Active);
  snprintf(p->auto_file,sizeof(p->auto_file),"%s",(char*)val(startup_file[0],MUIA_String_Contents));snprintf(p->config_file,sizeof(p->config_file),"%s",(char*)val(startup_file[1],MUIA_String_Contents));snprintf(p->cd_path,sizeof(p->cd_path),"%s",(char*)val(cd_path,MUIA_String_Contents));p->cd_mode=val(cd_mode,MUIA_Cycle_Active);p->midi=val(midi,MUIA_Cycle_Active);snprintf(p->midi_port,sizeof(p->midi_port),"%s",(char*)val(midi_port,MUIA_String_Contents));p->memory=1u<<val(memory,MUIA_Cycle_Active);p->machine=val(machine,MUIA_Cycle_Active);p->speed=val(speed,MUIA_Cycle_Active);p->fg=val(fg,MUIA_Cycle_Active);p->bg=val(bg,MUIA_Cycle_Active);p->live=val(live,MUIA_Cycle_Active);p->display=val(display,MUIA_Cycle_Active);p->size=val(window_size,MUIA_Cycle_Active);p->fps=val(fps,MUIA_Selected);p->scanlines=val(scanlines,MUIA_Cycle_Active);p->presentation=val(presentation,MUIA_Cycle_Active);p->monochrome=val(monochrome,MUIA_Cycle_Active);p->renderer=val(renderer,MUIA_Cycle_Active);p->system=val(system_choice,MUIA_Cycle_Active);snprintf(p->image,sizeof(p->image),"%s",p->system>=2?(char*)val(disk_image,MUIA_String_Contents):"");strcpy(p->autoexec,a);strcpy(p->configsys,c);return 1;}
-static void show_selection(int n){struct dl_profile*p;if(n<0||(unsigned)n>=library.count)return;selected=n;library.last=n;snapshot_refresh();p=&library.p[n];SetAttrs(category,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,p->category,TAG_DONE);set(title,MUIA_String_Contents,(ULONG)p->title);set(drawer,MUIA_String_Contents,(ULONG)p->drive);set(program,MUIA_String_Contents,(ULONG)p->program);set(helper,MUIA_Selected,p->helper);set(startup_mode[0],MUIA_Cycle_Active,p->edited);set(startup_mode[1],MUIA_Cycle_Active,p->config_mode);set(startup_file[0],MUIA_String_Contents,(ULONG)p->auto_file);set(startup_file[1],MUIA_String_Contents,(ULONG)p->config_file);set(cd_mode,MUIA_Cycle_Active,p->cd_mode);set(cd_path,MUIA_String_Contents,(ULONG)p->cd_path);set(midi,MUIA_Cycle_Active,p->midi);set(midi_port,MUIA_String_Contents,(ULONG)p->midi_port);set(memory,MUIA_Cycle_Active,p->memory==8?3:p->memory==4?2:p->memory==2?1:0);set(machine,MUIA_Cycle_Active,p->machine);set(speed,MUIA_Cycle_Active,p->speed);set(fg,MUIA_Cycle_Active,p->fg);set(bg,MUIA_Cycle_Active,p->bg);set(live,MUIA_Cycle_Active,p->live);set(display,MUIA_Cycle_Active,p->display);set(window_size,MUIA_Cycle_Active,p->size);set(fps,MUIA_Selected,p->fps);SetAttrs(scanlines,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,p->scanlines,TAG_DONE);set(presentation,MUIA_Cycle_Active,p->presentation);set(monochrome,MUIA_Cycle_Active,p->monochrome);set(renderer,MUIA_Cycle_Active,p->renderer);display_controls();set(disk_image,MUIA_String_Contents,(ULONG)p->image);set(system_choice,MUIA_Cycle_Active,p->system);editor_show(0,p->autoexec);editor_show(1,p->configsys);network_show(&p->network);system_controls();navigation_show(val(main_pages,MUIA_Group_ActivePage));}
+static void show_selection(int n){struct dl_profile*p;if(n<0||(unsigned)n>=library.count)return;selected=n;library.last=n;snapshot_refresh();p=&library.p[n];SetAttrs(category,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,p->category,TAG_DONE);set(title,MUIA_String_Contents,(ULONG)p->title);set(drawer,MUIA_String_Contents,(ULONG)p->drive);set(program,MUIA_String_Contents,(ULONG)p->program);set(paged_jit,MUIA_Selected,p->paged_jit);set(serial_mode,MUIA_Cycle_Active,p->serial_mode);set(serial_host,MUIA_String_Contents,(ULONG)p->serial_host);set(serial_port,MUIA_String_Integer,p->serial_port);serial_show(&p->serial);set(cpu_model,MUIA_Cycle_Active,p->cpu_model);set(vcpi,MUIA_Selected,p->vcpi);set(umb,MUIA_Selected,p->umb);set(joystick,MUIA_Selected,p->joystick);set(joy_count,MUIA_Cycle_Active,p->joy_buttons-1);{unsigned j;for(j=0;j<4;j++)set(joy_binding[j],MUIA_Cycle_Active,p->joy_keys[j]);}joystick_controls();set(extra_sound,MUIA_Cycle_Active,p->extra_sound);set(cycle_mode,MUIA_Cycle_Active,p->cycle_mode);set(ems,MUIA_Selected,p->ems);set(soundcard,MUIA_Cycle_Active,p->sound);set(pcspeaker,MUIA_Selected,p->speaker);set(helper,MUIA_Selected,p->helper);set(startup_mode[0],MUIA_Cycle_Active,p->edited);set(startup_mode[1],MUIA_Cycle_Active,p->config_mode);set(startup_file[0],MUIA_String_Contents,(ULONG)p->auto_file);set(startup_file[1],MUIA_String_Contents,(ULONG)p->config_file);set(cd_mode,MUIA_Cycle_Active,p->cd_mode);set(cd_path,MUIA_String_Contents,(ULONG)p->cd_path);set(midi,MUIA_Cycle_Active,p->midi);set(midi_port,MUIA_String_Contents,(ULONG)p->midi_port);set(memory,MUIA_Cycle_Active,p->memory==32?5:p->memory==16?4:p->memory==8?3:p->memory==4?2:p->memory==2?1:0);set(machine,MUIA_Cycle_Active,p->machine);set(speed,MUIA_Cycle_Active,p->speed);set(fg,MUIA_Cycle_Active,p->fg);set(bg,MUIA_Cycle_Active,p->bg);set(live,MUIA_Cycle_Active,p->live);set(display,MUIA_Cycle_Active,p->display);set(window_size,MUIA_Cycle_Active,p->size);set(fps,MUIA_Selected,p->fps);SetAttrs(scanlines,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,p->scanlines,TAG_DONE);set(presentation,MUIA_Cycle_Active,p->presentation);set(monochrome,MUIA_Cycle_Active,p->monochrome);set(renderer,MUIA_Cycle_Active,p->renderer);display_controls();set(disk_image,MUIA_String_Contents,(ULONG)p->image);set(system_choice,MUIA_Cycle_Active,p->system);editor_show(0,p->autoexec);editor_show(1,p->configsys);network_show(&p->network);system_controls();navigation_show(val(main_pages,MUIA_Group_ActivePage));}
 static void category_refresh(void){unsigned c,i;int row;
  set(snapshot_capture[0],MUIA_Disabled,selected<0);
  for(c=0;c<DL_CATEGORIES;c++){
@@ -199,7 +211,7 @@ static void rename_profile(void){
  set(dialog,MUIA_Window_Open,FALSE);DoMethod(app,OM_REMMEMBER,(ULONG)dialog);MUI_DisposeObject(dialog);set(win,MUIA_Window_Sleep,FALSE);program_list_focus();
 }
 static int browse(char*out,int onlydrawer,int saving,const char*caption){struct FileRequester*r;int ok=0;set(app,MUIA_Application_Sleep,TRUE);r=AllocAslRequestTags(ASL_FileRequest,ASLFR_TitleText,(ULONG)caption,ASLFR_InitialDrawer,(ULONG)(selected>=0?library.p[selected].drive:appdir),ASLFR_DrawersOnly,onlydrawer,ASLFR_DoSaveMode,saving,TAG_DONE);if(r){if(AslRequestTags(r,TAG_DONE)&&strlen(r->fr_Drawer)<DL_PATH){strcpy(out,r->fr_Drawer);ok=onlydrawer||AddPart(out,r->fr_File,DL_PATH);}FreeAslRequest(r);}set(app,MUIA_Application_Sleep,FALSE);return ok;}
-static void add(void){char p[DL_PATH];struct dl_profile*x;if(library.count==DL_MAX){note("Program list is full.");return;}if(!browse(p,0,0,"Add DOS program"))return;if(!store_selection())return;x=&library.p[library.count];dl_profile_default(x);snprintf(x->program,sizeof(x->program),"%s",FilePart(p));snprintf(x->title,sizeof(x->title),"%s",FilePart(p));*PathPart(p)=0;strcpy(x->drive,p);library.last=library.count++;refresh();if(!save())note("Could not save program list.");}
+static void add(void){char p[DL_PATH];struct dl_profile*x;if(library.count==DL_MAX){note("Program list is full.");return;}if(!browse(p,0,0,"Add DOS program"))return;if(!store_selection())return;x=&library.p[library.count];dl_profile_default(x);x->ems=x->sound=1;x->memory=8;snprintf(x->program,sizeof(x->program),"%s",FilePart(p));snprintf(x->title,sizeof(x->title),"%s",FilePart(p));*PathPart(p)=0;strcpy(x->drive,p);library.last=library.count++;refresh();if(!save())note("Could not save program list.");}
 static int copy_helper(const char*drive){char source[DL_PATH],dest[DL_PATH];FILE*a,*b;unsigned char data[1024];size_t n;int ok=1;path(source,"LOADFIX.COM");strcpy(dest,drive);if(!AddPart(dest,"LOADFIX.COM",sizeof(dest)))return 0;if(exists(dest))return 1;a=fopen(source,"rb");if(!a)return 0;b=fopen(dest,"wb");if(!b){fclose(a);return 0;}while((n=fread(data,1,sizeof(data),a))>0)if(fwrite(data,1,n,b)!=n){ok=0;break;}if(ferror(a))ok=0;fclose(a);if(fclose(b))ok=0;if(!ok)DeleteFile(dest);return ok;}
 #include "disk_ui.h"
 static int hdd_available(void){char image[DL_PATH];BPTR lock;
@@ -258,7 +270,7 @@ static void launch_msdos(const struct dl_profile*p,unsigned mode,const char*dosc
  if(mode==0||mode==2)snprintf(s.command,sizeof(s.command),"%s%s",mode==0&&p->helper?"LOADFIX ":"",doscommand);
  path(session,"Launch.session");path(player,developer_runtime(dl_profile_player(p)));
  if(!save()||!dl_session_write(session,&s)||!dl_quote(qp,sizeof(qp),player)||!dl_quote(qs,sizeof(qs),session)){note("Could not save launch settings.");goto finish;}
- snprintf(cmd,sizeof(cmd),"%s --session %s%s%s%s%s%s",qp,qs,dl_scanline_args(p),dl_presentation_args(p->presentation),dl_mono_args(p->monochrome),dev_arguments,net_arguments);last_log="LastRun.log";path(player,last_log);log=Open(player,MODE_NEWFILE);
+ snprintf(cmd,sizeof(cmd),"%s --session %s%s%s%s%s%s%s%s",qp,qs,dl_hardware_args(p),dl_compat_args(p),dl_scanline_args(p),dl_presentation_args(p->presentation),dl_mono_args(p->monochrome),dev_arguments,net_arguments);last_log="LastRun.log";path(player,last_log);log=Open(player,MODE_NEWFILE);
  if(!log){note("Cannot open session log.");goto finish;}
  conf_log(log,&s);rc=player_run(cmd,log);Close(log);DeleteFile(session);set(win,MUIA_Window_Open,TRUE);note(rc==0?"Session finished.":"MS-DOS failed; see LastRun.log.");
 finish:if(changed&&!startup_finish())note("Startup restore failed; originals remain in the DOS disk backups.");
@@ -274,7 +286,7 @@ static void launch_image(const struct dl_profile*p,unsigned mode,const char*comm
  s.fg=p->fg;s.bg=p->bg;s.display=p->display;s.size=p->size;s.fps=p->fps;s.midi=p->midi;strcpy(s.midi_port,p->midi_port);
  s.cd_mode=p->cd_mode;strcpy(s.cd_path,p->cd_path);if(mode==0||mode==2)snprintf(s.command,sizeof(s.command),"%s%s",mode==0&&p->helper?"LOADFIX ":"",command);
  path(session,"Launch.session");if(!save()||!dl_session_write(session,&s)||!dl_quote(qp,sizeof(qp),player)||!dl_quote(qs,sizeof(qs),session)){note("Cannot save image session.");return;}
- snprintf(cmd,sizeof(cmd),"%s --session %s%s%s",qp,qs,dl_mono_args(p->monochrome),dev_arguments);last_log="LastImage.log";path(file,last_log);log=Open(file,MODE_NEWFILE);if(!log){DeleteFile(session);note("Cannot open session log.");return;}
+ snprintf(cmd,sizeof(cmd),"%s --session %s%s%s%s%s",qp,qs,dl_hardware_args(p),dl_compat_args(p),dl_mono_args(p->monochrome),dev_arguments);last_log="LastImage.log";path(file,last_log);log=Open(file,MODE_NEWFILE);if(!log){DeleteFile(session);note("Cannot open session log.");return;}
  conf_log(log,&s);rc=player_run(cmd,log);Close(log);DeleteFile(session);set(win,MUIA_Window_Open,TRUE);note(rc==0?"Session finished.":"Image session failed; see LastImage.log.");
 }
 static void launch_embedded(struct dl_profile*p,unsigned mode,const char*script){
@@ -295,7 +307,7 @@ static void launch_embedded(struct dl_profile*p,unsigned mode,const char*script)
  if(fclose(f))ok=0;if(!ok){DeleteFile(boot);note("Invalid or oversized startup command.");return;}}
  dl_defaults(&s);strcpy(s.drive,p->drive);strcpy(s.command,bootname);s.memory=p->memory;s.machine=p->machine;s.cycles=dc_get(&conf,DC_CYCLES,p->speed==0?1000:p->speed==1?3000:6000);s.fg=p->fg;s.bg=p->bg;s.live=p->live;s.display=p->display;s.size=p->size;s.fps=p->fps;s.midi=p->midi;strcpy(s.midi_port,p->midi_port);s.cd_mode=p->cd_mode;strcpy(s.cd_path,p->cd_path);s.terminal=mode!=0||!*doscommand;
  path(session,"Launch.session");path(player,developer_runtime(dl_profile_player(p)));if(!save()||!dl_session_write(session,&s)||!dl_quote(qp,sizeof(qp),player)||!dl_quote(qs,sizeof(qs),session)){DeleteFile(boot);note("Could not save launch settings.");return;}
- snprintf(cmd,sizeof(cmd),"%s --session %s%s%s%s%s%s",qp,qs,dl_scanline_args(p),dl_presentation_args(p->presentation),dl_mono_args(p->monochrome),dev_arguments,net_arguments);last_log="LastRun.log";path(player,last_log);log=Open(player,MODE_NEWFILE);if(!log){DeleteFile(boot);note("Cannot open session log.");return;}
+ snprintf(cmd,sizeof(cmd),"%s --session %s%s%s%s%s%s%s%s",qp,qs,dl_hardware_args(p),dl_compat_args(p),dl_scanline_args(p),dl_presentation_args(p->presentation),dl_mono_args(p->monochrome),dev_arguments,net_arguments);last_log="LastRun.log";path(player,last_log);log=Open(player,MODE_NEWFILE);if(!log){DeleteFile(boot);note("Cannot open session log.");return;}
  conf_log(log,&s);rc=player_run(cmd,log);Close(log);DeleteFile(boot);DeleteFile(session);set(win,MUIA_Window_Open,TRUE);note(rc==0?"Session finished.":"Session failed; see LastRun.log.");
 }
 static void launch(unsigned mode,const char*script){struct dl_profile*p;const char*doscommand;
@@ -357,13 +369,15 @@ static void boot_disk(void){
  path(player,developer_runtime(dl_profile_player(p)));if(!exists(player)){note("Selected DOSBox runtime is missing.");return;}
  dl_defaults(&s);path(s.drive,"Disks");s.memory=p->memory;s.machine=p->machine;s.cycles=dc_get(&conf,DC_CYCLES,p->speed==0?1000:p->speed==1?3000:6000);s.display=p->display;s.size=p->size;s.fps=p->fps;s.fg=p->fg;s.bg=p->bg;s.midi=p->midi;strcpy(s.midi_port,p->midi_port);s.cd_mode=p->cd_mode;strcpy(s.cd_path,p->cd_path);
  path(session,"Launch.session");if(!dl_session_write(session,&s)||!dl_quote(qp,sizeof(qp),player)||!dl_quote(qs,sizeof(qs),session)){note("Cannot save boot session.");return;}
- snprintf(cmd,sizeof(cmd),"%s --session %s --boot %s%s%s%s%s",qp,qs,bootfiles[n],dl_scanline_args(p),dl_presentation_args(p->presentation),dl_mono_args(p->monochrome),dev_arguments);last_log="LastBoot.log";path(player,last_log);log=Open(player,MODE_NEWFILE);if(!log){DeleteFile(session);note("Cannot open boot log.");return;}
+ snprintf(cmd,sizeof(cmd),"%s --session %s --boot %s%s%s%s%s%s%s",qp,qs,bootfiles[n],dl_hardware_args(p),dl_compat_args(p),dl_scanline_args(p),dl_presentation_args(p->presentation),dl_mono_args(p->monochrome),dev_arguments);last_log="LastBoot.log";path(player,last_log);log=Open(player,MODE_NEWFILE);if(!log){DeleteFile(session);note("Cannot open boot log.");return;}
  conf_log(log,&s);rc=player_run(cmd,log);Close(log);DeleteFile(session);set(win,MUIA_Window_Open,TRUE);note(rc==0?"Session finished.":"Boot failed; see LastBoot.log.");
 }
+#include "io_ui.h"
 #include "audio_detect.h"
 #include "compatibility_ui.h"
 static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*execute,*auto_run,*script,*mount_disks,*eject_disks,*boot_button,*cd_check,*audio_check,*github,*dev_log,*root;
  style_open();
+ joy_diagram_class=MUI_CreateCustomClass(NULL,MUIC_Area,NULL,sizeof(struct joy_diagram_data),(APTR)joy_diagram_dispatch);if(!joy_diagram_class)return 0;
  P96Base=OpenLibrary("Picasso96API.library",2);if(!P96Base)return 0;
  snapshot_class=MUI_CreateCustomClass(NULL,MUIC_Area,NULL,0,(APTR)snapshot_dispatch);if(!snapshot_class)return 0;
  hover_help_class=MUI_CreateCustomClass(NULL,MUIC_Text,NULL,sizeof(struct hover_help_data),(APTR)hover_help_dispatch);if(!hover_help_class)return 0;
@@ -380,7 +394,7 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
     MUIA_Bodychunk_Masking,0,MUIA_Bitmap_SourceColors,(ULONG)sidebar_colours,
     MUIA_Bitmap_Transparent,0,End,Child,HSpace(0),End,
   Child,navigation_view=ListviewObject,MUIA_CycleChain,1,MUIA_FixWidthTxt,(ULONG)"    Compatibility      ",
-   MUIA_Listview_List,navigation=ListObject,MUIA_Font,ui_font(),InputListFrame,MUIA_List_MinLineHeight,30,
+   MUIA_Listview_List,navigation=ListObject,MUIA_Font,ui_font(),InputListFrame,MUIA_Background,(ULONG)UI_LIGHT_BACKGROUND,MUIA_List_MinLineHeight,30,
     MUIA_List_Format,(ULONG)"W=0 D=8,MAW=100",MUIA_List_DisplayHook,(ULONG)&navigation_hook,End,End,
   Child,save_button=ui_button("\33bSave settings"),End,
  Child,VGroup,
@@ -408,7 +422,7 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
   Child,label("D: - read-only data CD"),Child,cd_check=ui_button("Check CD-ROM"),Child,VSpace(0),End,
  End,
  Child,VGroup,
-  Child,ColGroup(2),UI_PANEL("Emulated PC"),Child,fieldlabel("Guest RAM"),Child,memory=cycle(memories),Child,fieldlabel("CPU cycles"),Child,speed=cycle(speeds),Child,fieldlabel("Session"),Child,live=cycle(lengths),End,Child,VSpace(0),End,
+  Child,ColGroup(2),UI_PANEL("Emulated PC"),Child,fieldlabel("CPU model"),Child,cpu_model=cycle(cpu_models),Child,fieldlabel("Paged register JIT (experimental)"),Child,paged_jit=CheckMark(FALSE),Child,fieldlabel("Guest RAM"),Child,memory=cycle(memories),Child,fieldlabel("EMS expanded RAM"),Child,ems=CheckMark(FALSE),Child,fieldlabel("VCPI services"),Child,vcpi=CheckMark(FALSE),Child,fieldlabel("Upper memory (UMB)"),Child,umb=CheckMark(FALSE),Child,fieldlabel("Cycle control"),Child,cycle_mode=cycle(cycle_modes),Child,fieldlabel("CPU cycles"),Child,speed=cycle(speeds),Child,fieldlabel("Session"),Child,live=cycle(lengths),End,Child,VSpace(0),End,
  Child,VGroup,
   Child,HGroup,Child,VGroup,MUIA_HorizWeight,60,
   Child,ColGroup(2),UI_PANEL("Screen"),Child,displaylabel("Display"),Child,display=cycle(displays),Child,displaylabel("Window size"),Child,window_size=cycle(sizes),Child,displaylabel("Video adapter"),Child,machine=cycle(machines),End,
@@ -421,9 +435,12 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
    Child,label("Presentation / FPS\nAdaptive skips display updates if needed.\nFPS shows the displayed frame rate.\nScanlines and Show FPS cannot be\nused together."),
    Child,VSpace(0),End,End,Child,VSpace(0),End,
  Child,VGroup,
+  Child,ColGroup(2),UI_PANEL("PC sound card"),Child,fieldlabel("Sound card"),Child,soundcard=cycle(soundcards),Child,fieldlabel("Additional card"),Child,extra_sound=cycle(extra_sounds),Child,fieldlabel("PC speaker / beep"),Child,pcspeaker=CheckMark(FALSE),Child,fieldlabel("Resources"),Child,label("220h / IRQ 7 / DMA 1; 16-bit DMA 5"),Child,fieldlabel("Output"),Child,label("AHI unit 0 - 32 kHz stereo"),End,
   Child,ColGroup(2),UI_PANEL("MIDI output"),Child,fieldlabel("MIDI"),Child,midi=cycle(midi_choices),Child,fieldlabel("CAMD output"),Child,midi_port=str(64),End,
   Child,VGroup,UI_PANEL("Drivers"),Child,audio_camd=label("CAMD: unchecked"),Child,audio_ahi=label("AHI: unchecked"),Child,audio_ax=label("ZZ9000AX: unchecked"),Child,audio_check=ui_button("Check audio drivers"),End,Child,VSpace(0),End,
  Child,network_page(),
+ Child,io_page(),
+ Child,joystick_page(),
  Child,VGroup,
   Child,HGroup,UI_PANEL("Boot image"),Child,bootdisk=cycle(bootlabels),Child,boot_button=ui_button("Boot"),End,
   Child,disk_image_page(),
@@ -454,8 +471,20 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
  {unsigned n;for(n=0;n<PAGE_COUNT;n++){snprintf(nav_entries[n].icon,sizeof(nav_entries[n].icon),"\33I[6:%lu]",(unsigned long)section_icons[n]);nav_entries[n].caption=sections[n];DoMethod(navigation,MUIM_List_InsertSingle,(ULONG)&nav_entries[n],MUIV_List_Insert_Bottom);}}
  set(navigation_view,MUIA_ShortHelp,(ULONG)"Choose a section. Use Up/Down when this list has keyboard focus.");
  notify(navigation,MUIA_List_Active,MUIV_EveryTime,ID_NAVIGATE);
+ notify(serial_mode,MUIA_Cycle_Active,MUIV_EveryTime,ID_SERIAL_CHANGE);
+ notify(serial_baud,MUIA_String_Acknowledge,MUIV_EveryTime,ID_SERIAL_CHANGE);
+ notify(joy_count,MUIA_Cycle_Active,MUIV_EveryTime,ID_JOY_COUNT);
  notify(program_tabs,MUIA_Group_ActivePage,MUIV_EveryTime,ID_PROGRAM_TAB);
  memory_ui_init();compat_init();network_init();
+ set(cpu_model,MUIA_ShortHelp,(ULONG)"Guest CPU instruction model; not a physical-PC speed rating.");
+ set(memory,MUIA_ShortHelp,(ULONG)"16/32 MB guest RAM selects Expanded, which owns 64 MB of ZZ9000 RAM.");
+ set(paged_jit,MUIA_ShortHelp,(ULONG)"Experimental register-only paging JIT. Memory, stack and x87 instructions still use the interpreter.");
+ set(vcpi,MUIA_ShortHelp,(ULONG)"Embedded-DOS VCPI services; requires EMS. Booted DOS uses its own drivers.");
+ set(umb,MUIA_ShortHelp,(ULONG)"Upper-memory allocation for embedded DOS; does not install EMM386 or enable DOS=HIGH.");
+ set(joystick,MUIA_ShortHelp,(ULONG)"Maps physical Amiga port 2 (lowlevel index 1) to a DOS two-axis, two-button gameport.");
+ set(cycle_mode,MUIA_ShortHelp,(ULONG)"Auto adjusts up to 10000; Max up to 100000. Manual cycle keys take over for this session.");
+ set(extra_sound,MUIA_ShortHelp,(ULONG)"GUS: 240h IRQ5 DMA3. CMS/Tandy require Sound Blaster off. Output uses AHI.");
+ set(serial_mode,MUIA_ShortHelp,(ULONG)"COM1 TCP, basic TCP modem or experimental physical Amiga serial driver. Embedded DOS only; NE2000/IPX must be off.");
  {unsigned c;for(c=0;c<DL_CATEGORIES+1;c++)notify(snapshot_capture[c],MUIA_Pressed,FALSE,ID_CAPTURE);}
  {unsigned c;for(c=0;c<DL_CATEGORIES;c++){notify(category_lists[c],MUIA_List_Active,MUIV_EveryTime,ID_CAT_SELECT+c);notify(category_run[c],MUIA_Pressed,FALSE,ID_CAT_RUN+c);notify(category_edit[c],MUIA_Pressed,FALSE,ID_CAT_EDIT+c);notify(category_rename[c],MUIA_Pressed,FALSE,ID_CAT_RENAME+c);notify(category_delete[c],MUIA_Pressed,FALSE,ID_CAT_DELETE+c);}}
  notify(category,MUIA_Cycle_Active,MUIV_EveryTime,ID_CATEGORY);
@@ -495,9 +524,14 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
  }
  MUIMasterBase=OpenLibrary("muimaster.library",15);AslBase=OpenLibrary("asl.library",38);WorkbenchBase=OpenLibrary("workbench.library",44);KeymapBase=OpenLibrary("keymap.library",37);if(!MUIMasterBase||!AslBase||!WorkbenchBase||!KeymapBase){puts("MUI 3.8 or later is required.");goto done;}
  disk_choices_init();if(!build())goto done;if(!conf_load())goto done;refresh();if(!startup_splash()){rc=0;goto done;}set(win,MUIA_Window_Open,TRUE);if(!val(win,MUIA_Window_Open))goto done;program_list_focus();
- while(running){mem_poll();id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
+ while(running){joystick_test_poll();mem_poll();id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
   switch(id){case (ULONG)MUIV_Application_ReturnID_Quit:if(mem_busy){note("Wait for the pending memory request.");break;}if(!store_selection())break;if(!conf_save())break;if(!save()){note("Cannot save settings.");break;}running=0;break;
+  case ID_SERIAL_CHANGE:serial_controls();break;
+  case ID_SERIAL_INTERNAL:set(serial_device,MUIA_String_Contents,(ULONG)"serial.device");set(serial_unit,MUIA_String_Integer,0);set(serial_mode,MUIA_Cycle_Active,3);serial_controls();break;
+  case ID_SERIAL_USB:serial_detect();if(*serial_usb_name){set(serial_device,MUIA_String_Contents,(ULONG)serial_usb_name);set(serial_unit,MUIA_String_Integer,0);set(serial_mode,MUIA_Cycle_Active,3);serial_controls();}break;
+  case ID_SERIAL_DETECT:serial_detect();break;
   case ID_NAVIGATE:navigation_show(val(navigation,MUIA_List_Active));break;
+  case ID_JOY_COUNT:joystick_controls();break;
   case ID_PROGRAM_TAB:program_list_focus();break;
   case ID_SELECT:if(!busy){int n=(LONG)val(list,MUIA_List_Active);if(n!=selected&&!select_profile(n))SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,selected,TAG_DONE);}break;
   case ID_CATEGORY:if(!busy&&selected>=0&&library.p[selected].category!=val(category,MUIA_Cycle_Active)){if(store_selection()){refresh();note(save()?"":"Could not save category.");}}break;
@@ -531,9 +565,9 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   if(id>=ID_CAT_RENAME&&id<ID_CAT_RENAME+DL_CATEGORIES){unsigned c=id-ID_CAT_RENAME;if(select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active))))rename_profile();break;}
   if((id>=ID_CAT_RUN&&id<ID_CAT_RUN+DL_CATEGORIES)||(id>=ID_CAT_EDIT&&id<ID_CAT_EDIT+DL_CATEGORIES)){unsigned c=id>=(unsigned)ID_CAT_EDIT?id-ID_CAT_EDIT:id-ID_CAT_RUN;int n=dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active));if(select_profile(n)){if(id>=ID_CAT_EDIT){navigation_show(PAGE_LOAD);set(program_tabs,MUIA_Group_ActivePage,0);}else launch(0,NULL);}break;}
   if(id>=ID_MEM_PAUSE&&id<=ID_MEM_STOP){mem_action(id);break;}if(id>=ID_EDITOR&&id<ID_EDITOR+48)editor_action((id-ID_EDITOR)/16,(id-ID_EDITOR)%16);break;}
-  if(running&&!id&&signals){if(Wait(signals|SIGBREAKF_CTRL_C|(mem_replies?1ul<<mem_replies->mp_SigBit:0))&SIGBREAKF_CTRL_C){if(!mem_busy&&store_selection()&&conf_save()&&save())running=0;}}
+  if(running&&!id&&signals){if(Wait(signals|joystick_test_signal()|SIGBREAKF_CTRL_C|(mem_replies?1ul<<mem_replies->mp_SigBit:0))&SIGBREAKF_CTRL_C){if(!mem_busy&&store_selection()&&conf_save()&&save())running=0;}}
  }rc=0;
-done:compat_store_close(&compat_database);if(mem_replies)DeleteMsgPort(mem_replies);if(app)MUI_DisposeObject(app);if(program_list_class)MUI_DeleteCustomClass(program_list_class);if(hover_help_class)MUI_DeleteCustomClass(hover_help_class);if(snapshot_class)MUI_DeleteCustomClass(snapshot_class);if(P96Base)CloseLibrary(P96Base);if(KeymapBase)CloseLibrary(KeymapBase);style_close();if(WorkbenchBase)CloseLibrary(WorkbenchBase);if(AslBase)CloseLibrary(AslBase);if(MUIMasterBase)CloseLibrary(MUIMasterBase);if(owner){RemPort(owner);DeleteMsgPort(owner);}return rc;
+done:joystick_test_active(0);compat_store_close(&compat_database);if(mem_replies)DeleteMsgPort(mem_replies);if(app)MUI_DisposeObject(app);if(joy_diagram_class)MUI_DeleteCustomClass(joy_diagram_class);if(program_list_class)MUI_DeleteCustomClass(program_list_class);if(hover_help_class)MUI_DeleteCustomClass(hover_help_class);if(snapshot_class)MUI_DeleteCustomClass(snapshot_class);if(P96Base)CloseLibrary(P96Base);if(KeymapBase)CloseLibrary(KeymapBase);style_close();if(WorkbenchBase)CloseLibrary(WorkbenchBase);if(AslBase)CloseLibrary(AslBase);if(MUIMasterBase)CloseLibrary(MUIMasterBase);if(owner){RemPort(owner);DeleteMsgPort(owner);}return rc;
 }
 
 /* Keep the entry frame small: reject undersized CLI stacks before entering

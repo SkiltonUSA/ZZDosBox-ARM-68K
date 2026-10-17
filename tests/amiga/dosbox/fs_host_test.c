@@ -13,7 +13,8 @@
 #include <errno.h>
 #include "fs_mock/implementation.h"
 static _Alignas(64) uint8_t memory[0x190000];static unsigned sequence;
-static void sync_range(volatile void*p,size_t n,void*u){(void)p;(void)n;(void)u;}
+static unsigned metadata_sync;
+static void sync_range(volatile void*p,size_t n,void*u){(void)u;if(p==memory+FS_NAME||p==memory+FS_DIR)metadata_sync+=(unsigned)n;}
 static void barrier(void*u){(void)u;}
 static unsigned call(unsigned op,unsigned h,unsigned n,unsigned pos,unsigned whence,const char *name,const char *other){
  memset(memory+FS_NAME,0,32);if(name)memcpy(memory+FS_NAME,name,strlen(name)<13?strlen(name):13);if(other)memcpy(memory+FS_NAME2,other,strlen(other)<13?strlen(other):13);
@@ -75,7 +76,11 @@ int main(void){
  for(unsigned j=0;j<25;j++){for(unsigned i=0;i<4096;i++)memory[FS_DATA+i]=(j*4096+i)%251;assert(!call(FS_WRITE,h,4096,0,0,NULL,NULL));assert(ad_get(memory,FS_REPLY+8)==4096);}
  assert(!call(FS_SEEK,h,0,99999,0,NULL,NULL));assert(!call(FS_WRITE,h,0,0,0,NULL,NULL));assert(!call(FS_CLOSE,h,0,0,0,NULL,NULL));assert(call(FS_READ,h,1,0,0,NULL,NULL)==6);
  assert(!call(FS_STAT,0,0,0,0,"LARGE.BIN",NULL));assert(ad_get(memory,FS_REPLY+12)==99999);
- assert(!call(FS_OPEN,0,0,0,0,"LARGE.BIN",NULL));h=ad_get(memory,FS_REPLY+8);assert(call(FS_WRITE,h,1,0,0,NULL,NULL)==5);assert(!call(FS_SEEK,h,0,99990,0,NULL,NULL));assert(!call(FS_READ,h,20,0,0,NULL,NULL));assert(ad_get(memory,FS_REPLY+8)==9);for(unsigned i=0;i<9;i++)assert(memory[FS_DATA+i]==(99990+i)%251);assert(!call(FS_CLOSE,h,0,0,0,NULL,NULL));
+ unsigned file_date=ad_get(memory,FS_REPLY+20),file_time=ad_get(memory,FS_REPLY+24),file_attr=ad_get(memory,FS_REPLY+16);assert(file_date!=0);
+ assert(!call(FS_OPEN,0,0,0,0,"LARGE.BIN",NULL));assert(ad_get(memory,FS_REPLY+12)==99999&&ad_get(memory,FS_REPLY+20)==file_date&&ad_get(memory,FS_REPLY+24)==file_time&&ad_get(memory,FS_REPLY+16)==file_attr);h=ad_get(memory,FS_REPLY+8);assert(call(FS_WRITE,h,1,0,0,NULL,NULL)==5);assert(!call(FS_SEEK,h,0,99990,0,NULL,NULL));assert(!call(FS_READ,h,20,0,0,NULL,NULL));assert(ad_get(memory,FS_REPLY+8)==9);for(unsigned i=0;i<9;i++)assert(memory[FS_DATA+i]==(99990+i)%251);assert(!call(FS_CLOSE,h,0,0,0,NULL,NULL));
+ /* Reset RTC: pre-1980 Amiga timestamps still return a valid DOS date. */
+ mock_days=4;assert(!call(FS_STAT,0,0,0,0,"LARGE.BIN",NULL));assert(ad_get(memory,FS_REPLY+20)==0x21&&ad_get(memory,FS_REPLY+24)==0);
+ assert(!call(FS_OPEN,0,0,0,0,"LARGE.BIN",NULL));h=ad_get(memory,FS_REPLY+8);assert(ad_get(memory,FS_REPLY+20)==0x21);assert(!call(FS_CLOSE,h,0,0,0,NULL,NULL));mock_days=17817;
  assert(!call(FS_RENAME,0,0,0,0,"LARGE.BIN","NEW.BIN"));assert(call(FS_RENAME,0,0,0,0,"NEW.BIN","LINK.TXT")==5);
  assert(!call(FS_LIST,0,0,0,0,NULL,NULL));assert(!strcmp((char*)memory+FS_NAME,"NEW.BIN"));assert(call(FS_LIST,1,0,0,0,NULL,NULL)==18);
  /* A nested install tree, cross-directory moves, and no link traversal. */
@@ -85,7 +90,17 @@ int main(void){
  assert(!call(FS_MKDIR,0,0,0,0,"SAVE",NULL));
  strcpy((char*)memory+FS_DIR,"GAMES\\SAVE");
  assert(!call(FS_CREATE,0,0,0,0,"STATE.DAT",NULL));h=ad_get(memory,FS_REPLY+8);
+ /* Nested file I/O must use the acquired handle without enumerating parents.
+  * Even changing the supplied cwd cannot redirect or invalidate this handle. */
+ unsigned enumerations=mock_exnext_calls,metadata=metadata_sync;
+ memset(memory+FS_DIR,0xff,FS_PATH_SIZE*2);
+ assert(!call(FS_SEEK,h,0,0,0,NULL,NULL));
+ assert(!call(FS_READ,h,1,0,0,NULL,NULL));
+ assert(mock_exnext_calls==enumerations&&metadata_sync==metadata);
+ strcpy((char*)memory+FS_DIR,"GAMES\\SAVE");memory[FS_DIR2]=0;
  memcpy(memory+FS_DATA,"saved",5);assert(!call(FS_WRITE,h,5,0,0,NULL,NULL));assert(!call(FS_CLOSE,h,0,0,0,NULL,NULL));
+ puts("PASS handle reads/seeks/writes/close: zero path enumeration and zero metadata sync");
+ assert(mock_exnext_calls==enumerations&&metadata_sync==metadata);
  assert(!call(FS_LIST,0,0,0,0,NULL,NULL));assert(!strcmp((char*)memory+FS_NAME,"STATE.DAT"));
  strcpy((char*)memory+FS_DIR2,"GAMES");assert(!call(FS_RENAME,0,0,0,0,"STATE.DAT","MOVED.DAT"));
  strcpy((char*)memory+FS_DIR,"GAMES");assert(!call(FS_OPEN,0,0,0,0,"MOVED.DAT",NULL));h=ad_get(memory,FS_REPLY+8);

@@ -77,7 +77,8 @@ static Object *network_page(void){return VGroup,Child,RegisterGroup(net_tabs),MU
  Child,HGroup,Child,net_button("Refresh",ID_NET_REFRESH),Child,net_disconnect=net_button("Disconnect",ID_NET_DISCONNECT),End,End,
  Child,VGroup,Child,ColGroup(2),Child,fieldlabel("Host / IPv4"),Child,net_target=str(64),End,
  Child,HGroup,Child,net_button("Ping",ID_NET_PING),Child,net_dns_button=net_button("DNS lookup",ID_NET_DNS),Child,net_button("Open log",ID_NET_LOG),End,
- Child,label("Diagnostics run inside DOS. Close the terminal with F10."),Child,VSpace(0),End,End,
+ Child,label("Diagnostics run inside DOS. Close the terminal with F10."),Child,VSpace(0),End,
+ End,
  Child,HGroup,Child,HSpace(0),Child,net_button("Network guide",ID_NET_GUIDE),End,End;
 }
 static void network_init(void){struct dn_config c;dn_defaults(&c);network_show(&c);
@@ -117,11 +118,10 @@ static int network_prepare(const char*root,const struct dn_config*c){
 }
 static int network_options(const struct dl_profile*p){char file[DL_PATH],q[DL_PATH*2+3];FILE*f;int ok;
  net_arguments[0]=0;network_requested=p->network.enabled;if(!p->network.enabled)return 1;
- /* The separate, tested network binary is an interpreter build. Never hide a core change. */
- if(p->system||p->renderer||p->presentation||p->scanlines||active_trace||active_break||val(mem_enabled,MUIA_Selected)||dc_get(&conf,DC_CORE,0)==2){note("Network: embedded DOS, core auto/normal, Direct/Normal, no scanlines or memory/trace tools.");return 0;}
- path(file,"ZZDosBox-Net");if(!exists(file)){note("ZZDosBox-Net is missing.");return 0;}
+ /* dc_runtime validates the complete profile and honours explicit core choice. */
+ path(file,active_runtime);if(!exists(file)){note("Selected network runtime is missing.");return 0;}
  path(file,"Network.session");f=fopen(file,"w");if(!f){note("Cannot write network session.");return 0;}ok=dn_write(f,&p->network);if(fclose(f))ok=0;if(!ok||!dl_quote(q,sizeof(q),file))return 0;
- snprintf(net_arguments,sizeof(net_arguments)," --network-config %s",q);active_runtime="ZZDosBox-Net";return 1;
+ snprintf(net_arguments,sizeof(net_arguments)," --network-config %s",q);return 1;
 }
 static void net_detail(const char*s){DoMethod(net_details,MUIM_List_InsertSingle,(ULONG)s,MUIV_List_Insert_Bottom);}
 static void network_refresh(void){struct dn_config c;char b[256],ip[16],dns[16],file[DL_PATH];FILE*f;unsigned lines=0;struct Library*socket;
@@ -132,7 +132,8 @@ static void network_refresh(void){struct dn_config c;char b[256],ip[16],dns[16],
  snprintf(b,sizeof(b),"Configured: %s  %s / %s",c.manual?"Manual":"DHCP",c.manual?c.ip:ip,c.mask);net_detail(b);
  snprintf(b,sizeof(b),"Gateway: %s   DNS proxy: %s   MTU: %u",c.gateway,*c.dns?dns:"off",c.mtu);net_detail(b);
  snprintf(b,sizeof(b),"Upstream DNS: %s",*c.dns?c.dns:"not configured");net_detail(b);
- net_detail("Transport: IPv4 NAT through the Amiga's current route");net_detail("Runtime: interpreter; bridged Ethernet not available");
+ net_detail("Transport: IPv4 NAT through the Amiga's current route");net_detail("Core auto/dynamic: ARM JIT; core normal: interpreter");
+ net_detail("JIT supports EMS and Sound Blaster; bridged Ethernet unavailable");
  if(selected>=0&&net_owned(library.p[selected].drive,0)&&dl_join(file,sizeof(file),library.p[selected].drive,"ZZNET/MTCP.CFG")&&(f=fopen(file,"r"))){
   net_detail("Last saved DOS settings (not a live connection):");
   while(lines++<100&&fgets(b,sizeof(b),f)){size_t n=strlen(b);while(n&&(b[n-1]=='\r'||b[n-1]=='\n'))b[--n]=0;
@@ -168,7 +169,7 @@ static void network_action(unsigned id){struct dl_profile p;struct dl_session s;
  if(p.system){note("Use an embedded DOS profile; Windows needs its own network driver setup.");return;}
  if(!developer_options())return;p.network.enabled=1;
  if(!conf_profile(&p))return;p=effective_profile;
- if(!network_options(&p)||!network_prepare(p.drive,&p.network))return;
+ if(!network_prepare(p.drive,&p.network))return;
  dl_join(file,sizeof(file),p.drive,"ZZNET/ACTION.BAT");f=fopen(file,"wb");if(!f){note("Cannot write network action.");return;}
  ok=fputs("@echo off\r\n",f)!=EOF&&dn_start(f,&p.network);
  if(id==ID_NET_PING&&p.network.protocol)ok=ok&&fputs("IPXNET PING\r\n",f)!=EOF;
@@ -177,9 +178,9 @@ static void network_action(unsigned id){struct dl_profile p;struct dl_session s;
  if(!p.network.protocol)ok=ok&&fputs("type C:\\ZZNET\\MTCP.CFG\r\n",f)!=EOF;
  ok=ok&&fputs("echo Network command completed\r\ngoto ZZNETEND\r\n:ZZNETFAIL\r\necho Network command failed\r\n:ZZNETEND\r\n",f)!=EOF;if(fclose(f))ok=0;
  if(!ok){note("Cannot write network action.");return;}
- dl_defaults(&s);strcpy(s.drive,p.drive);strcpy(s.command,"C:\\ZZNET\\ACTION.BAT");s.memory=8;s.live=1;s.terminal=id==ID_NET_CONNECT;s.display=0;s.size=p.size;
- path(session,"NetworkRun.session");path(runtime,"ZZDosBox-Net");if(!dl_session_write(session,&s)||!dl_quote(qp,sizeof(qp),runtime)||!dl_quote(qs,sizeof(qs),session))return;
- snprintf(cmd,sizeof(cmd),"%s --session %s%s",qp,qs,net_arguments);
+ dl_defaults(&s);strcpy(s.drive,p.drive);strcpy(s.command,"C:\\ZZNET\\ACTION.BAT");s.memory=p.memory;s.cycles=dc_get(&conf,DC_CYCLES,p.speed==0?1000:p.speed==1?3000:6000);s.machine=p.machine;s.live=1;s.terminal=id==ID_NET_CONNECT;s.display=0;s.size=p.size;
+ path(session,"NetworkRun.session");path(runtime,active_runtime);if(!dl_session_write(session,&s)||!dl_quote(qp,sizeof(qp),runtime)||!dl_quote(qs,sizeof(qs),session))return;
+ snprintf(cmd,sizeof(cmd),"%s --session %s%s%s",qp,qs,dl_compat_args(&p),net_arguments);
  path(file,"LastNetwork.log");log=Open(file,MODE_NEWFILE);if(!log){note("Cannot open network log.");return;}
  last_log="LastNetwork.log";rc=player_run(cmd,log);Close(log);DeleteFile(session);set(win,MUIA_Window_Open,TRUE);
  network_refresh();note(rc?"Network session failed; see log.":"Network session ended; see log for command result.");

@@ -81,9 +81,16 @@ int main(void){struct dl_session s,t;static struct dl_library a,b;char tmp[]="/t
  a.p[0].category=DL_CATEGORIES;assert(!dl_library_write(tmp,&a));
  a.p[0].category=dl_legacy_category(&a.p[0]);
  assert(dl_library_write(tmp,&a));f=fopen(tmp,"rb");n=fread(out,1,sizeof(out)-1,f);fclose(f);
- assert(n>18&&!memcmp(out,"ZZDOSLIB14",10));
+ assert(n>19&&!memcmp(out,"ZZDOSLIB19",10));
+ /* Strip only the physical-device suffix to exercise format 18 migration. */
+ n-=strlen("73657269616c2e646576696365\n0 0 8 0 1 0\n");out[9]='8';
+ f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fclose(f);
+ assert(dl_library_read(tmp,&b)&&!strcmp(b.p[0].serial.device,"serial.device")&&!b.p[0].serial.baud);
+ /* Format 17 defaults the newly added physical count/key bindings. */
+ {size_t old_n=n-strlen("2 1 2 5 6\n");out[9]='7';f=fopen(tmp,"wb");assert(fwrite(out,1,old_n,f)==old_n);fclose(f);
+  assert(dl_library_read(tmp,&b)&&b.p[0].joy_buttons==2&&b.p[0].joy_keys[2]==5);out[9]='8';}
  /* Remove the appended network record to exercise v5-v11 migrations. */
- out[n]=0;char *netrecord=strstr(out,"ZZNET2\n");assert(netrecord);size_t full_n=n;n=(size_t)(netrecord-out);out[9]='1';
+ out[n]=0;char *netrecord=strstr(out,"ZZNET2\n");assert(netrecord);size_t full_n=n-strlen("2 1 2 5 6\n")-6-strlen("0 0 0 0 0 0\n127.0.0.1\n0 23 0\n"); /* v16 adds EMS/sound/speaker after the network record. */n=(size_t)(netrecord-out);out[9]='1';
  f=fopen(tmp,"wb");assert(fwrite(out,1,n,f)==n);fclose(f);assert(dl_library_read(tmp,&b)&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
  /* Strip only the fields absent from each old format; the two-digit header
     shrinks by one byte. All launch settings must survive migration. */
@@ -122,4 +129,34 @@ int main(void){struct dl_session s,t;static struct dl_library a,b;char tmp[]="/t
  assert(dl_category_index(&b,(DL_MAX-1)%DL_CATEGORIES,(DL_MAX-1)/DL_CATEGORIES)==DL_MAX-1);
  a.count=DL_MAX+1;assert(!dl_library_write(tmp,&a));
  f=fopen(tmp,"w");fprintf(f,"ZZDOSLIB13\n%u 0\n",DL_MAX+1);fclose(f);assert(!dl_library_read(tmp,&b));
+ /* v15 compatibility preferences round-trip and choose the dedicated player. */
+ a.count=1;a.last=0;a.p[0].ems=a.p[0].sound=1;
+ assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&b.p[0].ems==1&&b.p[0].sound==1);
+ assert(!strcmp(dl_profile_player(&b.p[0]),"ZZDosBox-Compat"));
+ assert(!strcmp(dl_compat_args(&b.p[0])," --ems on --sound sbpro2 --speaker off"));
+ /* Legacy v15 has two flags; the speaker must default off. */
+ f=fopen(tmp,"rb");n=fread(out,1,sizeof(out)-1,f);fclose(f);out[9]='5';out[n]=0;char *flags=strstr(out,"1 1 0\n0 0 0 0 0 0\n");assert(flags);n=(size_t)(flags-out)+6;out[n-3]='\n';
+ f=fopen(tmp,"wb");assert(fwrite(out,1,n-2,f)==n-2);fclose(f);
+ assert(dl_library_read(tmp,&b)&&b.p[0].ems==1&&b.p[0].sound==1&&!b.p[0].speaker);
+ a.p[0].sound=2;a.p[0].speaker=1;
+ assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&b.p[0].sound==2&&b.p[0].speaker==1);
+ assert(!strcmp(dl_compat_args(&b.p[0])," --ems on --sound sb16 --speaker on"));
+ b.p[0].ems=b.p[0].sound=0;assert(!strcmp(dl_profile_player(&b.p[0]),"ZZDosBox-Compat"));
+ assert(!strcmp(dl_compat_args(&b.p[0])," --ems off --sound off --speaker on"));
+ b.p[0].sound=3;assert(!dl_library_write(tmp,&b));b.p[0].sound=0;
+ b.p[0].speaker=2;assert(!dl_library_write(tmp,&b));b.p[0].speaker=1;
+ b.p[0].ems=2;assert(!dl_library_write(tmp,&b));
+ for(unsigned count=1;count<=6;count++){
+  a.p[0].joystick=1;a.p[0].joy_buttons=count;a.p[0].joy_keys[3]=11;
+  assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b));assert(b.p[0].joy_buttons==count&&b.p[0].joy_keys[3]==11);
+  char expected[24];snprintf(expected,sizeof(expected),"--joy-buttons %u",count);assert(strstr(dl_hardware_args(&a.p[0]),expected));
+ }
+ a.p[0].joy_buttons=7;assert(!dl_library_write(tmp,&a));a.p[0].joy_buttons=6;
+ a.p[0].joy_keys[0]=DB_JOY_KEYS;assert(!dl_library_write(tmp,&a));
+
+ dl_profile_default(&a.p[0]);strcpy(a.p[0].title,"Serial");strcpy(a.p[0].drive,"RAM:Serial");a.count=1;a.last=0;a.p[0].serial_mode=3;
+ strcpy(a.p[0].serial.device,"serialpl2303.device");a.p[0].serial.unit=2;a.p[0].serial.baud=19200;a.p[0].serial.bits=7;a.p[0].serial.parity=2;a.p[0].serial.stop=2;a.p[0].serial.flow=1;
+ assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&!memcmp(&a.p[0],&b.p[0],sizeof(a.p[0])));
+ assert(strstr(dl_hardware_args(&a.p[0]),"--serial device")&&strstr(dl_hardware_args(&a.p[0]),"--serial-device serialpl2303.device --serial-line 2,19200,7,2,2,1"));
+ strcpy(a.p[0].serial.device,"bad.device\nExecute bad");assert(!dl_library_write(tmp,&a));
  unlink(tmp);puts("PASS profiles/sessions, adapter/colour/renderer migration and validation");return 0;}

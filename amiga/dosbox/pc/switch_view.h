@@ -1,5 +1,6 @@
 /* GPL-3.0-or-later. Retain both OS allocations until synchronous worker reset.
  * Mode changes occur only after frame unmapping and PAN acknowledgement. */
+#include "capabilities.h"
 struct pc_saved_view {struct Window *window;struct BitMap *bitmap;ULONG format,native;};
 static struct pc_saved_view saved_window,saved_full;
 static char live_title[96];
@@ -30,8 +31,8 @@ static int display_hotkey(UWORD raw,UWORD qualifiers){
   return 1;
  }
  if((key==0x0b||key==0x0c)&&(qualifiers&IEQUALIFIER_CONTROL)){
-  if(down){unsigned speed=ad_get(shared,PC_CYCLE_REQUEST);if(speed<500||speed>10000)speed=3000;
-   if(key==0x0c){if(speed<10000)speed+=500;}else if(speed>500)speed-=500;
+  if(down){unsigned speed=ad_get(shared,PC_CYCLE_REQUEST);if(speed<500||speed>DB_CYCLES_MAX)speed=3000;
+   if(key==0x0c){if(speed<DB_CYCLES_MAX)speed=DB_CYCLES_MAX-speed<500?DB_CYCLES_MAX:speed+500;}else if(speed>500)speed=speed<1000?500:speed-500;
    publish(PC_CYCLE_REQUEST,speed);update_live_title();printf("CPU_CYCLES requested=%u\n",speed);
   }return 1;
  }

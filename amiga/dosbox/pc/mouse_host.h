@@ -3,6 +3,7 @@
 static UWORD *window_mouse_pointer;
 static int window_mouse_hidden;
 static unsigned host_mouse_buttons,host_mouse_events,host_mouse_down,host_mouse_up;
+static int host_mouse_position;
 static int mouse_room(void){
  ULONG w=ad_get(shared,PC_MOUSE_WRITE);syncio->pull(shared+PC_MOUSE_READ,4,NULL);
  return w-ad_get(shared,PC_MOUSE_READ)<PC_MOUSE_SIZE;
@@ -14,7 +15,7 @@ static int mouse_publish(unsigned x,unsigned y,unsigned buttons,int valid){
  syncio->push(shared+p,PC_MOUSE_STRIDE,NULL);publish(PC_MOUSE_WRITE,w+1);host_mouse_events++;
  if(buttons&~host_mouse_buttons)host_mouse_down++;
  if(host_mouse_buttons&~buttons)host_mouse_up++;
- host_mouse_buttons=buttons;return 1;
+ host_mouse_buttons=buttons;host_mouse_position=valid;return 1;
 }
 static void mouse_pointer(int inside){
  if(fullscreen||!window||!window_mouse_pointer)return;
@@ -37,6 +38,7 @@ static int mouse_event(ULONG cl,UWORD code,WORD x,WORD y){
   if(code&IECODE_UP_PREFIX)buttons&=~bit;else if(p.inside)buttons|=bit;
  }
  /* Outside presses are window controls; outside releases still reach DOS. */
- if(!p.inside&&!host_mouse_buttons&&buttons==host_mouse_buttons)return 1;
+ if(!p.inside&&!host_mouse_buttons&&buttons==host_mouse_buttons)
+  return host_mouse_position?mouse_publish(0,0,0,0):1;
  return mouse_publish(p.x,p.y,buttons,1);
 }

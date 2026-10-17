@@ -12,9 +12,9 @@ def prepare():
  (OUT/'ega-planes.bin').write_bytes(planes)
  subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/'egatest.S'),'-o','egatest.o'],cwd=OUT,check=True)
  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x100','--oformat=binary','egatest.o','-o','EGATEST.COM'],cwd=OUT,check=True)
- for name in ['keytest','cgatest','boottest','pagingtest','hddtest','badmem','miditest','welcome','mousetst','smctest','pitmath']:
+ for name in ['keytest','cgatest','boottest','pagingtest','hddtest','badmem','miditest','welcome','mousetst','smctest','pitmath','emstest','sbtest','opltest','sb16test','beeptest','datetest','x87test','cputest','exttest','joytest','cmstest','tandtest','gustest','serialtest','filetest']:
   subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/(name+'.S')),'-o',name+'.o'],cwd=OUT,check=True)
-  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x7c00' if name=='pagingtest' else '0x100','--oformat=binary',name+'.o','-o',name.upper()+'.COM'],cwd=OUT,check=True)
+  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x7c00' if name=='pagingtest' else '0x100','--oformat=binary',name+'.o','-o','RDTEST.COM' if name=='filetest' else name.upper()+'.COM'],cwd=OUT,check=True)
  for name,adapter,mode,bpp in [('S3V101',3,0x101,8),('S3V103',3,0x103,8),('S3V105',3,0x105,8),('S3V110',3,0x110,15),('S3V111',3,0x111,16),('S3V114',3,0x114,16),('S3V10F',3,0x10f,32),('TANTEST',4,9,4),('JRTTEST',5,9,4),('HERCTEST',6,0,1)]:
   subprocess.run(['clang','--target=i386-none-elf',f'-DTEST_ADAPTER={adapter}',f'-DTEST_MODE={mode}',f'-DTEST_BPP={bpp}','-c',str(SRC/'adaptertest.S'),'-o',str(OUT/(name+'.o'))],check=True)
   subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x100','--oformat=binary',str(OUT/(name+'.o')),'-o',str(OUT/(name+'.COM'))],check=True)
@@ -155,9 +155,23 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
  return sources
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse','adapters'],default='fixture');args=p.parse_args();sources=prepare()
+ p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse','adapters','ems','sb','opl','sb16','beep','dates','x87','cpu','extended','joystick','gus','cms','tandy','serial','compatgame'],default='fixture');p.add_argument('--compat',action='store_true');p.add_argument('--x87',action='store_true');p.add_argument('--expanded',action='store_true');args=p.parse_args();sources=prepare()
+ if args.expanded and not (args.compat and args.x87):p.error('--expanded requires --compat --x87')
+ if args.compat:
+  from prepare_dosbox_compat import prepare as compat_prepare
+  sources+=compat_prepare(OUT)+[SRC/'compat.cpp']
+  from prepare_dosbox_audio import prepare as audio_prepare
+  sources+=audio_prepare(OUT)+[SRC/'audio.cpp']
+ if args.x87:
+  from prepare_dosbox_x87 import prepare as x87_prepare
+  sources+=x87_prepare(OUT)
+ if args.expanded:
+  from prepare_dosbox_expanded import prepare as expanded_prepare
+  sources+=expanded_prepare(OUT)+[SRC/'serial.cpp']
  if args.prepare_only:return
  flags=['-std=c++17','-O2','-g','-fno-exceptions','-fno-rtti','-ffunction-sections','-fdata-sections','-Wno-format','-Wno-deprecated-declarations','-DZZ_CONTROL=0x180000','-DDB_NATIVE','-DZZ_PC_CD',*['-I'+str(x) for x in [SRC,shell.SRC,ROOT/'amiga/dosbox/dos',ROOT/'amiga/dosbox/console',OUT,OUT/'include',OUT/'src/cpu',OUT/'src/ints',ROOT/'amiga/dosbox',ROOT/'amiga/common/arm',ROOT/'amiga/arm_debug',ROOT/'amiga/arm_debug/zz9000']]]
+ if args.expanded:flags+=['-DDB_EXPANDED']
+ if args.compat:flags+=['-DDB_COMPAT']
  if args.sanitize:flags+=['-fsanitize=address','-fno-omit-frame-pointer']
  sources += [SRC/'adapter.cpp',OUT/'frontend.cpp',OUT/'native_drive.cpp',SRC/'devices.cpp',SRC/'cd.cpp',SRC/'midi.cpp',SRC/'boot.cpp',SRC/'video.cpp',SRC/'native.cpp']
  headers=b''.join(x.read_bytes() for d in [OUT/'include',SRC,shell.SRC,ROOT/'amiga/dosbox/dos'] for x in sorted(d.glob('*.h')))

@@ -1,0 +1,233 @@
+--- a/src/dos/dos.cpp
++++ b/src/dos/dos.cpp
+@@ -22,14 +22,15 @@
+ #include <ctype.h>
+ #include "dosbox.h"
+ #include "bios.h"
++#define PIT_TICK_RATE 1193182
+ #include "mem.h"
+ #include "callback.h"
+ #include "regs.h"
+ #include "dos_inc.h"
+ #include "drives.h"
+-#include "setup.h"
++
+ #include "support.h"
+-#include "serialport.h"
++
+ 
+ DOS_Block dos;
+ DOS_InfoBlock dos_infoblock;
+@@ -159,29 +160,7 @@
+ 			reg_al=(c==9)?0x20:c; //strangely, tab conversion to spaces is reflected here
+ 		}
+ 		break;
+-	case 0x03:		/* Read character from STDAUX */
+-		{
+-			Bit16u port = real_readw(0x40,0);
+-			if(port!=0 && serialports[0]) {
+-				Bit8u status;
+-				// RTS/DTR on
+-				IO_WriteB(port+4,0x3);
+-				serialports[0]->Getchar(&reg_al, &status, true, 0xFFFFFFFF);
+-			}
+-		}
+-		break;
+-	case 0x04:		/* Write Character to STDAUX */
+-		{
+-			Bit16u port = real_readw(0x40,0);
+-			if(port!=0 && serialports[0]) {
+-				// RTS/DTR on
+-				IO_WriteB(port+4,0x3);
+-				serialports[0]->Putchar(reg_dl,true,true, 0xFFFFFFFF);
+-				// RTS off
+-				IO_WriteB(port+4,0x1);
+-			}
+-		}
+-		break;
++	case 0x03: case 0x04: E_Exit("Serial device not connected");
+ 	case 0x05:		/* Write Character to PRINTER */
+ 		E_Exit("DOS:Unhandled call %02X",reg_ah);
+ 		break;
+@@ -1205,36 +1184,7 @@
+ 	return CBRET_NONE;
+ }
+ 
+-static Bit16u DOS_SectorAccess(bool read) {
+-	fatDrive * drive = (fatDrive *)Drives[reg_al];
+-	Bit16u bufferSeg = SegValue(ds);
+-	Bit16u bufferOff = reg_bx;
+-	Bit16u sectorCnt = reg_cx;
+-	Bit32u sectorNum = (Bit32u)reg_dx + drive->partSectOff;
+-	Bit32u sectorEnd = drive->getSectorCount() + drive->partSectOff;
+-	Bit8u sectorBuf[512];
+-	Bitu i;
+-
+-	if (sectorCnt == 0xffff) { // large partition form
+-		bufferSeg = real_readw(SegValue(ds),reg_bx + 8);
+-		bufferOff = real_readw(SegValue(ds),reg_bx + 6);
+-		sectorCnt = real_readw(SegValue(ds),reg_bx + 4);
+-		sectorNum = real_readd(SegValue(ds),reg_bx + 0) + drive->partSectOff;
+-	} else if (sectorEnd > 0xffff) return 0x0207; // must use large partition form
+-
+-	while (sectorCnt--) {
+-		if (sectorNum >= sectorEnd) return 0x0408; // sector not found
+-		if (read) {
+-			if (drive->readSector(sectorNum++,&sectorBuf)) return 0x0408;
+-			for (i=0;i<512;i++) real_writeb(bufferSeg,bufferOff++,sectorBuf[i]);
+-		} else {
+-			for (i=0;i<512;i++) sectorBuf[i] = real_readb(bufferSeg,bufferOff++);
+-			if (drive->writeSector(sectorNum++,&sectorBuf)) return 0x0408;
+-		}
+-	}
+-	return 0;
+-}
+-
++static Bit16u DOS_SectorAccess(bool){return 0x8002;}
+ static Bitu DOS_25Handler(void) {
+ 	if (reg_al >= DOS_DRIVES || !Drives[reg_al] || Drives[reg_al]->isRemovable()) {
+ 		reg_ax = 0x8002;
+@@ -1272,70 +1222,13 @@
+ }
+ 
+ 
+-class DOS:public Module_base{
+-private:
+-	CALLBACK_HandlerObject callback[7];
+-public:
+-	DOS(Section* configuration):Module_base(configuration){
+-		callback[0].Install(DOS_20Handler,CB_IRET,"DOS Int 20");
+-		callback[0].Set_RealVec(0x20);
+-
+-		callback[1].Install(DOS_21Handler,CB_INT21,"DOS Int 21");
+-		callback[1].Set_RealVec(0x21);
+-	//Pseudo code for int 21
+-	// sti
+-	// callback 
+-	// iret
+-	// retf  <- int 21 4c jumps here to mimic a retf Cyber
+-
+-		callback[2].Install(DOS_25Handler,CB_RETF_STI,"DOS Int 25");
+-		callback[2].Set_RealVec(0x25);
+-
+-		callback[3].Install(DOS_26Handler,CB_RETF_STI,"DOS Int 26");
+-		callback[3].Set_RealVec(0x26);
+-
+-		callback[4].Install(DOS_27Handler,CB_IRET,"DOS Int 27");
+-		callback[4].Set_RealVec(0x27);
+-
+-		callback[5].Install(NULL,CB_IRET,"DOS Int 28");
+-		callback[5].Set_RealVec(0x28);
+-
+-		callback[6].Install(NULL,CB_INT29,"CON Output Int 29");
+-		callback[6].Set_RealVec(0x29);
+-		// pseudocode for CB_INT29:
+-		//	push ax
+-		//	mov ah, 0x0e
+-		//	int 0x10
+-		//	pop ax
+-		//	iret
+-
+-		DOS_SetupFiles();								/* Setup system File tables */
+-		DOS_SetupDevices();							/* Setup dos devices */
+-		DOS_SetupTables();
+-		DOS_SetupMemory();								/* Setup first MCB */
+-		DOS_SetupPrograms();
+-		DOS_SetupMisc();							/* Some additional dos interrupts */
+-		DOS_SDA(DOS_SDA_SEG,DOS_SDA_OFS).SetDrive(25); /* Else the next call gives a warning. */
+-		DOS_SetDefaultDrive(25);
+-	
+-		dos.version.major=5;
+-		dos.version.minor=0;
+-		dos.direct_output=false;
+-		dos.internal_output=false;
+-	}
+-	~DOS(){
+-		for (Bit16u i=0;i<DOS_DRIVES;i++) delete Drives[i];
+-	}
+-};
+-
+-static DOS* test;
+-
+-void DOS_ShutDown(Section* /*sec*/) {
+-	delete test;
++
++void zz_dos_init() {
++ const Bitu ints[]={0x20,0x21,0x25,0x26,0x27,0x28,0x29};
++ const Bitu types[]={CB_IRET,CB_INT21,CB_RETF_STI,CB_RETF_STI,CB_IRET,CB_IRET,CB_INT29};
++ CallBack_Handler funcs[]={DOS_20Handler,DOS_21Handler,DOS_25Handler,DOS_26Handler,DOS_27Handler,nullptr,nullptr};
++ for(unsigned i=0;i<7;i++){Bitu cb=CALLBACK_Allocate();CALLBACK_Setup(cb,funcs[i],types[i],"DOS");RealSetVec(ints[i],CALLBACK_RealPointer(cb));}
++ DOS_SetupFiles();DOS_SetupDevices();DOS_SetupTables();DOS_SetupMemory();
++ DOS_SDA(DOS_SDA_SEG,DOS_SDA_OFS).SetDrive(2);DOS_SetDefaultDrive(2);
++ dos.version.major=5;dos.version.minor=0;dos.direct_output=false;dos.internal_output=false;
+ }
+-
+-void DOS_Init(Section* sec) {
+-	test = new DOS(sec);
+-	/* shutdown function */
+-	sec->AddDestroyFunction(&DOS_ShutDown,false);
+-}
+--- a/src/dos/dos_files.cpp
++++ b/src/dos/dos_files.cpp
+@@ -1335,5 +1335,5 @@
+ 	for (i=0;i<DOS_DRIVES;i++) {
+ 		Drives[i]=0;
+ 	}
+-	Drives[25]=new Virtual_Drive();
+-}
++	/* Drives are installed by the platform frontend. */
++}
+--- a/src/dos/dos.cpp
++++ b/src/dos/dos.cpp
+@@ -27,7 +27,7 @@
+ #include "callback.h"
+ #include "regs.h"
+ #include "dos_inc.h"
+-#include "drives.h"
++#include "drive_decl.h"
+ 
+ #include "support.h"
+ 
+--- a/src/dos/dos_files.cpp
++++ b/src/dos/dos_files.cpp
+@@ -27,7 +27,7 @@
+ #include "mem.h"
+ #include "regs.h"
+ #include "dos_inc.h"
+-#include "drives.h"
++#include "drive_decl.h"
+ #include "cross.h"
+ 
+ #define DOS_FILESTART 4
+--- a/src/dos/dos_devices.cpp
++++ b/src/dos/dos_devices.cpp
+@@ -25,7 +25,7 @@
+ #include "bios.h"
+ #include "dos_inc.h"
+ #include "support.h"
+-#include "drives.h" //Wildcmp
++#include "drive_decl.h" //Wildcmp
+ /* Include all the devices */
+ 
+ #include "dev_con.h"
+--- a/src/dos/dos_devices.cpp
++++ b/src/dos/dos_devices.cpp
+@@ -28,7 +28,7 @@
+ #include "drive_decl.h" //Wildcmp
+ /* Include all the devices */
+ 
+-#include "dev_con.h"
++#include "console.h"
+ 
+ 
+ DOS_Device * Devices[DOS_DEVICES];
+--- a/src/dos/dos_tables.cpp
++++ b/src/dos/dos_tables.cpp
+@@ -72,6 +72,7 @@
+ };
+ 
+ void DOS_SetupTables(void) {
++ dos_memseg=DOS_PRIVATE_SEGMENT;
+ 	Bit16u seg;Bitu i;
+ 	dos.tables.tempdta=RealMake(DOS_GetMemory(4),0);
+ 	dos.tables.tempdta_fcbdelete=RealMake(DOS_GetMemory(4),0);

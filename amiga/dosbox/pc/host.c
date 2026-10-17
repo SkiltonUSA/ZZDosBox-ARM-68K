@@ -15,6 +15,7 @@
 #include "cd_host.h"
 #include "midi_host.h"
 #include "pc_wire.h"
+#include "joystick_plan.h"
 #include "mmu.h"
 #include "profile_plan.h"
 #include "options.h"
@@ -26,12 +27,32 @@ static int network_enabled;
 static const char *network_dns;
 static struct dn_config network_config;
 #endif
+#ifdef DB_COMPAT
+#include "audio_host.h"
+#ifdef DB_NETWORK
+/* Networking alone must not silently enable EMS or AHI. */
+static unsigned compat_ems=0,compat_sound=0,compat_speaker=0;
+#else
+static unsigned compat_ems=1,compat_sound=1,compat_speaker=0;
+#endif
+#endif
 static struct dl_session settings;
 static int configured;
 static char boot_name[FS_NAME_SIZE],hdd_name[FS_NAME_SIZE];
-static unsigned memory_override;
+static unsigned memory_override,cpu_model,memory_services;
 static int machine_override=-1;
 static unsigned monochrome;
+#ifdef DB_EXPANDED
+#include "serial_host.h"
+static unsigned paged_jit;
+static struct db_serial_config serial_physical;
+static unsigned serial_mode,serial_port=23;
+static char serial_address[16]="127.0.0.1";
+static unsigned joystick_buttons=2,joystick_keys[4]={1,2,5,6};
+static unsigned joystick_enabled,extra_sound,cycle_mode;
+#include "cycle_plan.h"
+static struct pc_cycle_control cycle_control;
+#endif
 struct Device *TimerBase;
 static volatile uint8_t *shared;
 static const struct ad_io *syncio;
@@ -58,6 +79,9 @@ static const char commands[]="dir /b\rtype readme.txt\recho saved text > SAVED.T
 static char transcript[8192];
 int db_arguments(int argc,char **argv){
  unsigned test_ms=0;int i;if(argc==0)return 0;dl_defaults(&settings);settings.display=1;
+ #ifdef DB_EXPANDED
+ db_serial_defaults(&serial_physical);
+#endif
  for(i=1;i<argc;i++){
   if(!strcmp(argv[i],"--session")&&i+1<argc){
    if(!dl_session_read(argv[++i],&settings)){puts("Invalid launcher session");return -1;}
@@ -65,6 +89,11 @@ int db_arguments(int argc,char **argv){
    if(settings.system){strcpy(hdd_name,settings.system==2?settings.image:"DOS622.IMG");duration=0;}
    if(*settings.command&&!settings.system)snprintf(auto_command,sizeof(auto_command),"%s\r%s",settings.command,settings.terminal?"":"exit\r");
   }
+#ifdef DB_COMPAT
+  else if(!strcmp(argv[i],"--ems")&&i+1<argc){const char*v=argv[++i];if(strcmp(v,"on")&&strcmp(v,"off"))return -1;compat_ems=!strcmp(v,"on");}
+  else if(!strcmp(argv[i],"--sound")&&i+1<argc){const char*v=argv[++i];if(strcmp(v,"sbpro2")&&strcmp(v,"sb16")&&strcmp(v,"off"))return -1;compat_sound=!strcmp(v,"sb16")?2:!strcmp(v,"sbpro2");}
+  else if(!strcmp(argv[i],"--speaker")&&i+1<argc){const char*v=argv[++i];if(strcmp(v,"on")&&strcmp(v,"off"))return -1;compat_speaker=!strcmp(v,"on");}
+#endif
   else if(!strcmp(argv[i],"--snapshot")&&i+1<argc){if(strlen(argv[i+1])>=256)return -1;pc_display_screenshot_path(argv[++i]);}
   else if(!strcmp(argv[i],"--window"))settings.display=0;
 #ifdef DB_NETWORK
@@ -78,7 +107,22 @@ int db_arguments(int argc,char **argv){
   else if(!strcmp(argv[i],"--fullscreen"))settings.display=1;
   else if(!strcmp(argv[i],"--window-size")&&i+1<argc){const char *n=argv[++i];if(strlen(n)!=1||!strchr("012",*n))return -1;settings.size=*n-'0';}
   else if(!strcmp(argv[i],"--fps"))settings.fps=1;
-  else if(!strcmp(argv[i],"--memory")&&i+1<argc){const char *m=argv[++i];if(strlen(m)!=1||!strchr("1248",*m))return -1;memory_override=*m-'0';}
+  else if(!strcmp(argv[i],"--memory")&&i+1<argc){const char *m=argv[++i];char*end;unsigned long n=strtoul(m,&end,10);if(!*m||*end||!db_memory_valid(n,DB_GUEST_MAX_MB))return -1;memory_override=n;}
+#ifdef DB_EXPANDED
+  else if(!strcmp(argv[i],"--paged-jit")&&i+1<argc){const char*m=argv[++i];if(!strcmp(m,"on"))paged_jit=1;else if(!strcmp(m,"off"))paged_jit=0;else return -1;}
+  else if(!strcmp(argv[i],"--serial")&&i+1<argc){const char*m=argv[++i];if(!strcmp(m,"off"))serial_mode=0;else if(!strcmp(m,"tcp"))serial_mode=1;else if(!strcmp(m,"modem"))serial_mode=2;else if(!strcmp(m,"device"))serial_mode=3;else return -1;}
+  else if(!strcmp(argv[i],"--serial-host")&&i+1<argc){const char*m=argv[++i];if(strlen(m)>=sizeof(serial_address))return -1;strcpy(serial_address,m);}
+  else if(!strcmp(argv[i],"--serial-port")&&i+1<argc){char*end;const char*m=argv[++i];unsigned long n=strtoul(m,&end,10);if(!*m||*end||!n||n>65535)return -1;serial_port=n;}
+  else if(!strcmp(argv[i],"--serial-device")&&i+1<argc){const char*m=argv[++i];if(strlen(m)>=sizeof(serial_physical.device))return -1;strcpy(serial_physical.device,m);}
+  else if(!strcmp(argv[i],"--serial-line")&&i+1<argc){char end;if(sscanf(argv[++i],"%u,%u,%u,%u,%u,%u%c",&serial_physical.unit,&serial_physical.baud,&serial_physical.bits,&serial_physical.parity,&serial_physical.stop,&serial_physical.flow,&end)!=6)return -1;}
+  else if(!strcmp(argv[i],"--cycle-mode")&&i+1<argc){const char*m=argv[++i];if(!strcmp(m,"fixed"))cycle_mode=0;else if(!strcmp(m,"auto"))cycle_mode=1;else if(!strcmp(m,"max"))cycle_mode=2;else return -1;}
+  else if(!strcmp(argv[i],"--joystick")&&i+1<argc){const char*m=argv[++i];if(!strcmp(m,"off"))joystick_enabled=0;else if(!strcmp(m,"2axis"))joystick_enabled=1;else return -1;}
+  else if(!strcmp(argv[i],"--joy-buttons")&&i+1<argc){const char*m=argv[++i];if(strlen(m)!=1||*m<'1'||*m>'6')return -1;joystick_buttons=*m-'0';}
+  else if(!strcmp(argv[i],"--joy-keys")&&i+1<argc){char end;if(sscanf(argv[++i],"%u,%u,%u,%u%c",&joystick_keys[0],&joystick_keys[1],&joystick_keys[2],&joystick_keys[3],&end)!=4||!db_joy_config_valid(joystick_buttons,joystick_keys))return -1;}
+  else if(!strcmp(argv[i],"--extra-sound")&&i+1<argc){static const char*names[]={"off","gus","cms","tandy"};const char*m=argv[++i];for(extra_sound=0;extra_sound<4&&strcmp(m,names[extra_sound]);extra_sound++){}if(extra_sound==4)return -1;}
+  else if(!strcmp(argv[i],"--cpu")&&i+1<argc){const char*m=argv[++i];if(!strcmp(m,"386"))cpu_model=DB_CPU_386;else if(!strcmp(m,"486"))cpu_model=DB_CPU_486;else if(!strcmp(m,"pentium"))cpu_model=DB_CPU_PENTIUM;else return -1;}
+  else if((!strcmp(argv[i],"--vcpi")||!strcmp(argv[i],"--umb"))&&i+1<argc){unsigned bit=!strcmp(argv[i],"--vcpi")?1:2;const char*m=argv[++i];if(!strcmp(m,"on"))memory_services|=bit;else if(!strcmp(m,"off"))memory_services&=~bit;else return -1;}
+#endif
   else if(!strcmp(argv[i],"--monochrome")&&i+1<argc){static const char*names[]={"white","amber","green","paperwhite"};const char*m=argv[++i];for(monochrome=0;monochrome<4&&strcmp(m,names[monochrome]);monochrome++){}if(monochrome==4)return -1;}
   else if(!strcmp(argv[i],"--machine")&&i+1<argc){
    static const char*names[]={"vga","ega","cga","s3","tandy","pcjr","hercules"};unsigned n;const char*m=argv[++i];
@@ -154,6 +198,17 @@ int db_arguments(int argc,char **argv){
  if(test_ms){duration=test_ms;if(test_ms>4500)wall_limit_us=test_ms*20000u;}
  if(machine_override>=0){settings.machine=machine_override;configured=1;}
  if(memory_override){settings.memory=memory_override;configured=1;}
+ if(!pc_options_valid(settings.memory,settings.machine,settings.cycles)){puts("Unsupported guest RAM / cycles for this runtime");return -1;}
+#ifdef DB_COMPAT
+#ifdef DB_EXPANDED
+ if(!db_serial_config_valid(&serial_physical)){puts("Invalid physical serial settings");return -1;}
+ if(serial_mode==3&&settings.midi&&!strcmp(serial_physical.device,"serial.device")){puts("Physical serial.device cannot share the built-in port with CAMD MIDI; disable MIDI for this program");return -1;}
+ if(serial_mode&&(settings.system||*boot_name||*hdd_name)){puts("COM1 transport currently requires embedded DOS");return -1;}
+ if(extra_sound>=2&&compat_sound){puts("CMS and Tandy require Sound Blaster off (I/O resources overlap)");return -1;}
+ if(extra_sound==1&&settings.machine!=0&&settings.machine!=1&&settings.machine!=3){puts("GUS requires EGA/VGA/S3");return -1;}
+#endif
+ if((memory_services&1)&&!compat_ems){puts("VCPI requires EMS");return -1;}
+#endif
  if(!configured&&!testmode&&!auto_command[0]&&!boot_name[0]&&!hdd_name[0]){puts("PC prototype requires --command; use the Shell build for an interactive prompt.");return -1;}
  return 1;
 }
@@ -173,6 +228,9 @@ static int poll_wait(void){
 static ULONG value(unsigned field){return ad_get(shared+MB_REPLY,MB_RESULT+field*4);}
 static void publish(unsigned offset,ULONG n){ad_put(shared,offset,n);syncio->push(shared+offset,4,NULL);syncio->barrier(NULL);}
 static ULONG receive(unsigned offset){syncio->pull(shared+offset,4,NULL);return ad_get(shared,offset);}
+#ifdef DB_EXPANDED
+#include "joystick_host.h"
+#endif
 static int input(const UBYTE *p,unsigned n){
  return db_stream_input(shared,syncio,p,n);
 }
@@ -198,6 +256,7 @@ static int drain(struct DbWindow *console){
 #endif
 /* Bounded session I/O timing: saturated totals rather than wrap after 71 min. */
 static ULONG fs_read_us,fs_write_us,fs_other_us,fs_max_us,fs_timed_calls;
+static struct {ULONG calls,total,max;} fs_operations[FS_CD_READ+1];
 static ULONG add_us(ULONG a,ULONG b){return b>~(ULONG)0-a?~(ULONG)0:a+b;}
 static int timed_fs_service(void){
  ULONG op,start,elapsed;int ok;
@@ -208,13 +267,14 @@ static int timed_fs_service(void){
  if(op==FS_DISK_READ||op==FS_READ)fs_read_us=add_us(fs_read_us,elapsed);
  else if(op==FS_DISK_WRITE||op==FS_WRITE)fs_write_us=add_us(fs_write_us,elapsed);
  else fs_other_us=add_us(fs_other_us,elapsed);
+ if(op<=FS_CD_READ){fs_operations[op].calls++;fs_operations[op].total=add_us(fs_operations[op].total,elapsed);if(elapsed>fs_operations[op].max)fs_operations[op].max=elapsed;}
  if(elapsed>fs_max_us){fs_max_us=elapsed;}
  fs_timed_calls++;
  return ok;
 }
 static int run(struct DbWindow *console){
  ULONG start=us(),stop_time=0;int sent=0,stopping=0,forced=0,transport_ok=1;
- fs_read_us=fs_write_us=fs_other_us=fs_max_us=fs_timed_calls=0;
+ fs_read_us=fs_write_us=fs_other_us=fs_max_us=fs_timed_calls=0;memset(fs_operations,0,sizeof(fs_operations));
  ULONG token=(sequence+1)^ad_get(shared,ZZ_CONTROL);UBYTE keys[64];
 #ifdef DB_VIDEO_TRACE
  trace_seen=0;puts("VIDEO_TRACE diagnostic build; timings are not benchmarks");fflush(stdout);
@@ -232,11 +292,21 @@ static int run(struct DbWindow *console){
 #ifdef DB_VIDEO_TRACE
   if(trace_enabled&&!pc_display_locked()&&!pc_display_pending())video_trace_poll();
 #endif
+#ifdef DB_EXPANDED
+  if(!stopping&&!pc_display_locked()&&!pc_display_pending()){
+   unsigned next;joystick_poll();if(!db_serial_host_poll(us())){transport_ok=0;want_stop=1;}
+   next=pc_cycle_sample(&cycle_control,us(),receive(PC_GUEST_TICKS),ad_get(shared,PC_CYCLE_REQUEST));
+   if(next)publish(PC_CYCLE_REQUEST,next);
+  }
+#endif
   if(receive(PC_CONSOLE_WAIT)&&!pc_display_locked()&&!pc_display_pending())pc_display_console(1);
   if(!stopping){int display_result=pc_display_service();if(display_result<=0){if(!display_result)transport_ok=0;want_stop=1;}}
 #ifdef DB_VIDEO_TRACE
   {int debug_result=video_debug_service(stopping);
    if(debug_result<=0){want_stop=1;if(debug_result<0)transport_ok=0;}}
+#endif
+#ifdef DB_COMPAT
+  if(!db_audio_host_service()){transport_ok=0;want_stop=1;}
 #endif
   if(!(midi_result=db_midi_host_service())){transport_ok=0;want_stop=1;}
 #ifdef DB_NETWORK
@@ -266,7 +336,11 @@ static int run(struct DbWindow *console){
    if(count&&!input(keys,count)){transport_ok=0;want_stop=1;}
   }
   syncio->pull(shared+MB_REPLY,320,NULL);ack=ad_get(shared+MB_REPLY,MB_ACK);error=ad_get(shared+MB_REPLY,MB_ERROR);
-  if(ack==sequence&&(midi_result!=2||stopping||!transport_ok)&&(!pc_display_pending()||stopping||!transport_ok)){
+  if(ack==sequence&&
+#ifdef DB_COMPAT
+     (!db_audio_host_pending()||stopping||!transport_ok)&&
+#endif
+(midi_result!=2||stopping||!transport_ok)&&(!pc_display_pending()||stopping||!transport_ok)){
    int ok=transport_ok&&ad_get(shared+MB_REPLY,68)==(token^ZZ_XOR);
 #ifdef DB_VIDEO_TRACE
    if(trace_enabled&&!pc_display_locked()&&!pc_display_pending())video_trace_poll();
@@ -325,6 +399,21 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected){
  timer=(struct timerequest *)CreateIORequest(port,sizeof(*timer));if(!timer)goto done;
  if(OpenDevice(TIMERNAME,UNIT_MICROHZ,(struct IORequest *)timer,0))goto done;
  opened=1;TimerBase=timer->tr_node.io_Device;
+#ifdef DB_EXPANDED
+ if(!db_serial_host_open(base,io,serial_mode,serial_address,serial_port,&serial_physical)){puts("Cannot open COM1 transport");goto done;}
+ if(!joystick_open()){puts("Joystick requires lowlevel.library V40");goto done;}
+ publish(PC_EXTRA_SOUND,extra_sound);publish(PC_PAGED_JIT,paged_jit);
+ printf("EXPANDED cpu=%u memory_services=%u joystick=%u extra_sound=%u cycle_mode=%u serial=%u paged_jit=%u\n",cpu_model,memory_services,joystick_enabled,extra_sound,cycle_mode,serial_mode,paged_jit);
+#endif
+#ifdef DB_COMPAT
+ if(!db_audio_host_open(base,io,compat_sound||compat_speaker
+#ifdef DB_EXPANDED
+ ||extra_sound
+#endif
+ )){puts("Cannot open AHI unit 0; use --sound off --speaker off");goto done;}
+ publish(PC_AUDIO_MODE,compat_sound|(compat_speaker?4:0));publish(PC_AUDIO_EMS,compat_ems);
+ printf("COMPAT ems=%u xms=1 sound=%s speaker=%u\n",compat_ems,compat_sound==2?"SB16 A220 I7 D1 H5 T6, OPL3":compat_sound?"SBPro2 A220 I7 D1 T4, OPL3":"off",compat_speaker);
+#endif
  poll_timer=timer;wait_calls=wait_us=wait_max=0;
  {unsigned j;for(j=0;j<FS_NAME_SIZE;j++)shared[PC_BOOT_NAME+j]=boot_name[j];syncio->push(shared+PC_BOOT_NAME,FS_NAME_SIZE,NULL);}
  {unsigned j;for(j=0;j<FS_NAME_SIZE;j++)shared[PC_HDD_NAME+j]=hdd_name[j];syncio->push(shared+PC_HDD_NAME,FS_NAME_SIZE,NULL);}
@@ -335,8 +424,12 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected){
  pc_display_mode(settings.display);pc_display_size(settings.size);
  printf("DISPLAY_CONFIG mode=%s fps=%u system=%s\n",settings.display?"fullscreen":"window",settings.fps,(*hdd_name||*boot_name)?"booted DOS":"embedded DOS 5");
  publish(PC_OPTIONS,0);publish(PC_KEY_WRITE,0);publish(PC_KEY_READ,0);publish(PC_MOUSE_WRITE,0);publish(PC_MOUSE_READ,0);publish(PC_CONSOLE_WAIT,0);
+ publish(PC_HARDWARE_MAGIC,PC_HARDWARE_VERSION);publish(PC_CPU_MODEL,cpu_model);publish(PC_MEMORY_SERVICES,memory_services);
  if(configured){publish(PC_OPTIONS+4,settings.memory);publish(PC_OPTIONS+8,settings.machine);publish(PC_OPTIONS+12,settings.cycles);publish(PC_OPTIONS+16,monochrome);publish(PC_OPTIONS,PC_OPTIONS_MAGIC);printf("SETTINGS memory_mb=%u machine=%u cycles=%u live=%u\n",settings.memory,settings.machine,settings.cycles,settings.live);}
  publish(PC_CYCLE_REQUEST,configured?settings.cycles:3000);publish(PC_CYCLE_APPLIED,0);
+#ifdef DB_EXPANDED
+ publish(PC_GUEST_TICKS,0);pc_cycle_init(&cycle_control,cycle_mode,configured?settings.cycles:3000);
+#endif
  publish(PC_DURATION,duration);publish(PC_DONE,0);
  publish(PC_PROFILE,profiling);publish(PC_PROFILE+4,0);
 #ifdef DB_VIDEO_TRACE
@@ -361,6 +454,12 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected){
 #endif
  rc=run(console);
 done:
+#ifdef DB_EXPANDED
+ joystick_close();db_serial_host_close();
+#endif
+#ifdef DB_COMPAT
+ db_audio_host_close();
+#endif
 #ifdef DB_NETWORK
  dn_control_close();db_net_host_close();
 #endif
@@ -371,6 +470,9 @@ done:
  video_debug_close();
 #endif
  db_midi_host_close();db_cd_host_close();printf("FILES_TIME calls=%u read_us=%u write_us=%u other_us=%u max_us=%u (totals saturate at 4294967295)\n",fs_timed_calls,fs_read_us,fs_write_us,fs_other_us,fs_max_us);
+ {unsigned op;static const char*names[]={"invalid","open","create","close","read","write","seek","stat","list","delete","rename","space","mkdir","rmdir","testdir","disk_open","disk_close","disk_read","disk_write","cd_read"};
+  for(op=0;op<=FS_CD_READ;op++)if(fs_operations[op].calls)printf("FILES_OP op=%s calls=%u total_us=%u max_us=%u\n",names[op],fs_operations[op].calls,fs_operations[op].total,fs_operations[op].max);
+ }
  db_fs_close();
  if(pc_display_locked()){puts("Display lock retained for reset");}
  deferred_console=console;

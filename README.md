@@ -13,9 +13,21 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 
 ## Development builds
 
-Download the [0.19.12 RC1 update](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.19.12-rc1)
-for an existing installation. This prerelease includes the red shortcut labels and
-yellow welcome title; physical screenshot and lifecycle checks remain pending.
+**Current development: 0.22.2-dev.** The launcher includes COM1 setup,
+experimental physical serial, a live joystick tester and 1–6 button choices.
+Net-JIT combines networking with ARM JIT, EMS and Sound Blaster. This pass adds
+bounded file read-ahead, mouse-motion coalescing and batched interpreter fallback
+for the opt-in paging experiment. Existing profiles retain their settings.
+
+[Current development update](artifacts/development/runtime-0.22.2) ·
+[I/O and joystick specifications](docs/amiga-dosbox-io.md) ·
+[Optimisation measurements](docs/amiga-dosbox-file-read-optimisation.md).
+Expanded supports up to 32 MiB guest RAM in a 64 MiB owned allocation;
+Compat and Net-JIT use 32 MiB allocations. Paging JIT remains off by default.
+
+The earlier packaged [0.19.12 RC1 update](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.19.12-rc1)
+remains available for existing installations. It predates the I/O and
+network/JIT features described here.
 
 This is development software. Builds and research artifacts are kept separately:
 
@@ -25,7 +37,7 @@ This is development software. Builds and research artifacts are kept separately:
   Screenshot capture and footer hover still need physical validation; see the [validation record](artifacts/development/launcher-0.19.12/validation.md).
   The DOS welcome title is yellow and lists Ctrl+F5.
   The included screenshot-enabled runtimes are test candidates. Requires the existing [0.19.7 support files](artifacts/development/launcher-0.19.7).
-- [TCP/IP + IPX interpreter runtime](artifacts/development/network-0.18.0):
+- [Interpreter network fallback](artifacts/development/network-0.18.0):
   optional guest networking through the existing Amiga connection.
 - [Console synchronization candidate](artifacts/experiments/console-sync):
   tested in Amiga RAM; not a replacement for the measured default runtime.
@@ -42,7 +54,7 @@ Disk formats: [IMG versus VHD](docs/amiga-dosbox-disk-images.md).
 
 ## Features
 
-Features below span the current **0.19.12-dev launcher** and its separate DOS,
+Features below span the **0.22.2-dev launcher source** and its separate DOS,
 Windows, network and developer runtimes. Experimental features are labelled;
 not every combination is supported.
 
@@ -52,7 +64,8 @@ not every combination is supported.
 | Program library | Up to 256 profiles; All, Games, Applications and OS lists; add/rename entries, confirmed deletion of dedicated game/app folders, protected OS/shared disks, category tags and per-program settings. Up/Down selection and letter/number jump in the focused list. |
 | DOS environments | Embedded DOSBox DOS 5 without installation disks; optional booted MS-DOS 6.22 from the user's installation. |
 | Execution | 386-class, 32-bit x86 emulation; ARMv7 dynamic recompiler with 4 MiB code cache for DOS; separate interpreter and paging-guarded Windows builds. |
-| CPU and memory | 1/2/4/8 MiB guest RAM; 1000/3000/6000 cycle presets; exact 500–10000 cycle overrides and live adjustment; timed tests or normal sessions. |
+| Guest FPU — experimental | [Portable x87](docs/amiga-dosbox-x87.md) in the EMS/Sound Blaster Compat runtime; A9 VFP double-precision helpers, no 68k FPU requirement. Not full 80-bit precision. |
+| CPU and memory | 386/486/Pentium models; 1–32 MiB guest RAM; fixed, Auto or Max cycles; live adjustment and timed/normal sessions. Expanded runtime required for the new options; limits are not hardware-speed claims. |
 | Windows/protected mode | Windows for Workgroups 3.11 tested; 386 paging, nested page-fault recovery, sparse mappings, A20 handling and BIOS/VGA ROM write protection. |
 | DOS terminal | Open terminal, run a command or batch file, text/background colours and a versioned welcome screen. |
 | Startup files | AUTOEXEC.BAT and CONFIG.SYS editors; Default/Edited/File selection, import/export and recovery of temporary booted-DOS edits. |
@@ -63,26 +76,33 @@ not every combination is supported.
 | Presentation | Normal or Adaptive frame presentation; optional ARM-drawn FPS counter. |
 | Scanlines and colour | Built-in ZZDosBox ARM software scanlines: Off/Classic/Soft/Gradient in fullscreen. **Scanlines and Show FPS cannot be used together**; turn Show FPS off to enable the selector. No external scanline utility required; Hercules White/Amber/Green/Paperwhite palettes; contextual settings help. |
 | Keyboard and mouse | DOS INT33/BIOS PS/2 mouse, three buttons, scaled coordinates and button release on focus loss; Alt+Return display switching, Ctrl+minus/plus cycles, F10 exit. |
-| Shared files | Writable Amiga drawer as C:, nested directories, DOS 8.3 names and persistent game/application files. |
+| Shared files | Writable Amiga drawer as C:, nested directories, DOS 8.3 names, synchronous writes and bounded ARM read-ahead for small read-only file requests. |
 | Disk images | BIOS floppy/hard-disk boot; select, mount, open and eject raw FAT images in Workbench. |
 | Create hard disk | 32/64/128/256 MiB raw FAT16 `.IMG`; startup files and OS library entry; DOSBox DOS 5 by default, optional MS-DOS 6.22 from installed files. |
 | Image-backed DOS 5 | Automatically mount the selected image as C: and eject after the session. |
 | CD-ROM | Read-only ISO9660 or mounted Amiga data CD; original ZZDOSCD.SYS gateway for booted DOS with the user's MSCDEX. |
 | External MIDI | MT-32 intelligent MPU-401 or General MIDI UART through CAMD; output selection and SysEx transport. |
-| Driver discovery | CAMD, AHI and ZZ9000AX detection; this does not provide PCM playback. |
+| Sound Blaster — development build | Selectable 8-bit SB Pro 2 or 16-bit SB16, OPL3 and independent PC speaker; 32 kHz stereo through AHI unit 0. |
+| EMS/XMS — development build | Shared guest-memory allocation, EMS 4.0 board mode and XMS for embedded DOS; per-program settings. |
+| Expanded devices — candidate | Optional VCPI/UMB, two-axis joystick, GUS/CMS/Tandy audio and outbound COM1 TCP/basic modem. Experimental physical COM1 adds built-in/USB/expansion driver selection, baud/framing and hardware flow control. [Constraints and validation](docs/amiga-dosbox-expanded-hardware.md). |
+| I/O — COM1 | Raw TCP, basic outbound modem, or experimental physical serial; built-in/USB/expansion device and unit, baud, framing and driver-managed flow control. [I/O specifications](docs/amiga-dosbox-io.md). |
+| Joystick | Amiga port 2; DOS two-axis/two-button gameport, 1–6 physical buttons, extra-button key bindings and live direction/button tester. |
+| Driver discovery | CAMD, AHI, ZZ9000AX and Poseidon/registered USB serial-driver detection. Driver availability does not prove a connected device. |
 | TCP/IP networking — experimental | NE2000/libslirp IPv4 NAT over Roadshow; DHCP/manual addressing, subnet, gateway, DNS, MTU, hostname, ping, DNS lookup, lease controls, counters, logs and cooperative disconnect. |
 | IPX networking — experimental | DOSBox-compatible IPX-over-UDP client; relay address/port, connect/status/ping/disconnect. Transport verified on hardware; multiplayer game compatibility remains untested. |
 | Compatibility browser | Offline searchable DOSBox community reports, version/result tables and game details/comments in a reading pane. These are upstream reports, not ZZDosBox certification. |
 | Configuration | Developer → dosbox.conf editor with validated supported overrides, import/export and defaults; unsupported keys/combinations are reported. |
 | Developer tools — experimental | Trace logs, cooperative frame checkpoints, profiling and handoff/poll controls; guest-RAM hex/ASCII monitor, 8/16/32-bit edits with undo, value scanner/refinement and 16/32-bit x86 disassembly. Separate diagnostic runtimes required. |
 
-**Current limits:** PCM sound-card/AHI/HDMI playback, joystick input, emulator
-save states, x87 and 64-bit x86 guests are not implemented. Embedded DOS does
+**Current limits:** Sound Blaster playback in booted DOS/Windows, verified HDMI
+audio, emulator save states and 64-bit x86 guests are not implemented. Embedded DOS does
 not load CONFIG.SYS drivers. Windows networking, guest OpenGL/Direct3D drivers,
 GLSL and FPGA 3D acceleration are not provided. Physical drag-resizing and
 higher-resolution Windows display drivers still need testing.
 
+[EMS and Sound Blaster setup](docs/amiga-dosbox-memory-audio.md) ·
 [Full feature and compatibility notes](docs/features.md) ·
+[I/O and joystick](docs/amiga-dosbox-io.md) ·
 [Configuration reference](docs/amiga-dosbox-conf.md) ·
 [Developer memory tools](docs/amiga-dosbox-memory-tools.md)
 
@@ -90,9 +110,8 @@ higher-resolution Windows display drivers still need testing.
 
 ## Launcher screenshots
 
-Captured on the Amiga: Load program uses **0.19.12-dev**, About uses
-**0.19.10-dev**; other pages
-show **0.19.8-dev**. Expand a page to view it.
+All twelve launcher pages below show **0.22.2-dev**, captured on the Amiga.
+Expand a page to view it.
 
 <details open>
 <summary>Load program</summary>
@@ -137,6 +156,20 @@ show **0.19.8-dev**. Expand a page to view it.
 </details>
 
 <details>
+<summary>I/O — COM1</summary>
+
+![ZZDosBox — COM1 and experimental physical serial](docs/screenshots/launcher/io.png)
+
+</details>
+
+<details>
+<summary>Joystick</summary>
+
+![ZZDosBox — joystick configuration and live tester](docs/screenshots/launcher/joystick.png)
+
+</details>
+
+<details>
 <summary>Disks</summary>
 
 ![ZZDosBox — Disks](docs/screenshots/launcher/disks.png)
@@ -170,7 +203,7 @@ show **0.19.8-dev**. Expand a page to view it.
 |---|---|
 | Platform | AmigaOS 3.x / Zorro III ZZ9000; physical development on A4000TX, TF4060/68060, AmigaOS 3.2.3, XX19c / XACP 1.7. Other configurations require validation. |
 | Processor split | One application-owned 32-bit Cortex-A9 Core1 worker, nominal 666 MHz; 68K provides AmigaOS files, input, MUI, CAMD, sockets and display coordination. |
-| Memory | 32 MiB contiguous owned ZZ9000 block for worker/guest/buffers; 1–8 MiB emulated PC RAM; 4 MiB translated-code cache in the DOS JIT build. |
+| Memory | Compat/Net-JIT: 32 MiB owned ZZ9000 allocation, 1–8 MiB guest RAM. Expanded: 64 MiB allocation, up to 32 MiB guest RAM. ARM JIT cache: 4 MiB. File read-ahead: up to 64 KiB inside the private heap. |
 | Execution protocol | Xanxi's XACP/PicoDrive-style application model, runtime address mapping, cache/MMU ownership checks and processor-state restoration. |
 | JIT | x86-to-ARMv7 translation, cached blocks and instruction-cache synchronization; interpreter fallback where required, including paging in the guarded Windows build. |
 | Direct display | ARM writes owned ZZ9000 bitmaps; fullscreen uses acknowledged buffer handoffs, Workbench uses a clipped P96 blit. Frame pixels need not be read back to the 68K. |
@@ -206,9 +239,13 @@ Native matrix/TinyGL results are not DOS-game speedups. See the linked
 
 TCP/IP and IPX share the Amiga's existing Roadshow route; they do not take over
 its Ethernet hardware or change its address. TCP/IP uses NE2000/libslirp NAT;
-IPX uses a compatible UDP relay. Both currently require the separate interpreter
-runtime and embedded DOS with Direct/Normal presentation. DHCP/manual IPv4,
-DNS, ping, IPX transport and clean disconnect passed bounded physical tests.
+IPX uses a compatible UDP relay. In the current development build, auto/dynamic core selects
+`ZZDosBox-Net-JIT`, combining networking with ARM JIT, EMS and Sound Blaster.
+Explicit normal core retains the interpreter fallback with EMS/audio off.
+Both require embedded DOS with Direct/Normal presentation and up to 8 MiB
+guest RAM. Expanded devices and Windows networking remain separate.
+DHCP/HTTP and IPX exchanges with audio passed bounded physical tests;
+multiplayer games remain untested. [Integration results](docs/amiga-dosbox-runtime-integration.md).
 Release clears saved guest lease configuration; it does not release the Amiga's
 IP address or send an on-wire DHCP release.
 
@@ -237,24 +274,27 @@ does not establish a minimum usable CPU speed or equivalent benchmark results.
 | Zorro III Amiga + ZZ9000 | 68020 instruction target; physically validated with a 68060 | 68K host and Cortex-A9 worker | Yes |
 | AmigaOS | Tested on 3.2.3; `workbench.library` v44+, `asl.library` v38+, `graphics.library` v39+, `keymap.library` v37+ | Workbench, requesters, graphics, Exec/DOS/Intuition/Expansion and timer.device | Yes |
 | ZZ9000 firmware / XACP | Tested XX19c / XACP 1.7 | ARM execution and display handoff | Yes |
-| ZZ9000 Fast RAM | Card's 256 MB Zorro III RAM enabled; 32 MB contiguous free worker block, plus OS/display memory | Worker code, guest RAM and buffers | Yes |
+| ZZ9000 Fast RAM | Card's 256 MB Zorro III RAM enabled; 32 MiB contiguous free worker block, or 64 MiB for Expanded, plus OS/display memory | Worker code, guest RAM and buffers | Yes |
 | Picasso96 and ZZ9000 RTG driver | `Picasso96API.library` v2+; supported 32-bit Workbench and 640×480 fullscreen mode | Window and fullscreen display | Yes |
 | MUI | 3.8+; standard classes only | Native launcher | Launcher only |
 | Writable application storage | Space for profiles, programs and disk images; 64 KiB application stack | Settings and persistent files | Yes |
 
-Guest PC RAM is selectable as **1, 2, 4 or 8 MB**, inside the worker's 32 MB
-allocation. Other 68K configurations and firmware versions remain unverified.
+Guest PC RAM is **1–8 MiB**, or up to **32 MiB with Expanded**, included in
+the allocation above. Other 68K configurations and firmware versions remain unverified.
 
 ### Optional runtime components
 
 | Dependency | Version / configuration | Provides | Required when |
 |---|---|---|---|
 | MultiView / AmigaGuide datatype | Standard AmigaOS viewer | Offline Network guide and log viewing | Opening help/logs only |
-| Roadshow | Running TCP/IP stack with `bsdsocket.library` and a working route | Host sockets for IPv4 NAT or IPX UDP | Guest networking only |
+| Roadshow | Running TCP/IP stack with `bsdsocket.library` and a working route | IPv4 NAT, IPX UDP and COM1 TCP/modem sockets | Network or TCP serial mode |
 | NE2000 packet driver + mTCP | Pinned guest utilities, staged separately | DOS packet driver, DHCP, ping and DNS tools | TCP/IP networking only |
 | CAMD | `camd.library` v37+, working output driver and external MIDI instrument | MT-32 / General MIDI output | External MIDI is selected |
-| AHI | v4+ supported by the detector | Driver discovery only | Using the audio-driver checker; does not enable PCM playback |
-| ZZ9000AX | Installed AHI modes | Optional mode discovery | Using AX detection; not needed to run the emulator |
+| AHI | v4+ with unit 0 configured | Optional audio | Required for compatibility-runtime Sound Blaster/OPL and PC speaker playback |
+| ZZ9000AX | Installed AHI modes | Optional audio output selected through AHI preferences | Not required; no direct HDMI-audio path |
+| lowlevel.library | V40+ | Amiga port 2 joystick and live tester | Joystick input/test |
+| Serial device | Installed IOExtSer-compatible device and unit | Built-in, USB or expansion COM1 transport | Experimental physical serial |
+| Poseidon + USB serial driver | Detected registration; adapter/unit still needs testing | Enables the USB shortcut | USB serial selection |
 | diskimage.device + DiskImageCtrl + fat95 | Tested device 37.7; `L:fat95` | Workbench mounting and booted-DOS startup-file editing | Using those disk-image tools; direct BIOS image boot does not need them |
 | MS-DOS 6.22 | User-supplied media | Booted Microsoft DOS | Choosing MS-DOS instead of embedded DOS |
 | MSCDEX.EXE | User-supplied; paired with included `ZZDOSCD.SYS` | CD access from booted MS-DOS | Using that DOS CD driver |
@@ -323,7 +363,9 @@ at `/work` in the ARM container:
 ```sh
 python3 scripts/restore_build_inputs.py --pic-vfp-build
 make test-host
-make build-current
+make build-current       # Compat: DOS, EMS and Sound Blaster
+make build-expanded      # Extended devices/RAM and optional paged JIT
+make build-network-jit   # TCP/IP or IPX with JIT and audio
 python3 scripts/build_dosbox_launcher.py
 ```
 
@@ -331,7 +373,7 @@ For instruction-model checks, use a Python environment containing Unicorn:
 
 ```sh
 /path/to/python-with-unicorn tests/amiga/dosbox/check_dynrec_arm.py \
-  --out .context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp
+  --out .context/amiga/dosbox-dynrec-4m-neon-pipe-scan-present-adapters-pic-vfp-compat-x87-read-ahead
 ```
 
 See [TinyGL experiment reproduction](docs/amiga-tinygl-compiler-experiment.md#reproduction)
@@ -404,6 +446,11 @@ are single runs; the latest VFP result uses two runs per build.
 - **Compiler selection — retain O2:** O3 and automatic vectorisation gave **about 14% lower original-fill throughput**. Native TinyGL, three runs per build. [Report](docs/amiga-tinygl-compiler-experiment.md)
 - **Scalar rejection + NEON — skip hidden span prefixes:** **+47.30% mostly hidden fill / +12.79% mixed fill / +2.89% visible fill**, with about **3% lower small-triangle throughput**. Dedicated native builds, three runs each; experimental. [Report](docs/amiga-tinygl-rejection-experiment.md)
 - **Scalar/NEON triangle dispatch + unguarded packing:** **+28.59% visible fill / +49.00% hidden fill / +33.37% mixed colour fill**; small geometry/clipping within 1% of scalar. Mixed textured scenes **+5.20%**, pure textures unchanged. Native research only, three runs per build. [Report](docs/amiga-tinygl-packing-experiment.md)
+
+- **Filesystem mailbox reduction:** handle operations skip unused path publication and cache maintenance. **No isolated FPS gain claimed**. [Report](docs/amiga-dosbox-runtime-integration.md)
+- **ARM file read-ahead — batch small DOS reads:** **98.2% less diagnostic wall time** on SD032G: 18,671 → 336 ms; read RPCs 8,198 → 8 (**99.90% fewer**). Original small-read/coherence test, not game FPS. [Measurements](docs/amiga-dosbox-file-read-optimisation.md)
+- **Mouse motion coalescing:** combine consecutive movement samples while preserving clicks/focus transitions. **Latency/FPS gain not measured**; model and native checks passed. [Details](docs/amiga-dosbox-file-read-optimisation.md)
+- **Paged-JIT interpreter batching:** up to 32-cycle fallback bursts remove the earlier Windows test-budget failure. Still **12.4% slower than normal paging** in the matched startup run; remains opt-in. [Comparison](docs/amiga-dosbox-file-read-optimisation.md)
 
 These techniques use the existing XACP application/host execution model;
 none required a firmware change. Future firmware work should preserve the

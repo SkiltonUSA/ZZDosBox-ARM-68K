@@ -4,7 +4,7 @@
 Instruction model + native NAT, not proof of Amiga/Roadshow operation.
 Inputs are private upstream downloads; no third-party binary is committed.
 """
-import argparse,ctypes,http.server,ipaddress,re,sys,threading,zipfile
+import argparse,ctypes,http.server,ipaddress,re,sys,threading,zipfile,subprocess
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[4]
 sys.path.insert(0,str(ROOT/'tests/amiga/dosbox'))
@@ -15,7 +15,14 @@ parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--http-bind',help='Optional local IPv4 address for a bounded in-process HTTP test')
 parser.add_argument('--manual',action='store_true',help='Exercise manual IPv4 without running DHCP')
 parser.add_argument('--custom-subnet',action='store_true',help='Exercise configured NAT on 192.168.77.0/24')
+parser.add_argument('--build',type=Path,help='Linked runtime build directory')
+parser.add_argument('--audio',action='store_true',help='Exercise EMS, SB16 and sustained OPL during HTTP')
 args=parser.parse_args()
+if args.build:model.OUT=args.build.resolve()
+if args.audio:
+ subprocess.run(['clang','--target=i386-none-elf','-c',str(Path(__file__).with_name('opl_hold.S')),'-o',str(model.OUT/'opl_hold.o')],check=True)
+ subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x100','--oformat=binary',str(model.OUT/'opl_hold.o'),'-o',str(model.OUT/'OPLHOLD.COM')],check=True)
+
 payload=bytes(i%251 for i in range(4099))
 server=None
 if args.http_bind:
@@ -51,6 +58,11 @@ class Network:
   if server:
    self.files['HTGET.EXE']=htget
    self.keys+=('htget -o NET.BIN http://'+args.http_bind+':'+str(server.server_port)+'/fixture\r').encode()
+  if args.audio:
+   self.audio_mode=2;self.ems=1
+   for name in ('EMSTEST.COM','SB16TEST.COM','OPLHOLD.COM'):
+    self.files[name]=(model.OUT/name).read_bytes()
+   self.keys=b'emstest\rsb16test\roplhold\r'+self.keys
   self.keys+=b'exit\r'
   assert self.lib.zz_net_open(None)
  def service(self,u,base,put,get):
@@ -68,6 +80,8 @@ class Network:
    put(off,size);u.mem_write(base+off+4,self.buf.raw[:size]);put(0x18c0c0,(w+i+1)&0xffffffff);self.rx+=1
  def check(self,output,files):
   (work/'model-console.txt').write_bytes(output)
+  if args.audio:
+   assert b'EMS/XMS remap execution and shared allocation PASS' in output and b'SB16 DMA5 IRQ7 PASS' in output and b'OPL held' in output,output
   assert self.ip.encode() in files['MTCP.CFG'],(output,files)
   assert self.tx>=2 and self.rx>=2,(self.tx,self.rx)
   print('PASS mTCP', 'manual IPv4' if args.manual else 'DHCP', self.ip,'packets TX/RX',self.tx,self.rx,flush=True)

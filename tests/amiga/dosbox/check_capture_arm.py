@@ -11,7 +11,8 @@ ROOT=Path(__file__).resolve().parents[3]
 NEON='--neon' in sys.argv
 OUT=ROOT/('.context/amiga/dosbox-capture'+('-neon' if NEON else ''));OUT.mkdir(parents=True,exist_ok=True)
 (OUT/'probe.cpp').write_text('#include "capture.h"\nextern "C" bool probe(uint32_t*d,const uint8_t*s,unsigned w,unsigned b,const uint32_t*p){return pc_capture_row(d,s,w,b,p); }\n')
-cmd=['podman','--connection','nuflix-converter-root','exec','zzdosbox-toolchain']
+import os
+cmd=json.loads(os.environ.get('DOSBOX_ARM_COMMAND','["podman","--connection","nuflix-converter-root","exec","zzdosbox-toolchain"]'))
 def run(*args):subprocess.run([*cmd,*args],check=True)
 p='/work/'+str(OUT.relative_to(ROOT))+'/'
 extra=[]

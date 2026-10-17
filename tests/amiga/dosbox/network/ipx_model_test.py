@@ -7,7 +7,8 @@ ROOT=Path(__file__).resolve().parents[4]
 sys.path.insert(0,str(ROOT/'tests/amiga/dosbox'))
 import check_pc_arm as model
 model.OUT=ROOT/'.context/amiga/dosbox-pc-cache1024-network'
-p=argparse.ArgumentParser();p.add_argument('--bind',required=True);p.add_argument('--upstream',action='store_true');p.add_argument('--cancel',action='store_true');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--bind',required=True);p.add_argument('--upstream',action='store_true');p.add_argument('--cancel',action='store_true');p.add_argument('--build',type=Path);a=p.parse_args()
+if a.build:model.OUT=a.build.resolve()
 work=ROOT/'.context/amiga/dosbox-ipx';work.mkdir(parents=True,exist_ok=True)
 subprocess.run(['clang','--target=i386-none-elf','-c',str(ROOT/'tests/amiga/dosbox/network/ipx_guest.S'),'-o',str(work/'ipx_guest.o')],check=True)
 subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x100','--oformat=binary',str(work/'ipx_guest.o'),'-o',str(work/'IPXTEST.COM')],check=True)

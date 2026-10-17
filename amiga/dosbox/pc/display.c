@@ -51,13 +51,23 @@ static int display_switch(void);
 static void display_focus(void);
 static void screenshot_save(void);
 #include "windowed.h"
+#include "joystick_plan.h"
+static unsigned joystick_keys_sent=~0u;
+static int joystick_keys_pending;
+int pc_display_input_active(void){return window&&(window->Flags&WFLG_WINDOWACTIVE);}
+void pc_display_joystick_buttons(unsigned bits,unsigned count,const unsigned keys[4]){
+ unsigned i;unsigned char desired[128];if(bits==joystick_keys_sent&&!joystick_keys_pending)return;joystick_keys_pending=1;db_joy_key_state(desired,bits,count,keys);
+ for(i=0;i<128;i++)if(!db_key_source_set(&key_sources,i,desired[i],1,window_send_key,NULL))return;
+ joystick_keys_sent=bits;joystick_keys_pending=0;
+}
+
 #include "screenshot.h"
 #include "switch_view.h"
 void pc_display_size(unsigned preset){window_preset=preset<3?preset:1;}
 void pc_display_mode(int full){fullscreen=full!=0;}
 void pc_display_pipeline(int enabled){pipeline=enabled!=0;}
 int pc_display_open(volatile uint8_t *b,const struct ad_io *io){
- shared=b;syncio=io;active=complete=frames=0;host_mouse_buttons=host_mouse_events=host_mouse_down=host_mouse_up=0;
+ joystick_keys_sent=~0u;joystick_keys_pending=0;memset(&key_sources,0,sizeof(key_sources));shared=b;syncio=io;active=complete=frames=0;host_mouse_buttons=host_mouse_events=host_mouse_down=host_mouse_up=0;host_mouse_position=0;
  copy_start=copy_us=copy_max=0;
  overlaps=releases=0;locked_memory=NULL;pc_flow_init(&flow,pipeline?2:1);
  GfxBase=(struct GfxBase*)OpenLibrary("graphics.library",39);if(!GfxBase)return 0;

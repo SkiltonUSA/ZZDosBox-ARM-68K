@@ -53,19 +53,34 @@ pages:
  mov ecx,cr3
  mov cr3,ecx
  mov edi,0x181000
+ /* Repeat beyond the interpreter burst so this alias also reaches JIT. */
+ mov esi,64
+alias_0:
  call edi
  cmp eax,0x11111111
  jne fail
+ dec esi
+ jnz alias_0
  mov dword ptr [0x11604],0x191003
  mov ecx,cr3
  mov cr3,ecx
+ /* Repeat beyond the interpreter burst so this alias also reaches JIT. */
+ mov esi,64
+alias_1:
  call edi
  cmp eax,0x22222222
  jne fail
+ dec esi
+ jnz alias_1
  mov dword ptr [0x191001],0x33333333
+ /* Repeat beyond the interpreter burst so this alias also reaches JIT. */
+ mov esi,64
+alias_2:
  call edi
  cmp eax,0x33333333
  jne fail
+ dec esi
+ jnz alias_2
  /* Leave the BIOS text aperture unmapped at stop, like a paged OS may.
   * Teardown must not invoke a guest fault after its escape frame unwinds. */
  mov dword ptr [0x112e0],0

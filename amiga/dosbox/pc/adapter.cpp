@@ -1,5 +1,5 @@
 /* GPL-2.0-or-later. Frontend for upstream DOSBox CPU, DOS, BIOS and EGA/VGA.
- * Sound and serial devices are not connected in this milestone. */
+ * Optional PC sound, memory managers and serial devices use owned services. */
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
@@ -27,7 +27,9 @@ static void console_wait(int on){ad_put(db_shared(),PC_CONSOLE_WAIT,on);__asm__ 
 #else
 static void console_wait(int){}
 #endif
-static uint8_t ram[8*1024*1024];
+#include "capabilities.h"
+static uint8_t ram[DB_GUEST_MAX_MB*1024*1024];
+unsigned db_cpu_model=DB_CPU_386,db_paged_jit=0;
 unsigned db_memory_mb=2,db_machine_option=0,db_cpu_cycles=3000,db_monochrome=0;
 bool db_vga_console=false;unsigned db_text_attr=7;
 static unsigned ansi_bytes;static int extended_key=-1;
@@ -70,16 +72,16 @@ public:
  void writed(PhysPt,Bitu) override {}
 };
 static RomPage rom_page;
-static PageHandler *handlers[2048];
+static PageHandler *handlers[DB_GUEST_PAGES];
 static Bitu lfb_page,lfb_pages;
 static PageHandler *lfb_handler,*lfb_mmio;
 PageHandler *MEM_GetPageHandler(Bitu page){
- if(page>=2048&&lfb_pages){
+ if(page>=DB_GUEST_PAGES&&lfb_pages){
   if(page>=lfb_page&&page-lfb_page<lfb_pages)return lfb_handler;
   if(page>=lfb_page+4096&&page-(lfb_page+4096)<16)return lfb_mmio;
  }
- if(page>=2048)E_Exit("Guest page bound %x at %x:%x ss:sp=%x:%x",(unsigned)page,SegValue(cs),reg_eip,SegValue(ss),reg_esp);return handlers[page]?handlers[page]:&ram_page;}
-void MEM_SetPageHandler(Bitu page,Bitu pages,PageHandler *h){if(page>2048||pages>2048-page)E_Exit("Page handler bound");for(Bitu i=0;i<pages;i++)handlers[page+i]=h;PAGING_ClearTLB();}
+ if(page>=DB_GUEST_PAGES)E_Exit("Guest page bound %x at %x:%x ss:sp=%x:%x",(unsigned)page,SegValue(cs),reg_eip,SegValue(ss),reg_esp);return handlers[page]?handlers[page]:&ram_page;}
+void MEM_SetPageHandler(Bitu page,Bitu pages,PageHandler *h){if(page>DB_GUEST_PAGES||pages>DB_GUEST_PAGES-page)E_Exit("Page handler bound");for(Bitu i=0;i<pages;i++)handlers[page+i]=h;PAGING_ClearTLB();}
 void MEM_ResetPageHandler(Bitu p,Bitu n){MEM_SetPageHandler(p,n,nullptr);}
 void MEM_SetLFB(Bitu page,Bitu pages,PageHandler*h,PageHandler*mmio){
  if(pages>PC_S3_VRAM_BYTES/4096||page>0x100000u-4096u-16u||!h||!mmio)E_Exit("SVGA mapping bound");
@@ -125,7 +127,14 @@ void DOSBOX_RunMachine(){
 }
 void DOSBOX_SetLoop(LoopHandler*){E_Exit("Unexpected loop change");}
 void DOSBOX_SetNormalLoop(){}
+#ifdef DB_COMPAT
+#include "compat.h"
+#include "audio.h"
+#endif
 extern void zz_dos_init();
+#ifdef DB_EXPANDED
+extern void db_serial_open(),db_serial_close();
+#endif
 static void vga_text(const uint8_t *p,unsigned n){
  for(unsigned i=0;i<n;i++){
   uint8_t c=p[i];
@@ -186,6 +195,10 @@ unsigned db_console_read(uint8_t *data,unsigned size,bool echo){
 static Bitu returned(){if(GETFLAG(CF))E_Exit("DOS EXEC failed %u",reg_ax);result->exit_code=dos.return_code;finished=true;return CBRET_STOP;}
 extern void zz_dosbox_paging_init();
 extern void CPU_Core_Normal_Init();
+extern Bitu CPU_extflags_toggle;
+#if C_FPU
+extern void FPU_Init(Section*);
+#endif
 extern void CALLBACK_Init(Section*);
 extern void db_cd_setup(),db_cd_mount(),db_cd_close();
 #if defined(DB_SIMD_CONTEXT) || defined(DB_NEON)
@@ -221,7 +234,15 @@ static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,Dosbox
  machine=adapters[db_machine_option];svgaCard=db_machine_option==PC_ADAPTER_S3?SVGA_S3Trio:SVGA_None;
  lfb_page=lfb_pages=0;lfb_handler=lfb_mmio=nullptr;
  memset(ram,0,sizeof(ram));memset(&cpu_regs,0,sizeof(cpu_regs));memset(&cpu,0,sizeof(cpu));memset(&Segs,0,sizeof(Segs));
- zz_dosbox_paging_init();CPU_ArchitectureType=CPU_ARCHTYPE_386SLOW;CPU_Core_Normal_Init();cpudecoder=CPU_Core_Normal_Run;
+ if(!db_memory_valid(db_memory_mb,DB_GUEST_MAX_MB)||db_cpu_model>=DB_CPU_COUNT)E_Exit("Invalid guest hardware configuration");
+ zz_dosbox_paging_init();
+ const Bitu models[]={CPU_ARCHTYPE_386SLOW,CPU_ARCHTYPE_486NEWSLOW,CPU_ARCHTYPE_PENTIUMSLOW};
+ CPU_ArchitectureType=models[db_cpu_model];
+ CPU_extflags_toggle=db_cpu_model==DB_CPU_386?0:(FLAG_ID|FLAG_AC);
+ CPU_Core_Normal_Init();cpudecoder=CPU_Core_Normal_Run;
+ #if C_FPU
+ FPU_Init(nullptr);
+ #endif
  for(unsigned seg=0;seg<6;seg++)SegSet16(seg,0x1000);
  cpu.stack.mask=0xffff;cpu.stack.notmask=0xffff0000;cpu.idt.SetBase(0);cpu.idt.SetLimit(1023);CPU_SetFlags(FLAG_IF,FMASK_ALL);
  reg_sp=0xfffe;reg_eip=0x100;
@@ -236,6 +257,12 @@ static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,Dosbox
  if(db_vga_console)INT10_ScrollWindow(0,0,24,79,0,db_text_attr,0);
  if(*db_boot_name||*db_hdd_name){db_boot_start();DOSBOX_RunMachine();return 0;}
  zz_dos_init();
+#ifdef DB_EXPANDED
+ db_serial_open();
+#endif
+#ifdef DB_COMPAT
+ db_memory_services_open();
+#endif
 #ifdef DB_NETWORK
  extern void db_ipx_open();db_ipx_open();
 #endif
@@ -247,7 +274,11 @@ static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,Dosbox
  dos.dta(RealMake(pspseg,0x80));db_stdio(parent);
  Bit16u scratch=DOS_GetMemory(256);SegSet16(ss,scratch);reg_sp=4094;
  SegSet16(ds,scratch);SegSet16(es,scratch);SegSet16(cs,scratch);reg_ip=0;
- if(!program){zz_shell_run();return 0;}
+ if(!program){zz_shell_run();
+#ifdef DB_COMPAT
+ db_audio_flush();
+#endif
+ return 0;}
  Bitu cb=CALLBACK_Allocate();CALLBACK_Setup(cb,returned,CB_IRET,"host return");
  RealPt ret=CALLBACK_RealPointer(cb);
  const uint8_t boot[]={0xb8,0x00,0x4b,0xba,0x00,0x01,0xbb,0x00,0x02,0xcd,0x21,0xea,
@@ -280,6 +311,15 @@ extern "C" int db_run_io(const uint8_t *program,unsigned bytes,unsigned limit,Do
  finishing=true;
  zz_shell_cleanup();
  db_boot_close();
+#ifdef DB_COMPAT
+ /* Guest execution has unwound: cleanup uses physical DOS/BIOS storage,
+  * never guest page tables that may no longer map the low-memory vectors. */
+ PAGING_Enable(false);
+ db_memory_services_close();
+#endif
+#ifdef DB_EXPANDED
+ db_serial_close();
+#endif
  db_pc_close();
  db_unmount();db_cd_close();
  for(unsigned i=0;i<CB_MAX;i++){delete[] CallBack_Description[i];CallBack_Description[i]=nullptr;}

@@ -18,6 +18,16 @@ extern void db_midi_setup(),MPU401_Init(Section*),MPU401_Destroy(Section*);
 #ifdef DB_NETWORK
 extern void db_net_device_open(),db_net_device_close(),db_ipx_close();
 #endif
+#ifdef DB_COMPAT
+#include "audio.h"
+extern void DMA_Init(Section*),DMA_Destroy(Section*);
+#endif
+#ifdef DB_EXPANDED
+#include "joystick.h"
+#include "pc_wire.h"
+extern "C" volatile uint8_t *db_shared();
+extern void JOYSTICK_Init(Section*),JOYSTICK_Destroy(Section*);
+#endif
 static bool initialized;
 static unsigned a20_control;
 static Bitu read_a20(Bitu,Bitu){return a20_control|(MEM_A20_Enabled()?2:0);}
@@ -31,19 +41,39 @@ void db_pc_init(){
 #ifdef DB_NETWORK
  db_net_device_open();
 #endif
+#ifdef DB_COMPAT
+ DMA_Init(nullptr);db_audio_open();
+#endif
+#ifdef DB_EXPANDED
+ JOYSTICK_Init(nullptr);JOYSTICK_Enable(0,ad_get(db_shared(),PC_JOYSTICK_ENABLED)!=0);
+#endif
  a20_control=0;IO_RegisterReadHandler(0x92,read_a20,IO_MB);IO_RegisterWriteHandler(0x92,write_a20,IO_MB);MEM_A20_Enable(false);
 }
 void db_pc_close(){if(!initialized)return;
 #ifdef DB_NETWORK
  db_ipx_close();db_net_device_close();
 #endif
+#ifdef DB_COMPAT
+ db_audio_close();DMA_Destroy(nullptr);
+#endif
+#ifdef DB_EXPANDED
+ JOYSTICK_Destroy(nullptr);
+#endif
  MPU401_Destroy(nullptr);BIOS_Destroy(nullptr);TIMER_Destroy(nullptr);CMOS_Destroy(nullptr);PIC_Destroy(nullptr);zz_vga_memory_close();IO_Destroy(nullptr);initialized=false;}
+#ifndef DB_COMPAT
 bool SB_Get_Address(Bitu&,Bitu&,Bitu&){return false;}
+#endif
+#ifndef DB_EXPANDED
 bool TS_Get_Address(Bitu&,Bitu&,Bitu&){return false;}
+#endif
+#ifndef DB_COMPAT
 void PCSPEAKER_SetCounter(Bitu,Bitu){}
 void PCSPEAKER_SetType(Bitu){}
+#endif
+#ifndef DB_EXPANDED
 bool JOYSTICK_IsEnabled(Bitu){return false;}
 float JOYSTICK_GetMove_X(Bitu){return 0;}float JOYSTICK_GetMove_Y(Bitu){return 0;}
+#endif
 void Mouse_AutoLock(bool){} /* Intuition retains ownership of the host pointer. */
 #include "setup.h"
 #include "mapper.h"

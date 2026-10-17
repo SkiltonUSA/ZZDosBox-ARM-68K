@@ -59,7 +59,7 @@ one upstream DNS resolver; secondary DNS and automatic Roadshow resolver
 discovery are not implemented.
 
 **Save settings** stores these options per program. Existing launcher profiles
-migrate with networking disabled. `Launcher.cfg` is now version 13 (version 12 and earlier remain readable); preserve
+migrate with networking disabled. `Launcher.cfg` is version 19 (earlier versions remain readable); preserve
 the pre-upgrade profile backup when reverting to an older launcher.
 
 ## TCP/IP controls
@@ -87,11 +87,16 @@ from the Amiga clock; lease timestamps are guest timestamps.
 
 ## Current scope
 
-The network runtime is an interpreter build. It supports embedded DOS with
-Direct/Normal presentation, without scanlines, OpenGL, trace/breakpoint or
-memory-monitor runtimes. Explicit dynamic-core selection and unsupported
-combinations are rejected, rather than silently downgraded. A default game
-with networking disabled continues to use its existing runtime.
+Launcher 0.22.1-dev selects `ZZDosBox-Net-JIT` for core auto/dynamic. It
+combines networking with ARM JIT, EMS/XMS, SBPro2/SB16 and PC speaker. Explicit
+core normal selects the existing `ZZDosBox-Net` interpreter and rejects EMS
+or PCM audio. Networking alone does not enable either EMS or audio.
+
+Both use embedded DOS, up to 8 MiB guest RAM, fixed cycles up to 10,000 and
+Direct/Normal presentation. Scanlines, OpenGL, developer tools and Expanded
+options remain separate. Unsupported combinations are rejected explicitly.
+Network terminal/diagnostic sessions use the selected core and sound settings.
+Programs with networking disabled retain their existing runtime.
 
 Windows/MS-DOS disk-image networking still needs guest-specific driver and
 TCP/IP configuration and is not enabled by this tab. IPv6, PCAP bridging,

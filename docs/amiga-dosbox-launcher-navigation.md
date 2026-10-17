@@ -169,3 +169,32 @@ The DOS welcome screen uses a yellow ASCII ZZDOSBox title, red shortcut keys
 and white descriptions. It lists Ctrl+F5
 for screenshots, Alt+Return for display mode, CPU speed controls and F10 to exit.
 Its version follows the launcher.
+
+## I/O and Joystick (0.21.1)
+
+I/O contains COM1 connection mode, server IPv4 and TCP port. The guest
+16550 uses 3F8h / IRQ 4; baud, data bits, parity and stop bits are set by the
+DOS application. Raw TCP and the basic modem use Roadshow. Physical serial
+is available as Experimental from 0.22.0; concurrent NE2000/IPX is unsupported.
+
+Joystick contains the per-program gameport switch and a live direction and
+button tester for physical Amiga port 2 (lowlevel index 1). Green indicators
+show held directions, Fire and Button 2, with an X/Y readout. Testing needs
+no DOS session and stops when leaving the page.
+
+### Controller buttons (0.21.2)
+
+Select 1-6 buttons on Joystick. The aligned tester displays that many buttons.
+Gameport buttons 1/2 use Red/Blue; buttons 3-6 use Green/Yellow/Forward/Reverse
+from a compatible gamepad, mapped to the DOS keys selected below the tester.
+The count and bindings are saved per program. Previous libraries migrate to
+format 18 with their two-button behavior retained.
+
+### Physical serial (0.22.0, Experimental)
+
+I/O offers a physical COM1 connection with a driver name and unit for built-in,
+USB or expansion serial ports. Built-in selects serial.device unit 0. Enter
+an expansion driver manually. USB is greyed out without Poseidon and a known
+registered serial driver; Detect USB refreshes that check. Baud 0 follows DOS
+settings; a nonzero baud enables physical data/parity/stop overrides.
+[Driver requirements and control-line limitations](amiga-dosbox-expanded-hardware.md#physical-com1-experimental).

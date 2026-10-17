@@ -22,6 +22,15 @@
 
 /* Separate cache lines for the single-producer keyboard ring indices. */
 #define PC_OPTIONS (PC_VIDEO+256u)
+#define PC_HARDWARE_MAGIC (PC_OPTIONS+20u)
+#define PC_HARDWARE_VERSION 0x48574431u
+#define PC_CPU_MODEL (PC_OPTIONS+24u)
+#define PC_MEMORY_SERVICES (PC_OPTIONS+28u) /* bit 0 VCPI, bit 1 UMB */
+#define PC_JOYSTICK_ENABLED (PC_OPTIONS+32u)
+#define PC_JOYSTICK_STATE (PC_VIDEO+972u) /* host-owned atomic packed digital state */
+#define PC_EXTRA_SOUND (PC_OPTIONS+36u) /* 0 off, 1 GUS, 2 CMS, 3 Tandy */
+#define PC_GUEST_TICKS (PC_VIDEO+980u) /* ARM-owned progress for wall-time cycle control */
+#define PC_PAGED_JIT (PC_OPTIONS+40u)
 #define PC_KEY_WRITE (PC_VIDEO+320u)
 #define PC_KEY_READ (PC_VIDEO+384u)
 #define PC_KEY_DATA (PC_VIDEO+448u)

@@ -15,10 +15,13 @@ adapter. ZZDosBox does not configure that adapter or change the Amiga's IP.
 ## Requirements
 
 - Working Roadshow connection and `bsdsocket.library`.
-- Current MUI launcher and the separate `ZZDosBox-Net` runtime beside it.
+- Current MUI launcher and `ZZDosBox-Net-JIT` (auto/dynamic) and `ZZDosBox-Net` (normal) beside it.
 - Embedded DOS, **Direct** renderer, **Normal** presentation, scanlines off
-  and developer trace/memory tools off. Keep `core=auto` or `normal`;
-  networking uses the interpreter and rejects explicit `core=dynamic`.
+  and developer trace/memory tools off. `core=auto` or `dynamic` selects ARM JIT
+  with optional EMS, SBPro2/SB16 and PC speaker. `core=normal` retains the
+  interpreter and requires EMS/PCM audio off. Up to 8 MiB guest RAM; Expanded
+  options (serial, joystick, VCPI/UMB, extra sound and Auto/Max cycles) remain
+  separate. Keep fixed cycles at 10,000 or below.
 - For TCP/IP: the staged `Network/` utility drawer beside the launcher,
   containing `NE2000.COM`, `DHCP.EXE`, `PING.EXE`, `DNSTEST.EXE`, `HTGET.EXE`,
   `COPYING.TXT` and `SOURCES.TXT`. See [utility preparation](amiga-dosbox-network-ui.md#building-the-optional-utilities).
@@ -106,7 +109,7 @@ rather than copying its configuration blocks.
 ## If it does not connect
 
 - **Missing tools:** check `ZZDosBox-Net` and the seven TCP/IP utility files.
-- **Configuration rejected:** check interpreter/Direct/Normal settings, numeric
+- **Configuration rejected:** check core/Direct/Normal settings, numeric
   addresses, matching subnet/gateway and a DNS resolver outside the guest subnet.
 - **DHCP fails:** inspect **Open log** for packet-driver or configuration errors;
   check that the virtual subnet does not overlap the LAN.

@@ -14,15 +14,15 @@ and Amiga-Bridge are not required to run the supplied Amiga executable.
 | 68K CPU | Executables target the 68020 instruction set. This is a build baseline, not a tested minimum-speed claim. No TF4060 or 68060 accelerator is required. |
 | AmigaOS | Tested with AmigaOS 3.2.3. The launcher requires `workbench.library` v44+, `asl.library` v38+ and the MUI library. Compatibility with older OS installations is unverified. |
 | ZZ9000 firmware | Tested **XX19c / XACP 1.7**. Later firmware has not yet been tested here. Close other applications using ARM Core1 before starting. Current PC builds require firmware-permitted SIMD access even with scalar pixels, because linked library routines can use VFP/NEON; the worker checks permission and preserves the state. |
-| ZZ9000 RAM | Enable the card's **256 MB Zorro III Fast RAM**. The player needs a **32 MB contiguous free block** in that RAM, plus memory for AmigaOS, the launcher and display buffers. |
+| ZZ9000 RAM | Enable the card's **256 MB Zorro III Fast RAM**. Compat and Net-JIT need a **32 MiB contiguous free block**; Expanded needs **64 MiB** in that RAM, plus memory for AmigaOS, the launcher and display buffers. |
 | Graphics | Working ZZ9000 Picasso96 driver and `Picasso96API.library` v2+. Window mode requires a supported **32-bit RTG Workbench**; fullscreen requires an existing **640×480 32-bit RTG mode**. The guest can still use CGA/EGA or 16-colour VGA. |
 | Compatibility browser | Keep the matching `Compatibility.dat` beside `ZZDosBox-Launcher` (0.16.0-dev onward). Missing data disables report details, not the emulator. |
 | MUI | **MUI 3.8 or later** for the launcher. No additional custom MUI classes are required. |
 | Stack and storage | Use a **65536-byte stack** for the player/launcher and a writable application drawer. Allow space for your programs and any disk images. |
 
-Guest PC RAM is selectable as **1, 2, 4 or 8 MB**. It is included within the
-32 MB worker allocation; it is not an extra 8 MB allocation or a limit on the
-Amiga's total RAM. The current Windows test uses 8 MB guest RAM.
+Guest PC RAM is selectable from **1–8 MiB**, or up to **32 MiB with Expanded**.
+It is included in the runtime allocation, not additional to it. The Windows
+test configuration uses 8 MiB guest RAM.
 
 A faster 68k can improve file and disk-image access, input, networking and
 Workbench window updates. CPU emulation runs on the ZZ9000 Cortex-A9.
@@ -36,9 +36,11 @@ minimum practical clock speed or measured these builds on it.
 | --- | --- |
 | **CAMD** | External MIDI only. Requires `camd.library` **v37+**, a working CAMD driver/output, and a connected MIDI synthesizer. Select the actual output name in Settings. Leave MIDI Off when unused. |
 | **Roland MT-32 / General MIDI** | External instruments: MT-32 selects intelligent MPU-401 emulation; General MIDI selects UART mode. ZZDosBox does not currently include Munt, SoundFonts or an internal MIDI synthesizer. |
-| **AHI** | Optional **driver detection only** in this build. The checker supports AHI v4+. Installing AHI does not enable PCM playback. |
-| **ZZ9000AX** | Optional; its AHI modes can be detected. It is not required to run DOSBox, and ZZDosBox does not yet send PCM audio to it or HDMI. |
+| **AHI** | AHI v4+ with unit 0 configured for PCM output. Required when enabling SB Pro 2, SB16, OPL, PC speaker or Expanded audio devices. Output is 32 kHz stereo. |
+| **ZZ9000AX** | Optional AHI output hardware; selected through AHI preferences. ZZDosBox does not require AX and has no direct HDMI-audio path. |
 | **diskimage.device + fat95** | Needed for Workbench mounting of DOS disk images and the launcher's MS-DOS startup-file editing workflow. Tested with Thore Boeckelmann's `diskimage.device` 37.7, `DiskImageCtrl` and `L:fat95`. Direct BIOS image boot itself does not use these drivers. |
+| **lowlevel.library V40** | Joystick input and the live direction/button tester on Amiga port 2. |
+| **Serial driver** | Experimental physical COM1 requires an IOExtSer-compatible built-in, USB or expansion driver. Poseidon/USB-driver discovery enables the USB shortcut; no driver is bundled. |
 | **CD-ROM** | Read-only ISO9660 image, or a data CD already mounted by AmigaOS. Booted MS-DOS additionally uses the supplied `ZZDOSCD.SYS` and your licensed `MSCDEX.EXE`. A USB drive needs its normal Amiga USB/storage/CD configuration. |
 
 Settings → **Check audio drivers** checks CAMD and the selected output, AHI,
@@ -46,7 +48,9 @@ and named ZZ9000AX modes. A positive result is driver discovery, not an audible
 playback test. CAMD message delivery has been captured on hardware; external
 MT-32 sound has not yet been verified in this project.
 
-Sound Blaster, AdLib/OPL and PC-speaker PCM audio remain unimplemented.
+SB Pro 2, SB16, OPL and PC speaker are available in Compat, Expanded and Net-JIT.
+Booted DOS/Windows audio remains unavailable. GUS/CMS/Tandy require Expanded.
+See [I/O and joystick specifications](amiga-dosbox-io.md).
 
 ## DOS, Windows and storage
 
@@ -84,7 +88,7 @@ Those features are not automatically included in this Amiga port.
 | Display | ARM renders into ZZ9000 buffers; 68K coordinates fullscreen presentation or Workbench window blits. |
 | Frontend | Native MUI profiles and DOS terminal, rather than RetroArch core options. |
 | MIDI | External CAMD output; upstream Munt/FluidSynth/BASSMIDI backends are not ported. |
-| Other features | Joystick, emulator save states, CD audio/CUE and Voodoo emulation remain unavailable. |
+| Other features | Expanded provides joystick and COM1. Emulator save states, CD audio/CUE and Voodoo emulation remain unavailable. |
 
 Upstream host build instructions and key bindings are not ZZDosBox installation
 instructions. Use the Amiga controls: **Alt+Return** changes window/fullscreen,
@@ -105,11 +109,12 @@ DHCP/manual IPv4, subnet, gateway, DNS, hostname and MTU controls. Diagnostics
 include ping, DNS lookup, counters, logs and cooperative disconnect. IPX uses
 a compatible UDP relay with address/port, connect/status/ping/disconnect controls.
 
-Both require `bsdsocket.library` and the separate `ZZDosBox-Net` interpreter.
+Both require `bsdsocket.library`. Auto/dynamic core selects `ZZDosBox-Net-JIT`;
+normal core uses `ZZDosBox-Net` with EMS/PCM off.
 TCP/IP additionally needs staged NE2000/mTCP guest utilities. libslirp is linked
 into the host; no separate Amiga installation is needed. Embedded DOS with
 Direct/Normal presentation is supported; networking is off by default.
-Dynamic-core, scanline, OpenGL and debug-runtime combinations are rejected.
+Expanded, scanline, OpenGL and debug-runtime combinations remain separate.
 Windows/MS-DOS image networking, IPv6 and port forwarding remain pending.
 IPX transport passed hardware checks; multiplayer games remain untested.
 Renew obtains a fresh guest lease; Release clears saved guest configuration,

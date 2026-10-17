@@ -1,5 +1,10 @@
 /* GPL-3.0-or-later. Map the painted guest rectangle, excluding window borders. */
 #pragma once
+/* Coalesce motion only: button transitions and invalid-position resets must
+ * retain their original order and coordinates. */
+static inline int pc_mouse_mergeable(unsigned previous,unsigned buttons,unsigned valid,unsigned next_buttons,unsigned next_valid){
+ return valid&&next_valid&&previous==buttons&&buttons==next_buttons;
+}
 struct pc_mouse_point {unsigned x,y;int inside;};
 static struct pc_mouse_point pc_mouse_map(int x,int y,int left,int top,unsigned width,unsigned height){
  struct pc_mouse_point p={0,0,0};if(width<2||height<2)return p;

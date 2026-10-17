@@ -15,3 +15,6 @@ void pc_display_mode(int fullscreen);
 void ff_cleanup(void);
 
 void pc_display_console(int waiting);
+
+int pc_display_input_active(void);
+void pc_display_joystick_buttons(unsigned bits,unsigned count,const unsigned keys[4]);

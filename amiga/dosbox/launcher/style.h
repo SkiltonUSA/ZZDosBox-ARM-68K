@@ -24,5 +24,6 @@ static Object *ui_button(const char *text){return TextObject,ButtonFrame,
  MUIA_CycleChain,1,MUIA_InnerTop,5,MUIA_InnerBottom,5,
  MUIA_Text_PreParse,(ULONG)"\33c",MUIA_Text_Contents,(ULONG)text,End;}
 /* Shared rhythm keeps secondary tabs/forms visually consistent. */
+#define UI_LIGHT_BACKGROUND "2:rdddddddd,dddddddd,dddddddd"
 #define UI_PAGE MUIA_Group_Spacing,8,InnerSpacing(10,8)
 #define UI_PANEL(name) GroupFrameT(name),MUIA_Background,MUII_GroupBack,MUIA_Group_Spacing,6,InnerSpacing(10,8)

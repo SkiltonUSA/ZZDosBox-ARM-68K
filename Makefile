@@ -31,7 +31,7 @@ test-model:
 build-current:
 	$(PYTHON) scripts/build_dosbox_dos_arm.py --pc --pc-dynrec --pc-jit-mib 4 \
 	  --pc-neon --pc-pipeline --pc-scanlines --pc-presentation --pc-adapters \
-	  --pc-doom-clock --pc-pic-vfp
+	  --pc-compat --pc-x87 --pc-file-readahead --pc-pic-vfp
 
 .PHONY: test-network
 test-network:
@@ -41,3 +41,15 @@ test-network:
 .PHONY: test-host-review
 test-host-review:
 	$(PYTHON) scripts/test_dosbox_host_review.py
+
+.PHONY: build-expanded build-network-jit test-file-read-ahead
+build-expanded:
+	$(PYTHON) scripts/build_dosbox_dos_arm.py --pc --pc-compat --pc-x87 --pc-expanded \
+	  --pc-dynrec --pc-jit-mib 4 --pc-neon --pc-pipeline --pc-pic-vfp \
+	  --pc-scanlines --pc-presentation --pc-adapters --pc-file-readahead
+build-network-jit:
+	$(PYTHON) scripts/build_dosbox_dos_arm.py --pc --pc-compat --pc-x87 --pc-network \
+	  --pc-dynrec --pc-jit-mib 4 --pc-neon --pc-pipeline --pc-pic-vfp \
+	  --pc-disk-cache-kib 1024 --pc-file-readahead
+test-file-read-ahead:
+	$(PYTHON) scripts/test_dosbox_file_read_ahead.py

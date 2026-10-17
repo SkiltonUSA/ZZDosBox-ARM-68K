@@ -5,7 +5,9 @@ static struct Screen *workbench;
 static int window_ready;
 static unsigned window_preset=1,window_width,window_height,paint_width,paint_height;
 static LONG window_black=-1;
-static UBYTE window_keys[128];
+#include "key_sources.h"
+static struct db_key_sources key_sources;
+#define window_keys key_sources.physical
 #include "mouse_host.h"
 static void window_black_rect(LONG x,LONG y,LONG w,LONG h){
  if(w>0&&h>0)RectFill(window->RPort,x,y,x+w-1,y+h-1);
@@ -51,13 +53,14 @@ static int window_open(void){
  printf("WINDOW native_format=%u geometry=%ux%u resizable=1 ARM=owned-bitmap present=P96-blit\n",format,width,height);
  return 1;
 }
-static int window_key(UWORD raw){ULONG w=ad_get(shared,PC_KEY_WRITE),r;
+static int window_send_key(unsigned raw,void*ctx){(void)ctx;ULONG w=ad_get(shared,PC_KEY_WRITE),r;
  syncio->pull(shared+PC_KEY_READ,4,NULL);r=ad_get(shared,PC_KEY_READ);
  if(w-r>=PC_KEY_SIZE)return 0;
  shared[PC_KEY_DATA+(w&(PC_KEY_SIZE-1))]=(UBYTE)raw;
  syncio->push(shared+PC_KEY_DATA,PC_KEY_SIZE,NULL);publish(PC_KEY_WRITE,w+1);
- window_keys[raw&127]=!(raw&128);return 1;
+ return 1;
 }
+static int window_key(UWORD raw){return db_key_source_set(&key_sources,raw&127,!(raw&128),0,window_send_key,NULL);}
 static int window_events(void){
  struct IntuiMessage *msg;
  if(direct_locked)return 1;

@@ -17,8 +17,9 @@ commands=b'dir /b\rtype readme.txt\recho saved text > SAVED.TXT\rtype saved.txt\
 def scan_row(data,mode,y):
  factor=(0 if y%2 else 8) if mode in (1,2) else (5 if y%2 else 8) if mode==3 else (8,6,4,6)[y%4] if mode==4 else 8
  return bytes(c*factor//8 for c in data)
-def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000,memory_requests=None,memory_stop=False,matrix_stop=False,disk_mib=32,paging_fixture=None,paging_faults=1,network=None):
- image,rel,_=pack.unpack((OUT/'dosbox.elf').read_bytes())
+def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000,memory_requests=None,memory_stop=False,matrix_stop=False,disk_mib=32,paging_fixture=None,paging_faults=1,network=None,hardware=None,fixture=None,mouse_burst=False):
+ build=json.loads((OUT/'build.json').read_text());allocation=build.get('allocation',0x2000000);expanded=build.get('expanded',False)
+ image,rel,_=pack.unpack((OUT/'dosbox.elf').read_bytes(),expanded=expanded)
  for off in rel:struct.pack_into('<I',image,off,struct.unpack_from('<I',image,off)[0]+base)
  symbols={}
  for line in subprocess.check_output(['/opt/homebrew/opt/llvm/bin/llvm-nm','-n',str(OUT/'dosbox.elf')],text=True).splitlines():
@@ -37,7 +38,7 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   u.reg_write(UC_ARM_REG_FPSCR,inherited_fpscr)
   # Reserved/unsupported exception-enable bits may be read-as-zero.
   inherited_fpscr=u.reg_read(UC_ARM_REG_FPSCR)
- u.mem_map(base&~4095,0x2002000);u.mem_write(base,bytes(image));u.mem_write(symbols['_ZL6shared'],struct.pack('<I',base))
+ u.mem_map(base&~4095,(allocation+0x2000));u.mem_write(base,bytes(image));u.mem_write(symbols['_ZL6shared'],struct.pack('<I',base))
  if 'zz_matrix_quick' in symbols:u.mem_write(symbols['zz_matrix_quick'],struct.pack('<I',1)) # correctness only; shorten microbenchmark repetition
  scheduler_digest=hashlib.sha256();scheduler_count=[0]
  if scheduler_trace is not None:
@@ -70,11 +71,13 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   for address in {symbols[n] for n in ('fmod','fmodl') if n in symbols}:
    u.hook_add(UC_HOOK_CODE,math_call,begin=address,end=address)
  if jit and mode=='paging' and 'db_dynrec_paged_fallbacks' in symbols:
-  paged=[False];dispatches=[0]
+  paged=[False];dispatches=[0];paged_dispatches=[0]
   def paging_policy(u,address,size,data):paged[0]=bool(u.reg_read(UC_ARM_REG_R0))
   address=symbols['_Z13PAGING_Enableb'];u.hook_add(UC_HOOK_CODE,paging_policy,begin=address,end=address)
   def jit_dispatch(u,kind,address,size,value,data):
-   assert not paged[0],'JIT dispatched while 386 paging was enabled'
+   if paged[0]:
+    assert expanded and hardware and hardware.get('paged_jit'),'JIT dispatched while 386 paging was enabled without opt-in'
+    paged_dispatches[0]+=1
    dispatches[0]+=1
   address=symbols['db_dynrec_dispatches'];u.hook_add(UC_HOOK_MEM_WRITE,jit_dispatch,begin=address,end=address+3)
  def put(off,n):u.mem_write(base+off,struct.pack('>I',n&0xffffffff))
@@ -125,19 +128,22 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
      put(0x180080,1);u.mem_write(base+0x1d0008,struct.pack('<I',1))
    addr=symbols['_Z13db_shell_pollv']
    u.hook_add(UC_HOOK_CODE,stop_skipped,begin=addr,end=addr)
+ if hardware:
+  put(0x188114,0x48574431);put(0x188118,hardware.get('cpu',0));put(0x18811c,hardware.get('services',0));put(0x188120,hardware.get('joystick',0));put(0x188124,hardware.get('sound',0));put(0x188128,hardware.get('paged_jit',0));put(0x1883cc,hardware.get('joy_state',0));put(0x198004,hardware.get('ems',1))
+ audio_frames=audio_nonzero=network_audio_nonzero=0
  for off in [RXW,RXR,TXW,TXR]:put(off,0xfffffffc)
  u.mem_write(base+0x1d0000,bytes.fromhex('00009fe51eff2fe100000000'));u.mem_write(base+0x1d0100,bytes.fromhex('0100a0e31eff2fe1'))
  bad=[]
  def access(u,kind,address,size,value,data):
-  if not base<=address<=base+0x2000000-size or (size>1 and address%size):bad.append((hex(address),size,hex(u.reg_read(UC_ARM_REG_PC)-base)));u.emu_stop()
+  if not base<=address<=base+allocation-size or (size>1 and address%size):bad.append((hex(address),size,hex(u.reg_read(UC_ARM_REG_PC)-base)));u.emu_stop()
  u.hook_add(UC_HOOK_MEM_READ|UC_HOOK_MEM_WRITE,access,begin=base&~4095,end=base-1)
- u.hook_add(UC_HOOK_MEM_READ|UC_HOOK_MEM_WRITE,access,begin=base+0x2000000,end=(base&~4095)+0x2002000-1)
+ u.hook_add(UC_HOOK_MEM_READ|UC_HOOK_MEM_WRITE,access,begin=base+allocation,end=(base&~4095)+(allocation+0x2000)-1)
  scan_test=mode in ("scan-full","scan-skip","scan-transition","scan-stop","scan-soft","scan-gradient")
  scan_mask=0;scan_epoch=0;scan_checked=set();scan_buffers=set()
  width,height=640,480
  frame=0x00fff040;pitch=3840 if mode=="resize" else 2560;span=(height-1)*pitch+width*4;fmt=3 if base==0x12000040 else 4
  u.mem_map(frame&~4095,0x400000 if scan_test else 0x2b0000 if mode=="resize" else 0x140000)
- l1=(base+0x100000+16383)&~16383
+ l1=(base+(0x140000 if expanded else 0x100000)+16383)&~16383
  u.mem_write(base+0x182000+15*4,struct.pack('<I',l1))
  put(0x188040,1000);put(0x188044,0)
  if options:
@@ -153,15 +159,19 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
     copy_stopped[0]=True;put(0x180080,1);u.mem_write(base+0x1d0008,struct.pack('<I',1))
   u.hook_add(UC_HOOK_MEM_WRITE,stop_copy,begin=frame,end=frame+span-1)
  frame_seq=0;captured=None
- for reg,val in [(UC_ARM_REG_SP,base+0x1fffff0),(UC_ARM_REG_LR,base+0x1ff0000),(UC_ARM_REG_R0,1),(UC_ARM_REG_R1,base+0x1e0000),(UC_ARM_REG_R2,base+0x1d0000),(UC_ARM_REG_R3,base+0x1d0100)]:u.reg_write(reg,val)
+ for reg,val in [(UC_ARM_REG_SP,base+allocation-16),(UC_ARM_REG_LR,base+allocation-0x10000),(UC_ARM_REG_R0,1),(UC_ARM_REG_R1,base+0x1e0000),(UC_ARM_REG_R2,base+0x1d0000),(UC_ARM_REG_R3,base+0x1d0100)]:u.reg_write(reg,val)
  files={'EGATEST.COM':(OUT/'EGATEST.COM').read_bytes()};keys=b'egatest\rexit\r'
  if presentation is not None:
-  fixture=files['EGATEST.COM'];assert fixture.count(bytes.fromhex('83fa05'))==1
-  files['EGATEST.COM']=fixture.replace(bytes.fromhex('83fa05'),bytes.fromhex('83fa0a'))
+  ega_fixture=files['EGATEST.COM'];assert ega_fixture.count(bytes.fromhex('83fa05'))==1
+  files['EGATEST.COM']=ega_fixture.replace(bytes.fromhex('83fa05'),bytes.fromhex('83fa0a'))
  if adapter:
   file=adapter[0]+'.COM';files={file:(OUT/file).read_bytes()};keys=file.encode()+b'\rexit\r'
  if mode=='pit-math':
   files={'PITMATH.COM':(OUT/'PITMATH.COM').read_bytes()};keys=b'pitmath\rexit\r'
+ if fixture:
+  file=fixture[0]+'.COM';files={file:(OUT/file).read_bytes()};keys=file.encode()+b'\rexit\r'
+ if mode=='x87':
+  files={'X87TEST.COM':(OUT/'X87TEST.COM').read_bytes()};keys=b'x87test\rexit\r'
  if mode=='vga-shell':
   keys=b'';put(0x1882c0,3);put(0x1882c8,7);put(0x188040,0)
  if mode in ('cga','keyboard'):
@@ -184,7 +194,7 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   files={'BOOTTEST.IMG':(OUT/'BOOTTEST.IMG').read_bytes()};keys=b''
   u.mem_write(base+0x188240,b'BOOTTEST.IMG\0');put(0x188040,100)
  if mode=='paging':
-  files={'PAGING.IMG':(Path(paging_fixture) if paging_fixture else OUT/'PAGINGTEST.COM').read_bytes()+bytes(1440*1024-512)};keys=b''
+  paging_data=(Path(paging_fixture) if paging_fixture else OUT/'PAGINGTEST.COM').read_bytes();files={'PAGING.IMG':paging_data+bytes(1440*1024-len(paging_data))};keys=b''
   u.mem_write(base+0x188240,b'PAGING.IMG\0');put(0x188040,100)
  if mode=='hdd':
   assert disk_mib in (32,64,128,256)
@@ -211,6 +221,7 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   assert json.loads((OUT/'build.json').read_text()).get('network')
   assert memory_requests is None
   files=dict(network.files);keys=network.keys
+  put(0x198000,getattr(network,"audio_mode",0));put(0x198004,getattr(network,"ems",0))
   put(0x18c000,0x4e455431);put(0x188040,0)
   put(0x18c004,getattr(network,"protocol",0));put(0x18c008,getattr(network,"server",0));put(0x18c00c,getattr(network,"port",213))
  midi_bytes=bytearray()
@@ -222,10 +233,10 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   assert re.fullmatch(r'[A-Z0-9_-]{1,8}(\.[A-Z0-9_-]{1,3})?',text),text
   return text
  def bad_code(u,address,size,data):
-  if jit and ((base+0x1f00000-jit_mib*0x100000+4095)&~4095)<=address<((base+0x1f20000)&~4095):return
+  if jit and ((base+allocation-0x100000-jit_mib*0x100000+4095)&~4095)<=address<((base+allocation-0xe0000)&~4095):return
   raise AssertionError(('execution outside text',hex(address-base),'lr',hex(u.reg_read(UC_ARM_REG_LR)-base),'sp',hex(u.reg_read(UC_ARM_REG_SP)-base)))
  u.hook_add(UC_HOOK_CODE,bad_code,begin=base+len(image),end=base+0x1cffff)
- u.hook_add(UC_HOOK_CODE,bad_code,begin=base+0x200000,end=base+0x1feffff)
+ u.hook_add(UC_HOOK_CODE,bad_code,begin=base+0x200000,end=base+allocation-0x10001)
  if neon:
   # Unicorn's A9 CPACR MRC reads zero even after C1_C0_2 is set; model only
   # that hardware-register read. Real availability/restoration is checked
@@ -267,13 +278,15 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
     u.mem_write(base+0x18c000,struct.pack('>8I',*request));put(0x18c040,memory_at+1);memory_pending=True
 
   # Preserve Thumb state when resuming a quantum inside the soft-float library.
-  u.emu_start(pc | (1 if u.reg_read(UC_ARM_REG_CPSR)&32 else 0),base+0x1ff0000,count=100000);pc=u.reg_read(UC_ARM_REG_PC);assert not bad,bad
+  u.emu_start(pc | (1 if u.reg_read(UC_ARM_REG_CPSR)&32 else 0),base+allocation-0x10000,count=100000);pc=u.reg_read(UC_ARM_REG_PC);assert not bad,bad
   if mode in ('mouse','mouse-invalid','mouse-stop'):
    stage=u.mem_read(symbols['_ZL3ram']+0x500,1)[0]
    if 0<stage<5 and stage!=mouse_stage:
-    w=get(0x188400);at=0x188480+(w&127)*16
-    for off,val in [(0,16384),(4,49151),(8,1 if stage in (1,4) else 6 if stage==2 else 0),(12,2 if mode=='mouse-invalid' else int(stage!=3))]:put(at+off,val)
-    put(0x188400,w+1);mouse_stage=stage
+    w=get(0x188400);count=3 if mouse_burst and stage==1 else 1
+    for index in range(count):
+     at=0x188480+((w+index)&127)*16
+     for off,val in [(0,16000 if index==1 else 16384),(4,49151),(8,1 if stage in (1,4) else 6 if stage==2 else 0),(12,2 if mode=='mouse-invalid' else int(stage!=3))]:put(at+off,val)
+    put(0x188400,w+count);mouse_stage=stage
     if mode=='mouse-stop':stopping=True
   mr=get(0x18a040);mw=get(0x18a000);mn=(mw-mr)&0xffffffff;assert mn<=4096
   for mi in range(mn):midi_bytes+=u.mem_read(base+0x18b000+((mr+mi)&4095),1)
@@ -407,7 +420,13 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
     put(REPLY,seq)
   if mode=='read-stop' and b'C:\\>' in output:stopping=True
   if stopping:u.mem_write(base+0x1d0008,struct.pack('<I',1))
-  if pc==base+0x1ff0000:break
+  r,w=get(0x198080),get(0x198040)
+  assert w-r<=4
+  while r!=w:
+   pcm=u.mem_read(base+0x1a0000+(r&3)*4096,4096);audio_frames+=1024;audio_nonzero+=sum(c!=0 for c in pcm);r=(r+1)&0xffffffff
+   if network is not None and network.rx:network_audio_nonzero+=sum(c!=0 for c in pcm)
+  put(0x198080,r)
+  if pc==base+allocation-0x10000:break
  else:raise AssertionError(('worker timeout',output[-200:],hex(pc-base)))
  if memory_requests is not None:
   assert memory_at==len(memory_requests),(memory_at,len(memory_requests))
@@ -512,7 +531,7 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   print('PASS profile publication and exclusive totals',mode,'unwound',get(0x188090),flush=True)
  if mode=='mouse':
   assert rc==0 and b'DOS mouse + PS2 IRQ12 PASS' in output and not handles,(rc,result,detail,output[-300:])
-  assert get(0x188400)==2 and get(0x188440)==2
+  assert get(0x188400)==(4 if mouse_burst else 2) and get(0x188440)==get(0x188400)
   print('PASS ARM mouse ring wrap, DOS position/buttons, release and BIOS PS2 IRQ12',flush=True);return
  if mode=='mouse-invalid':
   assert rc==1 and b'Mouse event bound' in detail,(rc,result,detail)
@@ -530,6 +549,13 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   assert rc==0 and b'MPU401 intelligent/UART PASS' in output,(rc,result,detail,output[-300:])
   assert midi_bytes==bytes([0xf8])*5000+bytes([0x91,60,64,62,65,0xf8,0x81,60,0,0xf0,0x7d,1,2,3,0xf7])
   print('PASS ARM MPU-401 and bounded MIDI stream/wrap',flush=True);return
+ if fixture:
+  assert rc==0 and fixture[1].encode() in output and not handles,(rc,result,detail,output)
+  if hardware and hardware.get('sound'):assert audio_frames>=16000 and audio_nonzero>1000,(audio_frames,audio_nonzero)
+  print('PASS ARM capability',fixture[0],hardware,'PCM',audio_frames,audio_nonzero,flush=True);return
+ if mode=='x87':
+  assert rc==0 and b'x87 arithmetic rounding state PASS' in output and not handles,(rc,result,detail,output)
+  print('PASS ARM x87 arithmetic/rounding/state and SIMD restoration',flush=True);return
  if mode=='pit-math':
   assert rc==0 and b'PIT math PASS' in output and math_calls[0]>0,(rc,result,output,math_calls[0])
   print('PASS PIT library math with IEEE policy and full SIMD state restoration; calls',math_calls[0],flush=True);return
@@ -542,7 +568,8 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   assert rc==2 and result[4]==3 and marker==0xfa17 and faults==paging_faults and not handles,(rc,result,hex(marker),faults,detail)
   if jit and 'db_dynrec_paged_fallbacks' in symbols:
    assert get(0x188d58)>0 and dispatches[0]>0,'Missing interpreter fallback or initial JIT execution'
-   print('PASS JIT before paging; interpreter exclusively during paging; fallback calls',get(0x188d58),flush=True)
+   if hardware and hardware.get('paged_jit'):assert paged_dispatches[0]>0,('Missing paged register JIT execution',get(0x188128),struct.unpack('<I',u.mem_read(symbols['db_paged_jit'],4))[0],get(0x188d58),dispatches[0])
+   print('PASS paging policy; paged register dispatches',paged_dispatches[0],'fallback calls',get(0x188d58),flush=True)
   assert get(0x1897d0)==0,'Paged shutdown must not publish a BIOS text dump'
   print('PASS ARM paging fixture',str(paging_fixture or 'demand-page'), 'faults',faults,'and shutdown with unmapped text aperture',flush=True);return
  if mode=='hdd':
@@ -588,6 +615,9 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   assert not handles
   (OUT/'model-network.txt').write_bytes(output+b'\n'+detail+b'\n')
   network.check(bytes(output),files)
+  if getattr(network,"audio_mode",0):
+   assert audio_frames>=2048 and network_audio_nonzero>1000,(audio_frames,audio_nonzero,network_audio_nonzero)
+   print("PASS concurrent network/audio PCM",audio_frames,"nonzero bytes",audio_nonzero,flush=True)
   print('PASS ARM guest '+('IPX/UDP' if getattr(network,'protocol',0) else 'NE2000')+', packet queues and clean shell exit',flush=True)
   return
  if adapter:

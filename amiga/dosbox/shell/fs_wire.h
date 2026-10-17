@@ -15,6 +15,12 @@
 /* Command: seq, operation, handle/index, count/flags, position, whence.
  * Reply: ack, DOS error, result, size, attributes, DOS date, DOS time. */
 enum { FS_OPEN=1,FS_CREATE,FS_CLOSE,FS_READ,FS_WRITE,FS_SEEK,FS_STAT,FS_LIST,FS_DELETE,FS_RENAME,FS_SPACE,FS_MKDIR,FS_RMDIR,FS_TESTDIR,FS_DISK_OPEN,FS_DISK_CLOSE,FS_DISK_READ,FS_DISK_WRITE,FS_CD_READ };
+/* Only these operations publish/consume path metadata. Handle/device operations
+ * leave it untouched; both ends must use this rule (no extra protocol fields). */
+static inline int fs_uses_path(unsigned op){
+ return op==FS_OPEN||op==FS_CREATE||op==FS_STAT||op==FS_LIST||op==FS_DELETE||
+        op==FS_RENAME||op==FS_MKDIR||op==FS_RMDIR||op==FS_TESTDIR||op==FS_DISK_OPEN;
+}
 /* BIOS HDD geometry: 16 heads, 32 sectors, 128..1024 cylinders (32..256 MiB).
  * Disk RPCs use a dedicated exclusive handle, sector index and 1..8 sectors. */
 #define FS_DISK_SECTORS 65536u

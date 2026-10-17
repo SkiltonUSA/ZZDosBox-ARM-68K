@@ -2,6 +2,12 @@
 #include <stdio.h>
 #include "mouse_geometry.h"
 int main(void){
+ assert(pc_mouse_mergeable(0,0,1,0,1));
+ assert(pc_mouse_mergeable(1,1,1,1,1));
+ assert(!pc_mouse_mergeable(0,1,1,1,1)); /* Keep the press at its position. */
+ assert(!pc_mouse_mergeable(1,1,1,0,1)); /* Keep the release. */
+ assert(!pc_mouse_mergeable(0,0,0,0,1));
+ assert(!pc_mouse_mergeable(0,0,1,0,0)); /* Focus/position reset. */
  struct pc_mouse_point p=pc_mouse_map(5,20,5,20,640,480);assert(p.inside&&!p.x&&!p.y);
  p=pc_mouse_map(644,499,5,20,640,480);assert(p.inside&&p.x==65535&&p.y==65535);
  p=pc_mouse_map(4,19,5,20,640,480);assert(!p.inside&&!p.x&&!p.y);

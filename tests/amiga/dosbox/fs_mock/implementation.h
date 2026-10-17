@@ -11,6 +11,8 @@
 #include <sys/file.h>
 #include <fcntl.h>
 struct mock_lock {char path[1024];DIR *listing;FILE *file;};
+static LONG mock_days=17817;
+static unsigned mock_exnext_calls;
 static LONG last_error;static BPTR current;
 LONG IoErr(void){return last_error;}
 static void pathof(char *out,const char *name){
@@ -31,7 +33,7 @@ LONG Examine(BPTR h,struct FileInfoBlock*f){struct mock_lock*p=(struct mock_lock
 }
 BPTR OpenFromLock(BPTR h){struct mock_lock*p=(struct mock_lock*)h;if(!p->file)return 0;FILE*f=p->file;p->file=NULL;UnLock(h);return (BPTR)f;}
 LONG Flush(BPTR h){return !fflush((FILE*)h);}
-LONG ExNext(BPTR h,struct FileInfoBlock*f){struct mock_lock*p=(struct mock_lock*)h;struct dirent*e=readdir(p->listing);struct stat st;char path[1200];if(!e){last_error=ERROR_NO_MORE_ENTRIES;return 0;}snprintf(path,sizeof(path),"%s/%s",p->path,e->d_name);assert(!lstat(path,&st));memset(f,0,sizeof(*f));snprintf(f->fib_FileName,sizeof(f->fib_FileName),"%s",e->d_name);f->fib_Size=st.st_size;f->fib_DirEntryType=S_ISREG(st.st_mode)?ST_FILE:S_ISDIR(st.st_mode)?ST_USERDIR:3;f->fib_Date.ds_Days=17817;return 1;}
+LONG ExNext(BPTR h,struct FileInfoBlock*f){mock_exnext_calls++;struct mock_lock*p=(struct mock_lock*)h;struct dirent*e=readdir(p->listing);struct stat st;char path[1200];if(!e){last_error=ERROR_NO_MORE_ENTRIES;return 0;}snprintf(path,sizeof(path),"%s/%s",p->path,e->d_name);assert(!lstat(path,&st));memset(f,0,sizeof(*f));snprintf(f->fib_FileName,sizeof(f->fib_FileName),"%s",e->d_name);f->fib_Size=st.st_size;f->fib_DirEntryType=S_ISREG(st.st_mode)?ST_FILE:S_ISDIR(st.st_mode)?ST_USERDIR:3;f->fib_Date.ds_Days=mock_days;return 1;}
 BPTR CurrentDir(BPTR h){BPTR old=current;current=h;return old;}
 BPTR CreateDir(STRPTR name){char p[1200];pathof(p,name);if(mkdir(p,0700))return 0;return Lock(p,ACCESS_READ);}
 LONG NameFromLock(BPTR h,STRPTR out,LONG size){const char*p=((struct mock_lock*)h)->path;if(strlen(p)>=(size_t)size)return 0;strcpy(out,p);return 1;}

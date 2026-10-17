@@ -1,0 +1,205 @@
+{
+  "386": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "0 emulated_ms=19 wall_ms=94 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [],
+    "sha256_log": "59eaaddcd08d8cb7827c47d9759f34ca47ac2f2b4a61fc2e055596b654ed4944"
+  },
+  "486": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "0 emulated_ms=20 wall_ms=95 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [],
+    "sha256_log": "4f1377f9ea6e131ef93b581035f565c2c992e69b302ebea3043c4a63c392c0ed"
+  },
+  "auto": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "306 emulated_ms=4394 wall_ms=8575 timed_done=0"
+    ],
+    "cycles": [
+      "2008"
+    ],
+    "audio": [],
+    "sha256_log": "7ce8ac75636e5226d7b3080b230544f9482383527cc0af74a38916d3a2766f51"
+  },
+  "cms": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "37 emulated_ms=549 wall_ms=1844 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [
+      "task: AHI unit 0, 32000 Hz stereo; 4 queue slots, 64 ms prebuffer"
+    ],
+    "sha256_log": "6102e2055a969f72d2dc3498a93724a6e19df4f2beeb7ed3123703024e6f23ef"
+  },
+  "ems": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "0 emulated_ms=19 wall_ms=116 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [],
+    "sha256_log": "7d103ae5403b75a40d39081cb2ec7cc3468f2cd3938c2e1d35eca6c4b63c3cc3"
+  },
+  "extended": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "0 emulated_ms=20 wall_ms=85 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [],
+    "sha256_log": "0a706479de1caac2d9a233ad301e7f2bb8e412afbd2a26c4644d49ccd727935a"
+  },
+  "gus": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "37 emulated_ms=549 wall_ms=1848 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [
+      "task: AHI unit 0, 32000 Hz stereo; 4 queue slots, 64 ms prebuffer"
+    ],
+    "sha256_log": "c8a46b219571441d7b494a98e218b81017e4a518cec0cc70c98c688a169b2a8a"
+  },
+  "joystick": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "0 emulated_ms=20 wall_ms=108 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [],
+    "sha256_log": "0365434ecf528378c962fc83ed86ef1f054cc658fd202155db4ddbb09dca134d"
+  },
+  "max": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "305 emulated_ms=4394 wall_ms=8552 timed_done=0"
+    ],
+    "cycles": [
+      "2008"
+    ],
+    "audio": [],
+    "sha256_log": "9f3ffccd0f7a60200bd9afad2a7fa42208f828e3e000159acfc17ce51ff3a943"
+  },
+  "paging": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "419 emulated_ms=6000 wall_ms=8416 timed_done=1"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [],
+    "sha256_log": "f057390ac22901bdb74b5a26cb599549b2c2653c5a576108300b6a24bfaf900f"
+  },
+  "pentium": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "0 emulated_ms=20 wall_ms=90 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [],
+    "sha256_log": "eb1fc37cd7a47bbb5a1b68d9e325d92dab8cf1603d2d29e31d799fc9240c158b"
+  },
+  "sb16": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "1 emulated_ms=45 wall_ms=295 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [
+      "task: AHI unit 0, 32000 Hz stereo; 4 queue slots, 64 ms prebuffer"
+    ],
+    "sha256_log": "6b0dd7520acf5a5c6d820ea19f55c7e91cc486a8b5db1cd991cf204d83779a98"
+  },
+  "serial": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "16 emulated_ms=256 wall_ms=403 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [],
+    "sha256_log": "d243f3739e18dab8abbf68f56d6184396aab2776a894fc41fe505c8e90a27272"
+  },
+  "tandy": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "37 emulated_ms=549 wall_ms=1836 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [
+      "task: AHI unit 0, 32000 Hz stereo; 4 queue slots, 64 ms prebuffer"
+    ],
+    "sha256_log": "922b8788b4fd5cd047ca9eca483f8c17b3909548374a7fc9cafd7d77eb35e564"
+  },
+  "x87": {
+    "exit_clean": true,
+    "registers_restored": true,
+    "cache_witness": true,
+    "frames": [
+      "1 emulated_ms=32 wall_ms=121 timed_done=0"
+    ],
+    "cycles": [
+      "6000"
+    ],
+    "audio": [],
+    "sha256_log": "8decbc3ab595296b9a8ccf2576fd18ce9691030b2963feaa9293b05ac5fd7c61"
+  }
+}

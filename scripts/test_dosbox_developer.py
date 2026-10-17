@@ -9,7 +9,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 includes = ['tests/amiga/dosbox/debug_mock', 'amiga/dosbox/launcher',
             'amiga/dosbox/pc', 'amiga/dosbox/console', 'amiga/dosbox/dos',
             'amiga/common/arm', 'amiga/arm_debug', 'amiga/arm_debug/zz9000']
-for name in ('developer', 'video_trace_host', 'video_debug_host', 'launcher'):
+for name in ('developer', 'video_trace_host', 'video_debug_host', 'launcher', 'conf', 'joystick_keys', 'serial_device'):
     binary = OUT/('test-'+name)
     subprocess.run(['clang', '-std=c99', '-fsanitize=address,undefined',
                     '-fno-sanitize-recover=all', *['-I'+p for p in includes],

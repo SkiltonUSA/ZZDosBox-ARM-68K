@@ -9,14 +9,14 @@
 enum {DC_CORE,DC_CYCLES,DC_MEMORY,DC_MACHINE,DC_FULLSCREEN,DC_SIZE,DC_FPS,
  DC_RENDERER,DC_PRESENTATION,DC_SCANLINES,DC_MONO,DC_MIDI,DC_PORT,DC_CD,DC_CDPATH,
  DC_LOADFIX,DC_FG,DC_BG,DC_LIVE,DC_AUTO_MODE,DC_AUTO_FILE,DC_CONFIG_MODE,DC_CONFIG_FILE,
- DC_TRACE,DC_PROFILE,DC_BREAK,DC_FRAME,DC_HANDOFF,DC_POLL,DC_COUNT};
+ DC_TRACE,DC_PROFILE,DC_BREAK,DC_FRAME,DC_HANDOFF,DC_POLL,DC_EMS,DC_SOUND,DC_SPEAKER,DC_CPUTYPE,DC_VCPI,DC_UMB,DC_JOYSTICK,DC_EXTRA_SOUND,DC_CYCLE_MODE,DC_SERIAL,DC_SERIAL_HOST,DC_SERIAL_PORT,DC_PAGED_JIT,DC_COUNT};
 struct dc_key {const char *section,*name,*choices,*example;int offset;unsigned cap,min,max;};
 #define DC_U(section,name,choices,example,field) {section,name,choices,example,offsetof(struct dl_profile,field),0,0,0}
 #define DC_S(section,name,example,field) {section,name,NULL,example,offsetof(struct dl_profile,field),sizeof(((struct dl_profile*)0)->field),0,0}
 static const struct dc_key dc_keys[DC_COUNT]={
  {"cpu","core","auto|normal|dynamic","auto",-1,0,0,0},
- {"cpu","cycles",NULL,"3000",-1,0,500,10000},
- {"dosbox","memsize",NULL,"8",offsetof(struct dl_profile,memory),0,1,8},
+ {"cpu","cycles",NULL,"3000",-1,0,500,100000},
+ {"dosbox","memsize",NULL,"8",offsetof(struct dl_profile,memory),0,1,32},
  DC_U("dosbox","machine","vga|ega|cga|svga_s3|tandy|pcjr|hercules","vga",machine),
  DC_U("sdl","fullscreen","false|true","false",display),
  DC_U("sdl","windowresolution","320x240|640x480|960x720","640x480",size),
@@ -42,7 +42,20 @@ static const struct dc_key dc_keys[DC_COUNT]={
  {"developer","breakpoint","off|before|after","off",-1,0,0,0},
  {"developer","frame",NULL,"1",-1,0,1,10000000},
  {"developer","handoff","default|serial|pipelined","default",-1,0,0,0},
- {"developer","poll_ms","default|1|4|20","default",-1,0,0,0}
+ {"developer","poll_ms","default|1|4|20","default",-1,0,0,0},
+ DC_U("dos","ems","false|true","true",ems),
+ DC_U("sblaster","sbtype","none|sbpro2|sb16","sbpro2",sound),
+ DC_U("speaker","pcspeaker","false|true","false",speaker),
+ DC_U("cpu","cputype","386|486|pentium","386",cpu_model),
+ DC_U("dos","vcpi","false|true","false",vcpi),
+ DC_U("dos","umb","false|true","false",umb),
+ DC_U("joystick","joysticktype","none|2axis","none",joystick),
+ DC_U("sound","extra_device","none|gus|cms|tandy","none",extra_sound),
+ DC_U("cpu","cycle_mode","fixed|auto|max","fixed",cycle_mode),
+ DC_U("serial","serial1","disabled|tcp|modem|device","disabled",serial_mode),
+ DC_S("serial","host","127.0.0.1",serial_host),
+ {"serial","port",NULL,"23",offsetof(struct dl_profile,serial_port),0,1,65535},
+ DC_U("cpu","paged_register_jit","false|true","false",paged_jit)
 };
 #undef DC_U
 #undef DC_S
@@ -65,7 +78,11 @@ static int dc_parse(const char*text,struct dc_config*out,char*error,size_t cap){
   eq=strchr(s,'=');if(!eq)return dc_error(error,cap,lineno,"expected key=value");*eq=0;s=dc_trim(s);value=dc_trim(eq+1);
   for(k=0;k<DC_COUNT;k++)if(dc_equal(section,dc_keys[k].section)&&dc_equal(s,dc_keys[k].name))break;
   if(k==DC_COUNT)return dc_error(error,cap,lineno,"unsupported setting");if(next.set[k])return dc_error(error,cap,lineno,"duplicate setting");
-  if(dc_keys[k].cap){if(strlen(value)>=dc_keys[k].cap||strlen(value)>=sizeof(next.text[k]))return dc_error(error,cap,lineno,"value too long");strcpy(next.text[k],value);}
+  if(k==DC_CYCLES&&(dc_equal(value,"auto")||dc_equal(value,"max"))){
+   if(next.set[DC_CYCLE_MODE])return dc_error(error,cap,lineno,"cycle mode specified twice");
+   next.set[DC_CYCLE_MODE]=1;next.value[DC_CYCLE_MODE]=dc_equal(value,"max")?2:1;next.value[k]=3000;
+  }
+  else if(dc_keys[k].cap){if(strlen(value)>=dc_keys[k].cap||strlen(value)>=sizeof(next.text[k]))return dc_error(error,cap,lineno,"value too long");strcpy(next.text[k],value);}
   else if(dc_keys[k].choices){if(!dc_choice(dc_keys[k].choices,value,&next.value[k]))return dc_error(error,cap,lineno,"unsupported value");}
   else {if(k==DC_CYCLES&&!strncmp(value,"fixed ",6))value=dc_trim(value+6);if(!dc_number(value,dc_keys[k].min,dc_keys[k].max,&next.value[k])||(k==DC_MEMORY&&(next.value[k]&(next.value[k]-1))))return dc_error(error,cap,lineno,"number outside supported range");}
   next.set[k]=1;
@@ -73,9 +90,9 @@ static int dc_parse(const char*text,struct dc_config*out,char*error,size_t cap){
  *out=next;*error=0;return 1;
 }
 static int dc_template(char*out,size_t cap){unsigned k;size_t used=0;const char*section="";int n;
- n=snprintf(out,cap,"# ZZDosBox overrides; commented settings keep program preferences.\n# Save settings applies this file. core=dynamic uses guarded JIT for images.\n# Paging uses the interpreter. OpenGL is experimental.\n# No x87, PCM mixer, EMS/XMS switches, auto/max cycles or int33 switch.\n");if(n<0||(size_t)n>=cap)return 0;used=n;
+ n=snprintf(out,cap,"# ZZDosBox overrides; commented settings keep program preferences.\n# Save settings applies this file. core=dynamic uses guarded JIT for images.\n# Paging defaults to the interpreter; register-only JIT is experimental.\n# x87 is in the Compat runtime. Auto/max use wall-time feedback; int33 is not configurable.\n");if(n<0||(size_t)n>=cap)return 0;used=n;
  for(k=0;k<DC_COUNT;k++){const struct dc_key*d=&dc_keys[k];if(strcmp(section,d->section)){n=snprintf(out+used,cap-used,"\n[%s]\n",d->section);if(n<0||(size_t)n>=cap-used)return 0;used+=n;section=d->section;}
-  if(d->choices)n=snprintf(out+used,cap-used,"# %s\n",d->choices);else if(d->cap)n=snprintf(out+used,cap-used,"# Amiga path / CAMD port\n");else n=snprintf(out+used,cap-used,"# %u..%u%s\n",d->min,d->max,k==DC_MEMORY?" (1, 2, 4, 8 only)":"");
+  if(d->choices)n=snprintf(out+used,cap-used,"# %s\n",d->choices);else if(d->cap)n=snprintf(out+used,cap-used,"# Amiga path / CAMD port\n");else n=snprintf(out+used,cap-used,"# %u..%u%s\n",d->min,d->max,k==DC_MEMORY?" (1, 2, 4, 8, 16, 32 only)":"");
   if(n<0||(size_t)n>=cap-used)return 0;used+=n;
   n=snprintf(out+used,cap-used,"%s%s=%s\n",k==DC_CORE?"":"# ",d->name,d->example);if(n<0||(size_t)n>=cap-used)return 0;used+=n;
  }return dl_text_valid(out);
@@ -83,6 +100,7 @@ static int dc_template(char*out,size_t cap){unsigned k;size_t used=0;const char*
 static unsigned dc_get(const struct dc_config*c,unsigned k,unsigned fallback){return c->set[k]?c->value[k]:fallback;}
 static int dc_apply(const struct dc_config*c,const struct dl_profile*base,struct dl_profile*out,char*error,size_t cap){unsigned k;*out=*base;
  for(k=0;k<DC_COUNT;k++)if(c->set[k]&&dc_keys[k].offset>=0){char*at=(char*)out+dc_keys[k].offset;if(dc_keys[k].cap)strcpy(at,c->text[k]);else *(unsigned*)at=c->value[k];}
+ if(c->set[DC_CYCLES]&&c->value[DC_CYCLES]>10000)out->expanded=1;
  if(!dl_profile_valid(out)){snprintf(error,cap,"dosbox.conf conflicts with program settings (colours, paths or startup files).");return 0;}
  if(out->scanlines&&!dl_scanlines_available(out->display,out->fps)&&(c->set[DC_SCANLINES]||c->set[DC_FULLSCREEN]||c->set[DC_FPS])){snprintf(error,cap,"Scanlines require fullscreen and FPS off.");return 0;}
  if((out->system==1||out->system==2)&&(c->set[DC_FG]||c->set[DC_BG]||(c->set[DC_LIVE]&&!out->live))){snprintf(error,cap,"Booted DOS controls its own colours and runs until closed.");return 0;}
@@ -97,6 +115,31 @@ static int dc_apply(const struct dc_config*c,const struct dl_profile*base,struct
 /* Existing binaries own the CPU core. Never silently ignore an explicit core. */
 static const char *dc_runtime(const struct dc_config*c,const struct dl_profile*p,unsigned trace,unsigned point,unsigned memory,char*error,size_t cap){
  unsigned core=dc_get(c,DC_CORE,0);
+ if(p->network.enabled){
+  if(p->system||p->renderer||p->presentation||p->scanlines||trace||point||memory||dl_profile_expanded(p)||(c->set[DC_CYCLES]&&c->value[DC_CYCLES]>10000)){
+   snprintf(error,cap,"Network requires embedded DOS, up to 8 MiB, Direct/Normal and no Expanded or developer options.");return NULL;
+  }
+  if(core==1){
+   if(p->ems||p->sound||p->speaker){snprintf(error,cap,"Network audio/EMS require core auto/dynamic.");return NULL;}
+   return "ZZDosBox-Net";
+  }
+  return "ZZDosBox-Net-JIT";
+ }
+
+ if(dl_profile_expanded(p)||(c->set[DC_CYCLES]&&c->value[DC_CYCLES]>10000)){
+  if(p->renderer||core==1||trace||point||memory){snprintf(error,cap,"Expanded hardware requires Direct, core auto/dynamic, developer tools off.");return NULL;}
+  if(p->serial_mode&&(p->system==1||p->system==2)){snprintf(error,cap,"COM1 currently requires embedded DOS.");return NULL;}
+  if(p->serial_mode==3&&p->midi&&!strcmp(p->serial.device,"serial.device")){snprintf(error,cap,"Disable CAMD MIDI when using the built-in serial port.");return NULL;}
+  if(p->vcpi&&!p->ems){snprintf(error,cap,"VCPI requires EMS enabled.");return NULL;}
+  if((p->system==1||p->system==2)&&(p->ems||p->vcpi||p->umb)){snprintf(error,cap,"Booted DOS supplies its own EMS/VCPI/UMB drivers.");return NULL;}
+  if(p->extra_sound>=2&&p->sound){snprintf(error,cap,"Turn Sound Blaster off for Game Blaster or Tandy (shared I/O ports).");return NULL;}
+  if(p->extra_sound==1&&p->machine!=0&&p->machine!=1&&p->machine!=3){snprintf(error,cap,"GUS requires EGA, VGA or S3 graphics.");return NULL;}
+  return "ZZDosBox-Expanded";
+ }
+ if(p->ems||p->sound||p->speaker){
+  if((p->system&&p->system!=3)||p->renderer||core==1||trace||point||memory){snprintf(error,cap,"EMS/Sound Blaster require embedded DOS, Direct, core auto/dynamic, developer tools off.");return NULL;}
+  return "ZZDosBox-Compat";
+ }
  if(memory&&(p->renderer||trace||point)){snprintf(error,cap,"Memory tools require Direct with trace and frame breakpoints off.");return NULL;}
  if(p->system==2){if(trace||point||memory){snprintf(error,cap,"Image sessions do not support trace, breakpoints or memory tools.");return NULL;}return core==2?"ZZDosBox-Windows-Dynamic":"ZZDosBox-Windows";}
  if(core==1){if(p->renderer||p->presentation||p->scanlines||trace||point||memory){snprintf(error,cap,"core=normal requires Direct/Normal, scanlines off and no trace or memory tools.");return NULL;}return "ZZDosBox-Windows";}

@@ -4,10 +4,15 @@
 #include "fs_wire.h"
 #include "shell_api.h"
 #include "disk_cache.h"
+#include "file_read_ahead.h"
 #include <string.h>
+#ifndef DB_FILE_READAHEAD
+#define DB_FILE_READAHEAD 0
+#endif
 extern "C" volatile uint8_t *db_shared();
 extern bool db_shell_finishing();
 static uint32_t sequence;
+static bool flush_file_read_ahead();
 static char search_dirs[64][FS_PATH_SIZE];static unsigned search_count;
 static void fence(){__asm__ volatile("dsb sy" ::: "memory");}
 static unsigned reply(unsigned n){return ad_get(db_shared(),FS_REPLY+n*4);}
@@ -19,7 +24,10 @@ static bool split_path(const char *path,char *dir,char *leaf){
 }
 static bool rpc(unsigned op,unsigned handle=0,unsigned count=0,unsigned pos=0,unsigned whence=0,const char *name=nullptr,const char *name2=nullptr){
  if(db_shell_finishing()){DOS_SetError(DOSERR_ACCESS_DENIED);return false;}
- volatile uint8_t *s=db_shared();db_shell_poll();char dir[FS_PATH_SIZE]={},dir2[FS_PATH_SIZE]={},leaf[FS_NAME_SIZE]={},leaf2[FS_NAME_SIZE]={};
+ volatile uint8_t *s=db_shared();db_shell_poll();
+ if((op==FS_WRITE||op==FS_CREATE||op==FS_DELETE||op==FS_RENAME)&&!flush_file_read_ahead())return false;
+ if(fs_uses_path(op)){
+ char dir[FS_PATH_SIZE]={},dir2[FS_PATH_SIZE]={},leaf[FS_NAME_SIZE]={},leaf2[FS_NAME_SIZE]={};
  bool valid=true;
  if(op==FS_LIST||op==FS_TESTDIR){if(name&&strlen(name)<FS_PATH_SIZE&&fs_dir_valid(name))strcpy(dir,name);else if(name)valid=false;}
  else if(name)valid=split_path(name,dir,leaf);
@@ -27,6 +35,7 @@ static bool rpc(unsigned op,unsigned handle=0,unsigned count=0,unsigned pos=0,un
  if(!valid){DOS_SetError(DOSERR_ACCESS_DENIED);return false;}
  for(unsigned i=0;i<FS_NAME_SIZE;i++){s[FS_NAME+i]=leaf[i];s[FS_NAME2+i]=leaf2[i];}
  for(unsigned i=0;i<FS_PATH_SIZE;i++){s[FS_DIR+i]=dir[i];s[FS_DIR2+i]=dir2[i];}
+ }
  ad_put(s,FS_CMD+4,op);ad_put(s,FS_CMD+8,handle);ad_put(s,FS_CMD+12,count);ad_put(s,FS_CMD+16,pos);ad_put(s,FS_CMD+20,whence);
  fence();ad_put(s,FS_CMD,++sequence);fence();
  while(ad_get(s,FS_REPLY)!=sequence)db_shell_poll();fence();
@@ -37,17 +46,31 @@ DOS_Drive_Cache::~DOS_Drive_Cache(){}
 void DOS_Drive_Cache::EmptyCache(){}
 DOS_Drive::DOS_Drive(){curdir[0]=0;strcpy(info,"ZZDosBox C drive");}
 char *DOS_Drive::GetInfo(){return info;}
+class RemoteFile;
+static RemoteFile *file_readers[FS_HANDLES];
 class RemoteFile:public DOS_File {
  unsigned handle;
+ DbFileReadAhead ahead;
+ struct Transfer {
+  unsigned handle;
+  bool read(uint8_t *p,unsigned &n){
+   unsigned requested=n;if(!rpc(FS_READ,handle,n))return false;n=reply(2);
+   if(n>requested)E_Exit("Invalid FS read response");
+   for(unsigned i=0;i<n;i++)p[i]=db_shared()[FS_DATA+i];return true;
+  }
+  bool rewind(unsigned n){return rpc(FS_SEEK,handle,0,0u-n,1);}
+ };
 public:
- RemoteFile(unsigned h,unsigned f):handle(h){open=true;flags=f;}
+ RemoteFile(unsigned h,unsigned f):handle(h){open=true;flags=f;date=reply(5);time=reply(6);attr=reply(4);if(!h||h>FS_HANDLES)E_Exit("Invalid FS open response");file_readers[h-1]=this;}
+ ~RemoteFile(){if(file_readers[handle-1]==this)file_readers[handle-1]=nullptr;}
+ bool DiscardReadAhead(){Transfer io{handle};return ahead.discard(io);}
  bool Read(Bit8u *p,Bit16u *n)override{
   if((flags&3)==OPEN_WRITE){DOS_SetError(DOSERR_ACCESS_DENIED);return false;}
-  unsigned want=*n,done=0;
-  while(done<want){unsigned k=want-done;if(k>FS_CHUNK)k=FS_CHUNK;
-   if(!rpc(FS_READ,handle,k)){*n=done;return false;}unsigned got=reply(2);if(got>k)E_Exit("Invalid FS read response");
-   for(unsigned i=0;i<got;i++)p[done+i]=db_shared()[FS_DATA+i];done+=got;if(got<k)break;
-  }*n=done;return true;
+  db_shell_poll(); /* Cached reads must retain input and cancellation service. */
+  if(db_shell_finishing()){DOS_SetError(DOSERR_ACCESS_DENIED);*n=0;return false;}
+  Transfer io{handle};unsigned count=*n;
+  bool ok=ahead.read(io,p,count,DB_FILE_READAHEAD&&(flags&3)==OPEN_READ);
+  *n=count;return ok;
  }
  bool Write(Bit8u *p,Bit16u *n)override{
   if((flags&3)==OPEN_READ){DOS_SetError(DOSERR_ACCESS_DENIED);return false;}
@@ -57,10 +80,14 @@ public:
    if(!rpc(FS_WRITE,handle,k)){*n=done;return false;}unsigned got=reply(2);if(got>k)E_Exit("Invalid FS write response");done+=got;if(got<k)break;
   }while(done<want);*n=done;return true;
  }
- bool Seek(Bit32u *p,Bit32u type)override{if(!rpc(FS_SEEK,handle,0,*p,type))return false;*p=reply(2);return true;}
- bool Close()override{if(!open)return true;bool ok=rpc(FS_CLOSE,handle);open=false;return ok;}
+ bool Seek(Bit32u *p,Bit32u type)override{Transfer io{handle};if(!ahead.discard(io)||!rpc(FS_SEEK,handle,0,*p,type))return false;*p=reply(2);return true;}
+ bool Close()override{if(!open)return true;bool ok=rpc(FS_CLOSE,handle);file_readers[handle-1]=nullptr;open=false;return ok;}
  Bit16u GetInformation()override{return 0;}
 };
+static bool flush_file_read_ahead(){
+ for(unsigned i=0;i<FS_HANDLES;i++)if(file_readers[i]&&!file_readers[i]->DiscardReadAhead())return false;
+ return true;
+}
 class RemoteDrive:public DOS_Drive {
 public:
  bool FileOpen(DOS_File **f,char *name,Bit32u flags)override{if(!rpc(FS_OPEN,0,flags&3,0,0,name))return false;*f=new RemoteFile(reply(2),flags);return true;}
@@ -89,7 +116,7 @@ public:
  bool Rename(char *a,char *b)override{return rpc(FS_RENAME,0,0,0,0,a,b);}
  bool AllocationInfo(Bit16u *b,Bit8u *s,Bit16u *t,Bit16u *f)override{if(!rpc(FS_SPACE))return false;*b=512;*s=64;*t=reply(2);*f=reply(3);return true;}
  bool FileExists(const char *name)override{return rpc(FS_STAT,0,0,0,0,name)&&!(reply(4)&DOS_ATTR_DIRECTORY);}
- bool FileStat(const char *name,FileStat_Block *st)override{if(!rpc(FS_STAT,0,0,0,0,name))return false;memset(st,0,sizeof(*st));st->size=reply(3);st->attr=reply(4);return true;}
+ bool FileStat(const char *name,FileStat_Block *st)override{if(!rpc(FS_STAT,0,0,0,0,name))return false;memset(st,0,sizeof(*st));st->size=reply(3);st->attr=reply(4);st->date=reply(5);st->time=reply(6);return true;}
  Bit8u GetMediaByte()override{return 0xf8;}bool isRemote()override{return true;}bool isRemovable()override{return false;}Bits UnMount()override{return 0;}
 };
 void db_mount(const uint8_t*,unsigned){Drives[2]=new RemoteDrive();DOS_SetDefaultDrive(2);sequence=0;search_count=0;}

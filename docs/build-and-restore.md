@@ -1,6 +1,7 @@
 # Build and restore
 
-This backup contains current development source and launcher 0.19.8-dev, the historical 0.8
+This backup contains current development source and the
+[0.22.2-dev update](../artifacts/development/runtime-0.22.2), the historical 0.8
 baseline and a separate experimental Windows build. The Windows build has
 passed physical desktop, Graphics WinMark and shutdown checks. See the per-artifact notes before deploying.
 The original 0.8 artifacts remain unchanged for recovery.
@@ -19,6 +20,7 @@ those for a different host. With Python's `unicorn==2.1.4` installed (or use `uv
 
 ```sh
 make test-host
+make test-file-read-ahead test-host-review
 make test-model PYTHON=/path/to/python-with-unicorn
 python3 scripts/build_dosbox_pc.py --sanitize
 ```
@@ -41,6 +43,10 @@ export AMIGA_CONTAINER_COMMAND='["podman"]'
 python3 scripts/build_dosbox_dos_arm.py --pc
 python3 scripts/build_dosbox_launcher.py
 ```
+
+Use `make build-current`, `make build-expanded` and `make build-network-jit`
+for the 0.22.2 runtime configurations. These enable bounded file read-ahead;
+historical command lines retain the unbuffered path unless explicitly requested.
 
 The launcher icon converter additionally needs ImageMagick (`magick`). The
 archived PIC soft-float libc is restored by the preparation script; its member

@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.19.12-dev**, newest first.
+Version history from **0.1.0-dev** through **0.22.2-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -10,8 +10,39 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
+## 0.22.2-dev — file reads and input scheduling
+
+- Optional 4 KiB read-ahead per read-only DOS file; buffers drain before writes,
+  truncation and other mutations, preserving AmigaDOS handle positions.
+- Consecutive mouse motion is coalesced without merging button/focus transitions;
+  leaving the painted area resets relative-position tracking.
+- Opt-in paged JIT interprets unsupported instructions in bursts of up to 32
+  cycles, bounded by the next scheduled event. Default paging remains interpreted.
+- Refreshed I/O/joystick specifications and launcher screenshots.
+- Measurements and installation scope: see the file-read optimisation report.
+
+## 0.22.1-dev — network integration candidate
+
+- Added `ZZDosBox-Net-JIT`: TCP/IP or IPX with ARM dynrec, 4 MiB code cache,
+  NEON conversion, pipelined display, EMS and SBPro2/SB16/PC speaker.
+- Launcher honours explicit normal core with the existing interpreter runtime;
+  network terminal uses the selected runtime and audio settings too.
+- Handle/device file operations no longer rewrite or synchronise unused path
+  metadata. Writes stay synchronous; pathname operations retain validation.
+- Expanded hardware/serial and booted Windows networking remain separate.
+- Validation and hardware promotion are recorded in the integration report.
+
 | Version | Main change |
 |---|---|
+| 0.22.2-dev | File read-ahead, mouse motion coalescing and batched paging fallback |
+| 0.22.1-dev | Combined network/JIT/EMS/Sound Blaster candidate; less filesystem mailbox work |
+| 0.22.0-dev | Experimental physical COM1, USB driver detection and per-program serial settings |
+| 0.21.2-dev | Aligned joystick panels, 1-6 buttons and extra-button DOS key bindings |
+| 0.21.1-dev | Dedicated I/O and live joystick/button tester pages |
+| 0.21.0-dev | Optional expanded PC hardware and memory settings |
+| 0.20.1-dev-compat-x87 | Experimental x87 guest FPU on A9 VFP |
+| 0.20.1-dev | Sound Blaster choices, PC speaker and file dates |
+| [0.20.0-dev](#v0-20-0) | EMS/XMS and Sound Blaster Pro 2 compatibility runtime |
 | [0.19.12-dev](#v0-19-12) | Per-program screenshots and library previews |
 | [0.19.11-dev](#v0-19-11) | Loading handoff, Rename, OS images and footer revision |
 | [0.19.10-dev](#v0-19-10) | Program-list keyboard navigation |
@@ -50,6 +81,67 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 | [0.2.0-dev](#v0-2-0) | DOS kernel |
 | [0.1.0-dev](#v0-1-0) | first ARM execution prototype |
 
+## 0.22.0-dev — Physical serial (Experimental)
+
+- Connect DOS COM1 to an AmigaOS serial-compatible driver: built-in serial,
+  supported USB adapters or serial expansion cards, with device/unit selection.
+- Follow DOS UART baud/framing or override physical baud, 7/8 data bits,
+  parity and stop bits. Optional RTS/CTS driver handshaking.
+- Asynchronous buffered read/write, modem input status and timed break output.
+  RTS/DTR outputs remain driver-managed, not arbitrary guest pin control.
+- Grey out the USB shortcut without Poseidon and a registered supported serial
+  driver. Detect USB refreshes the check; no port is opened by detection.
+- Save serial choices per program in library format 19; preserve older profiles.
+- Retain the light-grey sidebar, original-grey joystick test and oval directions.
+
+## 0.21.2-dev — Joystick button choices
+
+- Align the gameport, tester and key-binding panels to the same width.
+- Use smaller round indicators with labels below in the live joystick tester.
+- Save a 1-6 physical-button choice per program and display that many buttons
+  in the live tester. Buttons 3-6 use compatible gamepad colour/shoulder inputs.
+- Keep buttons 1-2 on the DOS gameport; map buttons 3-6 to selectable DOS keys.
+  Duplicate bindings and simultaneous keyboard holds retain independent releases.
+- Profile format 18 migrates earlier libraries with the previous two-button
+  behavior. Expanded runtime 0.21.2 adds host input handling; ARM core unchanged.
+
+## 0.21.1-dev — I/O and Joystick pages
+
+- Move COM1 TCP/modem settings from Network to a dedicated I/O sidebar page.
+- Add a Joystick page with per-program gameport enable, live direction and
+  Fire/Button 2 indicators, and X/Y values.
+- Poll physical Amiga port 2 (lowlevel index 1) only while the tester is open;
+  release the timer and library when leaving or closing the launcher.
+- Preserve profile format 17 and the existing runtime/device behavior.
+
+## 0.21.0-dev — Expanded hardware candidate
+
+- Optional 386/486/Pentium CPU models and up to 32 MiB guest RAM.
+- Auto/Max cycle control, VCPI/UMB and a two-axis joystick gameport.
+- GUS, Game Blaster/CMS and Tandy sound devices through AHI.
+- COM1 UART with outbound TCP and basic modem commands.
+- Experimental register-only paging JIT, disabled by default.
+- CPU/Audio/Network settings and dosbox.conf controls; profile format 17
+  preserves existing profiles. Expanded runtime uses a 64 MiB owned allocation.
+- Development candidate: compatibility and performance claims require separate
+  hardware results. See `docs/amiga-dosbox-expanded-hardware.md` for limitations.
+
+## 0.20.1-dev-compat-x87 — Experimental guest FPU
+
+- Optional portable x87 in the compatibility runtime, including interpreter and ARM JIT helpers.
+- Uses A9 VFPv3 double precision with preserved firmware floating-point state; does not require a 68k FPU.
+- Native, relocated ARM-model and physical x87 fixtures pass. Full 80-bit precision is not provided.
+- See the [x87 report](../../docs/amiga-dosbox-x87.md) for scope and game results.
+
+## 0.20.1-dev — Audio choices and file dates
+
+- Per-program Sound Blaster 8-bit (Pro 2), Sound Blaster 16-bit and independent PC speaker/beep controls in Audio.
+- SB16 DMA 5 and IRQ 7, matching BLASTER environment; PIT speaker output through AHI.
+- dosbox.conf supports `sbtype=none|sbpro2|sb16` and `[speaker] pcspeaker=false|true`.
+- Profile format v16 preserves old libraries; sound and speaker settings persist separately.
+- Remote DOS files report their host timestamps consistently on open and stat, fixing the stale-resource check seen in Eye of the Beholder III.
+- Native game checks use fresh recursive copies, preserving nested game assets and preventing cross-game test contamination.
+
 ## Unreleased — runtime review cleanup
 
 - Document ZZDosBox DHCP/manual IPv4 and IPX setup, with the supported subset
@@ -62,6 +154,17 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 - Document the unused fourth byte in scanline pixel formats.
 - Add sanitizer tests for ring publication, wrapping and receive recovery.
 - RAM-only hardware correctness check passed; no speed gain is established.
+
+<a id="v0-20-0"></a>
+## 0.20.0-dev — memory and audio compatibility
+
+- Embedded EMS 4.0 and XMS share the guest-memory pool.
+- Sound Blaster Pro 2, DMA/IRQ and DBOPL on ARM; batched 32 kHz stereo through AHI.
+- Per-program EMS and sound-card controls, with versioned library migration.
+- Dedicated Compat runtime preserves existing Windows, networking and Developer builds.
+- Native guest-level memory, DSP/DMA/IRQ and FM tests pass; hardware results are
+  tracked in the memory/audio guide. This is not a released compatibility claim.
+
 
 <a id="v0-19-12"></a>
 ## 0.19.12-dev — Library screenshots

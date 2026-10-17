@@ -240,7 +240,5 @@ Single-run elapsed values were 19,918 ms baseline and 20,534 ms candidate.
 There is **no demonstrated speed gain**. This is a correctness smoke test,
 not a controlled host-only performance comparison: the installed runtime and
 fresh source build have different worker provenance. The installed applications
-remain unchanged. Build records, logs and the test fixture are preserved in
-[the console synchronization candidate](../artifacts/experiments/console-sync/).
-The old drain already withheld consumption when output failed; the refactor
-preserves that behavior rather than introducing a new data-loss fix.
+remain unchanged. Private build records, logs and test fixture are under
+`.context/amiga/dosbox-review/`. No GitHub publication was performed.

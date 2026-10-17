@@ -1,4 +1,5 @@
 #include "../pc/adapters.h"
+#include "../pc/capabilities.h"
 /* GPL-3.0-or-later. Shared, bounded launcher/host configuration. */
 #ifndef DB_SESSION_H
 #define DB_SESSION_H
@@ -11,7 +12,7 @@ struct dl_session {char drive[DL_PATH],command[160],cd_path[DL_PATH],midi_port[6
 static inline void dl_defaults(struct dl_session *s){memset(s,0,sizeof(*s));s->memory=2;s->cycles=3000;s->fg=7;s->live=1;s->size=1;strcpy(s->midi_port,"out.0");}
 static inline int dl_plain(const char *s){for(;*s;s++)if((unsigned char)*s<32||*s==127)return 0;return 1;}
 static inline int dl_image_valid(const char*s){unsigned n=0,dots=0,dot=0;if(!*s)return 0;for(;*s;s++,n++){if(*s=='.'){if(!n||n>8||dots++)return 0;dot=n;}else if(!((*s>='A'&&*s<='Z')||(*s>='0'&&*s<='9')||*s=='_'||*s=='-'))return 0;if(n>=12)return 0;}return dots==1&&n>dot+1&&n-dot<=4;}
-static inline int dl_valid(const struct dl_session*s){return *s->drive&&dl_plain(s->drive)&&dl_plain(s->command)&&(s->memory==1||s->memory==2||s->memory==4||s->memory==8)&&s->machine<PC_ADAPTER_COUNT&&s->cycles>=500&&s->cycles<=10000&&s->fg<8&&s->bg<8&&s->fg!=s->bg&&s->live<=1&&s->terminal<=1&&s->display<=1&&s->fps<=1&&s->system<=2&&((s->system==2)?dl_image_valid(s->image):!*s->image)&&s->size<3&&s->midi<=2&&dl_plain(s->midi_port)&&(!s->midi||*s->midi_port)&&s->cd_mode<=2&&dl_plain(s->cd_path)&&(!s->cd_mode||*s->cd_path);}
+static inline int dl_valid(const struct dl_session*s){return *s->drive&&dl_plain(s->drive)&&dl_plain(s->command)&&db_memory_valid(s->memory,32)&&s->machine<PC_ADAPTER_COUNT&&s->cycles>=500&&s->cycles<=100000&&s->fg<8&&s->bg<8&&s->fg!=s->bg&&s->live<=1&&s->terminal<=1&&s->display<=1&&s->fps<=1&&s->system<=2&&((s->system==2)?dl_image_valid(s->image):!*s->image)&&s->size<3&&s->midi<=2&&dl_plain(s->midi_port)&&(!s->midi||*s->midi_port)&&s->cd_mode<=2&&dl_plain(s->cd_path)&&(!s->cd_mode||*s->cd_path);}
 static inline int dl_session_write(const char *p,const struct dl_session*s){FILE*f;int ok;if(!dl_valid(s)||(f=fopen(p,"w"))==NULL)return 0;ok=fprintf(f,"ZZDOSSESSION%u\n%s\n%s\n%u %u %u %u %u %u %u %u %u %u %u\n",s->system==2?6:5,s->drive,s->command,s->memory,s->machine,s->cycles,s->fg,s->bg,s->live,s->terminal,s->display,s->fps,s->system,s->size)>0;if(ok)ok=fprintf(f,"%u\n%s\n",s->cd_mode,s->cd_path)>0;if(ok)ok=fprintf(f,"%u\n%s\n",s->midi,s->midi_port)>0;if(ok&&s->system==2)ok=fprintf(f,"%s\n",s->image)>0;return fclose(f)==0&&ok;}
 static inline int dl_line(FILE*f,char*p,size_t n){size_t k;if(!fgets(p,n,f))return 0;k=strlen(p);if(!k||p[k-1]!='\n')return 0;p[--k]=0;if(k&&p[k-1]=='\r')p[k-1]=0;return dl_plain(p);}
 static inline int dl_session_read(const char *p,struct dl_session*s){

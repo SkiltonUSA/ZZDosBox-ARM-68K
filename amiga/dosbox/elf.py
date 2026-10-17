@@ -1,7 +1,9 @@
 """Strict benchmark-only image packer: low code/data plus high zeroed BSS."""
 import struct
 
-def unpack(data):
+def unpack(data, *, expanded=False):
+    image_limit=0x140000 if expanded else 0x100000
+    bss_limit=0x3b00000 if expanded else 0x1fd0000
     if data[:6]!=b'\x7fELF\x01\x01' or struct.unpack_from('<H',data,18)[0]!=40:
         raise ValueError('Expected ELF32 little-endian ARM')
     h=struct.unpack_from('<HHIIIIIHHHHHH',data,16)
@@ -10,11 +12,11 @@ def unpack(data):
     loads=[p for p in segments if p[0]==1]
     if len(loads)!=1:raise ValueError('One low image required')
     _,off,addr,_,filesz,memsz,_,_=loads[0]
-    if addr or not 0<memsz<0x100000 or filesz!=memsz or off+filesz>len(data) or entry>=memsz:
+    if addr or not 0<memsz<image_limit or filesz!=memsz or off+filesz>len(data) or entry>=memsz:
         raise ValueError('Invalid image bounds')
     image=bytearray(data[off:off+filesz]);sections=[struct.unpack_from('<10I',data,shoff+i*shsize) for i in range(shnum)]
     bss=[s for s in sections if s[1]==8 and s[2]&2]
-    if len(bss)!=1 or bss[0][3]!=0x220000 or not 0<bss[0][5]<0x1db0000:
+    if len(bss)!=1 or bss[0][3]!=0x220000 or not 0<bss[0][5]<bss_limit-0x220000:
         raise ValueError('Expected bounded high BSS')
     end=bss[0][3]+bss[0][5]
     for s in sections:

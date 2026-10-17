@@ -23,3 +23,10 @@
 #endif
 static inline unsigned net_slot(unsigned data,unsigned seq){return data+(seq&(NET_COUNT-1))*NET_STRIDE;}
 static inline int net_pending(unsigned write,unsigned read){unsigned n=write-read;return n>NET_COUNT?-1:(int)n;}
+
+#ifdef DB_COMPAT
+#include "audio_wire.h"
+#if NET_RX_DATA+NET_COUNT*NET_STRIDE > PC_AUDIO_CONTROL
+#error Network queues overlap audio control
+#endif
+#endif

@@ -19,6 +19,8 @@ static int leap(unsigned y){return !(y%4)&&(y%100||!(y%400));}
 static void timestamp(ULONG *date,ULONG *time){
  static const UBYTE months[]={31,28,31,30,31,30,31,31,30,31,30,31};
  LONG days=fib.fib_Date.ds_Days;unsigned y=1978,m=0,n;
+ /* A reset Amiga clock can predate DOS. Use the earliest valid DOS date. */
+ *date=0x21;*time=0;
  if(days<0)return;
  while(y<2108&&(ULONG)days>=(ULONG)(365+leap(y))){days-=365+leap(y);y++;}
  if(y<1980||y>2107)return;
@@ -66,6 +68,7 @@ int db_fs_service(void){
  syncio->pull(shared+FS_CMD,24,NULL);next=ad_get(shared,FS_CMD);if(next==sequence)return 1;
  if(next!=sequence+1){err=5;goto reply;}
  op=ad_get(shared,FS_CMD+4);h=ad_get(shared,FS_CMD+8);n=ad_get(shared,FS_CMD+12);pos=ad_get(shared,FS_CMD+16);whence=ad_get(shared,FS_CMD+20);
+ if(fs_uses_path(op)){
  syncio->pull(shared+FS_NAME,32,NULL);
  for(i=0;i<FS_NAME_SIZE;i++){name[i]=shared[FS_NAME+i];name2[i]=shared[FS_NAME2+i];}
  syncio->pull(shared+FS_DIR,FS_PATH_SIZE*2,NULL);
@@ -73,9 +76,15 @@ int db_fs_service(void){
  if(!fs_dir_valid(dir)||!fs_dir_valid(dir2)){err=5;goto reply;}
  if((op==FS_OPEN||op==FS_CREATE||op==FS_STAT||op==FS_DELETE||op==FS_RENAME||op==FS_MKDIR||op==FS_RMDIR||op==FS_DISK_OPEN)&&!fs_name_valid(name)){err=5;goto reply;}
  if(op==FS_RENAME&&!fs_name_valid(name2)){err=5;goto reply;}
+ }
  if((op==FS_READ||op==FS_WRITE)&&n>FS_CHUNK){err=5;goto reply;}
  if((op==FS_CLOSE||op==FS_READ||op==FS_WRITE||op==FS_SEEK)&&(h==0||h>FS_HANDLES||!handles[h-1])){err=6;goto reply;}
- parent=directory(dir);if(!parent){err=3;goto reply;}working=parent;old=CurrentDir(parent);requests++;
+ /* Handle/device operations need no directory lookup or CurrentDir change. */
+ if(fs_uses_path(op)){
+  parent=directory(dir);if(!parent){err=3;goto reply;}
+  working=parent;old=CurrentDir(parent);
+ }
+ requests++;
  switch(op){
 #ifdef ZZ_PC_CD
  case FS_CD_READ:
@@ -116,7 +125,8 @@ int db_fs_service(void){
   for(i=0;i<FS_HANDLES&&handles[i];i++){}
   if(i==FS_HANDLES){err=4;break;}
   handles[i]=Open((STRPTR)name,op==FS_CREATE?MODE_NEWFILE:MODE_OLDFILE);
-  if(!handles[i]){err=error();break;}access_mode[i]=op==FS_CREATE?2:n;result=i+1;break;
+  if(!handles[i]){err=error();break;}access_mode[i]=op==FS_CREATE?2:n;result=i+1;
+  if(op==FS_OPEN){size=fib.fib_Size;attr=attributes();timestamp(&date,&time);}break;
  case FS_CLOSE:
   if(!Close(handles[h-1]))err=error();
   handles[h-1]=0;break;
@@ -165,7 +175,7 @@ int db_fs_service(void){
  }
  default:err=1;break;
  }
- CurrentDir(old);
+ if(parent)CurrentDir(old);
  if(other&&other!=root)UnLock(other);if(parent&&parent!=root)UnLock(parent);
 reply:
  ad_put(shared,FS_REPLY+4,err);ad_put(shared,FS_REPLY+8,result);ad_put(shared,FS_REPLY+12,size);ad_put(shared,FS_REPLY+16,attr);ad_put(shared,FS_REPLY+20,date);ad_put(shared,FS_REPLY+24,time);

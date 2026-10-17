@@ -1,3 +1,3 @@
 /* Shared launcher version: About, Workbench version tag and startup panel. */
-#define ZZ_LAUNCHER_VERSION "0.19.12-dev"
-#define ZZ_LAUNCHER_DATE "15.10.2026"
+#define ZZ_LAUNCHER_VERSION "0.22.2-dev"
+#define ZZ_LAUNCHER_DATE "17.10.2026"
