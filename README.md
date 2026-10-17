@@ -108,6 +108,24 @@ higher-resolution Windows display drivers still need testing.
 
 ![ZZDosBox 0.19.12 welcome screen with yellow title and red shortcut keys](docs/screenshots/dos-welcome.png)
 
+## Software scanlines
+
+The scanline effect is built into the emulator and rendered by the ZZ9000
+Cortex-A9. **Xanxi’s separate ZZScanlines utility is not required**, and the
+effect does not require additional FPGA scanline support. XACP remains required
+for the emulator itself.
+
+- **Off:** unfiltered output.
+- **Classic:** alternating black rows.
+- **Soft:** alternating dimmed rows, retaining more fine detail.
+- **Gradient:** a repeating four-row brightness pattern.
+
+Select **Display → Scanlines**. Requires **Fullscreen**, with **Show FPS off**;
+the selector is disabled in a Workbench window or while Show FPS is enabled.
+
+If Workbench’s global scanline effect is enabled, turn it off to avoid applying
+both effects together. Software scanlines affect this emulator’s image only.
+
 ## Launcher screenshots
 
 All twelve launcher pages below show **0.22.2-dev**, captured on the Amiga.
