@@ -1,0 +1,20 @@
+{
+  "arm_image_sha256": "c6c06bf2622eea233dc2ed7d419e4a46b7c42b153655f0256cb5319548426020",
+  "payload_header_sha256": "cf852d614aab9433f54383c2eccd454cda22e2c9ac34ba048332a89892307156",
+  "variants": {
+    "byte": {
+      "sha256": "be532b0518f1103c3e0a73850667003a90be4e4963751b296a1161a7f8464590",
+      "file_service_sha256": "81bbb9c90442250244d93e4580742ad85afdbe7ee3817a2fd199c863af0906f2"
+    },
+    "bulk": {
+      "sha256": "beb7b023412355391703075ae1fbaac36a54cbfdb575ec0d1004e50dd8bb3279",
+      "file_service_sha256": "d2523fb078d380266191e31014ebe6896f28b86e4da2379da93e29df657dfb9b"
+    }
+  },
+  "source_hashes": {
+    ".context/amiga/dosbox-pc-cache1024/host.c": "adaa9d42c4ec04e9ea92ec03e5c23eb8662013495eda7898dd7ce012ae8ab967",
+    "amiga/dosbox/pc/display.c": "847bdce91850dce4eaf257a77eba21954ca4b6238c764410abeecd22a278079c",
+    "amiga/dosbox/pc/cd_host.c": "5bedb9f2aa3db4bc0398d87f35b6294e185332e299d358d19c534343e88e6d54",
+    "amiga/dosbox/pc/midi_host.c": "381aacec82e69c56e9d2c82ae941aa463904da9fb7480ec01604416a9ec646ad"
+  }
+}

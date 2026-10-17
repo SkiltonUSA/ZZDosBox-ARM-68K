@@ -1,0 +1,68 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=08cb8fc4
+BOOTSTRAP amiga=40c76b00 arm=00e66b00 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+AUDIO task: AHI unit 0, 32000 Hz stereo; 4 queue slots, 64 ms prebuffer
+COMPAT ems=1 xms=1 sound=SBPro2 A220 I7 D1 T4, OPL3 speaker=0
+DISPLAY_CONFIG mode=window fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=0 cycles=6000 live=0
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+VIDEO adapter=0 source=320x480 monochrome=0
+JIT magic=4a495431 commits=1104 witness=1 dispatches=882255 cache_bytes=4194304 heap_peak=3919616 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=356 rendered_rows=170880 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=6000
+PRESENT magic=50525331 source=356 shown=356 skipped=0 divisor=1 changes=0 mode=0 hz=60 work_ticks=8810474 copy_ticks=1794924 total_copy=00000000289dea14
+ARM_FPS tenths=0
+PC frames=356 emulated_ms=6000 wall_ms=11431 timed_done=1
+PROFILE total=00000000e2f593b0 unwound=0
+PROFILE bucket=other ticks=00000000258ec294 calls=0
+PROFILE bucket=cpu ticks=0000000063dc4da7 calls=444492
+PROFILE bucket=events ticks=00000000265333c5 calls=450492
+PROFILE bucket=capture ticks=000000000a9e0f4f calls=170942
+PROFILE bucket=grant ticks=00000000171cf029 calls=356
+PROFILE bucket=copy ticks=00000000117c5038 calls=356
+POLL ms=1 calls=4180 wait_us=7270208 max_us=29295
+SHELL result=2 guest_exit=0 slices=450492 bytes=276 hash=87fe33dc mismatches=0
+DosBox ZZ9000 project                         0.20.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>PINBALL.EXE
+
+SHELL PASS mode=0
+AUDIO_TASK queued=191488 submitted=191488 completed=191488 highwater=2 error=0 stopped=1
+FILES_TIME calls=237 read_us=806066 write_us=0 other_us=138769 max_us=16405 (totals saturate at 4294967295)
+FILES_OP op=open calls=12 total_us=55772 max_us=11065
+FILES_OP op=close calls=11 total_us=8925 max_us=1098
+FILES_OP op=read calls=183 total_us=806066 max_us=16405
+FILES_OP op=seek calls=18 total_us=10571 max_us=829
+FILES_OP op=stat calls=13 total_us=63501 max_us=15506
+DISK host_seeks=0
+FILES requests=237 read=625651 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=102f4000 restored=102f4000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000001 restored=00000001
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00001000 restored=00001000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=356 flips=0 wait_us=0
+COPY observed_us=1118146 max_us=23172
+PIPELINE enabled=1 overlaps=0 releases=356
+LAUNCHER exit=0; owned memory released

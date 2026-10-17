@@ -1,0 +1,510 @@
+[
+  {
+    "game": "fantasies",
+    "variant": "ahead",
+    "run": 1,
+    "frames": 356,
+    "guest_ms": 6000,
+    "wall_ms": 11628,
+    "complete": true,
+    "fs_calls": 237,
+    "read_us": 791156,
+    "write_us": 0,
+    "other_us": 150032,
+    "ops": {
+      "open": {
+        "calls": 12,
+        "us": 60639
+      },
+      "close": {
+        "calls": 11,
+        "us": 8433
+      },
+      "read": {
+        "calls": 183,
+        "us": 791156
+      },
+      "seek": {
+        "calls": 18,
+        "us": 10334
+      },
+      "stat": {
+        "calls": 13,
+        "us": 70626
+      }
+    },
+    "read_bytes": 625651,
+    "written_bytes": 0
+  },
+  {
+    "game": "fantasies",
+    "variant": "ahead",
+    "run": 2,
+    "frames": 356,
+    "guest_ms": 6000,
+    "wall_ms": 11431,
+    "complete": true,
+    "fs_calls": 237,
+    "read_us": 806066,
+    "write_us": 0,
+    "other_us": 138769,
+    "ops": {
+      "open": {
+        "calls": 12,
+        "us": 55772
+      },
+      "close": {
+        "calls": 11,
+        "us": 8925
+      },
+      "read": {
+        "calls": 183,
+        "us": 806066
+      },
+      "seek": {
+        "calls": 18,
+        "us": 10571
+      },
+      "stat": {
+        "calls": 13,
+        "us": 63501
+      }
+    },
+    "read_bytes": 625651,
+    "written_bytes": 0
+  },
+  {
+    "game": "fantasies",
+    "variant": "base",
+    "run": 0,
+    "frames": 356,
+    "guest_ms": 6000,
+    "wall_ms": 11926,
+    "complete": true,
+    "fs_calls": 383,
+    "read_us": 870034,
+    "write_us": 0,
+    "other_us": 142028,
+    "ops": {
+      "open": {
+        "calls": 12,
+        "us": 56073
+      },
+      "close": {
+        "calls": 11,
+        "us": 9081
+      },
+      "read": {
+        "calls": 333,
+        "us": 870034
+      },
+      "seek": {
+        "calls": 14,
+        "us": 8353
+      },
+      "stat": {
+        "calls": 13,
+        "us": 68521
+      }
+    },
+    "read_bytes": 609972,
+    "written_bytes": 0
+  },
+  {
+    "game": "fantasies",
+    "variant": "base",
+    "run": 3,
+    "frames": 357,
+    "guest_ms": 6000,
+    "wall_ms": 12198,
+    "complete": true,
+    "fs_calls": 383,
+    "read_us": 910758,
+    "write_us": 0,
+    "other_us": 154412,
+    "ops": {
+      "open": {
+        "calls": 12,
+        "us": 54773
+      },
+      "close": {
+        "calls": 11,
+        "us": 8569
+      },
+      "read": {
+        "calls": 333,
+        "us": 910758
+      },
+      "seek": {
+        "calls": 14,
+        "us": 20423
+      },
+      "stat": {
+        "calls": 13,
+        "us": 70647
+      }
+    },
+    "read_bytes": 609972,
+    "written_bytes": 0
+  },
+  {
+    "game": "gods",
+    "variant": "ahead",
+    "run": 1,
+    "frames": 418,
+    "guest_ms": 6000,
+    "wall_ms": 14564,
+    "complete": true,
+    "fs_calls": 252,
+    "read_us": 430354,
+    "write_us": 0,
+    "other_us": 5120241,
+    "ops": {
+      "open": {
+        "calls": 31,
+        "us": 2559612
+      },
+      "close": {
+        "calls": 31,
+        "us": 25836
+      },
+      "read": {
+        "calls": 135,
+        "us": 430354
+      },
+      "seek": {
+        "calls": 23,
+        "us": 12930
+      },
+      "stat": {
+        "calls": 32,
+        "us": 2521863
+      }
+    },
+    "read_bytes": 276291,
+    "written_bytes": 0
+  },
+  {
+    "game": "gods",
+    "variant": "ahead",
+    "run": 2,
+    "frames": 418,
+    "guest_ms": 6000,
+    "wall_ms": 14582,
+    "complete": true,
+    "fs_calls": 252,
+    "read_us": 417633,
+    "write_us": 0,
+    "other_us": 5122388,
+    "ops": {
+      "open": {
+        "calls": 31,
+        "us": 2519808
+      },
+      "close": {
+        "calls": 31,
+        "us": 25763
+      },
+      "read": {
+        "calls": 135,
+        "us": 417633
+      },
+      "seek": {
+        "calls": 23,
+        "us": 13106
+      },
+      "stat": {
+        "calls": 32,
+        "us": 2563711
+      }
+    },
+    "read_bytes": 276291,
+    "written_bytes": 0
+  },
+  {
+    "game": "gods",
+    "variant": "base",
+    "run": 0,
+    "frames": 418,
+    "guest_ms": 6000,
+    "wall_ms": 14598,
+    "complete": true,
+    "fs_calls": 263,
+    "read_us": 441978,
+    "write_us": 0,
+    "other_us": 5124464,
+    "ops": {
+      "open": {
+        "calls": 31,
+        "us": 2555317
+      },
+      "close": {
+        "calls": 31,
+        "us": 24193
+      },
+      "read": {
+        "calls": 154,
+        "us": 441978
+      },
+      "seek": {
+        "calls": 15,
+        "us": 8738
+      },
+      "stat": {
+        "calls": 32,
+        "us": 2536216
+      }
+    },
+    "read_bytes": 229042,
+    "written_bytes": 0
+  },
+  {
+    "game": "gods",
+    "variant": "base",
+    "run": 3,
+    "frames": 418,
+    "guest_ms": 6000,
+    "wall_ms": 14534,
+    "complete": true,
+    "fs_calls": 263,
+    "read_us": 438706,
+    "write_us": 0,
+    "other_us": 5095063,
+    "ops": {
+      "open": {
+        "calls": 31,
+        "us": 2519502
+      },
+      "close": {
+        "calls": 31,
+        "us": 25298
+      },
+      "read": {
+        "calls": 154,
+        "us": 438706
+      },
+      "seek": {
+        "calls": 15,
+        "us": 8931
+      },
+      "stat": {
+        "calls": 32,
+        "us": 2541332
+      }
+    },
+    "read_bytes": 229042,
+    "written_bytes": 0
+  },
+  {
+    "game": "vette",
+    "variant": "ahead",
+    "run": 1,
+    "frames": 418,
+    "guest_ms": 6000,
+    "wall_ms": 15003,
+    "complete": true,
+    "fs_calls": 108,
+    "read_us": 395718,
+    "write_us": 0,
+    "other_us": 75300,
+    "ops": {
+      "open": {
+        "calls": 6,
+        "us": 25440
+      },
+      "close": {
+        "calls": 6,
+        "us": 4542
+      },
+      "read": {
+        "calls": 83,
+        "us": 395718
+      },
+      "seek": {
+        "calls": 5,
+        "us": 2721
+      },
+      "stat": {
+        "calls": 8,
+        "us": 42597
+      }
+    },
+    "read_bytes": 319339,
+    "written_bytes": 0
+  },
+  {
+    "game": "vette",
+    "variant": "ahead",
+    "run": 2,
+    "frames": 418,
+    "guest_ms": 6000,
+    "wall_ms": 14997,
+    "complete": true,
+    "fs_calls": 108,
+    "read_us": 412388,
+    "write_us": 0,
+    "other_us": 83514,
+    "ops": {
+      "open": {
+        "calls": 6,
+        "us": 27694
+      },
+      "close": {
+        "calls": 6,
+        "us": 4523
+      },
+      "read": {
+        "calls": 83,
+        "us": 412388
+      },
+      "seek": {
+        "calls": 5,
+        "us": 2728
+      },
+      "stat": {
+        "calls": 8,
+        "us": 48569
+      }
+    },
+    "read_bytes": 319339,
+    "written_bytes": 0
+  },
+  {
+    "game": "vette",
+    "variant": "base",
+    "run": 0,
+    "frames": 418,
+    "guest_ms": 6000,
+    "wall_ms": 14955,
+    "complete": true,
+    "fs_calls": 105,
+    "read_us": 387518,
+    "write_us": 0,
+    "other_us": 81021,
+    "ops": {
+      "open": {
+        "calls": 6,
+        "us": 25509
+      },
+      "close": {
+        "calls": 6,
+        "us": 4603
+      },
+      "read": {
+        "calls": 82,
+        "us": 387518
+      },
+      "seek": {
+        "calls": 3,
+        "us": 1693
+      },
+      "stat": {
+        "calls": 8,
+        "us": 49216
+      }
+    },
+    "read_bytes": 315057,
+    "written_bytes": 0
+  },
+  {
+    "game": "vette",
+    "variant": "base",
+    "run": 3,
+    "frames": 418,
+    "guest_ms": 6000,
+    "wall_ms": 14971,
+    "complete": true,
+    "fs_calls": 105,
+    "read_us": 389429,
+    "write_us": 0,
+    "other_us": 75725,
+    "ops": {
+      "open": {
+        "calls": 6,
+        "us": 26826
+      },
+      "close": {
+        "calls": 6,
+        "us": 5952
+      },
+      "read": {
+        "calls": 82,
+        "us": 389429
+      },
+      "seek": {
+        "calls": 3,
+        "us": 1702
+      },
+      "stat": {
+        "calls": 8,
+        "us": 41245
+      }
+    },
+    "read_bytes": 315057,
+    "written_bytes": 0
+  },
+  {
+    "game": "windows",
+    "variant": "bulk",
+    "run": 1,
+    "frames": 772,
+    "guest_ms": 12000,
+    "wall_ms": 64458,
+    "complete": true,
+    "fs_calls": 607,
+    "read_us": 9034378,
+    "write_us": 377677,
+    "other_us": 2303,
+    "ops": {},
+    "read_bytes": 2383872,
+    "written_bytes": 12288
+  },
+  {
+    "game": "windows",
+    "variant": "bulk",
+    "run": 2,
+    "frames": 772,
+    "guest_ms": 12000,
+    "wall_ms": 64485,
+    "complete": true,
+    "fs_calls": 607,
+    "read_us": 9006718,
+    "write_us": 400878,
+    "other_us": 2319,
+    "ops": {},
+    "read_bytes": 2383872,
+    "written_bytes": 12288
+  },
+  {
+    "game": "windows",
+    "variant": "byte",
+    "run": 0,
+    "frames": 772,
+    "guest_ms": 12000,
+    "wall_ms": 64541,
+    "complete": true,
+    "fs_calls": 607,
+    "read_us": 9117980,
+    "write_us": 410948,
+    "other_us": 2337,
+    "ops": {},
+    "read_bytes": 2383872,
+    "written_bytes": 12288
+  },
+  {
+    "game": "windows",
+    "variant": "byte",
+    "run": 3,
+    "frames": 772,
+    "guest_ms": 12000,
+    "wall_ms": 64594,
+    "complete": true,
+    "fs_calls": 607,
+    "read_us": 9086988,
+    "write_us": 376889,
+    "other_us": 2327,
+    "ops": {},
+    "read_bytes": 2383872,
+    "written_bytes": 12288
+  }
+]

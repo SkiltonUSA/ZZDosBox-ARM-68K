@@ -448,7 +448,7 @@ are single runs; the latest VFP result uses two runs per build.
 - **Scalar/NEON triangle dispatch + unguarded packing:** **+28.59% visible fill / +49.00% hidden fill / +33.37% mixed colour fill**; small geometry/clipping within 1% of scalar. Mixed textured scenes **+5.20%**, pure textures unchanged. Native research only, three runs per build. [Report](docs/amiga-tinygl-packing-experiment.md)
 
 - **Filesystem mailbox reduction:** handle operations skip unused path publication and cache maintenance. **No isolated FPS gain claimed**. [Report](docs/amiga-dosbox-runtime-integration.md)
-- **ARM file read-ahead — batch small DOS reads:** **98.2% less diagnostic wall time** on SD032G: 18,671 → 336 ms; read RPCs 8,198 → 8 (**99.90% fewer**). Original small-read/coherence test, not game FPS. [Measurements](docs/amiga-dosbox-file-read-optimisation.md)
+- **ARM file read-ahead — batch small DOS reads:** **98.2% less diagnostic wall time** on SD032G: 18,671 → 336 ms; read RPCs 8,198 → 8 (**99.90% fewer**). Original small-read/coherence test, not game FPS. Pinball Fantasies startup used **4.4% less wall time**; Vette/Gods showed no meaningful gain. [Measurements](docs/amiga-dosbox-file-read-optimisation.md) · [Game comparisons](docs/amiga-dosbox-load-profile.md)
 - **Mouse motion coalescing:** combine consecutive movement samples while preserving clicks/focus transitions. **Latency/FPS gain not measured**; model and native checks passed. [Details](docs/amiga-dosbox-file-read-optimisation.md)
 - **Paged-JIT interpreter batching:** up to 32-cycle fallback bursts remove the earlier Windows test-budget failure. Still **12.4% slower than normal paging** in the matched startup run; remains opt-in. [Comparison](docs/amiga-dosbox-file-read-optimisation.md)
 

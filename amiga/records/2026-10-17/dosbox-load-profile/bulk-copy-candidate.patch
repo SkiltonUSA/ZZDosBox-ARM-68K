@@ -1,0 +1,46 @@
+--- a/amiga/dosbox/shell/fs_host.c
++++ b/amiga/dosbox/shell/fs_host.c
+@@ -2,6 +2,7 @@
+ #include <dos/dos.h>
+ #include <dos/dosextens.h>
+ #include <proto/dos.h>
++#include <proto/exec.h>
+ #include <stdio.h>
+ #include <string.h>
+ #include "fs_host.h"
+@@ -89,7 +90,7 @@
+ #ifdef ZZ_PC_CD
+  case FS_CD_READ:
+   if(!n||n>2||!db_cd_host_read(pos,n,data)){err=21;break;}
+-  result=n;for(i=0;i<n*2048;i++)shared[FS_DATA+i]=data[i];syncio->push(shared+FS_DATA,n*2048,NULL);read_bytes+=n*2048;break;
++  result=n;CopyMem(data,(void *)(shared+FS_DATA),n*2048);syncio->push(shared+FS_DATA,n*2048,NULL);read_bytes+=n*2048;break;
+ #endif
+  case FS_DISK_OPEN:{
+   BPTR lock;
+@@ -113,10 +114,10 @@
+   n*=512;
+   if(op==FS_DISK_READ){
+    value=Read(disk,data,n);if(value!=(LONG)n){err=5;break;}
+-   for(i=0;i<n;i++)shared[FS_DATA+i]=data[i];
++   CopyMem(data,(void *)(shared+FS_DATA),n);
+    syncio->push(shared+FS_DATA,n,NULL);read_bytes+=n;
+   }else{
+-   syncio->pull(shared+FS_DATA,n,NULL);for(i=0;i<n;i++)data[i]=shared[FS_DATA+i];
++   syncio->pull(shared+FS_DATA,n,NULL);CopyMem((void *)(shared+FS_DATA),data,n);
+    value=Write(disk,data,n);if(value!=(LONG)n||!Flush(disk)){err=5;break;}written_bytes+=n;
+   }disk_position=pos*512u+n;result=n/512;break;
+  case FS_OPEN:case FS_CREATE:
+@@ -133,11 +134,11 @@
+  case FS_READ:
+   if(access_mode[h-1]==1){err=5;break;}
+   value=Read(handles[h-1],data,n);if(value<0){err=error();break;}
+-  result=value;read_bytes+=result;for(i=0;i<result;i++)shared[FS_DATA+i]=data[i];syncio->push(shared+FS_DATA,result,NULL);break;
++  result=value;read_bytes+=result;CopyMem(data,(void *)(shared+FS_DATA),result);syncio->push(shared+FS_DATA,result,NULL);break;
+  case FS_WRITE:
+   if(access_mode[h-1]==0){err=5;break;}
+   if(!n){if(SetFileSize(handles[h-1],0,OFFSET_CURRENT)<0)err=error();break;}
+-  syncio->pull(shared+FS_DATA,n,NULL);for(i=0;i<n;i++)data[i]=shared[FS_DATA+i];
++  syncio->pull(shared+FS_DATA,n,NULL);CopyMem((void *)(shared+FS_DATA),data,n);
+   value=Write(handles[h-1],data,n);if(value<0){err=error();break;}result=value;written_bytes+=result;break;
+  case FS_SEEK:
+   if(whence>2){err=1;break;}
