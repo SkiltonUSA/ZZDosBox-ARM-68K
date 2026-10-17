@@ -80,7 +80,7 @@ static const char *startup_choices[]={"Default","Edited","File",NULL},*cd_choice
 static const char *sizes[]={"320 x 240","640 x 480","960 x 720",NULL};
 static const char *displays[]={"Workbench window","Fullscreen",NULL},*systems[]={"DOSBox DOS 5","MS-DOS 6.22","Disk image (DOS / Windows)","DOSBox DOS 5 + image",NULL};
 static const char *memories[]={"1 MB","2 MB","4 MB","8 MB","16 MB","32 MB",NULL},*machines[]={"VGA","EGA","CGA","S3 / VESA","Tandy","PCjr","Hercules",NULL},*speeds[]={"Slow (1000)","Normal (3000)","Fast (6000)",NULL},*colours[]={"Black","Red","Green","Yellow","Blue","Magenta","Cyan","White",NULL},*lengths[]={"Startup test (8 seconds)","Until closed",NULL};
-enum {ID_SELECT=1,ID_ADD,ID_REMOVE,ID_SAVE,ID_RUN,ID_TERM,ID_COMMAND,ID_AUTO,ID_SCRIPT,ID_BROWSE_DRAWER,ID_OPEN_DRAWER,ID_DISKS,ID_MOUNT_DISKS,ID_EJECT_DISKS,ID_BOOT_DISK,ID_MOUNT_HD,ID_EJECT_HD,ID_OPEN_HD,ID_SYSTEM,ID_DISPLAY,ID_STARTMODE,ID_CD_MODE,ID_CD_BROWSE,ID_CD_CHECK,ID_TERMPAGE,ID_AUDIO_CHECK,ID_GITHUB,ID_DEV_CHANGE,ID_DEV_LOG,ID_CATEGORY,ID_CONF_VALIDATE,ID_DISK_SELECT,ID_DISK_BROWSE,ID_DISK_CREATE,ID_CAT_SELECT=50,ID_CAT_RUN=60,ID_CAT_EDIT=70,ID_CAT_RENAME=80,ID_CAT_DELETE=85,ID_RENAME=90,ID_EDITOR=100};
+enum {ID_SELECT=1,ID_ADD,ID_REMOVE,ID_SAVE,ID_RUN,ID_TERM,ID_COMMAND,ID_AUTO,ID_SCRIPT,ID_BROWSE_DRAWER,ID_OPEN_DRAWER,ID_DISKS,ID_MOUNT_DISKS,ID_EJECT_DISKS,ID_BOOT_DISK,ID_MOUNT_HD,ID_EJECT_HD,ID_OPEN_HD,ID_SYSTEM,ID_DISPLAY,ID_STARTMODE,ID_CD_MODE,ID_CD_BROWSE,ID_CD_CHECK,ID_TERMPAGE,ID_AUDIO_CHECK,ID_DEV_CHANGE,ID_DEV_LOG,ID_CATEGORY,ID_CONF_VALIDATE,ID_DISK_SELECT,ID_DISK_BROWSE,ID_DISK_CREATE,ID_CAT_SELECT=50,ID_CAT_RUN=60,ID_CAT_EDIT=70,ID_CAT_RENAME=80,ID_CAT_DELETE=85,ID_RENAME=90,ID_EDITOR=100};
 static ULONG val(Object*o,ULONG a){ULONG v=0;get(o,a,&v);return v;}
 static void program_list_focus(void){
  unsigned page=val(program_tabs,MUIA_Group_ActivePage);
@@ -375,7 +375,7 @@ static void boot_disk(void){
 #include "io_ui.h"
 #include "audio_detect.h"
 #include "compatibility_ui.h"
-static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*execute,*auto_run,*script,*mount_disks,*eject_disks,*boot_button,*cd_check,*audio_check,*github,*dev_log,*root;
+static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*execute,*auto_run,*script,*mount_disks,*eject_disks,*boot_button,*cd_check,*audio_check,*dev_log,*root;
  style_open();
  joy_diagram_class=MUI_CreateCustomClass(NULL,MUIC_Area,NULL,sizeof(struct joy_diagram_data),(APTR)joy_diagram_dispatch);if(!joy_diagram_class)return 0;
  P96Base=OpenLibrary("Picasso96API.library",2);if(!P96Base)return 0;
@@ -425,8 +425,8 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
   Child,ColGroup(2),UI_PANEL("Emulated PC"),Child,fieldlabel("CPU model"),Child,cpu_model=cycle(cpu_models),Child,fieldlabel("Paged register JIT (experimental)"),Child,paged_jit=CheckMark(FALSE),Child,fieldlabel("Guest RAM"),Child,memory=cycle(memories),Child,fieldlabel("EMS expanded RAM"),Child,ems=CheckMark(FALSE),Child,fieldlabel("VCPI services"),Child,vcpi=CheckMark(FALSE),Child,fieldlabel("Upper memory (UMB)"),Child,umb=CheckMark(FALSE),Child,fieldlabel("Cycle control"),Child,cycle_mode=cycle(cycle_modes),Child,fieldlabel("CPU cycles"),Child,speed=cycle(speeds),Child,fieldlabel("Session"),Child,live=cycle(lengths),End,Child,VSpace(0),End,
  Child,VGroup,
   Child,HGroup,Child,VGroup,MUIA_HorizWeight,60,
-  Child,ColGroup(2),UI_PANEL("Screen"),Child,displaylabel("Display"),Child,display=cycle(displays),Child,displaylabel("Window size"),Child,window_size=cycle(sizes),Child,displaylabel("Video adapter"),Child,machine=cycle(machines),End,
-  Child,ColGroup(2),UI_PANEL("Rendering"),Child,displaylabel("Renderer"),Child,renderer=cycle(renderer_choices),Child,displaylabel("Presentation"),Child,presentation=cycle(presentation_choices),Child,displaylabel("Monochrome colour"),Child,monochrome=cycle(mono_choices),Child,displaylabel("Scanlines"),Child,scanlines=cycle(scanline_choices),Child,displaylabel("Show FPS"),Child,HGroup,Child,fps=CheckMark(FALSE),Child,HSpace(0),End,End,Child,VSpace(0),End,
+  Child,ColGroup(2),UI_PANEL("Screen"),MUIA_VertWeight,0,Child,displaylabel("Display"),Child,display=cycle(displays),Child,displaylabel("Window size"),Child,window_size=cycle(sizes),Child,displaylabel("Video adapter"),Child,machine=cycle(machines),End,
+  Child,VGroup,UI_PANEL("Rendering"),Child,ColGroup(2),MUIA_Group_Spacing,6,InnerSpacing(0,0),Child,displaylabel("Renderer"),Child,renderer=cycle(renderer_choices),Child,displaylabel("Presentation"),Child,presentation=cycle(presentation_choices),Child,displaylabel("Monochrome colour"),Child,monochrome=cycle(mono_choices),Child,displaylabel("Scanlines"),Child,scanlines=cycle(scanline_choices),Child,displaylabel("Show FPS"),Child,HGroup,Child,fps=CheckMark(FALSE),Child,HSpace(0),End,End,Child,VSpace(0),End,End,
   Child,VGroup,UI_PANEL("Settings guide"),MUIA_HorizWeight,40,
    Child,scanline_help=label("Scanlines\nRequires fullscreen with Show FPS off."),
    Child,label("Display\nWindow size sets the starting size.\nWorkbench windows remain resizable."),
@@ -460,7 +460,7 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
   Child,dev_log=ui_button("Open log"),Child,VSpace(0),End,
   Child,memory_page(),Child,conf_page(),End,End,
  Child,compat_page(),
- Child,VGroup,UI_PAGE,Child,label("DosBox ZZ9000 project"),Child,label(ZZ_LAUNCHER_VERSION " - AmigaOS - 32-bit"),Child,github=ui_button("GitHub"),Child,label("DOSBox / libretro contributors"),Child,label("XACP / Xanxi - ZZ9000 Cortex-A9"),Child,label("MUI - Stefan Stuntz"),Child,label("TinyGL - Fabrice Bellard and contributors"),Child,label("Development: Codex assisted, Amiga-Bridge MCP"),
+ Child,VGroup,UI_PAGE,Child,label("DosBox ZZ9000 project"),Child,label(ZZ_LAUNCHER_VERSION " - AmigaOS - 32-bit"),Child,label("DOSBox / libretro contributors"),Child,label("XACP / Xanxi - ZZ9000 Cortex-A9"),Child,label("MUI - Stefan Stuntz"),Child,label("TinyGL - Fabrice Bellard and contributors"),Child,label("Development: Codex assisted, Amiga-Bridge MCP"),
   Child,VGroup,UI_PANEL("Changelog"),Child,ListviewObject,MUIA_CycleChain,1,MUIA_Listview_Input,FALSE,
    MUIA_Listview_List,FloattextObject,ReadListFrame,MUIA_Font,ui_font(),
     MUIA_Floattext_Text,(ULONG)dl_changelog_text,End,End,End,End,
@@ -501,7 +501,7 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
  notify(rename,MUIA_Pressed,FALSE,ID_RENAME);notify(add,MUIA_Pressed,FALSE,ID_ADD);notify(remove,MUIA_Pressed,FALSE,ID_REMOVE);notify(run,MUIA_Pressed,FALSE,ID_RUN);notify(save_button,MUIA_Pressed,FALSE,ID_SAVE);notify(term,MUIA_Pressed,FALSE,ID_TERM);notify(execute,MUIA_Pressed,FALSE,ID_COMMAND);notify(auto_run,MUIA_Pressed,FALSE,ID_AUTO);notify(script,MUIA_Pressed,FALSE,ID_SCRIPT);notify(browse_button,MUIA_Pressed,FALSE,ID_BROWSE_DRAWER);
  disk_ui_wire();
  notify(boot_button,MUIA_Pressed,FALSE,ID_BOOT_DISK);
- notify(audio_check,MUIA_Pressed,FALSE,ID_AUDIO_CHECK);notify(github,MUIA_Pressed,FALSE,ID_GITHUB);
+ notify(audio_check,MUIA_Pressed,FALSE,ID_AUDIO_CHECK);
  notify(cd_mode,MUIA_Cycle_Active,MUIV_EveryTime,ID_CD_MODE);notify(cd_browse,MUIA_Pressed,FALSE,ID_CD_BROWSE);notify(cd_check,MUIA_Pressed,FALSE,ID_CD_CHECK);
  notify(terminal_reg,MUIA_Group_ActivePage,MUIV_EveryTime,ID_TERMPAGE);
  notify(startup_mode[0],MUIA_Cycle_Active,MUIV_EveryTime,ID_STARTMODE);notify(startup_mode[1],MUIA_Cycle_Active,MUIV_EveryTime,ID_STARTMODE);
@@ -553,7 +553,6 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   case ID_CD_BROWSE:if(browse(p,0,0,"Choose ISO image"))set(cd_path,MUIA_String_Contents,(ULONG)p);break;
   case ID_CD_CHECK:{unsigned n=val(cd_mode,MUIA_Cycle_Active);ULONG count;if(!n){note("Choose a CD-ROM source.");break;}set(app,MUIA_Application_Sleep,TRUE);count=db_cd_host_open(n,(char*)val(cd_path,MUIA_String_Contents));db_cd_host_close();set(app,MUIA_Application_Sleep,FALSE);note(count?"CD-ROM ready.":"Cannot read an ISO9660 data CD from that source.");}break;
   case ID_AUDIO_CHECK:audio_detect();break;
-  case ID_GITHUB:if(exists("C:OpenURL"))SystemTags("C:OpenURL https://github.com/SkiltonUSA/ZZDosBox-ARM-68K",SYS_Asynch,FALSE,NP_StackSize,16384,TAG_DONE);else note("https://github.com/SkiltonUSA/ZZDosBox-ARM-68K (OpenURL required)");break;
   case ID_SYSTEM:system_controls();break;
   case ID_OPEN_DRAWER:if(selected>=0)disk_open_drawer((STRPTR)val(drawer,MUIA_String_Contents));break;
   case ID_MOUNT_HD:case ID_EJECT_HD:case ID_OPEN_HD:case ID_DISKS:case ID_DISK_SELECT:case ID_DISK_BROWSE:case ID_DISK_CREATE:disk_action(id);break;

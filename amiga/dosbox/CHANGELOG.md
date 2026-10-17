@@ -12,6 +12,8 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## 0.22.2-dev — file reads and input scheduling
 
+- Removed the GitHub button from About; aligned the Display page panels.
+
 - Optional 4 KiB read-ahead per read-only DOS file; buffers drain before writes,
   truncation and other mutations, preserving AmigaDOS handle positions.
 - Consecutive mouse motion is coalesced without merging button/focus transitions;
