@@ -1,0 +1,70 @@
+{
+  "descent": {
+    "mapping_pass": true,
+    "simd_preserved": true,
+    "register_restore": true,
+    "cache_witness_ok": true,
+    "memory_released": true
+  },
+  "descent-share": {
+    "mapping_pass": true,
+    "simd_preserved": true,
+    "register_restore": true,
+    "cache_witness_ok": true,
+    "memory_released": true,
+    "audio_delivery_error": 0
+  },
+  "descent-fixed": {
+    "mapping_pass": true,
+    "simd_preserved": true,
+    "register_restore": true,
+    "cache_witness_ok": true,
+    "memory_released": true,
+    "audio_delivery_error": 0
+  },
+  "doom": {
+    "mapping_pass": true,
+    "simd_preserved": true,
+    "register_restore": true,
+    "cache_witness_ok": true,
+    "memory_released": true
+  },
+  "duke": {
+    "mapping_pass": true,
+    "simd_preserved": true,
+    "register_restore": true,
+    "cache_witness_ok": true,
+    "memory_released": true,
+    "audio_delivery_error": 0
+  },
+  "duke-fixed": {
+    "mapping_pass": true,
+    "simd_preserved": true,
+    "register_restore": true,
+    "cache_witness_ok": true,
+    "memory_released": true,
+    "audio_delivery_error": 0
+  },
+  "quake": {
+    "mapping_pass": true,
+    "simd_preserved": true,
+    "register_restore": true,
+    "cache_witness_ok": true,
+    "memory_released": true,
+    "audio_delivery_error": 0
+  },
+  "descent-old-fixed": {
+    "mapping_pass": true,
+    "simd_preserved": true,
+    "register_restore": true,
+    "cache_witness_ok": true,
+    "memory_released": true
+  },
+  "tempfile-physical": {
+    "mapping_pass": true,
+    "simd_preserved": true,
+    "register_restore": true,
+    "cache_witness_ok": true,
+    "memory_released": true
+  }
+}

@@ -1,0 +1,3 @@
+FILES requests=11 read=454 written=0; handles closed
+PC rc=0 fault=0 detail=DosBox ZZ9000 project                         0.20.1-dev
+DOS temporary file creation and missing directory PASS

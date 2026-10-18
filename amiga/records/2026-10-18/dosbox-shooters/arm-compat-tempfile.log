@@ -1,0 +1,3 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 21 dispatches 28 heap 3913152
+PASS ARM capability TEMPTEST None PCM 0 0

@@ -115,7 +115,14 @@ public:
  bool GetFileAttr(char *name,Bit16u *attr)override{if(!*name){*attr=DOS_ATTR_DIRECTORY;return true;}if(!rpc(FS_STAT,0,0,0,0,name))return false;*attr=reply(4);return true;}
  bool Rename(char *a,char *b)override{return rpc(FS_RENAME,0,0,0,0,a,b);}
  bool AllocationInfo(Bit16u *b,Bit8u *s,Bit16u *t,Bit16u *f)override{if(!rpc(FS_SPACE))return false;*b=512;*s=64;*t=reply(2);*f=reply(3);return true;}
- bool FileExists(const char *name)override{return rpc(FS_STAT,0,0,0,0,name)&&!(reply(4)&DOS_ATTR_DIRECTORY);}
+ bool FileExists(const char *name)override{
+  // This is a predicate, like upstream localDrive::FileExists. DOS_CreateTempFile
+  // probes unused names before creating one; leaking FS_STAT's error 2 makes
+  // it reject a successful create (DOS/4GW then reports VMM error 2504).
+  Bit16u saved=dos.errorcode;
+  bool exists=rpc(FS_STAT,0,0,0,0,name)&&!(reply(4)&DOS_ATTR_DIRECTORY);
+  DOS_SetError(saved);return exists;
+ }
  bool FileStat(const char *name,FileStat_Block *st)override{if(!rpc(FS_STAT,0,0,0,0,name))return false;memset(st,0,sizeof(*st));st->size=reply(3);st->attr=reply(4);st->date=reply(5);st->time=reply(6);return true;}
  Bit8u GetMediaByte()override{return 0xf8;}bool isRemote()override{return true;}bool isRemovable()override{return false;}Bits UnMount()override{return 0;}
 };

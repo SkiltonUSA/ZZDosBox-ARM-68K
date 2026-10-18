@@ -10,6 +10,14 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
+## Unreleased — protected-mode game startup
+
+- Fix stale DOS error state during temporary-file creation, which prevented
+  Descent's DOS/4GW 1.97 loader from starting (errors 2504/1011).
+- Add a temporary-file regression and native per-game CPU selection for tests.
+- Document Duke Nukem 3D's 486 setting and Quake's CD-audio startup pause.
+- [Startup review and validation](docs/amiga-dosbox-shooter-startup-review.md).
+
 ## 0.22.2-dev — file reads and input scheduling
 
 - Removed the GitHub button from About; aligned the Display page panels.

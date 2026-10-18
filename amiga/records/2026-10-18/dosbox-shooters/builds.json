@@ -1,0 +1,12 @@
+{
+  "ZZDosBox-Expanded": {
+    "bytes": 1334944,
+    "sha256": "fc0a2cf65de68deb8ad6fae109018b1c697e3291a52f38ab6d3e8a4f4559d83b",
+    "md5": "bc1577d27cd0e469c8ef9857b81faf09"
+  },
+  "ZZDosBox-Compat": {
+    "bytes": 1253644,
+    "sha256": "70e589d1c38dce5567487f874b6f24c0dbbeb216b9ca19ad3b917b1eff98332b",
+    "md5": "793918bd9069bfab8f4ef6573febd8fa"
+  }
+}

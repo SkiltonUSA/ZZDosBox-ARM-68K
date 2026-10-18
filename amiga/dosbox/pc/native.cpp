@@ -140,6 +140,7 @@ int main(int argc,char**argv){
   for(auto &p:std::filesystem::directory_iterator(dir))
    std::filesystem::copy(p.path(),root+"/"+p.path().filename().string(),std::filesystem::copy_options::recursive|std::filesystem::copy_options::overwrite_existing);
   std::filesystem::copy_file(".context/amiga/dosbox-pc/LoadFix.com",root+"/LOADFIX.COM",std::filesystem::copy_options::skip_existing);
+  if(const char*model=getenv("ZZ_GAME_CPU")){db_cpu_model=strtoul(model,nullptr,10);assert(db_cpu_model<DB_CPU_COUNT);}
   interactive=getenv("ZZ_GAME_INTERACTIVE")!=nullptr;
   interactive_start=std::chrono::steady_clock::now();
 #ifdef DB_COMPAT
@@ -147,8 +148,8 @@ int main(int argc,char**argv){
 #endif
   db_memory_mb=8;limit_ms=getenv("ZZ_GAME_MS")?strtoul(getenv("ZZ_GAME_MS"),nullptr,10):20000;assert(limit_ms<=120000);input=std::string(command)+"\rexit\r";
  }
- if(game=="sb16"||game=="beep"||game=="dates"||game=="x87"){
-  const char *name=game=="x87"?"X87TEST.COM":game=="sb16"?"SB16TEST.COM":game=="beep"?"BEEPTEST.COM":"DATETEST.COM";
+ if(game=="tempfile"||game=="sb16"||game=="beep"||game=="dates"||game=="x87"){
+  const char *name=game=="tempfile"?"TEMPTEST.COM":game=="x87"?"X87TEST.COM":game=="sb16"?"SB16TEST.COM":game=="beep"?"BEEPTEST.COM":"DATETEST.COM";
   std::filesystem::copy_file(std::string(".context/amiga/dosbox-pc/")+name,root+"/"+name,std::filesystem::copy_options::overwrite_existing);input=std::string(name)+"\rexit\r";
 #ifdef DB_COMPAT
   db_sound_card=game=="sb16"?2:0;db_pc_speaker=game=="beep";
@@ -228,6 +229,7 @@ int main(int argc,char**argv){
  if(game=="opl"){db_native_audio_service();printf("OPL frames=%u nonzero_bytes=%u\n",audio_frames,audio_nonzero);assert(rc==0&&audio_nonzero>100&&audio_frames>=16000);}
  if(game=="sb"){db_native_audio_service();printf("PCM frames=%u nonzero_bytes=%u\n",audio_frames,audio_nonzero);assert(rc==0&&audio_nonzero>0&&output.find("SBPro2 DMA1 IRQ7 PASS")!=std::string::npos);}
 #endif
+ if(game=="tempfile")assert(rc==0&&result.exit_code==0&&output.find("DOS temporary file creation and missing directory PASS")!=std::string::npos);
  if(game=="ems")assert(rc==0&&output.find("EMS/XMS remap execution and shared allocation PASS")!=std::string::npos);
  if(game=="fixture"){
   const uint32_t colors[]={0x000000,0x0000ad,0x00aa00,0x00aaad,0xad0000,0xad00ad,0xad5500,0xadaaad,0x525552,0x5255ff,0x52ff52,0x52ffff,0xff5552,0xff55ff,0xffff52,0xffffff};

@@ -384,10 +384,15 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
       old=files['HDD.IMG'];files['HDD.IMG']=old[:at]+bytes(u.mem_read(base+DATA,count))+old[at+count:];written+=count
      result=n
     elif op in (1,2):
-     if op==2:files[path]=b''
-     if path not in files:error=2
-     elif len(handles)>=16:error=4
-     else:result=next(k for k in range(1,17) if k not in handles);handles[result]=[path,0,n if op==1 else 2]
+     # This fixture filesystem has only a root directory. Reject a missing
+     # parent instead of silently creating its leaf in the root.
+     directory=bytes(u.mem_read(base+CMD+256,256)).split(b"\0")[0]
+     if directory:error=3
+     else:
+      if op==2:files[path]=b''
+      if path not in files:error=2
+      elif len(handles)>=16:error=4
+      else:result=next(k for k in range(1,17) if k not in handles);handles[result]=[path,0,n if op==1 else 2]
     elif op in (3,4,5,6):
      assert h in handles,(op,h,handles)
      path,at,access=handles[h]

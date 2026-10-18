@@ -12,7 +12,7 @@ def prepare():
  (OUT/'ega-planes.bin').write_bytes(planes)
  subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/'egatest.S'),'-o','egatest.o'],cwd=OUT,check=True)
  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x100','--oformat=binary','egatest.o','-o','EGATEST.COM'],cwd=OUT,check=True)
- for name in ['keytest','cgatest','boottest','pagingtest','hddtest','badmem','miditest','welcome','mousetst','smctest','pitmath','emstest','sbtest','opltest','sb16test','beeptest','datetest','x87test','cputest','exttest','joytest','cmstest','tandtest','gustest','serialtest','filetest']:
+ for name in ['keytest','cgatest','boottest','pagingtest','hddtest','badmem','miditest','welcome','mousetst','smctest','pitmath','emstest','sbtest','opltest','sb16test','beeptest','datetest','x87test','cputest','exttest','joytest','cmstest','tandtest','gustest','serialtest','filetest','temptest']:
   subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/(name+'.S')),'-o',name+'.o'],cwd=OUT,check=True)
   subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x7c00' if name=='pagingtest' else '0x100','--oformat=binary',name+'.o','-o','RDTEST.COM' if name=='filetest' else name.upper()+'.COM'],cwd=OUT,check=True)
  for name,adapter,mode,bpp in [('S3V101',3,0x101,8),('S3V103',3,0x103,8),('S3V105',3,0x105,8),('S3V110',3,0x110,15),('S3V111',3,0x111,16),('S3V114',3,0x114,16),('S3V10F',3,0x10f,32),('TANTEST',4,9,4),('JRTTEST',5,9,4),('HERCTEST',6,0,1)]:
@@ -155,7 +155,7 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
  return sources
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse','adapters','ems','sb','opl','sb16','beep','dates','x87','cpu','extended','joystick','gus','cms','tandy','serial','compatgame'],default='fixture');p.add_argument('--compat',action='store_true');p.add_argument('--x87',action='store_true');p.add_argument('--expanded',action='store_true');args=p.parse_args();sources=prepare()
+ p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse','adapters','ems','sb','opl','sb16','beep','dates','x87','cpu','extended','joystick','gus','cms','tandy','serial','tempfile','compatgame'],default='fixture');p.add_argument('--compat',action='store_true');p.add_argument('--x87',action='store_true');p.add_argument('--expanded',action='store_true');args=p.parse_args();sources=prepare()
  if args.expanded and not (args.compat and args.x87):p.error('--expanded requires --compat --x87')
  if args.compat:
   from prepare_dosbox_compat import prepare as compat_prepare
