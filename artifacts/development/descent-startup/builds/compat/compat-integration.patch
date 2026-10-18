@@ -1,0 +1,136 @@
+--- a/src/hardware/dma.cpp
++++ b/src/hardware/dma.cpp
+@@ -401,12 +401,12 @@
+ static DMA* test;
+ 
+ void DMA_Destroy(Section* /*sec*/){
+-	delete test;
++	delete test;test=nullptr;
+ }
+ void DMA_Init(Section* sec) {
+ 	DMA_SetWrapping(0xffff);
+ 	test = new DMA(sec);
+-	sec->AddDestroyFunction(&DMA_Destroy);
++	if(sec)sec->AddDestroyFunction(&DMA_Destroy);
+ 	Bitu i;
+ 	for (i=0;i<LINK_START;i++) {
+ 		ems_board_mapping[i]=i;
+--- a/src/ints/ems.cpp
++++ b/src/ints/ems.cpp
+@@ -32,6 +32,7 @@
+ #include "support.h"
+ #include "cpu.h"
+ #include "dma.h"
++#include "compat.h"
+ 
+ #define EMM_PAGEFRAME	0xE000
+ #define EMM_PAGEFRAME4K	((EMM_PAGEFRAME*16)/4096)
+@@ -1343,21 +1344,8 @@
+ 	return CBRET_NONE;
+ }
+ 
+-Bitu GetEMSType(Section_prop * section) {
+-	Bitu rtype = 0;
+-	std::string emstypestr(section->Get_string("ems"));
+-	if (emstypestr=="true") {
+-		rtype = 1;	// mixed mode
+-	} else if (emstypestr=="emsboard") {
+-		rtype = 2;
+-	} else if (emstypestr=="emm386") {
+-		rtype = 3;
+-	} else {
+-		rtype = 0;
+-	}
+-	return rtype;
+-}
+-
++extern void CALLBACK_DeAllocate(Bitu);
++Bitu GetEMSType(Section_prop*) { return db_ems_enabled ? (db_vcpi_enabled ? 1 : 2) : 0; }
+ 
+ class EMS: public Module_base {
+ private:
+@@ -1493,10 +1481,11 @@
+ 		MEM_BlockWrite(PhysMake(ems_baseseg,0),buf,32);
+ 		RealSetVec(0x67,old67_pointer);
+ 
+-		/* Release memory allocated to system handle */
+-		if (emm_handles[EMM_SYSTEM_HANDLE].pages != NULL_HANDLE) {
+-			MEM_ReleasePages(emm_handles[EMM_SYSTEM_HANDLE].mem);
+-		}
++		CALLBACK_DeAllocate(call_int67);
++		ems_baseseg=0;
++		/* Release all surviving application handles as well as the system handle. */
++        for(unsigned i=0;i<EMM_MAX_HANDLES;i++)
++            if(emm_handles[i].pages!=NULL_HANDLE) MEM_ReleasePages(emm_handles[i].mem);
+ 
+ 		/* Clear handle and page tables */
+ 		//TODO
+@@ -1517,12 +1506,12 @@
+ static EMS* test;
+ 
+ void EMS_ShutDown(Section* /*sec*/) {
+-	delete test;
++	delete test;test=nullptr;
+ }
+ 
+ void EMS_Init(Section* sec) {
+ 	test = new EMS(sec);
+-	sec->AddDestroyFunction(&EMS_ShutDown,true);
++	if(sec)sec->AddDestroyFunction(&EMS_ShutDown,true);
+ }
+ 
+ //Initialize static members
+--- a/src/ints/xms.cpp
++++ b/src/ints/xms.cpp
+@@ -28,6 +28,7 @@
+ #include "setup.h"
+ #include "inout.h"
+ #include "xms.h"
++#include "compat.h"
+ #include "bios.h"
+ 
+ #define XMS_HANDLES							50		/* 50 XMS Memory Blocks */ 
+@@ -421,7 +422,7 @@
+ 	XMS(Section* configuration):Module_base(configuration){
+ 		Section_prop * section=static_cast<Section_prop *>(configuration);
+ 		umb_available=false;
+-		if (!section->Get_bool("xms")) return;
++		if (!db_xms_enabled) return;
+ 		Bitu i;
+ 		BIOS_ZeroExtendedSize(true);
+ 		DOS_AddMultiplexHandler(multiplex_xms);
+@@ -446,9 +447,9 @@
+ 		xms_handles[0].free	= false;
+ 
+ 		/* Set up UMB chain */
+-		umb_available=section->Get_bool("umb");
++		umb_available=db_umb_enabled;
+ 		bool ems_available = GetEMSType(section)>0;
+-		DOS_BuildUMBChain(section->Get_bool("umb"),ems_available);
++		DOS_BuildUMBChain(db_umb_enabled,ems_available);
+ 	}
+ 
+ 	~XMS(){
+@@ -460,7 +461,7 @@
+ 			umb_available=false;
+ 		}
+ 
+-		if (!section->Get_bool("xms")) return;
++		if (!db_xms_enabled) return;
+ 		/* Undo biosclearing */
+ 		BIOS_ZeroExtendedSize(false);
+ 
+@@ -476,10 +477,10 @@
+ static XMS* test;
+ 
+ void XMS_ShutDown(Section* /*sec*/) {
+-	delete test;	
++	delete test;test=nullptr;	
+ }
+ 
+ void XMS_Init(Section* sec) {
+ 	test = new XMS(sec);
+-	sec->AddDestroyFunction(&XMS_ShutDown,true);
+-}
++	if(sec)sec->AddDestroyFunction(&XMS_ShutDown,true);
++}

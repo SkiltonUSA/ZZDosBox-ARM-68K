@@ -1,0 +1,251 @@
+--- a/include/config.h
++++ b/include/config.h
+@@ -171,3 +171,6 @@
+ #error "Can't determine pointer size"
+ #endif
+ 
++
++#define C_DYNREC 1
++#define C_TARGETCPU ARMV7LE
+--- a/src/cpu/core_dynrec.cpp
++++ b/src/cpu/core_dynrec.cpp
+@@ -1,3 +1,4 @@
++#include "dynrec_plan.h"
+ /*
+  *  Copyright (C) 2002-2021  The DOSBox Team
+  *
+@@ -53,9 +54,9 @@
+ #include "pic.h"
+ 
+ #define CACHE_MAXSIZE	(4096*2)
+-#define CACHE_TOTAL		(1024*1024*8)
+-#define CACHE_PAGES		(512)
+-#define CACHE_BLOCKS	(128*1024)
++#define CACHE_TOTAL		DB_JIT_CACHE
++#define CACHE_PAGES		(128)
++#define CACHE_BLOCKS	(8*1024*DB_JIT_MIB)
+ #define CACHE_ALIGN		(16)
+ #define DYN_HASH_SHIFT	(4)
+ #define DYN_PAGE_HASH	(4096>>DYN_HASH_SHIFT)
+@@ -181,8 +182,58 @@
+ 	execution process, or returning from the core etc.
+ */
+ 
++
++#ifdef DB_EXPANDED
++#include "paged_plan.h"
++extern unsigned db_paged_jit;
++static bool db_last_paging;
++static HostPt db_paged_ram_page(Bitu page){
++ if(page>=MEM_TotalPages())return nullptr;
++ PageHandler*h=MEM_GetPageHandler(page);
++ if(!(h->flags&PFLAG_READABLE)||(h->flags&PFLAG_NOCODE))return nullptr;
++ return h->GetHostReadPt(page);
++}
++static bool db_paged_register_instruction(){
++ PhysPt address=SegPhys(cs)+reg_eip;
++ // No page-boundary, segment-wrap or device-memory speculative fetches.
++ if((address&4095)>4080||(!cpu.code.big&&(reg_eip&65535)>65520))return false;
++ HostPt directory=db_paged_ram_page(paging.base.page);if(!directory)return false;
++ Bit32u pde=host_readd(directory+(address>>22)*4);if(!(pde&1))return false;
++ HostPt table=db_paged_ram_page(pde>>12);if(!table)return false;
++ Bit32u pte=host_readd(table+((address>>12)&1023)*4);if(!(pte&1))return false;
++ // Match the pinned interpreter's 386 versus 486/Pentium U/S rules.
++ bool user_allowed=CPU_ArchitectureType==CPU_ARCHTYPE_386SLOW?((pde|pte)&4)!=0:((pde&pte)&4)!=0;
++ if((cpu.cpl&cpu.mpl)==3&&!user_allowed)return false;
++ HostPt code=db_paged_ram_page(pte>>12);if(!code)return false;
++ // Read directly from validated physical RAM: supervisor-only pages normally
++ // leave the upstream TLB unlinked, and forcing that TLB would lose checks.
++ code+=address&4095;
++ return pc_paged_register_length(host_readb(code),host_readb(code+1),cpu.code.big)!=0;
++}
++#endif
++unsigned db_dynrec_dispatches,db_dynrec_paged_fallbacks;
+ Bits CPU_Core_Dynrec_Run(void) {
+ 	for (;;) {
++#ifdef DB_EXPANDED
++        if(db_last_paging!=paging.enabled){
++            while(cache.used_pages)cache.used_pages->ClearRelease();
++            db_last_paging=paging.enabled;
++        }
++        if(paging.enabled && !db_paged_jit){db_dynrec_paged_fallbacks++;return CPU_Core_Normal_Run();}
++        if(paging.enabled && !db_paged_register_instruction()){
++            // Let the paging-safe interpreter consume a short burst. Returning
++            // after every memory/branch instruction floods the frontend with
++            // dispatches. Preserve the scheduler's allocated cycle total and
++            // never extend past an already scheduled event boundary.
++            db_dynrec_paged_fallbacks++;
++            Bits quantum=CPU_Cycles>32?32:CPU_Cycles;
++            CPU_CycleLeft+=CPU_Cycles-quantum;CPU_Cycles=quantum;
++            return CPU_Core_Normal_Run();
++        }
++#else
++        if(paging.enabled){db_dynrec_paged_fallbacks++;return CPU_Core_Normal_Run();}
++#endif
++
+ 		// Determine the linear address of CS:EIP
+ 		PhysPt ip_point=SegPhys(cs)+reg_eip;
+ 		#if C_HEAVY_DEBUG
+@@ -207,7 +258,7 @@
+ 			// unless the instruction is known to be modified
+ 			if (!chandler->invalidation_map || (chandler->invalidation_map[ip_point&4095]<4)) {
+ 				// translate up to 32 instructions
+-				block=CreateCacheBlock(chandler,ip_point,32);
++				block=CreateCacheBlock(chandler,ip_point,paging.enabled?1:32);
+ 			} else {
+ 				// let the normal core handle this instruction to avoid zero-sized blocks
+ 				Bitu old_cycles=CPU_Cycles;
+@@ -226,6 +277,7 @@
+ 		cache.block.running=0;
+ 		// now we're ready to run the dynamic code block
+ //		BlockReturn ret=((BlockReturn (*)(void))(block->cache.start))();
++		db_dynrec_dispatches++;
+ 		BlockReturn ret=core_dynrec.runcode(block->cache.start);
+ 
+ 		switch (ret) {
+@@ -291,6 +343,7 @@
+ 
+ 		case BR_Link1:
+ 		case BR_Link2:
++			if(paging.enabled)break;
+ 			block=LinkBlocks(ret);
+ 			if (block) goto run_block;
+ 			break;
+--- a/src/cpu/core_dynrec/decoder_opcodes.h
++++ b/src/cpu/core_dynrec/decoder_opcodes.h
+@@ -795,7 +795,7 @@
+ }
+ 
+ 
+-static bool dyn_grp4_eb(void) {
++static Bitu dyn_grp4_eb(void) {
+ 	dyn_get_modrm();
+ 	switch (decode.modrm.reg) {
+ 	case 0x0://INC Eb
+@@ -821,8 +821,7 @@
+ 		dyn_closeblock();
+ 		return true;
+ 	default:
+-		IllegalOptionDynrec("dyn_grp4_eb");
+-		break;
++		return 2; // defer invalid encoding until execution
+ 	}
+ 	return false;
+ }
+--- a/src/cpu/core_dynrec/decoder.h
++++ b/src/cpu/core_dynrec/decoder.h
+@@ -570,7 +570,11 @@
+ 			break;
+ 
+ 		case 0xfe:
+-			if (dyn_grp4_eb()) goto finish_block;
++			switch (dyn_grp4_eb()) {
++            case 1: goto finish_block;
++            case 2: goto illegalopcode;
++            default: break;
++            }
+ 			break;
+ 		case 0xff:
+ 			switch (dyn_grp4_ev()) {
+--- a/src/cpu/core_dynrec/risc_armv4le-common.h
++++ b/src/cpu/core_dynrec/risc_armv4le-common.h
+@@ -84,27 +84,7 @@
+ #define HOST_pc HOST_r15
+ 
+ 
+-static void cache_block_closing(const Bit8u* block_start,Bitu block_size) {
+-#if (__ARM_EABI__)
+-	//flush cache - eabi
+-	register unsigned long _beg __asm ("a1") = (unsigned long)(block_start);				// block start
+-	register unsigned long _end __asm ("a2") = (unsigned long)(block_start+block_size);		// block end
+-	register unsigned long _flg __asm ("a3") = 0;
+-	register unsigned long _par __asm ("r7") = 0xf0002;										// sys_cacheflush
+-	__asm __volatile ("swi 0x0"
+-		: // no outputs
+-		: "r" (_beg), "r" (_end), "r" (_flg), "r" (_par)
+-		);
+-#else
+-// GP2X BEGIN
+-	//flush cache - old abi
+-	register unsigned long _beg __asm ("a1") = (unsigned long)(block_start);				// block start
+-	register unsigned long _end __asm ("a2") = (unsigned long)(block_start+block_size);		// block end
+-	register unsigned long _flg __asm ("a3") = 0;
+-	__asm __volatile ("swi 0x9f0002		@ sys_cacheflush"
+-		: // no outputs
+-		: "r" (_beg), "r" (_end), "r" (_flg)
+-		);
+-// GP2X END
+-#endif
++extern "C" void db_dynrec_commit(const void *,unsigned);
++static void cache_block_closing(const Bit8u *start,Bitu size) {
++ db_dynrec_commit(start,size);
+ }
+--- a/src/cpu/dyn_cache.h
++++ b/src/cpu/dyn_cache.h
+@@ -1,3 +1,5 @@
++extern "C" void *db_dynrec_alloc(unsigned);
++extern "C" void db_dynrec_commit(const void *,unsigned);
+ /*
+  *  Copyright (C) 2002-2021  The DOSBox Team
+  *
+@@ -627,14 +629,7 @@
+ 		}
+ 		if (cache_code_start_ptr==NULL) {
+ 			// allocate the code cache memory
+-#if defined (WIN32)
+-			cache_code_start_ptr=(Bit8u*)VirtualAlloc(0,CACHE_TOTAL+CACHE_MAXSIZE+PAGESIZE_TEMP-1+PAGESIZE_TEMP,
+-				MEM_COMMIT,PAGE_EXECUTE_READWRITE);
+-			if (!cache_code_start_ptr)
+-				cache_code_start_ptr=(Bit8u*)malloc(CACHE_TOTAL+CACHE_MAXSIZE+PAGESIZE_TEMP-1+PAGESIZE_TEMP);
+-#else
+-			cache_code_start_ptr=(Bit8u*)malloc(CACHE_TOTAL+CACHE_MAXSIZE+PAGESIZE_TEMP-1+PAGESIZE_TEMP);
+-#endif
++cache_code_start_ptr=(Bit8u*)db_dynrec_alloc(CACHE_TOTAL+CACHE_MAXSIZE+PAGESIZE_TEMP*2-1);
+ 			if(!cache_code_start_ptr) E_Exit("Allocating dynamic cache failed");
+ 
+ 			// align the cache at a page boundary
+@@ -669,6 +664,7 @@
+ 		core_dynrec.runcode=(BlockReturn (*)(const Bit8u*))cache.pos;
+ //		link_blocks[1].cache.start=cache.pos;
+ 		dyn_run_code();
++		db_dynrec_commit(cache_code_link_blocks,PAGESIZE_TEMP);
+ #endif
+ 
+ 		cache.free_pages=0;
+@@ -684,26 +680,13 @@
+ }
+ 
+ static void cache_close(void) {
+-/*	for (;;) {
+-		if (cache.used_pages) {
+-			CodePageHandler * cpage=cache.used_pages;
+-			CodePageHandler * npage=cache.used_pages->next;
+-			cpage->ClearRelease();
+-			delete cpage;
+-			cache.used_pages=npage;
+-		} else break;
+-	}
+-	if (cache_blocks != NULL) {
+-		free(cache_blocks);
+-		cache_blocks = NULL;
+-	}
+-	if (cache_code_start_ptr != NULL) {
+-		### care: under windows VirtualFree() has to be used if
+-		###       VirtualAlloc was used for memory allocation
+-		free(cache_code_start_ptr);
+-		cache_code_start_ptr = NULL;
+-	}
+-	cache_code = NULL;
+-	cache_code_link_blocks = NULL;
+-	cache_initialized = false; */
+-}
++ while(cache.used_pages)cache.used_pages->ClearRelease();
++ while(cache.free_pages){
++  CodePageHandlerDynRec *p=cache.free_pages;cache.free_pages=p->next;
++  free(p->invalidation_map);delete p;
++ }
++ free(cache_blocks);cache_blocks=NULL;
++ cache_code_start_ptr=cache_code=cache_code_link_blocks=NULL;
++ memset(&cache,0,sizeof(cache));memset(link_blocks,0,sizeof(link_blocks));
++ cache_initialized=false;
++}

@@ -12,6 +12,9 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — protected-mode game startup
 
+- Back up the tested Compat/Expanded executables, build metadata and licensed
+  DOS/32A helper in [the development update](artifacts/development/descent-startup).
+
 - Use DOS/32A 7.35 for the personal Descent profile; first-level rendering and
   input verified on the Amiga without DOS/4GW paging. Original game unchanged.
 - Fix ARM recompiler lookahead over self-modifying invalid FE-group bytes;

@@ -1,5 +1,18 @@
 # Descent, Doom, Quake and Duke Nukem 3D startup review
 
+## Summary
+
+| Change | Location | Evidence |
+| --- | --- | --- |
+| Preserve DOS error state during file-existence checks | ZZDosBox filesystem adapter | TEMPTEST fails before and passes after; fixes DOS/4GW errors 2504/1011 |
+| Defer invalid FE-group opcodes until execution | ARM dynamic recompiler | Independent self-modifying-code fixture passes with the fix |
+| Run Descent through DOS/32A 7.35 | Per-game launcher command | First level and input work; zero paged fallbacks in the recorded run |
+
+The DOS/32A change is a compatibility workaround, not a general repair to
+DOS/4GW paging. The JIT regression was independently verified; it is not
+established as the cause of Descent's original failure. The game executable
+and data were unchanged. [Tested runtime backup and setup](../artifacts/development/descent-startup/).
+
 ## Findings
 
 - **Descent:** DOS/4GW Professional 1.97 failed with errors 2504 and 1011
@@ -69,7 +82,8 @@ so the counts are diagnostic evidence, not an FPS comparison.
 
 The DOS/32A run reached the briefing and first playable mine on the A4000TX.
 Input changed the viewpoint. The sound-enabled configuration also reached the
-level and completed 3,356,672 audio samples with no reported delivery error. This establishes first-level startup, not complete-game compatibility.
+level and completed 3,356,672 audio samples with no reported delivery error.
+This establishes first-level startup, not complete-game compatibility.
 
 A separate recompiler regression was found while investigating the loader.
 Translation lookahead used to abort on an invalid FE-group encoding, even

@@ -1,0 +1,1100 @@
+--- a/src/hardware/mixer.cpp
++++ b/src/hardware/mixer.cpp
+@@ -22,10 +22,6 @@
+ 	That should call the mixer start from there or something.
+ */
+ 
+-#ifdef __LIBRETRO__
+-#include <stdlib.h>
+-#include "libretro_dosbox.h"
+-#endif
+ #include <string.h>
+ #include <sys/types.h>
+ #include <math.h>
+@@ -39,7 +35,9 @@
+ #include <mmsystem.h>
+ #endif
+ 
+-#include "SDL.h"
++#include "audio.h"
++#define SDL_LockAudio()
++#define SDL_UnlockAudio()
+ #include "mem.h"
+ #include "pic.h"
+ #include "dosbox.h"
+@@ -473,17 +471,7 @@
+ 	SDL_UnlockAudio();
+ }
+ 
+-extern bool ticksLocked;
+-static inline bool Mixer_irq_important(void) {
+-#ifndef __LIBRETRO__
+-	/* In some states correct timing of the irqs is more important than
+-	 * non stuttering audio */
+-	return (ticksLocked || (CaptureState & (CAPTURE_WAVE|CAPTURE_VIDEO)));
+-#else
+-	return ticksLocked;
+-#endif
+-}
+-
++static bool Mixer_irq_important(){return true;}
+ static Bit32u calc_tickadd(Bit32u freq) {
+ #if TICK_SHIFT > 16
+ 	Bit64u freq64 = static_cast<Bit64u>(freq);
+@@ -502,41 +490,24 @@
+ 		chan->Mix(needed);
+ 		chan=chan->next;
+ 	}
+-#ifndef __LIBRETRO__
+-	if (CaptureState & (CAPTURE_WAVE|CAPTURE_VIDEO)) {
+-		Bit16s convert[1024][2];
+-		Bitu added=needed-mixer.done;
+-		if (added>1024)
+-			added=1024;
+-		Bitu readpos=(mixer.pos+mixer.done)&MIXER_BUFMASK;
+-		for (Bitu i=0;i<added;i++) {
+-			Bits sample=mixer.work[readpos][0] >> MIXER_VOLSHIFT;
+-			convert[i][0]=MIXER_CLIP(sample);
+-			sample=mixer.work[readpos][1] >> MIXER_VOLSHIFT;
+-			convert[i][1]=MIXER_CLIP(sample);
+-			readpos=(readpos+1)&MIXER_BUFMASK;
+-		}
+-		CAPTURE_AddWave( mixer.freq, added, (Bit16s*)convert );
+-	}
+-#endif
++
+ 	//Reset the the tick_add for constant speed
+ 	if( Mixer_irq_important() )
+ 		mixer.tick_add = calc_tickadd(mixer.freq);
+ 	mixer.done = needed;
+ }
+ 
+-static void MIXER_Mix(void) {
+-	SDL_LockAudio();
+-	MIXER_MixData(mixer.needed);
+-	mixer.tick_counter += mixer.tick_add;
+-	mixer.needed+=(mixer.tick_counter >> TICK_SHIFT);
+-	mixer.tick_counter &= TICK_MASK;
+-	SDL_UnlockAudio();
+-}
+-
+ static void MIXER_Mix_NoSound(void) {
+ 	MIXER_MixData(mixer.needed);
+-	/* Clear piece we've just generated */
++	Bit16s pcm[32*2];
++ if(mixer.needed>32)E_Exit("PCM tick bound");
++ for(Bitu i=0;i<mixer.needed;i++){
++  Bitu p=(mixer.pos+i)&MIXER_BUFMASK;
++  pcm[i*2]=MIXER_CLIP(mixer.work[p][0]>>MIXER_VOLSHIFT);
++  pcm[i*2+1]=MIXER_CLIP(mixer.work[p][1]>>MIXER_VOLSHIFT);
++ }
++ db_audio_samples(pcm,(unsigned)mixer.needed);
++ /* Clear piece we've just generated */
+ 	for (Bitu i=0;i<mixer.needed;i++) {
+ 		mixer.work[mixer.pos][0]=0;
+ 		mixer.work[mixer.pos][1]=0;
+@@ -552,193 +523,6 @@
+ 	mixer.needed = (mixer.tick_counter >> TICK_SHIFT);
+ 	mixer.tick_counter &= TICK_MASK;
+ 	mixer.done=0;
+-}
+-
+-#define INDEX_SHIFT_LOCAL 14
+-
+-#ifndef __LIBRETRO__
+-static void SDLCALL
+-#else
+-void
+-#endif
+-MIXER_CallBack(void * /*userdata*/, Uint8 *stream, int len) {
+-	Bitu need=(Bitu)len/MIXER_SSIZE;
+-	Bit16s * output=(Bit16s *)stream;
+-	Bitu reduce;
+-	Bitu pos;
+-	//Local resampling counter to manipulate the data when sending it off to the callback
+-	Bitu index_add = (1<<INDEX_SHIFT_LOCAL);
+-	Bitu index = (index_add%need)?need:0;
+-
+-	Bits sample;
+-	/* Enough room in the buffer ? */
+-	if (mixer.done < need) {
+-//		LOG_MSG("Full underrun need %d, have %d, min %d", need, mixer.done, mixer.min_needed);
+-		if((need - mixer.done) > (need >>7) ) //Max 1 percent stretch.
+-			return;
+-		reduce = mixer.done;
+-		index_add = (reduce << INDEX_SHIFT_LOCAL) / need;
+-		mixer.tick_add = calc_tickadd(mixer.freq+mixer.min_needed);
+-	} else if (mixer.done < mixer.max_needed) {
+-		Bitu left = mixer.done - need;
+-		if (left < mixer.min_needed) {
+-			if( !Mixer_irq_important() ) {
+-				Bitu needed = mixer.needed - need;
+-				Bitu diff = (mixer.min_needed>needed?mixer.min_needed:needed) - left;
+-				mixer.tick_add = calc_tickadd(mixer.freq+(diff*3));
+-				left = 0; //No stretching as we compensate with the tick_add value
+-			} else {
+-				left = (mixer.min_needed - left);
+-				left = 1 + (2*left) / mixer.min_needed; //left=1,2,3
+-			}
+-//			LOG_MSG("needed underrun need %d, have %d, min %d, left %d", need, mixer.done, mixer.min_needed, left);
+-			reduce = need - left;
+-			index_add = (reduce << INDEX_SHIFT_LOCAL) / need;
+-		} else {
+-			reduce = need;
+-			index_add = (1 << INDEX_SHIFT_LOCAL);
+-//			LOG_MSG("regular run need %d, have %d, min %d, left %d", need, mixer.done, mixer.min_needed, left);
+-
+-			/* Mixer tick value being updated:
+-			 * 3 cases:
+-			 * 1) A lot too high. >division by 5. but maxed by 2* min to prevent too fast drops.
+-			 * 2) A little too high > division by 8
+-			 * 3) A little to nothing above the min_needed buffer > go to default value
+-			 */
+-			Bitu diff = left - mixer.min_needed;
+-			if(diff > (mixer.min_needed<<1)) diff = mixer.min_needed<<1;
+-			if(diff > (mixer.min_needed>>1))
+-				mixer.tick_add = calc_tickadd(mixer.freq-(diff/5));
+-			else if (diff > (mixer.min_needed>>2))
+-				mixer.tick_add = calc_tickadd(mixer.freq-(diff>>3));
+-			else
+-				mixer.tick_add = calc_tickadd(mixer.freq);
+-		}
+-	} else {
+-		/* There is way too much data in the buffer */
+-//		LOG_MSG("overflow run need %d, have %d, min %d", need, mixer.done, mixer.min_needed);
+-		if (mixer.done > MIXER_BUFSIZE)
+-			index_add = MIXER_BUFSIZE - 2*mixer.min_needed;
+-		else
+-			index_add = mixer.done - 2*mixer.min_needed;
+-		index_add = (index_add << INDEX_SHIFT_LOCAL) / need;
+-		reduce = mixer.done - 2* mixer.min_needed;
+-		mixer.tick_add = calc_tickadd(mixer.freq-(mixer.min_needed/5));
+-	}
+-	/* Reduce done count in all channels */
+-	for (MixerChannel * chan=mixer.channels;chan;chan=chan->next) {
+-		if (chan->done>reduce) chan->done-=reduce;
+-		else chan->done=0;
+-	}
+-
+-	// Reset mixer.tick_add when irqs are important
+-	if( Mixer_irq_important() )
+-		mixer.tick_add = calc_tickadd(mixer.freq);
+-
+-	mixer.done -= reduce;
+-	mixer.needed -= reduce;
+-	pos = mixer.pos;
+-	mixer.pos = (mixer.pos + reduce) & MIXER_BUFMASK;
+-	if(need != reduce) {
+-		while (need--) {
+-			Bitu i = (pos + (index >> INDEX_SHIFT_LOCAL )) & MIXER_BUFMASK;
+-			index += index_add;
+-			sample=mixer.work[i][0]>>MIXER_VOLSHIFT;
+-			*output++=MIXER_CLIP(sample);
+-			sample=mixer.work[i][1]>>MIXER_VOLSHIFT;
+-			*output++=MIXER_CLIP(sample);
+-		}
+-		/* Clean the used buffer */
+-		while (reduce--) {
+-			pos &= MIXER_BUFMASK;
+-			mixer.work[pos][0]=0;
+-			mixer.work[pos][1]=0;
+-			pos++;
+-		}
+-	} else {
+-		while (reduce--) {
+-			pos &= MIXER_BUFMASK;
+-			sample=mixer.work[pos][0]>>MIXER_VOLSHIFT;
+-			*output++=MIXER_CLIP(sample);
+-			sample=mixer.work[pos][1]>>MIXER_VOLSHIFT;
+-			*output++=MIXER_CLIP(sample);
+-			mixer.work[pos][0]=0;
+-			mixer.work[pos][1]=0;
+-			pos++;
+-		}
+-	}
+-}
+-
+-#undef INDEX_SHIFT_LOCAL
+-
+-static void MIXER_Stop(Section* /*sec*/) {
+-}
+-
+-class MIXER : public Program {
+-public:
+-	void MakeVolume(char * scan,float & vol0,float & vol1) {
+-		Bitu w=0;
+-		bool db=(toupper(*scan)=='D');
+-		if (db) scan++;
+-		while (*scan) {
+-			if (*scan==':') {
+-				++scan;w=1;
+-			}
+-			char * before=scan;
+-			float val=(float)strtod(scan,&scan);
+-			if (before==scan) {
+-				++scan;continue;
+-			}
+-			if (!db) val/=100;
+-			else val=powf(10.0f,(float)val/20.0f);
+-			if (val<0) val=1.0f;
+-			if (!w) {
+-				vol0=val;
+-			} else {
+-				vol1=val;
+-			}
+-		}
+-		if (!w) vol1=vol0;
+-	}
+-
+-	void Run(void) {
+-		if(cmd->FindExist("/LISTMIDI")) {
+-			ListMidi();
+-			return;
+-		}
+-		if (cmd->FindString("MASTER",temp_line,false)) {
+-			MakeVolume((char *)temp_line.c_str(),mixer.mastervol[0],mixer.mastervol[1]);
+-		}
+-		MixerChannel * chan = mixer.channels;
+-		while (chan) {
+-			if (cmd->FindString(chan->name,temp_line,false)) {
+-				MakeVolume((char *)temp_line.c_str(),chan->volmain[0],chan->volmain[1]);
+-			}
+-			chan->UpdateVolume();
+-			chan = chan->next;
+-		}
+-		if (cmd->FindExist("/NOSHOW")) return;
+-		WriteOut("Channel  Main    Main(dB)\n");
+-		ShowVolume("MASTER",mixer.mastervol[0],mixer.mastervol[1]);
+-		for (chan = mixer.channels;chan;chan = chan->next)
+-			ShowVolume(chan->name,chan->volmain[0],chan->volmain[1]);
+-	}
+-private:
+-	void ShowVolume(const char * name,float vol0,float vol1) {
+-		WriteOut("%-8s %3.0f:%-3.0f  %+3.2f:%-+3.2f \n",name,
+-			vol0*100,vol1*100,
+-			20*log(vol0)/log(10.0f),20*log(vol1)/log(10.0f)
+-		);
+-	}
+-
+-	void ListMidi(){
+-		if(midi.handler) midi.handler->ListAll(this);
+-	};
+-
+-};
+-
+-static void MIXER_ProgramStart(Program * * make) {
+-	*make=new MIXER;
+ }
+ 
+ MixerChannel* MixerObject::Install(MIXER_Handler handler,Bitu freq,const char * name){
+@@ -759,79 +543,11 @@
+ }
+ 
+ 
+-void MIXER_Init(Section* sec) {
+-	sec->AddDestroyFunction(&MIXER_Stop);
+-
+-	Section_prop * section=static_cast<Section_prop *>(sec);
+-	/* Read out config section */
+-	mixer.freq=section->Get_int("rate");
+-	mixer.nosound=section->Get_bool("nosound");
+-	mixer.blocksize=section->Get_int("blocksize");
+-
+-	/* Initialize the internal stuff */
+-	mixer.channels=0;
+-	mixer.pos=0;
+-	mixer.done=0;
+-	memset(mixer.work,0,sizeof(mixer.work));
+-	mixer.mastervol[0]=1.0f;
+-	mixer.mastervol[1]=1.0f;
+-
+-#ifndef __LIBRETRO__
+-	/* Start the Mixer using SDL Sound at 22 khz */
+-	SDL_AudioSpec spec;
+-	SDL_AudioSpec obtained;
+-
+-	spec.freq=mixer.freq;
+-	spec.format=AUDIO_S16SYS;
+-	spec.channels=2;
+-	spec.callback=MIXER_CallBack;
+-	spec.userdata=NULL;
+-	spec.samples=(Uint16)mixer.blocksize;
+-#endif
+-
+-	mixer.tick_counter=0;
+-	if (mixer.nosound) {
+-		LOG_MSG("MIXER: No Sound Mode Selected.");
+-		mixer.tick_add=calc_tickadd(mixer.freq);
+-		TIMER_AddTickHandler(MIXER_Mix_NoSound);
+-#ifndef __LIBRETRO__
+-	} else if (SDL_OpenAudio(&spec, &obtained) <0 ) {
+-		mixer.nosound = true;
+-		LOG_MSG("MIXER: Can't open audio: %s , running in nosound mode.",SDL_GetError());
+-		mixer.tick_add=calc_tickadd(mixer.freq);
+-		TIMER_AddTickHandler(MIXER_Mix_NoSound);
+-#endif
+-	} else {
+-#ifndef __LIBRETRO__
+-		if ((mixer.freq != static_cast<Bit32u>(obtained.freq)) || (mixer.blocksize != obtained.samples))
+-			LOG_MSG("MIXER: Got different values from SDL: freq %d, blocksize %d",obtained.freq,obtained.samples);
+-		mixer.freq=obtained.freq;
+-		mixer.blocksize=obtained.samples;
+-#endif
+-		mixer.tick_add=calc_tickadd(mixer.freq);
+-		TIMER_AddTickHandler(MIXER_Mix);
+-		SDL_PauseAudio(0);
+-	}
+-	//1000 = 8 *125
+-	mixer.tick_counter = (mixer.freq%125)?TICK_NEXT:0;
+-
+-	mixer.min_needed = section->Get_int("prebuffer");
+-	if (mixer.min_needed > 100) mixer.min_needed = 100;
+-	mixer.min_needed = (mixer.freq*mixer.min_needed)/1000;
+-	mixer.max_needed = mixer.blocksize * 2 + 2*mixer.min_needed;
+-	mixer.needed = mixer.min_needed+1;
+-	PROGRAMS_MakeFile("MIXER.COM",MIXER_ProgramStart);
+-}
+-
+-#ifdef __LIBRETRO__
+-// Need to put it in the av_info struct
+-Bit32u MIXER_RETRO_GetFrequency()
+-{
+-	return mixer.freq;
+-}
+-
+-auto MIXER_RETRO_GetAvailableFrames() noexcept -> Bitu
+-{
+-	return mixer.done;
+-}
+-#endif
++
++void MIXER_Init(Section*) {
++ memset(&mixer,0,sizeof(mixer));mixer.freq=32000;
++ mixer.mastervol[0]=mixer.mastervol[1]=1.0f;
++ mixer.tick_add=calc_tickadd(32000);mixer.needed=32;
++ TIMER_AddTickHandler(MIXER_Mix_NoSound);
++}
++void db_mixer_close(){TIMER_DelTickHandler(MIXER_Mix_NoSound);}
+--- a/src/hardware/sblaster.cpp
++++ b/src/hardware/sblaster.cpp
+@@ -17,8 +17,8 @@
+  */
+ 
+ 
+-#include <iomanip>
+-#include <sstream>
++
++
+ #include <string.h>
+ #include <math.h>
+ #include "dosbox.h"
+@@ -29,7 +29,7 @@
+ #include "hardware.h"
+ #include "setup.h"
+ #include "support.h"
+-#include "shell.h"
++#include "audio.h"
+ using namespace std;
+ 
+ void MIDI_RawOutByte(Bit8u data);
+@@ -1605,13 +1605,13 @@
+ 	/* Data */
+ 	IO_ReadHandleObject ReadHandler[0x10];
+ 	IO_WriteHandleObject WriteHandler[0x10];
+-	AutoexecObject autoexecline;
++
+ 	MixerObject MixerChan;
+ 	OPL_Mode oplmode;
+ 
+ 	/* Support Functions */
+ 	void Find_Type_And_Opl(Section_prop* config,SB_TYPES& type, OPL_Mode& opl_mode){
+-		const char * sbtype=config->Get_string("sbtype");
++		const char * sbtype=(db_sound_card==2?"sb16":"sbpro2");
+ 		if (!strcasecmp(sbtype,"sb1")) type=SBT_1;
+ 		else if (!strcasecmp(sbtype,"sb2")) type=SBT_2;
+ 		else if (!strcasecmp(sbtype,"sbpro1")) type=SBT_PRO1;
+@@ -1626,7 +1626,7 @@
+ 		}
+ 
+ 		/* OPL/CMS Init */
+-		const char * omode=config->Get_string("oplmode");
++		const char * omode="opl3";
+ 		if (!strcasecmp(omode,"none")) opl_mode=OPL_none;
+ 		else if (!strcasecmp(omode,"cms")) opl_mode=OPL_cms;
+ 		else if (!strcasecmp(omode,"opl2")) opl_mode=OPL_opl2;
+@@ -1661,16 +1661,16 @@
+ 		Bitu i;
+ 		Section_prop * section=static_cast<Section_prop *>(configuration);
+ 
+-		sb.hw.base=section->Get_hex("sbbase");
+-		sb.hw.irq=section->Get_int("irq");
+-		Bitu dma8bit=section->Get_int("dma");
++		sb.hw.base=0x220;
++		sb.hw.irq=7;
++		Bitu dma8bit=1;
+ 		if (dma8bit>0xff) dma8bit=0xff;
+ 		sb.hw.dma8=(Bit8u)(dma8bit&0xff);
+-		Bitu dma16bit=section->Get_int("hdma");
++		Bitu dma16bit=5;
+ 		if (dma16bit>0xff) dma16bit=0xff;
+ 		sb.hw.dma16=(Bit8u)(dma16bit&0xff);
+ 
+-		sb.mixer.enabled=section->Get_bool("sbmixer");
++		sb.mixer.enabled=true;
+ 		sb.mixer.stereo=false;
+ 
+ 		Find_Type_And_Opl(section,sb.type,oplmode);
+@@ -1681,10 +1681,10 @@
+ 			break;
+ 		case OPL_cms:
+ 			WriteHandler[0].Install(0x388,adlib_gusforward,IO_MB);
+-			CMS_Init(section);
++			/* CMS excluded: this build exposes SB Pro 2, SB16 and OPL3. */
+ 			break;
+ 		case OPL_opl2:
+-			CMS_Init(section);
++			/* CMS excluded: this build exposes SB Pro 2, SB16 and OPL3. */
+ 			// fall-through
+ 		case OPL_dualopl2:
+ 		case OPL_opl3:
+@@ -1720,15 +1720,6 @@
+ 		if (sb.type == SBT_16) sb.chan->Enable(true);
+ 		else sb.chan->Enable(false);
+ 
+-		// Create set blaster line
+-		ostringstream temp;
+-		temp << "SET BLASTER=A" << setw(3)<< hex << sb.hw.base
+-		     << " I" << dec << (Bitu)sb.hw.irq << " D" << (Bitu)sb.hw.dma8;
+-		if (sb.type==SBT_16) temp << " H" << (Bitu)sb.hw.dma16;
+-		temp << " T" << static_cast<unsigned int>(sb.type) << ends;
+-
+-		autoexecline.Install(temp.str());
+-
+ 		/* Soundblaster midi interface */
+ 		if (!MIDI_Available()) sb.midi = false;
+ 		else sb.midi = true;
+@@ -1739,10 +1730,10 @@
+ 		case OPL_none:
+ 			break;
+ 		case OPL_cms:
+-			CMS_ShutDown(m_configuration);
++			
+ 			break;
+ 		case OPL_opl2:
+-			CMS_ShutDown(m_configuration);
++			
+ 			// fall-through
+ 		case OPL_dualopl2:
+ 		case OPL_opl3:
+@@ -1758,10 +1749,10 @@
+ 
+ static SBLASTER* test;
+ void SBLASTER_ShutDown(Section* /*sec*/) {
+-	delete test;
++	delete test;test=nullptr;
+ }
+ 
+ void SBLASTER_Init(Section* sec) {
+ 	test = new SBLASTER(sec);
+-	sec->AddDestroyFunction(&SBLASTER_ShutDown,true);
+-}
++	if(sec)sec->AddDestroyFunction(&SBLASTER_ShutDown,true);
++}
+--- a/src/hardware/adlib.cpp
++++ b/src/hardware/adlib.cpp
+@@ -29,454 +29,8 @@
+ #include "dbopl.h"
+ #include "cpu.h"
+ 
+-#include "mame/emu.h"
+-#include "mame/fmopl.h"
+-#include "mame/ymf262.h"
+-
+-#include "nukedopl.h"
+-
+-#define OPL2_INTERNAL_FREQ    3600000   // The OPL2 operates at 3.6MHz
+-#define OPL3_INTERNAL_FREQ    14400000  // The OPL3 operates at 14.4MHz
+-
+-namespace OPL2 {
+-	#include "opl.cpp"
+-
+-	struct Handler : public Adlib::Handler {
+-		virtual void WriteReg( Bit32u reg, Bit8u val ) {
+-			adlib_write(reg,val);
+-		}
+-		virtual Bit32u WriteAddr( Bit32u /*port*/, Bit8u val ) {
+-			return val;
+-		}
+-
+-		virtual void Generate( MixerChannel* chan, Bitu samples ) {
+-			Bit16s buf[1024];
+-			while( samples > 0 ) {
+-				Bitu todo = samples > 1024 ? 1024 : samples;
+-				samples -= todo;
+-				adlib_getsample(buf, todo);
+-				chan->AddSamples_m16( todo, buf );
+-			}
+-		}
+-		virtual void Init( Bitu rate ) {
+-			adlib_init(rate);
+-		}
+-		~Handler() {
+-		}
+-	};
+-}
+-
+-namespace OPL3 {
+-	#define OPLTYPE_IS_OPL3
+-	#include "opl.cpp"
+-
+-	struct Handler : public Adlib::Handler {
+-		virtual void WriteReg( Bit32u reg, Bit8u val ) {
+-			adlib_write(reg,val);
+-		}
+-		virtual Bit32u WriteAddr( Bit32u port, Bit8u val ) {
+-			adlib_write_index(port, val);
+-			return opl_index;
+-		}
+-		virtual void Generate( MixerChannel* chan, Bitu samples ) {
+-			Bit16s buf[1024*2];
+-			while( samples > 0 ) {
+-				Bitu todo = samples > 1024 ? 1024 : samples;
+-				samples -= todo;
+-				adlib_getsample(buf, todo);
+-				chan->AddSamples_s16( todo, buf );
+-			}
+-		}
+-		virtual void Init( Bitu rate ) {
+-			adlib_init(rate);
+-		}
+-		~Handler() {
+-		}
+-	};
+-}
+-
+-namespace MAMEOPL2 {
+-
+-struct Handler : public Adlib::Handler {
+-	void* chip;
+-
+-	virtual void WriteReg(Bit32u reg, Bit8u val) {
+-		ym3812_write(chip, 0, reg);
+-		ym3812_write(chip, 1, val);
+-	}
+-	virtual Bit32u WriteAddr(Bit32u /*port*/, Bit8u val) {
+-		return val;
+-	}
+-	virtual void Generate(MixerChannel* chan, Bitu samples) {
+-		Bit16s buf[1024 * 2];
+-		while (samples > 0) {
+-			Bitu todo = samples > 1024 ? 1024 : samples;
+-			samples -= todo;
+-			ym3812_update_one(chip, buf, todo);
+-			chan->AddSamples_m16(todo, buf);
+-		}
+-	}
+-	virtual void Init(Bitu rate) {
+-		chip = ym3812_init(0, OPL2_INTERNAL_FREQ, rate);
+-	}
+-	~Handler() {
+-		ym3812_shutdown(chip);
+-	}
+-};
+-
+-}
+-
+-
+-namespace MAMEOPL3 {
+-
+-struct Handler : public Adlib::Handler {
+-	void* chip;
+-
+-	virtual void WriteReg(Bit32u reg, Bit8u val) {
+-		ymf262_write(chip, 0, reg);
+-		ymf262_write(chip, 1, val);
+-	}
+-	virtual Bit32u WriteAddr(Bit32u /*port*/, Bit8u val) {
+-		return val;
+-	}
+-	virtual void Generate(MixerChannel* chan, Bitu samples) {
+-		//We generate data for 4 channels, but only the first 2 are connected on a pc
+-		Bit16s buf[4][1024];
+-		Bit16s result[1024][2];
+-		Bit16s* buffers[4] = { buf[0], buf[1], buf[2], buf[3] };
+-
+-		while (samples > 0) {
+-			Bitu todo = samples > 1024 ? 1024 : samples;
+-			samples -= todo;
+-			ymf262_update_one(chip, buffers, todo);
+-			//Interleave the samples before mixing
+-			for (Bitu i = 0; i < todo; i++) {
+-				result[i][0] = buf[0][i];
+-				result[i][1] = buf[1][i];
+-			}
+-			chan->AddSamples_s16(todo, result[0]);
+-		}
+-	}
+-	virtual void Init(Bitu rate) {
+-		chip = ymf262_init(0, OPL3_INTERNAL_FREQ, rate);
+-	}
+-	~Handler() {
+-		ymf262_shutdown(chip);
+-	}
+-};
+-
+-}
+-
+-namespace NukedOPL {
+-struct Handler : public Adlib::Handler {
+-	opl3_chip chip;
+-	Bit8u newm;
+-	virtual void WriteReg( Bit32u reg, Bit8u val ) {
+-		OPL3_WriteRegBuffered(&chip, (Bit16u)reg, val);
+-		if (reg == 0x105)
+-			newm = reg & 0x01;
+-	}
+-	virtual Bit32u WriteAddr( Bit32u port, Bit8u val ) {
+-		Bit16u addr;
+-		addr = val;
+-		if ((port & 2) && (addr == 0x05 || newm)) {
+-			addr |= 0x100;
+-		}
+-		return addr;
+-	}
+-	virtual void Generate( MixerChannel* chan, Bitu samples ) {
+-		Bit16s buf[1024*2];
+-		while( samples > 0 ) {
+-			Bitu todo = samples > 1024 ? 1024 : samples;
+-			samples -= todo;
+-			OPL3_GenerateStream(&chip, buf, todo);
+-			chan->AddSamples_s16( todo, buf );
+-		}
+-	}
+-	virtual void Init( Bitu rate ) {
+-		newm = 0;
+-		OPL3_Reset(&chip, rate);
+-	}
+-	~Handler() {
+-	}
+-};
+-
+-}
+-
+-
+-
+-#define RAW_SIZE 1024
+-
+-
+-/*
+-	Main Adlib implementation
+-
+-*/
+-
+ namespace Adlib {
+ 
+-
+-/* Raw DRO capture stuff */
+-
+-#ifdef _MSC_VER
+-#pragma pack (1)
+-#endif
+-
+-#define HW_OPL2 0
+-#define HW_DUALOPL2 1
+-#define HW_OPL3 2
+-
+-struct RawHeader {
+-	Bit8u id[8];				/* 0x00, "DBRAWOPL" */
+-	Bit16u versionHigh;			/* 0x08, size of the data following the m */
+-	Bit16u versionLow;			/* 0x0a, size of the data following the m */
+-	Bit32u commands;			/* 0x0c, Bit32u amount of command/data pairs */
+-	Bit32u milliseconds;		/* 0x10, Bit32u Total milliseconds of data in this chunk */
+-	Bit8u hardware;				/* 0x14, Bit8u Hardware Type 0=opl2,1=dual-opl2,2=opl3 */
+-	Bit8u format;				/* 0x15, Bit8u Format 0=cmd/data interleaved, 1 maybe all cdms, followed by all data */
+-	Bit8u compression;			/* 0x16, Bit8u Compression Type, 0 = No Compression */
+-	Bit8u delay256;				/* 0x17, Bit8u Delay 1-256 msec command */
+-	Bit8u delayShift8;			/* 0x18, Bit8u (delay + 1)*256 */			
+-	Bit8u conversionTableSize;	/* 0x191, Bit8u Raw Conversion Table size */
+-} GCC_ATTRIBUTE(packed);
+-#ifdef _MSC_VER
+-#pragma pack()
+-#endif
+-/*
+-	The Raw Tables is < 128 and is used to convert raw commands into a full register index 
+-	When the high bit of a raw command is set it indicates the cmd/data pair is to be sent to the 2nd port
+-	After the conversion table the raw data follows immediatly till the end of the chunk
+-*/
+-
+-//Table to map the opl register to one <127 for dro saving
+-class Capture {
+-	//127 entries to go from raw data to registers
+-	Bit8u ToReg[127];
+-	//How many entries in the ToPort are used
+-	Bit8u RawUsed;
+-	//256 entries to go from port index to raw data
+-	Bit8u ToRaw[256];
+-	Bit8u delay256;
+-	Bit8u delayShift8;
+-	RawHeader header;
+-
+-	FILE*	handle;				//File used for writing
+-	Bit32u	startTicks;			//Start used to check total raw length on end
+-	Bit32u	lastTicks;			//Last ticks when last last cmd was added
+-	Bit8u	buf[1024];	//16 added for delay commands and what not
+-	Bit32u	bufUsed;
+-	Bit8u	cmd[2];				//Last cmd's sent to either ports
+-	bool	doneOpl3;
+-	bool	doneDualOpl2;
+-
+-	RegisterCache* cache;
+-
+-	void MakeEntry( Bit8u reg, Bit8u& raw ) {
+-		ToReg[ raw ] = reg;
+-		ToRaw[ reg ] = raw;
+-		raw++;
+-	}
+-	void MakeTables( void ) {
+-		Bit8u index = 0;
+-		memset( ToReg, 0xff, sizeof ( ToReg ) );
+-		memset( ToRaw, 0xff, sizeof ( ToRaw ) );
+-		//Select the entries that are valid and the index is the mapping to the index entry
+-		MakeEntry( 0x01, index );					//0x01: Waveform select
+-		MakeEntry( 0x04, index );					//104: Four-Operator Enable
+-		MakeEntry( 0x05, index );					//105: OPL3 Mode Enable
+-		MakeEntry( 0x08, index );					//08: CSW / NOTE-SEL
+-		MakeEntry( 0xbd, index );					//BD: Tremolo Depth / Vibrato Depth / Percussion Mode / BD/SD/TT/CY/HH On
+-		//Add the 32 byte range that hold the 18 operators
+-		for ( int i = 0 ; i < 24; i++ ) {
+-			if ( (i & 7) < 6 ) {
+-				MakeEntry(0x20 + i, index );		//20-35: Tremolo / Vibrato / Sustain / KSR / Frequency Multiplication Facto
+-				MakeEntry(0x40 + i, index );		//40-55: Key Scale Level / Output Level 
+-				MakeEntry(0x60 + i, index );		//60-75: Attack Rate / Decay Rate 
+-				MakeEntry(0x80 + i, index );		//80-95: Sustain Level / Release Rate
+-				MakeEntry(0xe0 + i, index );		//E0-F5: Waveform Select
+-			}
+-		}
+-		//Add the 9 byte range that hold the 9 channels
+-		for ( int i = 0 ; i < 9; i++ ) {
+-			MakeEntry(0xa0 + i, index );			//A0-A8: Frequency Number
+-			MakeEntry(0xb0 + i, index );			//B0-B8: Key On / Block Number / F-Number(hi bits) 
+-			MakeEntry(0xc0 + i, index );			//C0-C8: FeedBack Modulation Factor / Synthesis Type
+-		}
+-		//Store the amount of bytes the table contains
+-		RawUsed = index;
+-//		assert( RawUsed <= 127 );
+-		delay256 = RawUsed;
+-		delayShift8 = RawUsed+1; 
+-	}
+-
+-	void ClearBuf( void ) {
+-		fwrite( buf, 1, bufUsed, handle );
+-		header.commands += bufUsed / 2;
+-		bufUsed = 0;
+-	}
+-	void AddBuf( Bit8u raw, Bit8u val ) {
+-		buf[bufUsed++] = raw;
+-		buf[bufUsed++] = val;
+-		if ( bufUsed >= sizeof( buf ) ) {
+-			ClearBuf();
+-		}
+-	}
+-	void AddWrite( Bit32u regFull, Bit8u val ) {
+-		Bit8u regMask = regFull & 0xff;
+-		/*
+-			Do some special checks if we're doing opl3 or dualopl2 commands
+-			Although you could pretty much just stick to always doing opl3 on the player side
+-		*/
+-		//Enabling opl3 4op modes will make us go into opl3 mode
+-		if ( header.hardware != HW_OPL3 && regFull == 0x104 && val && (*cache)[0x105] ) {
+-			header.hardware = HW_OPL3;
+-		} 
+-		//Writing a keyon to a 2nd address enables dual opl2 otherwise
+-		//Maybe also check for rhythm
+-		if ( header.hardware == HW_OPL2 && regFull >= 0x1b0 && regFull <=0x1b8 && val ) {
+-			header.hardware = HW_DUALOPL2;
+-		}
+-		Bit8u raw = ToRaw[ regMask ];
+-		if ( raw == 0xff )
+-			return;
+-		if ( regFull & 0x100 )
+-			raw |= 128;
+-		AddBuf( raw, val );
+-	}
+-	void WriteCache( void  ) {
+-		Bitu i, val;
+-		/* Check the registers to add */
+-		for (i = 0;i < 256;i++) {
+-			val = (*cache)[ i ];
+-			//Silence the note on entries
+-			if (i >= 0xb0 && i <= 0xb8) {
+-				val &= ~0x20;
+-			}
+-			if (i == 0xbd) {
+-				val &= ~0x1f;
+-			}
+-
+-			if (val) {
+-				AddWrite( i, val );
+-			}
+-			val = (*cache)[ 0x100 + i ];
+-
+-			if (i >= 0xb0 && i <= 0xb8) {
+-				val &= ~0x20;
+-			}
+-			if (val) {
+-				AddWrite( 0x100 + i, val );
+-			}
+-		}
+-	}
+-	void InitHeader( void ) {
+-		memset( &header, 0, sizeof( header ) );
+-		memcpy( header.id, "DBRAWOPL", 8 );
+-		header.versionLow = 0;
+-		header.versionHigh = 2;
+-		header.delay256 = delay256;
+-		header.delayShift8 = delayShift8;
+-		header.conversionTableSize = RawUsed;
+-	}
+-	void CloseFile( void ) {
+-		if ( handle ) {
+-			ClearBuf();
+-			/* Endianize the header and write it to beginning of the file */
+-			var_write( &header.versionHigh, header.versionHigh );
+-			var_write( &header.versionLow, header.versionLow );
+-			var_write( &header.commands, header.commands );
+-			var_write( &header.milliseconds, header.milliseconds );
+-			fseek( handle, 0, SEEK_SET );
+-			fwrite( &header, 1, sizeof( header ), handle );
+-			fclose( handle );
+-			handle = 0;
+-		}
+-	}
+-public:
+-	bool DoWrite( Bit32u regFull, Bit8u val ) {
+-		Bit8u regMask = regFull & 0xff;
+-		//Check the raw index for this register if we actually have to save it
+-		if ( handle ) {
+-			/*
+-				Check if we actually care for this to be logged, else just ignore it
+-			*/
+-			Bit8u raw = ToRaw[ regMask ];
+-			if ( raw == 0xff ) {
+-				return true;
+-			}
+-			/* Check if this command will not just replace the same value 
+-			   in a reg that doesn't do anything with it
+-			*/
+-			if ( (*cache)[ regFull ] == val )
+-				return true;
+-			/* Check how much time has passed */
+-			Bitu passed = PIC_Ticks - lastTicks;
+-			lastTicks = PIC_Ticks;
+-			header.milliseconds += passed;
+-
+-			//if ( passed > 0 ) LOG_MSG( "Delay %d", passed ) ;
+-			
+-			// If we passed more than 30 seconds since the last command, we'll restart the the capture
+-			if ( passed > 30000 ) {
+-				CloseFile();
+-				goto skipWrite; 
+-			}
+-			while (passed > 0) {
+-				if (passed < 257) {			//1-256 millisecond delay
+-					AddBuf( delay256, passed - 1 );
+-					passed = 0;
+-				} else {
+-					Bitu shift = (passed >> 8);
+-					passed -= shift << 8;
+-					AddBuf( delayShift8, shift - 1 );
+-				}
+-			}
+-			AddWrite( regFull, val );
+-			return true;
+-		}
+-skipWrite:
+-		//Not yet capturing to a file here
+-		//Check for commands that would start capturing, if it's not one of them return
+-		if ( !(
+-			//note on in any channel 
+-			( regMask>=0xb0 && regMask<=0xb8 && (val&0x020) ) ||
+-			//Percussion mode enabled and a note on in any percussion instrument
+-			( regMask == 0xbd && ( (val&0x3f) > 0x20 ) )
+-		)) {
+-			return true;
+-		}
+-	  	handle = OpenCaptureFile("Raw Opl",".dro");
+-		if (!handle)
+-			return false;
+-		InitHeader();
+-		//Prepare space at start of the file for the header
+-		fwrite( &header, 1, sizeof(header), handle );
+-		/* write the Raw To Reg table */
+-		fwrite( &ToReg, 1, RawUsed, handle );
+-		/* Write the cache of last commands */
+-		WriteCache( );
+-		/* Write the command that triggered this */
+-		AddWrite( regFull, val );
+-		//Init the timing information for the next commands
+-		lastTicks = PIC_Ticks;	
+-		startTicks = PIC_Ticks;
+-		return true;
+-	}
+-	Capture( RegisterCache* _cache ) {
+-		cache = _cache;
+-		handle = 0;
+-		bufUsed = 0;
+-		MakeTables();
+-	}
+-	~Capture() {
+-		CloseFile();
+-	}
+-
+-};
+-
+-/*
+-Chip
+-*/
+ 
+ Chip::Chip() : timer0(80), timer1(320) {
+ }
+@@ -537,9 +91,7 @@
+ 
+ void Module::CacheWrite( Bit32u reg, Bit8u val ) {
+ 	//capturing?
+-	if ( capture ) {
+-		capture->DoWrite( reg, val );
+-	}
++
+ 	//Store it into the cache
+ 	cache[ reg ] = val;
+ }
+@@ -803,21 +355,6 @@
+ };
+ #endif
+ 
+-static void OPL_SaveRawEvent(bool pressed) {
+-	if (!pressed)
+-		return;
+-//	SaveRad();return;
+-	/* Check for previously opened wave file */
+-	if ( module->capture ) {
+-		delete module->capture;
+-		module->capture = 0;
+-		LOG_MSG("Stopped Raw OPL capturing.");
+-	} else {
+-		LOG_MSG("Preparing to capture Raw OPL, will start with first note played.");
+-		module->capture = new Adlib::Capture( &module->cache );
+-	}
+-}
+-
+ namespace Adlib {
+ 
+ Module::Module( Section* configuration ) : Module_base(configuration) {
+@@ -832,41 +369,19 @@
+ 	capture = 0;
+ 
+ 	Section_prop * section=static_cast<Section_prop *>(configuration);
+-	Bitu base = section->Get_hex("sbbase");
+-	Bitu rate = section->Get_int("oplrate");
++	Bitu base = 0x220;
++	Bitu rate = 32000;
+ 	//Make sure we can't select lower than 8000 to prevent fixed point issues
+ 	if ( rate < 8000 )
+ 		rate = 8000;
+-	std::string oplemu( section->Get_string( "oplemu" ) );
+-	ctrl.mixer = section->Get_bool("sbmixer");
++	
++	ctrl.mixer = true;
+ 
+ 	mixerChan = mixerObject.Install(OPL_CallBack,rate,"FM");
+ 	//Used to be 2.0, which was measured to be too high. Exact value depends on card/clone.
+ 	mixerChan->SetScale( 1.5f );  
+ 
+-	if (oplemu == "compat") {
+-		if ( oplmode == OPL_opl2 ) {
+-			handler = new OPL2::Handler();
+-		} else {
+-			handler = new OPL3::Handler();
+-		}
+-	}
+-	else if (oplemu == "mame") {
+-		if (oplmode == OPL_opl2) {
+-			handler = new MAMEOPL2::Handler();
+-		}
+-		else {
+-			handler = new MAMEOPL3::Handler();
+-		}
+-	}
+-	else if (oplemu == "nuked") {
+-		handler = new NukedOPL::Handler();
+-	}
+-	//Fall back to dbop, will also catch auto
+-	else if (oplemu == "fast" || 1) {
+-		const bool opl3Mode = oplmode >= OPL_opl3;
+-		handler = new DBOPL::Handler( opl3Mode );
+-	}
++	handler = new DBOPL::Handler(oplmode >= OPL_opl3);
+ 	handler->Init( rate );
+ 	bool single = false;
+ 	switch ( oplmode ) {
+@@ -896,13 +411,11 @@
+ 	WriteHandler[2].Install(base+8,OPL_Write,IO_MB, 2);
+ 	ReadHandler[2].Install(base+8,OPL_Read,IO_MB, 1);
+ 
+-	MAPPER_AddHandler(OPL_SaveRawEvent,MK_f7,MMOD1|MMOD2,"caprawopl","Cap OPL");
++
+ }
+ 
+ Module::~Module() {
+-	if ( capture ) {
+-		delete capture;
+-	}
++
+ 	if ( handler ) {
+ 		delete handler;
+ 	}
+--- a/src/hardware/pcspeaker.cpp
++++ b/src/hardware/pcspeaker.cpp
+@@ -20,6 +20,7 @@
+ #include <math.h>
+ #include "dosbox.h"
+ #include "mixer.h"
++#include "audio.h"
+ #include "timer.h"
+ #include "setup.h"
+ #include "pic.h"
+@@ -327,11 +328,11 @@
+ 	PCSPEAKER(Section* configuration):Module_base(configuration){
+ 		spkr.chan=0;
+ 		Section_prop * section=static_cast<Section_prop *>(configuration);
+-		if(!section->Get_bool("pcspeaker")) return;
++		if(!db_pc_speaker) return;
+ 		spkr.mode=SPKR_OFF;
+ 		spkr.last_ticks=0;
+ 		spkr.last_index=0;
+-		spkr.rate=section->Get_int("pcrate");
++		spkr.rate=32000;
+ 		spkr.pit_mode=3;
+ 		spkr.pit_max=(1000.0f/PIT_TICK_RATE)*1320;
+ 		spkr.pit_half=spkr.pit_max/2;
+@@ -345,16 +346,16 @@
+ 	}
+ 	~PCSPEAKER(){
+ 		Section_prop * section=static_cast<Section_prop *>(m_configuration);
+-		if(!section->Get_bool("pcspeaker")) return;
++		if(!db_pc_speaker) return;
+ 	}
+ };
+ static PCSPEAKER* test;
+ 
+ void PCSPEAKER_ShutDown(Section* sec){
+-	delete test;
++	delete test;test=nullptr;
+ }
+ 
+ void PCSPEAKER_Init(Section* sec) {
+ 	test = new PCSPEAKER(sec);
+-	sec->AddDestroyFunction(&PCSPEAKER_ShutDown,true);
+-}
++	if(sec)sec->AddDestroyFunction(&PCSPEAKER_ShutDown,true);
++}

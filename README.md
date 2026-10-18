@@ -19,6 +19,12 @@ Net-JIT combines networking with ARM JIT, EMS and Sound Blaster. This pass adds
 bounded file read-ahead, mouse-motion coalescing and batched interpreter fallback
 for the opt-in paging experiment. Existing profiles retain their settings.
 
+**Descent startup fix:** corrected DOS temporary-file errors and an ARM JIT
+lookahead bug. DOS/32A provides the working Descent launch path; first-level
+rendering and controls were verified on the Amiga.
+[Updated runtimes](artifacts/development/descent-startup) ·
+[Fix details and tests](docs/amiga-dosbox-shooter-startup-review.md).
+
 [Current development update](artifacts/development/runtime-0.22.2) ·
 [I/O and joystick specifications](docs/amiga-dosbox-io.md) ·
 [Optimisation measurements](docs/amiga-dosbox-file-read-optimisation.md).
