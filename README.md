@@ -540,4 +540,6 @@ Development: **Codex assisted, Amiga-Bridge MCP**.
 
 DOSBox upstream is GPL-2.0-or-later; the combined project includes GPL-3.0-or-later
 components. See [LICENSE](LICENSE) and [component notices](licenses/README.md).
-Games, Microsoft software and WinBench are supplied separately.
+Optional [shareware starter builds](docs/shareware-build.md) include Doom 1.9 and
+Duke Nukem 3D 1.3D with their original notices. Descent is retained in personal
+builds only. Other games, Microsoft software and WinBench are supplied separately.

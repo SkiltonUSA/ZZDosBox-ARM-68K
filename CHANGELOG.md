@@ -12,6 +12,9 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — protected-mode game startup
 
+- Add reproducible Doom/Duke shareware starter packaging and fresh launcher
+  profiles. Retain Descent in personal builds only due to its bundling terms.
+
 - Fix stale DOS error state during temporary-file creation, which prevented
   Descent's DOS/4GW 1.97 loader from starting (errors 2504/1011).
 - Add a temporary-file regression and native per-game CPU selection for tests.
