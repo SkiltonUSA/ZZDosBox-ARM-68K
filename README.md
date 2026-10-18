@@ -27,9 +27,15 @@ rendering and controls were verified on the Amiga.
 [Updated runtimes](artifacts/development/descent-startup) ·
 [Fix details and tests](docs/amiga-dosbox-shooter-startup-review.md).
 
-**Descent tuning:** S3/VESA and 10,000 cycles with adaptive presentation raised
-actual game rendering from **4.47 to 8.63 FPS (+93.3%)** at the existing custom
-detail level. Same starting room, 30-second samples, sound off.
+**Descent on the A4000TX / ZZ9000**
+
+| Gameplay screenshot | Measured game FPS |
+| --- | --- |
+| ![Descent running fullscreen on the A4000TX and ZZ9000](docs/screenshots/descent-gameplay.png) | **Before: 4.47 FPS** — VGA, 6,000 cycles<br><br>**After: 8.63 FPS** — S3/VESA, 10,000 cycles<br><br>**+93.3%** at unchanged custom detail<br><br>Both fullscreen with adaptive presentation. |
+
+Actual rendered frames, measured over 30 seconds in the same starting room,
+sound off. Screenshot captured from the installed player after tuning;
+measurements were taken separately.
 [Measurements and settings](docs/amiga-dosbox-descent-performance.md).
 
 [Current development update](artifacts/development/runtime-0.22.2) ·

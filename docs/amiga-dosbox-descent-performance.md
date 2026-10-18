@@ -28,6 +28,11 @@ are not established by these sound-off measurements.
 
 ## Existing custom-detail profile
 
+![Descent first mine on the A4000TX / ZZ9000, tuned custom-detail profile](screenshots/descent-gameplay.png)
+
+Captured from the installed player after tuning; the FPS below comes from
+separate timed samples, not an overlaid display-refresh counter.
+
 The original installed Descent profile already used adaptive presentation and
 custom detail `5,0,0,0,0,0,0`. This needs a separate comparison; the 126.6% figure
 above is not presented as its before/after improvement.
