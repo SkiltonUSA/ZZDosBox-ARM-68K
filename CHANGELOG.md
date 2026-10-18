@@ -12,6 +12,11 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — protected-mode game startup
 
+- Use DOS/32A 7.35 for the personal Descent profile; first-level rendering and
+  input verified on the Amiga without DOS/4GW paging. Original game unchanged.
+- Fix ARM recompiler lookahead over self-modifying invalid FE-group bytes;
+  add native, relocated ARM and physical regression checks.
+
 - Add reproducible Doom/Duke shareware starter packaging and fresh launcher
   profiles. Retain Descent in personal builds only due to its bundling terms.
 

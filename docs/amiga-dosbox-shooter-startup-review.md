@@ -58,12 +58,37 @@ include repeated frames and must not be reported as game FPS.
 
 File read-ahead/coherence and host console/display handoff tests also pass.
 
-Physical Descent reached its title and existing-pilot selector. A later
-transition remained black during the observation interval, so this review does
-**not** claim completed physical gameplay verification. The native interpreter
-reached the mission briefing both with the existing sound-disabled game
-configuration and with an explicit `-nosound` argument. This is a startup
-bug fix, not a Descent performance improvement or full compatibility pass.
+The original DOS/4GW path reached the pilot selector but later transitions
+were slow or remained black during observation. A subsequent physical check
+uses **DOS/32A 7.35** as an external loader: `DOS32A DESCENT.EXE`, or
+`DOS32A DCNTSHR.EXE` for the supplied shareware archive. The game executable
+is unchanged. With 16 MiB, the game reports `VMM:0` and no virtual memory;
+the ARM log records **zero paged interpreter fallbacks**, compared with
+1,857,429 in the earlier DOS/4GW run. These were different interactive runs,
+so the counts are diagnostic evidence, not an FPS comparison.
+
+The DOS/32A run reached the briefing and first playable mine on the A4000TX.
+Input changed the viewpoint. The sound-enabled configuration also reached the
+level and completed 3,356,672 audio samples with no reported delivery error. This establishes first-level startup, not complete-game compatibility.
+
+A separate recompiler regression was found while investigating the loader.
+Translation lookahead used to abort on an invalid FE-group encoding, even
+when preceding guest code overwrote those bytes before execution. The decoder
+now ends the block and defers the invalid opcode to execution. The original
+`JITSPEC.COM` fixture passes in the native interpreter, fails in the original
+ARM model, and passes with the fix at two relocation bases and on hardware.
+The hardware pass restores the register/cache witnesses and releases memory.
+The original hardware fixture required the launcher's bounded Core1 reset;
+it did not complete the normal restoration epilogue.
+
+Early DOS/32A 9.12 trials used an accidentally truncated bridge upload and
+are **excluded** from compatibility conclusions. The selected 7.35 binary was
+transferred with wget and matched the source MD5 before execution. The JIT
+fixture independently establishes the decoder bug; those corrupt-upload runs
+do not establish it as the cause of a valid Descent failure.
+
+This product uses DOS/32 Advanced DOS Extender technology. The external
+loader and its complete licence accompany the personal Descent installation.
 
 All completed physical game runs returned through F10 with mapping, SIMD,
 register/cache restoration and owned-memory release checks passing. The
@@ -75,6 +100,10 @@ The corrected Compat and Expanded binaries and four profile corrections were
 installed and read back successfully. Previous binaries and the library were
 retained for rollback. Other runtime variants were not replaced in this review.
 [Build fingerprints and regression results](../amiga/records/2026-10-18/dosbox-shooters/).
+
+The installed Descent profiles now invoke DOS/32A 7.35. Only those two command
+fields changed in the existing library; the runtime and library have rollback
+copies. [Level-start and decoder regression evidence](../amiga/records/2026-10-18/dosbox-descent/).
 
 ## References
 

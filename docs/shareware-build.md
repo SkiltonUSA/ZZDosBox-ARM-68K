@@ -11,7 +11,7 @@ components of ZZDosBox.
 | --- | --- | --- |
 | Doom 1.9 shareware | 8 MB, 386, normal runtime, sound off | Attract demo rendered |
 | Duke Nukem 3D 1.3D shareware | 8 MB, 486, EMS, SB16, Expanded runtime | Menu and rendered scene reached |
-| Descent shareware (personal build only) | 16 MB, 386, EMS, SB Pro 2, Expanded runtime | Pilot selection reached; later gameplay remains unverified |
+| Descent shareware (personal build only) | 16 MB, 386, EMS, SB Pro 2, Expanded runtime, DOS/32A | DOS/32A 7.35: first level and input verified |
 
 All three profiles start fullscreen at 6,000 cycles. LOADFIX, VCPI and paging JIT
 are off. Duke's original archive has no saved configuration: run its SETUP.EXE
@@ -37,6 +37,12 @@ Supply these pinned input files in a media directory:
   installer. The original installer archive's MD5 is
   `9771e9a03e81fd8a7e32e3d02708328c`.
 
+- Personal build only: `dos32a-735-bin.zip`, the original
+  [DOS/32A 7.35 binary archive](https://downloads.sourceforge.net/project/dos32a/DOS_32A%20v7.35/DOS_32A%20DOS%20Extender/dos32a-735-bin.zip).
+  Its loader and complete licence are added alongside the unchanged game.
+  The profile runs `DOS32A DCNTSHR.EXE` to avoid DOS/4GW paging.
+  This product uses DOS/32 Advanced DOS Extender technology.
+
 The script pins SHA-256 for every input and rejects different editions. Provide
 a runtime directory containing the tested `ZZDosBox-Compat` and
 `ZZDosBox-Expanded` binaries with the DOS temporary-file fix. Other starter
@@ -58,7 +64,7 @@ python3 scripts/package_dosbox_shareware.py \
 The library is generated with the production C serializer and read back for
 validation. ZIP members are CRC checked and compared with a per-file SHA-256
 manifest. Packaging verification is not a new gameplay or audio test. The
-startup tests and remaining Descent limitation are recorded in the
+startup tests and their scope are recorded in the
 [shooter review](amiga-dosbox-shooter-startup-review.md).
 
 ## Distribution notices
@@ -77,5 +83,5 @@ startup tests and remaining Descent limitation are recorded in the
 
 Personal game media and generated personal archives stay outside Git. Keep the
 local media directory with private build inputs so a later rebuild retains the
-same editions. Public mode does not read or package either Descent input.
+same editions. Public mode does not read or package the Descent or DOS/32A inputs.
 No commercial editions, Microsoft software or Quake data are bundled.

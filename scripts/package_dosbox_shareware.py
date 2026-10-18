@@ -14,6 +14,7 @@ import tempfile
 import zipfile
 
 INPUTS = {
+    'dos32a-735-bin.zip': '1b16a3cd147fd5f478d119d50acc33b2f95cd9f157814d83d99f9742f34e10c4',
     'doom19s.zip': 'cacf0142b31ca1af00796b4a0339e07992ac5f21bc3f81e7532fe1b5e1b486e6',
     'DN3DSW13.SHR': 'a6c010e735a8f8d910807d41985f16379583cd9d81f14a1e4634f30d04b881e4',
     'DOSBOX_DESCENT.ZIP': 'ec3f0f4d3a420a38a638ab37ee6defb044db0d264a9f5551c921d1256afed070',
@@ -50,7 +51,7 @@ def main():
     root = args.root.resolve()
     media = {}
     for name, digest in INPUTS.items():
-        if not args.personal_descent and name in ('DOSBOX_DESCENT.ZIP', 'DESCENT-LICENCE.TXT'):
+        if not args.personal_descent and name in ('DOSBOX_DESCENT.ZIP', 'DESCENT-LICENCE.TXT', 'dos32a-735-bin.zip'):
             continue
         data = (args.media / name).read_bytes()
         if sha(data) != digest:
@@ -63,6 +64,9 @@ def main():
     }
     if args.personal_descent:
         games['DCNTSHR'] = unpack(media['DOSBOX_DESCENT.ZIP'])
+        with zipfile.ZipFile(io.BytesIO(media['dos32a-735-bin.zip'])) as extender:
+            games['DCNTSHR']['DOS32A.EXE'] = extender.read('binw/dos32a.exe')
+            games['DCNTSHR']['D32-LIC.TXT'] = extender.read('license.txt')
     entries = {f'PC/Games/{game}/{name}': data
                for game, files in games.items() for name, data in files.items()}
     # Preserve the supplied installers as well as every decompressed member.
@@ -108,11 +112,14 @@ Doom 1.9: 8 MB, normal core, sound off (verified attract demo).
 Duke Nukem 3D 1.3D: 8 MB, 486 guest, EMS, SB16. Run SETUP.EXE first
 to choose 320x200 and Sound Blaster 16, port 220, IRQ 7, DMA 1/5.
 Descent, when included: 16 MB, EMS, SB Pro 2; LOADFIX/VCPI/paging JIT off.
-Its startup reaches pilot selection; later physical gameplay remains unverified.
+Launches through DOS/32A 7.35 with the original game executable unchanged.
+First-level rendering and input verified on the Amiga.
+This product uses DOS/32 Advanced DOS Extender technology.
+See PC/Games/DCNTSHR/D32-LIC.TXT in the personal build.
 
 Game files are preserved byte-for-byte from the pinned input archives, including
-their notices. No personal saves, pilots, test helpers or custom game CFGs were
-added. Configure controls/audio through each game's SETUP.EXE if needed.
+their notices. No personal saves, pilots or custom game CFGs were added. The personal build
+adds the DOS/32A compatibility loader and its licence. Configure controls/audio through each game's SETUP.EXE if needed.
 Games retain their publishers' terms; ZZDosBox's GPL does not cover game data.
 Descent's original installer licence restricts bundling despite its README's
 broader sharing language. Personal builds must not be uploaded as releases.

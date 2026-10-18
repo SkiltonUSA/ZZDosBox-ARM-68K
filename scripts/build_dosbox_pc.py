@@ -12,7 +12,7 @@ def prepare():
  (OUT/'ega-planes.bin').write_bytes(planes)
  subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/'egatest.S'),'-o','egatest.o'],cwd=OUT,check=True)
  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x100','--oformat=binary','egatest.o','-o','EGATEST.COM'],cwd=OUT,check=True)
- for name in ['keytest','cgatest','boottest','pagingtest','hddtest','badmem','miditest','welcome','mousetst','smctest','pitmath','emstest','sbtest','opltest','sb16test','beeptest','datetest','x87test','cputest','exttest','joytest','cmstest','tandtest','gustest','serialtest','filetest','temptest']:
+ for name in ['keytest','cgatest','boottest','pagingtest','hddtest','badmem','miditest','welcome','mousetst','smctest','pitmath','emstest','sbtest','opltest','sb16test','beeptest','datetest','x87test','cputest','exttest','joytest','cmstest','tandtest','gustest','serialtest','filetest','temptest','jitspec']:
   subprocess.run(['clang','--target=i386-none-elf','-c',str(SRC/(name+'.S')),'-o',name+'.o'],cwd=OUT,check=True)
   subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x7c00' if name=='pagingtest' else '0x100','--oformat=binary',name+'.o','-o','RDTEST.COM' if name=='filetest' else name.upper()+'.COM'],cwd=OUT,check=True)
  for name,adapter,mode,bpp in [('S3V101',3,0x101,8),('S3V103',3,0x103,8),('S3V105',3,0x105,8),('S3V110',3,0x110,15),('S3V111',3,0x111,16),('S3V114',3,0x114,16),('S3V10F',3,0x10f,32),('TANTEST',4,9,4),('JRTTEST',5,9,4),('HERCTEST',6,0,1)]:

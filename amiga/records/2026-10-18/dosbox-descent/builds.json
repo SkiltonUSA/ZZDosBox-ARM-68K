@@ -1,0 +1,17 @@
+{
+  "ZZDosBox-Expanded": {
+    "bytes": 1334864,
+    "sha256": "0d26c04dea0e5d4e63193923e9a1c16943019356cb535696c09040c8ede62bc9",
+    "md5": "0a93f5d43bc6f2ea628facdeb76ee94c"
+  },
+  "DOS32A735.EXE": {
+    "bytes": 28232,
+    "sha256": "7776e4d8e148e17180e3cc1b1f4c0f635d531d039375fa595a7733667b0fb380",
+    "md5": "7a24b65c9344ba8f70ec49fe2e942e32"
+  },
+  "D32-LIC.TXT": {
+    "bytes": 1870,
+    "sha256": "8658b2dfa2dbcc1c4d7c9ef4fe78965813fcf68913c804034e0ee7f22d9db0be",
+    "md5": "c0bafc2a48e23f029ea6fd0ace6f74be"
+  }
+}

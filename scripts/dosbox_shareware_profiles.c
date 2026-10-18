@@ -6,7 +6,7 @@ int main(int argc, char **argv) {
     unsigned i;
     const char *titles[] = {"Doom 1.9 (shareware)", "Duke Nukem 3D (shareware)", "Descent (shareware)"};
     const char *dirs[] = {"DOOM19", "DUKE3DS", "DCNTSHR"};
-    const char *commands[] = {"DOOM.EXE", "DUKE3D.EXE", "DESCENT.BAT"};
+    const char *commands[] = {"DOOM.EXE", "DUKE3D.EXE", "DOS32A DCNTSHR.EXE"};
     assert(argc == 3);
     library.count = !strcmp(argv[2], "personal") ? 3 : 2;
     for (i = 0; i < library.count; i++) {

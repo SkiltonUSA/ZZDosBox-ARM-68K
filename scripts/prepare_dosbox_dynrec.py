@@ -75,6 +75,24 @@ static bool db_paged_register_instruction(){
         s=s.replace('BlockReturn ret=core_dynrec.runcode(block->cache.start);','db_dynrec_dispatches++;\n\t\tBlockReturn ret=core_dynrec.runcode(block->cache.start);')
         return s
     change('src/cpu/core_dynrec.cpp',core)
+    # An unpacker can overwrite its following bytes before they execute. Do
+    # not abort while translating an as-yet invalid FE group instruction:
+    # terminate the block and use the existing interpreter fallback if reached.
+    def grp4(s):
+        s=s.replace('static bool dyn_grp4_eb(void)', 'static Bitu dyn_grp4_eb(void)')
+        old='\t\tIllegalOptionDynrec("dyn_grp4_eb");\n\t\tbreak;'
+        assert old in s
+        return s.replace(old,'\t\treturn 2; // defer invalid encoding until execution')
+    change('src/cpu/core_dynrec/decoder_opcodes.h',grp4)
+    def decode_grp4(s):
+        old='\t\t\tif (dyn_grp4_eb()) goto finish_block;'
+        assert old in s
+        return s.replace(old,'''\t\t\tswitch (dyn_grp4_eb()) {
+            case 1: goto finish_block;
+            case 2: goto illegalopcode;
+            default: break;
+            }''')
+    change('src/cpu/core_dynrec/decoder.h',decode_grp4)
     def arm(s):
         a=s.index('static void cache_block_closing(')
         return s[:a]+'''extern "C" void db_dynrec_commit(const void *,unsigned);

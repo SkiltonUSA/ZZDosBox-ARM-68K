@@ -1,0 +1,90 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=67108864 nonce=08c169ce
+BOOTSTRAP amiga=40c7fd40 arm=00e6fd40 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+EXPANDED cpu=0 memory_services=0 joystick=0 extra_sound=0 cycle_mode=0 serial=0 paged_jit=0
+AUDIO task: AHI unit 0, 32000 Hz stereo; 4 queue slots, 64 ms prebuffer
+COMPAT ems=1 xms=1 sound=SBPro2 A220 I7 D1 T4, OPL3 speaker=0
+DISPLAY_CONFIG mode=window fps=0 system=embedded DOS 5
+SETTINGS memory_mb=16 machine=0 cycles=6000 live=1
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+VIDEO adapter=0 source=320x400 monochrome=0
+JIT magic=4a495431 commits=11577 witness=1 dispatches=16049188 cache_bytes=4194304 heap_peak=3919808 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=7350 rendered_rows=3528000 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=6000
+PRESENT magic=50525331 source=7351 shown=7350 skipped=0 divisor=1 changes=0 mode=0 hz=60 work_ticks=5621204 copy_ticks=2822514 total_copy=0000000464d0e9c8
+ARM_FPS tenths=0
+PC frames=7351 emulated_ms=104916 wall_ms=197065 timed_done=0
+POLL ms=1 calls=55101 wait_us=119053868 max_us=85113
+SHELL result=2 guest_exit=0 slices=3980031 bytes=1072 hash=42807ecc mismatches=0
+DosBox ZZ9000 project                         0.20.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>D32OLD DESCENT.EXE -verbose
+
+DESCENT  SHAREWARE   Version 1.4  4/11/95
+Copyright (c) 1994 Parallax Software Corporation
+DESCENT is a trademark of Interplay Productions, Inc.
+
+Type 'DESCENT -help' for a list of command-line options.
+Initializing DPMI services... V0.90, CPU:3, VMM:0, P:13140K
+
+Available memory
+----------------
+Conventional:     582 KB
+Extended:      14,908 KB
+Virtual:            0 KB
+
+Getting settings from DESCENT.CFG...
+Initializing timer system...
+Initializing keyboard handler...
+Initializing mouse handler...
+Initializing joystick handler...
+Initializing network... No IPX compatible network found.Network support disabled...
+
+Initializing graphics system...
+
+File 'bundling.pcx', PCX load error: Error opening file. (1)
+  (No big deal, just no title screen.)
+
+SHELL PASS mode=0
+AUDIO_TASK queued=3356672 submitted=3356672 completed=3356672 highwater=2 error=0 stopped=1
+FILES_TIME calls=3925 read_us=7898050 write_us=9868 other_us=4280341 max_us=75362 (totals saturate at 4294967295)
+FILES_OP op=open calls=196 total_us=928199 max_us=16165
+FILES_OP op=close calls=102 total_us=105062 max_us=3640
+FILES_OP op=read calls=1387 total_us=7898050 max_us=25765
+FILES_OP op=write calls=6 total_us=9868 max_us=3548
+FILES_OP op=seek calls=2003 total_us=1884832 max_us=26067
+FILES_OP op=stat calls=199 total_us=1249624 max_us=75362
+FILES_OP op=list calls=31 total_us=112294 max_us=7282
+FILES_OP op=testdir calls=1 total_us=330 max_us=330
+DISK host_seeks=0
+FILES requests=3925 read=5597040 written=974; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=10334000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=10334000 restored=10334000
+REGISTER n=2 original=02000000 restored=02000000
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000001 restored=00000001
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00001000 restored=00001000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=15 press=4 release=4
+DISPLAY frames=7350 flips=0 wait_us=0
+COPY observed_us=31745264 max_us=82736
+PIPELINE enabled=1 overlaps=0 releases=7350
+LAUNCHER exit=0; owned memory released
