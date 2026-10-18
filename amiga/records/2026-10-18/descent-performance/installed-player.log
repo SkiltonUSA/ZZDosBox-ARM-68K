@@ -1,0 +1,80 @@
+CONFIG core=auto runtime=ZZDosBox-Expanded cycles=10000 memory=16
+OWNED amiga=50000040 arm_candidate=101f0040 size=67108864 nonce=0805db43
+BOOTSTRAP amiga=40c7fd40 arm=00e6fd40 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+EXPANDED cpu=0 memory_services=0 joystick=0 extra_sound=0 cycle_mode=0 serial=0 paged_jit=0
+COMPAT ems=1 xms=1 sound=off speaker=0
+DISPLAY_CONFIG mode=fullscreen fps=0 system=embedded DOS 5
+SETTINGS memory_mb=16 machine=3 cycles=10000 live=1
+FULLSCREEN_BITMAP allocated=095e5044 screen=09aba030 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=0aff4efc/410c1ec0 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+VIDEO adapter=3 source=320x200 monochrome=0
+JIT magic=4a495431 commits=9712 witness=1 dispatches=46123310 cache_bytes=4194304 heap_peak=6015168 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=4814 rendered_rows=2310720 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=10000
+PRESENT magic=50525331 source=11807 shown=4814 skipped=6992 divisor=2 changes=56 mode=1 hz=60 work_ticks=4153335 copy_ticks=946748 total_copy=000000020a9abe13
+ARM_FPS tenths=0
+PC frames=11807 emulated_ms=168495 wall_ms=196931 timed_done=0
+POLL ms=1 calls=107044 wait_us=150693615 max_us=90182
+SHELL result=2 guest_exit=0 slices=799705 bytes=706 hash=07dcf409 mismatches=0
+DosBox ZZ9000 project                         0.20.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>ZZL0000.BAT
+
+DESCENT  SHAREWARE   Version 1.4  4/11/95
+Copyright (c) 1994 Parallax Software Corporation
+DESCENT is a trademark of Interplay Productions, Inc.
+
+Type 'DESCENT -help' for a list of command-line options.
+
+Available memory
+----------------
+Conventional:     582 KB
+Extended:      14,908 KB
+Virtual:            0 KB
+
+File 'bundling.pcx', PCX load error: Error opening file. (1)
+  (No big deal, just no title screen.)
+
+SHELL PASS mode=0
+FILES_TIME calls=3596 read_us=6615797 write_us=10627 other_us=3426446 max_us=43518 (totals saturate at 4294967295)
+FILES_OP op=open calls=192 total_us=839475 max_us=10563
+FILES_OP op=close calls=102 total_us=113978 max_us=4515
+FILES_OP op=read calls=1206 total_us=6615797 max_us=18500
+FILES_OP op=write calls=6 total_us=10627 max_us=4032
+FILES_OP op=seek calls=1866 total_us=1426337 max_us=15185
+FILES_OP op=stat calls=197 total_us=965000 max_us=43518
+FILES_OP op=list calls=26 total_us=81131 max_us=6622
+FILES_OP op=testdir calls=1 total_us=525 max_us=525
+DISK host_seeks=0
+FILES requests=3596 read=4832640 written=996; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=10334000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=10334000 restored=10334000
+REGISTER n=2 original=02000000 restored=02000000
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000001 restored=00000001
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00001000 restored=00001000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=4814 flips=4814 wait_us=50339094
+COPY observed_us=18980032 max_us=69872
+PIPELINE enabled=1 overlaps=206 releases=4608
+LAUNCHER exit=0; owned memory released

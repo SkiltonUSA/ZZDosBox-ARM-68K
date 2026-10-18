@@ -1,0 +1,93 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=67108864 nonce=081beec7
+BOOTSTRAP amiga=40c7fd40 arm=00e6fd40 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+EXPANDED cpu=0 memory_services=0 joystick=0 extra_sound=0 cycle_mode=0 serial=0 paged_jit=0
+COMPAT ems=1 xms=1 sound=off speaker=0
+DISPLAY_CONFIG mode=fullscreen fps=0 system=embedded DOS 5
+SETTINGS memory_mb=16 machine=3 cycles=10000 live=1
+FULLSCREEN_BITMAP allocated=0963b12c screen=09685d90 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=0aff4efc/41010cc0 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+VIDEO adapter=3 source=320x200 monochrome=0
+JIT magic=4a495431 commits=9686 witness=1 dispatches=21278654 cache_bytes=4194304 heap_peak=6011072 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=3162 rendered_rows=1517760 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+DESCENTCLOCK magic=44434c31 address=00295860 rejected=0 first=37 last=250 sim_first=79098 sim_last=108226 start=000019261e85b2c1 end=000019287293fb47 samples=29129
+DESCENTPROFILE bucket=0 ticks=0000000006d27555
+DESCENTPROFILE bucket=1 ticks=00000001e25935ab
+DESCENTPROFILE bucket=2 ticks=000000000b728759
+DESCENTPROFILE bucket=3 ticks=000000001f8076b0
+DESCENTPROFILE bucket=4 ticks=000000001976bff3
+DESCENTPROFILE bucket=5 ticks=000000002678dfd9
+CPU_CYCLES applied=10000
+PRESENT magic=50525331 source=7582 shown=3162 skipped=4420 divisor=2 changes=39 mode=1 hz=60 work_ticks=4158649 copy_ticks=995542 total_copy=0000000161e9f8bc
+ARM_FPS tenths=0
+PC frames=7582 emulated_ms=108226 wall_ms=131433 timed_done=1
+PROFILE total=0000000a333e9be9 unwound=0
+PROFILE bucket=other ticks=00000001493d7e49 calls=0
+PROFILE bucket=cpu ticks=00000006e5e4cda2 calls=503841
+PROFILE bucket=events ticks=00000000277fd655 calls=612067
+PROFILE bucket=capture ticks=000000007ae7fb95 calls=1554250
+PROFILE bucket=grant ticks=00000000e5b09971 calls=3162
+PROFILE bucket=copy ticks=000000007c03e4a3 calls=3162
+POLL ms=1 calls=69025 wait_us=96818337 max_us=88720
+SHELL result=2 guest_exit=0 slices=612067 bytes=732 hash=ba1a99b4 mismatches=0
+DosBox ZZ9000 project                         0.20.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>DOS32A DCNTSHR.EXE -notitles -nosound
+
+DESCENT  SHAREWARE   Version 1.4  4/11/95
+Copyright (c) 1994 Parallax Software Corporation
+DESCENT is a trademark of Interplay Productions, Inc.
+
+Type 'DESCENT -help' for a list of command-line options.
+
+Available memory
+----------------
+Conventional:     582 KB
+Extended:      14,908 KB
+Virtual:            0 KB
+
+File 'bundling.pcx', PCX load error: Error opening file. (1)
+  (No big deal, just no title screen.)
+
+SHELL PASS mode=0
+FILES_TIME calls=3527 read_us=6423473 write_us=15853 other_us=3570141 max_us=92947 (totals saturate at 4294967295)
+FILES_OP op=open calls=183 total_us=881167 max_us=34348
+FILES_OP op=close calls=94 total_us=91982 max_us=3019
+FILES_OP op=read calls=1185 total_us=6423473 max_us=16169
+FILES_OP op=write calls=6 total_us=15853 max_us=6062
+FILES_OP op=seek calls=1845 total_us=1511869 max_us=22149
+FILES_OP op=stat calls=186 total_us=992185 max_us=92947
+FILES_OP op=list calls=27 total_us=92628 max_us=9094
+FILES_OP op=testdir calls=1 total_us=310 max_us=310
+DISK host_seeks=0
+FILES requests=3527 read=4773769 written=978; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=10334000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=10334000 restored=10334000
+REGISTER n=2 original=02000000 restored=02000000
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000001 restored=00000001
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00001000 restored=00001000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=3162 flips=3162 wait_us=32352647
+COPY observed_us=12593845 max_us=69009
+PIPELINE enabled=1 overlaps=67 releases=3095
+LAUNCHER exit=0; owned memory released

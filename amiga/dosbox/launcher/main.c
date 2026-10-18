@@ -80,7 +80,7 @@ static const char *terminal_tabs[]={"Terminal","AUTOEXEC.BAT","CONFIG.SYS","CD-R
 static const char *startup_choices[]={"Default","Edited","File",NULL},*cd_choices[]={"None","ISO image","Amiga CD-ROM",NULL};
 static const char *sizes[]={"320 x 240","640 x 480","960 x 720",NULL};
 static const char *displays[]={"Workbench window","Fullscreen",NULL},*systems[]={"DOSBox DOS 5","MS-DOS 6.22","Disk image (DOS / Windows)","DOSBox DOS 5 + image",NULL};
-static const char *memories[]={"1 MB","2 MB","4 MB","8 MB","16 MB","32 MB",NULL},*machines[]={"VGA","EGA","CGA","S3 / VESA","Tandy","PCjr","Hercules",NULL},*speeds[]={"Slow (1000)","Normal (3000)","Fast (6000)",NULL},*colours[]={"Black","Red","Green","Yellow","Blue","Magenta","Cyan","White",NULL},*lengths[]={"Startup test (8 seconds)","Until closed",NULL};
+static const char *memories[]={"1 MB","2 MB","4 MB","8 MB","16 MB","32 MB",NULL},*machines[]={"VGA","EGA","CGA","S3 / VESA","Tandy","PCjr","Hercules",NULL},*speeds[]={"1000","3000","6000","10000",NULL},*colours[]={"Black","Red","Green","Yellow","Blue","Magenta","Cyan","White",NULL},*lengths[]={"Startup test (8 seconds)","Until closed",NULL};
 enum {ID_SELECT=1,ID_ADD,ID_REMOVE,ID_SAVE,ID_RUN,ID_TERM,ID_COMMAND,ID_AUTO,ID_SCRIPT,ID_BROWSE_DRAWER,ID_OPEN_DRAWER,ID_DISKS,ID_MOUNT_DISKS,ID_EJECT_DISKS,ID_BOOT_DISK,ID_MOUNT_HD,ID_EJECT_HD,ID_OPEN_HD,ID_SYSTEM,ID_DISPLAY,ID_STARTMODE,ID_CD_MODE,ID_CD_BROWSE,ID_CD_CHECK,ID_TERMPAGE,ID_AUDIO_CHECK,ID_DEV_CHANGE,ID_DEV_LOG,ID_CATEGORY,ID_CONF_VALIDATE,ID_DISK_SELECT,ID_DISK_BROWSE,ID_DISK_CREATE,ID_CAT_SELECT=50,ID_CAT_RUN=60,ID_CAT_EDIT=70,ID_CAT_RENAME=80,ID_CAT_DELETE=85,ID_RENAME=90,ID_EDITOR=100};
 static ULONG val(Object*o,ULONG a){ULONG v=0;get(o,a,&v);return v;}
 static void program_list_focus(void){
@@ -265,7 +265,7 @@ static void launch_msdos(const struct dl_profile*p,unsigned mode,const char*dosc
  {char runtime[DL_PATH];path(runtime,developer_runtime(dl_profile_player(p)));if(!exists(runtime)){note("Selected DOSBox runtime is missing.");return;}}
  if(!hdd_available())return;
  dl_defaults(&s);path(s.drive,"Disks");s.system=1;s.terminal=1;s.live=1;
- s.memory=p->memory;s.machine=p->machine;s.cycles=dc_get(&conf,DC_CYCLES,p->speed==0?1000:p->speed==1?3000:6000);
+ s.memory=p->memory;s.machine=p->machine;s.cycles=dc_get(&conf,DC_CYCLES,dl_profile_cycles(p));
  s.fg=p->fg;s.bg=p->bg;s.display=p->display;s.size=p->size;s.fps=p->fps;s.midi=p->midi;strcpy(s.midi_port,p->midi_port);s.cd_mode=p->cd_mode;strcpy(s.cd_path,p->cd_path);
  if(!startup_prepare(p,&changed))return;
  if(mode==0||mode==2)snprintf(s.command,sizeof(s.command),"%s%s",mode==0&&p->helper?"LOADFIX ":"",doscommand);
@@ -283,7 +283,7 @@ static void launch_image(const struct dl_profile*p,unsigned mode,const char*comm
  if(!lock){note("Disk image unavailable; eject it from Workbench first.");return;}UnLock(lock);
  path(player,developer_runtime("ZZDosBox-Windows"));if(!exists(player)){note("ZZDosBox-Windows runtime is missing.");return;}
  dl_defaults(&s);strcpy(s.drive,p->drive);strcpy(s.image,p->image);s.system=2;s.terminal=s.live=1;
- s.memory=p->memory;s.machine=p->machine;s.cycles=dc_get(&conf,DC_CYCLES,p->speed==0?1000:p->speed==1?3000:6000);
+ s.memory=p->memory;s.machine=p->machine;s.cycles=dc_get(&conf,DC_CYCLES,dl_profile_cycles(p));
  s.fg=p->fg;s.bg=p->bg;s.display=p->display;s.size=p->size;s.fps=p->fps;s.midi=p->midi;strcpy(s.midi_port,p->midi_port);
  s.cd_mode=p->cd_mode;strcpy(s.cd_path,p->cd_path);if(mode==0||mode==2)snprintf(s.command,sizeof(s.command),"%s%s",mode==0&&p->helper?"LOADFIX ":"",command);
  path(session,"Launch.session");if(!save()||!dl_session_write(session,&s)||!dl_quote(qp,sizeof(qp),player)||!dl_quote(qs,sizeof(qs),session)){note("Cannot save image session.");return;}
@@ -306,7 +306,7 @@ static void launch_embedded(struct dl_profile*p,unsigned mode,const char*script)
  if(ok)ok=dl_boot(f,p,doscommand,1,withhelper);
  if(ok&&p->network.enabled)ok=fputs("goto ZZNETEND\r\n:ZZNETFAIL\r\necho Network setup failed\r\n:ZZNETEND\r\n",f)!=EOF;
  if(fclose(f))ok=0;if(!ok){DeleteFile(boot);note("Invalid or oversized startup command.");return;}}
- dl_defaults(&s);strcpy(s.drive,p->drive);strcpy(s.command,bootname);s.memory=p->memory;s.machine=p->machine;s.cycles=dc_get(&conf,DC_CYCLES,p->speed==0?1000:p->speed==1?3000:6000);s.fg=p->fg;s.bg=p->bg;s.live=p->live;s.display=p->display;s.size=p->size;s.fps=p->fps;s.midi=p->midi;strcpy(s.midi_port,p->midi_port);s.cd_mode=p->cd_mode;strcpy(s.cd_path,p->cd_path);s.terminal=mode!=0||!*doscommand;
+ dl_defaults(&s);strcpy(s.drive,p->drive);strcpy(s.command,bootname);s.memory=p->memory;s.machine=p->machine;s.cycles=dc_get(&conf,DC_CYCLES,dl_profile_cycles(p));s.fg=p->fg;s.bg=p->bg;s.live=p->live;s.display=p->display;s.size=p->size;s.fps=p->fps;s.midi=p->midi;strcpy(s.midi_port,p->midi_port);s.cd_mode=p->cd_mode;strcpy(s.cd_path,p->cd_path);s.terminal=mode!=0||!*doscommand;
  path(session,"Launch.session");path(player,developer_runtime(dl_profile_player(p)));if(!save()||!dl_session_write(session,&s)||!dl_quote(qp,sizeof(qp),player)||!dl_quote(qs,sizeof(qs),session)){DeleteFile(boot);note("Could not save launch settings.");return;}
  snprintf(cmd,sizeof(cmd),"%s --session %s%s%s%s%s%s%s%s",qp,qs,dl_hardware_args(p),dl_compat_args(p),dl_scanline_args(p),dl_presentation_args(p->presentation),dl_mono_args(p->monochrome),dev_arguments,net_arguments);last_log="LastRun.log";path(player,last_log);log=Open(player,MODE_NEWFILE);if(!log){DeleteFile(boot);note("Cannot open session log.");return;}
  conf_log(log,&s);rc=player_run(cmd,log);Close(log);DeleteFile(boot);DeleteFile(session);set(win,MUIA_Window_Open,TRUE);note(rc==0?"Session finished.":"Session failed; see LastRun.log.");
@@ -368,7 +368,7 @@ static void boot_disk(void){
  if(!n){launch_msdos(p,1,"");return;}
  if(conf.set[DC_AUTO_MODE]||conf.set[DC_AUTO_FILE]||conf.set[DC_CONFIG_MODE]||conf.set[DC_CONFIG_FILE]||(conf.set[DC_LOADFIX]&&p->helper)){note("Floppy boots use startup files stored on the floppy.");return;}
  path(player,developer_runtime(dl_profile_player(p)));if(!exists(player)){note("Selected DOSBox runtime is missing.");return;}
- dl_defaults(&s);path(s.drive,"Disks");s.memory=p->memory;s.machine=p->machine;s.cycles=dc_get(&conf,DC_CYCLES,p->speed==0?1000:p->speed==1?3000:6000);s.display=p->display;s.size=p->size;s.fps=p->fps;s.fg=p->fg;s.bg=p->bg;s.midi=p->midi;strcpy(s.midi_port,p->midi_port);s.cd_mode=p->cd_mode;strcpy(s.cd_path,p->cd_path);
+ dl_defaults(&s);path(s.drive,"Disks");s.memory=p->memory;s.machine=p->machine;s.cycles=dc_get(&conf,DC_CYCLES,dl_profile_cycles(p));s.display=p->display;s.size=p->size;s.fps=p->fps;s.fg=p->fg;s.bg=p->bg;s.midi=p->midi;strcpy(s.midi_port,p->midi_port);s.cd_mode=p->cd_mode;strcpy(s.cd_path,p->cd_path);
  path(session,"Launch.session");if(!dl_session_write(session,&s)||!dl_quote(qp,sizeof(qp),player)||!dl_quote(qs,sizeof(qs),session)){note("Cannot save boot session.");return;}
  snprintf(cmd,sizeof(cmd),"%s --session %s --boot %s%s%s%s%s%s%s",qp,qs,bootfiles[n],dl_hardware_args(p),dl_compat_args(p),dl_scanline_args(p),dl_presentation_args(p->presentation),dl_mono_args(p->monochrome),dev_arguments);last_log="LastBoot.log";path(player,last_log);log=Open(player,MODE_NEWFILE);if(!log){DeleteFile(session);note("Cannot open boot log.");return;}
  conf_log(log,&s);rc=player_run(cmd,log);Close(log);DeleteFile(session);set(win,MUIA_Window_Open,TRUE);note(rc==0?"Session finished.":"Boot failed; see LastBoot.log.");

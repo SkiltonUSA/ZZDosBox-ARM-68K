@@ -146,7 +146,7 @@ int main(int argc,char**argv){
 #ifdef DB_COMPAT
   if(const char*card=getenv("ZZ_GAME_SOUND")){assert(!strcmp(card,"off")||!strcmp(card,"sb16")||!strcmp(card,"sbpro2"));db_sound_card=!strcmp(card,"sb16")?2:!strcmp(card,"sbpro2");}
 #endif
-  db_memory_mb=8;limit_ms=getenv("ZZ_GAME_MS")?strtoul(getenv("ZZ_GAME_MS"),nullptr,10):20000;assert(limit_ms<=120000);input=std::string(command)+"\rexit\r";
+  db_memory_mb=getenv("ZZ_GAME_MEMORY")?strtoul(getenv("ZZ_GAME_MEMORY"),nullptr,10):8;assert(db_memory_valid(db_memory_mb,DB_GUEST_MAX_MB));limit_ms=getenv("ZZ_GAME_MS")?strtoul(getenv("ZZ_GAME_MS"),nullptr,10):20000;assert(limit_ms<=(interactive?600000u:120000u));input=std::string(command)+"\rexit\r";
  }
  if(game=="tempfile"||game=="sb16"||game=="beep"||game=="dates"||game=="x87"){
   const char *name=game=="tempfile"?"TEMPTEST.COM":game=="x87"?"X87TEST.COM":game=="sb16"?"SB16TEST.COM":game=="beep"?"BEEPTEST.COM":"DATETEST.COM";

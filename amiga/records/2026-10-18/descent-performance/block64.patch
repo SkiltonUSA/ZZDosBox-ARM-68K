@@ -1,0 +1,13 @@
+--- core_dynrec.cpp
++++ core_dynrec.cpp
+@@ -257,8 +257,8 @@
+ 			// no block found, thus translate the instruction stream
+ 			// unless the instruction is known to be modified
+ 			if (!chandler->invalidation_map || (chandler->invalidation_map[ip_point&4095]<4)) {
+-				// translate up to 32 instructions
+-				block=CreateCacheBlock(chandler,ip_point,paging.enabled?1:32);
++				// diagnostic: translate up to 64 instructions
++				block=CreateCacheBlock(chandler,ip_point,paging.enabled?1:64);
+ 			} else {
+ 				// let the normal core handle this instruction to avoid zero-sized blocks
+ 				Bitu old_cycles=CPU_Cycles;

@@ -17,6 +17,11 @@ void pc_prof_start(){
 void pc_prof_push(unsigned n){pp_enter(&profile,n,pc_clock_ticks());}
 void pc_prof_pop(){pp_leave(&profile,pc_clock_ticks());}
 void pc_prof_unwind(){if(pc_prof_enabled)pp_unwind(&profile,pc_clock_ticks());}
+/* Non-mutating interval sample; includes the currently open timing scope. */
+void pc_prof_snapshot(uint64_t *ticks){
+ for(unsigned i=0;i<PP_COUNT;i++)ticks[i]=pc_prof_enabled?profile.ticks[i]:0;
+ if(pc_prof_enabled&&!profile.error)ticks[profile.stack[profile.depth-1]]+=pc_clock_ticks()-profile.last;
+}
 void pc_prof_finish(){
  if(!pc_prof_enabled)return;
  pp_finish(&profile,pc_clock_ticks());pc_prof_enabled=false;

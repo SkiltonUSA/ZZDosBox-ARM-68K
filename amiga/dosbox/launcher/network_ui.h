@@ -178,7 +178,7 @@ static void network_action(unsigned id){struct dl_profile p;struct dl_session s;
  if(!p.network.protocol)ok=ok&&fputs("type C:\\ZZNET\\MTCP.CFG\r\n",f)!=EOF;
  ok=ok&&fputs("echo Network command completed\r\ngoto ZZNETEND\r\n:ZZNETFAIL\r\necho Network command failed\r\n:ZZNETEND\r\n",f)!=EOF;if(fclose(f))ok=0;
  if(!ok){note("Cannot write network action.");return;}
- dl_defaults(&s);strcpy(s.drive,p.drive);strcpy(s.command,"C:\\ZZNET\\ACTION.BAT");s.memory=p.memory;s.cycles=dc_get(&conf,DC_CYCLES,p.speed==0?1000:p.speed==1?3000:6000);s.machine=p.machine;s.live=1;s.terminal=id==ID_NET_CONNECT;s.display=0;s.size=p.size;
+ dl_defaults(&s);strcpy(s.drive,p.drive);strcpy(s.command,"C:\\ZZNET\\ACTION.BAT");s.memory=p.memory;s.cycles=dc_get(&conf,DC_CYCLES,dl_profile_cycles(&p));s.machine=p.machine;s.live=1;s.terminal=id==ID_NET_CONNECT;s.display=0;s.size=p.size;
  path(session,"NetworkRun.session");path(runtime,active_runtime);if(!dl_session_write(session,&s)||!dl_quote(qp,sizeof(qp),runtime)||!dl_quote(qs,sizeof(qs),session))return;
  snprintf(cmd,sizeof(cmd),"%s --session %s%s%s",qp,qs,dl_compat_args(&p),net_arguments);
  path(file,"LastNetwork.log");log=Open(file,MODE_NEWFILE);if(!log){note("Cannot open network log.");return;}

@@ -1,0 +1,100 @@
+[
+  {
+    "name": "f6000b",
+    "frames": 94,
+    "seconds": 30.00017,
+    "fps": 3.1333,
+    "guest_speed": 0.7328,
+    "profile_percent": [
+      4.16,
+      46.72,
+      23.24,
+      6.76,
+      7.59,
+      11.53
+    ]
+  },
+  {
+    "name": "b64s310k",
+    "frames": 215,
+    "seconds": 30.00032,
+    "fps": 7.1666,
+    "guest_speed": 0.9766,
+    "profile_percent": [
+      1.14,
+      80.8,
+      1.94,
+      5.32,
+      4.28,
+      6.52
+    ]
+  },
+  {
+    "name": "low-old",
+    "frames": 134,
+    "seconds": 30.00046,
+    "fps": 4.4666,
+    "guest_speed": 0.8707,
+    "profile_percent": [
+      4.97,
+      54.71,
+      27.0,
+      7.98,
+      1.91,
+      3.43
+    ]
+  },
+  {
+    "name": "w6000",
+    "frames": 93,
+    "seconds": 30.00471,
+    "fps": 3.0995,
+    "guest_speed": 0.7198,
+    "profile_percent": []
+  },
+  {
+    "name": "s310kadapt",
+    "frames": 213,
+    "seconds": 30.00047,
+    "fps": 7.0999,
+    "guest_speed": 0.9709,
+    "profile_percent": [
+      1.14,
+      80.92,
+      1.92,
+      5.29,
+      4.27,
+      6.45
+    ]
+  },
+  {
+    "name": "s36000",
+    "frames": 107,
+    "seconds": 30.00005,
+    "fps": 3.5667,
+    "guest_speed": 0.8382,
+    "profile_percent": [
+      0.8,
+      43.82,
+      1.56,
+      4.56,
+      37.84,
+      11.41
+    ]
+  },
+  {
+    "name": "low-new",
+    "frames": 259,
+    "seconds": 30.00056,
+    "fps": 8.6332,
+    "guest_speed": 0.9782,
+    "profile_percent": [
+      1.18,
+      82.35,
+      1.9,
+      5.28,
+      3.72,
+      5.58
+    ]
+  }
+]

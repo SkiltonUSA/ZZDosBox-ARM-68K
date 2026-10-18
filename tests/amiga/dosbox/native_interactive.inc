@@ -31,6 +31,16 @@ static void interactive_tick(){
   while(keys>>key>>down){if(n++==interactive_keys){if(key>0&&key<KBD_LAST&&down<2)KEYBOARD_AddKey((KBD_KEYS)key,down);interactive_keys++;break;}}
  }
  if(PIC_Ticks%500==0){
+  // Opt-in native research snapshot, requested by a file in the supplied drawer.
+  // No Amiga reads/writes and no changes to guest memory.
+  if(const char*dir=getenv("ZZ_GAME_OBSERVE")){
+   auto base=std::filesystem::path(dir),request=base/"snapshot.request";
+   if(std::filesystem::exists(request)){
+    std::ofstream ram(base/"ram.bin",std::ios::binary);ram.write((char*)MemBase,db_memory_mb*1048576u);ram.close();
+    std::ofstream info(base/"snapshot.txt");info<<PIC_Ticks<<" "<<db_frames<<" "<<std::hex<<SegPhys(cs)+reg_eip<<" "<<cpu.cr0<<"\n";info.close();
+    std::filesystem::remove(request);
+   }
+  }
   std::string text;
   for(unsigned i=0;i<2000;i++){unsigned c=mem_readb(0xb8000+i*2);text+=c>=32&&c<127?(char)c:' ';if(i%80==79)text+='\n';}
   {std::ofstream f(".context/amiga/wfw311/screen.txt");f<<"ticks="<<PIC_Ticks<<" frames="<<db_frames<<"\n"<<text;}

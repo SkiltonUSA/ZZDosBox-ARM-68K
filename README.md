@@ -13,10 +13,10 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 
 ## Development builds
 
-**Current launcher: 0.22.3-dev; runtimes: 0.22.2-dev.** The launcher includes COM1 setup,
+**Current launcher: 0.22.4-dev; runtimes: 0.22.2-dev.** The launcher includes COM1 setup,
 experimental physical serial, a live joystick tester and 1–6 button choices.
-[Launcher update](artifacts/development/launcher-0.22.3): live ZZ9000 temperature
-beside the version, refreshed every two seconds.
+[Launcher update](artifacts/development/launcher-0.22.4): live ZZ9000 temperature
+beside the version and a saved 10,000-cycle CPU choice.
 Net-JIT combines networking with ARM JIT, EMS and Sound Blaster. This pass adds
 bounded file read-ahead, mouse-motion coalescing and batched interpreter fallback
 for the opt-in paging experiment. Existing profiles retain their settings.
@@ -26,6 +26,11 @@ lookahead bug. DOS/32A provides the working Descent launch path; first-level
 rendering and controls were verified on the Amiga.
 [Updated runtimes](artifacts/development/descent-startup) ·
 [Fix details and tests](docs/amiga-dosbox-shooter-startup-review.md).
+
+**Descent tuning:** S3/VESA and 10,000 cycles with adaptive presentation raised
+actual game rendering from **4.47 to 8.63 FPS (+93.3%)** at the existing custom
+detail level. Same starting room, 30-second samples, sound off.
+[Measurements and settings](docs/amiga-dosbox-descent-performance.md).
 
 [Current development update](artifacts/development/runtime-0.22.2) ·
 [I/O and joystick specifications](docs/amiga-dosbox-io.md) ·
@@ -62,7 +67,7 @@ Disk formats: [IMG versus VHD](docs/amiga-dosbox-disk-images.md).
 
 ## Features
 
-Features below span the **0.22.2-dev launcher source** and its separate DOS,
+Features below span the **0.22.4-dev launcher source** and its separate DOS,
 Windows, network and developer runtimes. Experimental features are labelled;
 not every combination is supported.
 
@@ -73,7 +78,7 @@ not every combination is supported.
 | DOS environments | Embedded DOSBox DOS 5 without installation disks; optional booted MS-DOS 6.22 from the user's installation. |
 | Execution | 386-class, 32-bit x86 emulation; ARMv7 dynamic recompiler with 4 MiB code cache for DOS; separate interpreter and paging-guarded Windows builds. |
 | Guest FPU — experimental | [Portable x87](docs/amiga-dosbox-x87.md) in the EMS/Sound Blaster Compat runtime; A9 VFP double-precision helpers, no 68k FPU requirement. Not full 80-bit precision. |
-| CPU and memory | 386/486/Pentium models; 1–32 MiB guest RAM; fixed, Auto or Max cycles; live adjustment and timed/normal sessions. Expanded runtime required for the new options; limits are not hardware-speed claims. |
+| CPU and memory | 386/486/Pentium models; 1–32 MiB guest RAM; fixed (1,000/3,000/6,000/10,000), Auto or Max cycles; live adjustment and timed/normal sessions. Expanded runtime required for the new options; limits are not hardware-speed claims. |
 | Windows/protected mode | Windows for Workgroups 3.11 tested; 386 paging, nested page-fault recovery, sparse mappings, A20 handling and BIOS/VGA ROM write protection. |
 | DOS terminal | Open terminal, run a command or batch file, text/background colours and a versioned welcome screen. |
 | Startup files | AUTOEXEC.BAT and CONFIG.SYS editors; Default/Edited/File selection, import/export and recovery of temporary booted-DOS edits. |
@@ -477,6 +482,8 @@ are single runs; the latest VFP result uses two runs per build.
 - **ARM file read-ahead — batch small DOS reads:** **98.2% less diagnostic wall time** on SD032G: 18,671 → 336 ms; read RPCs 8,198 → 8 (**99.90% fewer**). Original small-read/coherence test, not game FPS. Pinball Fantasies startup used **4.4% less wall time**; Vette/Gods showed no meaningful gain. [Measurements](docs/amiga-dosbox-file-read-optimisation.md) · [Game comparisons](docs/amiga-dosbox-load-profile.md) · [Descent, Doom, Duke and Quake startup fixes](docs/amiga-dosbox-shooter-startup-review.md)
 - **Mouse motion coalescing:** combine consecutive movement samples while preserving clicks/focus transitions. **Latency/FPS gain not measured**; model and native checks passed. [Details](docs/amiga-dosbox-file-read-optimisation.md)
 - **Paged-JIT interpreter batching:** up to 32-cycle fallback bursts remove the earlier Windows test-budget failure. Still **12.4% slower than normal paging** in the matched startup run; remains opt-in. [Comparison](docs/amiga-dosbox-file-read-optimisation.md)
+
+- **S3/VESA event batching + adaptive presentation + cycle tuning:** Descent **+93.3%**, 4.47 → 8.63 rendered FPS at unchanged custom detail; maximum detail 3.13 → 7.10 FPS (**+126.6%**). Starting-room, sound-off samples. A 64-instruction JIT-block experiment gained under 1% and was not promoted. [Method and evidence](docs/amiga-dosbox-descent-performance.md)
 
 These techniques use the existing XACP application/host execution model;
 none required a firmware change. Future firmware work should preserve the

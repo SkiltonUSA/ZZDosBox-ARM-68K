@@ -1,0 +1,30 @@
+mkdir -p .context/tests
+clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc tests/amiga/dosbox/descent_clock.cpp -o .context/tests/descent-clock
+.context/tests/descent-clock
+PASS Descent clock: relocation, warmup, elapsed frames, reset, code change, ambiguity, bounds
+clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/launcher tests/amiga/dosbox/launcher.c -o .context/tests/launcher
+.context/tests/launcher
+PASS profiles/sessions, adapter/colour/renderer migration and validation
+clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/present_plan.c -o .context/tests/present
+.context/tests/present
+PASS 98 latency schedules, 168000 frames, ACK wrap, slot exclusivity, bounded batches, timeout/stop lock retention
+clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/direct_plan.c -o .context/tests/direct
+.context/tests/direct
+PC direct mapping: 7440 geometry, boundary, no-clobber and unmap cases PASS
+clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/profile.c -o .context/tests/profile
+.context/tests/profile
+PASS profile exclusive sum, nested scopes, cancellation unwind, low-word wrap, bounds
+clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/capture.cpp -o .context/tests/capture
+.context/tests/capture
+PASS all 65536 RGB565 colours, 1024 widths, 8/15/16/32 bpp, four source alignments and guards
+clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/scale.cpp -o .context/tests/scale
+.context/tests/scale
+PASS scaler: 329728 widths/formats, all 4:3 window widths, exact pixels and row guards
+clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc tests/amiga/dosbox/mouse_geometry.c -o .context/tests/mouse
+.context/tests/mouse
+PASS guest mouse bounds, scaled client, title/border exclusion and clamped drag
+clang++ -std=c++17 -O2 -fsanitize=address,undefined -Iamiga/dosbox/pc tests/amiga/dosbox/scanline_plan.cpp -o .context/tests/scanlines
+.context/tests/scanlines
+clang -std=c99 -O2 -fsanitize=address,undefined -Iamiga/dosbox/pc tests/amiga/dosbox/dynrec_plan.c -o .context/tests/dynrec
+.context/tests/dynrec
+PASS JIT owned arena spans, partial pages, bounds and overflow

@@ -1,0 +1,8 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 11 heap 3913408
+PASS ARM capability JITSPEC {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 617494 heap 3913216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x150020c0 fixture requests 16 read 36181 written 0 rc 0

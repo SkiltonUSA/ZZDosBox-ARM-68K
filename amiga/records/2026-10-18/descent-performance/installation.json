@@ -1,0 +1,22 @@
+{
+  "launcher_version": "0.22.4-dev",
+  "launcher_bytes": 703252,
+  "launcher_sha256": "322bec041cd6ec0737eaabe079072a903e9bd8a86ea5b1fc4fbc9d5914f61eec",
+  "transfer_checksum_verified": true,
+  "library_roundtrip_verified": true,
+  "profile_changed": "Descent",
+  "profile_changes": {
+    "graphics": "VGA -> S3/VESA",
+    "fixed_cycles": "6000 -> 10000"
+  },
+  "other_profile_fields_unchanged": true,
+  "other_profiles_unchanged": true,
+  "runtime_replaced": false,
+  "cpu_page_verified": true,
+  "temperature_footer_verified": true,
+  "normal_mui_launch_first_mine": true,
+  "f10_clean_exit": true,
+  "register_cache_restored": true,
+  "core1_owner_released": true,
+  "launcher_returned": true
+}

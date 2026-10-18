@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.22.3-dev**, newest first.
+Version history from **0.1.0-dev** through **0.22.4-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -9,6 +9,13 @@ installation statements describe that milestone, not the current default.
 Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
+
+## 0.22.4-dev — per-program CPU cycles
+
+- Add a saved 10000-cycle choice on the CPU page; existing 1000, 3000 and 6000
+  choices keep their values. Global dosbox.conf overrides still take precedence.
+- Add an isolated, read-only Descent rendered-frame benchmark with gameplay-only
+  timing. The normal player does not include the benchmark or its automatic stop.
 
 ## Unreleased — protected-mode game startup
 

@@ -6,6 +6,8 @@ prepare: verify
 	$(PYTHON) scripts/restore_build_inputs.py
 test-host:
 	mkdir -p .context/tests
+	clang++ -std=c++17 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc tests/amiga/dosbox/descent_clock.cpp -o .context/tests/descent-clock
+	.context/tests/descent-clock
 	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/launcher tests/amiga/dosbox/launcher.c -o .context/tests/launcher
 	.context/tests/launcher
 	clang -std=c99 -O2 -Wall -Wextra -Werror -Iamiga/dosbox/pc -Iamiga/common tests/amiga/dosbox/present_plan.c -o .context/tests/present
