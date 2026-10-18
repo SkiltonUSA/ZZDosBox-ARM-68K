@@ -1,0 +1,47 @@
+[
+  {
+    "name": "base",
+    "frames": 35,
+    "wall_seconds": 30.000417,
+    "fps": 1.16665,
+    "guest_speed": 0.574259,
+    "profile_percent": {
+      "other": 4.39,
+      "cpu": 40.73,
+      "events": 23.39,
+      "capture": 5.3,
+      "grant": 16.81,
+      "copy": 9.37
+    }
+  },
+  {
+    "name": "s3only",
+    "frames": 49,
+    "wall_seconds": 30.000606,
+    "fps": 1.6333,
+    "guest_speed": 0.748518,
+    "profile_percent": {
+      "other": 1.82,
+      "cpu": 45.16,
+      "events": 7.96,
+      "capture": 4.2,
+      "grant": 30.3,
+      "copy": 10.57
+    }
+  },
+  {
+    "name": "tuned",
+    "frames": 136,
+    "wall_seconds": 30.000854,
+    "fps": 4.533204,
+    "guest_speed": 0.847609,
+    "profile_percent": {
+      "other": 2.23,
+      "cpu": 74.83,
+      "events": 9.01,
+      "capture": 4.64,
+      "grant": 6.31,
+      "copy": 2.98
+    }
+  }
+]

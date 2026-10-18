@@ -38,6 +38,18 @@ sound off. Screenshot captured from the installed player after tuning;
 measurements were taken separately.
 [Measurements and settings](docs/amiga-dosbox-descent-performance.md).
 
+**Duke Nukem 3D on the A4000TX / ZZ9000**
+
+| Gameplay screenshot | Measured game FPS |
+| --- | --- |
+| ![Duke Nukem 3D running in a Workbench window](docs/screenshots/duke-gameplay.png) | **Before: 1.17 FPS** — VGA, 6,000 cycles, Normal<br><br>**S3 only: 1.63 FPS** — S3/VESA, 6,000 cycles, Normal<br><br>**Tuned: 4.53 FPS (+288.6%)** — S3/VESA, 10,000 cycles, Adaptive |
+
+Thirty-second opening-level samples, unchanged detail, SB16 sound/music enabled.
+Timed samples use a private copy with the game's FPS counter enabled; the screenshot
+shows the original game’s attract demo. Tuned game-clock progress was 84.8% of real time;
+performance remains below smooth gameplay.
+[Method and evidence](docs/amiga-dosbox-duke-performance.md).
+
 [Current development update](artifacts/development/runtime-0.22.2) ·
 [I/O and joystick specifications](docs/amiga-dosbox-io.md) ·
 [Optimisation measurements](docs/amiga-dosbox-file-read-optimisation.md).
@@ -490,6 +502,8 @@ are single runs; the latest VFP result uses two runs per build.
 - **Paged-JIT interpreter batching:** up to 32-cycle fallback bursts remove the earlier Windows test-budget failure. Still **12.4% slower than normal paging** in the matched startup run; remains opt-in. [Comparison](docs/amiga-dosbox-file-read-optimisation.md)
 
 - **S3/VESA event batching + adaptive presentation + cycle tuning:** Descent **+93.3%**, 4.47 → 8.63 rendered FPS at unchanged custom detail; maximum detail 3.13 → 7.10 FPS (**+126.6%**). Starting-room, sound-off samples. A 64-instruction JIT-block experiment gained under 1% and was not promoted. [Method and evidence](docs/amiga-dosbox-descent-performance.md)
+
+- **S3/VESA + adaptive presentation + cycle tuning — Duke Nukem 3D:** **+288.6%**, 1.17 → 4.53 rendered game FPS with SB16 sound/music enabled. S3 alone gave **+40.0%**. Single opening-level samples using the same counter instrumentation. [Results](docs/amiga-dosbox-duke-performance.md)
 
 These techniques use the existing XACP application/host execution model;
 none required a firmware change. Future firmware work should preserve the

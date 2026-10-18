@@ -10,6 +10,15 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
+## Experiment — Duke Nukem 3D configuration tuning
+
+- Measure 1.3D rendered frames against ARM wall time: VGA/6000/Normal 1.17 FPS,
+  S3/6000/Normal 1.63 FPS, S3/10000/Adaptive 4.53 FPS, with sound enabled.
+- Add an isolated Duke counter observer and wraparound/relocation tests. Private
+  benchmark copies enable the existing FPS counter; the installed game is unchanged.
+- Save the faster Duke profile using the existing launcher/player; no new runtime
+  release. [Method and limits](docs/amiga-dosbox-duke-performance.md).
+
 ## 0.22.4-dev — per-program CPU cycles
 
 - Add a saved 10000-cycle choice on the CPU page; existing 1000, 3000 and 6000

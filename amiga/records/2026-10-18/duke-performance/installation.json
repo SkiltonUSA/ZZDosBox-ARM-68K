@@ -1,0 +1,22 @@
+{
+  "profile": {
+    "machine": "S3/VESA",
+    "cycles": 10000,
+    "presentation": "adaptive"
+  },
+  "unchanged": [
+    "486 CPU model",
+    "8 MiB guest RAM",
+    "EMS enabled",
+    "SB16/OPL3 enabled",
+    "window mode",
+    "DUKE3D.EXE launch command",
+    "other program profiles",
+    "production runtime",
+    "launcher"
+  ],
+  "original_executable_md5": "522be90658f0241fb7ebb8368138de0b",
+  "original_game_config": "byte-identical after benchmark installation",
+  "normal_player": "launched original game, attract demo screenshot captured",
+  "interactive_exit": "pending physical mouse release after bridge title-bar input stall; not claimed passed"
+}

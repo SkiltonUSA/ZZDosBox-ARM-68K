@@ -1,0 +1,8 @@
+{
+  "original_sha256": "6e6f5159f21e795302221622df8be89325ede968c099126d5421dbec589ab3be",
+  "diagnostic_sha256": "bdbede4d5d952702342f02ec0e1c1052d3082dcca454e8b52ec2b0f85746bbb0",
+  "offset": 492478,
+  "before": "7405",
+  "after": "9090",
+  "purpose": "Enable existing tics() FPS display/counter in private benchmark copy only; equivalent to DNRATE being on. Original installed game not changed."
+}
