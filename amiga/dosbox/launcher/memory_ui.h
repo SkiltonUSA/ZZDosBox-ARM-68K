@@ -157,7 +157,7 @@ static LONG player_run(const char *command,BPTR log){
  if(!process){loading_end();set(win,MUIA_Window_Open,TRUE);DeleteMsgPort(done);network_live_end();if(capture_command)FreeVec(capture_command);return 20;}
  if(interactive){navigation_show(network_running?PAGE_NETWORK:PAGE_DEVELOPER);set(navigation_view,MUIA_Disabled,TRUE);note(network_running?"Network DOS session running.":"Developer session running.");}
  while(!finished||mem_busy||network_busy){
-  mem_poll();network_poll();if(GetMsg(done))finished=1;
+  mem_poll();network_poll();if(interactive)temperature_poll();if(GetMsg(done))finished=1;
   if(finished)loading_end();
   /* Normal play sleeps once the display opens: no background polling cost. */
   if(!interactive&&!loading_poll()){

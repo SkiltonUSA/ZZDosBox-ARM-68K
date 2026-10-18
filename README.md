@@ -13,8 +13,10 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 
 ## Development builds
 
-**Current development: 0.22.2-dev.** The launcher includes COM1 setup,
+**Current launcher: 0.22.3-dev; runtimes: 0.22.2-dev.** The launcher includes COM1 setup,
 experimental physical serial, a live joystick tester and 1–6 button choices.
+[Launcher update](artifacts/development/launcher-0.22.3): live ZZ9000 temperature
+beside the version, refreshed every two seconds.
 Net-JIT combines networking with ARM JIT, EMS and Sound Blaster. This pass adds
 bounded file read-ahead, mouse-motion coalescing and batched interpreter fallback
 for the opt-in paging experiment. Existing profiles retain their settings.

@@ -17,6 +17,7 @@
 #pragma GCC diagnostic ignored "-Wpointer-sign"
 #include "style.h"
 #include "version.h"
+#include "temperature.h"
 #include "program_list.h"
 #include "changelog_text.h"
 #include "sidebar-art.h"
@@ -466,7 +467,8 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
     MUIA_Floattext_Text,(ULONG)dl_changelog_text,End,End,End,End,
  End,End,End,Child,HGroup,TextFrame,InnerSpacing(6,4),
   Child,status=TextObject,MUIA_Text_SetMin,FALSE,MUIA_Text_Contents,(ULONG)"",End,
-  Child,TextObject,MUIA_HorizWeight,0,MUIA_Text_SetMax,TRUE,MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_Contents,(ULONG)"Rev " ZZ_LAUNCHER_VERSION,End,End,End,End,End;
+  Child,TextObject,MUIA_HorizWeight,0,MUIA_Text_SetMax,TRUE,MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_Contents,(ULONG)"Rev " ZZ_LAUNCHER_VERSION,End,
+  Child,temperature_text=TextObject,MUIA_HorizWeight,0,MUIA_FixWidthTxt,(ULONG)"ZZ9000: 150.0 C",MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_Contents,(ULONG)"ZZ9000: n/a",MUIA_ShortHelp,(ULONG)"ZZ9000 Zynq chip temperature. Updates every two seconds while the launcher is active.",End,End,End,End,End;
  if(!app)return 0;
  {unsigned n;for(n=0;n<PAGE_COUNT;n++){snprintf(nav_entries[n].icon,sizeof(nav_entries[n].icon),"\33I[6:%lu]",(unsigned long)section_icons[n]);nav_entries[n].caption=sections[n];DoMethod(navigation,MUIM_List_InsertSingle,(ULONG)&nav_entries[n],MUIV_List_Insert_Bottom);}}
  set(navigation_view,MUIA_ShortHelp,(ULONG)"Choose a section. Use Up/Down when this list has keyboard focus.");
@@ -523,8 +525,8 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   if(!found&&library.count<DL_MAX&&exists(p)){struct dl_profile*q=&library.p[library.count];dl_profile_default(q);strcpy(q->title,"MS-DOS 6.22");path(q->drive,"Disks");q->system=1;q->category=DL_OS;q->memory=8;library.last=library.count++;}
  }
  MUIMasterBase=OpenLibrary("muimaster.library",15);AslBase=OpenLibrary("asl.library",38);WorkbenchBase=OpenLibrary("workbench.library",44);KeymapBase=OpenLibrary("keymap.library",37);if(!MUIMasterBase||!AslBase||!WorkbenchBase||!KeymapBase){puts("MUI 3.8 or later is required.");goto done;}
- disk_choices_init();if(!build())goto done;if(!conf_load())goto done;refresh();if(!startup_splash()){rc=0;goto done;}set(win,MUIA_Window_Open,TRUE);if(!val(win,MUIA_Window_Open))goto done;program_list_focus();
- while(running){joystick_test_poll();mem_poll();id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
+ disk_choices_init();if(!build())goto done;temperature_init();if(!conf_load())goto done;refresh();if(!startup_splash()){rc=0;goto done;}set(win,MUIA_Window_Open,TRUE);if(!val(win,MUIA_Window_Open))goto done;program_list_focus();
+ while(running){temperature_poll();joystick_test_poll();mem_poll();id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
   switch(id){case (ULONG)MUIV_Application_ReturnID_Quit:if(mem_busy){note("Wait for the pending memory request.");break;}if(!store_selection())break;if(!conf_save())break;if(!save()){note("Cannot save settings.");break;}running=0;break;
   case ID_SERIAL_CHANGE:serial_controls();break;
   case ID_SERIAL_INTERNAL:set(serial_device,MUIA_String_Contents,(ULONG)"serial.device");set(serial_unit,MUIA_String_Integer,0);set(serial_mode,MUIA_Cycle_Active,3);serial_controls();break;
@@ -564,9 +566,9 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   if(id>=ID_CAT_RENAME&&id<ID_CAT_RENAME+DL_CATEGORIES){unsigned c=id-ID_CAT_RENAME;if(select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active))))rename_profile();break;}
   if((id>=ID_CAT_RUN&&id<ID_CAT_RUN+DL_CATEGORIES)||(id>=ID_CAT_EDIT&&id<ID_CAT_EDIT+DL_CATEGORIES)){unsigned c=id>=(unsigned)ID_CAT_EDIT?id-ID_CAT_EDIT:id-ID_CAT_RUN;int n=dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active));if(select_profile(n)){if(id>=ID_CAT_EDIT){navigation_show(PAGE_LOAD);set(program_tabs,MUIA_Group_ActivePage,0);}else launch(0,NULL);}break;}
   if(id>=ID_MEM_PAUSE&&id<=ID_MEM_STOP){mem_action(id);break;}if(id>=ID_EDITOR&&id<ID_EDITOR+48)editor_action((id-ID_EDITOR)/16,(id-ID_EDITOR)%16);break;}
-  if(running&&!id&&signals){if(Wait(signals|joystick_test_signal()|SIGBREAKF_CTRL_C|(mem_replies?1ul<<mem_replies->mp_SigBit:0))&SIGBREAKF_CTRL_C){if(!mem_busy&&store_selection()&&conf_save()&&save())running=0;}}
+  if(running&&!id&&signals){if(Wait(signals|temperature_signal()|joystick_test_signal()|SIGBREAKF_CTRL_C|(mem_replies?1ul<<mem_replies->mp_SigBit:0))&SIGBREAKF_CTRL_C){if(!mem_busy&&store_selection()&&conf_save()&&save())running=0;}}
  }rc=0;
-done:joystick_test_active(0);compat_store_close(&compat_database);if(mem_replies)DeleteMsgPort(mem_replies);if(app)MUI_DisposeObject(app);if(joy_diagram_class)MUI_DeleteCustomClass(joy_diagram_class);if(program_list_class)MUI_DeleteCustomClass(program_list_class);if(hover_help_class)MUI_DeleteCustomClass(hover_help_class);if(snapshot_class)MUI_DeleteCustomClass(snapshot_class);if(P96Base)CloseLibrary(P96Base);if(KeymapBase)CloseLibrary(KeymapBase);style_close();if(WorkbenchBase)CloseLibrary(WorkbenchBase);if(AslBase)CloseLibrary(AslBase);if(MUIMasterBase)CloseLibrary(MUIMasterBase);if(owner){RemPort(owner);DeleteMsgPort(owner);}return rc;
+done:temperature_close();joystick_test_active(0);compat_store_close(&compat_database);if(mem_replies)DeleteMsgPort(mem_replies);if(app)MUI_DisposeObject(app);if(joy_diagram_class)MUI_DeleteCustomClass(joy_diagram_class);if(program_list_class)MUI_DeleteCustomClass(program_list_class);if(hover_help_class)MUI_DeleteCustomClass(hover_help_class);if(snapshot_class)MUI_DeleteCustomClass(snapshot_class);if(P96Base)CloseLibrary(P96Base);if(KeymapBase)CloseLibrary(KeymapBase);style_close();if(WorkbenchBase)CloseLibrary(WorkbenchBase);if(AslBase)CloseLibrary(AslBase);if(MUIMasterBase)CloseLibrary(MUIMasterBase);if(owner){RemPort(owner);DeleteMsgPort(owner);}return rc;
 }
 
 /* Keep the entry frame small: reject undersized CLI stacks before entering

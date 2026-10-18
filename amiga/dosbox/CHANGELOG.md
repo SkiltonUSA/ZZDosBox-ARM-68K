@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.22.2-dev**, newest first.
+Version history from **0.1.0-dev** through **0.22.3-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -9,6 +9,12 @@ installation statements describe that milestone, not the current default.
 Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
+
+## 0.22.3-dev — launcher temperature
+
+- Show the ZZ9000 Zynq temperature beside the footer version, refreshed every
+  two seconds while the launcher is active. Unavailable readings show n/a.
+- Read-only sensor access; no ARM job or firmware changes.
 
 ## 0.22.2-dev — file reads and input scheduling
 
