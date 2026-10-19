@@ -21,10 +21,12 @@ Game data and the signing secret are not stored in this repository.
 
 ## Physical upgrade
 
-The Standard installer upgraded an isolated 0.22.6 installation on the A4000TX
-to 0.22.7 Beta successfully. The installed launcher checksum matches the build;
+The Standard and With Demos installers upgraded an isolated 0.22.6 installation
+on the A4000TX to 0.22.7 Beta successfully. The installed launcher checksum matches the build;
 the existing library, custom DOSBox configuration and test save file retain
-identical before/after checksums. The running production launcher was closed
-cooperatively for the check. Workbench screen preferences were not changed.
+identical before/after checksums. Both package receipts report 0.22.7-beta.
+The library still contains one custom profile plus the three supplied demos,
+without duplicates. The running production launcher was closed cooperatively
+for the check and reopened afterward. Workbench screen preferences were not changed.
 
 [Installation and dependencies](../../../docs/amipkg-installers.md).

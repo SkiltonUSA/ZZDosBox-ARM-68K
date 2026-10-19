@@ -1,0 +1,25 @@
+{
+  "standard": {
+    "return_code": 0,
+    "installed_launcher_md5": "5cb710cfc34241466a746470af87164d",
+    "preserved": [
+      "Launcher.cfg",
+      "dosbox.conf",
+      "Games/USERTEST/KEEP.SAV"
+    ],
+    "profile_count_after": 4,
+    "core_receipt_version": "0.22.7-beta"
+  },
+  "demos": {
+    "return_code": 0,
+    "installed_launcher_md5": "5cb710cfc34241466a746470af87164d",
+    "preserved": [
+      "Launcher.cfg",
+      "dosbox.conf",
+      "Games/USERTEST/KEEP.SAV"
+    ],
+    "profile_count_after": 4,
+    "core_receipt_version": "0.22.7-beta",
+    "demo_receipt_version": "0.22.7-beta"
+  }
+}
