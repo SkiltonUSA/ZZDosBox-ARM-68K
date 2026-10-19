@@ -1,0 +1,14 @@
+{
+  "version": "0.22.6-beta-demos",
+  "archive": "ZZDosBox-0.22.6-beta-demos.zip",
+  "bytes": 23094641,
+  "sha256": "bf3a749bfeabfa66ae16762c1fea530b54755bf2ac00d8c13a163289e018c464",
+  "files": 123,
+  "demos": [
+    "Corridor 7 Demo",
+    "Doom 1.9 Shareware",
+    "King's Quest VII Demo"
+  ],
+  "published": false,
+  "validation": "Profile serializer roundtrip, target files, ZIP CRC, SHA256 for every member, reproducible rebuild, changed/extra input rejection"
+}

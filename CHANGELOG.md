@@ -10,6 +10,17 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
+## 0.22.6 demo edition — packaging
+
+- Prepare a separate distribution with Corridor 7, Doom 1.9 shareware and
+  King's Quest VII promotional demo, with a relocatable three-game library.
+- Set King's Quest VII to SB Pro 2 to match its original Sierra drivers;
+  title and illustrated demo verified on the Amiga.
+- Pin original demo inputs, retain notices, exclude personal saves and verify
+  all archive members against a SHA-256 manifest. Emulator binaries unchanged.
+- Public bundling clearance for the Corridor/Sierra demo media remains
+  unverified; this archive is prepared locally, not uploaded as a release.
+
 ## 0.22.6-dev — high-cycle launcher choices
 
 - Add saved 60,000 and 100,000 CPU-cycle choices; existing selections keep

@@ -1,0 +1,5 @@
+PASS byte-identical repeated package build
+PASS extra personal file rejected
+PASS changed game configuration rejected
+PASS exactly three relocatable profiles; all launch targets packaged; no case-colliding paths
+SHA256 bf3a749bfeabfa66ae16762c1fea530b54755bf2ac00d8c13a163289e018c464
