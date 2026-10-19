@@ -168,6 +168,33 @@ inline-read flag; register forwarding and the read-value ABI remain optional
 experiments. [Development executable](../artifacts/development/expanded-0.22.5) ·
 [Logs, model checks and recalculation script](../amiga/records/2026-10-19/duke-optimisation).
 
+## Follow-up: 60,000 cycles
+
+The same guarded-inline-read build was tested at 60,000 cycles, with the same
+opening scene, source resolution, sound, CPU and presentation settings. No code
+or guest executable changes were made between these runs and the inline 10k/20k
+samples. These are DOSBox emulation cycles, not an ARM clock-frequency change.
+
+| Cycles | Display | Game FPS | Emulated-time progress |
+| ---: | --- | ---: | ---: |
+| 10,000 | Window | 4.67 | 87.3% |
+| 20,000 | Window | 6.77 | 54.1% |
+| 60,000 | Window | 7.97 | 22.0% |
+| 60,000 | Fullscreen | 8.13 | 22.3% |
+
+Windowed 60k rendered 239 frames in 30.003 seconds; fullscreen rendered 244 in
+30.003 seconds. Emulated time advanced only 6.599 and 6.705 seconds, respectively.
+The extra rendered FPS therefore accompanies roughly 4.5× slower emulated-time
+progress, rather than establishing a better gameplay configuration. The saved
+10k profile is unchanged.
+
+Across the whole sessions, 535/537 windowed and 539/541 fullscreen AHI links were
+late (about 99.6%). All queued frames completed with error=0, but that does not
+establish continuous sound. No listening result is claimed. Both runs passed the
+JIT/SIMD witnesses, register/cache restoration and owned-memory release checks.
+Accepted evidence is `inline60.log` and `inline60full.log` in the linked evidence
+folder; `results.json` and `verify_results.py` include both samples.
+
 ## Reproducing the diagnostics
 
 Build the normal Expanded tuning configuration with `--pc-duke-clock`; add just

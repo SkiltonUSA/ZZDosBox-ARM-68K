@@ -68,6 +68,9 @@ profile is retained. [ARM recompiler experiments and audio findings](docs/amiga-
 **Guarded ARM inline reads: +2.9%**, 4.53 → 4.67 FPS in repeated 10,000-cycle
 windowed samples. Included in [Expanded 0.22.5-dev](artifacts/development/expanded-0.22.5).
 Audio delivery improved but still has late buffer links.
+At **60,000 cycles**, the same updated build reached **7.97 FPS windowed /
+8.13 fullscreen**, but emulated time advanced at only **22%** of real time;
+about **99.6%** of audio-buffer links were late. This remains a benchmark setting.
 
 [Earlier runtime update](artifacts/development/runtime-0.22.2) ·
 [I/O and joystick specifications](docs/amiga-dosbox-io.md) ·

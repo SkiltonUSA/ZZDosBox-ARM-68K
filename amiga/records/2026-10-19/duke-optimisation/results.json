@@ -298,5 +298,39 @@
       "grant": 6.53,
       "copy": 2.97
     }
+  },
+  {
+    "name": "inline60",
+    "frames": 239,
+    "wall_seconds": 30.002968,
+    "fps": 7.965878,
+    "guest_speed": 0.219945,
+    "profile_percent": {
+      "other": 1.49,
+      "cpu": 88.78,
+      "events": 2.34,
+      "capture": 1.2,
+      "grant": 3.12,
+      "copy": 3.08
+    },
+    "audio_requests": 537,
+    "audio_late_links": 535
+  },
+  {
+    "name": "inline60full",
+    "frames": 244,
+    "wall_seconds": 30.003453,
+    "fps": 8.132397,
+    "guest_speed": 0.223474,
+    "profile_percent": {
+      "other": 1.48,
+      "cpu": 88.81,
+      "events": 2.33,
+      "capture": 1.21,
+      "grant": 3.12,
+      "copy": 3.04
+    },
+    "audio_requests": 541,
+    "audio_late_links": 539
   }
 ]
