@@ -1,10 +1,16 @@
 # AmiPkg installers
 
-Two offline installers are built from the same ZZDosBox 0.22.6 Beta binaries:
+[Download 0.22.6 Beta](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.6-beta). Both editions contain the same
+launcher, emulator runtimes, utilities and compatibility database.
 
-- **Standard** installs ZZDosBox with an empty game library.
-- **With Demos** also installs Corridor 7, Doom shareware and King's Quest VII
-  Demo, with their tested profiles.
+| Edition | Size | Library | Audio requirement |
+| --- | --- | --- | --- |
+| Standard | 7.2 MB | Empty; add your own games and applications | AHI checked, but sound-off use is allowed |
+| With Demos | 23.7 MB | Corridor 7, Doom 1.9 shareware and King's Quest VII Demo, with tested profiles | AHI v4+, output drivers and accessible unit 0 |
+
+With Demos is a complete installer; Standard is not needed first. King's Quest
+VII is a non-interactive promotional demo. Neither edition includes Microsoft
+DOS/Windows, system libraries or ZZ9000 firmware.
 
 Extract the chosen `.lha` archive, open its drawer and double-click **Install**.
 Choose a parent drawer; the application is installed in its `ZZDosBox` drawer.
@@ -95,8 +101,8 @@ python3 scripts/package_dosbox_amipkg.py \
 ```
 
 Source archive, client patch and Apache licence/notice are retained. Public-key
-files and signatures can ship; secret signing keys never do. Game-data publication
-status remains as described in [release editions](demo-edition.md).
+files and signatures can ship; secret signing keys never do. Demo provenance and publisher notices are described in
+[release editions](demo-edition.md).
 
 [Upstream AmiPkg](https://github.com/thomas-luebker/amipkg) ·
 [Recipe documentation](https://github.com/thomas-luebker/amiga-pkg/blob/main/PACKAGING.md)

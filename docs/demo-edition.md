@@ -1,6 +1,11 @@
 # ZZDosBox release editions
 
-Two packages use the same launcher, runtimes and support files:
+The [0.22.6 Beta release](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.6-beta) provides **Standard** and
+**With Demos** AmiPkg `.lha` installers. See the [installer comparison](amipkg-installers.md)
+for requirements and upgrade behaviour.
+
+The ZIP files below are build inputs for those installers. Both use the same
+launcher, runtimes and support files:
 
 | Package | Included games |
 | --- | --- |

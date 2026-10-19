@@ -30,8 +30,8 @@ scanline candidate is retained in the experiment notes rather than assigned one.
   title and illustrated demo verified on the Amiga.
 - Pin original demo inputs, retain notices, exclude personal saves and verify
   all archive members against a SHA-256 manifest. Emulator binaries unchanged.
-- Public bundling clearance for the Corridor/Sierra demo media remains
-  unverified; this archive is prepared locally, not uploaded as a release.
+- Publish both AmiPkg editions as 0.22.6 Beta, with archive checksums and
+  an installer comparison. Demo copyright notices remain included.
 
 ## 0.22.6-dev — high-cycle launcher choices
 

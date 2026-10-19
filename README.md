@@ -601,14 +601,19 @@ A9 timings; instruction-model timing is not hardware performance evidence.
 
 ## Offline installers
 
-Two **AmiPkg installer packages** are available locally: **Standard** (no games)
-and **With Demos** (Corridor 7, Doom shareware and King's Quest VII Demo).
-Both check MUI, AmigaOS libraries, Picasso96 and ZZ9000 hardware before installation.
-AHI drivers and unit 0 are checked; audio is optional for Standard and required
-for the supplied demo profiles. Existing libraries, settings and saves are preserved.
+[**Download ZZDosBox 0.22.6 Beta**](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.6-beta).
 
-Extract the LHA and open **Install** to choose a destination.
-[Installation, dependencies and updates](docs/amipkg-installers.md).
+| Installer | Download | Contents | AHI audio |
+| --- | --- | --- | --- |
+| [Standard](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v0.22.6-beta/ZZDosBox-0.22.6-beta-standard-amipkg.lha) | 7.2 MB | ZZDosBox; empty library for your own programs | Optional; sound-off use allowed |
+| [With Demos](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v0.22.6-beta/ZZDosBox-0.22.6-beta-demos-amipkg.lha) | 23.7 MB | Same ZZDosBox plus Corridor 7, Doom 1.9 shareware and King's Quest VII Demo | Required for supplied audio profiles |
+
+King's Quest VII is a non-interactive promotional demo. Both installers check
+MUI, AmigaOS libraries, Picasso96, ZZ9000 hardware and AHI. System libraries and
+firmware are supplied separately. Existing profiles, settings and saves are preserved.
+
+Extract the LHA, close ZZDosBox and open **Install** to choose a destination.
+[Installation and updates](docs/amipkg-installers.md) · [Demo details](docs/demo-edition.md).
 
 ## Credits and licences
 
@@ -624,11 +629,8 @@ Development: **Codex assisted, Amiga-Bridge MCP**.
 
 DOSBox upstream is GPL-2.0-or-later; the combined project includes GPL-3.0-or-later
 components. See [LICENSE](LICENSE) and [component notices](licenses/README.md).
-Two [release editions](docs/demo-edition.md) use identical emulator binaries:
-**Standard** contains no games; **With Demos** includes **Corridor 7, Doom 1.9
-shareware and King's Quest VII Demo** with ready-to-launch profiles. King's Quest VII is a
-non-interactive promotional demo. Public bundling clearance for Corridor and
-Sierra remains unverified; the prepared archive is not a published release.
+Bundled demos retain their publishers' copyrights and original notices;
+the emulator's GPL does not license game data.
 
 Optional [shareware starter builds](docs/shareware-build.md) include Doom 1.9 and
 Duke Nukem 3D 1.3D with their original notices. Descent is retained in personal
