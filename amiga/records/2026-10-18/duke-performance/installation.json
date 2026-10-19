@@ -18,5 +18,14 @@
   "original_executable_md5": "522be90658f0241fb7ebb8368138de0b",
   "original_game_config": "byte-identical after benchmark installation",
   "normal_player": "launched original game, attract demo screenshot captured",
-  "interactive_exit": "pending physical mouse release after bridge title-bar input stall; not claimed passed"
+  "interactive_exit": "Verified 2026-10-19: bridge recovered, F10 closed normal player, launcher restored and Core1 ownership released; gameplay keyboard controls remain unverified",
+  "shutdown_checks": [
+    "S3/10000/adaptive retained",
+    "JIT witness=1",
+    "SIMD context_equal=1",
+    "register mismatches=0",
+    "cache witness_bad=0",
+    "AHI submitted=completed, error=0",
+    "owned memory released"
+  ]
 }

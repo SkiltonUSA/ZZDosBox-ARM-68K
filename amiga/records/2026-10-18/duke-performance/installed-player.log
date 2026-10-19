@@ -1,0 +1,87 @@
+CONFIG core=auto runtime=ZZDosBox-Expanded cycles=10000 memory=8
+OWNED amiga=50000040 arm_candidate=101f0040 size=67108864 nonce=08242774
+BOOTSTRAP amiga=40c7fd40 arm=00e6fd40 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+EXPANDED cpu=1 memory_services=0 joystick=0 extra_sound=0 cycle_mode=0 serial=0 paged_jit=0
+AUDIO task: AHI unit 0, 32000 Hz stereo; 4 queue slots, 64 ms prebuffer
+COMPAT ems=1 xms=1 sound=SB16 A220 I7 D1 H5 T6, OPL3 speaker=0
+DISPLAY_CONFIG mode=window fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=3 cycles=10000 live=1
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+VIDEO adapter=3 source=320x200 monochrome=0
+JIT magic=4a495431 commits=155070 witness=1 dispatches=186144722 cache_bytes=4194304 heap_peak=6021440 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=16764 rendered_rows=8046720 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=10000
+PRESENT magic=50525331 source=62934 shown=16764 skipped=46170 divisor=4 changes=46 mode=1 hz=60 work_ticks=4496609 copy_ticks=946409 total_copy=000000073f781aa3
+ARM_FPS tenths=0
+PC frames=62934 emulated_ms=897990 wall_ms=3168433 timed_done=0
+POLL ms=1 calls=488054 wait_us=891806012 max_us=86279
+SHELL result=2 guest_exit=0 slices=68080551 bytes=892 hash=31aca532 mismatches=0
+DosBox ZZ9000 project                         0.20.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>ZZL0000.BAT
+DOS/4GW Professional Protected Mode Run-time  Version 1.97
+Copyright (c) Rational Systems, Inc. 1990-1994
+
+Distribution of shareware Duke Nukem 3D is restricted in certain ways.
+Please read LICENSE.DOC for more details.
+
+Using: 'DUKE3D.GRP'.
+KB_Startup: Keyboard Started
+Compiling: 'GAME.CON'.
+Including: 'DEFS.CON'.
+Including: 'USER.CON'.
+Found 0 warning(s), 0 error(s).
+Code Size:48516 bytes(1425 labels).
+Using Setup file: 'DUKE3D.CFG'
+
+*** You have run Duke Nukem 3D 1 times. ***
+
+Loading art header.
+Checking music inits.
+Checking sound inits.
+RTS Manager Started
+Loading palette/lookups.
+
+SHELL PASS mode=0
+AUDIO_TASK queued=28735488 submitted=28735488 completed=28735488 highwater=4 error=0 stopped=1
+FILES_TIME calls=12688 read_us=31042012 write_us=0 other_us=35174253 max_us=1248155 (totals saturate at 4294967295)
+FILES_OP op=open calls=2505 total_us=12561010 max_us=1011971
+FILES_OP op=close calls=22 total_us=37282 max_us=14361
+FILES_OP op=read calls=5923 total_us=31042012 max_us=68370
+FILES_OP op=seek calls=1706 total_us=6859171 max_us=82975
+FILES_OP op=stat calls=2510 total_us=15653484 max_us=1248155
+FILES_OP op=list calls=21 total_us=62995 max_us=6696
+FILES_OP op=testdir calls=1 total_us=311 max_us=311
+DISK host_seeks=0
+FILES requests=12688 read=18576923 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=10334000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=10334000 restored=10334000
+REGISTER n=2 original=02000000 restored=02000000
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000001 restored=00000001
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00001000 restored=00001000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=109 press=1 release=1
+DISPLAY frames=16764 flips=0 wait_us=0
+COPY observed_us=56777133 max_us=99322
+PIPELINE enabled=1 overlaps=0 releases=16764
+LAUNCHER exit=0; owned memory released

@@ -77,9 +77,11 @@ Other program profiles are unchanged. The existing launcher/player are retained;
 this research does not create a new runtime release.
 
 The normal, unmodified player launched the original game and reached its attract
-demo. Interactive keyboard/exit verification remains incomplete: a subsequent
-remote title-bar click stalled bridge input pending physical mouse release. This
-occurred after the three diagnostic runs had finished and is not evidence of a
-Duke runtime crash or clean normal-player exit.
+demo. A remote title-bar click stalled bridge input after the benchmark runs.
+Following physical input recovery on 19 October, F10 closed the normal player
+and restored the launcher. Its log confirms S3/10,000/Adaptive, intact JIT/SIMD
+witnesses, zero register/cache mismatches, completed AHI buffers with no reported
+error, and owned-memory release. No Core1 owner remains. In-game keyboard
+controls have not been verified; the recovery session is not another FPS sample.
 
 [Raw logs, hashes and test evidence](../amiga/records/2026-10-18/duke-performance/).
