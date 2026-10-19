@@ -527,6 +527,16 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   # Cancellation at the initial prompt can precede the first guest dispatch.
   if mode not in ('read-stop','fs-stop') and not memory_stop:assert get(0x188d4c)>0
   print('PASS JIT cache witness/report, commits',get(0x188d44),'dispatches',get(0x188d4c),'heap',get(0x188d54),flush=True)
+ if build.get('jit_reuse') and fixture and fixture[0]=='JITREUSE':
+  assert get(0x188d5c)>0,'Register forwarding did not reach direct CPU-register loads'
+  print('PASS register forwarding exercised:',get(0x188d5c),flush=True)
+ if build.get('jit_hot') and mode=='fixture':
+  assert get(0x188e60)==0x484f5431 and 0<get(0x188e64)<=16384 and get(0x188e68)==0
+  counts=[get(0x188e74+i*24) for i in range(16)]
+  assert counts==sorted(counts,reverse=True) and counts[0]>0 and sum(counts)<=get(0x188e6c)
+  for i,count in enumerate(counts):
+   if count:assert get(0x188e70+i*24)<8*1048576
+  print('PASS diagnostic JIT block ranking, bounds and count accounting',flush=True)
  detail=bytes(u.mem_read(base+0x180900+128,160)).split(b'\0')[0]
  if profile:
   assert get(0x188084)==0x50524631 and get(0x188094)==0

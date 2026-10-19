@@ -1,0 +1,77 @@
+--- a/src/cpu/core_dynrec/risc_armv4le-o3.h
++++ b/src/cpu/core_dynrec/risc_armv4le-o3.h
+@@ -203,6 +203,18 @@
+ 	cache_addd( MOV_REG_LSL_IMM(reg_dst, reg_src, 0) );      // mov reg_dst, reg_src
+ }
+ 
++#include "jit_reuse.h"
++static_assert(C_TARGETCPU==ARMV7LE && FC_REGS_ADDR==HOST_r10,"ARMv7 resident register base");
++static const Bit8u *db_reuse_floor;
++unsigned db_jit_reuse_hits;
++static void db_cpu_load_word(Bit32u instruction){
++ if(db_reuse_floor && cache.pos-db_reuse_floor>=4){
++  int source=db_arm_stored_register(host_readd((HostPt)(cache.pos-4)),instruction);
++  if(source>=0){gen_mov_regs((HostReg)((instruction>>12)&15),(HostReg)source);db_jit_reuse_hits++;return;}
++ }
++ cache_addd(instruction);
++}
++
+ // helper function
+ static bool val_is_operand2(Bit32u value, Bit32u *val_shift) {
+ 	Bit32u shift;
+@@ -329,10 +341,10 @@
+ #endif
+ 			{
+ 				if ((data >= addr_data) && (data < addr_data + 4096)) {
+-					cache_addd( LDR_IMM(dest_reg, addr_reg, data - addr_data) );      // ldr dest_reg, [addr_reg, #(data - addr_data)]
++					db_cpu_load_word( LDR_IMM(dest_reg, addr_reg, data - addr_data) );      // ldr dest_reg, [addr_reg, #(data - addr_data)]
+ 					return true;
+ 				} else if ((data < addr_data) && (data > addr_data - 4096)) {
+-					cache_addd( LDR_IMM_M(dest_reg, addr_reg, addr_data - data) );      // ldr dest_reg, [addr_reg, #-(addr_data - data)]
++					db_cpu_load_word( LDR_IMM_M(dest_reg, addr_reg, addr_data - data) );      // ldr dest_reg, [addr_reg, #-(addr_data - data)]
+ 					return true;
+ 				}
+ 			}
+@@ -872,6 +884,7 @@
+ 
+ // calculate relative offset and fill it into the location pointed to by data
+ static void INLINE gen_fill_branch(const Bit8u* data) {
++ db_reuse_floor=cache.pos; // a control-flow/patch boundary cannot reuse a prior store
+ #if C_DEBUG
+ 	Bits len=cache.pos-(data+8);
+ 	if (len<0) len=-len;
+@@ -966,6 +979,7 @@
+ // called when a call to a function can be replaced by a
+ // call to a simpler function
+ static void gen_fill_function_ptr(const Bit8u * pos,void* fct_ptr,Bitu flags_type) {
++ db_reuse_floor=cache.pos; // a control-flow/patch boundary cannot reuse a prior store
+ #ifdef DRC_FLAGS_INVALIDATION_DCODE
+ 	// try to avoid function calls but rather directly fill in code
+ 	switch (flags_type) {
+@@ -1240,14 +1254,14 @@
+ 
+ // mov 32bit value from cpu_regs[index] into dest_reg using FC_REGS_ADDR (index modulo 4 must be zero)
+ static void gen_mov_regval32_to_reg(HostReg dest_reg,Bitu index) {
+-	cache_addd( LDR_IMM(dest_reg, FC_REGS_ADDR, index) );      // ldr dest_reg, [FC_REGS_ADDR, #index]
++	db_cpu_load_word( LDR_IMM(dest_reg, FC_REGS_ADDR, index) );      // ldr dest_reg, [FC_REGS_ADDR, #index]
+ }
+ 
+ // move a 32bit (dword==true) or 16bit (dword==false) value from cpu_regs[index] into dest_reg using FC_REGS_ADDR (if dword==true index modulo 4 must be zero) (if dword==false index modulo 2 must be zero)
+ // 16bit moves may destroy the upper 16bit of the destination register
+ static void gen_mov_regword_to_reg(HostReg dest_reg,Bitu index,bool dword) {
+ 	if (dword) {
+-		cache_addd( LDR_IMM(dest_reg, FC_REGS_ADDR, index) );      // ldr dest_reg, [FC_REGS_ADDR, #index]
++		db_cpu_load_word( LDR_IMM(dest_reg, FC_REGS_ADDR, index) );      // ldr dest_reg, [FC_REGS_ADDR, #index]
+ 	} else {
+ 		cache_addd( LDRH_IMM(dest_reg, FC_REGS_ADDR, index) );      // ldrh dest_reg, [FC_REGS_ADDR, #index]
+ 	}
+--- a/src/cpu/core_dynrec/decoder.h
++++ b/src/cpu/core_dynrec/decoder.h
+@@ -41,6 +41,7 @@
+ 	decode.page.invmap=codepage->invalidation_map;
+ 	decode.page.first=start >> 12;
+ 	decode.active_block=decode.block=cache_openblock();
++ db_reuse_floor=cache.pos;
+ 	decode.block->page.start=(Bit16u)decode.page.index;
+ 	codepage->AddCacheBlock(decode.block);
+ 

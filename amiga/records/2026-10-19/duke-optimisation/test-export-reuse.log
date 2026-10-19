@@ -1,0 +1,1 @@
+PASS ARM store forwarding: 320 differential cases, offsets, registers, flags and rejected encodings

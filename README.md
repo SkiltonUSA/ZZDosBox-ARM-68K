@@ -13,7 +13,7 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 
 ## Development builds
 
-**Current launcher: 0.22.4-dev; runtimes: 0.22.2-dev.** The launcher includes COM1 setup,
+**Current launcher: 0.22.4-dev; Expanded: 0.22.5-dev; other runtimes: 0.22.2-dev.** The launcher includes COM1 setup,
 experimental physical serial, a live joystick tester and 1–6 button choices.
 [Launcher update](artifacts/development/launcher-0.22.4): live ZZ9000 temperature
 beside the version and a saved 10,000-cycle CPU choice.
@@ -46,11 +46,30 @@ measurements were taken separately.
 
 Thirty-second opening-level samples, unchanged detail, SB16 sound/music enabled.
 Timed samples use a private copy with the game's FPS counter enabled; the screenshot
-shows the original game’s attract demo. Tuned game-clock progress was 84.8% of real time;
+shows the original game in the updated player after movement and shooting checks.
+The earlier tuned baseline advanced game time at 84.8% of real time;
 performance remains below smooth gameplay.
 [Method and evidence](docs/amiga-dosbox-duke-performance.md).
 
-[Current development update](artifacts/development/runtime-0.22.2) ·
+Baseline cycle comparison, before the inline-read update:
+
+| Cycles | Window FPS | Fullscreen FPS |
+| ---: | ---: | ---: |
+| 10,000 | 4.53 | 4.60 |
+| 12,000 | 5.17 | 5.27 |
+| 15,000 | 5.83 | 5.90 |
+| 20,000 | 6.57 | 6.67 |
+
+Higher cycles trade game-clock speed and audio continuity for more rendered frames:
+20,000 advances emulated time at only about 53% of real time. The saved 10,000-cycle
+profile is retained. [ARM recompiler experiments and audio findings](docs/amiga-dosbox-duke-arm-optimisation.md).
+
+
+**Guarded ARM inline reads: +2.9%**, 4.53 → 4.67 FPS in repeated 10,000-cycle
+windowed samples. Included in [Expanded 0.22.5-dev](artifacts/development/expanded-0.22.5).
+Audio delivery improved but still has late buffer links.
+
+[Earlier runtime update](artifacts/development/runtime-0.22.2) ·
 [I/O and joystick specifications](docs/amiga-dosbox-io.md) ·
 [Optimisation measurements](docs/amiga-dosbox-file-read-optimisation.md).
 Expanded supports up to 32 MiB guest RAM in a 64 MiB owned allocation;
@@ -504,6 +523,7 @@ are single runs; the latest VFP result uses two runs per build.
 - **S3/VESA event batching + adaptive presentation + cycle tuning:** Descent **+93.3%**, 4.47 → 8.63 rendered FPS at unchanged custom detail; maximum detail 3.13 → 7.10 FPS (**+126.6%**). Starting-room, sound-off samples. A 64-instruction JIT-block experiment gained under 1% and was not promoted. [Method and evidence](docs/amiga-dosbox-descent-performance.md)
 
 - **S3/VESA + adaptive presentation + cycle tuning — Duke Nukem 3D:** **+288.6%**, 1.17 → 4.53 rendered game FPS with SB16 sound/music enabled. S3 alone gave **+40.0%**. Single opening-level samples using the same counter instrumentation. [Results](docs/amiga-dosbox-duke-performance.md)
+- **Guarded inline ARM memory reads — Duke Nukem 3D:** **+2.9%**, 4.53 → 4.67 game FPS at unchanged 10,000 cycles. Linked reads avoid a helper call; device, unaligned and high-bank accesses retain checked fallback. Register-forwarding experiments showed no gain and remain research-only. [Tests and audio limits](docs/amiga-dosbox-duke-arm-optimisation.md)
 
 These techniques use the existing XACP application/host execution model;
 none required a firmware change. Future firmware work should preserve the

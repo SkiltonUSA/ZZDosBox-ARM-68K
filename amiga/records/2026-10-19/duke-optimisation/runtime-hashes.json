@@ -1,0 +1,30 @@
+{
+  "ZZDosBox-Bench": {
+    "bytes": 1336792,
+    "sha256": "c6625e9ac29c458c29051c9835f2de365552533cb8df80d54cb2d34658577a17"
+  },
+  "ZZAudio": {
+    "bytes": 1336804,
+    "sha256": "86f42e6bb1146ae30dddbd7dcc322629bab991e2ab1181b6e5c60fe7998a8743"
+  },
+  "ZZValue": {
+    "bytes": 1337984,
+    "sha256": "c75f8a492c4a9c2685a657d5e6e256a708d943b2fbf3402268d06672081a7cff"
+  },
+  "ZZReuseDirect": {
+    "bytes": 1338416,
+    "sha256": "5c0bbdb1e0f5642dbad67bc001238aa237dc369a1ebe99e6d0f449f20a9a3512"
+  },
+  "ZZInline": {
+    "bytes": 1336340,
+    "sha256": "a7167da7851a862b5928693588880c47ba3253daf34887f67c224c091d307c40"
+  },
+  "ZZHotScoped": {
+    "bytes": 1339612,
+    "sha256": "3fc605c028ceac5d8ae72f047988261cdbf578f9053ef47e25b6d6ff9a9a7697"
+  },
+  "ZZInlinePlayer": {
+    "bytes": 1334416,
+    "sha256": "3ad6328ad6b051fae93dbe0acfba645fa7e5335b1101834ddcbd86c5361823a0"
+  }
+}

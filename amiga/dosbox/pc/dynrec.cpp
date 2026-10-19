@@ -42,5 +42,8 @@ extern "C" void db_dynrec_report() {
  ad_put(p,0,0x4a495431u);ad_put(p,4,commits);ad_put(p,8,selftest);
  ad_put(p,12,db_dynrec_dispatches);ad_put(p,16,DB_JIT_CACHE);
  ad_put(p,20,(unsigned)fb_heap_peak());ad_put(p,24,db_dynrec_paged_fallbacks);
+#ifdef DB_JIT_REUSE
+ extern unsigned db_jit_reuse_hits;ad_put(p,28,db_jit_reuse_hits);
+#endif
  __asm__ volatile("dsb sy":::"memory");
 }

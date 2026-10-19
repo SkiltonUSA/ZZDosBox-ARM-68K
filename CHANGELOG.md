@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.22.4-dev**, newest first.
+Version history from **0.1.0-dev** through **0.22.5-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -9,6 +9,27 @@ installation statements describe that milestone, not the current default.
 Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
+
+## 0.22.5-dev — guarded ARM inline reads
+
+- Expanded runtime emits aligned linked low-bank reads directly in ARM code;
+  device, unaligned and high-bank accesses keep checked helper handling.
+  Writes and self-modifying-code tracking remain unchanged.
+- Duke opening-level samples improved 4.53 → 4.67 game FPS (+2.9%) at the same
+  10,000 cycles; repeat samples agree. This is a measured workload result,
+  not a general emulator speed multiplier.
+- Expose the existing late AHI-buffer-link diagnostic. Delivery timing improved,
+  but audio continuity remains limited and audible quality was not verified.
+- Add page-alignment/read, partial-register, carry and memory-handler regression
+  fixtures, scoped hot-block profiling and optional register-ABI/forwarding
+  experiments. The latter showed no meaningful FPS gain and are not defaults.
+- Compare 10k/12k/15k/20k window/fullscreen runs. Higher FPS at 20k accompanies
+  roughly half-speed emulated time; retain the saved 10k configuration.
+- Document missing Duke keyboard assignments and their configuration fix;
+  the original game executable is unchanged.
+
+[Measurements, validation and limitations](docs/amiga-dosbox-duke-arm-optimisation.md) ·
+[Development runtime](artifacts/development/expanded-0.22.5)
 
 ## Experiment — Duke Nukem 3D configuration tuning
 

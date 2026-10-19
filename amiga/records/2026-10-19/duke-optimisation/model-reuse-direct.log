@@ -1,0 +1,58 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 21 dispatches 37 heap 3913408
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITREAD {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 1034503 heap 3913408
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x12000040 fixture requests 16 read 36181 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 11 heap 3913408
+PASS register forwarding exercised: 4
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITREUSE {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 21 dispatches 37 heap 3913408
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITREAD {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 1034503 heap 3913408
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x150020c0 fixture requests 16 read 36181 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 11 heap 3913408
+PASS register forwarding exercised: 4
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITREUSE {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 73 dispatches 125 heap 3917632
+PASS profile publication and exclusive totals cpu unwound 0
+PASS ARM x86 arithmetic/memory, DOS files and MZ relocation 0x12000040
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 3913408
+PASS profile publication and exclusive totals smc unwound 0
+PASS ARM JIT guest self-modification / invalidation
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 10 dispatches 7 heap 4066496
+PASS profile publication and exclusive totals paging unwound 0
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture demand-page faults 1 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 8 dispatches 4 heap 3925632
+PASS profile publication and exclusive totals high-bank-bound unwound 1
+PASS banked TLB rejects unsupported guest address high-bank-bound Guest page bound f0001 at 191:100 ss:sp=191:fffe
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 11 heap 3913408
+PASS ARM capability JITSPEC {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 3913408
+PASS ARM capability SMCTEST {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 11 heap 3913408
+PASS ARM capability JITSPEC {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 3913408
+PASS ARM capability SMCTEST {'cpu': 1} PCM 0 0
+REUSE DIRECT MODEL COMPLETE

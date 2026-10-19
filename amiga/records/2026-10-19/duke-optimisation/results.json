@@ -1,0 +1,302 @@
+[
+  {
+    "name": "w10a",
+    "frames": 136,
+    "wall_seconds": 30.000693,
+    "fps": 4.533229,
+    "guest_speed": 0.852214,
+    "profile_percent": {
+      "other": 2.31,
+      "cpu": 75.05,
+      "events": 9.06,
+      "capture": 4.66,
+      "grant": 5.93,
+      "copy": 2.99
+    }
+  },
+  {
+    "name": "w12",
+    "frames": 155,
+    "wall_seconds": 30.000603,
+    "fps": 5.166563,
+    "guest_speed": 0.757551,
+    "profile_percent": {
+      "other": 2.12,
+      "cpu": 78.26,
+      "events": 7.98,
+      "capture": 4.14,
+      "grant": 4.84,
+      "copy": 2.65
+    }
+  },
+  {
+    "name": "w15",
+    "frames": 175,
+    "wall_seconds": 30.000839,
+    "fps": 5.83317,
+    "guest_speed": 0.651448,
+    "profile_percent": {
+      "other": 2.04,
+      "cpu": 81.29,
+      "events": 6.98,
+      "capture": 3.55,
+      "grant": 3.86,
+      "copy": 2.29
+    }
+  },
+  {
+    "name": "w20",
+    "frames": 197,
+    "wall_seconds": 30.000644,
+    "fps": 6.566526,
+    "guest_speed": 0.527422,
+    "profile_percent": {
+      "other": 1.84,
+      "cpu": 84.82,
+      "events": 5.73,
+      "capture": 2.88,
+      "grant": 2.88,
+      "copy": 1.85
+    }
+  },
+  {
+    "name": "f10",
+    "frames": 138,
+    "wall_seconds": 30.000303,
+    "fps": 4.599954,
+    "guest_speed": 0.860625,
+    "profile_percent": {
+      "other": 2.2,
+      "cpu": 74.66,
+      "events": 8.98,
+      "capture": 4.66,
+      "grant": 6.58,
+      "copy": 2.92
+    }
+  },
+  {
+    "name": "f12",
+    "frames": 158,
+    "wall_seconds": 30.000494,
+    "fps": 5.26658,
+    "guest_speed": 0.768487,
+    "profile_percent": {
+      "other": 2.05,
+      "cpu": 78.32,
+      "events": 7.96,
+      "capture": 4.16,
+      "grant": 4.9,
+      "copy": 2.61
+    }
+  },
+  {
+    "name": "f15",
+    "frames": 177,
+    "wall_seconds": 30.000869,
+    "fps": 5.899829,
+    "guest_speed": 0.656214,
+    "profile_percent": {
+      "other": 2.02,
+      "cpu": 81.07,
+      "events": 6.9,
+      "capture": 3.55,
+      "grant": 4.23,
+      "copy": 2.23
+    }
+  },
+  {
+    "name": "f20",
+    "frames": 200,
+    "wall_seconds": 30.001816,
+    "fps": 6.666263,
+    "guest_speed": 0.534734,
+    "profile_percent": {
+      "other": 1.83,
+      "cpu": 84.96,
+      "events": 5.7,
+      "capture": 2.89,
+      "grant": 2.8,
+      "copy": 1.82
+    }
+  },
+  {
+    "name": "audio10",
+    "frames": 136,
+    "wall_seconds": 30.001001,
+    "fps": 4.533182,
+    "guest_speed": 0.847672,
+    "profile_percent": {
+      "other": 2.19,
+      "cpu": 74.81,
+      "events": 9.01,
+      "capture": 4.64,
+      "grant": 6.39,
+      "copy": 2.97
+    }
+  },
+  {
+    "name": "audio20",
+    "frames": 198,
+    "wall_seconds": 30.001491,
+    "fps": 6.599672,
+    "guest_speed": 0.528674,
+    "profile_percent": {
+      "other": 1.84,
+      "cpu": 85.01,
+      "events": 5.74,
+      "capture": 2.88,
+      "grant": 2.67,
+      "copy": 1.85
+    }
+  },
+  {
+    "name": "hot",
+    "frames": 125,
+    "wall_seconds": 30.000211,
+    "fps": 4.166637,
+    "guest_speed": 0.782294,
+    "profile_percent": {
+      "other": 2.35,
+      "cpu": 77.72,
+      "events": 8.35,
+      "capture": 4.28,
+      "grant": 4.56,
+      "copy": 2.75
+    }
+  },
+  {
+    "name": "candidate10",
+    "frames": 136,
+    "wall_seconds": 30.000872,
+    "fps": 4.533202,
+    "guest_speed": 0.849509,
+    "profile_percent": {
+      "other": 2.11,
+      "cpu": 74.37,
+      "events": 8.95,
+      "capture": 4.67,
+      "grant": 6.92,
+      "copy": 2.98
+    }
+  },
+  {
+    "name": "candidate20",
+    "frames": 200,
+    "wall_seconds": 30.000323,
+    "fps": 6.666595,
+    "guest_speed": 0.533261,
+    "profile_percent": {
+      "other": 1.74,
+      "cpu": 85.08,
+      "events": 5.74,
+      "capture": 2.92,
+      "grant": 2.64,
+      "copy": 1.87
+    }
+  },
+  {
+    "name": "audio8",
+    "frames": 113,
+    "wall_seconds": 30.000103,
+    "fps": 3.766654,
+    "guest_speed": 0.97583,
+    "profile_percent": {
+      "other": 2.36,
+      "cpu": 71.59,
+      "events": 10.38,
+      "capture": 5.37,
+      "grant": 5.01,
+      "copy": 5.29
+    }
+  },
+  {
+    "name": "reuse10",
+    "frames": 135,
+    "wall_seconds": 30.000525,
+    "fps": 4.499921,
+    "guest_speed": 0.846385,
+    "profile_percent": {
+      "other": 2.0,
+      "cpu": 74.91,
+      "events": 8.9,
+      "capture": 4.62,
+      "grant": 6.6,
+      "copy": 2.97
+    }
+  },
+  {
+    "name": "reuse20",
+    "frames": 198,
+    "wall_seconds": 30.00168,
+    "fps": 6.59963,
+    "guest_speed": 0.529337,
+    "profile_percent": {
+      "other": 1.72,
+      "cpu": 85.35,
+      "events": 5.68,
+      "capture": 2.88,
+      "grant": 2.52,
+      "copy": 1.85
+    }
+  },
+  {
+    "name": "inline10",
+    "frames": 140,
+    "wall_seconds": 30.000101,
+    "fps": 4.666651,
+    "guest_speed": 0.874897,
+    "profile_percent": {
+      "other": 2.15,
+      "cpu": 74.03,
+      "events": 9.31,
+      "capture": 4.78,
+      "grant": 6.66,
+      "copy": 3.07
+    }
+  },
+  {
+    "name": "inline20",
+    "frames": 203,
+    "wall_seconds": 30.002245,
+    "fps": 6.76616,
+    "guest_speed": 0.541159,
+    "profile_percent": {
+      "other": 1.85,
+      "cpu": 84.15,
+      "events": 5.87,
+      "capture": 2.95,
+      "grant": 3.29,
+      "copy": 1.9
+    }
+  },
+  {
+    "name": "inline10b",
+    "frames": 140,
+    "wall_seconds": 30.000314,
+    "fps": 4.666618,
+    "guest_speed": 0.873224,
+    "profile_percent": {
+      "other": 2.23,
+      "cpu": 73.88,
+      "events": 9.3,
+      "capture": 4.78,
+      "grant": 6.76,
+      "copy": 3.06
+    }
+  },
+  {
+    "name": "baseline10b",
+    "frames": 136,
+    "wall_seconds": 30.000033,
+    "fps": 4.533328,
+    "guest_speed": 0.847632,
+    "profile_percent": {
+      "other": 2.25,
+      "cpu": 74.61,
+      "events": 9.0,
+      "capture": 4.64,
+      "grant": 6.53,
+      "copy": 2.97
+    }
+  }
+]

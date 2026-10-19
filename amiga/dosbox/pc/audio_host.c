@@ -128,8 +128,8 @@ static void player_audio_close(void){
  audio_opened=0;
  if(audio_parent_signal>=0){SetSignal(0,1UL<<audio_parent_signal);FreeSignal(audio_parent_signal);audio_parent_signal=-1;}
  if(audio_queue){FreeVec(audio_queue);audio_queue=NULL;}
- printf("AUDIO_TASK queued=%u submitted=%u completed=%u highwater=%u error=%u stopped=%u\n",
-  audio_samples,audio_submitted,audio_completed,audio_highwater,audio_error,audio_done);
+ printf("AUDIO_TASK queued=%u submitted=%u completed=%u highwater=%u error=%u stopped=%u gaps=%u\n",
+  audio_samples,audio_submitted,audio_completed,audio_highwater,audio_error,audio_done,audio_gaps);
 }
 static int player_audio_open(void){
  audio_parent=FindTask(NULL);audio_parent_signal=AllocSignal(-1);

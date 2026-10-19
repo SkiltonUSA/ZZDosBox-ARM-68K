@@ -1,0 +1,77 @@
+--- a/src/cpu/core_dynrec/decoder_basic.h
++++ b/src/cpu/core_dynrec/decoder_basic.h
+@@ -760,20 +760,53 @@
+ }
+ 
+ 
++
++#if C_TARGETCPU != ARMV7LE
++#error Checked-read value ABI is ARMv7-only
++#endif
++static_assert(sizeof(Bitu)==4, "AAPCS32 checked-read ABI");
++
++static Bit64u DRC_CALL_CONV db_readb_value(PhysPt address) {
++ if(true){
++  HostPt p=get_tlb_read(address);
++  if(p)return host_readb(p+address);
++ }
++ bool error=mem_readb_checked_drc(address);
++ return ((Bit64u)error<<32)|*((Bit8u*)&core_dynrec.readdata);
++}
++
++static Bit64u DRC_CALL_CONV db_readw_value(PhysPt address) {
++ if((address & 4095u)<=4094u){
++  HostPt p=get_tlb_read(address);
++  if(p)return host_readw(p+address);
++ }
++ bool error=mem_readw_checked_drc(address);
++ return ((Bit64u)error<<32)|*((Bit16u*)&core_dynrec.readdata);
++}
++
++static Bit64u DRC_CALL_CONV db_readd_value(PhysPt address) {
++ if((address & 4095u)<=4092u){
++  HostPt p=get_tlb_read(address);
++  if(p)return host_readd(p+address);
++ }
++ bool error=mem_readd_checked_drc(address);
++ return ((Bit64u)error<<32)|*((Bit32u*)&core_dynrec.readdata);
++}
++
+ // functions that enable access to the memory
+ 
+ // read a byte from a given address and store it in reg_dst
+ static void dyn_read_byte(HostReg reg_addr,HostReg reg_dst) {
+ 	gen_mov_regs(FC_OP1,reg_addr);
+-	gen_call_function_raw((void *)&mem_readb_checked_drc);
+-	dyn_check_exception(FC_RETOP);
+-	gen_mov_byte_to_reg_low(reg_dst,&core_dynrec.readdata);
++	gen_call_function_raw((void *)&db_readb_value);
++	dyn_check_exception(FC_OP2);
++	gen_mov_regs(reg_dst,FC_RETOP);
+ }
+ static void dyn_read_byte_canuseword(HostReg reg_addr,HostReg reg_dst) {
+ 	gen_mov_regs(FC_OP1,reg_addr);
+-	gen_call_function_raw((void *)&mem_readb_checked_drc);
+-	dyn_check_exception(FC_RETOP);
+-	gen_mov_byte_to_reg_low_canuseword(reg_dst,&core_dynrec.readdata);
++	gen_call_function_raw((void *)&db_readb_value);
++	dyn_check_exception(FC_OP2);
++	gen_mov_regs(reg_dst,FC_RETOP);
+ }
+ 
+ // write a byte from reg_val into the memory given by the address
+@@ -788,10 +821,10 @@
+ // from a given address and store it in reg_dst
+ static void dyn_read_word(HostReg reg_addr,HostReg reg_dst,bool dword) {
+ 	gen_mov_regs(FC_OP1,reg_addr);
+-	if (dword) gen_call_function_raw((void *)&mem_readd_checked_drc);
+-	else gen_call_function_raw((void *)&mem_readw_checked_drc);
+-	dyn_check_exception(FC_RETOP);
+-	gen_mov_word_to_reg(reg_dst,&core_dynrec.readdata,dword);
++	if (dword) gen_call_function_raw((void *)&db_readd_value);
++	else gen_call_function_raw((void *)&db_readw_value);
++	dyn_check_exception(FC_OP2);
++	gen_mov_regs(reg_dst,FC_RETOP);
+ }
+ 
+ // write a 32bit (dword=true) or 16bit (dword=false) value

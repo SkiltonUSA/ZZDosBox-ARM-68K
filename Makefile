@@ -50,7 +50,7 @@ test-host-review:
 build-expanded:
 	$(PYTHON) scripts/build_dosbox_dos_arm.py --pc --pc-compat --pc-x87 --pc-expanded \
 	  --pc-dynrec --pc-jit-mib 4 --pc-neon --pc-pipeline --pc-pic-vfp \
-	  --pc-scanlines --pc-presentation --pc-adapters --pc-file-readahead
+	  --pc-scanlines --pc-presentation --pc-adapters --pc-file-readahead --pc-jit-inline
 build-network-jit:
 	$(PYTHON) scripts/build_dosbox_dos_arm.py --pc --pc-compat --pc-x87 --pc-network \
 	  --pc-dynrec --pc-jit-mib 4 --pc-neon --pc-pipeline --pc-pic-vfp \
