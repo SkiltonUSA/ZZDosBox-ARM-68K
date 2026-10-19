@@ -12,6 +12,9 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## 0.22.6 demo edition — packaging
 
+- Offer matching Standard (no games, empty library) and With Demos packages.
+  Both use identical emulator binaries and support files; Standard builds
+  without accessing any game media.
 - Prepare a separate distribution with Corridor 7, Doom 1.9 shareware and
   King's Quest VII promotional demo, with a relocatable three-game library.
 - Set King's Quest VII to SB Pro 2 to match its original Sierra drivers;

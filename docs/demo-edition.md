@@ -1,4 +1,14 @@
-# ZZDosBox demo edition
+# ZZDosBox release editions
+
+Two packages use the same launcher, runtimes and support files:
+
+| Package | Included games |
+| --- | --- |
+| `ZZDosBox-0.22.6-beta-standard.zip` | None; an empty library for your own programs |
+| `ZZDosBox-0.22.6-beta-demos.zip` | Corridor 7, Doom shareware and King's Quest VII Demo |
+
+Both are fresh-install packages. The Standard edition needs no game media to
+build and contains no demo payloads or original game installers.
 
 The demo edition includes **Corridor 7**, **Doom 1.9 shareware**, and
 **King's Quest VII's promotional demo**, ready to select in the Games library.
@@ -39,7 +49,13 @@ the private Descent package. It contains no commercial editions or personal save
 ## Rebuild
 
 ```sh
+# Without demos; no game inputs required.
 python3 scripts/package_dosbox_demos.py \
+  --edition standard --output .context/releases
+
+# With the three demos.
+python3 scripts/package_dosbox_demos.py \
+  --edition demos \
   --media /path/to/demo-archives \
   --kq7-dir /path/to/original-extracted-kq7-demo \
   --output .context/releases

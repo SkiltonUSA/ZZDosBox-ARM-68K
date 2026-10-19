@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the reproducible ZZDosBox demo edition from separately supplied media."""
+"""Build matching ZZDosBox standard and demo editions."""
 import argparse
 import json
 from pathlib import Path
@@ -9,14 +9,14 @@ import zipfile
 
 from package_dosbox_shareware import sha, unpack
 
-VERSION = '0.22.6-beta-demos'
+VERSION = '0.22.6-beta'
 INPUTS = {
     'corr7.zip': 'a6e73bead887ab588e084cf53b7dc476e9b220c595d8f429199f99c848a5d3f0',
     'doom19s.zip': 'cacf0142b31ca1af00796b4a0339e07992ac5f21bc3f81e7532fe1b5e1b486e6',
 }
 
 
-def build(root, media, kq7, output):
+def demo_entries(root, media, kq7):
     originals = {}
     for name, digest in INPUTS.items():
         data = (media / name).read_bytes()
@@ -40,6 +40,13 @@ def build(root, media, kq7, output):
     entries = {f'PC/Games/{game}/{name}': data
                for game, files in games.items() for name, data in files.items()}
     entries.update({'Originals/' + n: b for n, b in originals.items()})
+    return entries
+
+
+def build(root, media, kq7, output, edition='demos'):
+    if edition not in ('standard', 'demos'):
+        raise ValueError('Unknown edition: ' + edition)
+    entries = demo_entries(root, media, kq7) if edition == 'demos' else {}
     dev = root / 'artifacts/development'
     support = dev / 'launcher-0.19.7'
     files = {'ZZDosBox-Launcher': dev / 'launcher-0.22.6/ZZDosBox-Launcher',
@@ -68,7 +75,7 @@ def build(root, media, kq7, output):
         subprocess.run(['cc', '-std=c99', '-I', str(root),
                         str(root / 'scripts/dosbox_demo_profiles.c'),
                         '-o', str(temp / 'profiles')], check=True)
-        subprocess.run([str(temp / 'profiles'), str(temp / 'Launcher.cfg')], check=True)
+        subprocess.run([str(temp / 'profiles'), str(temp / 'Launcher.cfg'), edition], check=True)
         entries['PC/Launcher.cfg'] = (temp / 'Launcher.cfg').read_bytes()
     entries['ReadMe.txt'] = f'''ZZDosBox {VERSION} - demo edition
 
@@ -97,11 +104,28 @@ license their data. No personal profiles or saves are included.
 See docs/demo-edition.md for provenance and verification scope.
 Corresponding emulator source: https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
 '''.encode('ascii')
+    if edition == 'standard':
+        entries['ReadMe.txt'] = f'''ZZDosBox {VERSION} - standard edition (no demos)
+
+Extract into a NEW writable drawer, then open PC/ZZDosBox-Launcher.
+The library starts empty. Use Load Program to add your own games and apps.
+Keep your existing Launcher.cfg when updating an existing installation.
+
+The launcher, runtimes and support files match the demo edition exactly.
+No game payloads, demo installers, personal saves or Microsoft OS are included.
+Requires AmigaOS, MUI 3.8+, ZZ9000/XACP and RTG; see docs/requirements.md.
+System libraries, firmware, optional guest networking tools and LOADFIX
+are supplied separately.
+
+F10 exits. Alt+Return switches window/fullscreen. Ctrl+F5 captures.
+See docs/demo-edition.md for the two package options.
+Corresponding source: https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+'''.encode('ascii')
     manifest = {n: sha(b) for n, b in sorted(entries.items())}
     entries['SHA256SUMS.json'] = (json.dumps(manifest, indent=2) + '\n').encode()
     output.mkdir(parents=True, exist_ok=True)
-    archive = output / f'ZZDosBox-{VERSION}.zip'
-    folder = 'ZZDosBox-Demos'
+    archive = output / f'ZZDosBox-{VERSION}-{edition}.zip'
+    folder = 'ZZDosBox-Demos' if edition == 'demos' else 'ZZDosBox'
     with zipfile.ZipFile(archive, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as z:
         for name, data in sorted(entries.items()):
             info = zipfile.ZipInfo(folder + '/' + name, (2026, 10, 19, 0, 0, 0))
@@ -123,8 +147,11 @@ Corresponding emulator source: https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument('--media', type=Path, required=True, help='corr7.zip and doom19s.zip')
-    parser.add_argument('--kq7-dir', type=Path, required=True, help='Pinned original extracted KQ7 demo')
+    parser.add_argument('--edition', choices=('standard', 'demos'), default='demos')
+    parser.add_argument('--media', type=Path, help='Demos only: corr7.zip and doom19s.zip')
+    parser.add_argument('--kq7-dir', type=Path, help='Demos only: pinned original extracted KQ7 demo')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    build(args.root.resolve(), args.media, args.kq7_dir, args.output)
+    if args.edition == 'demos' and (args.media is None or args.kq7_dir is None):
+        parser.error('--media and --kq7-dir are required for the demo edition')
+    build(args.root.resolve(), args.media, args.kq7_dir, args.output, args.edition)

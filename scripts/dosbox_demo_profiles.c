@@ -6,8 +6,9 @@ int main(int argc, char **argv) {
     const char *titles[] = {"Corridor 7 Demo", "Doom 1.9 Shareware", "King's Quest VII Demo"};
     const char *dirs[] = {"CORR7", "DOOM19", "KQ7"};
     const char *commands[] = {"CORR7.EXE", "DOOM.EXE", "SIERRA.EXE"};
-    assert(argc == 2);
-    library.count = 3;
+    assert(argc == 3);
+    assert(!strcmp(argv[2], "demos") || !strcmp(argv[2], "standard"));
+    library.count = !strcmp(argv[2], "demos") ? 3 : 0;
     for (unsigned i = 0; i < library.count; i++) {
         struct dl_profile *p = &library.p[i];
         dl_profile_default(p);
@@ -23,7 +24,7 @@ int main(int argc, char **argv) {
         p->display = i == 1; /* retain tested windowed Corridor/KQ7 */
     }
     assert(dl_library_write(argv[1], &library));
-    assert(dl_library_read(argv[1], &check) && check.count == 3);
+    assert(dl_library_read(argv[1], &check) && check.count == library.count);
     for (unsigned i = 0; i < check.count; i++) {
         const struct dl_profile *p = &check.p[i];
         assert(dl_profile_valid(p));
