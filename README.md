@@ -51,30 +51,34 @@ The earlier tuned baseline advanced game time at 84.8% of real time;
 performance remains below smooth gameplay.
 [Method and evidence](docs/amiga-dosbox-duke-performance.md).
 
-Baseline cycle comparison, before the inline-read update:
+**CPU cycle settings:** open **CPU & memory**, choose **Fixed** cycle control,
+then select **1,000, 3,000, 6,000, 10,000, 60,000 or 100,000** cycles and save
+settings for the selected program. The two highest choices automatically use
+the Expanded runtime. A `cycles=` override in **Developer → dosbox.conf** takes
+precedence. Auto and Max remain available for automatic cycle adjustment.
+These values control the emulated CPU budget, not the ARM clock frequency.
 
-| Cycles | Window FPS | Fullscreen FPS |
-| ---: | ---: | ---: |
-| 10,000 | 4.53 | 4.60 |
-| 12,000 | 5.17 | 5.27 |
-| 15,000 | 5.83 | 5.90 |
-| 20,000 | 6.57 | 6.67 |
+**Latest Duke measurements — Expanded 0.22.5-dev with guarded ARM inline reads:**
 
-Higher cycles trade game-clock speed and audio continuity for more rendered frames:
-20,000 advances emulated time at only about 53% of real time. The saved 10,000-cycle
-profile is retained. [ARM recompiler experiments and audio findings](docs/amiga-dosbox-duke-arm-optimisation.md).
+| Fixed cycles | Window FPS | Fullscreen FPS | Game-clock progress vs real time (window / fullscreen) |
+| ---: | ---: | ---: | ---: |
+| 10,000 | 4.67 | — | 87.3% / — |
+| 20,000 | 6.77 | — | 54.1% / — |
+| 60,000 | 7.97 | 8.13 | 22.0% / 22.3% |
+| 80,000 | 8.10 | 8.23 | 17.6% / 17.9% |
+| 100,000 | 8.26 | 8.43 | 14.9% / 15.2% |
 
+Thirty-second opening-level samples at 320×200, S3/VESA, Adaptive presentation
+and SB16 sound/music enabled. These are rendered game frames, not display refresh
+rates. 20,000 and 80,000 were benchmark configurations; they are not launcher presets.
 
-**Guarded ARM inline reads: +2.9%**, 4.53 → 4.67 FPS in repeated 10,000-cycle
-windowed samples. Included in [Expanded 0.22.5-dev](artifacts/development/expanded-0.22.5).
-Audio delivery improved but still has late buffer links.
-At **60,000 cycles**, the same updated build reached **7.97 FPS windowed /
-8.13 fullscreen**, but emulated time advanced at only **22%** of real time;
-about **99.6%** of audio-buffer links were late. This remains a benchmark setting.
-At **80,000**, results barely increased to **8.10 / 8.23 FPS**, with game-clock
-progress falling to **17.6–17.9%**. The normal profile remains at 10,000 cycles.
-**100,000 cycles: 8.26 / 8.43 FPS**, but only **14.9–15.2%** game-clock progress.
-The launcher now exposes 60,000 and 100,000 as optional saved choices.
+**More cycles do not mean faster gameplay:** at 100,000, the game clock runs at
+about 15% of real time and approximately 99.5% of audio-buffer links are late.
+Keep the high choices for experimentation; the normal tested profile remains
+at **10,000**. Guarded inline reads improved its windowed result from 4.53 to
+4.67 FPS (**+2.9%**). All listed runs exited cleanly; audible quality at the high
+settings has not been verified.
+[Full comparison, earlier baselines and audio findings](docs/amiga-dosbox-duke-arm-optimisation.md).
 
 [Earlier runtime update](artifacts/development/runtime-0.22.2) ·
 [I/O and joystick specifications](docs/amiga-dosbox-io.md) ·
@@ -185,7 +189,7 @@ both effects together. Software scanlines affect this emulator’s image only.
 
 ## Launcher screenshots
 
-All twelve launcher pages below show **0.22.2-dev**, captured on the Amiga.
+All twelve launcher pages below show **0.22.6-dev**, captured on the Amiga.
 Expand a page to view it.
 
 <details open>
@@ -206,6 +210,12 @@ Expand a page to view it.
 <summary>CPU & memory</summary>
 
 ![ZZDosBox — CPU & memory](docs/screenshots/launcher/cpu.png)
+
+The new high-cycle choices (shown for illustration; the normal profile remains at 10,000):
+
+![ZZDosBox — 60,000 fixed cycles](docs/screenshots/launcher/cpu-60000.png)
+
+![ZZDosBox — 100,000 fixed cycles](docs/screenshots/launcher/cpu-100000.png)
 
 </details>
 
