@@ -22,3 +22,12 @@ Research math dependencies: hlsl++ (MIT, `HLSLPP-LICENSE`) and ARM CMSIS-DSP
 (Apache-2.0, `CMSIS-DSP-LICENSE`). Pinned versions and the ARM32 hlsl++ patch
 are recorded with the matrix experiments. Neither is a production DOSBox
 dependency. The Simd library was reviewed as a reference, not imported.
+
+## AmiPkg installer client
+
+The offline installers include a separately executable, locally patched
+[AmiPkg](https://github.com/thomas-luebker/amipkg) client under Apache-2.0.
+See [licence](amipkg/LICENSE), [notice](amipkg/NOTICE),
+[source archive](../sources/amipkg-66cfb988.tar.gz) and
+[local patch](../scripts/amipkg-zzinstall.patch). TweetNaCl is public domain.
+The ZZInstall helper remains GPL-3.0-or-later.

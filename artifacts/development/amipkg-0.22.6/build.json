@@ -1,0 +1,11 @@
+{
+  "amipkg_revision": "66cfb9888f7d6b28d1411ff254817ee14ed4e043",
+  "client_version": "0.7.11-zzinstall1",
+  "image": "docker.io/amigadev/crosstools@sha256:93ca1a47903b61873f6638881b44f9f2d6086a39f1b9b916a26faff3a8ea4d3d",
+  "sha256": {
+    "ZZInstall": "2127ae93221e546aed34432c8e7accce8bb212d2e5e734f77528254b6f15d2dc",
+    "amipkg": "767897fa55ea7197d35d8405969d507baad62d5ae940a8345682d004ea4b6558"
+  },
+  "source_sha256": "fa96676e8fbb4f63a82dbb36f3aa41796bca9cb1587e2f91c038c49e04006178",
+  "patch_sha256": "09da370d64f19a3d69e005bc36882ec106e6435607eed65f362bb185b3fd7d6d"
+}

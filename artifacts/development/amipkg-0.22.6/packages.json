@@ -1,0 +1,16 @@
+{
+  "version": "0.22.6-beta",
+  "client": "amipkg 0.7.11-zzinstall1",
+  "packages": {
+    "standard": {
+      "file": "ZZDosBox-0.22.6-beta-standard-amipkg.lha",
+      "bytes": 7221511,
+      "sha256": "c0c4aec8c790bc04d5dc132d0fa43a72045b8f54a562f76b3550e933b9f136c7"
+    },
+    "demos": {
+      "file": "ZZDosBox-0.22.6-beta-demos-amipkg.lha",
+      "bytes": 23713043,
+      "sha256": "a4e49935f2027659abe4667d10cf4dd1b3742ebd0d931eae668209b04cab81c2"
+    }
+  }
+}

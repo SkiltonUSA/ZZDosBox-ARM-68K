@@ -12,6 +12,15 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## 0.22.6 demo edition — packaging
 
+- Add offline AmiPkg installers for Standard and With Demos, with Workbench
+  destination selection, signed catalogues and SHA-256 archive checks.
+- Check MUI, AmigaOS, Picasso96, ZZ9000 and AHI before installing; report
+  missing components without replacing system libraries.
+- Keep package receipts separate from profiles, settings, saves and seeded
+  demo files. Add demos to an existing Standard library without replacing it.
+- Patch the bundled AmiPkg client for custom repository recipes, assign-root
+  paths, resolved receipt paths and prerequisite checks before upgrade removal.
+
 - Offer matching Standard (no games, empty library) and With Demos packages.
   Both use identical emulator binaries and support files; Standard builds
   without accessing any game media.

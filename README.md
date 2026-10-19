@@ -599,6 +599,17 @@ For bug reports, include the build, firmware, display mode and reproduction
 steps. Performance changes should include matching output checks and physical
 A9 timings; instruction-model timing is not hardware performance evidence.
 
+## Offline installers
+
+Two **AmiPkg installer packages** are available locally: **Standard** (no games)
+and **With Demos** (Corridor 7, Doom shareware and King's Quest VII Demo).
+Both check MUI, AmigaOS libraries, Picasso96 and ZZ9000 hardware before installation.
+AHI drivers and unit 0 are checked; audio is optional for Standard and required
+for the supplied demo profiles. Existing libraries, settings and saves are preserved.
+
+Extract the LHA and open **Install** to choose a destination.
+[Installation, dependencies and updates](docs/amipkg-installers.md).
+
 ## Credits and licences
 
 - [DOSBox team and libretro contributors](https://github.com/libretro/dosbox-libretro): emulation engine.
@@ -606,6 +617,7 @@ A9 timings; instruction-model timing is not hardware performance evidence.
 - [jserv](https://github.com/jserv/tinygl), Fabrice Bellard, C-Chads and TinyGL contributors: software OpenGL renderer.
 - [libslirp contributors](https://gitlab.freedesktop.org/slirp/libslirp), DOSBox-X/Bochs, Crynwr and Michael B. Brutman (mTCP): networking components and guest tools.
 - Stefan Stuntz: MUI.
+- [AmiPkg contributors](https://github.com/thomas-luebker/amipkg): offline package installer client.
 - ARM CMSIS-DSP, hlsl++ contributors, Picolibc and GCC contributors: retained component acknowledgements in [licence notices](licenses/README.md).
 
 Development: **Codex assisted, Amiga-Bridge MCP**.

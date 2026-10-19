@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "indexVersion": 1,
+  "packages": [
+    {
+      "id": "zzdosbox",
+      "name": "ZZDosBox",
+      "version": "0.22.6-beta",
+      "description": "ZZ9000 DOS emulator",
+      "category": "Emulation",
+      "tier": "A",
+      "archive": {
+        "url": "https://zzdosbox.invalid/offline/zzdosbox-0.22.6.lha",
+        "mirrors": [],
+        "sizeBytes": 7136425,
+        "sha256": "e3c19f588225853586440dc5f8eb3c9f6960f09360cef9dd1fc22964866e390b"
+      },
+      "requirements": {
+        "minCPU": "68020",
+        "minKS": "3.1"
+      },
+      "deps": [],
+      "conflicts": [],
+      "provides": [],
+      "recipe": {
+        "recipeSchema": 2,
+        "ops": [
+          {
+            "op": "preScript",
+            "lines": [
+              "FailAt 10",
+              "Stack 65536",
+              "ZZPKG:cache/extract/Core/ZZInstall check standard"
+            ]
+          },
+          {
+            "op": "copyTree",
+            "src": "Core",
+            "dest": "ZZDOSDEST:"
+          },
+          {
+            "op": "drawerIcon",
+            "dest": "ZZDOSDEST:PC.info",
+            "src": "Core/PC/ZZDosBox-Launcher.info"
+          },
+          {
+            "op": "postScript",
+            "lines": [
+              "FailAt 10",
+              "Stack 65536",
+              "ZZDOSDEST:ZZInstall seed standard ZZDOSDEST:"
+            ]
+          }
+        ]
+      },
+      "requiredCapabilities": [
+        "copy-tree-v1",
+        "pre-post-script-v1",
+        "drawer-icon-v1"
+      ]
+    },
+    {
+      "id": "zzdosbox-demos",
+      "name": "ZZDosBox Demo Pack",
+      "version": "0.22.6-beta",
+      "description": "Corridor 7, Doom and Kings Quest VII demos",
+      "category": "Emulation",
+      "tier": "A",
+      "archive": {
+        "url": "https://zzdosbox.invalid/offline/zzdosbox-demos-0.22.6.lha",
+        "mirrors": [],
+        "sizeBytes": 16491285,
+        "sha256": "df50cd3f162cc4d499571cf764c702a3592d30b1345045f7535f3d3179f216eb"
+      },
+      "requirements": {
+        "minCPU": "68020",
+        "minKS": "3.1"
+      },
+      "deps": [
+        {
+          "id": "zzdosbox",
+          "min": "0.22.6-beta"
+        }
+      ],
+      "conflicts": [],
+      "provides": [],
+      "recipe": {
+        "recipeSchema": 2,
+        "ops": [
+          {
+            "op": "preScript",
+            "lines": [
+              "FailAt 10",
+              "Stack 65536",
+              "ZZPKG:cache/extract/Demos/ZZInstall check demos"
+            ]
+          },
+          {
+            "op": "copyTree",
+            "src": "Demos/DemoDefaults",
+            "dest": "ZZDOSDEST:DemoDefaults"
+          },
+          {
+            "op": "postScript",
+            "lines": [
+              "FailAt 10",
+              "Stack 65536",
+              "ZZDOSDEST:ZZInstall seed demos ZZDOSDEST:"
+            ]
+          }
+        ]
+      },
+      "requiredCapabilities": [
+        "copy-tree-v1",
+        "pre-post-script-v1"
+      ]
+    }
+  ]
+}
