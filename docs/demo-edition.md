@@ -1,6 +1,6 @@
 # ZZDosBox release editions
 
-The [0.22.6 Beta release](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.6-beta) provides **Standard** and
+The [0.22.7 Beta release](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.7-beta) provides **Standard** and
 **With Demos** AmiPkg `.lha` installers. See the [installer comparison](amipkg-installers.md)
 for requirements and upgrade behaviour.
 
@@ -9,8 +9,8 @@ launcher, runtimes and support files:
 
 | Package | Included games |
 | --- | --- |
-| `ZZDosBox-0.22.6-beta-standard.zip` | None; an empty library for your own programs |
-| `ZZDosBox-0.22.6-beta-demos.zip` | Corridor 7, Doom shareware and King's Quest VII Demo |
+| `ZZDosBox-0.22.7-beta-standard.zip` | None; an empty library for your own programs |
+| `ZZDosBox-0.22.7-beta-demos.zip` | Corridor 7, Doom shareware and King's Quest VII Demo |
 
 Both are fresh-install packages. The Standard edition needs no game media to
 build and contains no demo payloads or original game installers.
@@ -41,7 +41,7 @@ tools and LOADFIX are not included or required by these demo profiles.
 
 ## Package contents
 
-- Launcher 0.22.6-dev, the tested Compat runtime, Expanded 0.22.5-dev and the
+- Launcher 0.22.7-dev, the tested Compat runtime, Expanded 0.22.5-dev and the
   existing display/developer runtime variants.
 - Disk utilities, compatibility database, network guide, component notices and
   a fresh three-entry launcher library.

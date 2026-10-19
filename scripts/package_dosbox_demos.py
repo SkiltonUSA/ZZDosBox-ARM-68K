@@ -9,7 +9,7 @@ import zipfile
 
 from package_dosbox_shareware import sha, unpack
 
-VERSION = '0.22.6-beta'
+VERSION = '0.22.7-beta'
 INPUTS = {
     'corr7.zip': 'a6e73bead887ab588e084cf53b7dc476e9b220c595d8f429199f99c848a5d3f0',
     'doom19s.zip': 'cacf0142b31ca1af00796b4a0339e07992ac5f21bc3f81e7532fe1b5e1b486e6',
@@ -49,7 +49,7 @@ def build(root, media, kq7, output, edition='demos'):
     entries = demo_entries(root, media, kq7) if edition == 'demos' else {}
     dev = root / 'artifacts/development'
     support = dev / 'launcher-0.19.7'
-    files = {'ZZDosBox-Launcher': dev / 'launcher-0.22.6/ZZDosBox-Launcher',
+    files = {'ZZDosBox-Launcher': dev / 'launcher-0.22.7/ZZDosBox-Launcher',
              'ZZDosBox-Compat': dev / 'descent-startup/ZZDosBox-Compat',
              'ZZDosBox-Expanded': dev / 'expanded-0.22.5/ZZDosBox-Expanded',
              'ZZDosBox-Net-JIT': dev / 'runtime-0.22.2/ZZDosBox-Net-JIT',

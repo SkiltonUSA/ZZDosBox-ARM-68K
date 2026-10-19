@@ -1,0 +1,31 @@
+LIMITS 400 291 / 1920 800
+LAYOUT screen budget 1024 x 768 compact 0 window 609 x 500
+PAGE 0 Load program viewport 349 x 352 content 352 x 476
+SCROLL 3 124
+PAGE 1 DOS terminal viewport 349 x 352 content 349 x 352
+SCROLL 0 0
+PAGE 2 CPU & memory viewport 349 x 352 content 380 x 352
+SCROLL 31 0
+PAGE 3 Display viewport 349 x 352 content 577 x 352
+SCROLL 228 0
+PAGE 4 Audio viewport 349 x 352 content 349 x 352
+SCROLL 0 0
+PAGE 5 Network viewport 349 x 352 content 389 x 378
+SCROLL 40 26
+PAGE 6 I/O viewport 349 x 352 content 387 x 386
+SCROLL 38 34
+PAGE 7 Joystick viewport 349 x 352 content 518 x 445
+SCROLL 169 93
+PAGE 8 Disks viewport 349 x 352 content 407 x 352
+SCROLL 58 0
+PAGE 9 Developer viewport 349 x 352 content 349 x 352
+SCROLL 0 0
+PAGE 10 Compatibility viewport 349 x 352 content 359 x 352
+SCROLL 10 0
+PAGE 11 About viewport 349 x 352 content 349 x 352
+SCROLL 0 0
+RESIZE requested 480 x 360 actual 480 x 360
+RESIZE requested 608 x 360 actual 608 x 360
+RESIZE requested 768 x 360 actual 768 x 360
+LOADING 413 x 218
+LAYOUT PASS errors=0 pages=12

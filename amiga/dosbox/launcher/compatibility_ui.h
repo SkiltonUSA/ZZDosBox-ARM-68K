@@ -87,7 +87,7 @@ static Object *compat_page(void){
   Child,label("DOSBox community reports - not verified ZZDosBox results."),
   Child,HGroup,Child,compat_letter=cycle(compat_letters),Child,compat_query=str(128),
    Child,TextObject,ButtonFrame,MUIA_InputMode,MUIV_InputMode_RelVerify,MUIA_Background,MUII_ButtonBack,MUIA_Text_Contents,(ULONG)"Search",MUIA_UserData,ID_COMPAT_FILTER,End,End,
-  Child,HGroup,
+  Child,GroupObject,MUIA_Group_Horiz,!ui_compact,
   Child,ListviewObject,MUIA_HorizWeight,35,MUIA_Listview_List,compat_list=ListObject,MUIA_Font,ui_font(),InputListFrame,MUIA_List_ConstructHook,MUIV_List_ConstructHook_String,MUIA_List_DestructHook,MUIV_List_DestructHook_String,End,End,
   Child,VGroup,MUIA_HorizWeight,65,
    Child,ColGroup(2),

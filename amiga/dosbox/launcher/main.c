@@ -15,8 +15,18 @@
 #include "developer.h"
 #include "conf.h"
 #pragma GCC diagnostic ignored "-Wpointer-sign"
+#include <intuition/screens.h>
 #include "style.h"
 #include "version.h"
+#ifdef ZZ_UI_LAYOUT_PROBE
+#define UI_OWNER "ZZDOS_LAYOUT_TEST"
+#define UI_BASE "ZZDOSLAYOUTTEST"
+#define UI_TITLE "ZZDosBox layout test"
+#else
+#define UI_OWNER "ZZDOS_LAUNCHER"
+#define UI_BASE "ZZDOSBOX"
+#define UI_TITLE ""
+#endif
 #include "temperature.h"
 #include "program_list.h"
 #include "changelog_text.h"
@@ -376,34 +386,37 @@ static void boot_disk(void){
 #include "io_ui.h"
 #include "audio_detect.h"
 #include "compatibility_ui.h"
+#include "scroll_pages.h"
 static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*execute,*auto_run,*script,*mount_disks,*eject_disks,*boot_button,*cd_check,*audio_check,*dev_log,*root;
  style_open();
+ viewport_class=MUI_CreateCustomClass(NULL,MUIC_Virtgroup,NULL,0,(APTR)viewport_dispatch);if(!viewport_class)return 0;
  joy_diagram_class=MUI_CreateCustomClass(NULL,MUIC_Area,NULL,sizeof(struct joy_diagram_data),(APTR)joy_diagram_dispatch);if(!joy_diagram_class)return 0;
  P96Base=OpenLibrary("Picasso96API.library",2);if(!P96Base)return 0;
  snapshot_class=MUI_CreateCustomClass(NULL,MUIC_Area,NULL,0,(APTR)snapshot_dispatch);if(!snapshot_class)return 0;
  hover_help_class=MUI_CreateCustomClass(NULL,MUIC_Text,NULL,sizeof(struct hover_help_data),(APTR)hover_help_dispatch);if(!hover_help_class)return 0;
  program_list_class=MUI_CreateCustomClass(NULL,MUIC_Listview,NULL,sizeof(struct program_list_data),(APTR)program_list_dispatch);if(!program_list_class)return 0;
- app=ApplicationObject,MUIA_Application_Title,(ULONG)"ZZDosBox",MUIA_Application_Base,(ULONG)"ZZDOSBOX",MUIA_Application_Version,(ULONG)"$VER: ZZDosBox Launcher " ZZ_LAUNCHER_VERSION " (" ZZ_LAUNCHER_DATE ")",
- SubWindow,win=WindowObject,MUIA_Window_Title,(ULONG)"",MUIA_Window_ID,0x5a444c31,MUIA_Window_Width,940,MUIA_Window_Height,500,
- WindowContents,root=VGroup,MUIA_Font,ui_font(),MUIA_Group_Spacing,8,InnerSpacing(8,8),
+ app=ApplicationObject,MUIA_Application_Title,(ULONG)"ZZDosBox",MUIA_Application_Base,(ULONG)UI_BASE,MUIA_Application_Version,(ULONG)"$VER: ZZDosBox Launcher " ZZ_LAUNCHER_VERSION " (" ZZ_LAUNCHER_DATE ")",
+ SubWindow,win=WindowObject,MUIA_Window_Title,(ULONG)UI_TITLE,MUIA_Window_ID,ui_compact?0x5a444c32:0x5a444c31,MUIA_Window_Width,ui_layout.width,MUIA_Window_Height,ui_layout.height,
+ MUIA_Window_LeftEdge,MUIV_Window_LeftEdge_Centered,MUIA_Window_TopEdge,MUIV_Window_TopEdge_Centered,
+ WindowContents,root=VGroup,MUIA_Font,ui_font(),MUIA_Group_Spacing,ui_compact?4:8,InnerSpacing(ui_compact?3:8,ui_compact?3:8),
  Child,HGroup,
  Child,VGroup,MUIA_HorizWeight,0,MUIA_Group_Spacing,8,
-  Child,HGroup,MUIA_VertWeight,0,InnerSpacing(0,4),Child,HSpace(0),
+  Child,HGroup,MUIA_ShowMe,!ui_compact,MUIA_VertWeight,0,InnerSpacing(0,4),Child,HSpace(0),
    Child,BodychunkObject,MUIA_FixWidth,80,MUIA_FixHeight,80,
     MUIA_Bitmap_Width,80,MUIA_Bitmap_Height,80,MUIA_Bodychunk_Depth,2,
     MUIA_Bodychunk_Body,(ULONG)sidebar_body,MUIA_Bodychunk_Compression,0,
     MUIA_Bodychunk_Masking,0,MUIA_Bitmap_SourceColors,(ULONG)sidebar_colours,
     MUIA_Bitmap_Transparent,0,End,Child,HSpace(0),End,
-  Child,navigation_view=ListviewObject,MUIA_CycleChain,1,MUIA_FixWidthTxt,(ULONG)"    Compatibility      ",
-   MUIA_Listview_List,navigation=ListObject,MUIA_Font,ui_font(),InputListFrame,MUIA_Background,(ULONG)UI_LIGHT_BACKGROUND,MUIA_List_MinLineHeight,30,
+  Child,navigation_view=ListviewObject,MUIA_CycleChain,1,MUIA_FixWidthTxt,(ULONG)(ui_compact?" Compatibility ":"    Compatibility      "),
+   MUIA_Listview_List,navigation=ListObject,MUIA_Font,ui_font(),InputListFrame,MUIA_Background,(ULONG)UI_LIGHT_BACKGROUND,MUIA_List_MinLineHeight,ui_compact?19:30,
     MUIA_List_Format,(ULONG)"W=0 D=8,MAW=100",MUIA_List_DisplayHook,(ULONG)&navigation_hook,End,End,
   Child,save_button=ui_button("\33bSave settings"),End,
  Child,VGroup,
-  Child,HGroup,TextFrame,MUIA_Background,MUII_ButtonBack,InnerSpacing(10,8),MUIA_VertWeight,0,
+  Child,HGroup,TextFrame,MUIA_Background,MUII_ButtonBack,InnerSpacing(ui_compact?4:10,ui_compact?3:8),MUIA_VertWeight,0,
    Child,page_icon=ImageObject,MUIA_Image_Spec,MUII_Drawer,MUIA_FixWidth,24,MUIA_FixHeight,24,End,
    Child,page_heading=TextObject,MUIA_Font,ui_title_font(),MUIA_FixWidthTxt,(ULONG)"CPU & memory  ",MUIA_HorizWeight,0,MUIA_Text_PreParse,(ULONG)"\33b",MUIA_Text_Contents,(ULONG)"Load program",End,
    Child,page_context=TextObject,MUIA_Font,ui_font(),MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_SetMin,FALSE,MUIA_Text_Contents,(ULONG)"",End,End,
-  Child,main_pages=PageGroup,GroupFrame,MUIA_Background,MUII_GroupBack,InnerSpacing(10,10),
+  Child,main_pages=PageGroup,GroupFrame,MUIA_Background,MUII_GroupBack,InnerSpacing(ui_compact?2:10,ui_compact?2:10),
  Child,program_tabs=RegisterGroup(library_tabs),MUIA_Font,ui_font(),
  Child,VGroup,UI_PAGE,
   Child,HGroup,Child,program_views[0]=program_list_new(&list),Child,snapshot_panel(0),End,
@@ -423,9 +436,9 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
   Child,label("D: - read-only data CD"),Child,cd_check=ui_button("Check CD-ROM"),Child,VSpace(0),End,
  End,
  Child,VGroup,
-  Child,ColGroup(2),UI_PANEL("Emulated PC"),Child,fieldlabel("CPU model"),Child,cpu_model=cycle(cpu_models),Child,fieldlabel("Paged register JIT (experimental)"),Child,paged_jit=CheckMark(FALSE),Child,fieldlabel("Guest RAM"),Child,memory=cycle(memories),Child,fieldlabel("EMS expanded RAM"),Child,ems=CheckMark(FALSE),Child,fieldlabel("VCPI services"),Child,vcpi=CheckMark(FALSE),Child,fieldlabel("Upper memory (UMB)"),Child,umb=CheckMark(FALSE),Child,fieldlabel("Cycle control"),Child,cycle_mode=cycle(cycle_modes),Child,fieldlabel("CPU cycles"),Child,speed=cycle(speeds),Child,fieldlabel("Session"),Child,live=cycle(lengths),End,Child,VSpace(0),End,
+  Child,ColGroup(2),UI_PANEL("Emulated PC"),Child,fieldlabel("CPU model"),Child,cpu_model=cycle(cpu_models),Child,fieldlabel(ui_compact?"Paged JIT (experimental)":"Paged register JIT (experimental)"),Child,paged_jit=CheckMark(FALSE),Child,fieldlabel("Guest RAM"),Child,memory=cycle(memories),Child,fieldlabel("EMS expanded RAM"),Child,ems=CheckMark(FALSE),Child,fieldlabel("VCPI services"),Child,vcpi=CheckMark(FALSE),Child,fieldlabel("Upper memory (UMB)"),Child,umb=CheckMark(FALSE),Child,fieldlabel("Cycle control"),Child,cycle_mode=cycle(cycle_modes),Child,fieldlabel("CPU cycles"),Child,speed=cycle(speeds),Child,fieldlabel("Session"),Child,live=cycle(lengths),End,Child,VSpace(0),End,
  Child,VGroup,
-  Child,HGroup,Child,VGroup,MUIA_HorizWeight,60,
+  Child,GroupObject,MUIA_Group_Horiz,!ui_compact,Child,VGroup,MUIA_HorizWeight,60,
   Child,ColGroup(2),UI_PANEL("Screen"),MUIA_VertWeight,0,Child,displaylabel("Display"),Child,display=cycle(displays),Child,displaylabel("Window size"),Child,window_size=cycle(sizes),Child,displaylabel("Video adapter"),Child,machine=cycle(machines),End,
   Child,VGroup,UI_PANEL("Rendering"),Child,ColGroup(2),MUIA_Group_Spacing,6,InnerSpacing(0,0),Child,displaylabel("Renderer"),Child,renderer=cycle(renderer_choices),Child,displaylabel("Presentation"),Child,presentation=cycle(presentation_choices),Child,displaylabel("Monochrome colour"),Child,monochrome=cycle(mono_choices),Child,displaylabel("Scanlines"),Child,scanlines=cycle(scanline_choices),Child,displaylabel("Show FPS"),Child,HGroup,Child,fps=CheckMark(FALSE),Child,HSpace(0),End,End,Child,VSpace(0),End,End,
   Child,VGroup,UI_PANEL("Settings guide"),MUIA_HorizWeight,40,
@@ -470,6 +483,7 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
   Child,TextObject,MUIA_HorizWeight,0,MUIA_Text_SetMax,TRUE,MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_Contents,(ULONG)"Rev " ZZ_LAUNCHER_VERSION,End,
   Child,temperature_text=TextObject,MUIA_HorizWeight,0,MUIA_FixWidthTxt,(ULONG)"ZZ9000: 150.0 C",MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_Contents,(ULONG)"ZZ9000: n/a",MUIA_ShortHelp,(ULONG)"ZZ9000 Zynq chip temperature. Updates every two seconds while the launcher is active.",End,End,End,End,End;
  if(!app)return 0;
+ if(!ui_scroll_pages(main_pages))return 0;
  {unsigned n;for(n=0;n<PAGE_COUNT;n++){snprintf(nav_entries[n].icon,sizeof(nav_entries[n].icon),"\33I[6:%lu]",(unsigned long)section_icons[n]);nav_entries[n].caption=sections[n];DoMethod(navigation,MUIM_List_InsertSingle,(ULONG)&nav_entries[n],MUIV_List_Insert_Bottom);}}
  set(navigation_view,MUIA_ShortHelp,(ULONG)"Choose a section. Use Up/Down when this list has keyboard focus.");
  notify(navigation,MUIA_List_Active,MUIV_EveryTime,ID_NAVIGATE);
@@ -517,8 +531,11 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
 static void seed(void){const char*dirs[]={"KEEN6","VETTE","ELITE"},*titles[]={"Commander Keen 6","Vette","Elite"},*programs[]={"KEEN6C.EXE","VETTE.EXE","ELITE.EXE"};char parent[DL_PATH];unsigned i;strcpy(parent,appdir);*PathPart(parent)=0;
  {struct dl_profile*p=&library.p[library.count];dl_profile_default(p);p->category=DL_OS;strcpy(p->title,"DOS hard drive");strcpy(p->drive,parent);AddPart(p->drive,"Drives/C",DL_PATH);if(exists(p->drive))library.count++;}
  for(i=0;i<3;i++){struct dl_profile*p=&library.p[library.count];dl_profile_default(p);p->category=DL_GAMES;strcpy(p->title,titles[i]);strcpy(p->drive,parent);AddPart(p->drive,"Shell/Games",DL_PATH);AddPart(p->drive,(STRPTR)dirs[i],DL_PATH);strcpy(p->program,programs[i]);p->helper=i!=0;if(exists(p->drive))library.count++;}}
+#ifdef ZZ_UI_LAYOUT_PROBE
+#include "../../../tests/amiga/dosbox/launcher_layout_probe.h"
+#endif
 static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int running=1,rc=20;struct MsgPort*owner=NULL;char p[DL_PATH];
- if(FindPort("ZZDOS_LAUNCHER"))return 0;owner=CreateMsgPort();if(!owner)return 20;owner->mp_Node.ln_Name="ZZDOS_LAUNCHER";AddPort(owner);
+ if(FindPort(UI_OWNER))return 0;owner=CreateMsgPort();if(!owner)return 20;owner->mp_Node.ln_Name=UI_OWNER;AddPort(owner);
  if(!NameFromLock(GetProgramDir(),appdir,sizeof(appdir)))goto done;path(configpath,"Launcher.cfg");
  if(exists(configpath)){if(!dl_library_read(configpath,&library)){puts("Invalid Launcher.cfg; restore Launcher.bak. No changes made.");goto done;}}else seed();
  {unsigned i;int found=0;path(p,"Disks/DOS622.IMG");
@@ -526,7 +543,10 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   if(!found&&library.count<DL_MAX&&exists(p)){struct dl_profile*q=&library.p[library.count];dl_profile_default(q);strcpy(q->title,"MS-DOS 6.22");path(q->drive,"Disks");q->system=1;q->category=DL_OS;q->memory=8;library.last=library.count++;}
  }
  MUIMasterBase=OpenLibrary("muimaster.library",15);AslBase=OpenLibrary("asl.library",38);WorkbenchBase=OpenLibrary("workbench.library",44);KeymapBase=OpenLibrary("keymap.library",37);if(!MUIMasterBase||!AslBase||!WorkbenchBase||!KeymapBase){puts("MUI 3.8 or later is required.");goto done;}
- disk_choices_init();if(!build())goto done;temperature_init();if(!conf_load())goto done;refresh();if(!startup_splash()){rc=0;goto done;}set(win,MUIA_Window_Open,TRUE);if(!val(win,MUIA_Window_Open))goto done;program_list_focus();
+ disk_choices_init();if(!build())goto done;temperature_init();if(!conf_load())goto done;refresh();if(!startup_splash()){rc=0;goto done;}SetAttrs(win,MUIA_Window_Width,ui_layout.width,MUIA_Window_Height,ui_layout.height,MUIA_Window_Open,TRUE,TAG_DONE);if(!val(win,MUIA_Window_Open))goto done;program_list_focus();
+#ifdef ZZ_UI_LAYOUT_PROBE
+ rc=layout_probe();goto done;
+#endif
  while(running){temperature_poll();joystick_test_poll();mem_poll();id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
   switch(id){case (ULONG)MUIV_Application_ReturnID_Quit:if(mem_busy){note("Wait for the pending memory request.");break;}if(!store_selection())break;if(!conf_save())break;if(!save()){note("Cannot save settings.");break;}running=0;break;
   case ID_SERIAL_CHANGE:serial_controls();break;
@@ -569,7 +589,7 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   if(id>=ID_MEM_PAUSE&&id<=ID_MEM_STOP){mem_action(id);break;}if(id>=ID_EDITOR&&id<ID_EDITOR+48)editor_action((id-ID_EDITOR)/16,(id-ID_EDITOR)%16);break;}
   if(running&&!id&&signals){if(Wait(signals|temperature_signal()|joystick_test_signal()|SIGBREAKF_CTRL_C|(mem_replies?1ul<<mem_replies->mp_SigBit:0))&SIGBREAKF_CTRL_C){if(!mem_busy&&store_selection()&&conf_save()&&save())running=0;}}
  }rc=0;
-done:temperature_close();joystick_test_active(0);compat_store_close(&compat_database);if(mem_replies)DeleteMsgPort(mem_replies);if(app)MUI_DisposeObject(app);if(joy_diagram_class)MUI_DeleteCustomClass(joy_diagram_class);if(program_list_class)MUI_DeleteCustomClass(program_list_class);if(hover_help_class)MUI_DeleteCustomClass(hover_help_class);if(snapshot_class)MUI_DeleteCustomClass(snapshot_class);if(P96Base)CloseLibrary(P96Base);if(KeymapBase)CloseLibrary(KeymapBase);style_close();if(WorkbenchBase)CloseLibrary(WorkbenchBase);if(AslBase)CloseLibrary(AslBase);if(MUIMasterBase)CloseLibrary(MUIMasterBase);if(owner){RemPort(owner);DeleteMsgPort(owner);}return rc;
+done:temperature_close();joystick_test_active(0);compat_store_close(&compat_database);if(mem_replies)DeleteMsgPort(mem_replies);if(app)MUI_DisposeObject(app);if(viewport_class)MUI_DeleteCustomClass(viewport_class);if(joy_diagram_class)MUI_DeleteCustomClass(joy_diagram_class);if(program_list_class)MUI_DeleteCustomClass(program_list_class);if(hover_help_class)MUI_DeleteCustomClass(hover_help_class);if(snapshot_class)MUI_DeleteCustomClass(snapshot_class);if(P96Base)CloseLibrary(P96Base);if(KeymapBase)CloseLibrary(KeymapBase);style_close();if(WorkbenchBase)CloseLibrary(WorkbenchBase);if(AslBase)CloseLibrary(AslBase);if(MUIMasterBase)CloseLibrary(MUIMasterBase);if(owner){RemPort(owner);DeleteMsgPort(owner);}return rc;
 }
 
 /* Keep the entry frame small: reject undersized CLI stacks before entering

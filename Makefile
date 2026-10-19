@@ -57,3 +57,7 @@ build-network-jit:
 	  --pc-disk-cache-kib 1024 --pc-file-readahead
 test-file-read-ahead:
 	$(PYTHON) scripts/test_dosbox_file_read_ahead.py
+
+.PHONY: test-launcher-layout
+test-launcher-layout:
+	$(PYTHON) scripts/test_dosbox_launcher_layout.py

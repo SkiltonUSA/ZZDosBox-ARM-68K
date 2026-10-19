@@ -198,3 +198,41 @@ an expansion driver manually. USB is greyed out without Poseidon and a known
 registered serial driver; Detect USB refreshes that check. Baud 0 follows DOS
 settings; a nonzero baud enables physical data/parity/stop overrides.
 [Driver requirements and control-line limitations](amiga-dosbox-expanded-hardware.md#physical-com1-experimental).
+
+
+## Smaller Workbench screens — 0.22.7-dev
+
+The launcher measures the public screen when it starts and chooses an initial
+window size that leaves space for the screen bar and window borders. Smaller
+screens use compact typography, reduced spacing and 128×96 previews. Larger
+screens retain the existing typography and 240×180 previews.
+
+Each section has its own horizontal and vertical scrollbars. The sidebar,
+Save settings and footer remain outside the scrolling area. Use the normal
+Workbench sizing gadget to resize the launcher; settings remain accessible by
+scrolling. Page contents and unsaved edits are retained when changing sections.
+The compact display guide and compatibility details stack vertically; network
+fields use one label/value pair per row. Startup and loading cards use reduced
+padding. No Workbench resolution or global MUI preferences are changed.
+
+Compact and regular windows use separate remembered geometry, so a large-desktop
+window size is not reused as the compact default.
+
+The compact layout is selected at startup; resizing adjusts the viewport without
+recreating controls or changing font sizes mid-edit. Large fonts or especially
+wide developer panels can still require horizontal scrolling. This changes the
+launcher only, not the game's display mode or rendering resolution.
+
+
+### Scalable layout verification
+
+The m68k build and native screen-budget/profile tests pass. On the Amiga,
+all 12 pages passed with simulated 640×480, 800×600 and 1024×768 window
+budgets on the existing desktop. The 640 budget opened at 608×420; actual
+Intuition resizing to 480×360, 608×360 and 768×360 passed. The compact loading
+card measured 315×157. This verifies the window layout, not a Workbench
+screen-mode change. No game/ARM worker was started by these checks.
+
+The viewport uses an embedded subclass of MUI's built-in Virtgroup to keep
+short pages from capping the maximum window size. No extra installed class
+is needed. [MUI scrollgroup reference](https://github.com/amiga-mui/muidev/wiki/MUI_Scrollgroup).

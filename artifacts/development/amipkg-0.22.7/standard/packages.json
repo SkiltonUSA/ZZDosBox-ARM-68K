@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "indexVersion": 1,
+  "packages": [
+    {
+      "id": "zzdosbox",
+      "name": "ZZDosBox",
+      "version": "0.22.7-beta",
+      "description": "ZZ9000 DOS emulator",
+      "category": "Emulation",
+      "tier": "A",
+      "archive": {
+        "url": "https://zzdosbox.invalid/offline/zzdosbox-0.22.7.lha",
+        "mirrors": [],
+        "sizeBytes": 7139790,
+        "sha256": "328c5970f8fe39a416038a9beedfd0af6921050d4ccfdc9a3e4fa3f79f9c0906"
+      },
+      "requirements": {
+        "minCPU": "68020",
+        "minKS": "3.1"
+      },
+      "deps": [],
+      "conflicts": [],
+      "provides": [],
+      "recipe": {
+        "recipeSchema": 2,
+        "ops": [
+          {
+            "op": "preScript",
+            "lines": [
+              "FailAt 10",
+              "Stack 65536",
+              "ZZPKG:cache/extract/Core/ZZInstall check standard"
+            ]
+          },
+          {
+            "op": "copyTree",
+            "src": "Core",
+            "dest": "ZZDOSDEST:"
+          },
+          {
+            "op": "drawerIcon",
+            "dest": "ZZDOSDEST:PC.info",
+            "src": "Core/PC/ZZDosBox-Launcher.info"
+          },
+          {
+            "op": "postScript",
+            "lines": [
+              "FailAt 10",
+              "Stack 65536",
+              "ZZDOSDEST:ZZInstall seed standard ZZDOSDEST:"
+            ]
+          }
+        ]
+      },
+      "requiredCapabilities": [
+        "copy-tree-v1",
+        "pre-post-script-v1",
+        "drawer-icon-v1"
+      ]
+    }
+  ]
+}

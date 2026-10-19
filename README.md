@@ -13,9 +13,10 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 
 ## Development builds
 
-**Current launcher: 0.22.6-dev; Expanded: 0.22.5-dev; other runtimes: 0.22.2-dev.** The launcher includes COM1 setup,
+**Current launcher: 0.22.7-dev; Expanded: 0.22.5-dev; other runtimes: 0.22.2-dev.** The launcher includes COM1 setup,
 experimental physical serial, a live joystick tester and 1–6 button choices.
-[Launcher update](artifacts/development/launcher-0.22.6): live ZZ9000 temperature
+[Launcher update](artifacts/development/launcher-0.22.7): compact layout for smaller screens,
+scrollable settings, live ZZ9000 temperature
 and saved 1,000 / 3,000 / 6,000 / 10,000 / 60,000 / 100,000 cycle choices.
 Net-JIT combines networking with ARM JIT, EMS and Sound Blaster. This pass adds
 bounded file read-ahead, mouse-motion coalescing and batched interpreter fallback
@@ -115,13 +116,13 @@ Disk formats: [IMG versus VHD](docs/amiga-dosbox-disk-images.md).
 
 ## Features
 
-Features below span the **0.22.6-dev launcher source** and its separate DOS,
+Features below span the **0.22.7-dev launcher source** and its separate DOS,
 Windows, network and developer runtimes. Experimental features are labelled;
 not every combination is supported.
 
 | Area | Features |
 |---|---|
-| Native launcher | MUI 3.8+ sidebar navigation, persistent settings, About/credits and scrollable changelog, ZZDosBox branding, startup logo, loading screen held until display handoff, shortcut reminders and footer revision. |
+| Native launcher | MUI 3.8+ sidebar navigation, screen-aware compact layout and independently scrollable settings, persistent settings, About/credits and scrollable changelog, ZZDosBox branding, startup logo, loading screen held until display handoff, shortcut reminders and footer revision. |
 | Program library | Up to 256 profiles; All, Games, Applications and OS lists; add/rename entries, confirmed deletion of dedicated game/app folders, protected OS/shared disks, category tags and per-program settings. Up/Down selection and letter/number jump in the focused list. |
 | DOS environments | Embedded DOSBox DOS 5 without installation disks; optional booted MS-DOS 6.22 from the user's installation. |
 | Execution | 386-class, 32-bit x86 emulation; ARMv7 dynamic recompiler with 4 MiB code cache for DOS; separate interpreter and paging-guarded Windows builds. |
@@ -601,12 +602,12 @@ A9 timings; instruction-model timing is not hardware performance evidence.
 
 ## Offline installers
 
-[**Download ZZDosBox 0.22.6 Beta**](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.6-beta).
+[**Download ZZDosBox 0.22.7 Beta**](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.7-beta).
 
 | Installer | Download | Contents | AHI audio |
 | --- | --- | --- | --- |
-| [Standard](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v0.22.6-beta/ZZDosBox-0.22.6-beta-standard-amipkg.lha) | 7.2 MB | ZZDosBox; empty library for your own programs | Optional; sound-off use allowed |
-| [With Demos](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v0.22.6-beta/ZZDosBox-0.22.6-beta-demos-amipkg.lha) | 23.7 MB | Same ZZDosBox plus Corridor 7, Doom 1.9 shareware and King's Quest VII Demo | Required for supplied audio profiles |
+| [Standard](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v0.22.7-beta/ZZDosBox-0.22.7-beta-standard-amipkg.lha) | 7.2 MB | ZZDosBox; empty library for your own programs | Optional; sound-off use allowed |
+| [With Demos](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v0.22.7-beta/ZZDosBox-0.22.7-beta-demos-amipkg.lha) | 23.7 MB | Same ZZDosBox plus Corridor 7, Doom 1.9 shareware and King's Quest VII Demo | Required for supplied audio profiles |
 
 King's Quest VII is a non-interactive promotional demo. Both installers check
 MUI, AmigaOS libraries, Picasso96, ZZ9000 hardware and AHI. System libraries and

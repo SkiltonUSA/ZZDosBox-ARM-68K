@@ -11,6 +11,9 @@ import subprocess
 import tempfile
 import zipfile
 
+from package_dosbox_demos import VERSION
+PACKAGE_VERSION = VERSION.split("-", 1)[0]
+
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -49,7 +52,7 @@ def main():
     drawer[48] = 2
     drawer[58:66] = struct.pack('>II', 0x80000000, 0x80000000)
     def read_zip(edition):
-        with zipfile.ZipFile(a.zip_dir / f'ZZDosBox-0.22.6-beta-{edition}.zip') as z:
+        with zipfile.ZipFile(a.zip_dir / f'ZZDosBox-{VERSION}-{edition}.zip') as z:
             return {n.split('/', 1)[1]: z.read(n) for n in z.namelist()}
     standard, demos = read_zip('standard'), read_zip('demos')
     core = {'Core/' + n: data for n, data in standard.items()
@@ -61,7 +64,7 @@ def main():
     addon['Demos/ZZInstall'] = helper
     archives = {}
     for ident, files in [('zzdosbox', core), ('zzdosbox-demos', addon)]:
-        path = repo / f'{ident}-0.22.6.lha'
+        path = repo / f'{ident}-{PACKAGE_VERSION}.lha'
         lha_archive(a.lha.resolve(), path, files)
         archives[ident] = path
     entries = []
@@ -76,11 +79,11 @@ def main():
             ops += [dict(op='copyTree', src='Demos/DemoDefaults', dest='ZZDOSDEST:DemoDefaults')]
         ops += [dict(op='postScript', lines=['FailAt 10', 'Stack 65536', f'ZZDOSDEST:ZZInstall seed {mode} ZZDOSDEST:'])]
         entries.append(dict(id=ident, name='ZZDosBox' + (' Demo Pack' if mode == 'demos' else ''),
-                            version='0.22.6-beta', description='ZZ9000 DOS emulator' if mode == 'standard' else 'Corridor 7, Doom and Kings Quest VII demos',
+                            version=VERSION, description='ZZ9000 DOS emulator' if mode == 'standard' else 'Corridor 7, Doom and Kings Quest VII demos',
                             category='Emulation', tier='A', archive=dict(url='https://zzdosbox.invalid/offline/' + archive.name,
                             mirrors=[], sizeBytes=archive.stat().st_size, sha256=digest(archive)),
                             requirements=dict(minCPU='68020', minKS='3.1'),
-                            deps=[dict(id='zzdosbox', min='0.22.6-beta')] if mode == 'demos' else [],
+                            deps=[dict(id='zzdosbox', min=VERSION)] if mode == 'demos' else [],
                             conflicts=[], provides=[], recipe=dict(recipeSchema=2, ops=ops),
                             requiredCapabilities=['copy-tree-v1', 'pre-post-script-v1'] + (['drawer-icon-v1'] if mode == 'standard' else [])))
     signer = source / 'tools/amipkg-repo-sign'
@@ -168,7 +171,7 @@ ZZDOSDEST:ZZInstall seed standard ZZDOSDEST:
         subprocess.run(['python3', str(source / 'dist/mkprojicon.py'),
                         str(root / 'artifacts/development/launcher-0.19.7/ZZDosBox-Launcher.info'),
                         str(directory / 'Install.info'), 'C:IconX'], check=True)
-        (directory / 'ReadMe.txt').write_text(f'''ZZDosBox 0.22.6 Beta - AmiPkg {edition} installer
+        (directory / 'ReadMe.txt').write_text(f'''ZZDosBox {VERSION} - AmiPkg {edition} installer
 
 Open Install from this drawer. Choose the parent drawer for ZZDosBox.
 Shell alternative (from this drawer): Execute Install DEST "SD032G:Emulator/ZZDosBox"
@@ -208,7 +211,7 @@ Game media retains publisher copyrights; see the demo edition documentation.
 ''')
         files = {str(f.relative_to(directory.parent)): f.read_bytes() for f in directory.rglob('*') if f.is_file()}
         files[directory.name + '.info'] = bytes(drawer)
-        archive = out / f'ZZDosBox-0.22.6-beta-{edition}-amipkg.lha'
+        archive = out / f'ZZDosBox-{VERSION}-{edition}-amipkg.lha'
         lha_archive(a.lha.resolve(), archive, files)
         archive.with_suffix('.sha256').write_text(digest(archive) + '  ' + archive.name + '\n')
         print(f'{archive}: {archive.stat().st_size:,} bytes')

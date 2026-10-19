@@ -1,0 +1,13 @@
+{
+  "version": "0.22.7-beta",
+  "launcher": "../launcher-0.22.7/launcher-build.json",
+  "installer_tools": "../amipkg-0.22.6/build.json",
+  "installer_tools_changed": false,
+  "launcher_sha256": "28c530a44c6f651152ac07c6e79b8aa264cb39a5beb6ada4e9fa28c9260aa7a0",
+  "reproducible_archives": true,
+  "packaging_sources": {
+    "scripts/package_dosbox_amipkg.py": "b098bf140bbf2b8afd2d532b65793d55ee2257fd3f4ca08d0da1968b2143dba4",
+    "scripts/package_dosbox_demos.py": "f47583aaa365dfb0f9322ef169e6c0cb0a8f1e2ac70c946e2ee6100935d7aad2",
+    "scripts/package_dosbox_shareware.py": "5abcc71c1aa3d820d378014e5233a1a38c85a644e3e9902145e1283b3f3586c7"
+  }
+}

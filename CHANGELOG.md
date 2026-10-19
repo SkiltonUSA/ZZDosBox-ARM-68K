@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.22.6-dev**, newest first.
+Version history from **0.1.0-dev** through **0.22.7-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -9,6 +9,25 @@ installation statements describe that milestone, not the current default.
 Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
+
+## 0.22.7 Beta — installer update
+
+- Include the scalable 0.22.7-dev launcher in Standard and With Demos installers.
+- Advance signed catalogue/package versions so existing 0.22.6 installations
+  can upgrade through Install. Keep dependency checks and user-data preservation.
+- Emulator runtimes, demo media and supplied game profiles are unchanged.
+
+## 0.22.7-dev — scalable Workbench launcher
+
+- Size the initial window to the available public screen, with a compact
+  layout for 640×480 and 800×600 desktops.
+- Keep navigation and Save settings outside individually scrollable pages;
+  resizing the window no longer requires every settings panel to fit at once.
+- Use smaller previews, tighter spacing and compact local fonts on smaller
+  screens. Stack the display guide and compatibility details, and use a
+  single column of network fields in compact mode.
+- Fit startup/loading cards to the compact layout. No screen-mode or global
+  font preference changes; emulator execution and saved profiles are unchanged.
 
 ## 0.22.6 demo edition — packaging
 
