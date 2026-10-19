@@ -87,10 +87,6 @@ settings has not been verified.
 Expanded supports up to 32 MiB guest RAM in a 64 MiB owned allocation;
 Compat and Net-JIT use 32 MiB allocations. Paging JIT remains off by default.
 
-The earlier packaged [0.19.12 RC1 update](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.19.12-rc1)
-remains available for existing installations. It predates the I/O and
-network/JIT features described here.
-
 This is development software. Builds and research artifacts are kept separately:
 
 - [Launcher 0.19.12-dev candidate](artifacts/development/launcher-0.19.12): keeps the loading
