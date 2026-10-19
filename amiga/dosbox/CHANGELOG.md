@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.22.4-dev**, newest first.
+Version history from **0.1.0-dev** through **0.22.6-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -10,12 +10,69 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
+## 0.22.6-dev — high-cycle launcher choices
+
+- Add saved 60,000 and 100,000 CPU-cycle choices; existing selections keep
+  their values. High-cycle profiles select the Expanded runtime automatically.
+- Keep dosbox.conf override precedence and existing restrictions for networking,
+  OpenGL, interpreter and developer modes. Add save/load and routing regressions.
+- Explain timing/audio trade-offs in the CPU-cycle tooltip.
+
+## 0.22.5-dev — guarded ARM inline reads
+
+- Expanded runtime emits aligned linked low-bank reads directly in ARM code;
+  device, unaligned and high-bank accesses keep checked helper handling.
+  Writes and self-modifying-code tracking remain unchanged.
+- Duke opening-level samples improved 4.53 → 4.67 game FPS (+2.9%) at the same
+  10,000 cycles; repeat samples agree. This is a measured workload result,
+  not a general emulator speed multiplier.
+- Expose the existing late AHI-buffer-link diagnostic. Delivery timing improved,
+  but audio continuity remains limited and audible quality was not verified.
+- Add page-alignment/read, partial-register, carry and memory-handler regression
+  fixtures, scoped hot-block profiling and optional register-ABI/forwarding
+  experiments. The latter showed no meaningful FPS gain and are not defaults.
+- Compare 10k/12k/15k/20k window/fullscreen runs. Higher FPS at 20k accompanies
+  roughly half-speed emulated time; retain the saved 10k configuration.
+- Document missing Duke keyboard assignments and their configuration fix;
+  the original game executable is unchanged.
+
+[Measurements, validation and limitations](docs/amiga-dosbox-duke-arm-optimisation.md) ·
+[Development runtime](artifacts/development/expanded-0.22.5)
+
+## Experiment — Duke Nukem 3D configuration tuning
+
+- Measure 1.3D rendered frames against ARM wall time: VGA/6000/Normal 1.17 FPS,
+  S3/6000/Normal 1.63 FPS, S3/10000/Adaptive 4.53 FPS, with sound enabled.
+- Add an isolated Duke counter observer and wraparound/relocation tests. Private
+  benchmark copies enable the existing FPS counter; the installed game is unchanged.
+- Save the faster Duke profile using the existing launcher/player; no new runtime
+  release. [Method and limits](docs/amiga-dosbox-duke-performance.md).
+
 ## 0.22.4-dev — per-program CPU cycles
 
 - Add a saved 10000-cycle choice on the CPU page; existing 1000, 3000 and 6000
   choices keep their values. Global dosbox.conf overrides still take precedence.
 - Add an isolated, read-only Descent rendered-frame benchmark with gameplay-only
   timing. The normal player does not include the benchmark or its automatic stop.
+
+## Unreleased — protected-mode game startup
+
+- Back up the tested Compat/Expanded executables, build metadata and licensed
+  DOS/32A helper in [the development update](artifacts/development/descent-startup).
+
+- Use DOS/32A 7.35 for the personal Descent profile; first-level rendering and
+  input verified on the Amiga without DOS/4GW paging. Original game unchanged.
+- Fix ARM recompiler lookahead over self-modifying invalid FE-group bytes;
+  add native, relocated ARM and physical regression checks.
+
+- Add reproducible Doom/Duke shareware starter packaging and fresh launcher
+  profiles. Retain Descent in personal builds only due to its bundling terms.
+
+- Fix stale DOS error state during temporary-file creation, which prevented
+  Descent's DOS/4GW 1.97 loader from starting (errors 2504/1011).
+- Add a temporary-file regression and native per-game CPU selection for tests.
+- Document Duke Nukem 3D's 486 setting and Quake's CD-audio startup pause.
+- [Startup review and validation](docs/amiga-dosbox-shooter-startup-review.md).
 
 ## 0.22.3-dev — launcher temperature
 

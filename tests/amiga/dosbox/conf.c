@@ -65,5 +65,20 @@ int main(int argc,char**argv){unsigned i;struct dl_session session,loaded;char s
  parse("[cpu]\ncycles=max\n");assert(dc_apply(&c,&base,&p,error,sizeof(error)));assert(p.cycle_mode==2&&dc_get(&c,DC_CYCLES,0)==3000);
  parse("[cpu]\ncycles=auto\n");assert(dc_apply(&c,&base,&p,error,sizeof(error)));assert(p.cycle_mode==1);
  bad("[cpu]\ncycles=max\ncycle_mode=auto\n");bad("[cpu]\ncycle_mode=auto\ncycles=max\n");
+ /* High profile choices must select a capable runtime without other options. */
+ for(i=4;i<=5;i++){
+  parse("[cpu]\ncore=dynamic\n");base.speed=i;
+  assert(dc_apply(&c,&base,&p,error,sizeof(error)));
+  assert(!strcmp(runtime(),"ZZDosBox-Expanded"));
+  assert(dc_get(&c,DC_CYCLES,dl_profile_cycles(&p))==(i==4?60000:100000));
+  assert(strstr(dl_hardware_args(&p),"--cycle-mode fixed"));
+  p.network.enabled=1;assert(!runtime());p.network.enabled=0;
+  p.renderer=1;assert(!runtime());p.renderer=0;
+  parse("[cpu]\ncore=normal\n");assert(!runtime());
+  parse("[cpu]\ncycles=7500\n");assert(dc_apply(&c,&base,&p,error,sizeof(error)));
+  assert(dc_get(&c,DC_CYCLES,dl_profile_cycles(&p))==7500);
+ }
+ base.speed=3;parse("[cpu]\ncore=dynamic\n");assert(dc_apply(&c,&base,&p,error,sizeof(error)));
+ assert(!strcmp(runtime(),"ZZDosBox"));
  unlink(session_path);puts("PASS dosbox.conf: template, all supported keys, CRLF/case, strict errors, transactional parsing, exact cycles/session, profile isolation, core routing and incompatible combinations");return 0;
 }

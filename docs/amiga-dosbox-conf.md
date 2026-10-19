@@ -11,6 +11,13 @@ those profiles. Changes apply on the next launch. The standalone runtime does
 not read this file itself. Invalid keys, sections, values and duplicates report
 an error with a line number. Unsupported combinations stop before launching.
 
+The **CPU & memory → CPU cycles** selector offers 1,000, 3,000, 6,000,
+10,000, 60,000 and 100,000. Select **Fixed** under Cycle control to hold that
+budget; Auto/Max adjust it during play. The two high choices select the Expanded
+runtime automatically. An active `[cpu] cycles=` override still takes precedence.
+High cycle values can increase rendered FPS while slowing emulated time and
+interrupting sound; they do not change the ARM processor's clock frequency.
+
 For example:
 
 ```ini

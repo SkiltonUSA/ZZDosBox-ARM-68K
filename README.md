@@ -13,10 +13,10 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 
 ## Development builds
 
-**Current launcher: 0.22.4-dev; Expanded: 0.22.5-dev; other runtimes: 0.22.2-dev.** The launcher includes COM1 setup,
+**Current launcher: 0.22.6-dev; Expanded: 0.22.5-dev; other runtimes: 0.22.2-dev.** The launcher includes COM1 setup,
 experimental physical serial, a live joystick tester and 1–6 button choices.
-[Launcher update](artifacts/development/launcher-0.22.4): live ZZ9000 temperature
-beside the version and a saved 10,000-cycle CPU choice.
+[Launcher update](artifacts/development/launcher-0.22.6): live ZZ9000 temperature
+and saved 1,000 / 3,000 / 6,000 / 10,000 / 60,000 / 100,000 cycle choices.
 Net-JIT combines networking with ARM JIT, EMS and Sound Blaster. This pass adds
 bounded file read-ahead, mouse-motion coalescing and batched interpreter fallback
 for the opt-in paging experiment. Existing profiles retain their settings.
@@ -73,6 +73,8 @@ At **60,000 cycles**, the same updated build reached **7.97 FPS windowed /
 about **99.6%** of audio-buffer links were late. This remains a benchmark setting.
 At **80,000**, results barely increased to **8.10 / 8.23 FPS**, with game-clock
 progress falling to **17.6–17.9%**. The normal profile remains at 10,000 cycles.
+**100,000 cycles: 8.26 / 8.43 FPS**, but only **14.9–15.2%** game-clock progress.
+The launcher now exposes 60,000 and 100,000 as optional saved choices.
 
 [Earlier runtime update](artifacts/development/runtime-0.22.2) ·
 [I/O and joystick specifications](docs/amiga-dosbox-io.md) ·
@@ -109,7 +111,7 @@ Disk formats: [IMG versus VHD](docs/amiga-dosbox-disk-images.md).
 
 ## Features
 
-Features below span the **0.22.4-dev launcher source** and its separate DOS,
+Features below span the **0.22.6-dev launcher source** and its separate DOS,
 Windows, network and developer runtimes. Experimental features are labelled;
 not every combination is supported.
 
@@ -120,7 +122,7 @@ not every combination is supported.
 | DOS environments | Embedded DOSBox DOS 5 without installation disks; optional booted MS-DOS 6.22 from the user's installation. |
 | Execution | 386-class, 32-bit x86 emulation; ARMv7 dynamic recompiler with 4 MiB code cache for DOS; separate interpreter and paging-guarded Windows builds. |
 | Guest FPU — experimental | [Portable x87](docs/amiga-dosbox-x87.md) in the EMS/Sound Blaster Compat runtime; A9 VFP double-precision helpers, no 68k FPU requirement. Not full 80-bit precision. |
-| CPU and memory | 386/486/Pentium models; 1–32 MiB guest RAM; fixed (1,000/3,000/6,000/10,000), Auto or Max cycles; live adjustment and timed/normal sessions. Expanded runtime required for the new options; limits are not hardware-speed claims. |
+| CPU and memory | 386/486/Pentium models; 1–32 MiB guest RAM; fixed (1,000/3,000/6,000/10,000/60,000/100,000), Auto or Max cycles; live adjustment and timed/normal sessions. Expanded runtime required for the new options; limits are not hardware-speed claims. |
 | Windows/protected mode | Windows for Workgroups 3.11 tested; 386 paging, nested page-fault recovery, sparse mappings, A20 handling and BIOS/VGA ROM write protection. |
 | DOS terminal | Open terminal, run a command or batch file, text/background colours and a versioned welcome screen. |
 | Startup files | AUTOEXEC.BAT and CONFIG.SYS editors; Default/Edited/File selection, import/export and recovery of temporary booted-DOS edits. |

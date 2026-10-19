@@ -12,6 +12,7 @@ frames, not VGA refresh counts. Game-clock progress is reported separately.
 - `inline10/inline20`, `baseline10b/inline10b`: guarded inline reads and repeat.
 - `inline60/inline60full`: guarded inline reads at 60,000 cycles, window/fullscreen.
 - `inline80/inline80full`: same runtime at 80,000 cycles, window/fullscreen.
+- `inline100/inline100full`: same runtime at 100,000 cycles, window/fullscreen.
 - `hot`: gameplay-scoped block entry counts; instrumented FPS excluded.
 - `controls-*`: original, unmodified game; physical interactive/exit checks.
 - `model-*`: linked ARM instruction-model tests; not physical execution proof.

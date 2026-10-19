@@ -1,6 +1,6 @@
 # ZZDosBox features and compatibility
 
-This describes the **0.22.2-dev launcher and current development runtimes**, including the separate Windows runtime.
+This describes the **0.22.6-dev launcher and current development runtimes**, including the separate Windows runtime.
 It is the implemented Amiga feature set, not the complete feature list of
 [upstream dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 
@@ -9,6 +9,7 @@ It is the implemented Amiga feature set, not the complete feature list of
 | Feature | Support |
 | --- | --- |
 | Native interface | MUI sidebar navigation with Load Program, DOS terminal, display/audio settings, Disks, Network, I/O, Joystick, Compatibility, Developer and About pages. Load Program contains All, Games, Applications and OS lists, with saved category tags. |
+| CPU cycles | Saved 1,000 / 3,000 / 6,000 / 10,000 / 60,000 / 100,000 choices; Fixed, Auto or Max control. High choices select Expanded; global dosbox.conf overrides still apply. |
 | Configuration | Developer → dosbox.conf: validated editor for supported global overrides, including core selection and exact CPU cycles. [Settings reference](amiga-dosbox-conf.md). |
 | Program library | Up to 256 saved profiles, each with its own program, C: drawer and emulator settings. Rename changes the library title. Delete removes a dedicated game/app folder and saves after Yes/No confirmation; OS and shared-image installations are protected. Focus the program list and use Up/Down to select; A–Z or 0–9 jumps to the first matching title. |
 | Compatibility helper | Optional LOADFIX per profile for programs needing a different conventional-memory load address. |

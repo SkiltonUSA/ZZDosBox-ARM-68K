@@ -80,7 +80,7 @@ static const char *terminal_tabs[]={"Terminal","AUTOEXEC.BAT","CONFIG.SYS","CD-R
 static const char *startup_choices[]={"Default","Edited","File",NULL},*cd_choices[]={"None","ISO image","Amiga CD-ROM",NULL};
 static const char *sizes[]={"320 x 240","640 x 480","960 x 720",NULL};
 static const char *displays[]={"Workbench window","Fullscreen",NULL},*systems[]={"DOSBox DOS 5","MS-DOS 6.22","Disk image (DOS / Windows)","DOSBox DOS 5 + image",NULL};
-static const char *memories[]={"1 MB","2 MB","4 MB","8 MB","16 MB","32 MB",NULL},*machines[]={"VGA","EGA","CGA","S3 / VESA","Tandy","PCjr","Hercules",NULL},*speeds[]={"1000","3000","6000","10000",NULL},*colours[]={"Black","Red","Green","Yellow","Blue","Magenta","Cyan","White",NULL},*lengths[]={"Startup test (8 seconds)","Until closed",NULL};
+static const char *memories[]={"1 MB","2 MB","4 MB","8 MB","16 MB","32 MB",NULL},*machines[]={"VGA","EGA","CGA","S3 / VESA","Tandy","PCjr","Hercules",NULL},*speeds[]={"1000","3000","6000","10000","60000","100000",NULL},*colours[]={"Black","Red","Green","Yellow","Blue","Magenta","Cyan","White",NULL},*lengths[]={"Startup test (8 seconds)","Until closed",NULL};
 enum {ID_SELECT=1,ID_ADD,ID_REMOVE,ID_SAVE,ID_RUN,ID_TERM,ID_COMMAND,ID_AUTO,ID_SCRIPT,ID_BROWSE_DRAWER,ID_OPEN_DRAWER,ID_DISKS,ID_MOUNT_DISKS,ID_EJECT_DISKS,ID_BOOT_DISK,ID_MOUNT_HD,ID_EJECT_HD,ID_OPEN_HD,ID_SYSTEM,ID_DISPLAY,ID_STARTMODE,ID_CD_MODE,ID_CD_BROWSE,ID_CD_CHECK,ID_TERMPAGE,ID_AUDIO_CHECK,ID_DEV_CHANGE,ID_DEV_LOG,ID_CATEGORY,ID_CONF_VALIDATE,ID_DISK_SELECT,ID_DISK_BROWSE,ID_DISK_CREATE,ID_CAT_SELECT=50,ID_CAT_RUN=60,ID_CAT_EDIT=70,ID_CAT_RENAME=80,ID_CAT_DELETE=85,ID_RENAME=90,ID_EDITOR=100};
 static ULONG val(Object*o,ULONG a){ULONG v=0;get(o,a,&v);return v;}
 static void program_list_focus(void){
@@ -484,6 +484,7 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
  set(vcpi,MUIA_ShortHelp,(ULONG)"Embedded-DOS VCPI services; requires EMS. Booted DOS uses its own drivers.");
  set(umb,MUIA_ShortHelp,(ULONG)"Upper-memory allocation for embedded DOS; does not install EMM386 or enable DOS=HIGH.");
  set(joystick,MUIA_ShortHelp,(ULONG)"Maps physical Amiga port 2 (lowlevel index 1) to a DOS two-axis, two-button gameport.");
+ set(speed,MUIA_ShortHelp,(ULONG)"Fixed cycles per emulated millisecond. High values can slow game timing and disrupt sound. dosbox.conf overrides this choice.");
  set(cycle_mode,MUIA_ShortHelp,(ULONG)"Auto adjusts up to 10000; Max up to 100000. Manual cycle keys take over for this session.");
  set(extra_sound,MUIA_ShortHelp,(ULONG)"GUS: 240h IRQ5 DMA3. CMS/Tandy require Sound Blaster off. Output uses AHI.");
  set(serial_mode,MUIA_ShortHelp,(ULONG)"COM1 TCP, basic TCP modem or experimental physical Amiga serial driver. Embedded DOS only; NE2000/IPX must be off.");

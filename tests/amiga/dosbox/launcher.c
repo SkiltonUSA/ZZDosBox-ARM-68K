@@ -160,11 +160,11 @@ int main(void){struct dl_session s,t;static struct dl_library a,b;char tmp[]="/t
  assert(strstr(dl_hardware_args(&a.p[0]),"--serial device")&&strstr(dl_hardware_args(&a.p[0]),"--serial-device serialpl2303.device --serial-line 2,19200,7,2,2,1"));
  strcpy(a.p[0].serial.device,"bad.device\nExecute bad");assert(!dl_library_write(tmp,&a));
  dl_profile_default(&a.p[0]);strcpy(a.p[0].title,"Cycles");strcpy(a.p[0].drive,"RAM:Test");a.count=1;a.last=0;
- {const unsigned expected[]={1000,3000,6000,10000};for(unsigned i=0;i<4;i++){
+ {const unsigned expected[]={1000,3000,6000,10000,60000,100000};for(unsigned i=0;i<6;i++){
   a.p[0].speed=i;assert(dl_profile_cycles(&a.p[0])==expected[i]);
   assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b)&&dl_profile_cycles(&b.p[0])==expected[i]);
   dl_defaults(&s);strcpy(s.drive,"RAM:Test");s.cycles=dl_profile_cycles(&b.p[0]);
   assert(dl_session_write(tmp,&s)&&dl_session_read(tmp,&t)&&t.cycles==expected[i]);
  }}
- a.p[0].speed=4;assert(!dl_library_write(tmp,&a)&&!dl_profile_cycles(&a.p[0]));
+ a.p[0].speed=6;assert(!dl_library_write(tmp,&a)&&!dl_profile_cycles(&a.p[0]));
  unlink(tmp);puts("PASS profiles/sessions, adapter/colour/renderer migration and validation");return 0;}

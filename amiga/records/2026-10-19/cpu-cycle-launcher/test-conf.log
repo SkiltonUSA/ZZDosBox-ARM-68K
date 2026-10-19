@@ -1,0 +1,1 @@
+PASS dosbox.conf: template, all supported keys, CRLF/case, strict errors, transactional parsing, exact cycles/session, profile isolation, core routing and incompatible combinations

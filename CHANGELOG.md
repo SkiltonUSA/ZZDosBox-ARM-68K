@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.22.5-dev**, newest first.
+Version history from **0.1.0-dev** through **0.22.6-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -9,6 +9,14 @@ installation statements describe that milestone, not the current default.
 Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
+
+## 0.22.6-dev — high-cycle launcher choices
+
+- Add saved 60,000 and 100,000 CPU-cycle choices; existing selections keep
+  their values. High-cycle profiles select the Expanded runtime automatically.
+- Keep dosbox.conf override precedence and existing restrictions for networking,
+  OpenGL, interpreter and developer modes. Add save/load and routing regressions.
+- Explain timing/audio trade-offs in the CPU-cycle tooltip.
 
 ## 0.22.5-dev — guarded ARM inline reads
 

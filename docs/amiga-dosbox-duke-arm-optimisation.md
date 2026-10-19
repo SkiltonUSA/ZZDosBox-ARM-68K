@@ -217,6 +217,25 @@ was not checked. Both runs restored JIT/SIMD/register/cache witnesses and releas
 owned memory. `inline80.log`, `inline80full.log` and the updated results JSON retain
 the evidence; the verification script recalculates both measurements.
 
+## Follow-up: 100,000 cycles and launcher presets
+
+Same inline-read runtime, scene and settings. Windowed rendered 248 frames in
+30.007058 seconds (**8.26 FPS**); fullscreen rendered 253 in 30.001601 seconds
+(**8.43 FPS**). Game-clock progress was **14.9% / 15.2%** of real time, respectively.
+This is another small FPS increase alongside slower emulated-time progression.
+CPU execution occupied about 92% of the measured interval.
+
+Whole-session late AHI links were 376/378 requests windowed and 378/380 fullscreen
+(about 99.5%). All queued frames completed with error=0; no listening result is
+claimed. JIT/SIMD witnesses, register/cache restoration and owned-memory release
+passed. Evidence: `inline100.log`, `inline100full.log` and the results verifier.
+
+Launcher **0.22.6-dev** adds saved **60,000 and 100,000** choices to CPU & memory.
+Select Fixed cycle control to retain the chosen budget; Auto and Max adjust it.
+These choices automatically select Expanded, and dosbox.conf overrides retain
+precedence. Existing saved cycle values are unchanged. The tooltip explains the
+timing/audio trade-off; these are emulation budgets, not ARM clock settings.
+
 ## Reproducing the diagnostics
 
 Build the normal Expanded tuning configuration with `--pc-duke-clock`; add just
