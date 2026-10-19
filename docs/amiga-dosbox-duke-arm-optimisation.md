@@ -195,6 +195,28 @@ JIT/SIMD witnesses, register/cache restoration and owned-memory release checks.
 Accepted evidence is `inline60.log` and `inline60full.log` in the linked evidence
 folder; `results.json` and `verify_results.py` include both samples.
 
+## Follow-up: 80,000 cycles
+
+Same guarded-inline-read runtime and benchmark settings; only the cycle value
+changed. Loading is excluded from the thirty-second measurement.
+
+| Cycles | Window FPS | Fullscreen FPS | Window game-clock speed | Fullscreen game-clock speed |
+| ---: | ---: | ---: | ---: | ---: |
+| 60,000 | 7.97 | 8.13 | 22.0% | 22.3% |
+| 80,000 | 8.10 | 8.23 | 17.6% | 17.9% |
+
+Windowed 80k rendered 243 frames in 30.000103 seconds; fullscreen rendered 247 in
+30.005704 seconds. Emulated time advanced only 5.286 and 5.369 seconds. Compared
+with 60k, the single samples added roughly 1–2% FPS while game-clock progress
+fell about 20%. These small FPS differences are not evidence of a worthwhile
+configuration improvement. The saved 10k profile remains unchanged.
+
+Whole-session late AHI links were 435/437 requests in the window and 438/440
+fullscreen (about 99.5%). All submitted frames completed, error=0; audible quality
+was not checked. Both runs restored JIT/SIMD/register/cache witnesses and released
+owned memory. `inline80.log`, `inline80full.log` and the updated results JSON retain
+the evidence; the verification script recalculates both measurements.
+
 ## Reproducing the diagnostics
 
 Build the normal Expanded tuning configuration with `--pc-duke-clock`; add just

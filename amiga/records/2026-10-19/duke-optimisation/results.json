@@ -332,5 +332,39 @@
     },
     "audio_requests": 541,
     "audio_late_links": 539
+  },
+  {
+    "name": "inline80",
+    "frames": 243,
+    "wall_seconds": 30.000103,
+    "fps": 8.099972,
+    "guest_speed": 0.176199,
+    "profile_percent": {
+      "other": 1.26,
+      "cpu": 90.8,
+      "events": 1.94,
+      "capture": 0.96,
+      "grant": 2.57,
+      "copy": 2.48
+    },
+    "audio_requests": 437,
+    "audio_late_links": 435
+  },
+  {
+    "name": "inline80full",
+    "frames": 247,
+    "wall_seconds": 30.005704,
+    "fps": 8.231768,
+    "guest_speed": 0.178933,
+    "profile_percent": {
+      "other": 1.25,
+      "cpu": 90.84,
+      "events": 1.93,
+      "capture": 0.97,
+      "grant": 2.58,
+      "copy": 2.44
+    },
+    "audio_requests": 440,
+    "audio_late_links": 438
   }
 ]

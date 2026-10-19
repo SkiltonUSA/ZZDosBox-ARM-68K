@@ -71,6 +71,8 @@ Audio delivery improved but still has late buffer links.
 At **60,000 cycles**, the same updated build reached **7.97 FPS windowed /
 8.13 fullscreen**, but emulated time advanced at only **22%** of real time;
 about **99.6%** of audio-buffer links were late. This remains a benchmark setting.
+At **80,000**, results barely increased to **8.10 / 8.23 FPS**, with game-clock
+progress falling to **17.6–17.9%**. The normal profile remains at 10,000 cycles.
 
 [Earlier runtime update](artifacts/development/runtime-0.22.2) ·
 [I/O and joystick specifications](docs/amiga-dosbox-io.md) ·
