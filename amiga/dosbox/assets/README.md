@@ -1,6 +1,6 @@
 # ZZDosBox artwork
 
-`zzdosbox-logo.png` is the transparent master for the launcher splash screens
+`zzdosbox-logo.png` is the transparent source image for the launcher splash screens
 and 64px Workbench icons. The design preserves the DOSBox box silhouette and
 DOS/BOX lettering, with two large Zs identifying the ZZ9000 version.
 

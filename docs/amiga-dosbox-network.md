@@ -77,7 +77,7 @@ then the 68k host raised Software Failure **#80000004**. The requester identifie
 byte-exact transfer, clean shutdown, SIMD/cache restoration or release has
 been established for that physical run. The bridge remained responsive and
 reported no saved crash context. The user subsequently restarted the Amiga. The stack defect below was fixed
-and a fresh full guest run passed. No failed host task or Core1 owner remained
+and a fresh full guest run passed. No failed host task or Core1 task remained
 after that corrected run.
 
 Do not treat successful native tests or two short TCP exchanges as proof of

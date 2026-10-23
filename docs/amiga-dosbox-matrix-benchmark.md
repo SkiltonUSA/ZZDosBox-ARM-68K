@@ -105,7 +105,7 @@ new game runtime, or claiming faster emulated x86 matrix calculations.
 The executable was staged only as `RAM:ZZMatrix/ZZMatrixBench`, with its
 original fixture. No installed runtime, launcher, firmware, OS driver or saved
 profile was changed. Normal runtime CRC32 remained `5C74FFFC`. Final bridge
-and Workbench checks were responsive with no Core1 owner or Software Failure.
+and Workbench checks were responsive with no Core1 task or Software Failure.
 
 Measured diagnostic: 1169592 bytes, CRC32 `048382F7`, SHA256
 `1ed574c1364eec041f2f1ab4cd32a56ac12af8d60b1de293195a2afaadfbd2bb`.

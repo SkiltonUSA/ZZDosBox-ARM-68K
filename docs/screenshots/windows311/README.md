@@ -19,5 +19,5 @@ Windows exited to DOS, followed by a clean return to Workbench.
 
 ![Windows exit confirmation](windows-exit.png)
 
-The text-test, result and exit screenshots were supplied by the owner.
+The text-test, result and exit screenshots were supplied by the user.
 [Full test record](../../../amiga/records/2026-10-13/dosbox-wfw/findings.md).

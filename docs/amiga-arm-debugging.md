@@ -13,7 +13,7 @@ in `amiga/arm_debug/zz9000/`.
   synchronization and display-acknowledgement protocol.
 - Preserve the firmware's register/MMU/cache state, stop cooperatively and
   reset Core1 idle before releasing the allocation.
-- Keep one application owner of Core1. Close other XACP applications first.
+- Keep one active application on Core1. Close other XACP applications first.
 
 The support code includes no console emulator core or video decoder.
 Historical worker symbol names remain compatible with archived ARM images.

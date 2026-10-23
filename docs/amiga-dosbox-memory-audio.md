@@ -94,7 +94,7 @@ cleanly through F10. A subsequent launch using the installed MUI launcher
 selected ZZDosBox-Compat and reached Raiden’s Acer intro in fullscreen, then
 returned cleanly; its AHI worker completed all 574,464 queued frames. These observations do not establish full-game compatibility.
 
-The owner confirmed hearing the brief test tones. This verifies audible output
+The user confirmed hearing the brief test tones. This verifies audible output
 as well as AHI completion; sustained gameplay audio quality and each game's
 sound-driver compatibility remain separate checks.
 

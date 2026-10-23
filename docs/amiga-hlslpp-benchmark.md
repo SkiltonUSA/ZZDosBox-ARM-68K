@@ -104,7 +104,7 @@ Raw stage results for both methods, ranges and every repeat are in the JSON file
   normal launcher exit and owned-memory release. The shared report remains
   within the existing bounded diagnostic area.
 - Installed DOS runtime, Windows interpreter, launcher, library and dosbox.conf
-  checksums are unchanged. Bridge responsive; no Core1 owner or Software Failure
+  checksums are unchanged. Bridge responsive; no Core1 task or Software Failure
   at completion. Executables were staged only in RAM. No release or GitHub push.
 
 Finite ordinary float inputs are covered. Exceptional/subnormal arithmetic and

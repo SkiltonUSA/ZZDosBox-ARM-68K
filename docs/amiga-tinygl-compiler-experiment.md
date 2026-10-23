@@ -57,7 +57,7 @@ Both candidate builds passed native sanitizer/exact-image checks and all four
 linked ARM lifecycle tests before execution. All nine physical runs passed the
 656-case self-check, seven-case colour/depth comparisons, EGA/PIT/shell checks,
 SIMD/MMU/register/cache-witness restoration and owned-memory release. Final
-bridge/Workbench checks remained responsive, with no Core1 owner or Software
+bridge/Workbench checks remained responsive, with no Core1 task or Software
 Failure. The installed DOSBox checksum stayed `5C74FFFC` throughout.
 
 Only `RAM:ZZRaster/ZZRasterBench` was replaced for each diagnostic. Its final

@@ -81,7 +81,7 @@ demo. A remote title-bar click stalled bridge input after the benchmark runs.
 Following physical input recovery on 19 October, F10 closed the normal player
 and restored the launcher. Its log confirms S3/10,000/Adaptive, intact JIT/SIMD
 witnesses, zero register/cache mismatches, completed AHI buffers with no reported
-error, and owned-memory release. No Core1 owner remains. In-game keyboard
+error, and owned-memory release. No Core1 task remains. In-game keyboard
 controls have not been verified; the recovery session is not another FPS sample.
 
 [Raw logs, hashes and test evidence](../amiga/records/2026-10-18/duke-performance/).

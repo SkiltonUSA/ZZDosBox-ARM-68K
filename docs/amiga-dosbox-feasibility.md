@@ -39,7 +39,7 @@ sound generation. The built-in DOS environment is the initial target.
 AHI playback. The MUI launcher comes after the execution test. Frames should be
 converted on ARM into owned ZZ9000 buffers rather than copied through the 68k.
 
-Keep one application owner on Core1. Reuse the verified launcher ownership,
+Keep one active application on Core1. Reuse the verified launcher ownership,
 mapping probe, cancellation and reset-before-free rules, adapting allocation
 size only from a measured memory budget. Preserve firmware/Core0 memory.
 
@@ -204,7 +204,7 @@ against input passed (SHA256
 
 Cooperative cancellation, all 14 restoration checks, cache witness and owned
 memory release passed. Launcher exit was 0; Workbench, Roadie and the bridge
-remained available with no Core1 owner. No FPS/PC speed claim is established.
+remained available with no Core1 task. No FPS/PC speed claim is established.
 The first log pull timed out; retry retrieved the complete CRC-verified log.
 
 Evidence: [`amiga/records/2026-10-12/dosbox-dos/`](../amiga/records/2026-10-12/dosbox-dos/).
@@ -244,7 +244,7 @@ nonstreaming diagnostics retain their original API.
 
 ### Architecture guidance from Xanxi
 
-The owner relayed Xanxi's review: the PicoDrive-style 68k/ARM split, framebuffer
+The user relayed Xanxi's review: the PicoDrive-style 68k/ARM split, framebuffer
 handling and application-owned Core1 worker model will remain supported in
 XACP 1.8 and later. Preserve that model. This does not independently validate
 our additional MMU/cache/debugger code on later firmware, nor establish
@@ -1205,7 +1205,7 @@ Completed native/model evidence:
 - Native sanitized embedded-DOS/EGA fixture, read-only floppy boot and HDD boot
   pass. `make test-amiga-arm test-amiga` passes (138 MCP tools).
 
-The image contains DOS utilities and copies of the owner's supplied Keen,
+The image contains DOS utilities and copies of the user's supplied Keen,
 Vette and Elite files. Its compressed transfer passed CRC validation; gzip
 reported success and produced 33,554,432 bytes on the Amiga. The bridge's
 whole-image CHECKSUM request timed out; do not describe that request as a pass.
@@ -1222,7 +1222,7 @@ Physical A9 validation after recovery passed:
   successful flush/close, register/cache-witness restoration and memory release.
 - A new ARM process read the same text; Workbench subsequently read it too.
 - The MUI controls passed mount, refusal to boot while mounted, eject, HDD boot,
-  VER, F10 return, test-file cleanup and final eject. No Core1 owner remains;
+  VER, F10 return, test-file cleanup and final eject. No Core1 task remains;
   the launcher is on Programs. Both installed runtime/UI CRC32 match the builds.
   The crash-inducing path was not repeated; the exact restart Guru cause
   remains unknown despite the successful corrected path.
@@ -1347,11 +1347,11 @@ The original 0.8 runtime is still installed; O3 remains a separate experiment.
 During icon capture, an unrelated injected Workbench sizing gesture stalled
 Intuition/bridge while no Core1 application was active. The bridge source
 explicitly documents this modal drag/size hazard. Following a physical-button
-release request, communication recovered and the owner confirmed recovery;
+release request, communication recovered and the user confirmed recovery;
 a button-up cleared the remaining injected state. No reboot was observed and
 no crash data was recorded. The O3 staging file was then independently
 checksummed before execution. Avoid synthetic Workbench icon/drag/size gestures.
-Final checks found the bridge responding, launcher present, no Core1 owner,
+Final checks found the bridge responding, launcher present, no Core1 task,
 and the installed baseline unchanged (CRC32 1FCAF3E4).
 
 The supplied DOSBox icon was installed and independently read back before the
@@ -1427,7 +1427,7 @@ Physical acceptance passed for all three starting sizes, raw keyboard VER,
 FPS and F10 exit; MS-DOS 6.22 fullscreen; saved MUI presets and disabled size
 control in fullscreen; and MUI-launched 6.22 at 640×480 with the native close
 gadget. Each run restored register/cache witnesses and released ownership.
-Show FPS was subsequently moved back to Settings at the owner's request;
+Show FPS was subsequently moved back to Settings at the user's request;
 that layout-only launcher rebuild is installed. Physical dragging of the
 size gadget remains a user check: bridge-injected window sizing previously
 stalled Intuition, so no synthetic resize gesture was used. Evidence is in
@@ -1442,7 +1442,7 @@ files temporarily replace the disk versions for a session, with reserved
 backups and a recovery marker; normal return restores the originals. Embedded
 DOS executes the selected batch file but does not process CONFIG.SYS.
 
-The owner's [CONFIG.SYS/AUTOEXEC guide](https://ctrl-alt-rees.com/archive/madsenworld.dk/con_auto/index-uk.htm)
+The user's [CONFIG.SYS/AUTOEXEC guide](https://ctrl-alt-rees.com/archive/madsenworld.dk/con_auto/index-uk.htm)
 is a useful reference, especially its DOS 6.22 section and matching CD driver
 `/D:` names. Windows/DOS 7 examples are not defaults for this port. This change
 does not add EMM386 or DOS=HIGH support.
@@ -1523,7 +1523,7 @@ An available mode/cluster is not proof of connected speakers or an MT-32.
 
 ### Idle-CPU research
 
-The owner highlighted DOSBox Staging's `cpu_idle` option. Its
+The user highlighted DOSBox Staging's `cpu_idle` option. Its
 [CPU manual](https://www.dosbox-staging.org/0.83/manual/system/cpu/)
 describes guest HLT-based idling, an off switch for third-party DOS power
 management tools, and reduced desktop host load with maximum cycles. That
@@ -1563,7 +1563,7 @@ ZZ9000AX modes. Default startup-file pages were checked after disk reads
 completed and showed the actual DOS disk files. Initial captures taken while
 those reads were pending still showed the previous editor text.
 
-The owner's extended welcome template is adapted through an original DOS
+The user's extended welcome template is adapted through an original DOS
 helper, `ZZHELLO.COM`, called by the temporary startup batch. It draws a blue
 panel, CP437 double-line border, ASCII ZZDosBox logo, version, detected DOS
 version, project URL and real shortcuts. It uses text-mode video memory and
@@ -1616,7 +1616,7 @@ physical run per build; broader compatibility remains unproven.
 
 Build instructions, model coverage and physical logs are in
 [`dosbox-dynrec/method.md`](../amiga/records/2026-10-13/dosbox-dynrec/method.md).
-At the owner’s request, the tested dynrec binary now occupies the normal
+At the user’s request, the tested dynrec binary now occupies the normal
 launcher’s runtime path, with the interpreter preserved as a fallback. Windows
 and broader game compatibility need separate tests.
 

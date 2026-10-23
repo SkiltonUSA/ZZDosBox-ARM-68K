@@ -23,7 +23,7 @@ automatic vectorisation regresses original clear cases 1.55–3.14%. No game-FPS
 gain established. Continue with rejected-span algorithm work, not global O3.
 
 Final diagnostic staged: `RAM:ZZRaster/ZZRasterBench`, O3-vector, CRC32
-`CF00BF01`, 1195576 bytes. Final bridge/Workbench responsive; no Core1 owner or
+`CF00BF01`, 1195576 bytes. Final bridge/Workbench responsive; no Core1 task or
 Software Failure. Installed app, firmware, startup and profiles unchanged.
 Report: `docs/amiga-tinygl-compiler-experiment.md`; evidence:
 `amiga/records/2026-10-14/tinygl-compiler/`. No publication/release.
@@ -48,7 +48,7 @@ builds. Revision 1 regressed both fill scenes and is retained as negative eviden
 Native sanitizer/exact-image checks, all four linked ARM lifecycle tests,
 physical 656-case self-checks and all scene colour/depth hashes passed.
 Physical EGA/PIT/shell, SIMD/MMU/register/cache-witness restoration and memory
-release passed. Bridge/Workbench responsive; no Core1 owner or Software Failure
+release passed. Bridge/Workbench responsive; no Core1 task or Software Failure
 on final checks. Next target: isolate rejected-span/mask overhead and validate
 zero clearing in a standalone production build. Do not globally enable spans.
 
@@ -70,7 +70,7 @@ unprofiled timings for speed claims. No DOS game FPS gain established.
 Native sanitizer/image tests and linked normal/copy-stop/mid-scene-stop/
 denied-SIMD tests passed. Physical images/depth hashes matched, EGA/PIT/shell
 passed, SIMD/MMU/register/cache-witness restoration and memory release clean.
-Final bridge/Workbench responsive with no Core1 owner or Software Failure.
+Final bridge/Workbench responsive with no Core1 task or Software Failure.
 Installed normal runtime remains CRC32 `5C74FFFC`. No publication/release.
 Report: `docs/amiga-tinygl-internal-transforms.md`; exact binary, ELF, three logs,
 results and source snapshots: `amiga/records/2026-10-14/tinygl-internal/`.
@@ -81,7 +81,7 @@ RAM-only benchmark completed; no installed runtime/launcher/profile changes.
 `RAM:ZZMatrix/ZZMatrixBench` is the separate diagnostic (CRC32 `048382F7`,
 1169592 bytes). Three runs passed exact dyadic math/image checks, EGA/PIT,
 SIMD/FPSCR/MMU/register/cache restoration, file closure and memory release.
-Final bridge/Workbench checks responsive; no Core1 owner or Software Failure.
+Final bridge/Workbench checks responsive; no Core1 task or Software Failure.
 Installed Direct runtime remains CRC32 `5C74FFFC`.
 
 Specialised NEON vs scalar VFP medians: 4x4 multiply **0.623 -> 0.230 us
@@ -141,7 +141,7 @@ in each completed log. Temporary launcher was then closed, with no Core1 or
 memory-debug port left. This does not resolve the older unrelated unattended
 Developer failure documented below; standard launcher is deliberately retained.
 The installed-path console protocol smoke test also passed after CRC verification.
-Final state: Workbench/Roadie/bridge responsive; no Core1 owner, memory-debug port,
+Final state: Workbench/Roadie/bridge responsive; no Core1 task, memory-debug port,
 or temporary developer launcher. Details: `docs/amiga-dosbox-memory-tools.md`; local evidence under
 `.context/amiga/dosbox-memory/` and `amiga/records/2026-10-14/dosbox-memory/`.
 
@@ -187,7 +187,7 @@ Previous executables/icon/Launcher.cfg are in `PC/PreAdapters`; `.pre11`
 executable copies also remain. Installed save migrated all nine profiles v7→v9,
 with exact parsed equality for old fields/order/last=2; new fields zero. The
 existing 65536-byte Workbench icon stack is preserved. **Stack 65536 is still
-mandatory** for Shell launches. No Core1 owner remains; bridge/Roadie/Workbench
+mandatory** for Shell launches. No Core1 task remains; bridge/Roadie/Workbench
 are present. Firmware and global scanline controls were not changed.
 
 Evidence: `amiga/records/2026-10-13/dosbox-adapters/` and
@@ -212,7 +212,7 @@ three buffers initialized; 3,121,920 black rows skipped. All runs cleaned up.
 
 Separate physical EGA and interactive Full -> Skip -> Off/F10 checks passed.
 Screenshots show 240 black odd rows in both masked modes, restored when Off;
-owner was not watching. Not a tear-free scanout claim. Native sanitizers and
+user was not watching. Not a tear-free scanout claim. Native sanitizers and
 ARM-model pixel/ownership/transition/cancellation tests passed. Core1 idle,
 Workbench restored, global FPGA scanlines Off. Candidate is RAM-only; local
 build `.context/amiga/dosbox-dynrec-4m-neon-pipe-scan/ZZDosBox-Dynrec`.
@@ -238,11 +238,11 @@ model commands, exact hashes and physical evidence: today's `dosbox-tuning/`.
 
 Interactive test at 3000 cycles/ms reached window mode but injected reverse
 switch/F10 did not take effect. Bridge briefly timed out; reconnect succeeded.
-Owner confirmed Workbench responsive. CLI `Break 10 C` cancelled our test,
+User confirmed Workbench responsive. CLI `Break 10 C` cancelled our test,
 with context/register/witness restoration clean and owned memory released.
-No reboot. Second manual-key test passed: owner confirmed both Alt+Return
+No reboot. Second manual-key test passed: user confirmed both Alt+Return
 switches and F10; `physical-interactive2.log` records both switches, checked
-restoration and memory release. Core1 owner absent, launcher on Workbench.
+restoration and memory release. Core1 task absent, launcher on Workbench.
 Installed after that test using checked staging/rename with rollback. Nothing
 launched after installation. See `dosbox-tuning/installation.json`. Injected
 input failure's cause remains unconfirmed; physical keys did not reproduce it.
@@ -250,7 +250,7 @@ input failure's cause remains unconfirmed; physical keys did not reproduce it.
 
 ## Dynrec connected to the normal ZZDosBox launcher — 13 October 2026
 
-At the owner's request, installed the exact physically tested dynrec executable
+At the user's request, installed the exact physically tested dynrec executable
 as `SD032G:Dev/ZZDosBox/PC/ZZDosBox`. The MUI launcher already invokes that
 sibling path for program, terminal and boot launches; no UI rebuild needed.
 MD5 verified `8020c504f3f3d621939d1ceffed0818f` (SHA256 and build identity below).
@@ -264,8 +264,8 @@ the already-loaded interpreter: exit and launch again for dynrec. Empire combat
 and Windows compatibility remain pending; the Doom result is the verified
 speed measurement. Installation used a checked staging file and rename with
 rollback on failure. See `dosbox-dynrec/launcher-install.log` in today's records.
-The owner then requested closing the active game. Sent F10 down/up; confirmed
-the Core1 owner disappeared and the MUI launcher returned on Workbench. The
+The user then requested closing the active game. Sent F10 down/up; confirmed
+the Core1 task disappeared and the MUI launcher returned on Workbench. The
 next launch will load dynrec. No replacement game was launched.
 The separate Windows311/ZZDosBox-WFW executable remains its previous build.
 To revert the normal launcher, close its DOS session, preserve the dynrec file,
@@ -299,7 +299,7 @@ the measured run. This does not establish general Intel CPU equivalence.
 
 JIT witness 1, 12,365 commits, 24,818,803 dispatches; SHELL PASS / guest exit 0,
 13,012 flips, checked register/cache restoration clean, memory released.
-Workbench, bridge and Roadie confirmed available; no Core1 owner remains.
+Workbench, bridge and Roadie confirmed available; no Core1 task remains.
 Evidence and repeatable build/model commands:
 `amiga/records/2026-10-13/dosbox-dynrec/`. Broader games and Windows 3.11 remain
 pending on dynrec. No game media or guest RAM dumps included in records.
@@ -310,7 +310,7 @@ pending on dynrec. No game media or guest RAM dumps included in records.
 User requested overall optimisation first, with Empire combat retesting later.
 Two local source changes are under verification: exact incremental generic
 scaling and 4 KiB read-ahead for exclusive BIOS HDD images (immediate writes).
-Installed runtime and the owner's active session are untouched. Read-ahead does
+Installed runtime and the user's active session are untouched. Read-ahead does
 not cover Empire's mounted directory. Local disk/pixel differential tests, the ARM scaler model, ARM/68k build and
 full linked ARM model regressions pass. Candidate (not deployed): 978232 bytes,
 SHA256 64598728b83dbcb8237b656f252923d95a274005a93c65fb04992ff50805e41b,
@@ -383,8 +383,8 @@ Windows mouse, PCM sound and networking remain unimplemented. Close apps, then
 File / Exit Windows, confirm, and use F10 at the DOS prompt to close ZZDosBox.
 This full lifecycle passed: SHELL PASS, disk/handles closed, no register/cache
 witness mismatch, launcher exit 0, owned memory released. No Guru/reboot.
-Left on Workbench, launcher still open, no Core1 owner. Evidence and screenshots:
-`amiga/records/2026-10-13/dosbox-wfw/`. Physical findings and owner-provided DOS/Windows screenshots are now backed up
+Left on Workbench, launcher still open, no Core1 task. Evidence and screenshots:
+`amiga/records/2026-10-13/dosbox-wfw/`. Physical findings and user-provided DOS/Windows screenshots are now backed up
 on private GitHub main `20dc70cc47be9fbae8a5b5b2d252b61b6e615313`; remote hash and 821-file manifest verified.
 
 ## ZZDosBox Windows research and GitHub backup — 13 October 2026
@@ -457,7 +457,7 @@ Previous binaries/config: `ZZDosBox-PreStart`, `Launcher-PreStart`,
 `Launcher.cfg-PreStart`; full DOS disk backup `Disks/DOS622-PreStart.IMG`.
 Original profiles restored after tests (format 5); selected MS-DOS 6.22,
 window 640x480, FPS on, MIDI/CD off. Launcher left on DOS terminal, no Core1
-owner, DOSHD ejected. No GitHub push; private GitHub backup remains 0.8.
+task, DOSHD ejected. No GitHub push; private GitHub backup remains 0.8.
 
 Native ASan EGA/PIT/CD/MIDI/welcome, startup/profile units, full ARM model
 (including CD/MIDI/speed) and shared ARM/MCP checks pass. All recorded target
@@ -465,7 +465,7 @@ runs finished with register/cache witnesses restored and owned memory released.
 Evidence: `amiga/records/2026-10-13/dosbox-startup-cd/`; scratch automation and
 screenshots: `.context/amiga/dosbox-startup-cd/`.
 
-Owner also highlighted Staging's HLT-based `cpu_idle`. Reviewed and documented
+User also highlighted Staging's HLT-based `cpu_idle`. Reviewed and documented
 as follow-up; **not implemented** and no ZZ9000 idle-power saving measured.
 Current core emulates HLT but prompt callbacks still run NOP idle loops.
 An emulated HLT does not sleep the physical ARM, whose XACP handshakes still
@@ -484,7 +484,7 @@ Both installed and independently checksummed. Previous binaries/config are
 PreWindow backups remain. Launch UI with Stack 65536 as before.
 
 DOS terminal now has Display (Workbench window / Fullscreen) and Window size
-(320×240 / 640×480 / 960×720). **Show FPS is in Settings**, per the owner's
+(320×240 / 640×480 / 960×720). **Show FPS is in Settings**, per the user's
 latest request. Format 3 saves the preset per profile; formats 1/2 import at
 640×480. Disk boot also consumes the preset. Fullscreen disables the size
 control and stays 640×480. Native Workbench size gadget permits client sizes
@@ -503,7 +503,7 @@ checks pass. **Physical drag-resizing remains untested.** Do not synthesize
 window dragging/sizing through the bridge; see the earlier Intuition stall.
 
 Final profile: MS-DOS 6.22, window, 640×480, FPS enabled. Other profiles kept
-their existing settings. Launcher is on DOS terminal, no Core1 owner, disk
+their existing settings. Launcher is on DOS terminal, no Core1 task, disk
 image ejected from Workbench. No firmware/startup/disk-image changes or GitHub
 push. Evidence: `amiga/records/2026-10-13/dosbox-window-sizes/`;
 local automation/screenshots: `.context/amiga/dosbox-window-sizes/`.
@@ -546,7 +546,7 @@ migration/FPS unit tests, full ARM PC model including VGA-shell raw-key VER/EXIT
 and `make test-amiga-arm test-amiga` passed.
 
 Final state: launcher on DOS terminal tab, MS-DOS 6.22 selected, window + FPS
-saved, no Core1 owner. Image remains ejected from Workbench. No firmware or
+saved, no Core1 task. Image remains ejected from Workbench. No firmware or
 startup-service changes. Evidence: `amiga/records/2026-10-13/dosbox-window/`.
 Local automation/screenshots: `.context/amiga/dosbox-window/`. No GitHub push;
 the previous private backup remains 0.8.0-dev.
@@ -569,7 +569,7 @@ Repository remains private; no GitHub Release was created.
 **Recovered:** bridge temporarily stopped answering after an injected Workbench
 window-sizing gesture while capturing the new DOSBox icon. No Core1 application
 was running. After requesting a physical mouse-button release, the bridge
-responded again and the owner confirmed recovery; a fresh injected button-up
+responded again and the user confirmed recovery; a fresh injected button-up
 cleared any remaining qualifier. No reboot was observed and the bridge reports
 no crash data. The bridge source `input_inject.c` warns that injected window
 drag/size gadgets can put Intuition into a modal loop requiring a physical
@@ -582,7 +582,7 @@ Installed runtime remains the original 0.8.0-dev (CRC32 1FCAF3E4), and the
 launcher/config are unchanged. User's supplied DOSBox ICO is now installed as
 a classic 64x64 Workbench launcher icon; readback and metadata passed (WBTOOL,
 stack 65536). Old icon: `SD032G:Dev/ZZDosBox/PC/LauncherIcon-Original`.
-Master: `amiga/dosbox/assets/dosbox.ico`; conversion/build helper:
+Source: `amiga/dosbox/assets/dosbox.ico`; conversion/build helper:
 `scripts/prepare_dosbox_icon.py`, `amiga/dosbox/launcher/icon.c`.
 
 Two scheduler experiments passed native differential PIC traces, exact game
@@ -604,7 +604,7 @@ Two matched trials per game/build also rejected O3: Keen mean wall time
 15034.5 -> 15100 ms (+0.44%); Vette 20075 -> 20156 ms (+0.40%). Each run
 completed 558 frames/8000 simulated ms and passed register/cache restoration
 and owned-memory release. These are startup refresh measurements, not steady
-play or unique frames. Final bridge ping/launcher window passed, no Core1 owner,
+play or unique frames. Final bridge ping/launcher window passed, no Core1 task,
 no crash data; canonical executable remains CRC32 1FCAF3E4. Local default O2
 rebuild matches the installed baseline SHA256 byte-for-byte. No GitHub push,
 firmware/startup change or baseline replacement.
@@ -639,7 +639,7 @@ from these tests. Audio remains unimplemented.
 Evidence: `amiga/records/2026-10-13/dosbox-08-games/`; local controls/captures
 in `.context/amiga/dosbox-08-games/` and `.context/dosbox-08-{games,bench}.py`.
 No new Guru observed; bridge reports no crash record. Final state: launcher
-Programs/Keen selected, no Core1 owner, disk images ejected. No GitHub push.
+Programs/Keen selected, no Core1 task, disk images ejected. No GitHub push.
 
 ## ZZDosBox 0.8.0-dev installed — 13 October 2026
 
@@ -653,13 +653,13 @@ Previous 0.7 runtime/UI/config are `ZZDosBox-PreHDD`, `Launcher-PreHDD`,
 `Launcher.cfg-PreHDD`; earlier PreOvernight copies remain too.
 
 `Disks/DOS622.IMG` is a 32 MiB BIOS hard disk, CHS 128/16/32, FAT16 partition.
-Prepared MS-DOS 6.22 and DOS utilities come from the owner's supplied disks;
+Prepared MS-DOS 6.22 and DOS utilities come from the user's supplied disks;
 Keen/Vette/Elite are in C:\GAMES. HIMEM works with 8 MiB guest RAM (7,104 KiB
 free XMS); DOS=HIGH stalled in native testing and is omitted. EMM386 is present
 as a DOS file but not enabled/validated. No full interactive SETUP run claimed.
 User media is local only. No new FPS benchmark.
 
-The first mount helper stalled before an ARM job started. Owner then reported
+The first mount helper stalled before an ARM job started. User then reported
 **Guru during the restart**, not during initial mounting. Bridge retained no
 crash data after reboot, so exact Guru cause is unknown. The likely mount
 deadlock was using `DiskImageCtrl DRIVE DOSHD:` while FAT95 was inhibited.
@@ -673,7 +673,7 @@ image, raw diskimage.device second open refused while BIOS held image, real A9
 DOS write/flush/F10 return, fresh-process readback, Workbench readback. Register
 and cache-witness restoration and owned-memory release passed. MUI mount/eject,
 mounted-boot refusal, HDD boot/VER/F10 return also passed. Test BAT/text files
-were removed. Final state: Workbench, launcher Programs tab, no Core1 owner;
+were removed. Final state: Workbench, launcher Programs tab, no Core1 task;
 unit 5/DOSHD exists with image ejected. All floppy image units are empty after
 reboot; use Mount floppies if wanted. No startup/firmware changes.
 
@@ -733,7 +733,7 @@ ARM dynrec remain pending. The shared writable C: drawer is still available.
 Records: `amiga/records/2026-10-12/dosbox-07/`; scratch/tests/screenshots and
 source backups: `.context/amiga/dosbox-overnight/`. No media, firmware, startup
 or unrelated emulator changes; no GitHub publication this turn. Final UI stays
-on Programs; the bridge/Roadie remain available and no Core1 owner is active.
+on Programs; the bridge/Roadie remain available and no Core1 task is active.
 
 ## 2026-10-12 — DOSBox interpreter port: first physical execution
 
@@ -753,7 +753,7 @@ Verified actual DOSBox normal x86 interpreter on Core1: original COM fixture,
 arithmetic/flags/stack/32-bit operations, RAM checksum f23411c5, guest exit0,
 expected DOS text; twelve successful runs plus cooperative cancellation.
 MMU/cache/register restoration and cache witness passed; launcher exit0 and
-owned memory released. Bridge/Roadie alive and owner port absent afterward.
+owned memory released. Bridge/Roadie alive and coordination port absent afterward.
 32 MiB allocation; larger page-table reserve tested at all16,384 alignments.
 Do not use the inherited PIC libc's hard-float setjmp; build the soft-float
 source as this script does. Diagnostics free callback strings between runs.
@@ -780,7 +780,7 @@ resize/allocate/free pass. Retrieved `FileTest.out` (256 bytes) matches input
 exactly, SHA256 `34e74cd225ecbf83b8c1fd7424fbfa663bcfff126e5d23a674668c67ab9da38e`.
 Cancellation, 14 restoration registers, cache witness and owned-memory release
 pass; launcher exit 0. Final state: Workbench, Roadie/bridge present, no Core1
-owner. Native ASan and ten ARM-model cases pass. Evidence:
+task. Native ASan and ten ARM-model cases pass. Evidence:
 `amiga/records/2026-10-12/dosbox-dos/`. Executable SHA256:
 `84df1354c92cd130cc20c9531838caacb16ff718ee7c0bdec6b2945dca344755`.
 
@@ -833,7 +833,7 @@ and waiting for outstanding input before closing the device/window. The ARM
 transport uses 256-byte RX and 4096-byte TX rings inside the existing uncached
 shared region. Counter wrap, backpressure and blocked cancellation are tested.
 
-Xanxi's guidance (relayed by owner) supports preserving the PicoDrive-style
+Xanxi's guidance (relayed by user) supports preserving the PicoDrive-style
 execution model for XACP 1.8+. It does not prove our extra MMU/debugger paths
 on later firmware or our own 68030 compatibility. Future audio should measure
 AHI servicing/synchronization and batch exchanges, not just lower sample rate.
@@ -855,7 +855,7 @@ filesystem facade ASan/UBSan), `build_dosbox_dos_arm.py --shell` (ARM/68k), and
 bases; game startup probes additionally pass with edge-bound guards. New live
 filesystem uses 4 KiB chunks and 16 handles; path/linked-file restrictions,
 truncation/seek, large files, enumeration and handle cleanup are tested.
-Existing XX19c single-owner, mapping/MMU/cache/teardown rules still apply. Shared
+Existing XX19c single-client, mapping/MMU/cache/teardown rules still apply. Shared
 launcher, NES/SNES sources, firmware and startup settings were not changed.
 
 Physical DIR, TYPE, redirection, COM/EXE launch, COPY and REN passed. Pulled
@@ -976,7 +976,7 @@ startup or GitHub publication changes.
 
 Post-promotion default-path EGA/PIT smoke passed with `POLL ms=1`, clean
 restoration and owned-memory release. Final state: Workbench and bridge
-available, no Core1 owner. No user-facing gameplay controls were added here.
+available, no Core1 task. No user-facing gameplay controls were added here.
 
 ## 2026-10-12 — ZZDosBox ARM scaler optimisation
 
@@ -1067,7 +1067,7 @@ startup or GitHub changes. Next: profile CPU/VGA, evaluate bounded ARM dynrec
 with code-cache synchronisation; input/audio are separate functional work.
 
 Post-install default-path EGA/PIT passed (18 frames/18 ACKs). Final state:
-Workbench, Roadie and bridge available; no Core1 owner.
+Workbench, Roadie and bridge available; no Core1 task.
 
 ## 2026-10-12 — ZZDosBox profiling and RGB565 conversion installed
 

@@ -42,7 +42,7 @@ profiles are unchanged. Run Install against the existing destination to upgrade.
 | ZZ9000 graphics and Fast RAM board configuration | Required | Required |
 | AHI v4+, registered audio modes and accessible unit 0 | Reported; sound-off use allowed | Required for the supplied audio-enabled profiles |
 | CAMD v37+ | Optional MIDI information | Optional MIDI information |
-| Closed ZZDosBox launcher and no active Core1 owner | Required | Required |
+| Closed ZZDosBox launcher and no active Core1 task | Required | Required |
 
 Missing dependencies produce an explanation and stop installation where required.
 The installer does **not** replace system libraries or install drivers silently.

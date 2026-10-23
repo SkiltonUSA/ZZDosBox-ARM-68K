@@ -104,7 +104,7 @@ be read through the bridge; collect only after the completion marker, or observe
 Shell output directly during an attended test.
 
 The short physical Hercules checks subsequently passed on 14 October 2026,
-staged separately with Stack 65536 and an idle Core1 owner check. Direct and
+staged separately with Stack 65536 and an idle Core1 exclusive-access check. Direct and
 OpenGL both paused before frame 2, stepped to frame 3 and continued to clean
 completion. Both also stopped cleanly after frame 2 with tracing disabled.
 These are lifecycle checks, not game benchmarks or a diagnosis of the earlier

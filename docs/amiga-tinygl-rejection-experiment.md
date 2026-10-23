@@ -177,7 +177,7 @@ All nine physical runs (three comparison, three scalar, three hybrid) passed
 7,872 bounded kernel checks per run, exact scene colour/depth comparisons,
 EGA/PIT/shell checks, SIMD/MMU/register/cache-witness restoration and owned-memory
 release. All twelve linked-model lifecycle checks passed across the three builds.
-Final bridge and Workbench checks were responsive, with no Core1 owner or
+Final bridge and Workbench checks were responsive, with no Core1 task or
 Software Failure. The staged RAM diagnostic is now the fixed hybrid, CRC32
 `16B0FC11`. Installed DOSBox remains CRC32 `5C74FFFC`; no installed launcher,
 profile, firmware or startup changes were made. No GitHub push or release was

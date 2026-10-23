@@ -70,7 +70,7 @@ comparisons for every method. The first three scene hashes also matched the
 previous physically verified scalar results. All runs completed EGA/PIT and
 DOS shell checks, SIMD/MMU/register/cache-witness restoration and owned-memory
 release without reported errors. The bridge and Workbench remained responsive;
-post-run checks found no Core1 owner or Software Failure window.
+post-run checks found no Core1 task or Software Failure window.
 
 Only the separate `RAM:ZZRaster/ZZRasterBench` diagnostic was staged:
 1,171,224 bytes, CRC32 `8FAD32D1`, SHA256

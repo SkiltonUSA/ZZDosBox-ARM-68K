@@ -58,7 +58,7 @@ geometry, or DOSBox's existing pixel-presentation path.
   pass, `guest_exit=0`, `context_equal=1`, zero register mismatches and cache
   witness errors, normal launcher exit and owned-memory release.
 - Installed runtime unchanged (CRC32 `5C74FFFC`). Diagnostic exists only in RAM
-  and local evidence. Final bridge/Workbench checks show no Core1 owner or
+  and local evidence. Final bridge/Workbench checks show no Core1 task or
   Software Failure. No GitHub publication or Release was made for this experiment.
 
 Diagnostic: 1157896 bytes, CRC32 `16EDEFE9`, SHA-256

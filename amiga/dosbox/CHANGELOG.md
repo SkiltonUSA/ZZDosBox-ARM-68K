@@ -303,7 +303,7 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 - Add a Network guide button below the Network page's subtabs.
 - Open the bundled AmigaGuide in MultiView, including during a network session.
-- Generate linked help sections from the same Markdown master as the web guide.
+- Generate linked help sections from the same Markdown source as the web guide.
 - Keep network settings and program profiles unchanged.
 
 <a id="v0-19-7"></a>
