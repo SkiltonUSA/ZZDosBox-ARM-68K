@@ -18,9 +18,9 @@ experimental physical serial, a live joystick tester and 1–6 button choices.
 [Launcher update](artifacts/development/launcher-0.22.7): compact layout for smaller screens,
 scrollable settings, live ZZ9000 temperature
 and saved 1,000 / 3,000 / 6,000 / 10,000 / 60,000 / 100,000 cycle choices.
-Net-JIT combines networking with ARM JIT, EMS and Sound Blaster. This pass adds
-bounded file read-ahead, mouse-motion coalescing and batched interpreter fallback
-for the opt-in paging experiment. Existing profiles retain their settings.
+Net-JIT includes networking, ARM JIT, EMS, Sound Blaster, bounded file read-ahead,
+mouse-motion coalescing and batched interpreter fallback for experimental paging.
+Existing profile settings are preserved.
 
 **Descent startup fix:** corrected DOS temporary-file errors and an ARM JIT
 lookahead bug. DOS/32A provides the working Descent launch path; first-level
