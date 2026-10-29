@@ -6,7 +6,6 @@ ROOT=Path(__file__).resolve().parents[1]
 UP=ROOT/'.context/research/dosbox-libretro'
 def prepare(out):
  patches=[];sources=[]
- p=out/'shell_messages.cpp';p.write_text(p.read_text().replace('0.11.0-dev','0.20.1-dev'))
  # Add the environment only in the compatibility runtime, after shell creation.
  p=out/'frontend.cpp';text=p.read_text();text=text.replace('first_shell=new DOS_Shell();first_shell->Run();','first_shell=new DOS_Shell();if(db_sound_card)first_shell->SetEnv("BLASTER",db_sound_card==2?"A220 I7 D1 H5 T6":"A220 I7 D1 T4");first_shell->Run();');text=text.replace('first_shell->Run();','if(db_extra_sound==1){first_shell->SetEnv("ULTRASND","240,3,3,5,5");first_shell->SetEnv("ULTRADIR","C:\\\\ULTRASND");}first_shell->Run();');p.write_text('#include "audio.h"\n'+text)
  def unit(rel,edit):

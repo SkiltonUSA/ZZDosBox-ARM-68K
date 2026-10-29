@@ -122,7 +122,7 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
  # This port has its own controls; do not advertise unsupported upstream menus.
  def welcome(text):
   messages={
-   'SHELL_STARTUP_BEGIN':"DosBox ZZ9000 project                         0.11.0-dev\nAmigaOS - 32-bit | DOSBox / libretro\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\n\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\nF10: close session             HELP: DOS commands\n\n",
+   'SHELL_STARTUP_BEGIN':"DosBox ZZ9000 project                         "+re.search(r'#define ZZ_DOSBOX_VERSION "([^"]+)"',(ROOT/"amiga/dosbox/version.h").read_text())[1]+"\nAmigaOS - 32-bit | DOSBox / libretro\nhttps://github.com/SkiltonUSA/ZZDosBox-ARM-68K\n\nAlt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed\nF10: close session             HELP: DOS commands\n\n",
    'SHELL_STARTUP_END':'', 'SHELL_STARTUP_CGA':'', 'SHELL_STARTUP_HERC':'', 'SHELL_STARTUP_DEBUG':''}
   messages['SHELL_STARTUP_SUB']=messages['SHELL_STARTUP_BEGIN']
   for key,value in messages.items():

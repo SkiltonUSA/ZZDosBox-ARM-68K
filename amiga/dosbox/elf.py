@@ -1,9 +1,13 @@
 """Strict benchmark-only image packer: low code/data plus high zeroed BSS."""
 import struct
 
-def unpack(data, *, expanded=False):
+def unpack(data, *, expanded=False, jit_mib=0):
     image_limit=0x140000 if expanded else 0x100000
     bss_limit=0x3b00000 if expanded else 0x1fd0000
+    if jit_mib:
+        if jit_mib not in (1,4,32) or (jit_mib==32 and not expanded):
+            raise ValueError('Unsupported executable-cache profile')
+        bss_limit=min(bss_limit,(0x4000000 if expanded else 0x2000000)-0x100000-jit_mib*0x100000)
     if data[:6]!=b'\x7fELF\x01\x01' or struct.unpack_from('<H',data,18)[0]!=40:
         raise ValueError('Expected ELF32 little-endian ARM')
     h=struct.unpack_from('<HHIIIIIHHHHHH',data,16)

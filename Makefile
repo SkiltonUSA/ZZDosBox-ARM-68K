@@ -50,7 +50,8 @@ test-host-review:
 build-expanded:
 	$(PYTHON) scripts/build_dosbox_dos_arm.py --pc --pc-compat --pc-x87 --pc-expanded \
 	  --pc-dynrec --pc-jit-mib 4 --pc-neon --pc-pipeline --pc-pic-vfp \
-	  --pc-scanlines --pc-presentation --pc-adapters --pc-file-readahead --pc-jit-inline
+	  --pc-scanlines --pc-presentation --pc-adapters --pc-file-readahead --pc-jit-inline \
+	  --output .context/cache32
 build-network-jit:
 	$(PYTHON) scripts/build_dosbox_dos_arm.py --pc --pc-compat --pc-x87 --pc-network \
 	  --pc-dynrec --pc-jit-mib 4 --pc-neon --pc-pipeline --pc-pic-vfp \
@@ -61,3 +62,17 @@ test-file-read-ahead:
 .PHONY: test-launcher-layout
 test-launcher-layout:
 	$(PYTHON) scripts/test_dosbox_launcher_layout.py
+
+.PHONY: build-cache32 test-cache32
+build-cache32:
+	$(PYTHON) scripts/build_dosbox_dos_arm.py --pc --pc-compat --pc-x87 --pc-expanded \
+	  --pc-dynrec --pc-jit-mib 32 --pc-neon --pc-pipeline --pc-pic-vfp \
+	  --pc-scanlines --pc-presentation --pc-adapters --pc-file-readahead --pc-jit-inline \
+	  --output .context/cache32
+
+test-cache32:
+	mkdir -p .context/tests
+	clang -O2 -I. -DDB_DYNREC -DDB_EXPANDED -DDB_JIT_MIB=32 tests/amiga/dosbox_jit_layout.c -o .context/tests/cache32
+	.context/tests/cache32
+	clang++ -std=c++11 -fsanitize=address,undefined -I. tests/amiga/dosbox_row_cache.cpp -o .context/tests/rows
+	.context/tests/rows

@@ -1,0 +1,38 @@
+[
+  {
+    "run": "run-1-cache4",
+    "copy_us_per_call": 2850.6841793212725,
+    "calls": 17,
+    "cpu_ms": 461.63553346163553
+  },
+  {
+    "run": "run-2-cache32",
+    "copy_us_per_call": 2307.6628356409965,
+    "calls": 18,
+    "cpu_ms": 488.1925114881925
+  },
+  {
+    "run": "run-3-rows",
+    "copy_us_per_call": 3350.269003350269,
+    "calls": 18,
+    "cpu_ms": 488.0590864880591
+  },
+  {
+    "run": "run-4-rows",
+    "copy_us_per_call": 3591.222003591222,
+    "calls": 17,
+    "cpu_ms": 490.2736804902737
+  },
+  {
+    "run": "run-5-cache32",
+    "copy_us_per_call": 2713.3245909486186,
+    "calls": 17,
+    "cpu_ms": 471.6216544716217
+  },
+  {
+    "run": "run-6-cache4",
+    "copy_us_per_call": 2291.9306689585974,
+    "calls": 18,
+    "cpu_ms": 491.9917714919918
+  }
+]

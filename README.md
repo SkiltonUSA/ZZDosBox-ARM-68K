@@ -632,3 +632,10 @@ the emulator's GPL does not license game data.
 Optional [shareware starter builds](docs/shareware-build.md) include Doom 1.9 and
 Duke Nukem 3D 1.3D with their original notices. Descent is retained in personal
 builds only. Other games, Microsoft software and WinBench are supplied separately.
+
+## Cache development
+
+[32 MiB translation cache and converted-row experiment](docs/32mib-cache-experiment.md):
+physical cache/x87 checks pass. This optional 64 MiB runtime limits guest RAM to
+8 MiB; the released player is unchanged. Hardware DMA remains gated on channel
+ownership and cancellation support.

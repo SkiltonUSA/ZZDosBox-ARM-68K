@@ -1,0 +1,7 @@
+mkdir -p .context/tests
+clang -O2 -I. -DDB_DYNREC -DDB_EXPANDED -DDB_JIT_MIB=32 tests/amiga/dosbox_jit_layout.c -o .context/tests/cache32
+.context/tests/cache32
+PASS 32 MiB executable cache / 64 MiB allocation: guest limit, alignment, bounds
+clang++ -std=c++11 -fsanitize=address,undefined -I. tests/amiga/dosbox_row_cache.cpp -o .context/tests/rows
+.context/tests/rows
+PASS converted rows: formats, scaling, dimming, guards, frame invalidation and hits

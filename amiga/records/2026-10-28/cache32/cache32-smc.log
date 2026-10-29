@@ -1,0 +1,12 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 11 heap 8001216
+PASS ARM capability JITSPEC {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 8001216
+PASS ARM capability SMCTEST {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 11 heap 8001216
+PASS ARM capability JITSPEC {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 8001216
+PASS ARM capability SMCTEST {'cpu': 1} PCM 0 0

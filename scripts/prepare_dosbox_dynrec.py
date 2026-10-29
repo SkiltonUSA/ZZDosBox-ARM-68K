@@ -10,7 +10,7 @@ def prepare(out):
     change('include/config.h',lambda s:s+'\n#define C_DYNREC 1\n#define C_TARGETCPU ARMV7LE\n')
     def core(s):
         s='#include "dynrec_plan.h"\n'+s
-        s=s.replace('(1024*1024*8)','DB_JIT_CACHE').replace('(128*1024)','(8*1024*DB_JIT_MIB)').replace('#define CACHE_PAGES\t\t(512)','#define CACHE_PAGES\t\t(128)')
+        s=s.replace('(1024*1024*8)','DB_JIT_CACHE').replace('(128*1024)','DB_JIT_BLOCKS').replace('#define CACHE_PAGES\t\t(512)','#define CACHE_PAGES\t\tDB_JIT_PAGES')
         s=s.replace('Bits CPU_Core_Dynrec_Run(void)', 'unsigned db_dynrec_dispatches;\nBits CPU_Core_Dynrec_Run(void)')
         # DOSBox-X also falls back for 386 paging: recursive guest page faults
         # are unsafe in dynrec. Check every dispatcher iteration, including

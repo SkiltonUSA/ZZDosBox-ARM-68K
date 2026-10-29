@@ -1,0 +1,17 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 617494 heap 8001024
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 691200 geometry resize
+PASS ARM shell 0x12000040 resize requests 16 read 36181 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 617494 heap 8001024
+PASS scanline masks, three preserved slots, nonce repair and row guards scan-soft frames checked 18
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry scan-soft
+PASS ARM shell 0x12000040 scan-soft requests 16 read 36181 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 617494 heap 8001024
+PASS scanline masks, three preserved slots, nonce repair and row guards scan-gradient frames checked 18
+PASS ARM EGA/PIT/direct framebuffer 0x12000040 format 3 frames 18 pixels 307200 geometry scan-gradient
+PASS ARM shell 0x12000040 scan-gradient requests 16 read 36181 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 63365 heap 8001024
+PASS cancellation during framebuffer write revokes mapping

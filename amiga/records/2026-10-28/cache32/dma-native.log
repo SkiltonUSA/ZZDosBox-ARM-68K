@@ -1,0 +1,2 @@
+PASS DMA program model: exact copies, burst/loop/tail boundaries, guards, bounds and rejection
+PASS DMA builder: freestanding Cortex-A9 C compile

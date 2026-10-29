@@ -1,0 +1,6 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 32 dispatches 31 heap 8001024
+PASS ARM x87 arithmetic/rounding/state and SIMD restoration
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 32 dispatches 31 heap 8001024
+PASS ARM x87 arithmetic/rounding/state and SIMD restoration

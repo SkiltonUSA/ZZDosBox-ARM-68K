@@ -53,6 +53,10 @@ extern "C" void db_gl_shutdown(){
  __asm__ volatile("dsb sy":::"memory");ad_put(b,o,0x474c3031);
 }
 #endif
+#ifdef DB_ROW_CACHE
+#include "row_cache.h"
+static pc_row_cache converted_row;
+#endif
 static unsigned sequence;
 static pc_fps fps;
 #ifdef DB_PRESENT_TEST
@@ -137,6 +141,9 @@ void db_video_present(){
    }
    gl_ticks+=pc_clock_ticks()-gl_start;gl_frames++;
 #endif
+#ifdef DB_ROW_CACHE
+   converted_row.valid=false;
+#endif
    // Match the PC image's 4:3 display area; VGA scanlines may already be doubled.
    for(unsigned y=0;!error&&!rendered_direct&&y<height;y++){
     if(ad_get(b,ZZ_STOP)){error=2;break;}
@@ -150,7 +157,15 @@ void db_video_present(){
     scan.rendered++;
 #endif
     const uint32_t *src=frame_pixels+(y*frame_height/height)*frame_width;
+#ifdef DB_ROW_CACHE
+    pc_cached_row(&converted_row,row,src,frame_width,format,width,
 #ifdef DB_SCANLINE_TEST
+      pc_scan_level(mask,y),
+#else
+      8,
+#endif
+      frame_height<height);
+#elif defined(DB_SCANLINE_TEST)
     pc_scan_scale_row(row,src,frame_width,format,width,pc_scan_level(mask,y));
 #else
     pc_scale_row(row,src,frame_width,format,width);
