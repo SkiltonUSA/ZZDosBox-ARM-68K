@@ -1,0 +1,98 @@
+0x2b5323 924634 runtime bytes only
+ 2b5323: shr ecx, 0x1b
+ 2b5326: mov ebx, esi
+ 2b5328: and ebx, 0x1f
+0x2947c1 674894 first 16 bytes match; remaining instructions from historical snapshot
+ 2947c1: mov edx, ebp
+ 2947c3: mov word ptr [edi + 2], bx
+ 2947ca: shr edx, 0x10
+ 2947cd: add edi, 4
+ 2947d0: movzx ebx, byte ptr [esi + edx]
+ 2947d4: dec ecx
+ 2947d5: jne 0x294764
+0x2947a0 674894 first 16 bytes match; remaining instructions from historical snapshot
+ 2947a0: add ebx, edx
+ 2947a2: mov word ptr [edi], ax
+ 2947a5: cmp ebx, 0xffff8000
+ 2947ab: jge 0x2947b4
+0x2947b4 674894 first 16 bytes match; remaining instructions from historical snapshot
+ 2947b4: cmp ebx, 0x7fff
+ 2947ba: jle 0x2947c1
+0x294794 674894 first 16 bytes match; remaining instructions from historical snapshot
+ 294794: cmp eax, 0x7fff
+ 294799: jle 0x2947a0
+0x294764 672240 first 16 bytes match; remaining instructions from historical snapshot
+ 294764: movsx eax, word ptr [ebx*2 + 0x466588]
+ 29476c: movsx edx, word ptr [edi]
+ 29476f: movsx ebx, word ptr [ebx*2 + 0x465b88]
+ 294777: add eax, edx
+ 294779: add ebp, 0x7fdf
+ 29477f: movsx edx, word ptr [edi + 2]
+ 294786: cmp eax, 0xffff8000
+ 29478b: jge 0x294794
+0x2b56f0 665592 first 16 bytes match; remaining instructions from historical snapshot
+ 2b56f0: add ebx, 0
+ 2b56f6: mov al, byte ptr [esi]
+ 2b56f8: adc esi, 1
+ 2b56fe: cmp al, 0xff
+ 2b5700: je 0x2b570a
+0x2b502a 576331 runtime bytes only
+ 2b502a: mov ebx, edx
+ 2b502c: shr ebx, 0x1b
+ 2b502f: add edi, 0x50
+ 2b5035: mov bl, byte ptr [esi + ebx]
+ 2b5038: add edx, eax
+0x2b5053 550877 first 16 bytes match; remaining instructions from historical snapshot
+ 2b5053: mov ebx, edx
+ 2b5055: shr ebx, 0x19
+ 2b5058: mov bl, byte ptr [esi + ebx]
+ 2b505b: cmp bl, 0xff
+ 2b505e: je 0x2b5066
+0x2b4e70 488867 runtime bytes only
+ 2b4e70: mov dword ptr [edi], ebx
+ 2b4e72: rol eax, 7
+ 2b4e75: and eax, 0xfff
+ 2b4e7a: sub esi, 0x90067019
+0x2b4efe 488867 first 16 bytes match; remaining instructions from historical snapshot
+ 2b4efe: mov bl, byte ptr [ecx + 0x4cefb4]
+ 2b4f04: jae 0x2b4e70
+0x2b5702 371061 first 16 bytes match; remaining instructions from historical snapshot
+ 2b5702: mov al, byte ptr [eax + 0x4cefb4]
+ 2b5708: mov byte ptr [edi], al
+ 2b570a: add edi, 0x50
+ 2b5710: add edx, 0
+ 2b5716: dec ecx
+ 2b5717: ja 0x2b56f0
+0x2b5d91 336025 first 16 bytes match; remaining instructions from historical snapshot
+ 2b5d91: shr ebx, 0xf3
+ 2b5d94: add esi, ecx
+ 2b5d96: shr edx, 0xf9
+ 2b5d99: and ebx, 0x1f80
+ 2b5d9f: add edi, eax
+ 2b5da1: add ebp, 0xffffffb0
+ 2b5da7: mov dl, byte ptr [ebx + edx + 0x6a8cb0]
+ 2b5dae: mov ebx, dword ptr [esp - 0x134720]
+ 2b5db5: sub esp, 4
+ 2b5db8: dec cl
+ 2b5dba: mov al, byte ptr [ebx + edx]
+ 2b5dbd: mov ebx, esi
+ 2b5dbf: mov byte ptr [ebp], al
+ 2b5dc2: mov edx, edi
+ 2b5dc4: jne 0x2b5d91
+0x2b5066 307973 first 16 bytes match; remaining instructions from historical snapshot
+ 2b5066: add edx, eax
+ 2b5068: add edi, 0x50
+ 2b506e: sub ecx, 1
+ 2b5071: jae 0x2b5053
+0x2b570a 294531 first 16 bytes match; remaining instructions from historical snapshot
+ 2b570a: add edi, 0x50
+ 2b5710: add edx, 0
+ 2b5716: dec ecx
+ 2b5717: ja 0x2b56f0
+0x2b5060 286264 first 16 bytes match; remaining instructions from historical snapshot
+ 2b5060: mov bl, byte ptr [ebp + ebx]
+ 2b5064: mov byte ptr [edi], bl
+ 2b5066: add edx, eax
+ 2b5068: add edi, 0x50
+ 2b506e: sub ecx, 1
+ 2b5071: jae 0x2b5053

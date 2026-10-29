@@ -17,7 +17,7 @@ commands=b'dir /b\rtype readme.txt\recho saved text > SAVED.TXT\rtype saved.txt\
 def scan_row(data,mode,y):
  factor=(0 if y%2 else 8) if mode in (1,2) else (5 if y%2 else 8) if mode==3 else (8,6,4,6)[y%4] if mode==4 else 8
  return bytes(c*factor//8 for c in data)
-def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000,memory_requests=None,memory_stop=False,matrix_stop=False,disk_mib=32,paging_fixture=None,paging_faults=1,network=None,hardware=None,fixture=None,mouse_burst=False):
+def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000,memory_requests=None,memory_stop=False,matrix_stop=False,disk_mib=32,paging_fixture=None,paging_faults=1,network=None,hardware=None,fixture=None,mouse_burst=False,jit_helpers=None):
  build=json.loads((OUT/'build.json').read_text());allocation=build.get('allocation',0x2000000);expanded=build.get('expanded',False)
  image,rel,_=pack.unpack((OUT/'dosbox.elf').read_bytes(),expanded=expanded)
  for off in rel:struct.pack_into('<I',image,off,struct.unpack_from('<I',image,off)[0]+base)
@@ -32,6 +32,14 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
  neon='db_neon_begin' in symbols
  jit_mib=json.loads((OUT/'build.json').read_text()).get('jit_mib',1) if jit else 1
  u=Uc(UC_ARCH_ARM,UC_MODE_ARM);u.ctl_set_cpu_model(UC_CPU_ARM_CORTEX_A9)
+ if jit_helpers is not None:
+  # Model-only exact entry counts; these are not hardware time measurements.
+  for name,address in symbols.items():
+   if any(part in name for part in ('checked_drc','FillFlags','get_CF','get_ZF','get_SF','get_OF','get_PF')):
+    jit_helpers[name]=0
+    def entered(u,pc,size,key):jit_helpers[key]+=1
+    u.hook_add(UC_HOOK_CODE,entered,user_data=name,begin=address,end=address)
+
  if neon and mode!='neon-denied':
   u.reg_write(UC_ARM_REG_C1_C0_2,0x00f00000);u.reg_write(UC_ARM_REG_FPEXC,0x40000000)
   for i in range(32):u.reg_write(globals()['UC_ARM_REG_D'+str(i)],0xa5a5000000000000+i)

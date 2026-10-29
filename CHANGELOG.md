@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.22.7-dev**, newest first.
+Version history from **0.1.0-dev** through **0.23.0-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -9,6 +9,13 @@ installation statements describe that milestone, not the current default.
 Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
+
+## 0.23.0-dev — isolated cache and scheduling experiments
+
+- Record a 32 MiB translation cache inside a 64 MiB owned allocation, with 8 MiB guest RAM and matching product versions.
+- Add opt-in guarded writable-TLB JIT paths and bounded host audio batching before presentation.
+- Preserve checked fallbacks, self-modifying-code invalidation and x87/SIMD restoration.
+- Keep release defaults unchanged; [measurements and rejected candidates](docs/guarded-writes-audio.md).
 
 ## 0.22.7 Beta — installer update
 

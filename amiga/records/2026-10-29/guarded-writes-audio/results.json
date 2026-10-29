@@ -1,0 +1,159 @@
+[
+  {
+    "run": "hot-1",
+    "valid": true,
+    "instrumented": true,
+    "seconds": 30.00073239000073,
+    "fps": 4.399892585422204,
+    "game_time_ratio": 0.8237798890615482,
+    "audio_frames": 2234368,
+    "audio_gaps": 1229,
+    "audio_gap_fraction": 0.5632447296058661,
+    "sample_percent": {
+      "other": 2.045548412161607,
+      "cpu": 76.44179403043215,
+      "events": 8.710497063461933,
+      "capture": 4.464886653534782,
+      "grant": 5.5319629774211725,
+      "copy": 2.8053108629883634
+    }
+  },
+  {
+    "run": "ref-1",
+    "valid": true,
+    "instrumented": false,
+    "seconds": 30.00067053600067,
+    "fps": 4.9332230698777435,
+    "game_time_ratio": 0.9165128481713408,
+    "audio_frames": 2337792,
+    "audio_gaps": 830,
+    "audio_gap_fraction": 0.36355672360928604,
+    "sample_percent": {
+      "other": 2.0803668220146334,
+      "cpu": 75.34593104066708,
+      "events": 9.558055813578308,
+      "capture": 4.960601723221615,
+      "grant": 4.935531574284027,
+      "copy": 3.1195130262343267
+    }
+  },
+  {
+    "run": "ref-2",
+    "valid": true,
+    "instrumented": false,
+    "seconds": 30.000633513000633,
+    "fps": 4.899896528394917,
+    "game_time_ratio": 0.9132807141598118,
+    "audio_frames": 2337792,
+    "audio_gaps": 821,
+    "audio_gap_fraction": 0.35961454226894435,
+    "sample_percent": {
+      "other": 2.0596194107242187,
+      "cpu": 75.0496842609069,
+      "events": 9.502241338273693,
+      "capture": 4.941307083312674,
+      "grant": 5.3448324427940035,
+      "copy": 3.1023154639885147
+    }
+  },
+  {
+    "run": "write-1",
+    "valid": true,
+    "instrumented": false,
+    "seconds": 30.00039090600039,
+    "fps": 4.866603253852885,
+    "game_time_ratio": 0.9090548215005196,
+    "audio_frames": 2333696,
+    "audio_gaps": 843,
+    "audio_gap_fraction": 0.36989907854322074,
+    "sample_percent": {
+      "other": 2.16270210551145,
+      "cpu": 74.7956660750599,
+      "events": 9.544198661712983,
+      "capture": 4.915733336000286,
+      "grant": 5.49603408152912,
+      "copy": 3.0856657401862613
+    }
+  },
+  {
+    "run": "write-2",
+    "valid": true,
+    "instrumented": false,
+    "seconds": 30.00042111600042,
+    "fps": 4.866598353252194,
+    "game_time_ratio": 0.9061539468024719,
+    "audio_frames": 2331648,
+    "audio_gaps": 846,
+    "audio_gap_fraction": 0.3715415019762846,
+    "sample_percent": {
+      "other": 2.170398334150919,
+      "cpu": 74.5587488929013,
+      "events": 9.508199195932454,
+      "capture": 4.8992445742308615,
+      "grant": 5.786018538426405,
+      "copy": 3.0773904643580594
+    }
+  },
+  {
+    "run": "write-3",
+    "valid": true,
+    "instrumented": false,
+    "seconds": 30.000342576000342,
+    "fps": 4.866611093861208,
+    "game_time_ratio": 0.904956332789301,
+    "audio_frames": 2331648,
+    "audio_gaps": 844,
+    "audio_gap_fraction": 0.3706631532718489,
+    "sample_percent": {
+      "other": 2.2064295353158143,
+      "cpu": 74.46397094385073,
+      "events": 9.498726770742532,
+      "capture": 4.893139793836297,
+      "grant": 5.855228232864639,
+      "copy": 3.082504723389986
+    }
+  },
+  {
+    "run": "write-audio-1",
+    "valid": false,
+    "reason": "Failed lifecycle checks; excluded"
+  },
+  {
+    "run": "write-audio-2",
+    "valid": true,
+    "instrumented": false,
+    "seconds": 30.00044996700045,
+    "fps": 4.899926506492249,
+    "game_time_ratio": 0.9101196825392133,
+    "audio_frames": 2336768,
+    "audio_gaps": 838,
+    "audio_gap_fraction": 0.3672217353198948,
+    "sample_percent": {
+      "other": 2.1325875119892257,
+      "cpu": 74.88758035256238,
+      "events": 9.553278437992274,
+      "capture": 4.920055482513605,
+      "grant": 5.414461352839824,
+      "copy": 3.092036862102692
+    }
+  },
+  {
+    "run": "write-audio-3",
+    "valid": true,
+    "instrumented": false,
+    "seconds": 30.000354495000355,
+    "fps": 4.933275039288773,
+    "game_time_ratio": 0.9137892022098814,
+    "audio_frames": 2339840,
+    "audio_gaps": 826,
+    "audio_gap_fraction": 0.3614879649890591,
+    "sample_percent": {
+      "other": 2.1756250638705565,
+      "cpu": 75.1924581499695,
+      "events": 9.596835852004212,
+      "capture": 4.940040180058514,
+      "grant": 4.992413800274329,
+      "copy": 3.102626953822891
+    }
+  }
+]

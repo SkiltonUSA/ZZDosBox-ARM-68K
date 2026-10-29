@@ -1,0 +1,33 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 18 dispatches 27 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITWRITE {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability SMCTEST {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 21 dispatches 37 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITREAD {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 18 dispatches 27 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITWRITE {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability SMCTEST {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 21 dispatches 37 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITREAD {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 10 dispatches 7 heap 8154304
+PASS profile publication and exclusive totals paging unwound 0
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture demand-page faults 1 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 8 dispatches 4 heap 8013440
+PASS profile publication and exclusive totals high-bank-bound unwound 1
+PASS banked TLB rejects unsupported guest address high-bank-bound Guest page bound f0001 at 191:100 ss:sp=191:fffe

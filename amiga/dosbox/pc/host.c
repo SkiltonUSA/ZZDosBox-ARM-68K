@@ -17,6 +17,9 @@
 #include "pc_wire.h"
 #include "joystick_plan.h"
 #include "mmu.h"
+#if defined(MB_MMU) && (MB_PUBLIC_BEGIN != ZZ_CONTROL || MB_MMU_STATE != ZZ_CONTROL+0x2000u || MB_MMU_REPORT != ZZ_CONTROL+0x2400u)
+#error DOSBox host must use its generated MMU layout headers
+#endif
 #include "profile_plan.h"
 #include "options.h"
 #include "../launcher/session.h"
@@ -299,13 +302,17 @@ static int run(struct DbWindow *console){
    if(next)publish(PC_CYCLE_REQUEST,next);
   }
 #endif
+#if defined(DB_COMPAT) && defined(DB_AUDIO_BATCH)
+  /* Fill ready AHI batches before display service can wait on a frame. */
+  if(!db_audio_host_service()){transport_ok=0;want_stop=1;}
+#endif
   if(receive(PC_CONSOLE_WAIT)&&!pc_display_locked()&&!pc_display_pending())pc_display_console(1);
   if(!stopping){int display_result=pc_display_service();if(display_result<=0){if(!display_result)transport_ok=0;want_stop=1;}}
 #ifdef DB_VIDEO_TRACE
   {int debug_result=video_debug_service(stopping);
    if(debug_result<=0){want_stop=1;if(debug_result<0)transport_ok=0;}}
 #endif
-#ifdef DB_COMPAT
+#if defined(DB_COMPAT) && !defined(DB_AUDIO_BATCH)
   if(!db_audio_host_service()){transport_ok=0;want_stop=1;}
 #endif
   if(!(midi_result=db_midi_host_service())){transport_ok=0;want_stop=1;}

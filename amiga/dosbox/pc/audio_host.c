@@ -165,6 +165,23 @@ int db_audio_host_service(void){
  if(r==w)return 1;
  Forbid();n=audio_write-audio_read;Permit();
  if(n==AUDIO_SLOTS)return 1;
+#ifdef DB_AUDIO_BATCH
+ /* Bounded snapshot: the worker only consumes, so free capacity can grow.
+  * Publish both read/write indices once after all copied slots are immutable. */
+ ULONG count=w-r,free_slots=AUDIO_SLOTS-n;
+ if(count>free_slots)count=free_slots;
+ for(ULONG k=0;k<count;k++){
+  index=(audio_write+k)%AUDIO_SLOTS;
+  ULONG at=PC_AUDIO_DATA+((r+k)&(PC_AUDIO_SLOTS-1))*PC_AUDIO_STRIDE;
+  syncio->pull(b+at,PC_AUDIO_STRIDE,NULL);
+  CopyMem((APTR)(b+at),audio_queue[index].data,PC_AUDIO_STRIDE);
+  audio_queue[index].count=PC_AUDIO_FRAMES;
+ }
+ Forbid();audio_write+=count;if(n+count>audio_highwater)audio_highwater=n+count;Permit();
+ audio_samples+=count*PC_AUDIO_FRAMES;
+ ad_put(b,PC_AUDIO_READ,r+count);syncio->push(b+PC_AUDIO_READ,4,NULL);syncio->barrier(NULL);
+ audio_wake();
+#else
  index=audio_write%AUDIO_SLOTS;
  syncio->pull(b+PC_AUDIO_DATA+(r&(PC_AUDIO_SLOTS-1))*PC_AUDIO_STRIDE,PC_AUDIO_STRIDE,NULL);
  CopyMem((APTR)(b+PC_AUDIO_DATA+(r&(PC_AUDIO_SLOTS-1))*PC_AUDIO_STRIDE),audio_queue[index].data,PC_AUDIO_STRIDE);
@@ -172,6 +189,7 @@ int db_audio_host_service(void){
  Forbid();audio_write++;if(n+1>audio_highwater)audio_highwater=n+1;Permit();
  audio_samples+=PC_AUDIO_FRAMES;audio_wake();
  ad_put(b,PC_AUDIO_READ,r+1);syncio->push(b+PC_AUDIO_READ,4,NULL);syncio->barrier(NULL);
+#endif
  return 1;
 }
 int db_audio_host_pending(void){

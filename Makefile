@@ -75,3 +75,7 @@ test-cache32:
 	.context/tests/cache32
 	clang++ -std=c++11 -fsanitize=address,undefined -I. tests/amiga/dosbox_row_cache.cpp -o .context/tests/rows
 	.context/tests/rows
+
+.PHONY: test-audio-batch
+test-audio-batch:
+	$(PYTHON) scripts/test_dosbox_audio_batch.py

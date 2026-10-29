@@ -1,0 +1,5 @@
+Missing generated mmu.h: actual m68k-amigaos-gcc compile fails with DOSBox host must use its generated MMU layout headers.
+Complete generated headers: compile succeeds; ARM payload unchanged.
+Portable clang include-selection test: PASS.
+Rejected physical report phase/mismatch 33ff2fe1/7080efe6 exactly match image bytes at 0x82400; expected report offset is 0x182400.
+Corrected physical repeats write-audio-2 and write-audio-3: exit 0, zero register mismatches and witness failures, memory released.

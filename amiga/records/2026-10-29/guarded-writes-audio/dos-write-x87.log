@@ -1,0 +1,4 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 32 dispatches 31 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability X87TEST {'cpu': 1} PCM 0 0

@@ -1,0 +1,16 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 7908544
+PASS paging policy; paged register dispatches 0 fallback calls 1
+PASS ARM paging fixture /Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-paging-cases/paging_alias.bin faults 0 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 7908544
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture /Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-paging-cases/paging_fetch.bin faults 1 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 7908544
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture /Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-paging-cases/paging_rmw.bin faults 1 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 7908544
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture /Users/dskilton/conductor/workspaces/sixies_development/port-louis/.context/amiga/dosbox-paging-cases/paging_nested.bin faults 2 and shutdown with unmapped text aperture

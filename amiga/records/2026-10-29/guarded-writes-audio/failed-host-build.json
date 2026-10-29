@@ -1,0 +1,16 @@
+{
+  "base_manifest_sha256": "3b301ecd82514e58b9ff57668956ca331d92d0ed0e0abe0c6286189abd9f5c8f",
+  "version": "0.23.0-dev",
+  "ARM_payload_identical": true,
+  "host_define": "DB_AUDIO_BATCH",
+  "outputs": {
+    "ZZDosBox-Expanded": "92fc95948359ea28b76160e4410dad0c74cc9f9510faa1a5050d09e9a78af894",
+    "dosbox.elf": "3e846fa7c9e0ee6dc28062fb9798571f8f5dac84c44f5b6a9d33fac0617adfb9",
+    "zz_payload.h": "3d6a675cbd2a8b4ce300191ba2de2006f6d2e335668ac3b39a0f3764feb58bdc"
+  },
+  "source_hashes": {
+    "amiga/dosbox/pc/audio_host.c": "dd4f14960d696eb2c66e120c83fa7c08a1d640bf292900e282d6ff6063c34ace",
+    "amiga/dosbox/pc/host.c": "4fbdb118c3acab94399602110f9d72118aeef0fc5fa8f2df0d991fd358944c22",
+    "scripts/build_dosbox_dos_arm.py": "f588f992f2962bee5d76a94b6bf90157a87cc989fd02e50968bb77f1a442f696"
+  }
+}

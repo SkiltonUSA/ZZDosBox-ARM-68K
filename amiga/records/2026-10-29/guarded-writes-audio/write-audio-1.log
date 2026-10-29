@@ -1,0 +1,102 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=67108864 nonce=09a23b99
+BOOTSTRAP amiga=40c78400 arm=00e68400 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+EXPANDED cpu=1 memory_services=0 joystick=0 extra_sound=0 cycle_mode=0 serial=0 paged_jit=0
+AUDIO task: AHI unit 0, 32000 Hz stereo; 4 queue slots, 64 ms prebuffer
+COMPAT ems=1 xms=1 sound=SB16 A220 I7 D1 H5 T6, OPL3 speaker=0
+DISPLAY_CONFIG mode=fullscreen fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=3 cycles=10000 live=1
+FULLSCREEN_BITMAP allocated=0896872c screen=08fce2a8 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=097c85ac/40c78400 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+VIDEO adapter=3 source=320x200 monochrome=0
+JIT magic=4a495431 commits=13231 witness=1 dispatches=13807858 cache_bytes=33554432 heap_peak=10105088 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=1505 rendered_rows=722400 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+DUKECLOCK magic=444b4331 address=002be6c4 rejected=0 first=18 last=165 sim_first=45700 sim_last=72990 start=00000094ae815411 end=00000097028f66bf samples=27291
+DUKEPROFILE bucket=0 ticks=000000000cd8f819
+DUKEPROFILE bucket=1 ticks=00000001be1f33c4
+DUKEPROFILE bucket=2 ticks=0000000038eb4ec5
+DUKEPROFILE bucket=3 ticks=000000001d4f629b
+DUKEPROFILE bucket=4 ticks=0000000020742c6e
+DUKEPROFILE bucket=5 ticks=00000000126708ef
+CPU_CYCLES applied=10000
+PRESENT magic=50525331 source=5113 shown=1505 skipped=3608 divisor=4 changes=17 mode=1 hz=60 work_ticks=4860564 copy_ticks=1045165 total_copy=00000000a4d35fbc
+ARM_FPS tenths=0
+PC frames=5113 emulated_ms=72990 wall_ms=104832 timed_done=1
+PROFILE total=00000008229cf08f unwound=0
+PROFILE bucket=other ticks=00000001c64fee0d calls=0
+PROFILE bucket=cpu ticks=000000045efc67a1 calls=964744
+PROFILE bucket=events ticks=00000000c2a11d6b calls=1037734
+PROFILE bucket=capture ticks=0000000095f34d14 calls=1436150
+PROFILE bucket=grant ticks=000000005d234085 calls=1505
+PROFILE bucket=copy ticks=000000004798efdd calls=1505
+POLL ms=1 calls=45019 wait_us=69751253 max_us=60127
+SHELL result=2 guest_exit=0 slices=1037734 bytes=903 hash=a83012fe mismatches=0
+DosBox ZZ9000 project                         0.23.0-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>DUKE3D.EXE /v1 /l1 /s1
+DOS/4GW Professional Protected Mode Run-time  Version 1.97
+Copyright (c) Rational Systems, Inc. 1990-1994
+
+Distribution of shareware Duke Nukem 3D is restricted in certain ways.
+Please read LICENSE.DOC for more details.
+
+Using: 'DUKE3D.GRP'.
+KB_Startup: Keyboard Started
+Compiling: 'GAME.CON'.
+Including: 'DEFS.CON'.
+Including: 'USER.CON'.
+Found 0 warning(s), 0 error(s).
+Code Size:48516 bytes(1425 labels).
+Using Setup file: 'DUKE3D.CFG'
+
+*** You have run Duke Nukem 3D 1 times. ***
+
+Loading art header.
+Checking music inits.
+Checking sound inits.
+RTS Manager Started
+Loading palette/lookups.
+
+SHELL PASS mode=0
+AUDIO_TASK queued=2334720 submitted=2334720 completed=2334720 highwater=4 error=0 stopped=1 gaps=841
+FILES_TIME calls=3382 read_us=8580728 write_us=0 other_us=6824395 max_us=64547 (totals saturate at 4294967295)
+FILES_OP op=open calls=454 total_us=2363907 max_us=33680
+FILES_OP op=close calls=7 total_us=5681 max_us=1039
+FILES_OP op=read calls=1864 total_us=8580728 max_us=25683
+FILES_OP op=seek calls=579 total_us=1489857 max_us=64547
+FILES_OP op=stat calls=457 total_us=2883014 max_us=54819
+FILES_OP op=list calls=20 total_us=81626 max_us=8288
+FILES_OP op=testdir calls=1 total_us=310 max_us=310
+DISK host_seeks=0
+FILES requests=3382 read=4995130 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=872361953 register_mismatches=7080efe6 cpsr_control=930800e0 expected=0e0 ttbr=4c309de5 ccsidr=7800a9e6 witness_bad=264 mailbox_rounds=1
+REGISTER n=0 original=013083e2 restored=030080e0
+REGISTER n=1 original=4c308de5 restored=e5ffffea
+REGISTER n=2 original=18b09ae5 restored=189094e5
+REGISTER n=3 original=cefeffea restored=44ffffea
+REGISTER n=4 original=14339fe5 restored=1c9094e5
+REGISTER n=5 original=1400a0e3 restored=42ffffea
+REGISTER n=6 original=900800e0 restored=cc329fe5
+REGISTER n=7 original=033095e7 restored=1400a0e3
+REGISTER n=8 original=100080e2 restored=900800e0
+REGISTER n=9 original=030080e0 restored=033095e7
+REGISTER n=10 original=e4ffffea restored=100080e2
+REGISTER n=11 original=1430a0e3 restored=030080e0
+REGISTER n=12 original=930800e0 restored=40ffffea
+REGISTER n=13 original=f0329fe5 restored=1430a0e3
+MOUSE events=0 press=0 release=0
+DISPLAY frames=1505 flips=1505 wait_us=15476270
+COPY observed_us=5762716 max_us=60912
+PIPELINE enabled=1 overlaps=6 releases=1499
+ZZDosBox-Expanded: Application frontend or ARM transfer failed. See the CLI log for details.
+LAUNCHER exit=20; owned memory released

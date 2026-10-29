@@ -1,0 +1,18 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 32 dispatches 31 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability X87TEST {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 11 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITREUSE {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 1034503 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry fixture
+PASS ARM shell 0x150020c0 fixture requests 16 read 36181 written 0 rc 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 29 dispatches 1034503 heap 8001216
+PASS profile publication and exclusive totals present-cancel unwound 0
+PASS ARM EGA/PIT/direct framebuffer 0x150020c0 format 4 frames 18 pixels 307200 geometry present-cancel
+PASS ARM shell 0x150020c0 present-cancel requests 16 read 36181 written 0 rc 0

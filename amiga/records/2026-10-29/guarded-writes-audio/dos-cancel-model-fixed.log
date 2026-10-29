@@ -1,0 +1,8 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 170523 heap 8001216
+PASS profile publication and exclusive totals present-stop unwound 1
+PASS cancellation on skipped frame without another grant or mapping
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 116548 heap 8001216
+PASS profile publication and exclusive totals copy-stop unwound 1
+PASS cancellation during framebuffer write revokes mapping

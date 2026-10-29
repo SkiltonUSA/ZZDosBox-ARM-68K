@@ -1,0 +1,7 @@
+python3 scripts/test_dosbox_audio_batch.py
+PASS audio batch: 50 exact-order/capacity/wrap cases, corrupt queue and worker errors
+python3 scripts/test_dosbox_host_review.py
+PASS console rings: empty/full, exact sync spans, wrap, publication ordering, corrupt indices, output retry
+PASS 98 latency schedules, 168000 frames, ACK wrap, slot exclusivity, bounded batches, timeout/stop lock retention
+PASS 200000 triple-slot handoffs, ACK wrap, pending protection, unexpected ACK rejection
+PASS network receive: oversized drop, next packet, no truncation, full queue, uint32 wrap, NULL and zero capacity

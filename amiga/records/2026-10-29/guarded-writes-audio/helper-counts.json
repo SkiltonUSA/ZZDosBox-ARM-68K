@@ -1,0 +1,32 @@
+{
+  "reference": {
+    "_Z6get_CFv": 8192,
+    "_Z6get_ZFv": 12289,
+    "_Z6get_SFv": 0,
+    "_Z6get_OFv": 0,
+    "_Z6get_PFv": 0,
+    "_Z9FillFlagsv": 4103,
+    "_Z15FillFlagsNoCFOFv": 0,
+    "_Z21mem_readb_checked_drcm": 0,
+    "_Z22mem_writeb_checked_drcmh": 4096,
+    "_Z21mem_readw_checked_drcm": 0,
+    "_Z22mem_writew_checked_drcmt": 4097,
+    "_Z21mem_readd_checked_drcm": 9216,
+    "_Z22mem_writed_checked_drcmm": 4096
+  },
+  "writes": {
+    "_Z6get_CFv": 8192,
+    "_Z6get_ZFv": 12289,
+    "_Z6get_SFv": 0,
+    "_Z6get_OFv": 0,
+    "_Z6get_PFv": 0,
+    "_Z9FillFlagsv": 4103,
+    "_Z15FillFlagsNoCFOFv": 0,
+    "_Z21mem_readb_checked_drcm": 0,
+    "_Z22mem_writeb_checked_drcmh": 0,
+    "_Z21mem_readw_checked_drcm": 0,
+    "_Z22mem_writew_checked_drcmt": 2049,
+    "_Z21mem_readd_checked_drcm": 9216,
+    "_Z22mem_writed_checked_drcmm": 3073
+  }
+}

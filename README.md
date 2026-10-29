@@ -639,3 +639,7 @@ builds only. Other games, Microsoft software and WinBench are supplied separatel
 physical cache/x87 checks pass. This optional 64 MiB runtime limits guest RAM to
 8 MiB; the released player is unchanged. Hardware DMA remains gated on channel
 ownership and cancellation support.
+
+[Guarded ARM writes and audio batching](docs/guarded-writes-audio.md): opt-in
+JIT memory helpers and earlier AHI servicing, with matched hardware comparisons
+and separate correctness checks.
