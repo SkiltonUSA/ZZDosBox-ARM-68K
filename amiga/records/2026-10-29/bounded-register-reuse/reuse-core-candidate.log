@@ -1,0 +1,26 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 11 heap 8001216
+PASS register forwarding exercised: 4
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITREUSE {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 30 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITSPAN {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability SMCTEST {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 11 heap 8001216
+PASS register forwarding exercised: 4
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITREUSE {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 30 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability JITSPAN {'cpu': 1} PCM 0 0
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 221 heap 8001216
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability SMCTEST {'cpu': 1} PCM 0 0

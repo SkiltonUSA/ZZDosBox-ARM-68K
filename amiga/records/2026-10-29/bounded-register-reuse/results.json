@@ -1,0 +1,49 @@
+{
+  "runs": [
+    {
+      "run": "ref-1",
+      "seconds": 30.00043068000043,
+      "frames": 147,
+      "fps": 4.899929656609779,
+      "guest_wall": 0.9139868788043548,
+      "replacements": null,
+      "pcm": 2337792,
+      "late_links": 818
+    },
+    {
+      "run": "ref-2",
+      "seconds": 30.000132213000132,
+      "frames": 147,
+      "fps": 4.8999784053051485,
+      "guest_wall": 0.9108293192174366,
+      "replacements": null,
+      "pcm": 2336768,
+      "late_links": 813
+    },
+    {
+      "run": "reuse-1",
+      "seconds": 30.000875754000877,
+      "frames": 148,
+      "fps": 4.933189324657062,
+      "guest_wall": 0.9171065613419891,
+      "replacements": 5773,
+      "pcm": 2339840,
+      "late_links": 837
+    },
+    {
+      "run": "reuse-2",
+      "seconds": 30.000412773000413,
+      "frames": 147,
+      "fps": 4.899932581337553,
+      "guest_wall": 0.9131874353627456,
+      "replacements": 5772,
+      "pcm": 2338816,
+      "late_links": 817
+    }
+  ],
+  "mean_fps": {
+    "ref": 4.899954030957463,
+    "reuse": 4.916560952997307
+  },
+  "change_percent": 0.3389199558796463
+}

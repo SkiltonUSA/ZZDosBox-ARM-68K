@@ -1,0 +1,1 @@
+PASS host layout: generated headers accepted; missing mmu.h cannot select fallback report offsets

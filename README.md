@@ -643,3 +643,5 @@ ownership and cancellation support.
 [Guarded ARM writes and audio batching](docs/guarded-writes-audio.md): opt-in
 JIT memory helpers and earlier AHI servicing, with matched hardware comparisons
 and separate correctness checks.
+
+[Bounded ARM register reuse](docs/bounded-register-reuse.md): correctness checks pass, but the Duke repeat pair shows no useful speed gain. It remains experimental.

@@ -1226,3 +1226,12 @@ Previous runtime preserved as `PC/ZZDosBox-PreLauncher`. Core1 ownership and
 32 MiB allocation/mapping/nonce/reset-before-free contracts unchanged.
 Records: `amiga/records/2026-10-12/dosbox-launcher/`. No OS/game binaries in
 records; no GitHub publication this turn.
+
+## Bounded register reuse — 29 October 2026
+
+Added optional --pc-jit-reuse-span 8, preserving adjacent mode and release defaults.
+6,000 differential streams, linked mixed-width/flags/SMC/paging/x87/SIMD/cancel
+cases pass. Four physical Duke runs: reference 4.900/4.900 FPS, candidate
+4.933/4.900; only one extra frame in one 30-second sample, no useful demonstrated
+gain. All PCM completes and MMU/register/cache/SIMD restoration and release pass.
+No installed player or release changed. See bounded-register-reuse.md.

@@ -2,7 +2,8 @@
 import difflib
 
 
-def prepare(out):
+def prepare(out, span=1):
+    assert span in (1,8)
     patches=[]
     def change(name,fn):
         path=out/name;old=path.read_text();new=fn(old);assert old!=new
@@ -17,14 +18,17 @@ static const Bit8u *db_reuse_floor;
 unsigned db_jit_reuse_hits;
 static void db_cpu_load_word(Bit32u instruction){
  if(db_reuse_floor && cache.pos-db_reuse_floor>=4){
-  int source=db_arm_stored_register(host_readd((HostPt)(cache.pos-4)),instruction);
+  unsigned count=(unsigned)(cache.pos-db_reuse_floor)/4;
+  if(count>DB_REUSE_SPAN)count=DB_REUSE_SPAN;
+  int source=DB_REUSE_SPAN==1 ? db_arm_stored_register(host_readd((HostPt)(cache.pos-4)),instruction)
+   : db_arm_reuse_register((const uint32_t *)(cache.pos-count*4),count,instruction);
   if(source>=0){gen_mov_regs((HostReg)((instruction>>12)&15),(HostReg)source);db_jit_reuse_hits++;return;}
  }
  cache_addd(instruction);
 }
 
 '''
-        text=text.replace(marker,helper+marker)
+        text=text.replace(marker,helper.replace("DB_REUSE_SPAN",str(span))+marker)
         for opcode in ('LDR_IMM','LDR_IMM_M'):
             old=f'cache_addd( {opcode}(dest_reg, addr_reg, '
             assert old in text

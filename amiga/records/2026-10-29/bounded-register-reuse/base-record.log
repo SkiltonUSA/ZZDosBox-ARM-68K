@@ -1,0 +1,1 @@
+PASS base manifest: reject version/core/artifact drift and unrecorded flags before build

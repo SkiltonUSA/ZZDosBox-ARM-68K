@@ -1,0 +1,1 @@
+PASS bounded register reuse: 6000 A9 differential streams, 3104 replacements; alias, clobber and control boundaries

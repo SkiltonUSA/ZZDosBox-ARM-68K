@@ -13,6 +13,7 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 ## 0.23.0-dev — isolated cache and scheduling experiments
 
 - Record a 32 MiB translation cache inside a 64 MiB owned allocation, with 8 MiB guest RAM and matching product versions.
+- Add opt-in eight-instruction ARM register reuse; differential/linked-core tests and four Duke runs pass, without a useful measured FPS gain. [Evidence](docs/bounded-register-reuse.md).
 - Add opt-in guarded writable-TLB JIT paths and bounded host audio batching before presentation.
 - Preserve checked fallbacks, self-modifying-code invalidation and x87/SIMD restoration.
 - Keep release defaults unchanged; [measurements and rejected candidates](docs/guarded-writes-audio.md).
