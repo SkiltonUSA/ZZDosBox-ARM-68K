@@ -2,7 +2,20 @@
 #include <assert.h>
 #include <unistd.h>
 #include "model.h"
+#include "shared_drive.h"
 int main(void){struct dl_session s,t;static struct dl_library a,b;char tmp[]="/tmp/zzdos-launcher-XXXXXX",q[100],out[DL_TEXT];int fd=mkstemp(tmp);FILE*f;size_t n;assert(fd>=0);close(fd);
+ {struct dl_profile p;
+  assert(dl_shared_profile(&p,"USB0:DOSSHARE","USB SD drive"));
+  assert(p.system==0&&p.category==DL_OS&&!*p.program&&!*p.image&&p.memory==8);
+  assert(!strcmp(p.drive,"USB0:DOSSHARE")&&p.sound==2&&p.ems);
+  assert(dl_shared_profile(&p,"SD032G:Shared DOS","Shared Drive"));
+  a.count=1;a.last=0;a.p[0]=p;
+  assert(dl_library_write(tmp,&a)&&dl_library_read(tmp,&b));
+  assert(!strcmp(b.p[0].drive,p.drive)&&!b.p[0].system&&b.p[0].category==DL_OS);
+  assert(!dl_shared_profile(&p,"","Empty"));
+  assert(!dl_shared_profile(&p,"USB0:\nBAD","Invalid"));
+  assert(!dl_shared_profile(&p,"USB0:",""));
+ }
  dl_defaults(&s);strcpy(s.drive,"SD032G:Games/Elite");strcpy(s.command,"ZZL0000.BAT");assert(dl_session_write(tmp,&s)&&dl_session_read(tmp,&t));assert(!memcmp(&s,&t,sizeof(s)));
  s.size=2;s.memory=8;s.display=1;s.fps=1;s.system=1;assert(dl_session_write(tmp,&s)&&dl_session_read(tmp,&t)&&t.memory==8&&t.size==2);
  s.memory=64;assert(!dl_session_write(tmp,&s));s.memory=2;s.fg=s.bg;assert(!dl_session_write(tmp,&s));s.fg=7;s.drive[0]='\n';assert(!dl_session_write(tmp,&s));

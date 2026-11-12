@@ -3,7 +3,7 @@
 #include "startup.h"
 #include <dos/dosextens.h>
 static Object *disk_choice,*disk_path,*disk_browse,*disk_open,*disk_mount,*disk_eject,*disk_files;
-static Object *disk_size,*disk_create,*disk_os;
+static Object *disk_size,*disk_create,*disk_os,*disk_cd_settings;
 static const char *disk_os_all[]={"DOSBox DOS 5","MS-DOS 6.22 (installed)",NULL};
 static const char *disk_os_builtin[]={"DOSBox DOS 5",NULL};
 static const char *disk_sizes[]={"32 MB","64 MB","128 MB","256 MB",NULL};
@@ -27,7 +27,10 @@ static int disk_open_drawer(const char*name){
  if(!OpenWorkbenchObjectA((STRPTR)name,WorkbenchBase->lib_Version>=45?tags:NULL)){snprintf(err,sizeof(err),"Workbench could not open the drawer (error %ld).",(long)IoErr());note(err);return 0;}
  note("Opened in Workbench.");return 1;
 }
+#include "shared_ui.h"
 static Object* disk_image_page(void){return VGroup,
+ Child,shared_page(),
+ Child,HGroup,UI_PANEL("CD-ROM"),Child,disk_cd_settings=ui_button("CD-ROM settings..."),Child,label("Use a Workbench disc or ISO as D:"),End,
  Child,VGroup,UI_PANEL("Hard disk image"),
  Child,ColGroup(2),
   Child,fieldlabel("Image"),Child,disk_choice=cycle(disk_names),
@@ -41,6 +44,8 @@ static Object* disk_image_page(void){return VGroup,
   Child,label("Raw .IMG  |  Added to OS  |  DOSBox DOS 5 needs no install disks"),End,
  End;}
 static void disk_ui_wire(void){
+ shared_wire();
+ notify(disk_cd_settings,MUIA_Pressed,FALSE,ID_CD_SETTINGS);
  notify(disk_create,MUIA_Pressed,FALSE,ID_DISK_CREATE);
  set(disk_size,MUIA_Cycle_Active,1);
  set(disk_path,MUIA_String_Contents,(ULONG)disk_paths[0]);
@@ -53,7 +58,7 @@ static int disk_image_control(const char*action,const char*image){
  if(FindPort("Sixies.ARM.Debug.Owner")||FindPort("ZZDOS_DISK_CREATE"))return 0;
  path(tool,"ZZDosDisk");if(!dl_quote(qt,sizeof(qt),tool)||!dl_quote(qi,sizeof(qi),image))return 0;
  snprintf(cmd,sizeof(cmd),"%s %s %s",qt,action,qi);set(app,MUIA_Application_Sleep,TRUE);
- rc=SystemTags(cmd,SYS_Asynch,FALSE,NP_StackSize,32768,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);return rc==0;
+ rc=SystemTags(cmd,SYS_Input,0,SYS_Asynch,FALSE,NP_StackSize,32768,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);return rc==0;
 }
 static void disk_create_image(void){
  static char dest[DL_PATH],tool[DL_PATH],source[DL_PATH],qt[DL_PATH*2+3],qd[DL_PATH*2+3],qs[DL_PATH*2+3],cmd[DL_PATH*6+128];
@@ -121,7 +126,7 @@ static void disk_action(unsigned id){
  if(normal&&id!=ID_EJECT_HD&&disk_exists(root)){if(!disk_register_os(image,normal))return;if(id==ID_OPEN_HD)disk_open_drawer(root);else note("MS-DOS disk is already mounted.");return;}
  path(tool,"ZZDosDisk");if(!dl_quote(qt,sizeof(qt),tool)||!dl_quote(qi,sizeof(qi),image))return;
  snprintf(cmd,sizeof(cmd),"%s %s%s%s",qt,id==ID_EJECT_HD?"eject":"mount",normal?"":" ",normal?"":qi);
- set(app,MUIA_Application_Sleep,TRUE);rc=SystemTags(cmd,SYS_Asynch,FALSE,NP_StackSize,32768,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);
+ set(app,MUIA_Application_Sleep,TRUE);rc=SystemTags(cmd,SYS_Input,0,SYS_Asynch,FALSE,NP_StackSize,32768,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);
  if(rc){note(rc==10?"Use a raw FAT .IMG disk (32-256 MB), not a VHD container.":"Disk unavailable; close DOSBox and any open disk files.");return;}
  if(id!=ID_EJECT_HD&&!disk_register_os(image,normal))return;
  if(id==ID_OPEN_HD)disk_open_drawer(root);else note(id==ID_EJECT_HD?"Disk ejected.":"Disk mounted. Available under OS; eject before booting.");

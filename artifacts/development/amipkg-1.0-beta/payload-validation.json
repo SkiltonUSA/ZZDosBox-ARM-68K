@@ -1,0 +1,36 @@
+{
+  "standard": {
+    "file": "ZZDosBox-1.0.0-beta-standard-amipkg.lha",
+    "bytes": 7244424,
+    "sha256": "38cdc3ec39517a36f8bd5ac6b61ca085958394a92f4ed3c8972310dee4bb6270",
+    "reproducible": true,
+    "signature": "verified",
+    "changed_zip_members": [
+      "ZZDosBox/Changelog.md",
+      "ZZDosBox/PC/ZZDosBox-Launcher",
+      "ZZDosBox/ReadMe.txt",
+      "ZZDosBox/SHA256SUMS.json",
+      "ZZDosBox/docs/amiga-dosbox-shared-drives.md",
+      "ZZDosBox/docs/amipkg-installers.md",
+      "ZZDosBox/docs/demo-edition.md"
+    ],
+    "unchanged_files": 32
+  },
+  "demos": {
+    "file": "ZZDosBox-1.0.0-beta-demos-amipkg.lha",
+    "bytes": 23735954,
+    "sha256": "d3740aed3fa108ae8cbdaa7465582e032f013e5a2531e45e6dfb7b61ef556ac7",
+    "reproducible": true,
+    "signature": "verified",
+    "changed_zip_members": [
+      "ZZDosBox-Demos/Changelog.md",
+      "ZZDosBox-Demos/PC/ZZDosBox-Launcher",
+      "ZZDosBox-Demos/ReadMe.txt",
+      "ZZDosBox-Demos/SHA256SUMS.json",
+      "ZZDosBox-Demos/docs/amiga-dosbox-shared-drives.md",
+      "ZZDosBox-Demos/docs/amipkg-installers.md",
+      "ZZDosBox-Demos/docs/demo-edition.md"
+    ],
+    "unchanged_files": 119
+  }
+}

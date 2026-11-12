@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.23.0-beta**, newest first.
+Version history from **0.1.0-dev** through **1.0 Beta**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -9,6 +9,15 @@ installation statements describe that milestone, not the current default.
 Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
+
+## 1.0 Beta — shared drives and Workbench CDs
+
+- Mount a Workbench folder or USB/SD volume as DOS C:; create a shared folder and open it for file transfers.
+- Choose a mounted IDE/ATAPI, SCSI or USB ISO9660 CD as read-only DOS D:.
+- Give disk mount/eject helpers empty standard input to avoid stale shell handles.
+- Update both signed offline AmiPkg editions, with dependency checks and preservation of existing profiles and saves.
+- Keep the tested emulator runtimes and demo media unchanged from 0.22.7 Beta.
+- Shared-folder read/write passed on the Amiga. Native CD resolver checks passed; physical CD and removable USB media checks remain pending.
 
 ## 0.23.0-beta — refreshed launcher installers
 

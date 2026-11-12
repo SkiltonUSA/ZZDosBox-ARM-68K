@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0-beta",
+  "display_version": "1.0 Beta",
+  "packages": {
+    "standard": {
+      "file": "ZZDosBox-1.0.0-beta-standard-amipkg.lha",
+      "bytes": 7244424,
+      "sha256": "38cdc3ec39517a36f8bd5ac6b61ca085958394a92f4ed3c8972310dee4bb6270"
+    },
+    "demos": {
+      "file": "ZZDosBox-1.0.0-beta-demos-amipkg.lha",
+      "bytes": 23735954,
+      "sha256": "d3740aed3fa108ae8cbdaa7465582e032f013e5a2531e45e6dfb7b61ef556ac7"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # AmiPkg installers
 
-[Download 0.23.0 Beta](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.23.0-beta). Both editions contain the same
+[Download 1.0 Beta](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v1.0.0-beta). Both editions contain the same
 launcher, emulator runtimes, utilities and compatibility database.
 
 | Edition | Size | Library | Audio requirement |
@@ -24,15 +24,18 @@ Open `PC/ZZDosBox-Launcher` in the destination after installation.
 `C:lha` is required; Workbench launch also uses `C:IconX`.
 No network connection, Microsoft operating system or Mac is required.
 
-## Launcher update in 0.23.0
+## Launcher update in 1.0 Beta
 
-Both editions include the tested 0.23.0-dev launcher: library categories,
+Both editions include the tested 1.0 Beta launcher: library categories,
 compact settings tabs, an [i] About button and scrolling status history.
 Settings use the full content area, with clean page switching and scrollbars
 when needed. Both 640×480 and 1024×768 window budgets passed all twelve pages,
 scrolling and resize checks on the Amiga without changing Workbench resolution.
 Emulator runtimes and demo profiles/media are unchanged from 0.22.7 Beta.
 Run Install against the existing destination to upgrade.
+
+The Disks page adds shared USB/SD folders. DOS → CD-ROM selects mounted
+IDE/ATAPI, SCSI and USB data CDs. See the [shared-drive guide](amiga-dosbox-shared-drives.md).
 
 ## Dependency checks
 

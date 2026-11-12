@@ -31,7 +31,8 @@ static int welcome_support(const char*root){
 static int startup_disk(int mount){char helper_path[DL_PATH],quoted[DL_PATH*2+3],cmd[DL_PATH*2+40];LONG rc;
  path(helper_path,"ZZDosDisk");if(!dl_quote(quoted,sizeof(quoted),helper_path))return 0;
  snprintf(cmd,sizeof(cmd),"%s %s",quoted,mount?"mount":"eject");
- set(app,MUIA_Application_Sleep,TRUE);rc=SystemTags(cmd,SYS_Asynch,FALSE,NP_StackSize,32768,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);return rc==0;
+ set(app,MUIA_Application_Sleep,TRUE);/* Bridge/Workbench launches may leave no usable inherited stdin. */
+ rc=SystemTags(cmd,SYS_Input,0,SYS_Asynch,FALSE,NP_StackSize,32768,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);return rc==0;
 }
 static int startup_read_default(unsigned n,char *out){
  char file[DL_PATH];int ok;

@@ -1,0 +1,37 @@
+{
+  "version": "1.0.0-beta",
+  "display_version": "1.0 Beta",
+  "launcher": "../launcher-1.0-beta/build.json",
+  "installer_tools": "../amipkg-0.22.6/build.json",
+  "installer_tools_changed": false,
+  "reproducible_archives": true,
+  "runtime_and_demo_payload_unchanged_from": "0.22.7-beta",
+  "native_tests": [
+    "profile/session ASan/UBSan",
+    "CD volume resolution ASan/UBSan",
+    "compact layout",
+    "installer dependency combinations"
+  ],
+  "launcher_sha256": "2566ba41c0dc9d7f3aa41f4449b72f6985d72cd0bb43373c537709928b39d31f",
+  "packaging_sources": {
+    "scripts/package_dosbox_amipkg.py": "b098bf140bbf2b8afd2d532b65793d55ee2257fd3f4ca08d0da1968b2143dba4",
+    "scripts/package_dosbox_demos.py": "1fb0035e844e2fb7fbf308a0d23a3ed1a549004ed3dc23bfbe40b27609301b49",
+    "scripts/package_dosbox_shareware.py": "5abcc71c1aa3d820d378014e5233a1a38c85a644e3e9902145e1283b3f3586c7"
+  },
+  "hardware_install": {
+    "edition": "standard",
+    "mode": "fresh install in isolated drawer",
+    "installed_files": 39,
+    "dependencies": "passed",
+    "catalogue_signature": "verified",
+    "archive_sha256": "verified",
+    "amipkg_doctor": "all packages healthy, RC 0"
+  },
+  "demos_validation": "Signature, extraction, checksums and reproducibility passed; demo payload unchanged. No new physical demo-install or gameplay run.",
+  "hardware_launcher": {
+    "version": "1.0 Beta",
+    "layout": "640x480 budget; 12 pages, zero errors",
+    "installed_sha256": "2566ba41c0dc9d7f3aa41f4449b72f6985d72cd0bb43373c537709928b39d31f",
+    "launcher_reopened": true
+  }
+}
