@@ -1,7 +1,5 @@
 # ZZDosBox-ARM-68K
 
-Development launcher: ZZ8-Bit-style library categories and settings tabs, an About icon, and a scrolling status history. [Navigation guide](docs/amiga-dosbox-launcher-navigation.md).
-
 **DOSBox for AmigaOS and the ZZ9000 Cortex-A9**, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 The ARM runs the emulated PC; the 68K handles the MUI interface, AmigaOS services
@@ -15,14 +13,18 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 
 ## Development builds
 
-**Current launcher: 0.22.7-dev; Expanded: 0.22.5-dev; other runtimes: 0.22.2-dev.** The launcher includes COM1 setup,
-experimental physical serial, a live joystick tester and 1–6 button choices.
-[Launcher update](artifacts/development/launcher-0.22.7): compact layout for smaller screens,
-scrollable settings, live ZZ9000 temperature
-and saved 1,000 / 3,000 / 6,000 / 10,000 / 60,000 / 100,000 cycle choices.
-Net-JIT includes networking, ARM JIT, EMS, Sound Blaster, bounded file read-ahead,
-mouse-motion coalescing and batched interpreter fallback for experimental paging.
-Existing profile settings are preserved.
+**Development launcher: 0.23.0-dev — refreshed interface.**
+[Download the launcher update](artifacts/development/launcher-0.23.0-ui) ·
+[Navigation guide](docs/amiga-dosbox-launcher-navigation.md).
+
+- Library categories on the left; compact settings tabs across the top.
+- Ports groups Network, Serial I/O and Joystick; Tools groups Developer and Compatibility.
+- **[i] About** opens credits and the changelog.
+- Scrolling status history keeps the latest 200 messages, with **Clear**.
+- Full-page settings forms; scrollbars appear when needed and compact layouts support 640×480.
+
+The packaged installers remain [0.22.7 Beta](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.7-beta).
+The launcher update preserves existing profiles and uses the installed runtimes.
 
 **Descent startup fix:** corrected DOS temporary-file errors and an ARM JIT
 lookahead bug. DOS/32A provides the working Descent launch path; first-level
@@ -188,18 +190,18 @@ both effects together. Software scanlines affect this emulator’s image only.
 
 ## Launcher screenshots
 
-All twelve launcher pages below show **0.22.6-dev**, captured on the Amiga.
-Expand a page to view it.
+The updated **0.23.0-dev** interface, captured on the A4000TX.
+Expand a section to view its settings.
 
 <details open>
-<summary>Load program</summary>
+<summary>Library</summary>
 
 ![ZZDosBox — Load program](docs/screenshots/launcher/library.png)
 
 </details>
 
 <details>
-<summary>DOS terminal</summary>
+<summary>DOS</summary>
 
 ![ZZDosBox — DOS terminal](docs/screenshots/launcher/terminal.png)
 
@@ -210,7 +212,7 @@ Expand a page to view it.
 
 ![ZZDosBox — CPU & memory](docs/screenshots/launcher/cpu.png)
 
-The new high-cycle choices (shown for illustration; the normal profile remains at 10,000):
+The 60,000 and 100,000 cycle choices are shown below for illustration; these captures do not change saved profiles.
 
 ![ZZDosBox — 60,000 fixed cycles](docs/screenshots/launcher/cpu-60000.png)
 
@@ -226,28 +228,28 @@ The new high-cycle choices (shown for illustration; the normal profile remains a
 </details>
 
 <details>
-<summary>Audio</summary>
+<summary>Sound</summary>
 
 ![ZZDosBox — Audio](docs/screenshots/launcher/audio.png)
 
 </details>
 
 <details>
-<summary>Network</summary>
+<summary>Ports — Network</summary>
 
 ![ZZDosBox — Network](docs/screenshots/launcher/network.png)
 
 </details>
 
 <details>
-<summary>I/O — COM1</summary>
+<summary>Ports — Serial I/O</summary>
 
 ![ZZDosBox — COM1 and experimental physical serial](docs/screenshots/launcher/io.png)
 
 </details>
 
 <details>
-<summary>Joystick</summary>
+<summary>Ports — Joystick</summary>
 
 ![ZZDosBox — joystick configuration and live tester](docs/screenshots/launcher/joystick.png)
 
@@ -261,21 +263,21 @@ The new high-cycle choices (shown for illustration; the normal profile remains a
 </details>
 
 <details>
-<summary>Developer</summary>
+<summary>Tools — Developer</summary>
 
 ![ZZDosBox — Developer](docs/screenshots/launcher/developer.png)
 
 </details>
 
 <details>
-<summary>Compatibility</summary>
+<summary>Tools — Compatibility</summary>
 
 ![ZZDosBox — Compatibility](docs/screenshots/launcher/compatibility.png)
 
 </details>
 
 <details>
-<summary>About</summary>
+<summary>[i] About</summary>
 
 ![ZZDosBox — About](docs/screenshots/launcher/about.png)
 

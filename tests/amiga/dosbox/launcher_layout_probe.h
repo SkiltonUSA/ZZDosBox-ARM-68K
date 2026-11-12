@@ -6,23 +6,27 @@ static void layout_pump(void){
  ULONG signals;unsigned i;
  for(i=0;i<12;i++){DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);ui_scroll_update();Delay(1);}
 }
+#ifdef ZZ_UI_GALLERY
+#include "launcher_gallery.h"
+#else
 static int layout_probe(void){
  FILE *report=freopen("PROGDIR:layout-report.txt","w",stdout);
- struct List *children;APTR state;Object *scroll,*virt;unsigned page=0;int errors=0;
+ Object *virt;unsigned page=0;int errors=0;
  struct Window *native=(struct Window*)val(win,MUIA_Window_Window);
  if(!report)return 20;
  printf("LIMITS %d %d / %d %d\n",native->MinWidth,native->MinHeight,native->MaxWidth,native->MaxHeight);
  printf("LAYOUT screen budget %u x %u compact %d window %u x %u\n",ZZ_UI_TEST_WIDTH,ZZ_UI_TEST_HEIGHT,ui_compact,native->Width,native->Height);
  if(native->Width>ZZ_UI_TEST_WIDTH||native->Height>ZZ_UI_TEST_HEIGHT-20)errors++;
- get(main_pages,MUIA_Group_ChildList,&children);state=children->lh_Head;
- while((scroll=NextObject(&state))){
+ for(page=0;page<PAGE_COUNT;page++){
   navigation_show(page);layout_pump();virt=ui_scroll_objects[page].view;
+  if(val(main_pages,MUIA_Group_ActivePage)!=page)errors++;
+  if(page==PAGE_CPU&&_mright(cpu_model)<_mright(virt)-24)errors++;
   printf("PAGE %u %s viewport %ld x %ld content %lu x %lu\n",page,sections[page],(long)_mwidth(virt),(long)_mheight(virt),(unsigned long)val(virt,MUIA_Virtgroup_Width),(unsigned long)val(virt,MUIA_Virtgroup_Height));
   if(_mwidth(virt)<180||_mheight(virt)<100)errors++;
   SetAttrs(virt,MUIA_Virtgroup_Left,10000,MUIA_Virtgroup_Top,10000,TAG_DONE);layout_pump();
   printf("SCROLL %lu %lu\n",(unsigned long)val(virt,MUIA_Virtgroup_Left),(unsigned long)val(virt,MUIA_Virtgroup_Top));
   SetAttrs(virt,MUIA_Virtgroup_Left,0,MUIA_Virtgroup_Top,0,TAG_DONE);
-  fflush(stdout);page++;
+  fflush(stdout);
  }
  if(page!=PAGE_COUNT)errors++;
  for(unsigned i=0;i<220;i++)note("Status history capacity check");
@@ -54,3 +58,5 @@ static int layout_probe(void){
  printf("LAYOUT %s errors=%d pages=%u\n",errors?"FAIL":"PASS",errors,page);fflush(stdout);
  return errors?20:0;
 }
+
+#endif

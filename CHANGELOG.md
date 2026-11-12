@@ -10,6 +10,15 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
+## 0.23.0-dev — launcher interface update
+
+- Adopt ZZ8-Bit's category column, compact settings tabs and About icon.
+- Add a scrolling, bounded status history with Clear.
+- Show settings scrollbars only when needed and retain compact screen support.
+- Expand settings forms to the page width; fixed checkmarks no longer constrain entire columns.
+- Use native page selection and clear the full viewport so previous controls cannot remain visible.
+- Refresh all launcher screenshots and provide a launcher-only development download.
+
 ## 0.23.0-dev — isolated cache and scheduling experiments
 
 - Record a 32 MiB translation cache inside a 64 MiB owned allocation, with 8 MiB guest RAM and matching product versions.

@@ -1,12 +1,6 @@
 # ZZDosBox changelog
 
-## Unreleased launcher styling
-
-- ZZ8-Bit-style category column, compact settings tabs and About icon.
-- Scrollable 200-message status history, with Clear.
-- Settings scrollbars appear only when required; retain compact screen support.
-
-Version history from **0.1.0-dev** through **0.22.7-dev**, newest first.
+Version history from **0.1.0-dev** through **0.23.0-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -15,6 +9,13 @@ installation statements describe that milestone, not the current default.
 Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
+
+## 0.23.0-dev — launcher interface update
+
+- ZZ8-Bit-style library categories, compact settings tabs and About icon.
+- Scrolling 200-message status history with Clear.
+- Full-width settings forms and clean page switching, without stale controls.
+- Settings scrollbars appear when needed; retain compact screen support.
 
 ## 0.22.7-dev — scalable Workbench launcher
 

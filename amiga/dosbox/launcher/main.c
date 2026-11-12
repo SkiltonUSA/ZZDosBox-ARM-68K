@@ -74,6 +74,8 @@ static int selected=-1,busy;
 static char appdir[DL_PATH],configpath[DL_PATH],message[256];
 static const char *sections[]={"Load program","DOS terminal","CPU & memory","Display","Audio","Network","I/O","Joystick","Disks","Developer","Compatibility","About",NULL};
 static Object *navigation,*navigation_view,*page_heading,*page_context,*main_pages;
+static unsigned active_page;
+static void ui_page_select(unsigned page);
 enum {ID_NAVIGATE=43,ID_PROGRAM_TAB=44,ID_JOY_COUNT=45};
 static char context_text[96];
 
@@ -94,7 +96,7 @@ enum {ID_SELECT=1,ID_ADD,ID_REMOVE,ID_SAVE,ID_RUN,ID_TERM,ID_COMMAND,ID_AUTO,ID_
 static ULONG val(Object*o,ULONG a){ULONG v=0;get(o,a,&v);return v;}
 static void program_list_focus(void){
  unsigned page=val(program_tabs,MUIA_Group_ActivePage);
- if(val(main_pages,MUIA_Group_ActivePage)==PAGE_LOAD&&page<=DL_CATEGORIES)
+ if(active_page==PAGE_LOAD&&page<=DL_CATEGORIES)
   set(win,MUIA_Window_ActiveObject,(ULONG)program_views[page]);
 }
 #include "hover_help.h"
@@ -109,7 +111,7 @@ static void note(const char*s){
 /* Navigation changes only the visible page. Unsaved controls remain alive. */
 static void joystick_test_active(int active);
 static void navigation_show(unsigned page){
- if(page>=PAGE_COUNT)page=val(main_pages,MUIA_Group_ActivePage);
+ if(page>=PAGE_COUNT)page=active_page;
  unsigned active=8;
  for(unsigned i=0;i<8;i++)if(top_pages[i]==page)active=i;
  if(page>=PAGE_NETWORK&&page<=PAGE_JOYSTICK)active=5;
@@ -119,7 +121,7 @@ static void navigation_show(unsigned page){
  DoMethod(tool_row,MUIM_Group_InitChange);set(tool_row,MUIA_ShowMe,active==7);DoMethod(tool_row,MUIM_Group_ExitChange);
  if(active==5)SetAttrs(port_choice,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,page-PAGE_NETWORK,TAG_DONE);
  if(active==7)SetAttrs(tool_choice,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,page==PAGE_COMPATIBILITY,TAG_DONE);
- set(main_pages,MUIA_Group_ActivePage,page);
+ active_page=page;ui_page_select(page);
  joystick_test_active(page==PAGE_JOYSTICK);if(page==PAGE_IO)serial_detect();
  set(page_heading,MUIA_Text_Contents,(ULONG)sections[page]);
  snprintf(context_text,sizeof(context_text),"Program: %s",selected>=0?(char*)val(title,MUIA_String_Contents):"No program selected");
@@ -148,6 +150,10 @@ static Object *fieldlabel(const char*s){Object*o=label(s);set(o,MUIA_Text_SetMax
 static Object *displaylabel(const char*s){return TextObject,MUIA_Font,ui_font(),MUIA_Text_Contents,(ULONG)s,MUIA_FixWidthTxt,(ULONG)"Monochrome colour",MUIA_HorizWeight,0,End;}
 static Object *str(unsigned n){return StringObject,StringFrame,MUIA_Font,ui_font(),MUIA_String_MaxLen,n,End;}
 static Object *cycle(const char**s){return CycleObject,MUIA_CycleChain,1,MUIA_Font,ui_font(),MUIA_Cycle_Entries,(ULONG)s,End;}
+/* A fixed-size checkmark must not cap its whole form column's width. */
+static Object *check_cell(Object **control){
+ *control=CheckMark(FALSE);return HGroup,Child,*control,Child,HSpace(0),End;
+}
 static void notify(Object*o,ULONG attr,ULONG trigger,unsigned id){DoMethod(o,MUIM_Notify,attr,trigger,(ULONG)app,2,MUIM_Application_ReturnID,id);}
 static void path(char*out,const char*name){strcpy(out,appdir);AddPart(out,(STRPTR)name,DL_PATH);}
 static int same_dir(const char*a,const char*b){BPTR x=Lock((STRPTR)a,ACCESS_READ),y=Lock((STRPTR)b,ACCESS_READ);int same=x&&y&&SameLock(x,y)==LOCK_SAME;if(x)UnLock(x);if(y)UnLock(y);return same;}
@@ -179,7 +185,7 @@ static int network_options(const struct dl_profile*);
 #include "snapshot_ui.h"
 static int store_selection(void){char a[DL_TEXT],c[DL_TEXT];struct dl_profile*p;if(selected<0)return 1;if(!editor_read(0,a)||!editor_read(1,c)||!dl_text_valid(a)||!dl_text_valid(c)){note("Startup file is too long.");return 0;}p=&library.p[selected];if(!network_store(&p->network))return 0;p->category=val(category,MUIA_Cycle_Active);snprintf(p->title,sizeof(p->title),"%s",(char*)val(title,MUIA_String_Contents));snprintf(p->drive,sizeof(p->drive),"%s",(char*)val(drawer,MUIA_String_Contents));snprintf(p->program,sizeof(p->program),"%s",(char*)val(program,MUIA_String_Contents));p->paged_jit=val(paged_jit,MUIA_Selected);p->serial_mode=val(serial_mode,MUIA_Cycle_Active);snprintf(p->serial_host,sizeof(p->serial_host),"%s",(char*)val(serial_host,MUIA_String_Contents));p->serial_port=val(serial_port,MUIA_String_Integer);if(!serial_store(&p->serial))return 0;p->cpu_model=val(cpu_model,MUIA_Cycle_Active);p->vcpi=val(vcpi,MUIA_Selected);p->umb=val(umb,MUIA_Selected);p->joystick=val(joystick,MUIA_Selected);p->joy_buttons=val(joy_count,MUIA_Cycle_Active)+1;{unsigned j;for(j=0;j<4;j++)p->joy_keys[j]=val(joy_binding[j],MUIA_Cycle_Active);}p->extra_sound=val(extra_sound,MUIA_Cycle_Active);p->cycle_mode=val(cycle_mode,MUIA_Cycle_Active);p->ems=val(ems,MUIA_Selected);p->sound=val(soundcard,MUIA_Cycle_Active);p->speaker=val(pcspeaker,MUIA_Selected);p->helper=val(helper,MUIA_Selected);p->edited=val(startup_mode[0],MUIA_Cycle_Active);p->config_mode=val(startup_mode[1],MUIA_Cycle_Active);
  snprintf(p->auto_file,sizeof(p->auto_file),"%s",(char*)val(startup_file[0],MUIA_String_Contents));snprintf(p->config_file,sizeof(p->config_file),"%s",(char*)val(startup_file[1],MUIA_String_Contents));snprintf(p->cd_path,sizeof(p->cd_path),"%s",(char*)val(cd_path,MUIA_String_Contents));p->cd_mode=val(cd_mode,MUIA_Cycle_Active);p->midi=val(midi,MUIA_Cycle_Active);snprintf(p->midi_port,sizeof(p->midi_port),"%s",(char*)val(midi_port,MUIA_String_Contents));p->memory=1u<<val(memory,MUIA_Cycle_Active);p->machine=val(machine,MUIA_Cycle_Active);p->speed=val(speed,MUIA_Cycle_Active);p->fg=val(fg,MUIA_Cycle_Active);p->bg=val(bg,MUIA_Cycle_Active);p->live=val(live,MUIA_Cycle_Active);p->display=val(display,MUIA_Cycle_Active);p->size=val(window_size,MUIA_Cycle_Active);p->fps=val(fps,MUIA_Selected);p->scanlines=val(scanlines,MUIA_Cycle_Active);p->presentation=val(presentation,MUIA_Cycle_Active);p->monochrome=val(monochrome,MUIA_Cycle_Active);p->renderer=val(renderer,MUIA_Cycle_Active);p->system=val(system_choice,MUIA_Cycle_Active);snprintf(p->image,sizeof(p->image),"%s",p->system>=2?(char*)val(disk_image,MUIA_String_Contents):"");strcpy(p->autoexec,a);strcpy(p->configsys,c);return 1;}
-static void show_selection(int n){struct dl_profile*p;if(n<0||(unsigned)n>=library.count)return;selected=n;library.last=n;snapshot_refresh();p=&library.p[n];SetAttrs(category,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,p->category,TAG_DONE);set(title,MUIA_String_Contents,(ULONG)p->title);set(drawer,MUIA_String_Contents,(ULONG)p->drive);set(program,MUIA_String_Contents,(ULONG)p->program);set(paged_jit,MUIA_Selected,p->paged_jit);set(serial_mode,MUIA_Cycle_Active,p->serial_mode);set(serial_host,MUIA_String_Contents,(ULONG)p->serial_host);set(serial_port,MUIA_String_Integer,p->serial_port);serial_show(&p->serial);set(cpu_model,MUIA_Cycle_Active,p->cpu_model);set(vcpi,MUIA_Selected,p->vcpi);set(umb,MUIA_Selected,p->umb);set(joystick,MUIA_Selected,p->joystick);set(joy_count,MUIA_Cycle_Active,p->joy_buttons-1);{unsigned j;for(j=0;j<4;j++)set(joy_binding[j],MUIA_Cycle_Active,p->joy_keys[j]);}joystick_controls();set(extra_sound,MUIA_Cycle_Active,p->extra_sound);set(cycle_mode,MUIA_Cycle_Active,p->cycle_mode);set(ems,MUIA_Selected,p->ems);set(soundcard,MUIA_Cycle_Active,p->sound);set(pcspeaker,MUIA_Selected,p->speaker);set(helper,MUIA_Selected,p->helper);set(startup_mode[0],MUIA_Cycle_Active,p->edited);set(startup_mode[1],MUIA_Cycle_Active,p->config_mode);set(startup_file[0],MUIA_String_Contents,(ULONG)p->auto_file);set(startup_file[1],MUIA_String_Contents,(ULONG)p->config_file);set(cd_mode,MUIA_Cycle_Active,p->cd_mode);set(cd_path,MUIA_String_Contents,(ULONG)p->cd_path);set(midi,MUIA_Cycle_Active,p->midi);set(midi_port,MUIA_String_Contents,(ULONG)p->midi_port);set(memory,MUIA_Cycle_Active,p->memory==32?5:p->memory==16?4:p->memory==8?3:p->memory==4?2:p->memory==2?1:0);set(machine,MUIA_Cycle_Active,p->machine);set(speed,MUIA_Cycle_Active,p->speed);set(fg,MUIA_Cycle_Active,p->fg);set(bg,MUIA_Cycle_Active,p->bg);set(live,MUIA_Cycle_Active,p->live);set(display,MUIA_Cycle_Active,p->display);set(window_size,MUIA_Cycle_Active,p->size);set(fps,MUIA_Selected,p->fps);SetAttrs(scanlines,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,p->scanlines,TAG_DONE);set(presentation,MUIA_Cycle_Active,p->presentation);set(monochrome,MUIA_Cycle_Active,p->monochrome);set(renderer,MUIA_Cycle_Active,p->renderer);display_controls();set(disk_image,MUIA_String_Contents,(ULONG)p->image);set(system_choice,MUIA_Cycle_Active,p->system);editor_show(0,p->autoexec);editor_show(1,p->configsys);network_show(&p->network);system_controls();navigation_show(val(main_pages,MUIA_Group_ActivePage));}
+static void show_selection(int n){struct dl_profile*p;if(n<0||(unsigned)n>=library.count)return;selected=n;library.last=n;snapshot_refresh();p=&library.p[n];SetAttrs(category,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,p->category,TAG_DONE);set(title,MUIA_String_Contents,(ULONG)p->title);set(drawer,MUIA_String_Contents,(ULONG)p->drive);set(program,MUIA_String_Contents,(ULONG)p->program);set(paged_jit,MUIA_Selected,p->paged_jit);set(serial_mode,MUIA_Cycle_Active,p->serial_mode);set(serial_host,MUIA_String_Contents,(ULONG)p->serial_host);set(serial_port,MUIA_String_Integer,p->serial_port);serial_show(&p->serial);set(cpu_model,MUIA_Cycle_Active,p->cpu_model);set(vcpi,MUIA_Selected,p->vcpi);set(umb,MUIA_Selected,p->umb);set(joystick,MUIA_Selected,p->joystick);set(joy_count,MUIA_Cycle_Active,p->joy_buttons-1);{unsigned j;for(j=0;j<4;j++)set(joy_binding[j],MUIA_Cycle_Active,p->joy_keys[j]);}joystick_controls();set(extra_sound,MUIA_Cycle_Active,p->extra_sound);set(cycle_mode,MUIA_Cycle_Active,p->cycle_mode);set(ems,MUIA_Selected,p->ems);set(soundcard,MUIA_Cycle_Active,p->sound);set(pcspeaker,MUIA_Selected,p->speaker);set(helper,MUIA_Selected,p->helper);set(startup_mode[0],MUIA_Cycle_Active,p->edited);set(startup_mode[1],MUIA_Cycle_Active,p->config_mode);set(startup_file[0],MUIA_String_Contents,(ULONG)p->auto_file);set(startup_file[1],MUIA_String_Contents,(ULONG)p->config_file);set(cd_mode,MUIA_Cycle_Active,p->cd_mode);set(cd_path,MUIA_String_Contents,(ULONG)p->cd_path);set(midi,MUIA_Cycle_Active,p->midi);set(midi_port,MUIA_String_Contents,(ULONG)p->midi_port);set(memory,MUIA_Cycle_Active,p->memory==32?5:p->memory==16?4:p->memory==8?3:p->memory==4?2:p->memory==2?1:0);set(machine,MUIA_Cycle_Active,p->machine);set(speed,MUIA_Cycle_Active,p->speed);set(fg,MUIA_Cycle_Active,p->fg);set(bg,MUIA_Cycle_Active,p->bg);set(live,MUIA_Cycle_Active,p->live);set(display,MUIA_Cycle_Active,p->display);set(window_size,MUIA_Cycle_Active,p->size);set(fps,MUIA_Selected,p->fps);SetAttrs(scanlines,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,p->scanlines,TAG_DONE);set(presentation,MUIA_Cycle_Active,p->presentation);set(monochrome,MUIA_Cycle_Active,p->monochrome);set(renderer,MUIA_Cycle_Active,p->renderer);display_controls();set(disk_image,MUIA_String_Contents,(ULONG)p->image);set(system_choice,MUIA_Cycle_Active,p->system);editor_show(0,p->autoexec);editor_show(1,p->configsys);network_show(&p->network);system_controls();navigation_show(active_page);}
 static void category_refresh(void){unsigned c,i;int row;
  set(snapshot_capture[0],MUIA_Disabled,selected<0);
  for(c=0;c<DL_CATEGORIES;c++){
@@ -197,7 +203,7 @@ static void category_refresh(void){unsigned c,i;int row;
   set(category_delete[c],MUIA_Disabled,c==DL_OS||selected<0||library.p[selected].category!=c);
  }
 }
-static void refresh(void){unsigned i;busy=1;DoMethod(list,MUIM_List_Clear);for(i=0;i<library.count;i++)DoMethod(list,MUIM_List_InsertSingle,(ULONG)library.p[i].title,MUIV_List_Insert_Bottom);if(library.count){if(library.last>=library.count)library.last=0;SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,library.last,TAG_DONE);show_selection(library.last);}else{selected=-1;snapshot_refresh();}category_refresh();navigation_show(val(main_pages,MUIA_Group_ActivePage));busy=0;}
+static void refresh(void){unsigned i;busy=1;DoMethod(list,MUIM_List_Clear);for(i=0;i<library.count;i++)DoMethod(list,MUIM_List_InsertSingle,(ULONG)library.p[i].title,MUIV_List_Insert_Bottom);if(library.count){if(library.last>=library.count)library.last=0;SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,library.last,TAG_DONE);show_selection(library.last);}else{selected=-1;snapshot_refresh();}category_refresh();navigation_show(active_page);busy=0;}
 static int select_profile(int n){if(n<0||(unsigned)n>=library.count)return 0;if(n==selected)return 1;if(!store_selection())return 0;show_selection(n);note(library.p[n].title);SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,n,TAG_DONE);category_refresh();return 1;}
 static Object *category_page(unsigned c){return VGroup,UI_PAGE,
  Child,HGroup,Child,program_views[c+1]=program_list_new(&category_lists[c]),Child,snapshot_panel(c+1),End,
@@ -435,7 +441,7 @@ static int build(void){Object *about_button,*log_clear,*add,*remove,*rename,*sav
   Child,tab_row,
   Child,port_row=HGroup,MUIA_ShowMe,FALSE,MUIA_VertWeight,0,Child,label("Ports"),Child,port_choice=cycle(port_tabs),Child,HSpace(0),End,
   Child,tool_row=HGroup,MUIA_ShowMe,FALSE,MUIA_VertWeight,0,Child,label("Tools"),Child,tool_choice=cycle(tool_tabs),Child,HSpace(0),End,
-  Child,main_pages=PageGroup,GroupFrame,MUIA_Background,MUII_GroupBack,InnerSpacing(ui_compact?2:10,ui_compact?2:10),
+  Child,main_pages=PageGroup,GroupFrame,MUIA_Background,MUII_GroupBack,MUIA_FillArea,TRUE,InnerSpacing(ui_compact?2:10,ui_compact?2:10),
  Child,program_tabs=PageGroup,MUIA_Font,ui_font(),
  Child,VGroup,UI_PAGE,
   Child,HGroup,Child,program_views[0]=program_list_new(&list),Child,snapshot_panel(0),End,
@@ -455,7 +461,7 @@ static int build(void){Object *about_button,*log_clear,*add,*remove,*rename,*sav
   Child,label("D: - read-only data CD"),Child,cd_check=ui_button("Check CD-ROM"),Child,VSpace(0),End,
  End,
  Child,VGroup,
-  Child,ColGroup(2),UI_PANEL("Emulated PC"),Child,fieldlabel("CPU model"),Child,cpu_model=cycle(cpu_models),Child,fieldlabel(ui_compact?"Paged JIT (experimental)":"Paged register JIT (experimental)"),Child,paged_jit=CheckMark(FALSE),Child,fieldlabel("Guest RAM"),Child,memory=cycle(memories),Child,fieldlabel("EMS expanded RAM"),Child,ems=CheckMark(FALSE),Child,fieldlabel("VCPI services"),Child,vcpi=CheckMark(FALSE),Child,fieldlabel("Upper memory (UMB)"),Child,umb=CheckMark(FALSE),Child,fieldlabel("Cycle control"),Child,cycle_mode=cycle(cycle_modes),Child,fieldlabel("CPU cycles"),Child,speed=cycle(speeds),Child,fieldlabel("Session"),Child,live=cycle(lengths),End,Child,VSpace(0),End,
+  Child,ColGroup(2),UI_PANEL("Emulated PC"),Child,fieldlabel("CPU model"),Child,cpu_model=cycle(cpu_models),Child,fieldlabel(ui_compact?"Paged JIT (experimental)":"Paged register JIT (experimental)"),Child,check_cell(&paged_jit),Child,fieldlabel("Guest RAM"),Child,memory=cycle(memories),Child,fieldlabel("EMS expanded RAM"),Child,check_cell(&ems),Child,fieldlabel("VCPI services"),Child,check_cell(&vcpi),Child,fieldlabel("Upper memory (UMB)"),Child,check_cell(&umb),Child,fieldlabel("Cycle control"),Child,cycle_mode=cycle(cycle_modes),Child,fieldlabel("CPU cycles"),Child,speed=cycle(speeds),Child,fieldlabel("Session"),Child,live=cycle(lengths),End,Child,VSpace(0),End,
  Child,VGroup,
   Child,GroupObject,MUIA_Group_Horiz,!ui_compact,Child,VGroup,MUIA_HorizWeight,60,
   Child,ColGroup(2),UI_PANEL("Screen"),MUIA_VertWeight,0,Child,displaylabel("Display"),Child,display=cycle(displays),Child,displaylabel("Window size"),Child,window_size=cycle(sizes),Child,displaylabel("Video adapter"),Child,machine=cycle(machines),End,
@@ -468,7 +474,7 @@ static int build(void){Object *about_button,*log_clear,*add,*remove,*rename,*sav
    Child,label("Presentation / FPS\nAdaptive skips display updates if needed.\nFPS shows the displayed frame rate.\nScanlines and Show FPS cannot be\nused together."),
    Child,VSpace(0),End,End,Child,VSpace(0),End,
  Child,VGroup,
-  Child,ColGroup(2),UI_PANEL("PC sound card"),Child,fieldlabel("Sound card"),Child,soundcard=cycle(soundcards),Child,fieldlabel("Additional card"),Child,extra_sound=cycle(extra_sounds),Child,fieldlabel("PC speaker / beep"),Child,pcspeaker=CheckMark(FALSE),Child,fieldlabel("Resources"),Child,label("220h / IRQ 7 / DMA 1; 16-bit DMA 5"),Child,fieldlabel("Output"),Child,label("AHI unit 0 - 32 kHz stereo"),End,
+  Child,ColGroup(2),UI_PANEL("PC sound card"),Child,fieldlabel("Sound card"),Child,soundcard=cycle(soundcards),Child,fieldlabel("Additional card"),Child,extra_sound=cycle(extra_sounds),Child,fieldlabel("PC speaker / beep"),Child,check_cell(&pcspeaker),Child,fieldlabel("Resources"),Child,label("220h / IRQ 7 / DMA 1; 16-bit DMA 5"),Child,fieldlabel("Output"),Child,label("AHI unit 0 - 32 kHz stereo"),End,
   Child,ColGroup(2),UI_PANEL("MIDI output"),Child,fieldlabel("MIDI"),Child,midi=cycle(midi_choices),Child,fieldlabel("CAMD output"),Child,midi_port=str(64),End,
   Child,VGroup,UI_PANEL("Drivers"),Child,audio_camd=label("CAMD: unchecked"),Child,audio_ahi=label("AHI: unchecked"),Child,audio_ax=label("ZZ9000AX: unchecked"),Child,audio_check=ui_button("Check audio drivers"),End,Child,VSpace(0),End,
  Child,network_page(),
@@ -484,8 +490,8 @@ static int build(void){Object *about_button,*log_clear,*add,*remove,*rename,*sav
   Child,HGroup,Child,mem_enabled=CheckMark(FALSE),Child,label("Memory tools (experimental)"),End,
   Child,RegisterGroup(developer_tabs),MUIA_Font,ui_font(),Child,VGroup,UI_PAGE,
   Child,ColGroup(2),
-  Child,fieldlabel("Trace logging"),Child,dev_trace=CheckMark(FALSE),
-  Child,fieldlabel("CPU / video profiling"),Child,dev_profile=CheckMark(FALSE),
+  Child,fieldlabel("Trace logging"),Child,check_cell(&dev_trace),
+  Child,fieldlabel("CPU / video profiling"),Child,check_cell(&dev_profile),
   Child,fieldlabel("Frame breakpoint"),Child,dev_break=cycle(break_choices),
   Child,fieldlabel("Frame number"),Child,dev_frame=str(9),
   Child,fieldlabel("Display handoff"),Child,dev_handoff=cycle(handoff_choices),
@@ -586,8 +592,8 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   case ID_SERIAL_USB:serial_detect();if(*serial_usb_name){set(serial_device,MUIA_String_Contents,(ULONG)serial_usb_name);set(serial_unit,MUIA_String_Integer,0);set(serial_mode,MUIA_Cycle_Active,3);serial_controls();}break;
   case ID_SERIAL_DETECT:serial_detect();break;
   case ID_NAVIGATE:{unsigned n=val(navigation,MUIA_List_Active);if(n<=DL_CATEGORIES){set(program_tabs,MUIA_Group_ActivePage,n);navigation_show(PAGE_LOAD);note(library_tabs[n]);}break;}
-  case ID_PORT_TAB:navigation_show(PAGE_NETWORK+val(port_choice,MUIA_Cycle_Active));note(sections[val(main_pages,MUIA_Group_ActivePage)]);break;
-  case ID_TOOL_TAB:navigation_show(val(tool_choice,MUIA_Cycle_Active)?PAGE_COMPATIBILITY:PAGE_DEVELOPER);note(sections[val(main_pages,MUIA_Group_ActivePage)]);break;
+  case ID_PORT_TAB:navigation_show(PAGE_NETWORK+val(port_choice,MUIA_Cycle_Active));note(sections[active_page]);break;
+  case ID_TOOL_TAB:navigation_show(val(tool_choice,MUIA_Cycle_Active)?PAGE_COMPATIBILITY:PAGE_DEVELOPER);note(sections[active_page]);break;
   case ID_ABOUT:navigation_show(PAGE_ABOUT);break;
   case ID_LOG_CLEAR:DoMethod(loglist,MUIM_List_Clear);loglines=0;break;
   case ID_JOY_COUNT:joystick_controls();break;
@@ -618,7 +624,7 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   case ID_BOOT_DISK:boot_disk();break;
   case ID_MOUNT_DISKS:case ID_EJECT_DISKS:{char quoted[DL_PATH*2+3],cmd[DL_PATH*2+32];path(p,id==ID_MOUNT_DISKS?"Disks/Mount-DOS-Disks":"Disks/Eject-DOS-Disks");if(dl_quote(quoted,sizeof(quoted),p)){LONG result;snprintf(cmd,sizeof(cmd),"Execute %s",quoted);set(app,MUIA_Application_Sleep,TRUE);result=SystemTags(cmd,SYS_Asynch,FALSE,NP_StackSize,16384,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);note(result==0?(id==ID_MOUNT_DISKS?"Disks mounted in Workbench.":"Disks ejected."):"Disk action failed.");}break;}
   case ID_BROWSE_DRAWER:if(browse(p,1,0,"Select C: drawer"))set(drawer,MUIA_String_Contents,(ULONG)p);break;
-  default:if(id>=ID_TOP_TAB&&id<ID_TOP_TAB+8){navigation_show(top_pages[id-ID_TOP_TAB]);note(sections[val(main_pages,MUIA_Group_ActivePage)]);break;}if(id>=ID_NET_MODE&&id<=ID_NET_GUIDE){network_action(id);break;}if(id>=ID_CAT_SELECT&&id<ID_CAT_SELECT+DL_CATEGORIES){unsigned c=id-ID_CAT_SELECT;if(!busy)select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active)));break;}
+  default:if(id>=ID_TOP_TAB&&id<ID_TOP_TAB+8){navigation_show(top_pages[id-ID_TOP_TAB]);note(sections[active_page]);break;}if(id>=ID_NET_MODE&&id<=ID_NET_GUIDE){network_action(id);break;}if(id>=ID_CAT_SELECT&&id<ID_CAT_SELECT+DL_CATEGORIES){unsigned c=id-ID_CAT_SELECT;if(!busy)select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active)));break;}
   if(id>=ID_CAT_DELETE&&id<ID_CAT_DELETE+DL_CATEGORIES){unsigned c=id-ID_CAT_DELETE;if(select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active))))delete_profile();break;}
   if(id>=ID_CAT_RENAME&&id<ID_CAT_RENAME+DL_CATEGORIES){unsigned c=id-ID_CAT_RENAME;if(select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active))))rename_profile();break;}
   if((id>=ID_CAT_RUN&&id<ID_CAT_RUN+DL_CATEGORIES)||(id>=ID_CAT_EDIT&&id<ID_CAT_EDIT+DL_CATEGORIES)){unsigned c=id>=(unsigned)ID_CAT_EDIT?id-ID_CAT_EDIT:id-ID_CAT_RUN;int n=dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active));if(select_profile(n)){if(id>=ID_CAT_EDIT){navigation_show(PAGE_LOAD);set(program_tabs,MUIA_Group_ActivePage,0);}else launch(0,NULL);}break;}

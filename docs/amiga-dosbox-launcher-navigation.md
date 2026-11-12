@@ -262,3 +262,31 @@ The installed launcher was captured at 940×580. Launcher.cfg and dosbox.conf
 checksums remained unchanged. The previous executable and library configuration
 were retained as backups. This is UI validation; no new emulator-performance or
 gameplay results are claimed. Released installers have not been replaced.
+
+### Full-page correction
+
+Settings use the full content area. Fixed-size checkmarks sit in flexible form
+cells, so they no longer limit an entire CPU, Sound or Developer column.
+The joystick panel uses a minimum width rather than a fixed page width.
+
+The native MUI page selector handles active-page visibility. The virtual
+viewport paints its full background when selected, clearing space left by a
+previous page. Scrollbar visibility is tracked locally: MUI 3.8 returned TRUE
+for `MUIA_ShowMe` even after the diagnostic hid a wrapper, so querying that
+attribute is not used to decide whether to change the bars.
+
+The layout probe checks the native active-page number, CPU form width,
+scrolling, resizing and bounded status history. The read-only gallery build
+(`test_dosbox_launcher_layout.py --build-probe 1024x768 --gallery`) captures
+pages from a scratch installation on the Amiga without saving profiles or
+starting an ARM worker. It uses `Gallery.page` / `Gallery.ready` to select
+pages 0–11; 12/13 show the high-cycle choices, and 99 closes the gallery.
+
+[MUI virtual groups](https://github.com/amiga-mui/muidev/wiki/MUI_Virtgroup)
+and [background drawing](https://github.com/amiga-mui/muidev/wiki/MUI_Area)
+describe the underlying layout and drawing interfaces.
+
+Both constrained 640×480 and 1024×768 hardware layout runs pass all 12 pages,
+CPU form-width checks, resizing, scrolling and status-history checks. Fourteen
+launcher images document the interface and the two high-cycle selections;
+these are UI captures, not additional gameplay benchmarks.

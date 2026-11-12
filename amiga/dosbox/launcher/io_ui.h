@@ -78,11 +78,11 @@ static void joystick_controls(void){unsigned i,count=val(joy_count,MUIA_Cycle_Ac
 static Object *joy_label(const char*s){Object*o=label(s);set(o,MUIA_Text_SetMax,FALSE);return o;}
 static Object *joystick_page(void){return VGroup,UI_PAGE,
  Child,VGroup,UI_PANEL("DOS gameport"),Child,ColGroup(2),
- Child,fieldlabel("Enable for this program"),Child,joystick=CheckMark(FALSE),
+ Child,fieldlabel("Enable for this program"),Child,check_cell(&joystick),
  Child,fieldlabel("Controller"),Child,joy_count=cycle(joy_counts),
  Child,fieldlabel("Input"),Child,joy_label("Amiga port 2 (joystick)"),
  Child,fieldlabel("Guest device"),Child,joy_label("Two axes / buttons 1-2 - I/O 201h"),End,
- Child,RectangleObject,MUIA_FixWidth,470,MUIA_FixHeight,0,End,End,
+ Child,RectangleObject,MUIA_MinWidth,470,MUIA_FixHeight,0,End,End,
  Child,VGroup,UI_PANEL("Joystick and button test"),Child,VGroup,MUIA_Background,MUII_GroupBack,
  Child,joy_device=joy_label(""),Child,joy_diagram=NewObject(joy_diagram_class->mcc_Class,NULL,TAG_DONE),
  Child,joy_axes=joy_label("X: +0     Y: +0"),End,End,

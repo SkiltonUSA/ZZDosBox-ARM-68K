@@ -14,6 +14,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--gallery', action='store_true', help='Build read-only screenshot driver')
 parser.add_argument('--build-probe', choices=['640x480', '800x600', '1024x768'])
 parser.add_argument('--capture-seconds', type=int, default=0, choices=range(61))
 args = parser.parse_args()
@@ -26,13 +27,13 @@ subprocess.run([str(exe)], check=True)
 if args.build_probe:
     width, height = args.build_probe.split('x')
     image = json.loads((ROOT / 'amiga/upstream.json').read_text())['image']
-    target = out / ('Layout' + width)
+    target = out / ('Gallery' if args.gallery else 'Layout' + width)
     subprocess.run([
         'podman', '--connection', 'nuflix-converter-root', 'run', '--rm',
         '--platform', 'linux/amd64', '-v', f'{ROOT}:/work', '-w', '/work', image,
         'm68k-amigaos-gcc', '-std=c99', '-noixemul', '-m68020', '-O2', '-g',
         '-Wall', '-Wextra', '-Werror', '-Wno-unused-function',
-        '-Wno-misleading-indentation', '-fwrapv', '-DZZ_UI_LAYOUT_PROBE',
+        '-Wno-misleading-indentation', '-fwrapv', '-DZZ_UI_LAYOUT_PROBE', *(['-DZZ_UI_GALLERY'] if args.gallery else []),
         f'-DZZ_UI_TEST_WIDTH={width}', f'-DZZ_UI_TEST_HEIGHT={height}',
         f'-DZZ_UI_CAPTURE_TICKS={args.capture_seconds * 50}',
         '-Iamiga/dosbox/developer', '-I.context/amiga/dosbox-launcher',
