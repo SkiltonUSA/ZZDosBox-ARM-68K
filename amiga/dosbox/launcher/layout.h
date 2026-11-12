@@ -8,7 +8,7 @@ static struct ui_layout ui_layout_for_screen(unsigned width,unsigned height,unsi
  l.width=width>32?width-32:1;
  l.height=height>bar+40?height-bar-40:1;
  if(l.width>940)l.width=940;
- if(l.height>500)l.height=500;
+ if(l.height>580)l.height=580;
  l.compact=l.width<820||l.height<460;
  return l;
 }

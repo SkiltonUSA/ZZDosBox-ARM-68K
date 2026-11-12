@@ -4,7 +4,7 @@ struct hover_help_data {struct MUI_EventHandlerNode events;int shown,hover;};
 static void hover_help_set(struct hover_help_data *d,int hover){
  if(d->hover==hover)return;d->hover=hover;
  set(status,MUIA_Text_Contents,(ULONG)(hover?
-  "Delete removes game/app files and saves. OS and shared installations are protected.":message));
+  "Delete removes game/app files and saves. OS and shared installations are protected.":""));
 }
 static ULONG hover_help_dispatch(struct IClass *cl __asm("a0"),
  Object *obj __asm("a2"),Msg msg __asm("a1")){
@@ -37,5 +37,5 @@ static ULONG hover_help_dispatch(struct IClass *cl __asm("a0"),
 }
 static Object *delete_button(void){return NewObject(hover_help_class->mcc_Class,NULL,
  ButtonFrame,MUIA_Font,ui_font(),MUIA_InputMode,MUIV_InputMode_RelVerify,
- MUIA_Background,MUII_ButtonBack,MUIA_CycleChain,1,MUIA_InnerTop,5,MUIA_InnerBottom,5,
+ MUIA_Background,MUII_ButtonBack,MUIA_CycleChain,1,MUIA_InnerTop,2,MUIA_InnerBottom,2,
  MUIA_Text_PreParse,(ULONG)"\33c",MUIA_Text_Contents,(ULONG)"Delete",TAG_DONE);}

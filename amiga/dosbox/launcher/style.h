@@ -38,9 +38,9 @@ static void style_close(void){
 }
 static Object *ui_button(const char *text){return TextObject,ButtonFrame,
  MUIA_Font,ui_font(),MUIA_InputMode,MUIV_InputMode_RelVerify,MUIA_Background,MUII_ButtonBack,
- MUIA_CycleChain,1,MUIA_InnerTop,ui_compact?2:5,MUIA_InnerBottom,ui_compact?2:5,
+ MUIA_CycleChain,1,MUIA_InnerLeft,2,MUIA_InnerRight,2,MUIA_InnerTop,2,MUIA_InnerBottom,2,
  MUIA_Text_PreParse,(ULONG)"\33c",MUIA_Text_Contents,(ULONG)text,End;}
 /* Shared rhythm keeps secondary tabs/forms visually consistent. */
 #define UI_LIGHT_BACKGROUND "2:rdddddddd,dddddddd,dddddddd"
-#define UI_PAGE MUIA_Group_Spacing,ui_compact?4:8,InnerSpacing(ui_compact?4:10,ui_compact?4:8)
-#define UI_PANEL(name) GroupFrameT(name),MUIA_Background,MUII_GroupBack,MUIA_Group_Spacing,ui_compact?4:6,InnerSpacing(ui_compact?4:10,ui_compact?4:8)
+#define UI_PAGE MUIA_Group_Spacing,4,InnerSpacing(4,4)
+#define UI_PANEL(name) GroupFrameT(name),MUIA_Background,MUII_GroupBack,MUIA_Group_Spacing,4,InnerSpacing(4,4)

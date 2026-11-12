@@ -1,8 +1,8 @@
 /* GPL-3.0-or-later. Local per-program PPM previews, no network or datatypes. */
 #include <proto/Picasso96.h>
 struct Library *P96Base;
-#define SNAP_W (ui_compact?128u:240u)
-#define SNAP_H (ui_compact?96u:180u)
+#define SNAP_W (ui_compact?128u:192u)
+#define SNAP_H (ui_compact?96u:144u)
 #define SNAP_BYTES (240*180*3)
 static struct MUI_CustomClass *snapshot_class;
 static Object *snapshot_views[DL_CATEGORIES+1],*snapshot_capture[DL_CATEGORIES+1];

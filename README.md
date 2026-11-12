@@ -1,5 +1,7 @@
 # ZZDosBox-ARM-68K
 
+Development launcher: ZZ8-Bit-style library categories and settings tabs, an About icon, and a scrolling status history. [Navigation guide](docs/amiga-dosbox-launcher-navigation.md).
+
 **DOSBox for AmigaOS and the ZZ9000 Cortex-A9**, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 The ARM runs the emulated PC; the 68K handles the MUI interface, AmigaOS services
@@ -118,7 +120,7 @@ not every combination is supported.
 
 | Area | Features |
 |---|---|
-| Native launcher | MUI 3.8+ sidebar navigation, screen-aware compact layout and independently scrollable settings, persistent settings, About/credits and scrollable changelog, ZZDosBox branding, startup logo, loading screen held until display handoff, shortcut reminders and footer revision. |
+| Native launcher | MUI 3.8+ ZZ8-Bit-style category column and compact settings tabs, screen-aware layout with scrollbars only when needed, 200-message status history, persistent settings, About/credits and scrollable changelog, ZZDosBox branding, startup logo, loading screen held until display handoff, shortcut reminders and footer revision. |
 | Program library | Up to 256 profiles; All, Games, Applications and OS lists; add/rename entries, confirmed deletion of dedicated game/app folders, protected OS/shared disks, category tags and per-program settings. Up/Down selection and letter/number jump in the focused list. |
 | DOS environments | Embedded DOSBox DOS 5 without installation disks; optional booted MS-DOS 6.22 from the user's installation. |
 | Execution | 386-class, 32-bit x86 emulation; ARMv7 dynamic recompiler with 4 MiB code cache for DOS; separate interpreter and paging-guarded Windows builds. |

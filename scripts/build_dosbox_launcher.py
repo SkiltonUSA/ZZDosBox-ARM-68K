@@ -2,6 +2,7 @@
 """Build the MUI launcher and disk helper; does not deploy or start Core1."""
 import hashlib,json,subprocess
 from prepare_dosbox_disasm import prepare
+from prepare_dosbox_about import build as build_about
 from pathlib import Path
 from amiga import PIN
 ROOT=Path(__file__).resolve().parents[1]
@@ -10,6 +11,7 @@ subprocess.run(['python3',str(ROOT/'scripts/build_dosbox_compatibility_details.p
 subprocess.run(['python3',str(ROOT/'scripts/prepare_dosbox_network_guide.py')],check=True,cwd=ROOT)
 subprocess.run(['python3',str(ROOT/'scripts/prepare_dosbox_changelog.py')],check=True,cwd=ROOT)
 disasm=prepare(OUT)
+build_about(OUT)
 subprocess.run(['python3',str(ROOT/'scripts/prepare_dosbox_icon.py')],check=True,cwd=ROOT)
 subprocess.run(['podman','--connection','nuflix-converter-root','run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-fstack-usage','-Wall','-Wextra','-Werror','-Wno-unused-function','-Wno-misleading-indentation','-fwrapv','-Iamiga/dosbox/developer','-I.context/amiga/dosbox-launcher','amiga/dosbox/launcher/main.c','amiga/dosbox/pc/cd_host.c',str(disasm.relative_to(ROOT)),'-lamiga','-o','.context/amiga/dosbox-launcher/ZZDosBox-Launcher'],check=True,cwd=ROOT)
 subprocess.run(['podman','--connection','nuflix-converter-root','run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-Wall','-Wextra','-Werror','-I.context/amiga/dosbox-launcher','amiga/dosbox/launcher/icon.c','-lamiga','-o','.context/amiga/dosbox-launcher/MakeLauncherIcon'],check=True,cwd=ROOT)
@@ -20,7 +22,7 @@ subprocess.run(['podman','--connection','nuflix-converter-root','run','--rm','--
 (ROOT/'cd_host.su').replace(OUT/'cd-stack.su')
 (ROOT/'disk.su').replace(OUT/'disk-stack.su')
 p=OUT/'ZZDosBox-Launcher';assert p.read_bytes()[:4]==bytes.fromhex('000003f3')
-record={'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'sources':{str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest() for f in [*(ROOT/'amiga/dosbox/launcher').glob('*'), ROOT/'amiga/dosbox/pc/welcome.S', ROOT/'amiga/dosbox/version.h', ROOT/'scripts/build_dosbox_launcher.py', ROOT/'amiga/dosbox/assets/zzdosbox-logo.png', ROOT/'scripts/prepare_dosbox_icon.py', ROOT/'scripts/prepare_dosbox_network_guide.py', ROOT/'docs/amiga-dosbox-network-setup.md', ROOT/'scripts/prepare_dosbox_changelog.py', ROOT/'amiga/dosbox/CHANGELOG.md', ROOT/'amiga/dosbox/compatibility/data.h', ROOT/'amiga/dosbox/compatibility/details_meta.h', ROOT/'amiga/dosbox/network/config.h', ROOT/'amiga/dosbox/network/control.h'] if f.is_file()}}
+record={'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'sources':{str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest() for f in [*(ROOT/'amiga/dosbox/launcher').glob('*'), ROOT/'amiga/dosbox/pc/welcome.S', ROOT/'amiga/dosbox/version.h', ROOT/'scripts/build_dosbox_launcher.py', ROOT/'amiga/dosbox/assets/zzdosbox-logo.png', ROOT/'scripts/prepare_dosbox_icon.py', ROOT/'scripts/prepare_dosbox_about.py', ROOT/'amiga/dosbox/assets/about-icon.png', ROOT/'scripts/prepare_dosbox_network_guide.py', ROOT/'docs/amiga-dosbox-network-setup.md', ROOT/'scripts/prepare_dosbox_changelog.py', ROOT/'amiga/dosbox/CHANGELOG.md', ROOT/'amiga/dosbox/compatibility/data.h', ROOT/'amiga/dosbox/compatibility/details_meta.h', ROOT/'amiga/dosbox/network/config.h', ROOT/'amiga/dosbox/network/control.h'] if f.is_file()}}
 (OUT/'launcher-build.json').write_text(json.dumps(record,indent=2)+'\n');print(record['bytes'],record['sha256'])
 
 import shutil

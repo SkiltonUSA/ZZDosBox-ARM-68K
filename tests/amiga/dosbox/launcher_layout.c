@@ -7,7 +7,7 @@ int main(void){
  for(i=0;i<sizeof(screens)/sizeof(screens[0]);i++){
   struct ui_layout l=ui_layout_for_screen(screens[i][0],screens[i][1],20);
   assert(l.width+32<=screens[i][0]);assert(l.height+60<=screens[i][1]);
-  assert(l.width<=940&&l.height<=500);
+  assert(l.width<=940&&l.height<=580);
   assert(l.compact==(screens[i][0]<=800||screens[i][1]<480));
  }
  puts("PASS: launcher screen budgets and compact selection");return 0;

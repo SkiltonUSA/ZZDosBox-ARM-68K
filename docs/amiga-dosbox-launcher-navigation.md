@@ -1,33 +1,39 @@
 # ZZDosBox launcher navigation
 
-Launcher **0.19.3-dev** replaces the main row of tabs with a persistent left
-sidebar. Select a section with the mouse, or focus the list with Tab and use
-Up/Down. The highlight and page heading identify the current section. The
-selected program stays visible above its settings.
+The launcher follows ZZ8-Bit's compact MUI layout. Choose **All programs**,
+**Games**, **Applications** or **OS** in the left column. The selected program
+and its settings remain available when switching tabs.
 
-| Section | Contents |
+| Tab | Contents |
 | --- | --- |
-| Load program | All programs, Games, Applications and OS; add, edit and launch |
-| DOS terminal | DOS selection, terminal colours, commands, AUTOEXEC.BAT, CONFIG.SYS and CD-ROM |
-| CPU & memory | Guest RAM, CPU cycles and session duration |
-| Display | Window/fullscreen, window size, video adapter, monochrome colour, renderer, presentation, scanlines and FPS |
-| Audio | MIDI output and CAMD/AHI/ZZ9000AX driver detection |
-| Network | TCP/IP or IPX configuration, connection status and diagnostics |
-| Disks | Boot images and Workbench mounting/ejection |
-| Developer | Diagnostics, memory tools and dosbox.conf |
-| Compatibility | Offline DOSBox community reports |
-| About | Version and credits |
+| Library | Program list, screenshots, add, rename, delete and launch |
+| DOS | Terminal, AUTOEXEC.BAT, CONFIG.SYS and CD-ROM |
+| CPU | CPU model, guest memory, EMS/VCPI/UMB and cycle controls |
+| Display | Window/fullscreen, adapter, rendering, scanlines and FPS |
+| Sound | Sound cards, MIDI and driver checks |
+| Ports | Network, serial I/O and joystick settings/tester |
+| Disks | Boot images, creation and Workbench mounting/ejection |
+| Tools | Developer diagnostics, dosbox.conf and compatibility reports |
 
-**Save settings** stays below the sidebar; operation messages stay along the
-bottom. Navigation preserves in-progress edits. Category Edit returns to the
-program editor and keeps the sidebar in sync. Small secondary tab groups are
-retained only within their own section. No separately installed custom MUI classes or MUI 4 upgrade are required;
-the launcher retains its MUI 3.8 requirement.
+The **[i]** icon opens About, credits and the changelog. **Save settings** stays
+beneath the library categories. Settings remain editable without switching
+programs; navigation does not discard edits.
 
-During an active network/developer session, the launcher selects the relevant
-section and temporarily disables the sidebar. Its live controls remain
-available, including cooperative Disconnect/Stop. Navigation returns when the
-session ends. This change does not alter emulator execution or profile formats.
+A scrolling **Status** panel records startup, program selection, launch/return,
+file operations and errors. It retains the latest 200 messages; **Clear** empties
+only this session's on-screen history. Detailed player logs remain accessible
+through Tools / Developer / Open log. Normal gameplay still sleeps the launcher;
+the new panel adds no continuous gameplay polling or disk logging.
+
+Buttons and form spacing match ZZ8-Bit. Settings scrollbars appear only when
+content exceeds the available space. The screen-aware compact layout retains
+640×480 support without changing Workbench resolution or global preferences.
+MUI 3.8 remains sufficient; no additional custom MUI classes are required.
+
+During a live network/developer session, navigation is held until the session
+ends; the existing Disconnect/Stop controls remain available.
+
+The sections below retain the history of earlier navigation and layout work.
 
 ## Program-list keyboard controls — 0.19.10-dev
 
@@ -236,3 +242,23 @@ screen-mode change. No game/ARM worker was started by these checks.
 The viewport uses an embedded subclass of MUI's built-in Virtgroup to keep
 short pages from capping the maximum window size. No extra installed class
 is needed. [MUI scrollgroup reference](https://github.com/amiga-mui/muidev/wiki/MUI_Scrollgroup).
+
+## 2026-11-12 launcher verification
+
+The launcher and both layout probes compile with warnings treated as errors.
+Native screen-budget checks pass. On the A4000TX, constrained 640×480 and
+1024×768 layouts visited all 12 settings pages, all four library categories,
+exercised scrolling and resizing, and checked the loading card. Both report
+`LAYOUT PASS errors=0 pages=12`. The status test inserts 220 messages, verifies
+that only 200 remain, clears the history, and verifies one new message.
+
+Intuition enforces a 501-pixel minimum width with the full-size font; the compact
+layout accepts 480 pixels. The resize check respects that native minimum and
+requires it to fit a 640-pixel screen. Initial diagnostics incorrectly expected
+480 pixels with both font sizes. Library controls now fit the normal window
+without an outer scrollbar; oversized pages remain scrollable.
+
+The installed launcher was captured at 940×580. Launcher.cfg and dosbox.conf
+checksums remained unchanged. The previous executable and library configuration
+were retained as backups. This is UI validation; no new emulator-performance or
+gameplay results are claimed. Released installers have not been replaced.

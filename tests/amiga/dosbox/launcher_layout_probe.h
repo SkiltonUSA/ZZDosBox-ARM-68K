@@ -4,7 +4,7 @@
 #endif
 static void layout_pump(void){
  ULONG signals;unsigned i;
- for(i=0;i<12;i++){DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);Delay(1);}
+ for(i=0;i<12;i++){DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);ui_scroll_update();Delay(1);}
 }
 static int layout_probe(void){
  FILE *report=freopen("PROGDIR:layout-report.txt","w",stdout);
@@ -16,7 +16,7 @@ static int layout_probe(void){
  if(native->Width>ZZ_UI_TEST_WIDTH||native->Height>ZZ_UI_TEST_HEIGHT-20)errors++;
  get(main_pages,MUIA_Group_ChildList,&children);state=children->lh_Head;
  while((scroll=NextObject(&state))){
-  navigation_show(page);layout_pump();virt=(Object*)val(scroll,MUIA_Scrollgroup_Contents);
+  navigation_show(page);layout_pump();virt=ui_scroll_objects[page].view;
   printf("PAGE %u %s viewport %ld x %ld content %lu x %lu\n",page,sections[page],(long)_mwidth(virt),(long)_mheight(virt),(unsigned long)val(virt,MUIA_Virtgroup_Width),(unsigned long)val(virt,MUIA_Virtgroup_Height));
   if(_mwidth(virt)<180||_mheight(virt)<100)errors++;
   SetAttrs(virt,MUIA_Virtgroup_Left,10000,MUIA_Virtgroup_Top,10000,TAG_DONE);layout_pump();
@@ -25,12 +25,21 @@ static int layout_probe(void){
   fflush(stdout);page++;
  }
  if(page!=PAGE_COUNT)errors++;
+ for(unsigned i=0;i<220;i++)note("Status history capacity check");
+ if(loglines!=200||val(loglist,MUIA_List_Entries)!=200)errors++;
+ DoMethod(loglist,MUIM_List_Clear);loglines=0;note("All settings pages checked. Ready.");
+ printf("STATUS bounded history=%lu\n",(unsigned long)val(loglist,MUIA_List_Entries));
+ for(unsigned i=0;i<4;i++){set(program_tabs,MUIA_Group_ActivePage,i);navigation_show(PAGE_LOAD);layout_pump();}
+ set(program_tabs,MUIA_Group_ActivePage,0);
  /* Exercise real MUI resizing, without injecting a held mouse gesture. */
  {const unsigned widths[]={480,608,768};unsigned i;
   for(i=0;i<3;i++){
    ChangeWindowBox(native,native->LeftEdge,native->TopEdge,widths[i],360);layout_pump();
    printf("RESIZE requested %u x 360 actual %u x %u\n",widths[i],native->Width,native->Height);
-   if((unsigned)native->Width!=widths[i]||native->Height!=360)errors++;
+   /* Intuition clamps to the font-dependent minimum. The full-size
+    * font need not shrink to 480px; the supported 640px screen must fit. */
+   unsigned expected=widths[i]<(unsigned)native->MinWidth?(unsigned)native->MinWidth:widths[i];
+   if((unsigned)native->Width!=expected||native->Height!=360||native->MinWidth>640)errors++;
   }
   ChangeWindowBox(native,native->LeftEdge,native->TopEdge,ui_layout.width,ui_layout.height);layout_pump();
  }

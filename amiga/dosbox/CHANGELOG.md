@@ -1,5 +1,11 @@
 # ZZDosBox changelog
 
+## Unreleased launcher styling
+
+- ZZ8-Bit-style category column, compact settings tabs and About icon.
+- Scrollable 200-message status history, with Clear.
+- Settings scrollbars appear only when required; retain compact screen support.
+
 Version history from **0.1.0-dev** through **0.22.7-dev**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments

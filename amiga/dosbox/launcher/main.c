@@ -25,13 +25,14 @@
 #else
 #define UI_OWNER "ZZDOS_LAUNCHER"
 #define UI_BASE "ZZDOSBOX"
-#define UI_TITLE ""
+#define UI_TITLE "ZZDosBox"
 #endif
 #include "temperature.h"
 #include "program_list.h"
 #include "changelog_text.h"
-#include "sidebar-art.h"
-static const ULONG sidebar_colours[]={0,0,0, 0,0,0, 0xffffffff,0xffffffff,0xffffffff, 0,0,0};
+#include "about-art.h"
+
+
 struct Library *MUIMasterBase,*AslBase,*WorkbenchBase;
 static struct dl_library library;
 static Object *joy_count,*joy_binding[4];
@@ -75,17 +76,15 @@ static const char *sections[]={"Load program","DOS terminal","CPU & memory","Dis
 static Object *navigation,*navigation_view,*page_heading,*page_context,*main_pages;
 enum {ID_NAVIGATE=43,ID_PROGRAM_TAB=44,ID_JOY_COUNT=45};
 static char context_text[96];
-static Object *page_icon;
-static const ULONG section_icons[]={MUII_Drawer,MUII_PopFile,MUII_Chip,MUII_Chip,MUII_TapePlay,MUII_Network,MUII_Chip,MUII_Chip,MUII_HardDisk,MUII_Chip,MUII_PopFile,MUII_PopFile};
-/* Separate columns keep captions aligned even when stock icons differ in width.
- * Static entries outlive the list; HookEntry bridges MUI's register ABI. */
-struct nav_entry {char icon[32];const char *caption;};
-static struct nav_entry nav_entries[PAGE_COUNT];
-static ULONG navigation_display(struct Hook *hook,char **columns,struct nav_entry *entry){
- (void)hook;columns[0]=entry?entry->icon:"";columns[1]=entry?(char*)entry->caption:"";return 0;
-}
-static struct Hook navigation_hook={{NULL,NULL},(ULONG (*)())HookEntry,(ULONG (*)())navigation_display,NULL};
-static const char *library_tabs[]={"All","Games","Applications","OS",NULL};
+
+static const char *library_tabs[]={"All programs","Games","Applications","OS",NULL};
+static const char *top_tabs[]={"Library","DOS","CPU","Display","Sound","Ports","Disks","Tools"};
+static const unsigned top_pages[]={PAGE_LOAD,PAGE_TERMINAL,PAGE_CPU,PAGE_DISPLAY,PAGE_AUDIO,PAGE_NETWORK,PAGE_DISKS,PAGE_DEVELOPER};
+static const char *port_tabs[]={"Network","Serial I/O","Joystick",NULL};
+static const char *tool_tabs[]={"Developer","Compatibility",NULL};
+static Object *tab_buttons[8],*tab_row,*port_row,*tool_row,*port_choice,*tool_choice,*loglist;
+static unsigned loglines;
+enum {ID_TOP_TAB=800,ID_PORT_TAB=808,ID_TOOL_TAB,ID_ABOUT,ID_LOG_CLEAR};
 static const char *terminal_tabs[]={"Terminal","AUTOEXEC.BAT","CONFIG.SYS","CD-ROM",NULL};
 static const char *startup_choices[]={"Default","Edited","File",NULL},*cd_choices[]={"None","ISO image","Amiga CD-ROM",NULL};
 static const char *sizes[]={"320 x 240","640 x 480","960 x 720",NULL};
@@ -99,15 +98,30 @@ static void program_list_focus(void){
   set(win,MUIA_Window_ActiveObject,(ULONG)program_views[page]);
 }
 #include "hover_help.h"
-static void note(const char*s){snprintf(message,sizeof(message),"%s",s);set(status,MUIA_Text_Contents,(ULONG)message);}
+static void note(const char*s){
+ if(!*s)return;
+ snprintf(message,sizeof(message),"%s",s);
+ if(!loglist)return;
+ if(loglines==200){DoMethod(loglist,MUIM_List_Remove,MUIV_List_Remove_First);loglines--;}
+ DoMethod(loglist,MUIM_List_InsertSingle,(ULONG)message,MUIV_List_Insert_Bottom);loglines++;
+ set(loglist,MUIA_List_Active,MUIV_List_Active_Bottom);
+}
 /* Navigation changes only the visible page. Unsaved controls remain alive. */
 static void joystick_test_active(int active);
 static void navigation_show(unsigned page){
  if(page>=PAGE_COUNT)page=val(main_pages,MUIA_Group_ActivePage);
- SetAttrs(navigation,MUIA_NoNotify,TRUE,MUIA_List_Active,page,TAG_DONE);
+ unsigned active=8;
+ for(unsigned i=0;i<8;i++)if(top_pages[i]==page)active=i;
+ if(page>=PAGE_NETWORK&&page<=PAGE_JOYSTICK)active=5;
+ if(page==PAGE_COMPATIBILITY)active=7;
+ for(unsigned i=0;i<8;i++)set(tab_buttons[i],MUIA_Selected,i==active);
+ DoMethod(port_row,MUIM_Group_InitChange);set(port_row,MUIA_ShowMe,active==5);DoMethod(port_row,MUIM_Group_ExitChange);
+ DoMethod(tool_row,MUIM_Group_InitChange);set(tool_row,MUIA_ShowMe,active==7);DoMethod(tool_row,MUIM_Group_ExitChange);
+ if(active==5)SetAttrs(port_choice,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,page-PAGE_NETWORK,TAG_DONE);
+ if(active==7)SetAttrs(tool_choice,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,page==PAGE_COMPATIBILITY,TAG_DONE);
  set(main_pages,MUIA_Group_ActivePage,page);
  joystick_test_active(page==PAGE_JOYSTICK);if(page==PAGE_IO)serial_detect();
- set(page_heading,MUIA_Text_Contents,(ULONG)sections[page]);set(page_icon,MUIA_Image_Spec,section_icons[page]);
+ set(page_heading,MUIA_Text_Contents,(ULONG)sections[page]);
  snprintf(context_text,sizeof(context_text),"Program: %s",selected>=0?(char*)val(title,MUIA_String_Contents):"No program selected");
  set(page_context,MUIA_Text_Contents,(ULONG)context_text);
 }
@@ -133,7 +147,7 @@ static Object *fieldlabel(const char*s){Object*o=label(s);set(o,MUIA_Text_SetMax
 /* Equal text columns across both Display panels, scaled with the UI font. */
 static Object *displaylabel(const char*s){return TextObject,MUIA_Font,ui_font(),MUIA_Text_Contents,(ULONG)s,MUIA_FixWidthTxt,(ULONG)"Monochrome colour",MUIA_HorizWeight,0,End;}
 static Object *str(unsigned n){return StringObject,StringFrame,MUIA_Font,ui_font(),MUIA_String_MaxLen,n,End;}
-static Object *cycle(const char**s){return CycleObject,MUIA_Font,ui_font(),MUIA_Cycle_Entries,(ULONG)s,End;}
+static Object *cycle(const char**s){return CycleObject,MUIA_CycleChain,1,MUIA_Font,ui_font(),MUIA_Cycle_Entries,(ULONG)s,End;}
 static void notify(Object*o,ULONG attr,ULONG trigger,unsigned id){DoMethod(o,MUIM_Notify,attr,trigger,(ULONG)app,2,MUIM_Application_ReturnID,id);}
 static void path(char*out,const char*name){strcpy(out,appdir);AddPart(out,(STRPTR)name,DL_PATH);}
 static int same_dir(const char*a,const char*b){BPTR x=Lock((STRPTR)a,ACCESS_READ),y=Lock((STRPTR)b,ACCESS_READ);int same=x&&y&&SameLock(x,y)==LOCK_SAME;if(x)UnLock(x);if(y)UnLock(y);return same;}
@@ -184,7 +198,7 @@ static void category_refresh(void){unsigned c,i;int row;
  }
 }
 static void refresh(void){unsigned i;busy=1;DoMethod(list,MUIM_List_Clear);for(i=0;i<library.count;i++)DoMethod(list,MUIM_List_InsertSingle,(ULONG)library.p[i].title,MUIV_List_Insert_Bottom);if(library.count){if(library.last>=library.count)library.last=0;SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,library.last,TAG_DONE);show_selection(library.last);}else{selected=-1;snapshot_refresh();}category_refresh();navigation_show(val(main_pages,MUIA_Group_ActivePage));busy=0;}
-static int select_profile(int n){if(n<0||(unsigned)n>=library.count)return 0;if(n==selected)return 1;if(!store_selection())return 0;show_selection(n);SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,n,TAG_DONE);category_refresh();return 1;}
+static int select_profile(int n){if(n<0||(unsigned)n>=library.count)return 0;if(n==selected)return 1;if(!store_selection())return 0;show_selection(n);note(library.p[n].title);SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,n,TAG_DONE);category_refresh();return 1;}
 static Object *category_page(unsigned c){return VGroup,UI_PAGE,
  Child,HGroup,Child,program_views[c+1]=program_list_new(&category_lists[c]),Child,snapshot_panel(c+1),End,
  Child,HGroup,Child,category_run[c]=ui_button("\33bLaunch"),Child,category_edit[c]=ui_button("Edit"),Child,category_rename[c]=ui_button("Rename..."),Child,category_delete[c]=delete_button(),End,End;}
@@ -222,7 +236,7 @@ static void rename_profile(void){
  set(dialog,MUIA_Window_Open,FALSE);DoMethod(app,OM_REMMEMBER,(ULONG)dialog);MUI_DisposeObject(dialog);set(win,MUIA_Window_Sleep,FALSE);program_list_focus();
 }
 static int browse(char*out,int onlydrawer,int saving,const char*caption){struct FileRequester*r;int ok=0;set(app,MUIA_Application_Sleep,TRUE);r=AllocAslRequestTags(ASL_FileRequest,ASLFR_TitleText,(ULONG)caption,ASLFR_InitialDrawer,(ULONG)(selected>=0?library.p[selected].drive:appdir),ASLFR_DrawersOnly,onlydrawer,ASLFR_DoSaveMode,saving,TAG_DONE);if(r){if(AslRequestTags(r,TAG_DONE)&&strlen(r->fr_Drawer)<DL_PATH){strcpy(out,r->fr_Drawer);ok=onlydrawer||AddPart(out,r->fr_File,DL_PATH);}FreeAslRequest(r);}set(app,MUIA_Application_Sleep,FALSE);return ok;}
-static void add(void){char p[DL_PATH];struct dl_profile*x;if(library.count==DL_MAX){note("Program list is full.");return;}if(!browse(p,0,0,"Add DOS program"))return;if(!store_selection())return;x=&library.p[library.count];dl_profile_default(x);x->ems=x->sound=1;x->memory=8;snprintf(x->program,sizeof(x->program),"%s",FilePart(p));snprintf(x->title,sizeof(x->title),"%s",FilePart(p));*PathPart(p)=0;strcpy(x->drive,p);library.last=library.count++;refresh();if(!save())note("Could not save program list.");}
+static void add(void){char p[DL_PATH];struct dl_profile*x;if(library.count==DL_MAX){note("Program list is full.");return;}if(!browse(p,0,0,"Add DOS program"))return;if(!store_selection())return;x=&library.p[library.count];dl_profile_default(x);x->ems=x->sound=1;x->memory=8;snprintf(x->program,sizeof(x->program),"%s",FilePart(p));snprintf(x->title,sizeof(x->title),"%s",FilePart(p));*PathPart(p)=0;strcpy(x->drive,p);library.last=library.count++;refresh();note(save()?"Program added.":"Could not save program list.");}
 static int copy_helper(const char*drive){char source[DL_PATH],dest[DL_PATH];FILE*a,*b;unsigned char data[1024];size_t n;int ok=1;path(source,"LOADFIX.COM");strcpy(dest,drive);if(!AddPart(dest,"LOADFIX.COM",sizeof(dest)))return 0;if(exists(dest))return 1;a=fopen(source,"rb");if(!a)return 0;b=fopen(dest,"wb");if(!b){fclose(a);return 0;}while((n=fread(data,1,sizeof(data),a))>0)if(fwrite(data,1,n,b)!=n){ok=0;break;}if(ferror(a))ok=0;fclose(a);if(fclose(b))ok=0;if(!ok)DeleteFile(dest);return ok;}
 #include "disk_ui.h"
 static int hdd_available(void){char image[DL_PATH];BPTR lock;
@@ -325,6 +339,7 @@ static void launch(unsigned mode,const char*script){struct dl_profile*p;const ch
  if(!developer_options())return;
  if(selected<0){note("Add a program first.");return;}if(!store_selection())return;p=&library.p[selected];if(!dl_profile_valid(p)){note("Check settings; text and background must differ.");return;}if(!conf_profile(p))return;p=&effective_profile;
  if(FindPort("Sixies.ARM.Debug.Owner")||FindPort("ZZDOS_DISK_CREATE")){note("Another ARM application or disk creator is running.");return;}
+ {char text[128];snprintf(text,sizeof(text),"Launching: %s",p->title);note(text);}
  doscommand=mode==0?p->program:mode==2?(char*)val(command,MUIA_String_Contents):mode==4?script:"";
  if(p->system==2){launch_image(p,mode,doscommand);return;}
  if(p->system==1){launch_msdos(p,mode,doscommand);return;}
@@ -387,8 +402,10 @@ static void boot_disk(void){
 #include "audio_detect.h"
 #include "compatibility_ui.h"
 #include "scroll_pages.h"
-static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*execute,*auto_run,*script,*mount_disks,*eject_disks,*boot_button,*cd_check,*audio_check,*dev_log,*root;
+static int build(void){Object *about_button,*log_clear,*add,*remove,*rename,*save_button,*run,*term,*execute,*auto_run,*script,*mount_disks,*eject_disks,*boot_button,*cd_check,*audio_check,*dev_log,*root;
  style_open();
+ tab_row=HGroup,MUIA_Group_Spacing,2,MUIA_VertWeight,0,End;
+ for(unsigned i=0;i<8;i++){tab_buttons[i]=ui_button(top_tabs[i]);DoMethod(tab_row,OM_ADDMEMBER,(ULONG)tab_buttons[i]);}
  viewport_class=MUI_CreateCustomClass(NULL,MUIC_Virtgroup,NULL,0,(APTR)viewport_dispatch);if(!viewport_class)return 0;
  joy_diagram_class=MUI_CreateCustomClass(NULL,MUIC_Area,NULL,sizeof(struct joy_diagram_data),(APTR)joy_diagram_dispatch);if(!joy_diagram_class)return 0;
  P96Base=OpenLibrary("Picasso96API.library",2);if(!P96Base)return 0;
@@ -396,28 +413,30 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
  hover_help_class=MUI_CreateCustomClass(NULL,MUIC_Text,NULL,sizeof(struct hover_help_data),(APTR)hover_help_dispatch);if(!hover_help_class)return 0;
  program_list_class=MUI_CreateCustomClass(NULL,MUIC_Listview,NULL,sizeof(struct program_list_data),(APTR)program_list_dispatch);if(!program_list_class)return 0;
  app=ApplicationObject,MUIA_Application_Title,(ULONG)"ZZDosBox",MUIA_Application_Base,(ULONG)UI_BASE,MUIA_Application_Version,(ULONG)"$VER: ZZDosBox Launcher " ZZ_LAUNCHER_VERSION " (" ZZ_LAUNCHER_DATE ")",
- SubWindow,win=WindowObject,MUIA_Window_Title,(ULONG)UI_TITLE,MUIA_Window_ID,ui_compact?0x5a444c32:0x5a444c31,MUIA_Window_Width,ui_layout.width,MUIA_Window_Height,ui_layout.height,
+ SubWindow,win=WindowObject,MUIA_Window_Title,(ULONG)UI_TITLE,MUIA_Window_ID,ui_compact?0x5a444c34:0x5a444c33,MUIA_Window_Width,ui_layout.width,MUIA_Window_Height,ui_layout.height,
  MUIA_Window_LeftEdge,MUIV_Window_LeftEdge_Centered,MUIA_Window_TopEdge,MUIV_Window_TopEdge_Centered,
- WindowContents,root=VGroup,MUIA_Font,ui_font(),MUIA_Group_Spacing,ui_compact?4:8,InnerSpacing(ui_compact?3:8,ui_compact?3:8),
+ WindowContents,root=VGroup,MUIA_Font,ui_font(),MUIA_Background,(ULONG)UI_LIGHT_BACKGROUND,MUIA_Group_Spacing,4,InnerSpacing(4,4),
  Child,HGroup,
- Child,VGroup,MUIA_HorizWeight,0,MUIA_Group_Spacing,8,
-  Child,HGroup,MUIA_ShowMe,!ui_compact,MUIA_VertWeight,0,InnerSpacing(0,4),Child,HSpace(0),
-   Child,BodychunkObject,MUIA_FixWidth,80,MUIA_FixHeight,80,
-    MUIA_Bitmap_Width,80,MUIA_Bitmap_Height,80,MUIA_Bodychunk_Depth,2,
-    MUIA_Bodychunk_Body,(ULONG)sidebar_body,MUIA_Bodychunk_Compression,0,
-    MUIA_Bodychunk_Masking,0,MUIA_Bitmap_SourceColors,(ULONG)sidebar_colours,
-    MUIA_Bitmap_Transparent,0,End,Child,HSpace(0),End,
-  Child,navigation_view=ListviewObject,MUIA_CycleChain,1,MUIA_FixWidthTxt,(ULONG)(ui_compact?" Compatibility ":"    Compatibility      "),
-   MUIA_Listview_List,navigation=ListObject,MUIA_Font,ui_font(),InputListFrame,MUIA_Background,(ULONG)UI_LIGHT_BACKGROUND,MUIA_List_MinLineHeight,ui_compact?19:30,
-    MUIA_List_Format,(ULONG)"W=0 D=8,MAW=100",MUIA_List_DisplayHook,(ULONG)&navigation_hook,End,End,
-  Child,save_button=ui_button("\33bSave settings"),End,
- Child,VGroup,
-  Child,HGroup,TextFrame,MUIA_Background,MUII_ButtonBack,InnerSpacing(ui_compact?4:10,ui_compact?3:8),MUIA_VertWeight,0,
-   Child,page_icon=ImageObject,MUIA_Image_Spec,MUII_Drawer,MUIA_FixWidth,24,MUIA_FixHeight,24,End,
-   Child,page_heading=TextObject,MUIA_Font,ui_title_font(),MUIA_FixWidthTxt,(ULONG)"CPU & memory  ",MUIA_HorizWeight,0,MUIA_Text_PreParse,(ULONG)"\33b",MUIA_Text_Contents,(ULONG)"Load program",End,
-   Child,page_context=TextObject,MUIA_Font,ui_font(),MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_SetMin,FALSE,MUIA_Text_Contents,(ULONG)"",End,End,
+ Child,VGroup,GroupFrame,MUIA_FixWidth,ui_compact?104:128,MUIA_Group_Spacing,6,
+  Child,label("Library"),
+  Child,navigation_view=ListviewObject,MUIA_CycleChain,1,
+   MUIA_Listview_List,navigation=ListObject,MUIA_Font,ui_font(),InputListFrame,
+    MUIA_List_MinLineHeight,20,MUIA_List_SourceArray,(ULONG)library_tabs,End,End,
+  Child,save_button=ui_button("Save settings"),End,
+ Child,VGroup,MUIA_Group_Spacing,4,
+  Child,HGroup,MUIA_VertWeight,0,
+   Child,page_heading=TextObject,MUIA_Font,ui_font(),MUIA_Text_SetMin,FALSE,MUIA_Text_PreParse,(ULONG)"\33b",MUIA_Text_Contents,(ULONG)"Library",End,
+   Child,page_context=TextObject,MUIA_Font,ui_font(),MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_SetMin,FALSE,MUIA_Text_Contents,(ULONG)"",End,
+   Child,about_button=BodychunkObject,MUIA_FixWidth,ABOUT_WIDTH,MUIA_FixHeight,ABOUT_HEIGHT,
+    InnerSpacing(0,0),MUIA_InputMode,MUIV_InputMode_RelVerify,MUIA_CycleChain,TRUE,
+    MUIA_Bitmap_Width,ABOUT_WIDTH,MUIA_Bitmap_Height,ABOUT_HEIGHT,MUIA_Bodychunk_Depth,4,
+    MUIA_Bodychunk_Body,(ULONG)about_body,MUIA_Bodychunk_Compression,0,MUIA_Bodychunk_Masking,0,
+    MUIA_Bitmap_SourceColors,(ULONG)about_colours,MUIA_Bitmap_Transparent,0,End,End,
+  Child,tab_row,
+  Child,port_row=HGroup,MUIA_ShowMe,FALSE,MUIA_VertWeight,0,Child,label("Ports"),Child,port_choice=cycle(port_tabs),Child,HSpace(0),End,
+  Child,tool_row=HGroup,MUIA_ShowMe,FALSE,MUIA_VertWeight,0,Child,label("Tools"),Child,tool_choice=cycle(tool_tabs),Child,HSpace(0),End,
   Child,main_pages=PageGroup,GroupFrame,MUIA_Background,MUII_GroupBack,InnerSpacing(ui_compact?2:10,ui_compact?2:10),
- Child,program_tabs=RegisterGroup(library_tabs),MUIA_Font,ui_font(),
+ Child,program_tabs=PageGroup,MUIA_Font,ui_font(),
  Child,VGroup,UI_PAGE,
   Child,HGroup,Child,program_views[0]=program_list_new(&list),Child,snapshot_panel(0),End,
   Child,HGroup,Child,add=ui_button("Add program..."),Child,rename=ui_button("Rename..."),Child,remove=delete_button(),End,
@@ -478,14 +497,27 @@ static int build(void){Object *add,*remove,*rename,*save_button,*run,*term,*exec
   Child,VGroup,UI_PANEL("Changelog"),Child,ListviewObject,MUIA_CycleChain,1,MUIA_Listview_Input,FALSE,
    MUIA_Listview_List,FloattextObject,ReadListFrame,MUIA_Font,ui_font(),
     MUIA_Floattext_Text,(ULONG)dl_changelog_text,End,End,End,End,
- End,End,End,Child,HGroup,TextFrame,InnerSpacing(6,4),
+ End,End,End,
+ Child,VGroup,GroupFrameT("Status"),MUIA_VertWeight,0,MUIA_Group_Spacing,2,
+  Child,ListviewObject,MUIA_Listview_Input,FALSE,MUIA_FixHeight,ui_compact?48:64,
+   MUIA_Listview_List,loglist=ListObject,ReadListFrame,MUIA_Font,ui_code_font(),
+    MUIA_List_ConstructHook,MUIV_List_ConstructHook_String,MUIA_List_DestructHook,MUIV_List_DestructHook_String,End,End,
+  Child,HGroup,Child,log_clear=ui_button("Clear"),Child,HSpace(0),End,End,
+ Child,HGroup,InnerSpacing(2,0),
   Child,status=TextObject,MUIA_Text_SetMin,FALSE,MUIA_Text_Contents,(ULONG)"",End,
   Child,TextObject,MUIA_HorizWeight,0,MUIA_Text_SetMax,TRUE,MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_Contents,(ULONG)"Rev " ZZ_LAUNCHER_VERSION,End,
   Child,temperature_text=TextObject,MUIA_HorizWeight,0,MUIA_FixWidthTxt,(ULONG)"ZZ9000: 150.0 C",MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_Contents,(ULONG)"ZZ9000: n/a",MUIA_ShortHelp,(ULONG)"ZZ9000 Zynq chip temperature. Updates every two seconds while the launcher is active.",End,End,End,End,End;
  if(!app)return 0;
  if(!ui_scroll_pages(main_pages))return 0;
- {unsigned n;for(n=0;n<PAGE_COUNT;n++){snprintf(nav_entries[n].icon,sizeof(nav_entries[n].icon),"\33I[6:%lu]",(unsigned long)section_icons[n]);nav_entries[n].caption=sections[n];DoMethod(navigation,MUIM_List_InsertSingle,(ULONG)&nav_entries[n],MUIV_List_Insert_Bottom);}}
- set(navigation_view,MUIA_ShortHelp,(ULONG)"Choose a section. Use Up/Down when this list has keyboard focus.");
+ set(about_button,MUIA_ShortHelp,(ULONG)"About ZZDosBox");
+ set(log_clear,MUIA_FixWidth,52);
+ for(unsigned i=0;i<8;i++)notify(tab_buttons[i],MUIA_Pressed,FALSE,ID_TOP_TAB+i);
+ notify(port_choice,MUIA_Cycle_Active,MUIV_EveryTime,ID_PORT_TAB);
+ notify(tool_choice,MUIA_Cycle_Active,MUIV_EveryTime,ID_TOOL_TAB);
+ notify(about_button,MUIA_Pressed,FALSE,ID_ABOUT);
+ notify(log_clear,MUIA_Pressed,FALSE,ID_LOG_CLEAR);
+ SetAttrs(navigation,MUIA_NoNotify,TRUE,MUIA_List_Active,0,TAG_DONE);
+ set(port_choice,MUIA_MaxWidth,280);set(tool_choice,MUIA_MaxWidth,280);
  notify(navigation,MUIA_List_Active,MUIV_EveryTime,ID_NAVIGATE);
  notify(serial_mode,MUIA_Cycle_Active,MUIV_EveryTime,ID_SERIAL_CHANGE);
  notify(serial_baud,MUIA_String_Acknowledge,MUIV_EveryTime,ID_SERIAL_CHANGE);
@@ -543,19 +575,23 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   if(!found&&library.count<DL_MAX&&exists(p)){struct dl_profile*q=&library.p[library.count];dl_profile_default(q);strcpy(q->title,"MS-DOS 6.22");path(q->drive,"Disks");q->system=1;q->category=DL_OS;q->memory=8;library.last=library.count++;}
  }
  MUIMasterBase=OpenLibrary("muimaster.library",15);AslBase=OpenLibrary("asl.library",38);WorkbenchBase=OpenLibrary("workbench.library",44);KeymapBase=OpenLibrary("keymap.library",37);if(!MUIMasterBase||!AslBase||!WorkbenchBase||!KeymapBase){puts("MUI 3.8 or later is required.");goto done;}
- disk_choices_init();if(!build())goto done;temperature_init();if(!conf_load())goto done;refresh();if(!startup_splash()){rc=0;goto done;}SetAttrs(win,MUIA_Window_Width,ui_layout.width,MUIA_Window_Height,ui_layout.height,MUIA_Window_Open,TRUE,TAG_DONE);if(!val(win,MUIA_Window_Open))goto done;program_list_focus();
+ disk_choices_init();if(!build())goto done;temperature_init();if(!conf_load())goto done;refresh();if(!startup_splash()){rc=0;goto done;}SetAttrs(win,MUIA_Window_Width,ui_layout.width,MUIA_Window_Height,ui_layout.height,MUIA_Window_Open,TRUE,TAG_DONE);if(!val(win,MUIA_Window_Open))goto done;program_list_focus();note("ZZDosBox " ZZ_LAUNCHER_VERSION);note("Library loaded. Ready.");
 #ifdef ZZ_UI_LAYOUT_PROBE
  rc=layout_probe();goto done;
 #endif
- while(running){temperature_poll();joystick_test_poll();mem_poll();id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
+ while(running){ui_scroll_update();temperature_poll();joystick_test_poll();mem_poll();id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
   switch(id){case (ULONG)MUIV_Application_ReturnID_Quit:if(mem_busy){note("Wait for the pending memory request.");break;}if(!store_selection())break;if(!conf_save())break;if(!save()){note("Cannot save settings.");break;}running=0;break;
   case ID_SERIAL_CHANGE:serial_controls();break;
   case ID_SERIAL_INTERNAL:set(serial_device,MUIA_String_Contents,(ULONG)"serial.device");set(serial_unit,MUIA_String_Integer,0);set(serial_mode,MUIA_Cycle_Active,3);serial_controls();break;
   case ID_SERIAL_USB:serial_detect();if(*serial_usb_name){set(serial_device,MUIA_String_Contents,(ULONG)serial_usb_name);set(serial_unit,MUIA_String_Integer,0);set(serial_mode,MUIA_Cycle_Active,3);serial_controls();}break;
   case ID_SERIAL_DETECT:serial_detect();break;
-  case ID_NAVIGATE:navigation_show(val(navigation,MUIA_List_Active));break;
+  case ID_NAVIGATE:{unsigned n=val(navigation,MUIA_List_Active);if(n<=DL_CATEGORIES){set(program_tabs,MUIA_Group_ActivePage,n);navigation_show(PAGE_LOAD);note(library_tabs[n]);}break;}
+  case ID_PORT_TAB:navigation_show(PAGE_NETWORK+val(port_choice,MUIA_Cycle_Active));note(sections[val(main_pages,MUIA_Group_ActivePage)]);break;
+  case ID_TOOL_TAB:navigation_show(val(tool_choice,MUIA_Cycle_Active)?PAGE_COMPATIBILITY:PAGE_DEVELOPER);note(sections[val(main_pages,MUIA_Group_ActivePage)]);break;
+  case ID_ABOUT:navigation_show(PAGE_ABOUT);break;
+  case ID_LOG_CLEAR:DoMethod(loglist,MUIM_List_Clear);loglines=0;break;
   case ID_JOY_COUNT:joystick_controls();break;
-  case ID_PROGRAM_TAB:program_list_focus();break;
+  case ID_PROGRAM_TAB:SetAttrs(navigation,MUIA_NoNotify,TRUE,MUIA_List_Active,val(program_tabs,MUIA_Group_ActivePage),TAG_DONE);program_list_focus();break;
   case ID_SELECT:if(!busy){int n=(LONG)val(list,MUIA_List_Active);if(n!=selected&&!select_profile(n))SetAttrs(list,MUIA_NoNotify,TRUE,MUIA_List_Active,selected,TAG_DONE);}break;
   case ID_CATEGORY:if(!busy&&selected>=0&&library.p[selected].category!=val(category,MUIA_Cycle_Active)){if(store_selection()){refresh();note(save()?"":"Could not save category.");}}break;
   case ID_RENAME:rename_profile();break;
@@ -582,7 +618,7 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   case ID_BOOT_DISK:boot_disk();break;
   case ID_MOUNT_DISKS:case ID_EJECT_DISKS:{char quoted[DL_PATH*2+3],cmd[DL_PATH*2+32];path(p,id==ID_MOUNT_DISKS?"Disks/Mount-DOS-Disks":"Disks/Eject-DOS-Disks");if(dl_quote(quoted,sizeof(quoted),p)){LONG result;snprintf(cmd,sizeof(cmd),"Execute %s",quoted);set(app,MUIA_Application_Sleep,TRUE);result=SystemTags(cmd,SYS_Asynch,FALSE,NP_StackSize,16384,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);note(result==0?(id==ID_MOUNT_DISKS?"Disks mounted in Workbench.":"Disks ejected."):"Disk action failed.");}break;}
   case ID_BROWSE_DRAWER:if(browse(p,1,0,"Select C: drawer"))set(drawer,MUIA_String_Contents,(ULONG)p);break;
-  default:if(id>=ID_NET_MODE&&id<=ID_NET_GUIDE){network_action(id);break;}if(id>=ID_CAT_SELECT&&id<ID_CAT_SELECT+DL_CATEGORIES){unsigned c=id-ID_CAT_SELECT;if(!busy)select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active)));break;}
+  default:if(id>=ID_TOP_TAB&&id<ID_TOP_TAB+8){navigation_show(top_pages[id-ID_TOP_TAB]);note(sections[val(main_pages,MUIA_Group_ActivePage)]);break;}if(id>=ID_NET_MODE&&id<=ID_NET_GUIDE){network_action(id);break;}if(id>=ID_CAT_SELECT&&id<ID_CAT_SELECT+DL_CATEGORIES){unsigned c=id-ID_CAT_SELECT;if(!busy)select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active)));break;}
   if(id>=ID_CAT_DELETE&&id<ID_CAT_DELETE+DL_CATEGORIES){unsigned c=id-ID_CAT_DELETE;if(select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active))))delete_profile();break;}
   if(id>=ID_CAT_RENAME&&id<ID_CAT_RENAME+DL_CATEGORIES){unsigned c=id-ID_CAT_RENAME;if(select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active))))rename_profile();break;}
   if((id>=ID_CAT_RUN&&id<ID_CAT_RUN+DL_CATEGORIES)||(id>=ID_CAT_EDIT&&id<ID_CAT_EDIT+DL_CATEGORIES)){unsigned c=id>=(unsigned)ID_CAT_EDIT?id-ID_CAT_EDIT:id-ID_CAT_RUN;int n=dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active));if(select_profile(n)){if(id>=ID_CAT_EDIT){navigation_show(PAGE_LOAD);set(program_tabs,MUIA_Group_ActivePage,0);}else launch(0,NULL);}break;}
