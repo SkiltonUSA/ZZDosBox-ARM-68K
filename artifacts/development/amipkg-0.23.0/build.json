@@ -1,0 +1,16 @@
+{
+  "version": "0.23.0-beta",
+  "launcher": "../launcher-0.23.0-ui/build.json",
+  "installer_tools": "../amipkg-0.22.6/build.json",
+  "installer_tools_changed": false,
+  "launcher_sha256": "4a27c78f473f1663daa9f4ef0f796f40840bfa51aa94daa95250f3779508983e",
+  "reproducible_archives": true,
+  "runtime_and_demo_payload_unchanged_from": "0.22.7-beta",
+  "native_dependency_tests": "passed",
+  "hardware_upgrade_test": "pending: active Core1 session left undisturbed",
+  "packaging_sources": {
+    "scripts/package_dosbox_amipkg.py": "b098bf140bbf2b8afd2d532b65793d55ee2257fd3f4ca08d0da1968b2143dba4",
+    "scripts/package_dosbox_demos.py": "918053d03f2bc68cd7e431e096942766a5d63696c41f98d3779589134574d449",
+    "scripts/package_dosbox_shareware.py": "5abcc71c1aa3d820d378014e5233a1a38c85a644e3e9902145e1283b3f3586c7"
+  }
+}

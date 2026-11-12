@@ -1,6 +1,6 @@
 # AmiPkg installers
 
-[Download 0.22.7 Beta](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.7-beta). Both editions contain the same
+[Download 0.23.0 Beta](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.23.0-beta). Both editions contain the same
 launcher, emulator runtimes, utilities and compatibility database.
 
 | Edition | Size | Library | Audio requirement |
@@ -24,13 +24,15 @@ Open `PC/ZZDosBox-Launcher` in the destination after installation.
 `C:lha` is required; Workbench launch also uses `C:IconX`.
 No network connection, Microsoft operating system or Mac is required.
 
-## Launcher update in 0.22.7
+## Launcher update in 0.23.0
 
-Both editions include the scalable 0.22.7-dev launcher: compact layout for
-smaller Workbench screens, independently scrollable pages and resizable content.
-The 640×480 layout was verified with a constrained window on the Amiga; no
-Workbench screen mode was changed during testing. Emulator runtimes and demo
-profiles are unchanged. Run Install against the existing destination to upgrade.
+Both editions include the tested 0.23.0-dev launcher: library categories,
+compact settings tabs, an [i] About button and scrolling status history.
+Settings use the full content area, with clean page switching and scrollbars
+when needed. Both 640×480 and 1024×768 window budgets passed all twelve pages,
+scrolling and resize checks on the Amiga without changing Workbench resolution.
+Emulator runtimes and demo profiles/media are unchanged from 0.22.7 Beta.
+Run Install against the existing destination to upgrade.
 
 ## Dependency checks
 

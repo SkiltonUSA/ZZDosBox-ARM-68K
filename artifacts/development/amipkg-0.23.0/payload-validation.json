@@ -1,0 +1,24 @@
+{
+  "standard": {
+    "changed_zip_members": [
+      "ZZDosBox/Changelog.md",
+      "ZZDosBox/PC/ZZDosBox-Launcher",
+      "ZZDosBox/ReadMe.txt",
+      "ZZDosBox/SHA256SUMS.json",
+      "ZZDosBox/docs/amiga-dosbox-launcher-navigation.md",
+      "ZZDosBox/docs/demo-edition.md"
+    ],
+    "unchanged_payload_files": 31
+  },
+  "demos": {
+    "changed_zip_members": [
+      "ZZDosBox/Changelog.md",
+      "ZZDosBox/PC/ZZDosBox-Launcher",
+      "ZZDosBox/ReadMe.txt",
+      "ZZDosBox/SHA256SUMS.json",
+      "ZZDosBox/docs/amiga-dosbox-launcher-navigation.md",
+      "ZZDosBox/docs/demo-edition.md"
+    ],
+    "unchanged_payload_files": 118
+  }
+}

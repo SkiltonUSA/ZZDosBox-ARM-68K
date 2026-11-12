@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **0.23.0-dev**, newest first.
+Version history from **0.1.0-dev** through **0.23.0-beta**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -9,6 +9,12 @@ installation statements describe that milestone, not the current default.
 Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
+
+## 0.23.0-beta — refreshed launcher installers
+
+- Update Standard and With Demos AmiPkg installers with the tested 0.23.0-dev launcher.
+- Include full-page settings, compact navigation, About and status history.
+- Preserve dependency checks, existing settings and saves; runtime binaries and demo media are unchanged from 0.22.7 Beta.
 
 ## 0.23.0-dev — launcher interface update
 

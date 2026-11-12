@@ -23,8 +23,8 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 - Scrolling status history keeps the latest 200 messages, with **Clear**.
 - Full-page settings forms; scrollbars appear when needed and compact layouts support 640×480.
 
-The packaged installers remain [0.22.7 Beta](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.7-beta).
-The launcher update preserves existing profiles and uses the installed runtimes.
+Both [0.23.0 Beta installers](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.23.0-beta) include this launcher.
+Existing profiles are preserved; emulator runtimes are unchanged from 0.22.7 Beta.
 
 **Descent startup fix:** corrected DOS temporary-file errors and an ARM JIT
 lookahead bug. DOS/32A provides the working Descent launch path; first-level
@@ -116,7 +116,7 @@ Disk formats: [IMG versus VHD](docs/amiga-dosbox-disk-images.md).
 
 ## Features
 
-Features below span the **0.22.7-dev launcher source** and its separate DOS,
+Features below span the **0.23.0-dev launcher source** and its separate DOS,
 Windows, network and developer runtimes. Experimental features are labelled;
 not every combination is supported.
 
@@ -602,12 +602,12 @@ A9 timings; instruction-model timing is not hardware performance evidence.
 
 ## Offline installers
 
-[**Download ZZDosBox 0.22.7 Beta**](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.22.7-beta).
+[**Download ZZDosBox 0.23.0 Beta**](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v0.23.0-beta).
 
 | Installer | Download | Contents | AHI audio |
 | --- | --- | --- | --- |
-| [Standard](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v0.22.7-beta/ZZDosBox-0.22.7-beta-standard-amipkg.lha) | 7.2 MB | ZZDosBox; empty library for your own programs | Optional; sound-off use allowed |
-| [With Demos](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v0.22.7-beta/ZZDosBox-0.22.7-beta-demos-amipkg.lha) | 23.7 MB | Same ZZDosBox plus Corridor 7, Doom 1.9 shareware and King's Quest VII Demo | Required for supplied audio profiles |
+| [Standard](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v0.23.0-beta/ZZDosBox-0.23.0-beta-standard-amipkg.lha) | 7.2 MB | ZZDosBox; empty library for your own programs | Optional; sound-off use allowed |
+| [With Demos](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v0.23.0-beta/ZZDosBox-0.23.0-beta-demos-amipkg.lha) | 23.7 MB | Same ZZDosBox plus Corridor 7, Doom 1.9 shareware and King's Quest VII Demo | Required for supplied audio profiles |
 
 King's Quest VII is a non-interactive promotional demo. Both installers check
 MUI, AmigaOS libraries, Picasso96, ZZ9000 hardware and AHI. System libraries and
