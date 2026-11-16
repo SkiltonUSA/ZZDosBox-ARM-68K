@@ -83,7 +83,7 @@ static int window_service(void){
  syncio->pull(shared+PC_VIDEO,44,NULL);seq=ad_get(shared,PC_VIDEO);
  if(active&&ad_get(shared,PC_VIDEO+36)==active){
   ULONG elapsed=us()-copy_start;copy_us+=elapsed;if(elapsed>copy_max)copy_max=elapsed;
-  if(ad_get(shared,PC_VIDEO+40))return 0;
+  if(ad_get(shared,PC_VIDEO+40)){display_transfer_error(ad_get(shared,PC_VIDEO+40));return 0;}
   complete=active;active=0;frames++;full_unlock();locked_memory=NULL;releases++;
   window_ready=1;paint_width=window_width;paint_height=window_height;window_paint();
  }
@@ -111,6 +111,7 @@ static int window_service(void){
  publish(PC_VIDEO+52,0);publish(PC_VIDEO+56,scan_epoch);
 #endif
  publish(PC_VIDEO+20,addr);publish(PC_VIDEO+24,full_pitch);publish(PC_VIDEO+28,direct_format);publish(PC_VIDEO+32,nonce);
+ grant_target=locked_memory;grant_span=span;grant_nonce=nonce;
  copy_start=us();publish(PC_VIDEO+16,seq);active=seq;return 1;
 }
 static void window_cleanup(void){

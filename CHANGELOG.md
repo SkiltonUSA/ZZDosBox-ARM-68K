@@ -10,6 +10,15 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
+## Unreleased — fullscreen diagnostics
+
+- Wait for a background fullscreen screen to return before granting a framebuffer.
+- Record failed handoff sequence, address, pitch and format; report endpoint
+  markers after ARM completion when nonce validation fails.
+- Physical screen switching, deliberate rejection and cancellation checks are
+  [recorded here](amiga/records/2026-11-15/handoff-followup/README.md).
+  The original intermittent nonce failure remains unresolved; no release update.
+
 ## 1.0 Beta — shared drives and Workbench CDs
 
 - Mount a Workbench folder or USB/SD volume as DOS C:; create a shared folder and open it for file transfers.

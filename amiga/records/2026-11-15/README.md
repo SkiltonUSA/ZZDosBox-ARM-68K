@@ -65,3 +65,10 @@ fullscreen attempt as windowed; its retained log is named
 Screen ordering follows the [AmigaOS ScreenToFront interface](https://developer.amigaos3.net/autodocs/intuition.library/ScreenToFront.html).
 The diagnostic evidence establishes loss of foreground; it does not identify
 which application or Intuition operation changed the screen order.
+
+## Follow-up: actual screen switching and fault rejection
+
+[Display handoff follow-up](handoff-followup/README.md) records actual Intuition
+screen-depth changes, six window/fullscreen transitions, deliberate bad-marker
+rejection and normal cancellation while behind Workbench. The original
+intermittent nonce failure is still unresolved. Installed releases are unchanged.

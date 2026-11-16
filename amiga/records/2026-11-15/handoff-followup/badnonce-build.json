@@ -1,0 +1,32 @@
+{
+  "scope": "Archived release ARM payload; host diagnostics, current support sources; not a performance comparison",
+  "sha256": {
+    "ZZDosBox-Compat": "70e589d1c38dce5567487f874b6f24c0dbbeb216b9ca19ad3b917b1eff98332b",
+    "zz_payload.h": "08e7c837d01e0c17bce049a841dbfe142b9c1a2534fe8a671f220be605b0a0f7",
+    "ZZDosBox-Diagnostic": "a72fa2dd2116ddd7e33442b978a9f6d7c84b4b580c0505864ebbab0d93519c50"
+  },
+  "flags": [
+    "-DDB_COMPAT",
+    "-DDB_SCANLINE_TEST",
+    "-DDB_PRESENT_TEST",
+    "-DDB_PIPELINE_DEFAULT=1",
+    "-DFF_DIRECT",
+    "-DZZ_PC_CD",
+    "-DZZ_HEADLESS_BENCH",
+    "-DZZ_RELEASE",
+    "-DZZ_BLOCK_SIZE=0x2000000",
+    "-DZZ_CONTROL=0x180000",
+    "-DMB_ALLOCATION=0x2000000",
+    "-DDB_JIT_MIB=4",
+    "-DZZ_APP_NAME=\"ZZDosBox-Diagnostic\"",
+    "-DZZ_APP_VERSION=\"0.22.7-host-diagnostic\"",
+    "-DZZ_MIN_STACK=65536",
+    "-DMB_MMU",
+    "-DMB_DCACHE",
+    "-DZZ_HEADLESS_MMU",
+    "-DZZ_HEADLESS_ICACHE"
+  ],
+  "injected_foreground_checks": 0,
+  "injected_bad_nonce": true,
+  "view_stress": false
+}

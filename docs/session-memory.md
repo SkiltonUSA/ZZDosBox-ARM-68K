@@ -1250,3 +1250,13 @@ The final private foreground fault test forced five false foreground checks,
 recorded exactly five waits, resumed rendering and passed clean teardown. Normal
 patched runs alone had not exercised the wait branch. This is not a real screen
 switch test and does not resolve the separate nonce mismatch.
+
+## 2026-11-15 — display handoff follow-up
+
+Private diagnostic hosts passed actual Intuition screen-depth changes and six
+window/fullscreen transitions using the release ARM payload. Deliberate bad
+nonce rejection and Ctrl-C cancellation behind Workbench restore and release
+cleanly. The source now logs error details after ARM completion while the
+bitmap remains locked. Original intermittent error 7 remains unresolved;
+audio gaps remain. Installed players/defaults/releases are unchanged.
+See [the recorded follow-up](../amiga/records/2026-11-15/handoff-followup/README.md).

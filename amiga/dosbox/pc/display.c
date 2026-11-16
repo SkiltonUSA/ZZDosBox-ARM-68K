@@ -42,9 +42,20 @@ static unsigned scan_mode,scan_epoch=1;
 void pc_display_scanlines(unsigned mode){scan_mode=mode;scan_epoch++;}
 #endif
 static UBYTE *direct_readback;
+static UBYTE *grant_target;
+static ULONG grant_span,grant_nonce;
 static ULONG us(void){struct timeval t;GetSysTime(&t);return t.tv_secs*1000000u+t.tv_micro;}
 #include "fullscreen.h"
 static void publish(unsigned offset,ULONG n){ad_put(shared,offset,n);syncio->push(shared+offset,4,NULL);syncio->barrier(NULL);}
+/* Diagnostic reads occur only after ARM publishes completion. The bitmap
+ * remains locked; values observed here may differ from the earlier ARM read. */
+static void display_transfer_error(ULONG error){
+ printf("DISPLAY_TRANSFER error=%u sequence=%u address=%08x pitch=%u format=%u\n",error,active,ad_get(shared,PC_VIDEO+20),ad_get(shared,PC_VIDEO+24),ad_get(shared,PC_VIDEO+28));
+ if(error==7 && grant_target){
+  syncio->pull(grant_target,4,NULL);syncio->pull(grant_target+grant_span-4,4,NULL);
+  printf("DISPLAY_NONCE host_after_completion expected=%08x/%08x observed=%08x/%08x span=%u\n",grant_nonce,grant_nonce^0x31415926u,ad_get(grant_target,0),ad_get(grant_target,grant_span-4),grant_span);
+ }
+}
 static int switch_requested=-1;
 static int display_hotkey(UWORD,UWORD);
 static int display_switch(void);
@@ -69,7 +80,7 @@ void pc_display_pipeline(int enabled){pipeline=enabled!=0;}
 int pc_display_open(volatile uint8_t *b,const struct ad_io *io){
  joystick_keys_sent=~0u;joystick_keys_pending=0;memset(&key_sources,0,sizeof(key_sources));shared=b;syncio=io;active=complete=frames=0;host_mouse_buttons=host_mouse_events=host_mouse_down=host_mouse_up=0;host_mouse_position=0;
  copy_start=copy_us=copy_max=0;
- overlaps=releases=background_waits=0;locked_memory=NULL;pc_flow_init(&flow,pipeline?2:1);
+ overlaps=releases=background_waits=0;locked_memory=grant_target=NULL;grant_span=grant_nonce=0;pc_flow_init(&flow,pipeline?2:1);
  GfxBase=(struct GfxBase*)OpenLibrary("graphics.library",39);if(!GfxBase)return 0;
  console_shown=0;return 1;
 }
@@ -83,7 +94,7 @@ int pc_display_service(void){
  if(active && ad_get(shared,PC_VIDEO+36)==active){
   ULONG elapsed=us()-copy_start;copy_us+=elapsed;
   if(elapsed>copy_max)copy_max=elapsed;
-  if(ad_get(shared,PC_VIDEO+40))return 0;
+  if(ad_get(shared,PC_VIDEO+40)){display_transfer_error(ad_get(shared,PC_VIDEO+40));return 0;}
   if(!pc_flow_complete(&flow))return 0;
   complete=active;active=0;frames++;
  }
@@ -128,6 +139,7 @@ int pc_display_service(void){
 #ifdef DB_SCANLINE_TEST
  publish(PC_VIDEO+52,scan_mode);publish(PC_VIDEO+56,scan_epoch);
 #endif
+ grant_target=target;grant_span=span;grant_nonce=nonce;
  copy_start=us();publish(PC_VIDEO+16,seq);active=seq;return 1;
 }
 extern void pc_console_cleanup(void);
