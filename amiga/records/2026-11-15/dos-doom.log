@@ -1,0 +1,75 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=0f702cd8
+BOOTSTRAP amiga=40e93cc0 arm=01083cc0 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+AUDIO task: AHI unit 0, 32000 Hz stereo; 4 queue slots, 64 ms prebuffer
+COMPAT ems=1 xms=1 sound=SB16 A220 I7 D1 H5 T6, OPL3 speaker=0
+DISPLAY_CONFIG mode=fullscreen fps=0 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=0 cycles=10000 live=1
+FULLSCREEN_BITMAP allocated=09e0134c screen=09f214d0 width=640 height=480 allocated_height=1440 screen_height=1440 on_board=1/1 memory=0b001af4/40e93cc0 pitch=2560/2560
+FULLSCREEN mode=50041303 native_format=9 depth=32 slots=3 geometry=640x480 PC=640x480
+VIDEO adapter=0 source=720x400 monochrome=0
+JIT magic=4a495431 commits=4741 witness=1 dispatches=272912 cache_bytes=4194304 heap_peak=3919680 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=70 rendered_rows=33600 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=10000
+PRESENT magic=50525331 source=71 shown=70 skipped=0 divisor=1 changes=0 mode=0 hz=60 work_ticks=0 copy_ticks=0 total_copy=000000003be077d5
+ARM_FPS tenths=0
+PC frames=71 emulated_ms=1030 wall_ms=35486 timed_done=0
+POLL ms=1 calls=2623 wait_us=12189233 max_us=145967
+SHELL result=2 guest_exit=0 slices=84978 bytes=784 hash=806d3d8e mismatches=0
+DosBox ZZ9000 project                         0.20.1-dev
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>DOOM.EXE -demo demo3
+DOS/4GW Professional Protected Mode Run-time  Version 1.95
+Copyright (c) Rational Systems, Inc. 1990-1993
+
+P_Init: Checking cmd-line parameters...
+V_Init: allocate screens.
+M_LoadDefaults: Load system defaults.
+Z_Init: Init zone memory allocation daemon. 
+DPMI memory: 0x572000, 0x552000 allocated for zone
+W_Init: Init WADfiles.
+	adding doom1.wad
+	shareware version.
+M_Init: Init miscellaneous info.
+R_Init: Init DOOM refresh daemon - [                   ]..........
+SHELL FAIL mode=0
+AUDIO_TASK queued=32768 submitted=32768 completed=32768 highwater=2 error=0 stopped=1
+FILES_TIME calls=2055 read_us=8432298 write_us=0 other_us=10758903 max_us=309389 (totals saturate at 4294967295)
+FILES_OP op=open calls=6 total_us=207186 max_us=79677
+FILES_OP op=close calls=3 total_us=39216 max_us=16906
+FILES_OP op=read calls=863 total_us=8432298 max_us=299653
+FILES_OP op=seek calls=1172 total_us=10275633 max_us=309389
+FILES_OP op=stat calls=11 total_us=236868 max_us=60327
+DISK host_seeks=0
+FILES requests=2055 read=3531773 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000000 restored=02000000
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00001000 restored=00001000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=1 press=0 release=0
+DISPLAY frames=70 flips=70 wait_us=1001435
+COPY observed_us=490057 max_us=25015
+PIPELINE enabled=1 overlaps=2 releases=68
+ZZDosBox-Compat: Application frontend or ARM transfer failed. See the CLI log for details.
+LAUNCHER exit=20; owned memory released

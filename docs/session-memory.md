@@ -1235,3 +1235,18 @@ cases pass. Four physical Duke runs: reference 4.900/4.900 FPS, candidate
 4.933/4.900; only one extra frame in one 30-second sample, no useful demonstrated
 gain. All PCM completes and MMU/register/cache/SIMD restoration and release pass.
 No installed player or release changed. See bounded-register-reuse.md.
+
+## 15 November 2026 — current-firmware regressions
+
+See [the XACP 1.8 report](../amiga/records/2026-11-15/README.md).
+x87, EMS/XMS, SB16 and paged-JIT hardware fixtures pass. Windowed Doom completes
+its bounded run. Fullscreen diagnostics identified a fatal foreground check;
+source now waits while behind Workbench, preserving PAN and cancellation rules.
+A private rebuilt host completed the same bounded fullscreen run. A separate
+nonce mismatch remains unresolved; no ownership check was relaxed. Installed
+players, cache size, profiles and releases remain unchanged.
+
+The final private foreground fault test forced five false foreground checks,
+recorded exactly five waits, resumed rendering and passed clean teardown. Normal
+patched runs alone had not exercised the wait branch. This is not a real screen
+switch test and does not resolve the separate nonce mismatch.

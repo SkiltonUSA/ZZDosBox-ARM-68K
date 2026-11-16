@@ -1,0 +1,77 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=67108864 nonce=0f5fdb85
+BOOTSTRAP amiga=40e605c0 arm=010505c0 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+EXPANDED cpu=0 memory_services=0 joystick=0 extra_sound=0 cycle_mode=0 serial=0 paged_jit=1
+COMPAT ems=0 xms=1 sound=off speaker=0
+DISPLAY_CONFIG mode=window fps=0 system=booted DOS
+SETTINGS memory_mb=8 machine=0 cycles=6000 live=0
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+BOOT TEXT:
+Paged register JIT alias and SMC PASS                                           
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+VIDEO adapter=0 source=720x400 monochrome=0
+JIT magic=4a495431 commits=20 witness=1 dispatches=19 cache_bytes=4194304 heap_peak=3820736 paged_fallbacks=2
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=419 rendered_rows=201120 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=6000
+PRESENT magic=50525331 source=419 shown=419 skipped=0 divisor=1 changes=0 mode=0 hz=60 work_ticks=2520183 copy_ticks=2495795 total_copy=000000007d7469c0
+ARM_FPS tenths=0
+PC frames=419 emulated_ms=6000 wall_ms=15038 timed_done=1
+POLL ms=1 calls=1830 wait_us=6398220 max_us=29689
+SHELL result=2 guest_exit=0 slices=350844 bytes=0 hash=811c9dc5 mismatches=0
+
+SHELL PASS mode=0
+FILES_TIME calls=363 read_us=2757895 write_us=0 other_us=132088 max_us=88194 (totals saturate at 4294967295)
+FILES_OP op=open calls=1 total_us=88194 max_us=88194
+FILES_OP op=close calls=1 total_us=5525 max_us=5525
+FILES_OP op=read calls=360 total_us=2757895 max_us=25016
+FILES_OP op=stat calls=1 total_us=38369 max_us=38369
+DISK host_seeks=0
+FILES requests=363 read=1474560 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=10334000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000000 restored=02000000
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00001000 restored=00001000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=419 flips=0 wait_us=0
+COPY observed_us=2819987 max_us=26776
+PIPELINE enabled=1 overlaps=0 releases=419
+LAUNCHER exit=0; owned memory released

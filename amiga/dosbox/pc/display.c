@@ -36,7 +36,7 @@ static struct pc_flow flow;
 #endif
 static int pipeline=DB_PIPELINE_DEFAULT,console_shown,fullscreen=1;
 static UBYTE *locked_memory;
-static ULONG overlaps,releases;
+static ULONG overlaps,releases,background_waits;
 #ifdef DB_SCANLINE_TEST
 static unsigned scan_mode,scan_epoch=1;
 void pc_display_scanlines(unsigned mode){scan_mode=mode;scan_epoch++;}
@@ -69,7 +69,7 @@ void pc_display_pipeline(int enabled){pipeline=enabled!=0;}
 int pc_display_open(volatile uint8_t *b,const struct ad_io *io){
  joystick_keys_sent=~0u;joystick_keys_pending=0;memset(&key_sources,0,sizeof(key_sources));shared=b;syncio=io;active=complete=frames=0;host_mouse_buttons=host_mouse_events=host_mouse_down=host_mouse_up=0;host_mouse_position=0;
  copy_start=copy_us=copy_max=0;
- overlaps=releases=0;locked_memory=NULL;pc_flow_init(&flow,pipeline?2:1);
+ overlaps=releases=background_waits=0;locked_memory=NULL;pc_flow_init(&flow,pipeline?2:1);
  GfxBase=(struct GfxBase*)OpenLibrary("graphics.library",39);if(!GfxBase)return 0;
  console_shown=0;return 1;
 }
@@ -106,7 +106,9 @@ int pc_display_service(void){
  if(seq!=complete+1)return 0;
  if(!full_attached){if(!full_open())return 0;}
  if(console_shown){ScreenToFront(full_screen);ActivateWindow(window);console_shown=0;}
- if(!full_front())return 0;
+ /* A background screen cannot receive PAN requests. Keep servicing audio,
+  * files and cancellation while waiting for Intuition to bring it forward. */
+ if(!full_front()){background_waits++;return 1;}
  if(!pc_flow_can_grant(&flow,&full_slots))return 1;
  if(!direct_locked){
  memset(&ri,0,sizeof(ri));direct_lock=p96LockBitMap(direct_bitmap,(UBYTE*)&ri,sizeof(ri));direct_locked=1;full_origin_known=0;
@@ -142,7 +144,7 @@ void ff_cleanup(void){
  if(GfxBase){CloseLibrary((struct Library*)GfxBase);GfxBase=NULL;}
  pc_console_cleanup();
  printf("MOUSE events=%u press=%u release=%u\n",host_mouse_events,host_mouse_down,host_mouse_up);
- printf("DISPLAY frames=%u flips=%u wait_us=%u\n",frames,full_slots.flips,full_wait_us);
+ printf("DISPLAY frames=%u flips=%u wait_us=%u background_waits=%u\n",frames,full_slots.flips,full_wait_us,background_waits);
  printf("COPY observed_us=%u max_us=%u\n",copy_us,copy_max);
  printf("PIPELINE enabled=%u overlaps=%u releases=%u\n",pipeline,overlaps,releases);
 }

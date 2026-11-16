@@ -651,3 +651,7 @@ JIT memory helpers and earlier AHI servicing, with matched hardware comparisons
 and separate correctness checks.
 
 [Bounded ARM register reuse](docs/bounded-register-reuse.md): correctness checks pass, but the Duke repeat pair shows no useful speed gain. It remains experimental.
+
+### Development validation
+
+[XACP 1.8 regression results and fullscreen foreground handling](amiga/records/2026-11-15/README.md): CPU/memory/audio fixtures and bounded Doom checks, including the remaining fullscreen limitation. These development results do not change the published beta.
