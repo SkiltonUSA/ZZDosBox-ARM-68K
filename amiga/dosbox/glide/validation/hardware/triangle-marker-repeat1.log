@@ -1,0 +1,17 @@
+GPU id=52495831 version=00020000 caps=0000000b abi=00010000
+MARKER scene=0 mode=triangle before=5aa5 expected=4120
+SUBMIT scene=0 words=30 status=2 err=0 at=4294967295 detail=0 ack_us=158
+PIXELS scene=0 checked=4096 bad=0 guards=0 fence_us=13094 left=0000 right=0000
+MARKER scene=1 mode=triangle before=0000 expected=f800
+SUBMIT scene=1 words=94 status=2 err=0 at=4294967295 detail=0 ack_us=224
+PIXELS scene=1 checked=3611 bad=0 guards=0 fence_us=4676 left=f800 right=f800
+MARKER scene=2 mode=triangle before=f800 expected=ffe0
+SUBMIT scene=2 words=94 status=2 err=0 at=4294967295 detail=0 ack_us=203
+PIXELS scene=2 checked=3611 bad=0 guards=0 fence_us=8881 left=ffe0 right=ffe0
+MARKER scene=3 mode=triangle before=ffe0 expected=f800
+SUBMIT scene=3 words=102 status=2 err=0 at=4294967295 detail=0 ack_us=219
+PIXELS scene=3 checked=3464 bad=0 guards=0 fence_us=8489 left=f800 right=001f
+MARKER scene=4 mode=triangle before=f800 expected=07e0
+SUBMIT scene=4 words=94 status=2 err=0 at=4294967295 detail=0 ack_us=216
+PIXELS scene=4 checked=3464 bad=0 guards=0 fence_us=9310 left=f800 right=800f
+GLIDE PROBE rc=0

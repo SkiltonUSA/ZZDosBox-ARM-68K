@@ -2,6 +2,7 @@
  * No MMIO, device allocation, guest pointers or automatic fallbacks here.
  */
 #include "descriptor.h"
+#include "pipeline.h"
 
 #define POOL_START 0x06600000u
 #define POOL_END   0x067f0000u
@@ -44,12 +45,7 @@ grx_result grx_begin(grx_packet *p,const grx_config *c)
     if(!c)return GRX_BAD_ARGUMENT;
     grx_result result=check_config(c);if(result!=GRX_OK)return result;
     p->config=*c;p->open=1;append(p,0);append(p,0);
-    unsigned features=c->texture_address?0x40u:0u,fragment=0x78000u;
-    if(c->blend!=GRX_OPAQUE) {
-        features|=2;
-        fragment|=c->blend==GRX_ALPHA?((6u<<19)|(7u<<23)):((1u<<19)|(1u<<23));
-    }
-    reg(p,0,features);reg(p,3,fragment);reg(p,8,0);
+    reg(p,0,grx_features(c));reg(p,3,grx_fragment(c));reg(p,8,0);
     reg(p,9,(c->height<<16)|c->width);reg(p,16,c->color_address);
     if(c->texture_address) {
         /* RGB565, nearest, no mipmapping; texture modulates vertex RGBA. */

@@ -13,11 +13,14 @@
     "cortex-a9 ARM32 softfp VFPv3"
   ],
   "source_sha256": {
-    "amiga/dosbox/glide/translator.c": "64fa166fc1c6ee36e2d0773267f3bcd10e4c7bd8cd9c9ba3d9a9753cbfca591a",
+    "amiga/dosbox/glide/translator.c": "b99aaf43cdc89decadde610b6e3ccf3bca3777c7fa16d1aef835833cd7c561c4",
     "amiga/dosbox/glide/descriptor.c": "439a94cafd84ec9d52e0ab01b03ae7c0e368a01e81e5ad18b39dc9697b43df03",
+    "amiga/dosbox/glide/probe_scene.c": "895eb77421ef8821ffad399fc929c77101ba2a18a832222128fbe0bf90c963d9",
     "amiga/dosbox/glide/descriptor.h": "02859f7188379d10940073952cf78f4cd01cbd36ed2b600d0dd06fca5384034c",
     "amiga/dosbox/glide/translator.h": "ee8994472519b89102048cca603bc23e26afe66ebf27e68042a7fe14c121c069",
-    "tests/amiga/dosbox/glide/translator.cpp": "0dbbf6ffdceb85baca0986eb6dd31dcf6c1dd43b9261b6cec1f3f676647589c6",
-    "scripts/test_dosbox_glide.py": "e6a5c2d207d87e5cd9fd66a5d8005427803216b8175c5264aeea094b65b1c4bc"
+    "amiga/dosbox/glide/probe_scene.h": "bdebc90126c926ef77ae7b6ab8dfc76a1f85c8015a5f7a0f077b8999b143442e",
+    "amiga/dosbox/glide/pipeline.h": "6624a41ab6c726c5662027cdddf3e7659d03d71ae2f9d4869cc95629894a40bf",
+    "tests/amiga/dosbox/glide/translator.cpp": "15ade448c01c82afba45623a4455e011f1430f6f1bc3c391aa153cc17d5a355f",
+    "scripts/test_dosbox_glide.py": "d3c5cda09be328d6ea0d4fc6e9d9e8c6063a389a02119adcbba0559d36769944"
   }
 }

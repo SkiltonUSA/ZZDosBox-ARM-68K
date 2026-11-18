@@ -1,5 +1,6 @@
 /* Decode the emitted stream independently; no GPU execution claim. */
 #include "amiga/dosbox/glide/translator.h"
+#include "amiga/dosbox/glide/probe_scene.h"
 #include <cassert>
 #include <cmath>
 #include <cstdio>
@@ -107,4 +108,37 @@ int main() {
     assert(grx_end(&p)==GRX_OK&&p.words<=GRX_PACKET_WORDS);
     assert(grx_triangle(&p,v)==GRX_BAD_STATE);assert(grx_end(&p)==GRX_BAD_STATE);
     puts("PASS blend mapping, unsupported depth, pool bounds, atomic rejection and bounded packets");
+    for(unsigned scene=0;scene<GRX_PROBE_SCENES;scene++) {
+        assert(grx_probe_scene(&p,scene,0x4120+scene));
+        assert(!p.open&&p.words<=GRX_PACKET_WORDS);
+        assert(word(p,0)==(0x90000000u|(p.words-2)*4));
+        unsigned tail=p.words-13;
+        assert(word(p,tail)==0&&word(p,tail+1)==0);
+        unsigned features=0x20|(scene==3?0x40:0)|((scene==2||scene==4)?2:0);
+        assert(word(p,tail+2)==0x10000000&&word(p,tail+3)==features);
+        unsigned frag=0x78000|(scene==2?((1u<<19)|(1u<<23)):scene==4?((6u<<19)|(7u<<23)):0);
+        assert(word(p,tail+4)==0x10000003&&word(p,tail+5)==frag);
+        assert(word(p,tail+6)==0x10000006&&word(p,tail+7)==0);
+        assert(word(p,tail+8)==0x10000007&&word(p,tail+9)==0x10040);
+        uint32_t rgba=word(p,tail+11);
+        unsigned marker=((rgba>>16)&0xf800)|((rgba>>13)&0x7e0)|((rgba>>11)&31);
+        assert(marker==0x4120+scene);
+        assert(word(p,tail+12)==(0x20000012u|(GRX_PROBE_WIDTH*GRX_PROBE_HEIGHT<<8)));
+    }
+    for(unsigned scene=1;scene<GRX_PROBE_SCENES;scene++) {
+        assert(grx_probe_triangle_marker(&p,scene));
+        assert(!p.open&&p.words<=GRX_PACKET_WORDS);
+        // Last draw is a marker triangle. No register writes or clears follow it.
+        unsigned tail=p.words-42;
+        assert((word(p,tail)>>28)==3);
+        for(int x=4;x<=28;x++) {
+            assert(covered(p,tail+1,x,2));
+            near(attribute(p,tail+1,12,4,3,x,2),1.0f);
+        }
+        for(int y=8;y<72;y++)assert(!covered(p,tail+1,4,y));
+        assert(word(p,p.words-2)==0&&word(p,p.words-1)==0);
+        assert(word(p,0)==(0x90000000u|(p.words-2)*4));
+    }
+    assert(!grx_probe_scene(&p,5,1)&&!grx_probe_scene(&p,0,0)&&!grx_probe_scene(&p,0,65536));
+    puts("PASS probe fixtures: bounded packets, mask restoration, scissor row and marker encoding");
 }

@@ -8,10 +8,11 @@
 | Opaque/alpha/additive register mapping | Passed |
 | Invalid/overlapping pool spans, depth requests, NaN, clipping and degenerate geometry | Rejected as specified |
 | Packet capacity and finalisation lifecycle | Passed; no partial triangle on rejection/full |
-| Actual upstream XACP submit validator | Accepted 306 batches; rejected depth enable in all 306 |
+| Actual upstream XACP submit validator | Accepted 306 batches and ten offscreen fixtures; rejected depth enable in all 306 batches |
 | GCC 16.2.0 Cortex-A9 ARM32 compilation | Soft-float and softfp/VFPv3 objects built |
 | Unicorn 2.1.4 Cortex-A9 execution | 12 soft-float and 12 softfp batches bit-identical to native packet output |
-| Physical ZZ9000 / DOS game / FPS | Not tested |
+| Physical ZZ9000 | Five offscreen fixtures pass final readback; earlier completion-marker failures remain under investigation |
+| DOS game / FPS | Not tested |
 
 The firmware test uses the validator extracted from XACP commit
 `5516effbad59acf6bef44ea1cc3ca4393c8ec9e0`, `firmware/source/XX19d-RIX/arm/ZZ9000_proto.sdk/ZZ9000OS/src/main.c`.
@@ -40,5 +41,15 @@ source remain outside Git.
 7. Documented limitations and the hardware/guest integration gates. No Amiga
    connection, firmware change, installation or release promotion occurred.
 
-This is correctness evidence for a command encoder, not proof of Glide
-compatibility, rendered GPU pixels, audible quality or performance.
+8. Built a separate 68k offscreen probe with generated wire fixtures, avoiding a
+   floating-point dependency on the 68k. Tested clear, solid, texture and blending
+   through Core0 on the physical ZZ9000. Preserved failed runs as well as passes.
+9. Compared scissored-memset and same-state triangle markers, two framebuffer
+   heights, and logging placement. Added pre-submit marker and firmware CRC
+   checks. Final guarded runs pass, but the earlier failure is not isolated.
+10. Re-ran sanitizer, firmware-validator and A9 instruction-model checks. Saved
+    source/build hashes, raw logs and actual framebuffer captures. No runtime or
+    release promotion.
+
+See the [hardware report](hardware/README.md) for pixel evidence and its limits.
+This is not proof of Glide compatibility, audible quality or game performance.

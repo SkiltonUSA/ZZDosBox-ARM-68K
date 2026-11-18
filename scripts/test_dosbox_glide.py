@@ -33,6 +33,7 @@ def firmware_test(path, flags, objects):
 #include <string.h>
 #include <stdio.h>
 #include "amiga/dosbox/glide/translator.h"
+#include "amiga/dosbox/glide/probe_scene.h"
 static uint32_t be32(uint32_t x) {
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
  return __builtin_bswap32(x);
@@ -65,6 +66,13 @@ int main(void) {
   }
  }
  printf("PASS upstream XACP validator: %u texture/aspect/origin/blend batches and depth rejection\n",runs);
+ for(unsigned mode=0;mode<2;mode++)for(unsigned scene=0;scene<GRX_PROBE_SCENES;scene++) {
+  grx_packet p;assert(mode?grx_probe_triangle_marker(&p,scene):grx_probe_scene(&p,scene,0x4120+scene));
+  uint32_t wire[GRX_PACKET_WORDS];memcpy(wire,p.bytes,p.words*4);
+  XACPGPU_SafeState st={0};uint32_t bad=0,detail=0;
+  assert(xacpgpu_validate_submit(wire,p.words,&st,&bad,&detail)==0);
+ }
+ puts("PASS upstream XACP validator: ten offscreen fixtures with completion markers");
 }
 '''
     source = OUT / 'firmware_validator.c'
@@ -84,7 +92,7 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     flags = ['-std=c11', '-Wall', '-Wextra', '-Werror', '-O1', '-g', '-fsanitize=address,undefined']
     objects = []
-    sources = [SRC/'translator.c', SRC/'descriptor.c']
+    sources = [SRC/'translator.c', SRC/'descriptor.c', SRC/'probe_scene.c']
     for source in sources:
         obj = OUT / (source.stem+'.o')
         run('clang', *flags, '-c', source, '-o', obj)
@@ -105,7 +113,7 @@ def main():
                     '-ffreestanding', '-fno-builtin', '-c', source,
                     '-o', OUT/(source.stem+'.'+abi+'.o'))
         record['arm_compile_only'] = ['cortex-a9 ARM32 soft', 'cortex-a9 ARM32 softfp VFPv3']
-    inputs = [*sources, SRC/'descriptor.h', SRC/'translator.h',
+    inputs = [*sources, SRC/'descriptor.h', SRC/'translator.h', SRC/'probe_scene.h', SRC/'pipeline.h',
               ROOT/'tests/amiga/dosbox/glide/translator.cpp', Path(__file__)]
     record['source_sha256'] = {str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
     (OUT/'validation.json').write_text(json.dumps(record, indent=2)+'\n')

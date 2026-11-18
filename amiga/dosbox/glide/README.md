@@ -1,6 +1,6 @@
 # Experimental Glide-to-RasterIX translator
 
-This is a standalone **command encoder**, not yet a guest Glide driver.
+This is a standalone **command encoder and offscreen probe**, not yet a guest Glide driver.
 It translates a small, explicit subset of Glide window-space rendering into
 RasterIX packets for the XACP Core0 submission interface. The released
 ZZDosBox player and launcher do not use it. No GPU throughput or game FPS
@@ -13,8 +13,15 @@ the ARM translator, XACP Core0 submission, then FPGA rasterisation. Core1
 continues PC emulation. Core0 submits GPU commands; it does not perform the
 triangle rasterisation in software.
 
-The current implementation covers only the translator box in that path.
-It has no MMIO, firmware changes, guest memory dereferences or display takeover.
+The encoder itself has no MMIO, guest memory dereferences or display takeover.
+A separate 68k probe submits pre-encoded fixtures through the firmware's validated
+Core0 service. It does not launch Core1, change the display or modify firmware.
+
+**Physical progress:** clear, solid red, additive green, red/blue texturing and
+source-alpha blending passed guarded readback on the A4000TX. Earlier runs
+observed a marker before correct pixels; the delayed readback then passed.
+Revised probes pass, but the cause of the earlier failure is not isolated.
+See the [hardware report and captures](validation/hardware/README.md).
 
 ## Implemented subset
 
@@ -60,8 +67,8 @@ follow the reference FIFO pattern; they do not establish completion.
 
 Further work before launching a game:
 
-1. Offscreen submission, texture upload, completion fencing, pixel readback
-   and cancellation on the physical ZZ9000.
+1. Resolve the earlier completion-marker failure; extend offscreen tests to
+   repeated batches, texture replacement, shared edges and cancellation.
 2. Guest Glide 2 OVL interception and bounded guest-memory marshalling.
 3. Viewport clipping and pixel-centre/edge-rule comparison against Glide.
 4. Depth and W-buffer semantics, texture formats/palettes/mipmaps, additional
@@ -120,3 +127,15 @@ The firmware test extracts and compiles the **unchanged upstream validator**
 from the supplied source, rather than duplicating its checks. The reference
 results are in [validation/](validation/). These checks do not establish
 physical GPU behaviour or instruction timing.
+
+To build the separate 68k hardware probe (does not install or run it):
+
+```sh
+python3 scripts/build_dosbox_glide_probe.py
+```
+
+This uses the pinned Amiga cross-toolchain container and native Clang to generate
+wire fixtures, so the 68k executable needs no FPU. The build record includes
+source, fixture and executable hashes. Hardware execution requires exclusive GPU
+access, an idle Core1 and the verified XACP GPU submit ABI. Read the report before
+running it; a timeout leaves completion unknown and must stop further GPU tests.

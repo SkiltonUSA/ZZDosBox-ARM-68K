@@ -85,7 +85,7 @@ def main():
                     count += 1
         checked[abi] = count
     print('PASS A9 instruction model: bit-identical packets', checked)
-    inputs=[Path(__file__), SRC/'translator.c', SRC/'translator.h', SRC/'descriptor.c', SRC/'descriptor.h']
+    inputs=[Path(__file__), SRC/'translator.c', SRC/'translator.h', SRC/'descriptor.c', SRC/'descriptor.h', SRC/'pipeline.h']
     (OUT/'arm-model.json').write_text(json.dumps({'scope':'instruction model, not physical GPU',
         'bit_identical_batches':checked,
         'source_sha256':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}}, indent=2)+'\n')

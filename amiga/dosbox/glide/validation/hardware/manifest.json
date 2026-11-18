@@ -1,0 +1,38 @@
+{
+  "scope": "Offscreen hardware fixtures; no guest-game or FPS claim",
+  "final_build_logs": [
+    "final-triangle.log",
+    "final-memset.log",
+    "final-triangle-repeat.log"
+  ],
+  "earlier_logs": "Development iterations, not all reproduced by final source; see README",
+  "captures": "Raw 64x64 RGB565 readback from final-triangle.log, PPM to PNG via sips, no resizing",
+  "files": {
+    "build.json": "16703a9fdbbdf27e50872cdf47b25a0cc4d4774c2809573b413c924a96346149",
+    "capture.log": "3d9a2f820deb45414141c64677529a3b03c6464aaa59ec36e454f26842de85d8",
+    "final-memset.log": "61652f4e6cca041edf630eaa3a9bf4ef0991c8ef555148f0464322cf526eedb3",
+    "final-triangle-repeat.log": "96497550d071d621bb62591d7a0b0e9dde08cd88a2862215fb78fb7791fc7e0f",
+    "final-triangle.log": "95ba7b63db94ea2038ef4f7ba4cc23dc4d512f0fa02139cf629bd5001ecd1152",
+    "full.log": "87e52becc9cf88f2f6905ca90065bce618b3bb8ab99078fe1a00cdf22f66f7e1",
+    "logging-65.log": "15c9f2f2879bee39cd39128705251dc0bf9b27b34cdbacece804e477b3131098",
+    "matched-0.log": "c287b6e5f69079b30493cf296f97e245e3ef643becbc30c1ee1a0f1389e14531",
+    "matched-1.log": "a8e0249d995697a690b31a7dde9e9ccb3e5be377efae1b57ff449fe72ec273f3",
+    "matched-2.log": "21b9f1304b3467bb76b667f16a186c0d5f8535643654fbe56b7c97716fbd5e39",
+    "matched-3.log": "6f3fae17bcbea4e923f89d96fb94ad2b928f6f50faa56c568d762763484dd161",
+    "memset-65-no-log.log": "e0d17fd506900199a240546eebed496a1932d5dc3e08bd96648c3b520fd946ea",
+    "memset-72.log": "18321716644b2446c21b9ff0c457716b9cf8cc841f14d5ea1887e0dfc49834e9",
+    "memset-no-log.log": "a7b14f6c4d69d24ab593a520ba4c5d500b8d0af34146548f52730e6ee147ab4f",
+    "no-commit.log": "516a3998816ac152535e295eaae4a28ffbc0b88bca03c5c7f7390c7603ca7bc7",
+    "preserve-pipeline.log": "c79f5e15e6fe4169ae914b903e4232aff975db39e019090c17488d77cc5dd079",
+    "preserve-texture.log": "f451092b4afb1edd61f2ace6b29be3ac774acd2fad613f5a0a9c4f7c68084938",
+    "repeat.log": "05b8771f47340b8e6ec0c93eb49417bc4af00d9f876b38692f56b6c4214beda6",
+    "scene-0.png": "cc015a0c9789aa20b650d970784e1ae2cdfe2147671e7f647578df07b52828f5",
+    "scene-1.png": "3eb2ea86ef14e710dbf7bbf4b5d4d3aac9fd07aeeef402770a3d9c13a9debe95",
+    "scene-2.png": "18b63a318d987b2e9a8e017a75e807f782ec89b6cae50016494b00e49f6ac89a",
+    "scene-3.png": "5fabb6c586c539e4b7174b655a0ff90c668aa02b8ec616c17d53073ce3f30826",
+    "scene-4.png": "8dd5f072f34f85a4bf6afb0a38697809f665b0f96d78cc34237abfb39cdd5ccd",
+    "triangle-marker-repeat1.log": "d6fc57f07ee46b7b686c95f9e8a574a3ec1ad97422c7472782011ff05dbae10e",
+    "triangle-marker.log": "92a0c58c7f5775a62118a673b92b6b0f0a1f72144bfec20005034cef00e836a9",
+    "triangle-no-log.log": "c512008c79c529217e16e8caa07a7327a9f144838ce5fae14c3d25c4c8e393b1"
+  }
+}
