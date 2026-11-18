@@ -13,6 +13,10 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 
 ## Development builds
 
+**Experimental [Glide-to-RasterIX translator](amiga/dosbox/glide/README.md):**
+triangle/texture command encoding tested natively and in an ARM instruction model.
+Not connected to games or included in the release; Core0 depth support remains a blocker.
+
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·
 [Navigation guide](docs/amiga-dosbox-launcher-navigation.md).

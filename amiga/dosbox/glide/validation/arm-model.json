@@ -1,0 +1,14 @@
+{
+  "scope": "instruction model, not physical GPU",
+  "bit_identical_batches": {
+    "soft": 12,
+    "softfp": 12
+  },
+  "source_sha256": {
+    "tests/amiga/dosbox/glide/arm_model.py": "d643afc8dae9367f6dfeb9dc05505c9b14ce9971bbdf4adecd3c120fcd9f28b4",
+    "amiga/dosbox/glide/translator.c": "64fa166fc1c6ee36e2d0773267f3bcd10e4c7bd8cd9c9ba3d9a9753cbfca591a",
+    "amiga/dosbox/glide/translator.h": "ee8994472519b89102048cca603bc23e26afe66ebf27e68042a7fe14c121c069",
+    "amiga/dosbox/glide/descriptor.c": "439a94cafd84ec9d52e0ab01b03ae7c0e368a01e81e5ad18b39dc9697b43df03",
+    "amiga/dosbox/glide/descriptor.h": "02859f7188379d10940073952cf78f4cd01cbd36ed2b600d0dd06fca5384034c"
+  }
+}

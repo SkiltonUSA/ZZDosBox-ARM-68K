@@ -10,6 +10,16 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
+## Unreleased — Glide-to-RasterIX encoder
+
+- Add a standalone, bounded window-space triangle encoder, using Xanxi's
+  librixgpu descriptor math and the XACP Core0 packet format.
+- Support a single RGB565 texture, perspective coordinates and three colour
+  blend modes; explicitly reject depth requests and triangles needing clipping.
+- Validate with native sanitizers, the upstream firmware validator and the
+  Cortex-A9 instruction model. No installed player, release or FPS change.
+- [Scope, limitations and test record](amiga/dosbox/glide/README.md).
+
 ## Unreleased — fullscreen diagnostics
 
 - Wait for a background fullscreen screen to return before granting a framebuffer.

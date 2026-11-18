@@ -1,0 +1,23 @@
+{
+  "scope": "Native encoder tests; no physical GPU or game execution",
+  "native_sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "upstream_validator": {
+    "main_c_sha256": "88d83038524b8ce7f6c32c5dc284d8ba385cfffa8ef399b094401880aa791399",
+    "validator_sha256": "80a4a395735e92c3b6cf30c589ebe5ac1e70628ea8519574999f3f024a9e2610"
+  },
+  "arm_compile_only": [
+    "cortex-a9 ARM32 soft",
+    "cortex-a9 ARM32 softfp VFPv3"
+  ],
+  "source_sha256": {
+    "amiga/dosbox/glide/translator.c": "64fa166fc1c6ee36e2d0773267f3bcd10e4c7bd8cd9c9ba3d9a9753cbfca591a",
+    "amiga/dosbox/glide/descriptor.c": "439a94cafd84ec9d52e0ab01b03ae7c0e368a01e81e5ad18b39dc9697b43df03",
+    "amiga/dosbox/glide/descriptor.h": "02859f7188379d10940073952cf78f4cd01cbd36ed2b600d0dd06fca5384034c",
+    "amiga/dosbox/glide/translator.h": "ee8994472519b89102048cca603bc23e26afe66ebf27e68042a7fe14c121c069",
+    "tests/amiga/dosbox/glide/translator.cpp": "0dbbf6ffdceb85baca0986eb6dd31dcf6c1dd43b9261b6cec1f3f676647589c6",
+    "scripts/test_dosbox_glide.py": "e6a5c2d207d87e5cd9fd66a5d8005427803216b8175c5264aeea094b65b1c4bc"
+  }
+}
