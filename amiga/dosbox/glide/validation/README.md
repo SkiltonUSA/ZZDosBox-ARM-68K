@@ -50,6 +50,11 @@ source remain outside Git.
 10. Re-ran sanitizer, firmware-validator and A9 instruction-model checks. Saved
     source/build hashes, raw logs and actual framebuffer captures. No runtime or
     release promotion.
+11. Reproduced the marker failure by disabling the pre-submit read. Fresh marker
+    colours and triangle markers did not cure it. Cache-only preparation failed;
+    read-only and full preparation passed their recorded series. Added tested
+    marker retagging and packet CRC diagnostics; retained all negative results in
+    the [isolation report](marker-isolation/README.md).
 
 See the [hardware report](hardware/README.md) for pixel evidence and its limits.
 This is not proof of Glide compatibility, audible quality or game performance.

@@ -22,6 +22,10 @@ source-alpha blending passed guarded readback on the A4000TX. Earlier runs
 observed a marker before correct pixels; the delayed readback then passed.
 Revised probes pass, but the cause of the earlier failure is not isolated.
 See the [hardware report and captures](validation/hardware/README.md).
+The [marker-isolation follow-up](validation/marker-isolation/README.md) reproduces
+the failure without a pre-submit marker read. Fresh colours and triangle markers
+also fail in that mode; sixteen prepared runs pass. The underlying cause remains
+unresolved, so no production fence or guest-game support is claimed.
 
 ## Implemented subset
 

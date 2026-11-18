@@ -1,0 +1,19 @@
+{
+  "image": "docker.io/amigadev/crosstools@sha256:93ca1a47903b61873f6638881b44f9f2d6086a39f1b9b916a26faff3a8ea4d3d",
+  "height": 72,
+  "source_sha256": {
+    "amiga/dosbox/glide/probe.c": "9bf5c6cd3b968190291e7b7ddf71716db8910ba1ace2be352f46018d264f08d5",
+    "amiga/dosbox/glide/probe_scene.c": "895eb77421ef8821ffad399fc929c77101ba2a18a832222128fbe0bf90c963d9",
+    "amiga/dosbox/glide/translator.c": "b99aaf43cdc89decadde610b6e3ccf3bca3777c7fa16d1aef835833cd7c561c4",
+    "amiga/dosbox/glide/descriptor.c": "439a94cafd84ec9d52e0ab01b03ae7c0e368a01e81e5ad18b39dc9697b43df03",
+    "amiga/dosbox/glide/descriptor.h": "02859f7188379d10940073952cf78f4cd01cbd36ed2b600d0dd06fca5384034c",
+    "amiga/dosbox/glide/probe_wire.h": "43aebbb744fec36a3a84f3d0bb3f3e21950c47066ed4a759307534ca04b1336d",
+    "amiga/dosbox/glide/pipeline.h": "6624a41ab6c726c5662027cdddf3e7659d03d71ae2f9d4869cc95629894a40bf",
+    "amiga/dosbox/glide/translator.h": "ee8994472519b89102048cca603bc23e26afe66ebf27e68042a7fe14c121c069",
+    "amiga/dosbox/glide/probe_scene.h": "bdebc90126c926ef77ae7b6ab8dfc76a1f85c8015a5f7a0f077b8999b143442e",
+    "scripts/build_dosbox_glide_probe.py": "fae0240477aee92039c93091f9d1dcfa98f839a7fef397b7d74294ab1410f833",
+    "tests/amiga/dosbox/glide/fixtures.c": "51f940358b0af9efe792a1dae45fe483c9d043201056d1e0961ef077f71a926a"
+  },
+  "fixtures_sha256": "47f2b0812b4da02d6c1153b6cc243b13c2a680262ff2eb51236c9921ffaf166d",
+  "binary_sha256": "9c88b27e5dafa32aa2eac3f52e3bf78e81357a4e081a84cca661ad70f5665705"
+}

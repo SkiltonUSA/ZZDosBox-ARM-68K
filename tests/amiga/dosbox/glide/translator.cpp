@@ -1,6 +1,7 @@
 /* Decode the emitted stream independently; no GPU execution claim. */
 #include "amiga/dosbox/glide/translator.h"
 #include "amiga/dosbox/glide/probe_scene.h"
+#include "amiga/dosbox/glide/probe_wire.h"
 #include <cassert>
 #include <cmath>
 #include <cstdio>
@@ -49,6 +50,20 @@ static void triangle(grx_vertex *v) {
     v[2]={8,40,0,0,255,255,0,256,1};
 }
 int main() {
+    assert(grx_probe_crc32((const uint8_t*)"123456789",9)==0xcbf43926);
+    assert(grx_probe_crc32((const uint8_t*)"",0)==0);
+    grx_packet tagged;
+    assert(grx_probe_scene(&tagged,1,0x4121));
+    auto original=tagged;
+    assert(grx_probe_retag(&tagged,0xa619));
+    uint32_t rgba=word(tagged,tagged.words-2);
+    assert((((rgba>>16)&0xf800)|((rgba>>13)&0x7e0)|((rgba>>11)&31))==0xa619);
+    for(unsigned i=0;i<tagged.words;i++)if(i!=tagged.words-2)assert(word(tagged,i)==word(original,i));
+    assert(grx_probe_triangle_marker(&tagged,1));original=tagged;
+    assert(!grx_probe_retag(&tagged,0xa619));
+    assert(!memcmp(&tagged,&original,sizeof(tagged)));
+    puts("PASS marker retagging: only clear colour changes; standard CRC32 check vectors");
+
     grx_packet p={};auto c=config();grx_vertex v[3];triangle(v);
     assert(grx_begin(&p,&c)==GRX_OK);
     assert(grx_triangle(&p,v)==GRX_OK);assert(grx_end(&p)==GRX_OK);

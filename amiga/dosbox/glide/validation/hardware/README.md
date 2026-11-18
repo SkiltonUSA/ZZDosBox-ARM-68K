@@ -6,6 +6,11 @@ earlier runs sometimes observed the marker before correct pixel readback.
 The revised probe has not established the cause of those earlier failures.
 No guest Glide game, throughput improvement or FPS gain is claimed.
 
+**Follow-up:** the failure is now reproducible without the pre-submit marker
+read. Cache maintenance alone is insufficient. See the
+[controlled comparison](../marker-isolation/README.md); the original results below
+remain unchanged.
+
 ## Final checks
 
 | Scene | Operation | Result |

@@ -1,0 +1,1304 @@
+[
+  {
+    "file": "cold-1.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "cold-3.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "cold-5.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "cold-7.log",
+    "passed": false,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 35,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "fresh-0.log",
+    "passed": false,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 153,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "preclear-0.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "preclear-1.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "preclear-2.log",
+    "passed": false,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 3,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "read-only-0.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "read-only-1.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "read-only-2.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "read-only-3.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "read-only-4.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "read-only-5.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "read-only-6.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "read-only-7.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "triangle-cold-0.log",
+    "passed": false,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3611,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3611,
+        "bad": 946,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-0.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-2.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-4.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-6.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-0.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-1.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-10.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-11.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-12.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-13.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-14.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-15.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-2.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-3.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-4.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-5.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-6.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-7.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-8.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  },
+  {
+    "file": "warm-fresh-9.log",
+    "passed": true,
+    "scenes": [
+      {
+        "scene": 0,
+        "checked": 4096,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 1,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 2,
+        "checked": 3502,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 3,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      },
+      {
+        "scene": 4,
+        "checked": 3355,
+        "bad": 0,
+        "guards": 0
+      }
+    ]
+  }
+]

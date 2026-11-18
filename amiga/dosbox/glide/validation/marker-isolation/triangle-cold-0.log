@@ -1,0 +1,9 @@
+GPU id=52495831 version=00020000 caps=0000000b abi=00010000
+SUBMIT scene=0 mode=triangle words=30 before=10000 marker=7200 crc=f25ad3f1 ack_us=165
+PIXELS scene=0 checked=4096 bad=0 guards=0 fence_us=93 left=0000 right=0000
+SUBMIT scene=1 mode=triangle words=94 before=10000 marker=f800 crc=9c2a9ab3 ack_us=203
+PIXELS scene=1 checked=3611 bad=0 guards=0 fence_us=60 left=f800 right=f800
+SUBMIT scene=2 mode=triangle words=94 before=10000 marker=ffe0 crc=1116dccb ack_us=208
+PIXELS scene=2 checked=3611 bad=946 guards=0 fence_us=65 left=f800 right=f800
+LATE READ scene=2 bad=0 (diagnostic only; run still fails)
+GLIDE PROBE rc=20

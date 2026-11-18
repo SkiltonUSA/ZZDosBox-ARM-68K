@@ -12,8 +12,10 @@
 #include <proto/timer.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "probe_scene.h"
 #include "fixtures.h"
+#include "probe_wire.h"
 struct ExpansionBase *ExpansionBase;
 struct Device *TimerBase;
 static ULONG now(void){struct timeval t;GetSysTime(&t);return t.tv_secs*1000000u+t.tv_micro;}
@@ -90,12 +92,20 @@ int main(int argc,char **argv)
     struct ConfigDev *cd;struct MsgPort *port=NULL,*owner=NULL;
     struct timerequest *timer=NULL;int opened=0,claimed=0,rc=20;
     volatile UWORD *reg=NULL,*pixels,*texture;volatile ULONG *q;volatile UBYTE *stage;
-    ULONG base,start;unsigned last=4;int triangle_marker=0,log_before=0;const char *prefix=NULL;
+    ULONG base,start;unsigned last=4,marker_base=0x4120;int triangle_marker=0,log_before=0,preread=3;const char *prefix=NULL;
     for(int arg=1;arg<argc;arg++) {
         if(!strcmp(argv[arg],"--clear"))last=0;
         else if(!strcmp(argv[arg],"--solid"))last=1;
         else if(!strcmp(argv[arg],"--triangle-marker"))triangle_marker=1;
         else if(!strcmp(argv[arg],"--log-before-read"))log_before=1;
+        else if(!strcmp(argv[arg],"--no-marker-preread"))preread=0;
+        else if(!strcmp(argv[arg],"--marker-preclear-only"))preread=1;
+        else if(!strcmp(argv[arg],"--marker-preread-only"))preread=2;
+        else if(!strcmp(argv[arg],"--marker-base")&&arg+1<argc) {
+            char *end;unsigned long value=strtoul(argv[++arg],&end,0);
+            if(*end||!value||value>65531)return 20;
+            marker_base=(unsigned)value;
+        }
         else if(!strcmp(argv[arg],"--capture")&&arg+1<argc&&strlen(argv[arg+1])<200)prefix=argv[++arg];
         else return 20;
     }
@@ -127,17 +137,25 @@ int main(int argc,char **argv)
     CacheClearE((APTR)(pixels-64),GRX_PROBE_BYTES+256,CACRF_ClearD);
     CacheClearE((APTR)(texture-64),2048+256,CACRF_ClearD);
     for(unsigned scene=0;scene<=last;scene++) {
-        grx_packet p;unsigned marker=0x4120+scene,checked,bad,guard,i;
+        grx_packet p;unsigned marker=marker_base+scene,checked,bad,guard,i;
         p.words=triangle_marker?grx_probe_words1[scene]:grx_probe_words0[scene];
         memcpy(p.bytes,triangle_marker?grx_probe_bytes1[scene]:grx_probe_bytes0[scene],p.words*4);
+        if((!triangle_marker||!scene)&&!grx_probe_retag(&p,(uint16_t)marker))goto done;
+        unsigned expected_crc=grx_probe_crc32(p.bytes,p.words*4);
+        if(marker_base==0x4120&&expected_crc!=grx_probe_crc[triangle_marker][scene]){
+            puts("STOP: generated fixture CRC mismatch");goto done;
+        }
         unsigned marker_offset=(GRX_PROBE_HEIGHT-1)*64,marker_count=64;
         if(triangle_marker&&scene) {
             marker=scene==2?0xffe0:scene==4?0x07e0:0xf800;
             marker_offset=(GRX_PROBE_HEIGHT-3)*64+4;marker_count=25;
         }
-        CacheClearE((APTR)(pixels+marker_offset),marker_count*2,CACRF_ClearD);
-        unsigned before=swap(pixels[marker_offset]);
-        if(before==marker){puts("STOP: marker already present before submit");goto done;}
+        unsigned before=0x10000;
+        if(preread&1)CacheClearE((APTR)(pixels+marker_offset),marker_count*2,CACRF_ClearD);
+        if(preread&2) {
+            before=swap(pixels[marker_offset]);
+            if(before==marker){puts("STOP: marker already present before submit");goto done;}
+        }
         if(SetSignal(0,0)&SIGBREAKF_CTRL_C){puts("Cancelled before submit");goto done;}
         for(i=0;i<p.words*4;i++)stage[i]=p.bytes[i];
         CacheClearE((APTR)stage,p.words*4,CACRF_ClearD);
@@ -145,7 +163,7 @@ int main(int argc,char **argv)
         CacheClearE((APTR)q,128,CACRF_ClearD);
         start=now();unsigned status=request(reg,0x0603),ack_us=now()-start;
         CacheClearE((APTR)q,128,CACRF_ClearD);
-        if(status!=2||q[12]||q[10]!=p.words||q[9]!=grx_probe_crc[triangle_marker][scene]){
+        if(status!=2||q[12]||q[10]!=p.words||q[9]!=expected_crc){
             printf("STOP: submit status=%u error=%x words=%u crc=%08x; GPU completion unknown\n",status,q[12],q[10],q[9]);goto done;
         }
         if(log_before)printf("ACK diagnostic scene=%u status=%u\n",scene,status);
@@ -163,7 +181,7 @@ int main(int argc,char **argv)
         bad=verify(pixels,scene,&checked);guard=guards(pixels,texture);
         for(i=0;i<1024;i++)if(texture[i]!=swap(grx_probe_texel(i)))guard++;
         /* No log I/O between submit, marker polling and the first readback. */
-        printf("SUBMIT scene=%u mode=%s words=%u before=%04x marker=%04x crc=%08x ack_us=%u\n",scene,triangle_marker?"triangle":"memset",p.words,before,marker,q[9],ack_us);
+        printf("SUBMIT scene=%u mode=%s prepare=%u words=%u before=%04x marker=%04x crc=%08x ack_us=%u\n",scene,triangle_marker?"triangle":"memset",preread,p.words,before,marker,q[9],ack_us);
         printf("PIXELS scene=%u checked=%u bad=%u guards=%u fence_us=%u left=%04x right=%04x\n",scene,checked,bad,guard,fence_us,swap(pixels[(GRX_PROBE_HEIGHT-1-12)*64+16]),swap(pixels[(GRX_PROBE_HEIGHT-1-12)*64+40]));
         if(bad||guard) {
             Delay(2);CacheClearE((APTR)(pixels-64),GRX_PROBE_BYTES+256,CACRF_ClearD);

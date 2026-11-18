@@ -20,7 +20,8 @@
     "amiga/dosbox/glide/translator.h": "ee8994472519b89102048cca603bc23e26afe66ebf27e68042a7fe14c121c069",
     "amiga/dosbox/glide/probe_scene.h": "bdebc90126c926ef77ae7b6ab8dfc76a1f85c8015a5f7a0f077b8999b143442e",
     "amiga/dosbox/glide/pipeline.h": "6624a41ab6c726c5662027cdddf3e7659d03d71ae2f9d4869cc95629894a40bf",
-    "tests/amiga/dosbox/glide/translator.cpp": "15ade448c01c82afba45623a4455e011f1430f6f1bc3c391aa153cc17d5a355f",
-    "scripts/test_dosbox_glide.py": "d3c5cda09be328d6ea0d4fc6e9d9e8c6063a389a02119adcbba0559d36769944"
+    "amiga/dosbox/glide/probe_wire.h": "43aebbb744fec36a3a84f3d0bb3f3e21950c47066ed4a759307534ca04b1336d",
+    "tests/amiga/dosbox/glide/translator.cpp": "3ccd055cae5f897f07fe7f23309a7dd2c67a75947e7d11efa0be32050e7ccfe2",
+    "scripts/test_dosbox_glide.py": "f2d474a1d1b4f5794bc1c76439a8a2995a3ce78bf8e940322a0cc39a7b78ffe3"
   }
 }
