@@ -1,0 +1,2 @@
+FATAL: tests/amiga/dosbox/glide/fence_coalesced.v:198: Corrupt data at pixel 0
+       Time: 465000  Scope: coalesced_fence_test.scenario

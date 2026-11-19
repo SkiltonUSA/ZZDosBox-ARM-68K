@@ -6,7 +6,7 @@
     "CommandParser.v": "256ab3127d6cdbf18b38e2d8e51b13fac5e2e5e1ece24366526730690a11f7ee",
     "RegisterAndDescriptorDefines.vh": "265dc4ae18aea0cd79617e5e63e7e1310b0e8184165fa5a812c95a923b606fd6",
     "tests/amiga/dosbox/glide/fence.v": "edcbd91a6ee4fae05004b076d8b4c1dcd7415469f82d07dd21ca7d27ba3bda9d",
-    "scripts/test_dosbox_glide_fence.py": "3cd39fc7a04c5f4cc30e6e0bc51e3be0c455d6f831b9876d33fc45dcb3ca0e20"
+    "scripts/test_dosbox_glide_fence.py": "1924f9cb93eff6b7ec9fc8ecf1ca718709718fb316ddac5c7f3f4f5ba1fb376c"
   },
   "axi": {
     "scope": "Parser plus bypass Coalescer and ValueTrack; simulated AXI slave",
@@ -16,6 +16,26 @@
       "Coalescer.v": "311568dede59103ea05471128c1734b03be1f494224f6ea8eb45cc59279015ea",
       "ValueTrack.v": "f2383b9581966772e8b8b3aaf928a8faecb1324bc208d4d9eaded0bb958fedd4",
       "fence_axi.v": "854fbd2bd586c712eb42a80ba7207ee07ee819ba9094146402e92cec6d24fbe3"
+    }
+  },
+  "coalesced": {
+    "scope": "Parser plus complete Coalescer and simulated AXI slave; not full GPU",
+    "scenarios": 18,
+    "widths": [
+      32,
+      64
+    ],
+    "mutations_detected": [
+      "coalesced-without-response-tracking",
+      "coalesced-corrupt-pixel"
+    ],
+    "sources": {
+      "Coalescer.v": "311568dede59103ea05471128c1734b03be1f494224f6ea8eb45cc59279015ea",
+      "CoalesceAddrGen.v": "ba58de084d97e22f2b95ddf7a9ac9c18e43949d535ea64afa882dadb01e14ad1",
+      "CoalesceFiFo.v": "dbff1130aa0298f45f2a0d393771df4d358848b9a00dec5f637ab1d882cd3c4d",
+      "ValueTrack.v": "f2383b9581966772e8b8b3aaf928a8faecb1324bc208d4d9eaded0bb958fedd4",
+      "sfifo.v": "548c56a31320eac1599f8884a03daf2e376c5e4dc6d3a7b6c1e595e0f80d939f",
+      "fence_coalesced.v": "7ced7faed17a5de05f73811751d151d3ffb23274390bd0267682add41550a57d"
     }
   }
 }

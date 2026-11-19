@@ -13,6 +13,11 @@
     "rtl/RasterIX/FramebufferAdapter.v": "b58bfb72717a93f1c4568563bf817eedc5853d45a276b60c05efde19df431910",
     "rtl/RasterIX/Coalescer.v": "311568dede59103ea05471128c1734b03be1f494224f6ea8eb45cc59279015ea",
     "rtl/RasterIX/RasterIXRenderCore.v": "cdc31461355d41f157c79c25e207b3fac814c5d6c4128f95968bc698c51b3fc1",
-    "rtl/RasterIX/AxisToAxiAdapter.v": "201ddd21bef58bbb9efa7752a3ace751664e53dceadfff0fdad2ccf17d65669b"
+    "rtl/RasterIX/AxisToAxiAdapter.v": "201ddd21bef58bbb9efa7752a3ace751664e53dceadfff0fdad2ccf17d65669b",
+    "rtl/RasterIX/CoalesceAddrGen.v": "ba58de084d97e22f2b95ddf7a9ac9c18e43949d535ea64afa882dadb01e14ad1",
+    "rtl/RasterIX/CoalesceFiFo.v": "dbff1130aa0298f45f2a0d393771df4d358848b9a00dec5f637ab1d882cd3c4d",
+    "rtl/3rdParty/sfifo.v": "548c56a31320eac1599f8884a03daf2e376c5e4dc6d3a7b6c1e595e0f80d939f",
+    "rtl/RasterIX/RasterIX_EF.v": "f8cfe25da69b1c4bafaccfb318b798586e9178e9781ce0ceb5298b690a61c187",
+    "rtl/RasterIX/RasterIX.v": "809112d7f59fe84a3ab28ceb546f3fd115e1f3caa11e17b0b0cec940a42406d3"
   }
 }

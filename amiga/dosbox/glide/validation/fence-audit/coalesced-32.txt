@@ -1,0 +1,10 @@
+PASS coalesced fence: width=32 pixels=1 layout=0 bursts=1 cold=1
+PASS coalesced fence: width=32 pixels=7 layout=0 bursts=1 cold=1
+PASS coalesced fence: width=32 pixels=8 layout=0 bursts=1 cold=1
+PASS coalesced fence: width=32 pixels=17 layout=0 bursts=3 cold=1
+PASS coalesced fence: width=32 pixels=64 layout=0 bursts=8 cold=1
+PASS coalesced fence: width=32 pixels=17 layout=1 bursts=3 cold=1
+PASS coalesced fence: width=32 pixels=17 layout=2 bursts=17 cold=1
+PASS coalesced fence: width=32 pixels=64 layout=0 bursts=8 cold=0
+PASS coalesced fence: width=32 pixels=7 layout=1 bursts=2 cold=0
+tests/amiga/dosbox/glide/fence_coalesced.v:222: $finish called at 14010000 (1ps)

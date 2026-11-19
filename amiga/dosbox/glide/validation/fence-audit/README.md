@@ -66,6 +66,44 @@ texture-cache tracking, the DDR controller, CPU cache visibility or a live GPU.
 The test models successful AXI responses; detecting bus errors is a separate
 requirement. No clock or emulator performance measurements were made.
 
+## Coalesced-write and token tests
+
+The `--coalesced` suite adds the actual upstream `Coalescer`, `CoalesceAddrGen`,
+`CoalesceFiFo`, `sfifo` and `ValueTrack`, with a simulated AXI slave. Eighteen
+scenarios pass: nine each at 32-bit and 64-bit data widths. These cover partial
+and full eight-beat bursts, 64 pixels across multiple bursts, non-contiguous
+addresses, 4-KiB boundaries, independent address/data stalls, delayed responses
+and consecutive submissions without resetting the RTL.
+
+The scoreboard checks every output address, pixel, byte strobe and `WLAST`.
+It also verifies that contiguous input really merges into fewer transactions.
+Removing response tracking causes an early-completion failure; flipping one
+pixel bit causes a data-corruption failure. Both intentional failures are saved.
+Together with the earlier suites, there are **27 passing scenarios and four
+detected mutations**. These are correctness tests, not FPS benchmarks.
+
+After each fence the test sends a changing clear-colour configuration value.
+Exactly one matching token reaches the parser's configuration output, after
+all preceding burst responses. This proves ordering at that output; it does
+not implement a CPU-readable completion register or write a marker into DDR.
+
+For a hardware marker, the proposed sequence is rendering → fence → marker
+setup/write. The marker allocation must remain owned until its own write has
+retired: observing its value does not acknowledge its AXI response. A permanent
+completion area or an explicit hardware sequence acknowledgement needs a
+separate verified lifetime contract. Existing XACP framebuffer addresses are
+pool-constrained; this work does not authorize arbitrary completion addresses.
+
+Upstream also exposes registered `idle = dmaIdle & renderCoreIdle` in
+`RasterIX_EF.v`. An untagged idle read alone can observe the idle state from
+before a queued submission starts. A host-visible completion interface must
+associate its acknowledgement with the submitted batch. The current ZZ9000
+integration has not been shown to expose this new signal to the CPU.
+
+Remaining validation includes texture-cache transaction tracking, complete
+render/DMA/interconnect integration, bus errors, CPU visibility and physical
+resource cleanup. No firmware or installed emulator was changed.
+
 ## ZZ9000 integration boundary
 
 The published [XX19d-RIX provenance](https://github.com/Xanxi-Amiga/XACP-ZZ9000/blob/6e59edbaf24e0d8d2f29cdd31667a10e16c5b283/firmware/source/XX19d-RIX/PROVENANCE.json)
@@ -116,3 +154,10 @@ RasterIX revision and `ValueTrack.v` from its Float submodule, using the exact
 path/revision in `tracker-sources.json`. Place both beside the parser and add
 `--axi` to the first command. The pinned Float revision is
 `83485654e380392a726ee67f8e5d2f4f8f73dd32`.
+
+For merged bursts, add `CoalesceAddrGen.v` and `CoalesceFiFo.v` from
+`rtl/RasterIX/`, plus `sfifo.v` from `rtl/3rdParty/`, at the same RasterIX
+revision. Place these beside the parser and add `--coalesced`. Source hashes
+and paths are recorded in `upstream-sources.json`. Use both flags to run all
+27 scenarios and four mutation checks. Test output and temporary mutated
+sources stay under `.context/amiga/glide/fence-model/`.

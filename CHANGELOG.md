@@ -12,6 +12,9 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Extend fence validation to merged 32/64-bit writes, pixel/burst integrity,
+  4-KiB boundaries, ordered configuration tokens and submissions without resets.
+  All 27 simulation scenarios pass; four deliberate faults are detected.
 - Verify the proposed GPU fence against delayed AXI write responses, including
   128 outstanding writes and backpressure. Record the XX19d-RIX FPGA prerequisite;
   firmware-only opcode acceptance would not provide retirement.

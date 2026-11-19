@@ -17,8 +17,10 @@ def main():
     p.add_argument('--vvp', default='vvp')
     p.add_argument('--ivl-dir', type=Path)
     p.add_argument('--axi', action='store_true', help='Also test bypass Coalescer write retirement')
+    p.add_argument('--coalesced', action='store_true', help='Also test merged bursts at 32 and 64 bits')
     a = p.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / 'validation.json').unlink(missing_ok=True)
     source = a.rtl.resolve() / 'CommandParser.v'
     definitions = a.rtl.resolve() / 'RegisterAndDescriptorDefines.vh'
     bench = ROOT / 'tests/amiga/dosbox/glide/fence.v'
@@ -28,9 +30,9 @@ def main():
         compiler += ['-B', str(a.ivl_dir.resolve())]
         runtime += ['-M', str(a.ivl_dir.resolve())]
 
-    def simulate(path, name, testbench=bench, top='fence_test', extra=()):
+    def simulate(path, name, testbench=bench, top='fence_test', extra=(), flags=()):
         binary = OUT / (name + '.vvp')
-        subprocess.run(compiler + ['-g2012', '-s', top, '-I', str(a.rtl.resolve()),
+        subprocess.run(compiler + list(flags) + ['-g2012', '-s', top, '-I', str(a.rtl.resolve()),
                                   '-o', str(binary), str(testbench), str(path)] +
                        [str(x) for x in extra], check=True)
         result = subprocess.run(runtime + [str(binary)], capture_output=True, text=True)
@@ -81,6 +83,38 @@ def main():
                          'scenarios': 5, 'removed_response_tracking_detected': True,
                          'sources': {x.name: hashlib.sha256(x.read_bytes()).hexdigest()
                                      for x in (coalescer, tracker, axi_bench)}}
+    if a.coalesced:
+        testbench = ROOT / 'tests/amiga/dosbox/glide/fence_coalesced.v'
+        dependencies = [a.rtl.resolve() / (name + '.v') for name in
+                        ('Coalescer', 'CoalesceAddrGen', 'CoalesceFiFo', 'ValueTrack', 'sfifo')]
+        for width in (32, 64):
+            rc, text = simulate(source, f'coalesced-{width}', testbench,
+                                'coalesced_fence_test', dependencies,
+                                (f'-Pcoalesced_fence_test.DATA_WIDTH={width}',))
+            if rc or text.count('PASS coalesced fence:') != 9:
+                raise SystemExit(f'Coalesced write scenarios failed at {width} bits')
+        fifo = dependencies[2].read_text()
+        mutations = (
+            ('coalesced-without-response-tracking', '| outstanding_write_active;', ';',
+             'Passed fence with transactions pending'),
+            ('coalesced-corrupt-pixel', 'm_mem_axi_wdata <= fifo_wdata;',
+             "m_mem_axi_wdata <= fifo_wdata ^ 1'b1;", 'Corrupt data at pixel'),
+        )
+        for name, old, new, failure in mutations:
+            if fifo.count(old) != 1:
+                raise SystemExit('Unexpected upstream FIFO; review before mutation')
+            mutated = OUT / (name + '.v')
+            mutated.write_text(fifo.replace(old, new))
+            sources = dependencies[:2] + [mutated] + dependencies[3:]
+            rc, text = simulate(source, name, testbench, 'coalesced_fence_test', sources)
+            if not rc or failure not in text:
+                raise SystemExit('Test did not detect mutation: ' + name)
+            print('PASS mutation: ' + name)
+        record['coalesced'] = {
+            'scope': 'Parser plus complete Coalescer and simulated AXI slave; not full GPU',
+            'scenarios': 18, 'widths': [32, 64], 'mutations_detected': [m[0] for m in mutations],
+            'sources': {x.name: hashlib.sha256(x.read_bytes()).hexdigest()
+                        for x in dependencies + [testbench]}}
     (OUT / 'validation.json').write_text(json.dumps(record, indent=2) + '\n')
 
 
