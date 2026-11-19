@@ -30,8 +30,10 @@ unresolved, so no production fence or guest-game support is claimed.
 The [Core1 witness comparison](validation/core1-witness/README.md) records one
 scene with correct ARM readback and 35 incorrect 68k pixels. Idle and delayed
 observer controls also pass, so visibility and timing still need isolation.
-The next [preparation controls and first-read trace](validation/preparation-controls/README.md)
-are built and locally checked; their physical comparison is pending.
+The [preparation controls and first-read trace](validation/preparation-controls/README.md)
+add 80 physical runs: unrelated reads still fail, while wait controls pass.
+Traced incorrect pixels retain previous-scene colours. No production wait or
+completion-fence fix has been promoted.
 
 ## Implemented subset
 

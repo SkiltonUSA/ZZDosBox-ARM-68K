@@ -1,0 +1,29 @@
+{
+  "sha256": "d7588892e31a7b0e99a9b5ffd3866068f2f3127ad6f2f3bb18997e5f87df6a5a",
+  "modes": [
+    [
+      "cold",
+      ""
+    ],
+    [
+      "texture",
+      "--submit-read-texture"
+    ],
+    [
+      "stage",
+      "--submit-read-stage"
+    ],
+    [
+      "yield",
+      "--submit-yield"
+    ],
+    [
+      "spin",
+      "--submit-spin"
+    ],
+    [
+      "marker",
+      "--marker-preread-only"
+    ]
+  ]
+}

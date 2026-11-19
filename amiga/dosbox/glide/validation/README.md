@@ -61,5 +61,10 @@ source remain outside Git.
     ARM and 68k readback. Preserved the failure and confounders in the
     [Core1 report](core1-witness/README.md). Six compiled-worker model checks pass.
 
+13. Completed 72 rotated preparation-control runs and eight first-read trace
+    runs after restoring the Mac bridge. Unrelated reads fail; yield and busy-wait
+    controls pass. Incorrect samples retain prior-scene colours. Recorded the
+    [results](preparation-controls/README.md) without promoting a production wait.
+
 See the [hardware report](hardware/README.md) for pixel evidence and its limits.
 This is not proof of Glide compatibility, audible quality or game performance.

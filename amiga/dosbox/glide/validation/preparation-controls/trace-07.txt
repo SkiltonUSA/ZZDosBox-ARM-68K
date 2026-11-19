@@ -1,0 +1,32 @@
+[OK]
+GPU id=52495831 version=00020000 caps=0000000b abi=00010000
+PREP scene=0 mode=0 us=0 read=0000
+SUBMIT scene=0 mode=memset prepare=0 words=30 before=10000 marker=61ea crc=4aaafc50 ack_us=159
+PIXELS scene=0 checked=4096 bad=0 guards=0 fence_us=81 left=0000 right=0000
+PREP scene=1 mode=0 us=0 read=0000
+SUBMIT scene=1 mode=memset prepare=0 words=67 before=10000 marker=61eb crc=b599726d ack_us=172
+PIXELS scene=1 checked=3502 bad=0 guards=0 fence_us=6920 left=f800 right=f800
+PREP scene=2 mode=0 us=0 read=0000
+SUBMIT scene=2 mode=memset prepare=0 words=67 before=10000 marker=61ec crc=813bb264 ack_us=2881
+PIXELS scene=2 checked=3502 bad=0 guards=0 fence_us=7597 left=ffe0 right=ffe0
+PREP scene=3 mode=0 us=0 read=0000
+SUBMIT scene=3 mode=memset prepare=0 words=75 before=10000 marker=61ed crc=9d0c7f64 ack_us=189
+PIXELS scene=3 checked=3355 bad=247 guards=0 fence_us=80 left=f800 right=001f
+BAD scene=3 offset=778 x=10 row=12 got=ffe0 want=f800
+BAD scene=3 offset=842 x=10 row=13 got=ffe0 want=f800
+BAD scene=3 offset=843 x=11 row=13 got=ffe0 want=f800
+BAD scene=3 offset=906 x=10 row=14 got=ffe0 want=f800
+BAD scene=3 offset=907 x=11 row=14 got=ffe0 want=f800
+BAD scene=3 offset=908 x=12 row=14 got=ffe0 want=f800
+BAD scene=3 offset=970 x=10 row=15 got=ffe0 want=f800
+BAD scene=3 offset=971 x=11 row=15 got=ffe0 want=f800
+BAD scene=3 offset=972 x=12 row=15 got=ffe0 want=f800
+BAD scene=3 offset=973 x=13 row=15 got=ffe0 want=f800
+BAD scene=3 offset=1034 x=10 row=16 got=ffe0 want=f800
+BAD scene=3 offset=1035 x=11 row=16 got=ffe0 want=f800
+BAD scene=3 offset=1036 x=12 row=16 got=ffe0 want=f800
+BAD scene=3 offset=1037 x=13 row=16 got=ffe0 want=f800
+BAD scene=3 offset=1038 x=14 row=16 got=ffe0 want=f800
+BAD scene=3 offset=1098 x=10 row=17 got=ffe0 want=f800
+LATE READ scene=3 bad=0 (diagnostic only; run still fails)
+GLIDE PROBE rc=20
