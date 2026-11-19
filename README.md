@@ -25,7 +25,7 @@ now loads in the GTA ECTS native test and receives its hardware query. It report
 no board; game rendering is not connected or included in the release. Core0
 depth support also remains a blocker. No GTA hardware FPS result is claimed.
 An [upstream fence candidate](amiga/dosbox/glide/validation/fence-audit/README.md)
-passes parser, merged-write and delayed-response simulations (27 scenarios).
+passes parser, merged-write and cached-texture simulations (43 scenarios).
 The published XX19d-RIX
 parser lacks it; compatible FPGA/firmware integration is required before hardware use.
 

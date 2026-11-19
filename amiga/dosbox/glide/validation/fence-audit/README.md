@@ -100,9 +100,46 @@ before a queued submission starts. A host-visible completion interface must
 associate its acknowledgement with the submitted batch. The current ZZ9000
 integration has not been shown to expose this new signal to the CPU.
 
-Remaining validation includes texture-cache transaction tracking, complete
+Remaining validation includes the uncached texture reader, complete
 render/DMA/interconnect integration, bus errors, CPU visibility and physical
 resource cleanup. No firmware or installed emulator was changed.
+
+## Cached-texture read and replacement tests
+
+The `--texture` suite connects the actual upstream cached `TextureReader` and
+its dependencies to the parser, a synthetic pixel stage and a simulated AXI
+memory. Sixteen cases pass: eight each at 32-bit and 64-bit memory widths.
+The parser uploads two page-table entries, samples a four-texel group, repeats
+it from cache, remaps the same virtual texels to different physical memory,
+crosses cache-line and page boundaries, and returns to the original mapping.
+Every returned texel is checked against its physical address. Cache-hit cases
+must issue no additional memory request; replacement cases must fetch again.
+
+Memory responses include gaps and a delayed final beat. The texel consumer
+also pauses before accepting its result. In five cases per width, the texels
+are consumed **before the final memory-read response**. The following fence
+and configuration token still wait for the remaining responses. This is why
+receiving pixels is insufficient proof that texture memory can be reused.
+
+Two mutation checks pass: counting every response beat as a completed burst
+fails with `Lost outstanding texture read`; disabling page-table-triggered
+invalidation fails with `Stale or corrupt texture`. Together, the suites now
+have **43 passing scenarios and six detected mutations**. They establish
+component behaviour, not a fix for the previous physical readback/freezes.
+
+For Icarus, a generated copy of `TextureReader.v` replaces two constants used
+as unused FIFO output destinations with two unused wires. Icarus otherwise
+rejects those output connections. The runner checks the exact source pattern
+before adapting it; the original and adapted hashes are recorded separately.
+Remaining compiler warnings are upstream constant-width truncations on disabled
+or constant broadcast sidebands; both width-specific compile logs are retained.
+No datapath or transaction-tracking logic is altered for the passing runs.
+
+The pixel-stage activity signal is supplied by the testbench. It establishes
+read activity (or a cache-hit result) before submitting the trailing fence;
+this does not test triangle-to-texture scheduling or command ingress ordering.
+The AXI model supplies successful, ordered responses. It does not test errors,
+out-of-order IDs, live DDR, or ARM/68k cache coherence.
 
 ## ZZ9000 integration boundary
 
@@ -130,6 +167,12 @@ The firmware completion contract should distinguish submission from retirement:
    buffers that the GPU may still access. Recovery must quiesce the hardware.
 5. Advertise guest rendering only after repeated batches, texture replacement,
    readback, cancellation and teardown pass on hardware.
+
+Before that hardware step, the integration work still needs to connect the
+component results into a full render/DMA/interconnect test, then provide a
+batch-tagged acknowledgement the ARM can read. Neither a configuration token
+inside the parser nor untagged `idle` is that CPU-visible interface. A verified
+bitstream and its matching XACP capability contract remain prerequisites.
 
 No experimental firmware was produced or installed from these tests. The next
 hardware prerequisite is a compatible FPGA build, not another FIFO-delay tweak.
@@ -161,3 +204,9 @@ revision. Place these beside the parser and add `--coalesced`. Source hashes
 and paths are recorded in `upstream-sources.json`. Use both flags to run all
 27 scenarios and four mutation checks. Test output and temporary mutated
 sources stay under `.context/amiga/glide/fence-model/`.
+
+Add `--texture` to run all 43 scenarios and six mutation checks. Fetch the
+`TextureReader*`, `TextureCacheDirectMapped*`, `TextureMMU`, `StreamConcatFifo`
+and `axis_broadcast` modules listed in `upstream-sources.json`, preserving their
+filenames beside the other RTL. The runner generates the Icarus-compatible
+reader and mutated copies under `.context/`; it leaves supplied RTL untouched.

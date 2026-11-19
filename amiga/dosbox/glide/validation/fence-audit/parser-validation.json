@@ -6,7 +6,7 @@
     "CommandParser.v": "256ab3127d6cdbf18b38e2d8e51b13fac5e2e5e1ece24366526730690a11f7ee",
     "RegisterAndDescriptorDefines.vh": "265dc4ae18aea0cd79617e5e63e7e1310b0e8184165fa5a812c95a923b606fd6",
     "tests/amiga/dosbox/glide/fence.v": "edcbd91a6ee4fae05004b076d8b4c1dcd7415469f82d07dd21ca7d27ba3bda9d",
-    "scripts/test_dosbox_glide_fence.py": "1924f9cb93eff6b7ec9fc8ecf1ca718709718fb316ddac5c7f3f4f5ba1fb376c"
+    "scripts/test_dosbox_glide_fence.py": "26aec419d36fb8795146b9201a57038c1f20f79a6f5845b47201ddbc5abee1f0"
   },
   "axi": {
     "scope": "Parser plus bypass Coalescer and ValueTrack; simulated AXI slave",
@@ -36,6 +36,34 @@
       "ValueTrack.v": "f2383b9581966772e8b8b3aaf928a8faecb1324bc208d4d9eaded0bb958fedd4",
       "sfifo.v": "548c56a31320eac1599f8884a03daf2e376c5e4dc6d3a7b6c1e595e0f80d939f",
       "fence_coalesced.v": "7ced7faed17a5de05f73811751d151d3ffb23274390bd0267682add41550a57d"
+    }
+  },
+  "texture": {
+    "scope": "Cached TextureReader and parser; synthetic pixel stage and AXI slave, not full GPU",
+    "scenarios": 16,
+    "widths": [
+      32,
+      64
+    ],
+    "mutations_detected": [
+      "texture-premature-retirement",
+      "texture-stale-cache"
+    ],
+    "adaptation": "Two unused FIFO output constants replaced with unused wires for Icarus",
+    "sources": {
+      "StreamConcatFifo.v": "07e0bc7c522999593f1125eb00d2aa0ccec08ef38aeb13f80f148a6c1b607796",
+      "TextureCacheDirectMapped.v": "4e82e99693f6c75d1724bc375b00220c3be2fa5f5b162e6ab0685604d59fbaa6",
+      "TextureCacheDirectMappedContext.v": "93ec512df7336f4f9414f035fb894dbbeb35883067e824811e0d0af32b74c8a5",
+      "TextureCacheDirectMappedController.v": "a122ddf67bdac41a07f05b55bd44721dcc2aab5837f7e96505dc6bdcd8db804e",
+      "TextureMMU.v": "c5be67e0627f73b343b9fb7de3902c412697bdcccc96dd0c01dcf95900cc9081",
+      "TextureReaderContext.v": "40f6bb42f8507d1a8b114b1b468fd60451b2f42fd3109cf264c403c6c154a6fa",
+      "TextureReaderController.v": "fb2471f0c09c44a53c4c33ac8daf9c91159b361ede79d97dc4948bdc9959d238",
+      "axis_broadcast.v": "cd5f6bca7f1b2dc85ee10d86c4f59759610725f33dbc5a148477fc693fc62ad4",
+      "sfifo.v": "548c56a31320eac1599f8884a03daf2e376c5e4dc6d3a7b6c1e595e0f80d939f",
+      "ValueTrack.v": "f2383b9581966772e8b8b3aaf928a8faecb1324bc208d4d9eaded0bb958fedd4",
+      "TextureReader.v": "393be504bf98f6ff3608c1341a2f90629a1c81334ed6d6301763f6cc006b4eec",
+      "TextureReader-compatible.v": "94738ae91f2f856d4260d644e745644ff3b2f545395bb03f915d2dac406330c8",
+      "fence_texture.v": "b9aee07c19b8eed735c5ad8950d8afdf81973a7c8a47976d1e3751b4e138860a"
     }
   }
 }

@@ -12,6 +12,9 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Validate cached texture reads, page remapping and cache hits with delayed
+  responses at 32/64-bit widths. The combined suite passes 43 scenarios and
+  detects six deliberate faults; CPU-visible completion remains unimplemented.
 - Extend fence validation to merged 32/64-bit writes, pixel/burst integrity,
   4-KiB boundaries, ordered configuration tokens and submissions without resets.
   All 27 simulation scenarios pass; four deliberate faults are detected.

@@ -1,0 +1,10 @@
+PASS texture fence: width=64 case=1 reads=1
+PASS texture fence: width=64 case=2 reads=0
+PASS texture fence: width=64 case=3 reads=1
+PASS texture fence: width=64 case=4 reads=0
+PASS texture fence: width=64 case=5 reads=2
+PASS texture fence: width=64 case=6 reads=2
+PASS texture fence: width=64 case=7 reads=0
+PASS texture fence: width=64 case=8 reads=1
+Texture outputs consumed before final read response: 5
+tests/amiga/dosbox/glide/fence_texture.v:182: $finish called at 8440000 (1ps)

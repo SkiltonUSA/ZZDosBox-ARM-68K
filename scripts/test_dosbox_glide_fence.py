@@ -18,6 +18,7 @@ def main():
     p.add_argument('--ivl-dir', type=Path)
     p.add_argument('--axi', action='store_true', help='Also test bypass Coalescer write retirement')
     p.add_argument('--coalesced', action='store_true', help='Also test merged bursts at 32 and 64 bits')
+    p.add_argument('--texture', action='store_true', help='Also test cached texture reads and replacement')
     a = p.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / 'validation.json').unlink(missing_ok=True)
@@ -32,9 +33,13 @@ def main():
 
     def simulate(path, name, testbench=bench, top='fence_test', extra=(), flags=()):
         binary = OUT / (name + '.vvp')
-        subprocess.run(compiler + list(flags) + ['-g2012', '-s', top, '-I', str(a.rtl.resolve()),
+        build = subprocess.run(compiler + list(flags) + ['-g2012', '-s', top, '-I', str(a.rtl.resolve()),
                                   '-o', str(binary), str(testbench), str(path)] +
-                       [str(x) for x in extra], check=True)
+                       [str(x) for x in extra], capture_output=True, text=True)
+        build_log = (build.stdout + build.stderr).replace(str(ROOT) + '/', '')
+        (OUT / (name + '-compile.txt')).write_text(build_log)
+        if build.returncode:
+            raise SystemExit(build_log)
         result = subprocess.run(runtime + [str(binary)], capture_output=True, text=True)
         text = (result.stdout + result.stderr).replace(str(ROOT) + '/', '')
         (OUT / (name + '.txt')).write_text(text)
@@ -115,6 +120,52 @@ def main():
             'scenarios': 18, 'widths': [32, 64], 'mutations_detected': [m[0] for m in mutations],
             'sources': {x.name: hashlib.sha256(x.read_bytes()).hexdigest()
                         for x in dependencies + [testbench]}}
+    if a.texture:
+        testbench = ROOT / 'tests/amiga/dosbox/glide/fence_texture.v'
+        names = ('StreamConcatFifo', 'TextureCacheDirectMapped', 'TextureCacheDirectMappedContext',
+                 'TextureCacheDirectMappedController', 'TextureMMU', 'TextureReaderContext',
+                 'TextureReaderController', 'axis_broadcast', 'sfifo', 'ValueTrack')
+        dependencies = [a.rtl.resolve() / (name + '.v') for name in names]
+        reader = a.rtl.resolve() / 'TextureReader.v'
+        original = reader.read_text()
+        # Icarus rejects constants as output destinations. These two bits are
+        # unused; connect them to unused wires without changing datapath logic.
+        old = ".m_stream_tdata({\n            1'b0,\n            1'b0,"
+        declaration = '    wire                         fifoReady;'
+        if original.count(old) != 1 or original.count(declaration) != 1:
+            raise SystemExit('Unexpected TextureReader output wiring; review adaptation')
+        adapted = original.replace(declaration, declaration + '\n    wire [1:0] unusedFifoOutputs;')
+        adapted = adapted.replace(old, '.m_stream_tdata({\n            unusedFifoOutputs[1],\n            unusedFifoOutputs[0],')
+        compatible = OUT / 'TextureReader-compatible.v'
+        compatible.write_text(adapted)
+        for width in (32, 64):
+            rc, text = simulate(source, f'texture-{width}', testbench, 'texture_fence_test',
+                                dependencies + [compatible],
+                                (f'-Ptexture_fence_test.DATA_WIDTH={width}',))
+            if rc or text.count('PASS texture fence:') != 8:
+                raise SystemExit(f'Cached texture scenarios failed at {width} bits')
+        mutations = (
+            ('texture-premature-retirement',
+             'm_axi_rvalid & m_axi_rready & m_axi_rlast', 'm_axi_rvalid & m_axi_rready',
+             1, 'Lost outstanding texture read'),
+            ('texture-stale-cache', '.invalidate(s_axis_tvalid)', ".invalidate(1'b0)",
+             2, 'Stale or corrupt texture'),
+        )
+        for name, old, new, count, failure in mutations:
+            if adapted.count(old) != count:
+                raise SystemExit('Unexpected texture logic; review mutation: ' + name)
+            mutated = OUT / (name + '.v')
+            mutated.write_text(adapted.replace(old, new))
+            rc, text = simulate(source, name, testbench, 'texture_fence_test', dependencies + [mutated])
+            if not rc or failure not in text:
+                raise SystemExit('Test did not detect mutation: ' + name)
+            print('PASS mutation: ' + name)
+        record['texture'] = {
+            'scope': 'Cached TextureReader and parser; synthetic pixel stage and AXI slave, not full GPU',
+            'scenarios': 16, 'widths': [32, 64], 'mutations_detected': [m[0] for m in mutations],
+            'adaptation': 'Two unused FIFO output constants replaced with unused wires for Icarus',
+            'sources': {x.name: hashlib.sha256(x.read_bytes()).hexdigest()
+                        for x in dependencies + [reader, compatible, testbench]}}
     (OUT / 'validation.json').write_text(json.dumps(record, indent=2) + '\n')
 
 

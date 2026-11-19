@@ -1,0 +1,2 @@
+FATAL: tests/amiga/dosbox/glide/fence_texture.v:103: Lost outstanding texture read
+       Time: 1040000  Scope: texture_fence_test

@@ -18,6 +18,16 @@
     "rtl/RasterIX/CoalesceFiFo.v": "dbff1130aa0298f45f2a0d393771df4d358848b9a00dec5f637ab1d882cd3c4d",
     "rtl/3rdParty/sfifo.v": "548c56a31320eac1599f8884a03daf2e376c5e4dc6d3a7b6c1e595e0f80d939f",
     "rtl/RasterIX/RasterIX_EF.v": "f8cfe25da69b1c4bafaccfb318b798586e9178e9781ce0ceb5298b690a61c187",
-    "rtl/RasterIX/RasterIX.v": "809112d7f59fe84a3ab28ceb546f3fd115e1f3caa11e17b0b0cec940a42406d3"
+    "rtl/RasterIX/RasterIX.v": "809112d7f59fe84a3ab28ceb546f3fd115e1f3caa11e17b0b0cec940a42406d3",
+    "rtl/RasterIX/PagedMemoryReader.v": "082b4d0b23fbcf5ef0907f7ef7b086fe4770aa4b366b8bd7f20509b04191331d",
+    "rtl/RasterIX/TextureReader.v": "393be504bf98f6ff3608c1341a2f90629a1c81334ed6d6301763f6cc006b4eec",
+    "rtl/RasterIX/TextureReaderContext.v": "40f6bb42f8507d1a8b114b1b468fd60451b2f42fd3109cf264c403c6c154a6fa",
+    "rtl/RasterIX/StreamConcatFifo.v": "07e0bc7c522999593f1125eb00d2aa0ccec08ef38aeb13f80f148a6c1b607796",
+    "rtl/RasterIX/TextureMMU.v": "c5be67e0627f73b343b9fb7de3902c412697bdcccc96dd0c01dcf95900cc9081",
+    "rtl/RasterIX/TextureCacheDirectMapped.v": "4e82e99693f6c75d1724bc375b00220c3be2fa5f5b162e6ab0685604d59fbaa6",
+    "rtl/RasterIX/TextureCacheDirectMappedContext.v": "93ec512df7336f4f9414f035fb894dbbeb35883067e824811e0d0af32b74c8a5",
+    "rtl/RasterIX/TextureCacheDirectMappedController.v": "a122ddf67bdac41a07f05b55bd44721dcc2aab5837f7e96505dc6bdcd8db804e",
+    "rtl/3rdParty/verilog-axis/axis_broadcast.v": "cd5f6bca7f1b2dc85ee10d86c4f59759610725f33dbc5a148477fc693fc62ad4",
+    "rtl/RasterIX/TextureReaderController.v": "fb2471f0c09c44a53c4c33ac8daf9c91159b361ede79d97dc4948bdc9959d238"
   }
 }
