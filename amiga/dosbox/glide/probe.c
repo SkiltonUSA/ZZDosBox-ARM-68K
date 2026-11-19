@@ -171,7 +171,9 @@ int main(int argc,char **argv)
             preparation_us=now()-t;
         }
 #ifdef GRX_WITNESS
+        ULONG arm_prepare_us=now();
         if(!witness_prepare(scene,marker,marker_offset,marker_count))goto done;
+        arm_prepare_us=now()-arm_prepare_us;
 #endif
         start=now();unsigned status=request(reg,0x0603),ack_us=now()-start;
         CacheClearE((APTR)q,128,CACRF_ClearD);
@@ -179,7 +181,17 @@ int main(int argc,char **argv)
             printf("STOP: submit status=%u error=%x words=%u crc=%08x; GPU completion unknown\n",status,q[12],q[10],q[9]);goto done;
         }
         if(log_before)printf("ACK diagnostic scene=%u status=%u\n",scene,status);
-        *reg=0;start=now();
+        *reg=0;
+#ifdef GRX_WITNESS
+        /* Ordered observer: no GPU pixel read by 68k until ARM verification
+         * and its release barrier are complete. No logging in this interval. */
+        unsigned arm_wait_us=0;
+        if(witness_mode==3) {
+            ULONG t=now();if(!witness_wait(GW_DONE))goto done;
+            arm_wait_us=now()-t;
+        }
+#endif
+        start=now();
         do {
             CacheClearE((APTR)(pixels+marker_offset),marker_count*2,CACRF_ClearD);
             for(i=0;i<marker_count&&pixels[marker_offset+i]==swap(marker);i++){}
@@ -195,6 +207,7 @@ int main(int argc,char **argv)
         for(i=0;i<1024;i++)if(texture[i]!=swap(grx_probe_texel(i)))guard++;
 #ifdef GRX_WITNESS
         witness_ok=witness_finish();
+        printf("ORDER scene=%u arm_prepare_us=%u before_host_wait_us=%u\n",scene,arm_prepare_us,arm_wait_us);
 #endif
         /* No log I/O between submit, marker polling and the first readback. */
         printf("PREP scene=%u mode=%u us=%u read=%04x\n",scene,submit_prepare,preparation_us,read_value);
@@ -235,8 +248,13 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected) {
  char mode[32]={0};GetVar("GLIDEWITNESS",mode,sizeof(mode)-1,0);
  if(!strcmp(mode,"afterhost"))witness_mode=1;
  else if(!strcmp(mode,"idle"))witness_mode=2;
+ else if(!strcmp(mode,"beforehost"))witness_mode=3;
+ else if(!strcmp(mode,"fast"))witness_mode=4;
  else if(*mode&&strcmp(mode,"concurrent")){puts("Invalid GLIDEWITNESS mode");return 20;}
- printf("WITNESS mode=%s\n",witness_mode==1?"afterhost":witness_mode==2?"idle":"concurrent");
+ printf("WITNESS mode=%s\n",witness_mode==1?"afterhost":witness_mode==2?"idle":witness_mode==3?"beforehost":witness_mode==4?"fast":"concurrent");
+ char direction[8]={0};GetVar("GLIDEREVERSE",direction,sizeof(direction)-1,0);
+ if(!strcmp(direction,"1"))witness_reverse=1;
+ else if(*direction&&strcmp(direction,"0")){puts("Invalid GLIDEREVERSE setting");return 20;}
  char marker[24];
  char *args[]={"probe","--no-marker-preread","--marker-base",marker};
  /* timer.device is opened by probe_main; nonce provides a fresh run tag. */

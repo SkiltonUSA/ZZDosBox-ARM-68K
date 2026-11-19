@@ -1,0 +1,18 @@
+[OK]
+GPU id=52495831 version=00020000 caps=0000000b abi=00010000
+PREP scene=0 mode=0 us=0 read=0000
+SUBMIT scene=0 mode=memset prepare=0 words=30 before=10000 marker=7530 crc=f808e90f ack_us=142
+PIXELS scene=0 checked=4096 bad=0 guards=0 fence_us=82 left=0000 right=0000
+PREP scene=1 mode=0 us=0 read=0000
+SUBMIT scene=1 mode=memset prepare=0 words=67 before=10000 marker=7531 crc=073b6732 ack_us=167
+PIXELS scene=1 checked=3502 bad=0 guards=0 fence_us=1538 left=f800 right=f800
+PREP scene=2 mode=0 us=0 read=0000
+SUBMIT scene=2 mode=memset prepare=0 words=67 before=10000 marker=7532 crc=3435a20d ack_us=173
+PIXELS scene=2 checked=3502 bad=0 guards=0 fence_us=11672 left=ffe0 right=ffe0
+PREP scene=3 mode=0 us=0 read=0000
+SUBMIT scene=3 mode=memset prepare=0 words=75 before=10000 marker=7533 crc=28026f0d ack_us=182
+PIXELS scene=3 checked=3355 bad=0 guards=0 fence_us=7241 left=f800 right=001f
+PREP scene=4 mode=0 us=0 read=0000
+SUBMIT scene=4 mode=memset prepare=0 words=67 before=10000 marker=7534 crc=b1b96a6a ack_us=162
+PIXELS scene=4 checked=3355 bad=0 guards=0 fence_us=10211 left=f800 right=800f
+GLIDE PROBE rc=0

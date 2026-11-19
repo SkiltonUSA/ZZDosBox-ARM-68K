@@ -18,8 +18,10 @@ int main(void) {
    set(x,y,c);
   }
   assert(grx_probe_verify(pixels,scene,&checked)==0&&checked>3000);
+  assert(grx_probe_verify_order(pixels,scene,&checked,NULL,1)==0&&checked>3000);
   set(16,12,0x07e0);
   assert(grx_probe_verify(pixels,scene,&checked)==1);
+  assert(grx_probe_verify_order(pixels,scene,&checked,NULL,1)==1);
  }
  for(unsigned i=0;i<GRX_PROBE_BYTES/2;i++)pixels[i]=0;
  set(5,12,0xffff);set(7,11,0xf800);
@@ -29,9 +31,14 @@ int main(void) {
  assert(trace.samples[0].got==0xffff && trace.samples[0].want==0);
  assert(trace.samples[1].got==0xf800);
  assert(grx_probe_verify_trace(pixels,0,&checked,NULL)==2);
+ assert(grx_probe_verify_order(pixels,0,&checked,&trace,1)==2);
+ assert(trace.samples[0].got==0xf800 && trace.samples[1].got==0xffff);
+ assert(trace.samples[0].offset>trace.samples[1].offset);
  for(unsigned i=0;i<GRX_PROBE_BYTES/2;i++)pixels[i]=0xffff;
  assert(grx_probe_verify_trace(pixels,0,&checked,&trace)==4096);
  assert(trace.count==GRX_TRACE_SAMPLES && trace.samples[15].offset==15);
+ assert(grx_probe_verify_order(pixels,0,&checked,&trace,1)==4096);
+ assert(trace.count==GRX_TRACE_SAMPLES && trace.samples[0].offset==4095 && trace.samples[15].offset==4080);
  puts("PASS mismatch trace records values from the original reads");
  puts("PASS shared readback oracle: five scenes, corruption detected in each");
 }

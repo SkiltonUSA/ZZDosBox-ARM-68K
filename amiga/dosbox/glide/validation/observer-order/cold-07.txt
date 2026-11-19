@@ -1,0 +1,16 @@
+[OK]
+GPU id=52495831 version=00020000 caps=0000000b abi=00010000
+PREP scene=0 mode=0 us=0 read=0000
+SUBMIT scene=0 mode=memset prepare=0 words=30 before=10000 marker=75ea crc=be072789 ack_us=163
+PIXELS scene=0 checked=4096 bad=0 guards=0 fence_us=81 left=0000 right=0000
+PREP scene=1 mode=0 us=0 read=0000
+SUBMIT scene=1 mode=memset prepare=0 words=67 before=10000 marker=75eb crc=4134a9b4 ack_us=171
+PIXELS scene=1 checked=3502 bad=0 guards=0 fence_us=9332 left=f800 right=f800
+PREP scene=2 mode=0 us=0 read=0000
+SUBMIT scene=2 mode=memset prepare=0 words=67 before=10000 marker=75ec crc=759669bd ack_us=180
+PIXELS scene=2 checked=3502 bad=0 guards=0 fence_us=810 left=ffe0 right=ffe0
+PREP scene=3 mode=0 us=0 read=0000
+SUBMIT scene=3 mode=memset prepare=0 words=75 before=10000 marker=75ed crc=69a1a4bd ack_us=189
+PIXELS scene=3 checked=3355 bad=28 guards=0 fence_us=81 left=ffe0 right=ffe0
+LATE READ scene=3 bad=0 (diagnostic only; run still fails)
+GLIDE PROBE rc=20

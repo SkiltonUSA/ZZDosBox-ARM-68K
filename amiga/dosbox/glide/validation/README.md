@@ -66,5 +66,10 @@ source remain outside Git.
     controls pass. Incorrect samples retain prior-scene colours. Recorded the
     [results](preparation-controls/README.md) without promoting a production wait.
 
+14. Compared ordered and concurrent observers, then reverse ARM traversal:
+    45 completed runs, 178 scenes and one interrupted run. Preserved all outcomes
+    in the [observer-order report](observer-order/README.md). Nine worker model
+    checks pass; hardware testing stopped with cleanup unverified.
+
 See the [hardware report](hardware/README.md) for pixel evidence and its limits.
 This is not proof of Glide compatibility, audible quality or game performance.

@@ -34,6 +34,10 @@ The [preparation controls and first-read trace](validation/preparation-controls/
 add 80 physical runs: unrelated reads still fail, while wait controls pass.
 Traced incorrect pixels retain previous-scene colours. No production wait or
 completion-fence fix has been promoted.
+The [ordered-observer tests](validation/observer-order/README.md) add 45 completed
+runs and one interrupted run. Waiting for ARM verification passed 12/12 runs;
+concurrent and reverse readback still fail intermittently. Hardware testing is
+paused after the interrupted run; its cleanup is unverified.
 
 ## Implemented subset
 

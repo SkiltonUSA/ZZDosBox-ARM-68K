@@ -1,0 +1,37 @@
+[OK]
+OWNED amiga=50000040 arm_candidate=101f0040 size=131072 nonce=0c35502f
+BOOTSTRAP amiga=40c79780 arm=00e69780 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c51878 MIDR=413fc090 MPIDR=80000001
+WITNESS mode=beforehost
+GPU id=52495831 version=00020000 caps=0000000b abi=00010000
+ARM scene=0 error=0 checked=4096 bad=0 polls=109 wait_ticks=35642
+ORDER scene=0 arm_prepare_us=159 before_host_wait_us=802
+PREP scene=0 mode=0 us=0 read=0000
+SUBMIT scene=0 mode=memset prepare=0 words=30 before=10000 marker=9e50 crc=e42bf14a ack_us=127
+PIXELS scene=0 checked=4096 bad=0 guards=0 fence_us=83 left=0000 right=0000
+ARM scene=1 error=0 checked=3502 bad=0 polls=115 wait_ticks=40776
+ORDER scene=1 arm_prepare_us=6649 before_host_wait_us=17763
+PREP scene=1 mode=0 us=0 read=0000
+SUBMIT scene=1 mode=memset prepare=0 words=67 before=10000 marker=9e51 crc=1b187f77 ack_us=149
+PIXELS scene=1 checked=3502 bad=0 guards=0 fence_us=89 left=f800 right=f800
+ARM scene=2 error=0 checked=3502 bad=0 polls=116 wait_ticks=40883
+ORDER scene=2 arm_prepare_us=6169 before_host_wait_us=16465
+PREP scene=2 mode=0 us=0 read=0000
+SUBMIT scene=2 mode=memset prepare=0 words=67 before=10000 marker=9e52 crc=2816ba48 ack_us=157
+PIXELS scene=2 checked=3502 bad=0 guards=0 fence_us=96 left=ffe0 right=ffe0
+ARM scene=3 error=0 checked=3355 bad=0 polls=117 wait_ticks=42337
+ORDER scene=3 arm_prepare_us=10223 before_host_wait_us=11186
+PREP scene=3 mode=0 us=0 read=0000
+SUBMIT scene=3 mode=memset prepare=0 words=75 before=10000 marker=9e53 crc=34217748 ack_us=162
+PIXELS scene=3 checked=3355 bad=0 guards=0 fence_us=87 left=f800 right=001f
+ARM scene=4 error=0 checked=3355 bad=0 polls=114 wait_ticks=40487
+ORDER scene=4 arm_prepare_us=1686 before_host_wait_us=16427
+PREP scene=4 mode=0 us=0 read=0000
+SUBMIT scene=4 mode=memset prepare=0 words=67 before=10000 marker=9e54 crc=ad9a722f ack_us=146
+PIXELS scene=4 checked=3355 bad=0 guards=0 fence_us=96 left=f800 right=800f
+GLIDE PROBE rc=0
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c51878 restored=08c50878
+LAUNCHER exit=0; owned memory released

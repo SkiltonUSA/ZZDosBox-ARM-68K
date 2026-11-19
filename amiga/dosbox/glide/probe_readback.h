@@ -19,10 +19,11 @@ static inline void grx_trace_bad(struct grx_readback_trace *trace,unsigned offse
         p->offset=offset;p->got=got;p->want=want;
     }
 }
-static inline unsigned grx_probe_verify_trace(const volatile uint16_t *pixels,unsigned scene,unsigned *checked,struct grx_readback_trace *trace)
+static inline unsigned grx_probe_verify_order(const volatile uint16_t *pixels,unsigned scene,unsigned *checked,struct grx_readback_trace *trace,unsigned reverse)
 {
     unsigned bad=0;*checked=0;if(trace)trace->count=0;
-    for(unsigned row=0;row<64;row++)for(unsigned x=0;x<64;x++) {
+    for(unsigned n=0;n<4096;n++) {
+        unsigned offset=reverse?4095-n:n,row=offset/64,x=offset%64;
         unsigned y=GRX_PROBE_HEIGHT-1-row;
         int inside=x>=10&&y>=10&&x+y<=62;
         int outside=x<6||y<6||x+y>66;
@@ -45,6 +46,9 @@ static inline unsigned grx_probe_verify_trace(const volatile uint16_t *pixels,un
         (*checked)++;if(got!=want){bad++;grx_trace_bad(trace,row*64+x,got,want);}
     }
     return bad;
+}
+static inline unsigned grx_probe_verify_trace(const volatile uint16_t *pixels,unsigned scene,unsigned *checked,struct grx_readback_trace *trace) {
+    return grx_probe_verify_order(pixels,scene,checked,trace,0);
 }
 static inline unsigned grx_probe_verify(const volatile uint16_t *pixels,unsigned scene,unsigned *checked) {
     return grx_probe_verify_trace(pixels,scene,checked,0);

@@ -16,9 +16,9 @@ void zz_worker(volatile uint8_t *base) {
   volatile uint8_t *c=base+GW_CMD,*r=base+GW_REPLY;
   unsigned next=ad_get(c,GW_SEQ);if(next==seq)continue;
   barrier();unsigned scene=ad_get(c,GW_SCENE),marker=ad_get(c,GW_MARKER);
-  unsigned offset=ad_get(c,GW_OFFSET),count=ad_get(c,GW_COUNT),idle=ad_get(c,GW_IDLE);
+  unsigned offset=ad_get(c,GW_OFFSET),count=ad_get(c,GW_COUNT),idle=ad_get(c,GW_IDLE),reverse=ad_get(c,GW_REVERSE);
   if(next!=seq+1||ad_get(c,GW_NONCE)!=(next^ad_get(base,ZZ_CONTROL))||
-     idle>1||scene>=5||!marker||marker>65535||!count||count>64||
+     reverse>1||idle>1||scene>=5||!marker||marker>65535||!count||count>64||
      offset>GRX_PROBE_BYTES/2-count)return;
   seq=next;ad_put(r,GW_ARMED,seq);barrier();
   /* No pixel reads until the host has written the GPU submit register. */
@@ -33,7 +33,13 @@ void zz_worker(volatile uint8_t *base) {
    if((uint32_t)(ticks()-start)>500000000u){error=1;break;}
   }while(1);
   unsigned elapsed=ticks()-start;
-  if(!error&&!idle){barrier();bad=grx_probe_verify(pixels,scene,&checked);}
+  unsigned verify_start=ticks();struct grx_readback_trace trace;trace.count=0;
+  if(!error&&!idle){barrier();bad=grx_probe_verify_order(pixels,scene,&checked,&trace,reverse);}
+  unsigned verify_ticks=ticks()-verify_start;
+  ad_put(r,GW_FIRST_OFFSET,trace.count?trace.samples[0].offset:0xffffffffu);
+  ad_put(r,GW_FIRST_GOT,trace.count?trace.samples[0].got:0);
+  ad_put(r,GW_FIRST_WANT,trace.count?trace.samples[0].want:0);
+  ad_put(r,GW_VERIFY_TICKS,verify_ticks);
   ad_put(r,GW_ERROR,error);ad_put(r,GW_BAD,bad);ad_put(r,GW_CHECKED,checked);
   ad_put(r,GW_POLLS,polls);ad_put(r,GW_TICKS,elapsed);
   barrier();ad_put(r,GW_DONE,seq);barrier();

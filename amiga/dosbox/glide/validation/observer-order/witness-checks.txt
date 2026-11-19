@@ -1,0 +1,9 @@
+PASS witness instruction model: valid
+PASS witness instruction model: corrupt
+PASS witness instruction model: idle
+PASS witness instruction model: bad-nonce
+PASS witness instruction model: bad-range
+PASS witness instruction model: cancel
+PASS witness instruction model: reverse
+PASS witness instruction model: reverse-corrupt
+PASS witness instruction model: bad-order

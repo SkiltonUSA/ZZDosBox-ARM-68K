@@ -1,0 +1,32 @@
+[OK]
+OWNED amiga=50000040 arm_candidate=101f0040 size=131072 nonce=0c773999
+BOOTSTRAP amiga=40c79780 arm=00e69780 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c51878 MIDR=413fc090 MPIDR=80000001
+WITNESS mode=fast
+GPU id=52495831 version=00020000 caps=0000000b abi=00010000
+ARM scene=0 error=0 checked=4096 bad=0 polls=200 wait_ticks=34732
+ARMREAD reverse=0 verify_ticks=858437 first_offset=4294967295 got=0000 want=0000
+ORDER scene=0 arm_prepare_us=144 before_host_wait_us=0
+PREP scene=0 mode=0 us=0 read=0000
+SUBMIT scene=0 mode=memset prepare=0 words=30 before=10000 marker=9cba crc=0cd07a7e ack_us=127
+PIXELS scene=0 checked=4096 bad=0 guards=0 fence_us=89 left=0000 right=0000
+ARM scene=1 error=0 checked=3502 bad=0 polls=264 wait_ticks=40446
+ARMREAD reverse=0 verify_ticks=781799 first_offset=4294967295 got=0000 want=0000
+ORDER scene=1 arm_prepare_us=13544 before_host_wait_us=0
+PREP scene=1 mode=0 us=0 read=0000
+SUBMIT scene=1 mode=memset prepare=0 words=67 before=10000 marker=9cbb crc=f3e3f443 ack_us=2520
+PIXELS scene=1 checked=3502 bad=0 guards=0 fence_us=93 left=f800 right=f800
+ARM scene=2 error=0 checked=3502 bad=0 polls=253 wait_ticks=40310
+ARMREAD reverse=0 verify_ticks=783268 first_offset=4294967295 got=0000 want=0000
+ORDER scene=2 arm_prepare_us=138 before_host_wait_us=0
+PREP scene=2 mode=0 us=0 read=0000
+SUBMIT scene=2 mode=memset prepare=0 words=67 before=10000 marker=9cbc crc=c741344a ack_us=141
+PIXELS scene=2 checked=3502 bad=35 guards=0 fence_us=91 left=ffe0 right=ffe0
+LATE READ scene=2 bad=0 (diagnostic only; run still fails)
+GLIDE PROBE rc=20
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c51878 restored=08c50878
+ZZGlideWitness: Application frontend or ARM transfer failed. See the CLI log for details.
+LAUNCHER exit=20; owned memory released
