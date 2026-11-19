@@ -1,0 +1,6 @@
+{
+  "python": "3.15.2",
+  "pillow": "13.0.0",
+  "script_sha256": "3d410dbe6e23bf68b255dfbba43f61f75b0febb851ddfe9d80011a02ecb23062",
+  "test_sha256": "8a840afa32216e410c15bd28733c52ed4218c6e0ba2817a42639f413175802f1"
+}

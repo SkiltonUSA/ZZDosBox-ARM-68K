@@ -1,0 +1,18 @@
+{
+  "baseline": "5 tests passed, including 80 deterministic random frames",
+  "mutations": [
+    {
+      "mutation": "lose-last-row",
+      "detected": true
+    },
+    {
+      "mutation": "merge-different-colours",
+      "detected": true
+    },
+    {
+      "mutation": "reject-exact-capacity",
+      "detected": true
+    }
+  ],
+  "scope": "Native Python planner and independent pixel reconstruction only"
+}

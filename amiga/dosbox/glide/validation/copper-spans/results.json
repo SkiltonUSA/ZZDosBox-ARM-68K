@@ -1,0 +1,53 @@
+{
+  "scope": "Post-render RGB565 rectangle feasibility; excludes fences and presentation",
+  "captures": [
+    {
+      "width": 640,
+      "height": 256,
+      "horizontal_runs": 12473,
+      "rectangle_count": 8622,
+      "required_drawing_words": 60364,
+      "drawing_budget_words": 32768,
+      "input": "acid-menu.png",
+      "sha256": "e1b3d5802fbdc92a90fc24653cb1bd7bb1afe3ea88d3a697bcb32e54ab7c32b8",
+      "fits_drawing_budget": false,
+      "drawing_bytes": 241456,
+      "raw_rgb565_bytes": 327680,
+      "command_to_pixel_bytes_ratio": 0.7369,
+      "rgb565_reconstruction": "exact",
+      "limitation": "Offline image grouping only; no Copper trace, GPU execution or FPS measurement"
+    },
+    {
+      "width": 640,
+      "height": 256,
+      "horizontal_runs": 10578,
+      "rectangle_count": 7623,
+      "required_drawing_words": 53371,
+      "drawing_budget_words": 32768,
+      "input": "banshee-briefing.png",
+      "sha256": "1f774ab8d27c7f9ead5ab297787c0501182c923283442f95310c2803564dc43c",
+      "fits_drawing_budget": false,
+      "drawing_bytes": 213484,
+      "raw_rgb565_bytes": 327680,
+      "command_to_pixel_bytes_ratio": 0.6515,
+      "rgb565_reconstruction": "exact",
+      "limitation": "Offline image grouping only; no Copper trace, GPU execution or FPS measurement"
+    },
+    {
+      "width": 640,
+      "height": 256,
+      "horizontal_runs": 3205,
+      "rectangle_count": 1840,
+      "required_drawing_words": 12890,
+      "drawing_budget_words": 32768,
+      "input": "state-of-art-silhouette.png",
+      "sha256": "25e92e1a0078379e93946e29a931afb810070558d7dcc7d358d2c845c15abfa1",
+      "fits_drawing_budget": true,
+      "drawing_bytes": 51560,
+      "raw_rgb565_bytes": 327680,
+      "command_to_pixel_bytes_ratio": 0.1573,
+      "rgb565_reconstruction": "exact",
+      "limitation": "Offline image grouping only; no Copper trace, GPU execution or FPS measurement"
+    }
+  ]
+}
