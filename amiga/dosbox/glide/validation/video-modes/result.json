@@ -1,0 +1,419 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 893.13,
+  "routed_checkpoint_sha256": "71987c95d7f2046c9427e0f9a40ca6ed693d59d2f6157ab207da182e24207790",
+  "firmware_video_source_sha256": "ac54096007a658d88ba6f3a02ced91e8c29106e129fa3a4c04061c5975c49b12",
+  "control_restored": true,
+  "coverage_counts_match_control": true,
+  "modes": [
+    {
+      "mode": "baseline",
+      "mult": "33",
+      "div": "4",
+      "outdiv": "11",
+      "period_ns": "13.333",
+      "wns_ns": "0.156",
+      "whs_ns": "0.010",
+      "video_setup_slack_ns": 4.962,
+      "setup_failing_endpoints": 0,
+      "hold_failing_endpoints": 0,
+      "pulse_width_failing_endpoints": 0,
+      "coverage": {
+        "no_clock": 566,
+        "constant_clock": 0,
+        "pulse_width_clock": 0,
+        "unconstrained_internal_endpoints": 1016,
+        "no_input_delay": 76,
+        "no_output_delay": 75,
+        "multiple_clock": 0,
+        "generated_clocks": 0,
+        "loops": 0,
+        "partial_input_delay": 0,
+        "partial_output_delay": 0,
+        "latch_loops": 0
+      },
+      "pll_drc_findings": 0,
+      "pll_drc_rules": [],
+      "worst_video_source": "zz9000_ps_i/video/video_formatter_0/inst/counter_y_reg[1]/C",
+      "worst_video_destination": "zz9000_ps_i/video/video_formatter_0/inst/sprite_py_reg[0]/R"
+    },
+    {
+      "mode": "640x480",
+      "mult": "15",
+      "div": "1",
+      "outdiv": "60",
+      "period_ns": "40.000",
+      "wns_ns": "0.156",
+      "whs_ns": "0.010",
+      "video_setup_slack_ns": 31.698,
+      "setup_failing_endpoints": 0,
+      "hold_failing_endpoints": 0,
+      "pulse_width_failing_endpoints": 0,
+      "coverage": {
+        "no_clock": 566,
+        "constant_clock": 0,
+        "pulse_width_clock": 0,
+        "unconstrained_internal_endpoints": 1016,
+        "no_input_delay": 76,
+        "no_output_delay": 75,
+        "multiple_clock": 0,
+        "generated_clocks": 0,
+        "loops": 0,
+        "partial_input_delay": 0,
+        "partial_output_delay": 0,
+        "latch_loops": 0
+      },
+      "pll_drc_findings": 0,
+      "pll_drc_rules": [],
+      "worst_video_source": "zz9000_ps_i/video/video_formatter_0/inst/counter_y_reg[1]/C",
+      "worst_video_destination": "zz9000_ps_i/video/video_formatter_0/inst/sprite_py_reg[0]/R"
+    },
+    {
+      "mode": "800x600",
+      "mult": "14",
+      "div": "1",
+      "outdiv": "35",
+      "period_ns": "25.000",
+      "wns_ns": "0.156",
+      "whs_ns": "0.010",
+      "video_setup_slack_ns": 16.699,
+      "setup_failing_endpoints": 0,
+      "hold_failing_endpoints": 0,
+      "pulse_width_failing_endpoints": 0,
+      "coverage": {
+        "no_clock": 566,
+        "constant_clock": 0,
+        "pulse_width_clock": 0,
+        "unconstrained_internal_endpoints": 1016,
+        "no_input_delay": 76,
+        "no_output_delay": 75,
+        "multiple_clock": 0,
+        "generated_clocks": 0,
+        "loops": 0,
+        "partial_input_delay": 0,
+        "partial_output_delay": 0,
+        "latch_loops": 0
+      },
+      "pll_drc_findings": 0,
+      "pll_drc_rules": [],
+      "worst_video_source": "zz9000_ps_i/video/video_formatter_0/inst/counter_y_reg[1]/C",
+      "worst_video_destination": "zz9000_ps_i/video/video_formatter_0/inst/sprite_py_reg[0]/R"
+    },
+    {
+      "mode": "1024x768",
+      "mult": "13",
+      "div": "1",
+      "outdiv": "20",
+      "period_ns": "15.385",
+      "wns_ns": "0.156",
+      "whs_ns": "0.010",
+      "video_setup_slack_ns": 7.085,
+      "setup_failing_endpoints": 0,
+      "hold_failing_endpoints": 0,
+      "pulse_width_failing_endpoints": 0,
+      "coverage": {
+        "no_clock": 566,
+        "constant_clock": 0,
+        "pulse_width_clock": 0,
+        "unconstrained_internal_endpoints": 1016,
+        "no_input_delay": 76,
+        "no_output_delay": 75,
+        "multiple_clock": 0,
+        "generated_clocks": 0,
+        "loops": 0,
+        "partial_input_delay": 0,
+        "partial_output_delay": 0,
+        "latch_loops": 0
+      },
+      "pll_drc_findings": 0,
+      "pll_drc_rules": [],
+      "worst_video_source": "zz9000_ps_i/video/video_formatter_0/inst/counter_y_reg[1]/C",
+      "worst_video_destination": "zz9000_ps_i/video/video_formatter_0/inst/sprite_py_reg[0]/R"
+    },
+    {
+      "mode": "1280x720",
+      "mult": "15",
+      "div": "1",
+      "outdiv": "20",
+      "period_ns": "13.333",
+      "wns_ns": "0.156",
+      "whs_ns": "0.010",
+      "video_setup_slack_ns": 5.041,
+      "setup_failing_endpoints": 0,
+      "hold_failing_endpoints": 0,
+      "pulse_width_failing_endpoints": 0,
+      "coverage": {
+        "no_clock": 566,
+        "constant_clock": 0,
+        "pulse_width_clock": 0,
+        "unconstrained_internal_endpoints": 1016,
+        "no_input_delay": 76,
+        "no_output_delay": 75,
+        "multiple_clock": 0,
+        "generated_clocks": 0,
+        "loops": 0,
+        "partial_input_delay": 0,
+        "partial_output_delay": 0,
+        "latch_loops": 0
+      },
+      "pll_drc_findings": 0,
+      "pll_drc_rules": [],
+      "worst_video_source": "zz9000_ps_i/video/video_formatter_0/inst/counter_y_reg[1]/C",
+      "worst_video_destination": "zz9000_ps_i/video/video_formatter_0/inst/sprite_py_reg[0]/R"
+    },
+    {
+      "mode": "1280x1024",
+      "mult": "54",
+      "div": "5",
+      "outdiv": "10",
+      "period_ns": "9.259",
+      "wns_ns": "0.156",
+      "whs_ns": "0.010",
+      "video_setup_slack_ns": 0.912,
+      "setup_failing_endpoints": 0,
+      "hold_failing_endpoints": 0,
+      "pulse_width_failing_endpoints": 0,
+      "coverage": {
+        "no_clock": 566,
+        "constant_clock": 0,
+        "pulse_width_clock": 0,
+        "unconstrained_internal_endpoints": 1016,
+        "no_input_delay": 76,
+        "no_output_delay": 75,
+        "multiple_clock": 0,
+        "generated_clocks": 0,
+        "loops": 0,
+        "partial_input_delay": 0,
+        "partial_output_delay": 0,
+        "latch_loops": 0
+      },
+      "pll_drc_findings": 0,
+      "pll_drc_rules": [],
+      "worst_video_source": "zz9000_ps_i/video/video_formatter_0/inst/counter_y_reg[1]/C",
+      "worst_video_destination": "zz9000_ps_i/video/video_formatter_0/inst/sprite_py_reg[0]/R"
+    },
+    {
+      "mode": "1920x1080",
+      "mult": "15",
+      "div": "1",
+      "outdiv": "10",
+      "period_ns": "6.667",
+      "wns_ns": "-1.621",
+      "whs_ns": "0.010",
+      "video_setup_slack_ns": -1.621,
+      "setup_failing_endpoints": 62,
+      "hold_failing_endpoints": 0,
+      "pulse_width_failing_endpoints": 0,
+      "coverage": {
+        "no_clock": 566,
+        "constant_clock": 0,
+        "pulse_width_clock": 0,
+        "unconstrained_internal_endpoints": 1016,
+        "no_input_delay": 76,
+        "no_output_delay": 75,
+        "multiple_clock": 0,
+        "generated_clocks": 0,
+        "loops": 0,
+        "partial_input_delay": 0,
+        "partial_output_delay": 0,
+        "latch_loops": 0
+      },
+      "pll_drc_findings": 0,
+      "pll_drc_rules": [],
+      "worst_video_source": "zz9000_ps_i/video/video_formatter_0/inst/counter_y_reg[1]/C",
+      "worst_video_destination": "zz9000_ps_i/video/video_formatter_0/inst/sprite_py_reg[0]/R"
+    },
+    {
+      "mode": "1600x1200",
+      "mult": "21",
+      "div": "1",
+      "outdiv": "13",
+      "period_ns": "6.190",
+      "wns_ns": "-2.088",
+      "whs_ns": "0.010",
+      "video_setup_slack_ns": -2.088,
+      "setup_failing_endpoints": 90,
+      "hold_failing_endpoints": 0,
+      "pulse_width_failing_endpoints": 0,
+      "coverage": {
+        "no_clock": 566,
+        "constant_clock": 0,
+        "pulse_width_clock": 0,
+        "unconstrained_internal_endpoints": 1016,
+        "no_input_delay": 76,
+        "no_output_delay": 75,
+        "multiple_clock": 0,
+        "generated_clocks": 0,
+        "loops": 0,
+        "partial_input_delay": 0,
+        "partial_output_delay": 0,
+        "latch_loops": 0
+      },
+      "pll_drc_findings": 1,
+      "pll_drc_rules": [
+        [
+          "PDRC-42",
+          "Warning"
+        ]
+      ],
+      "worst_video_source": "zz9000_ps_i/video/video_formatter_0/inst/counter_y_reg[1]/C",
+      "worst_video_destination": "zz9000_ps_i/video/video_formatter_0/inst/sprite_py_reg[0]/R"
+    },
+    {
+      "mode": "2560x1440",
+      "mult": "41",
+      "div": "2",
+      "outdiv": "14",
+      "period_ns": "6.829",
+      "wns_ns": "-1.453",
+      "whs_ns": "0.010",
+      "video_setup_slack_ns": -1.453,
+      "setup_failing_endpoints": 59,
+      "hold_failing_endpoints": 0,
+      "pulse_width_failing_endpoints": 0,
+      "coverage": {
+        "no_clock": 566,
+        "constant_clock": 0,
+        "pulse_width_clock": 0,
+        "unconstrained_internal_endpoints": 1016,
+        "no_input_delay": 76,
+        "no_output_delay": 75,
+        "multiple_clock": 0,
+        "generated_clocks": 0,
+        "loops": 0,
+        "partial_input_delay": 0,
+        "partial_output_delay": 0,
+        "latch_loops": 0
+      },
+      "pll_drc_findings": 1,
+      "pll_drc_rules": [
+        [
+          "PDRC-42",
+          "Warning"
+        ]
+      ],
+      "worst_video_source": "zz9000_ps_i/video/video_formatter_0/inst/counter_y_reg[1]/C",
+      "worst_video_destination": "zz9000_ps_i/video/video_formatter_0/inst/sprite_py_reg[0]/R"
+    }
+  ],
+  "files": {
+    "video-mode-timing.tcl": {
+      "original_sha256": "ef6689b526699362ceea4430d131d6aceec58ca088e92bfb046766e0d93809fb",
+      "published_sha256": "ef6689b526699362ceea4430d131d6aceec58ca088e92bfb046766e0d93809fb"
+    },
+    "video-mode-timing.tsv": {
+      "original_sha256": "1f9f28c0fd535ea06bed101e21309d1d65b3dfbf36ade9fdadcfaf3f665bcaf0",
+      "published_sha256": "9234d9cf90df8a22fbb0e1e04870f72940b0fb9bcfb2ec1f891569961db26a4d"
+    },
+    "video-mode-1024x768-timing.rpt": {
+      "original_sha256": "60a61cd3c3df5bdd0517018350baf33976d3ea42db55f50c548c3eb1476610bb",
+      "published_sha256": "223d902bfec1cf1038ca5a605372e67d3e495b3f92fc107719eff1cd9f08fe41"
+    },
+    "video-mode-1280x1024-timing.rpt": {
+      "original_sha256": "2ca1cf0dac408def58625f11bbc9e395507f7d872fa8373c061246947e0b2907",
+      "published_sha256": "1cde5f29262b9391d246698d289709dd5ae6032c3a1f5886e30862cb2bd4d04e"
+    },
+    "video-mode-1280x720-timing.rpt": {
+      "original_sha256": "ca0efef9853d95690fc2d6d24b4319879df73ff5f7491aeaacfa5adc62affd41",
+      "published_sha256": "08ed94e3dc4280b455a6b96f8c3bbbb8a9ef4a0195530aa5bc65e63e296d474e"
+    },
+    "video-mode-1600x1200-timing.rpt": {
+      "original_sha256": "33bb5cef92c4481fcb1bf90dbd5c8a5d00c995b01b061b4fec0a6f9ca109ba1e",
+      "published_sha256": "bff29cb5cfb218eaba4eec3ef7e28d0e1048b2a7b0e9ffcb558b7c1797205fe5"
+    },
+    "video-mode-1920x1080-timing.rpt": {
+      "original_sha256": "15bf019729c892e30d771ac64bd6d95e8dd09e27c1b3f9afa3a441eb0237b89f",
+      "published_sha256": "f4b90ac24a2ea33bad3c8e410c090614758f42601d0775f86a39ebae810f05b0"
+    },
+    "video-mode-2560x1440-timing.rpt": {
+      "original_sha256": "25024af7d32feeced9d9b92c4b44fccc9693f8a082b03e3fe813218fdd623266",
+      "published_sha256": "f7b18c00874858e04925116ed9189ad02dd8aa665981c3d5b69f86ebd489aa53"
+    },
+    "video-mode-640x480-timing.rpt": {
+      "original_sha256": "744a1a600638290b18d8b46eacdb2ed2b3509c159214bfd278cefc2629a20947",
+      "published_sha256": "c6d147c1798b79da33b9a27a75dfc28b9e08d0f02f0e37c076d351fb27072900"
+    },
+    "video-mode-800x600-timing.rpt": {
+      "original_sha256": "6141f61ed37ecb449ade8f275a02b696cf2bc66457cba484ba65daa8ec03e940",
+      "published_sha256": "3e732a421cad50c1cef23a2e85edee3906d374c0b459d736366fc9e1dad937c5"
+    },
+    "video-mode-baseline-timing.rpt": {
+      "original_sha256": "66d3cf3f1e966d66f0e378981559595709c9957e2fd2b508469ea59e466195bf",
+      "published_sha256": "9e8d32c08196b49f2a49a96337833d6c0bd242f163a8f6ac639b305e1d9bc22e"
+    },
+    "video-mode-1024x768-paths.rpt": {
+      "original_sha256": "10ddc7d94b5aeea8cb1a448f6b2f841dd49963f8c8346e97e640d99a7732b9e3",
+      "published_sha256": "5a9d5e8e0550c9a033360d8e9e7623e5aaa9e8ae7cfd696161dde6f11df95d50"
+    },
+    "video-mode-1280x1024-paths.rpt": {
+      "original_sha256": "16ba99594c5dd0f2422363b0ffa496c66216dce5ad1d38868b2afcccf0628274",
+      "published_sha256": "debc24e393eab2d9c207a87d2a1494f0066e0d070e6d695eb9cd462fd122ab0c"
+    },
+    "video-mode-1280x720-paths.rpt": {
+      "original_sha256": "b3ec3a1d0fe6cb375121b8292beabcb35ea1ccf8cf45fa0c67a55ce5d9c4f7c1",
+      "published_sha256": "1109a60817f893802b4965abe1a0df6c89e82fb03e9cd819867cfc54a963ccce"
+    },
+    "video-mode-1600x1200-paths.rpt": {
+      "original_sha256": "791da9e6ae42e11f20d304f85b1e41e526830f2fb84172efe1adaec67ffd6856",
+      "published_sha256": "a6390dbc3072984927e7df8c55bd99f79e795091e279fcc53896ca7ab57e5813"
+    },
+    "video-mode-1920x1080-paths.rpt": {
+      "original_sha256": "2aefc4e04dc8ae301c0a35ce2ed7b3c8b84b9e99f8a6f52d1efbac74d45bdfca",
+      "published_sha256": "239614c1fe4277205a2f702ced0a0d6b8253f89dd7d76e58414769a8b2b7ad73"
+    },
+    "video-mode-2560x1440-paths.rpt": {
+      "original_sha256": "242b67086bb02a27dba0198d18806de4a2cc48b9c8bd84b06658af9320f85803",
+      "published_sha256": "6392d2ad4def8eb894c77b2d4471369342d28126cb1893936aa78d77994b11b6"
+    },
+    "video-mode-640x480-paths.rpt": {
+      "original_sha256": "43989be09afdba453b77a03b9bcb581541a8bf7a34d62058d41fd7f9676a37fc",
+      "published_sha256": "df6bc9987106d81ca553db84d47dc6191983fb7a5fb580521065e4988d30eae3"
+    },
+    "video-mode-800x600-paths.rpt": {
+      "original_sha256": "55c0ae265c58dd50e0006f407693ab3e5f2d6d1b59ae1e7a3065815175d13bfa",
+      "published_sha256": "8e4bd505ca0862831233dd31cfcb68e032af2482b0af24300cf88c8fc45ed6ee"
+    },
+    "video-mode-baseline-paths.rpt": {
+      "original_sha256": "d2cc8a0c9615edf51e8b8826811819b73e79cff67f1687299e5e98df5778cbf6",
+      "published_sha256": "cce40ac10142a946241ff90ede936d3f493b28b532d76a9c965800a3d085feac"
+    },
+    "video-mode-1024x768-pll-drc.rpt": {
+      "original_sha256": "f99130882f04784c3b13fb04a76f61eb8b3b7e8de5fca11923c016e5831b0759",
+      "published_sha256": "97005b1b646da03e1278c96a39c2e49f7dc39cf8682e20c54e5d4e623e7665cb"
+    },
+    "video-mode-1280x1024-pll-drc.rpt": {
+      "original_sha256": "358d32a5137d425467d980e8a1dc082d9bb7ec49d332e37b5955c27c816d8646",
+      "published_sha256": "f264cdc8ed1d042503f05cb39c1418a99f4ccb2a22f57c5369ae051cfe2eb19f"
+    },
+    "video-mode-1280x720-pll-drc.rpt": {
+      "original_sha256": "68a148bb12212022e615743f85aa00ccdd508fd9fb624fc1da415e713235ad25",
+      "published_sha256": "8e66d51c4922fee484efe80f8ee8e1a368020919c1833542400db18a0f1aa5ba"
+    },
+    "video-mode-1600x1200-pll-drc.rpt": {
+      "original_sha256": "6173464f58508dbf6aad8b433c1a1c51d657250818f5eb851adae7ce2fa97629",
+      "published_sha256": "e7491b8ccb1fbe28146fdda87e88eae2a82a1e1b7b8c31bce20a9768816084ad"
+    },
+    "video-mode-1920x1080-pll-drc.rpt": {
+      "original_sha256": "b5ad288a6e59fed7bbb164cd6458ac2b8bd0a7da0b81c8c4aea76fa17860cff2",
+      "published_sha256": "65a431a544ce6a59b99a914485a14b72c5c977d4ef4dafc75764125abeef0871"
+    },
+    "video-mode-2560x1440-pll-drc.rpt": {
+      "original_sha256": "5c32d5cb51f446feb06d854f837c0a43004e1ffa79a25850b3cd183bb3a1655b",
+      "published_sha256": "2d8cce8e2c7bf743d6b14a9e501bee89fb53537e7efec087d447103e86960ac4"
+    },
+    "video-mode-640x480-pll-drc.rpt": {
+      "original_sha256": "295ee1ca02bce9e1301d1323656a1a9ef6b30d17f1ba3b745a7d0ef3b3de0d8f",
+      "published_sha256": "6d494e6263afdd59d7fd8dfe11bfde90aea4e4f57fd675f84fb64476b418990c"
+    },
+    "video-mode-800x600-pll-drc.rpt": {
+      "original_sha256": "e81f894ad1b64f8d04aefd81e43a0d4e7c0a7949e33e219aa4a95203a403fb28",
+      "published_sha256": "498ed066302b0f3a765e9c6c3e4ec02b0a11d3cb5e6e52effc2e5dc886b41bb9"
+    },
+    "video-mode-baseline-pll-drc.rpt": {
+      "original_sha256": "9e00bff0f749d4ade4a2f079ff4b3e4bd9e4c983921e068dc7db18976aaf9563",
+      "published_sha256": "755050378107a755b0b3b61594ca254c040515a5356894c7ebe396cb50399889"
+    }
+  },
+  "redaction": "Report host name replaced; line endings normalized and trailing whitespace removed",
+  "scope": "Steady-state in-memory PLL parameter sweep on fixed routed logic; original properties restored; no new routing, checkpoint, bitstream or hardware test. Existing false paths and coverage gaps retained; invalid PLL configurations are not usable timing passes."
+}

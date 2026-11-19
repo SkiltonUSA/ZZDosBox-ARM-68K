@@ -43,13 +43,15 @@ The [XACP firmware rebuild guide](docs/xacp-firmware-rebuild.md) records Xanxi's
 source baseline, boot-image components and pending integration work. The ARM
 firmware baseline and a regenerated FSBL candidate now build. Full-board FPGA
 synthesis, an independent checkpoint audit and optimization completed, including
-both debug cores. Full-board routing completed with no routing errors and passes
-the declared timing constraints. Missing audio-clock constraints and other timing
+both debug cores. Full-board routing completed with no routing errors; its 75 MHz
+video baseline passes the declared timing constraints. A [display-clock sweep](amiga/dosbox/glide/experimental/video-modes.md)
+finds setup failures at higher pixel clocks and two PLL-range warnings.
+Missing audio-clock constraints and other timing
 coverage/clock-domain findings still require review before hardware validation.
 No replacement firmware has been flashed.
 The [video/audio crossing audit](amiga/dosbox/glide/experimental/crossing-audit.md)
-adds nine passing audio-clock simulations and identifies runtime display-clock
-coverage and video-counter handoff work still needed before promotion.
+adds nine passing audio-clock simulations and 18 passing fetch-consumer tests.
+Integrated video handoff and timing coverage work remain before promotion.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

@@ -609,10 +609,18 @@ passing digital tests of the unchanged sampled audio clock. Both deliberately
 broken simulation controls were detected. Sampling quantises output periods to
 the 100 MHz clock grid; this is not a hardware audio-quality measurement.
 
-The baseline's 75 MHz video timing does not cover all firmware-programmed display
-modes. Active frame/line transfers also need functional review independently of
-long-held configuration signals. No crossing exceptions were added, and no RTL
-or deployed firmware changed during this audit.
+The [runtime clock sweep](../amiga/dosbox/glide/experimental/video-modes.md) now
+checks eight representative display presets on the fixed routed design. Five
+retain positive declared setup/hold timing; the three 146–162 MHz cases fail
+setup, and two also have PLL VCO-range warnings. All timing coverage counts stay
+unchanged. Restoring the original PLL properties reproduces the original timing.
+This diagnoses our rebuild and does not characterize the released firmware binary.
+
+The unchanged line-fetch consumer also passed 18 controlled tests with frame
+gating, vertical doubling and source stalls; three compiled mutations were caught.
+Artificially prolonged inconsistent counter samples produced extra fetches.
+This fixture does not validate the complete producer/scanout path or physical CDC.
+No crossing exceptions were added, and no RTL or deployed firmware changed.
 
 ## Evidence required before promotion
 

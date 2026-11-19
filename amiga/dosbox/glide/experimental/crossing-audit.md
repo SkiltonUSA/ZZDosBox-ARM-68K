@@ -132,7 +132,9 @@ For the routed review, put `crossing-details.tcl` alongside the recorded
 `baseline-routed.dcp` and run it with Vivado 2025.2. It only writes a report and
 prints register properties. See the [evidence](../validation/crossing-audit/).
 
-Next, validate runtime video modes and simulate the active frame/line handoff
-before proposing crossing changes. Complete sampled-clock and external I/O
+The subsequent [runtime video-mode sweep](video-modes.md) records timing failures
+at higher pixel clocks and two PLL-range warnings. Next, extend the consumer
+fixture to the actual producer and scanout before proposing crossing changes.
+Complete sampled-clock and external I/O
 timing coverage remains a separate requirement. The known-working firmware stays
 the reference; no FPGA image or performance improvement is claimed by this audit.

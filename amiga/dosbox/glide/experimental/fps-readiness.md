@@ -63,6 +63,10 @@ The [detailed crossing review](crossing-audit.md) identifies runtime display mod
 beyond the 75 MHz timing baseline and the active line-counter transfer. Nine
 digital audio-clock tests pass, including edge-count and divide-by-eight checks;
 they do not close physical sampled-clock timing or establish audio quality.
+Eighteen fetch-consumer cases also pass. The [runtime video-clock sweep](video-modes.md)
+finds setup failures in the three tested 146–162 MHz cases, with PLL-range warnings
+in two. The lower tested rates have positive declared timing margins, with all
+previous coverage gaps retained. No replacement firmware is promoted by these tests.
 
 The full pinned RasterIX and Float sources were downloaded for the next simulator
 stage. An exploratory Icarus elaboration of the complete RasterIX top failed
