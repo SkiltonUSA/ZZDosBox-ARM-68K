@@ -9,9 +9,19 @@ static inline uint16_t grx_probe_pixel(uint16_t v) {
  return v;
 #endif
 }
-static inline unsigned grx_probe_verify(const volatile uint16_t *pixels,unsigned scene,unsigned *checked)
+/* Captures the values used by the verdict, never a second framebuffer read. */
+#define GRX_TRACE_SAMPLES 16u
+struct grx_bad_pixel {unsigned offset,got,want;};
+struct grx_readback_trace {unsigned count;struct grx_bad_pixel samples[GRX_TRACE_SAMPLES];};
+static inline void grx_trace_bad(struct grx_readback_trace *trace,unsigned offset,unsigned got,unsigned want) {
+    if(trace&&trace->count<GRX_TRACE_SAMPLES) {
+        struct grx_bad_pixel *p=&trace->samples[trace->count++];
+        p->offset=offset;p->got=got;p->want=want;
+    }
+}
+static inline unsigned grx_probe_verify_trace(const volatile uint16_t *pixels,unsigned scene,unsigned *checked,struct grx_readback_trace *trace)
 {
-    unsigned bad=0;*checked=0;
+    unsigned bad=0;*checked=0;if(trace)trace->count=0;
     for(unsigned row=0;row<64;row++)for(unsigned x=0;x<64;x++) {
         unsigned y=GRX_PROBE_HEIGHT-1-row;
         int inside=x>=10&&y>=10&&x+y<=62;
@@ -27,13 +37,16 @@ static inline unsigned grx_probe_verify(const volatile uint16_t *pixels,unsigned
                 if(scene==4&&x>32) {
                     unsigned r=got>>11,g=(got>>5)&63,b=got&31;
                     (*checked)++;
-                    if(r<15||r>17||g||b<14||b>16)bad++;
+                    if(r<15||r>17||g||b<14||b>16){bad++;grx_trace_bad(trace,row*64+x,got,0x800f);}
                     continue;
                 }
             }
         }
-        (*checked)++;if(got!=want)bad++;
+        (*checked)++;if(got!=want){bad++;grx_trace_bad(trace,row*64+x,got,want);}
     }
     return bad;
+}
+static inline unsigned grx_probe_verify(const volatile uint16_t *pixels,unsigned scene,unsigned *checked) {
+    return grx_probe_verify_trace(pixels,scene,checked,0);
 }
 #endif

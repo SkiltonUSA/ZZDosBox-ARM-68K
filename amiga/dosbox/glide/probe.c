@@ -84,7 +84,7 @@ int main(int argc,char **argv)
 #endif
     struct timerequest *timer=NULL;int opened=0,rc=20;
     volatile UWORD *reg=NULL,*pixels,*texture;volatile ULONG *q;volatile UBYTE *stage;
-    ULONG base,start;unsigned last=4,marker_base=0x4120;int triangle_marker=0,log_before=0,preread=3;const char *prefix=NULL;
+    ULONG base,start;unsigned last=4,marker_base=0x4120;int triangle_marker=0,log_before=0,preread=3,submit_prepare=0,trace_readback=0;const char *prefix=NULL;
     for(int arg=1;arg<argc;arg++) {
         if(!strcmp(argv[arg],"--clear"))last=0;
         else if(!strcmp(argv[arg],"--solid"))last=1;
@@ -93,6 +93,11 @@ int main(int argc,char **argv)
         else if(!strcmp(argv[arg],"--no-marker-preread"))preread=0;
         else if(!strcmp(argv[arg],"--marker-preclear-only"))preread=1;
         else if(!strcmp(argv[arg],"--marker-preread-only"))preread=2;
+        else if(!strcmp(argv[arg],"--trace-readback"))trace_readback=1;
+        else if(!strcmp(argv[arg],"--submit-read-texture"))submit_prepare=1;
+        else if(!strcmp(argv[arg],"--submit-read-stage"))submit_prepare=2;
+        else if(!strcmp(argv[arg],"--submit-yield"))submit_prepare=3;
+        else if(!strcmp(argv[arg],"--submit-spin"))submit_prepare=4;
         else if(!strcmp(argv[arg],"--marker-base")&&arg+1<argc) {
             char *end;unsigned long value=strtoul(argv[++arg],&end,0);
             if(*end||!value||value>65531)return 20;
@@ -156,6 +161,15 @@ int main(int argc,char **argv)
         CacheClearE((APTR)stage,p.words*4,CACRF_ClearD);
         memset((void*)q,0,52);q[0]=0x0603;q[1]=0x065f0000;q[2]=p.words*4;
         CacheClearE((APTR)q,128,CACRF_ClearD);
+        unsigned preparation_us=0,read_value=0;
+        if(submit_prepare) {
+            ULONG t=now();
+            if(submit_prepare==1)read_value=texture[0];
+            else if(submit_prepare==2)read_value=stage[0];
+            else if(submit_prepare==3)Delay(1);
+            else while((ULONG)(now()-t)<20000u){}
+            preparation_us=now()-t;
+        }
 #ifdef GRX_WITNESS
         if(!witness_prepare(scene,marker,marker_offset,marker_count))goto done;
 #endif
@@ -176,14 +190,21 @@ int main(int argc,char **argv)
         if(i!=marker_count){printf("STOP: FENCE timeout scene=%u got=%04x want=%04x\n",scene,pixels[marker_offset+i],swap(marker));goto done;}
         CacheClearE((APTR)(pixels-64),GRX_PROBE_BYTES+256,CACRF_ClearD);
         CacheClearE((APTR)(texture-64),2048+256,CACRF_ClearD);
-        bad=grx_probe_verify(pixels,scene,&checked);guard=guards(pixels,texture);
+        struct grx_readback_trace trace;
+        bad=grx_probe_verify_trace(pixels,scene,&checked,trace_readback?&trace:NULL);guard=guards(pixels,texture);
         for(i=0;i<1024;i++)if(texture[i]!=swap(grx_probe_texel(i)))guard++;
 #ifdef GRX_WITNESS
         witness_ok=witness_finish();
 #endif
         /* No log I/O between submit, marker polling and the first readback. */
+        printf("PREP scene=%u mode=%u us=%u read=%04x\n",scene,submit_prepare,preparation_us,read_value);
         printf("SUBMIT scene=%u mode=%s prepare=%u words=%u before=%04x marker=%04x crc=%08x ack_us=%u\n",scene,triangle_marker?"triangle":"memset",preread,p.words,before,marker,q[9],ack_us);
         printf("PIXELS scene=%u checked=%u bad=%u guards=%u fence_us=%u left=%04x right=%04x\n",scene,checked,bad,guard,fence_us,swap(pixels[(GRX_PROBE_HEIGHT-1-12)*64+16]),swap(pixels[(GRX_PROBE_HEIGHT-1-12)*64+40]));
+        if(trace_readback)for(unsigned k=0;k<trace.count;k++) {
+            struct grx_bad_pixel *b=&trace.samples[k];
+            printf("BAD scene=%u offset=%u x=%u row=%u got=%04x want=%04x\n",
+                scene,b->offset,b->offset%64,b->offset/64,b->got,b->want);
+        }
         if(bad||guard||!witness_ok) {
             Delay(2);CacheClearE((APTR)(pixels-64),GRX_PROBE_BYTES+256,CACRF_ClearD);
             unsigned late=grx_probe_verify(pixels,scene,&checked);
