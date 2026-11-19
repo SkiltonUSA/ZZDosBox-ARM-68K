@@ -244,6 +244,32 @@ debug blocks, `u_ila_0` and `dbg_hub`, are still black boxes. AMD documents that
 [debug cores are implemented during optimization](https://docs.amd.com/r/en-US/ug835-vivado-tcl-commands/implement_debug_core).
 These counts therefore do not establish final free resources for a Copper unit.
 
+During `opt_design`, Wine's generated Windows JScript runner left both debug
+IP synthesis jobs queued without launching Vivado. A small probe reproduced
+the runner stopping at its COM environment-property assignment. Bypassing
+that line alone still failed during runner initialization. The workaround
+executes each **unchanged generated synthesis Tcl** through `vivado.bat`, from
+that run's directory, with the same arguments:
+
+```text
+vivado.bat -log <core>.vds -m64 -product Vivado -mode batch \
+  -messageDb vivado.pb -notrace -source <core>.tcl
+```
+
+This replaces process launch and completion reporting, not RTL or synthesis
+commands. A successful handoff requires a real exit code of zero, a newly
+produced nonempty `<core>.dcp`, and Vivado's own
+`__synthesis_is_complete__` file. Only then may the wrapper produce the same
+`.vivado.end.rst` marker as `ISEWrap.js`; otherwise it reports failure. Existing
+checkpoints or completion markers must be rejected to prevent stale results
+from satisfying this check. Never unblock a waiting run by creating a success
+marker before synthesis. Both debug cores completed with exit 0 and verified
+checkpoints; the waiting full-board optimization then resumed. Placement and
+routing are queued behind successful optimization
+and a zero-black-box check; no bitstream generation or flashing is queued.
+The [debug-core record](../amiga/dosbox/glide/validation/fence-audit/baseline-debug-cores.json)
+contains the generated-script and checkpoint hashes with each exit status.
+
 The board XDC initially could not resolve `ZORRO_E7M_IBUF`; that net exists in
 the completed checkpoint. False-path rules at lines 289/292 also referenced
 MMCM `CLKOUT1`. Its pin exists, but no generated clock is reported for that
@@ -484,6 +510,13 @@ exceeded its 128 KiB drawing-command budget; a State of the Art silhouette fit.
 This rejects universal whole-frame colour-span replacement under that budget,
 not GPU acceleration in general. It is an offline representation test, not a
 Copper trace, GPU execution or measured speed gain.
+
+The selective follow-up keeps smaller regions on the CPU. At a 256-pixel
+minimum area, candidate regions cover 37.34%, 76.83% and 63.20% respectively,
+using 1,636, 3,484 and 5,892 drawing bytes. All reconstruct exactly with their
+CPU remainder. Eight tests and three new mutation controls pass. These
+coverage figures justify a future event-derived drawing test; they are not
+percentages of emulator work saved. Production rendering remains unchanged.
 
 ## Additional source-review finding
 

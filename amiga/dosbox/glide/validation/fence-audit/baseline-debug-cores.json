@@ -1,0 +1,23 @@
+{
+  "tool": "Vivado 2025.2 under Wine 11.0",
+  "workaround": "Launch unchanged generated Tcl directly; certify wrapper success only after real exit 0, fresh checkpoint and vendor synthesis-complete marker",
+  "cores": [
+    {
+      "core": "dbg_hub",
+      "exit_code": 0,
+      "verified": true,
+      "elapsed_seconds": 336.74,
+      "script_sha256": "982bf26c165713f315184fcd7f8b65ab5b5aa728381dc837e0bb7b767af3a36b",
+      "checkpoint_sha256": "c94fc3794df4ceb4e3e563564461ffe2ca85d497aad8e6594e7ebd015474f3a5"
+    },
+    {
+      "core": "u_ila_0",
+      "exit_code": 0,
+      "verified": true,
+      "elapsed_seconds": 804.76,
+      "script_sha256": "1d1efd975625cb989b4131e59b07ee807cca34a0aec13179e89f55bd13f41771",
+      "checkpoint_sha256": "eaa7d63eaef8d339e123dfb8494bb3f114dbe1a2f1e447578c9fb29804c4a577"
+    }
+  ],
+  "scope": "Debug IP synthesis only; whole-board optimization, routing and hardware validation are separate"
+}
