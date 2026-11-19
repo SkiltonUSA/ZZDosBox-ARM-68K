@@ -1,0 +1,10 @@
+{
+  "watcom_release": "2026-11-01-Build",
+  "image": "docker.io/amigadev/crosstools@sha256:93ca1a47903b61873f6638881b44f9f2d6086a39f1b9b916a26faff3a8ea4d3d",
+  "exports": 146,
+  "sources": {
+    "amiga/dosbox/glide/abi/glide2x.api": "d82f11aa1dad5ccbdc9c2bc2138ae0734cd984903b588111f19bdd6806ee7772",
+    "scripts/build_dosbox_glide_ovl.py": "ea178ac23b2fcc9db914bc0391bae36be0e7f4d267e36a1fab582ee9aa74ce97"
+  },
+  "ovl_sha256": "ac155154c31d68e62774845c792e37899e282888a6261b05bdbb67f2c82c986d"
+}

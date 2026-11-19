@@ -17,17 +17,21 @@ void db_native_exception(Bitu which,Bitu error){
   std::ofstream f(".context/amiga/wfw311/fault-ram.bin",std::ios::binary);f.write((char*)MemBase,db_memory_mb*1048576u);
  }
 }
+static std::string interactive_path(const char *name){
+ const char *dir=getenv("ZZ_GAME_INPUT");
+ return std::string(dir?dir:".context/amiga/wfw311")+"/"+name;
+}
 static void interactive_tick(){
  if(!interactive)return;
  if(PIC_Ticks%20==0){
-  std::ifstream mousefile(".context/amiga/wfw311/mouse.txt");unsigned mx,my,buttons,valid,mi=0;
+  std::ifstream mousefile(interactive_path("mouse.txt"));unsigned mx,my,buttons,valid,mi=0;
   while(mousefile>>mx>>my>>buttons>>valid){if(mi++==interactive_mouse){
    unsigned w=ad_get(shared,PC_MOUSE_WRITE),r=ad_get(shared,PC_MOUSE_READ);
    if(w-r<PC_MOUSE_SIZE){unsigned p=PC_MOUSE_DATA+(w&(PC_MOUSE_SIZE-1))*PC_MOUSE_STRIDE;
     ad_put(shared,p,mx);ad_put(shared,p+4,my);ad_put(shared,p+8,buttons);ad_put(shared,p+12,valid);ad_put(shared,PC_MOUSE_WRITE,w+1);interactive_mouse++;
    }break;
   }}
-  std::ifstream keys(".context/amiga/wfw311/keys.txt");unsigned key,down,n=0;
+  std::ifstream keys(interactive_path("keys.txt"));unsigned key,down,n=0;
   while(keys>>key>>down){if(n++==interactive_keys){if(key>0&&key<KBD_LAST&&down<2)KEYBOARD_AddKey((KBD_KEYS)key,down);interactive_keys++;break;}}
  }
  if(PIC_Ticks%500==0){
@@ -43,9 +47,9 @@ static void interactive_tick(){
   }
   std::string text;
   for(unsigned i=0;i<2000;i++){unsigned c=mem_readb(0xb8000+i*2);text+=c>=32&&c<127?(char)c:' ';if(i%80==79)text+='\n';}
-  {std::ofstream f(".context/amiga/wfw311/screen.txt");f<<"ticks="<<PIC_Ticks<<" frames="<<db_frames<<"\n"<<text;}
-  if(db_width&&db_height){std::ofstream f(".context/amiga/wfw311/screen.tmp",std::ios::binary);f<<"P6\n"<<db_width<<" "<<db_height<<"\n255\n";for(unsigned i=0;i<db_width*db_height;i++){char rgb[]={(char)(db_pixels[i]>>16),(char)(db_pixels[i]>>8),(char)db_pixels[i]};f.write(rgb,3);}f.close();std::filesystem::rename(".context/amiga/wfw311/screen.tmp",".context/amiga/wfw311/screen.ppm");}
-  if(std::filesystem::exists(".context/amiga/wfw311/stop"))limit_ms=PIC_Ticks;
+  {std::ofstream f(interactive_path("screen.txt"));f<<"ticks="<<PIC_Ticks<<" frames="<<db_frames<<"\n"<<text;}
+  if(db_width&&db_height){std::ofstream f(interactive_path("screen.tmp"),std::ios::binary);f<<"P6\n"<<db_width<<" "<<db_height<<"\n255\n";for(unsigned i=0;i<db_width*db_height;i++){char rgb[]={(char)(db_pixels[i]>>16),(char)(db_pixels[i]>>8),(char)db_pixels[i]};f.write(rgb,3);}f.close();std::filesystem::rename(interactive_path("screen.tmp"),interactive_path("screen.ppm"));}
+  if(std::filesystem::exists(interactive_path("stop")))limit_ms=PIC_Ticks;
  }
  if(PIC_Ticks%20==0&&!getenv("ZZDOS_FAST"))std::this_thread::sleep_until(interactive_start+std::chrono::milliseconds(PIC_Ticks));
 }

@@ -1,0 +1,40 @@
+{
+  "scope": "Native DOS/4G guest-loader diagnostic; no ARM game/GPU/FPS validation",
+  "native_compiler": "Apple clang version 21.0.0 (clang-2100.3.34.2)",
+  "input_sha256": {
+    "COMPFX.EXE": "5a171ba9a4ee792806830f0e4b0f6c93815f7b091e942295792ce0cdb28766e7",
+    "GLIDE2X.OVL": "e077ab1c5809f7ee1df9a1406f9ca6be99fb92d5822eaee2c67edbdbd351fb23"
+  },
+  "native_executable_sha256": "a1e15cad004f05b44dc3f746411ba0a69102eda3567400f64307098e1ec6099b",
+  "configuration": {
+    "machine": "S3/VESA",
+    "guest_memory_MiB": 32,
+    "cycles": 3000,
+    "sound": "off",
+    "limit_guest_ms": 280000,
+    "stop": "harness time limit, not normal DOS exit"
+  },
+  "gateway_calls": {
+    "grGlideInit": 1,
+    "grSstQueryHardware": 1,
+    "grGlideShutdown": 2
+  },
+  "sources": {
+    "amiga/dosbox/glide/guest.c": "3b8f4ff8ffdeaaeab7be8be5f907d5c835d700bf0164e6530dd69856ae11f36d",
+    "amiga/dosbox/glide/guest.h": "336a92b77facacdfc5ca3686bea8f1de8c34907ccb472eb1e59ff1daa75885db",
+    "amiga/dosbox/glide/guest_port.cpp": "1ee1e2ee8d420118a7b7254009306d57f3def1078bb966d13fdc3c7d2a18e094",
+    "amiga/dosbox/glide/guest_vertex.c": "4affd2228924bff88add06bc980acdbdab045425393f01be0a5a92f25a1fb7d1",
+    "amiga/dosbox/glide/guest_vertex.h": "c39798becef9422d472e09330be446aa81114a37d7baabfef2d40f6eb7478626",
+    "amiga/dosbox/glide/clip.c": "11a8dea8ea827a0cb174c25e71571be36f89798c24004d1d4697ed3019de9d75",
+    "amiga/dosbox/glide/clip.h": "bc01248ed2c02ce04d332d79f306647a80a194cffa31a2982f3c2ec0265fd803",
+    "amiga/dosbox/glide/vertex.h": "cdd796e7671fe06bd5efb85a632f9f1e7fbada619d84ddd74bb4b70094a32cb5",
+    "amiga/dosbox/pc/devices.cpp": "2226c7c5e13a5d5d43f7f3d85fbc4585f62d78585108d059c9c376829555dc14",
+    "scripts/build_dosbox_pc.py": "d559b5d154e572ae06c88529b4059816c87598c945066073b752ab943024e566",
+    "scripts/test_dosbox_glide_guest.py": "c857d627f873537e68f47a6bba299b08a042192d57e0f55b9bba07b91c62a7a9",
+    "tests/amiga/dosbox/native_interactive.inc": "7cfb1328e7b310e52a3310022f30b2f103cef705d56152d895ac3412c0937089",
+    "tests/amiga/dosbox/glide/guest.c": "3fd02f02c4777d7fe471beeb15b0f533fbea27527bb1b3673ab597703601c940",
+    "tests/amiga/dosbox/glide/vertices.c": "f68b574ce4eee6b02deca6ba6d5b3f4a6efd0b78c2d7e43cff4514dc5df85e24",
+    "tests/amiga/dosbox/glide/test_ovl.py": "94e15100eb324db41e5976e230c106932d35cff5ae155fb5b5740e7049d0186f",
+    "tests/amiga/dosbox/glide/ovl_model.py": "c65316db13baf2b4e46a980173a8224ec5a9f19717efc93ebadb61c203a239be"
+  }
+}

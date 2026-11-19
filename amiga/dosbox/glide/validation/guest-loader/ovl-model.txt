@@ -1,0 +1,2 @@
+PASS OVL x86: 146 gateways, bridge absent, stdcall cleanup and preserved registers
+PASS OVL x86: 146 gateways, bridge present, stdcall cleanup and preserved registers

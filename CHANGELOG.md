@@ -12,6 +12,13 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Add an opt-in diagnostic Glide 2 OVL and native DOSBox guest-call hook.
+  GTA ECTS loads it and reaches the hardware query; it deliberately reports
+  no board. This is not yet a playable accelerated game.
+- Decode Glide 2 vertices with global/TMU reciprocal-W selection and add
+  bounded viewport clipping, with inside/outside fast paths.
+- Check all 146 OVL entry points on the x86 instruction model and 512
+  clipped triangles on Cortex-A9 soft/softfp models. No FPS gain claimed.
 - Add a standalone, bounded window-space triangle encoder, using Xanxi's
   librixgpu descriptor math and the XACP Core0 packet format.
 - Support a single RGB565 texture, perspective coordinates and three colour

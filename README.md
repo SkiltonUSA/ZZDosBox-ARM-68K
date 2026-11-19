@@ -20,7 +20,10 @@ offscreen solid, textured and blended triangles now pass pixel readback on the Z
 completion failures and the pre-submit read dependency. A
 [Core1 witness comparison](amiga/dosbox/glide/validation/core1-witness/README.md)
 now isolates differing ARM/68k pixel observations; the cause remains unresolved.
-Not connected to games or included in the release; Core0 depth support also remains a blocker.
+A [diagnostic Glide overlay](amiga/dosbox/glide/validation/guest-loader/README.md)
+now loads in the GTA ECTS native test and receives its hardware query. It reports
+no board; game rendering is not connected or included in the release. Core0
+depth support also remains a blocker. No GTA hardware FPS result is claimed.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

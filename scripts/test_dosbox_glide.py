@@ -118,7 +118,7 @@ def main():
                     '-ffreestanding', '-fno-builtin', '-c', source,
                     '-o', OUT/(source.stem+'.'+abi+'.o'))
         record['arm_compile_only'] = ['cortex-a9 ARM32 soft', 'cortex-a9 ARM32 softfp VFPv3']
-    inputs = [*sources, SRC/'descriptor.h', SRC/'translator.h', SRC/'probe_scene.h', SRC/'pipeline.h', SRC/'probe_wire.h',
+    inputs = [*sources, SRC/'descriptor.h', SRC/'translator.h', SRC/'vertex.h', SRC/'probe_scene.h', SRC/'pipeline.h', SRC/'probe_wire.h',
               ROOT/'tests/amiga/dosbox/glide/translator.cpp', Path(__file__)]
     record['source_sha256'] = {str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
     (OUT/'validation.json').write_text(json.dumps(record, indent=2)+'\n')

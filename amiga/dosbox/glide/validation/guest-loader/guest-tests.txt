@@ -1,0 +1,7 @@
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
+PASS bounded guest argument decode, version write and no-board diagnostic
+PASS Glide 2 vertex layout, global/TMU W, transactional reads and perspective-preserving viewport clipping

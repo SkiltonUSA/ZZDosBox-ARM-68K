@@ -1,0 +1,13 @@
+FS op=7 dir=GTADOS name=GLIDE2X.OVL err=0 size=9308 date=23885 time=0
+FS op=7 dir=GTADOS name=GLIDE2X.OVL err=0 size=9308 date=23885 time=0
+FS op=1 dir=GTADOS name=GLIDE2X.OVL err=0 size=9308 date=23885 time=0
+GLIDE tick=169496 call=grGlideInit args=
+GLIDE tick=169498 call=grSstQueryHardware args=006205c0
+GLIDE tick=169517 call=grGlideShutdown args=
+GLIDE tick=169538 call=grGlideShutdown args=
+GLIDE total grGlideInit=1
+GLIDE total grGlideShutdown=2
+GLIDE total grSstQueryHardware=1
+FILES requests=6820 read=18889568 written=0; handles closed
+PC rc=2 fault=3 detail=DosBox ZZ9000 project                         1.0 Beta
+main: grSstQueryHardware failed!

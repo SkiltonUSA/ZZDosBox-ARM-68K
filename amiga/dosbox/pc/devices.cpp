@@ -28,6 +28,9 @@ extern void DMA_Init(Section*),DMA_Destroy(Section*);
 extern "C" volatile uint8_t *db_shared();
 extern void JOYSTICK_Init(Section*),JOYSTICK_Destroy(Section*);
 #endif
+#ifdef DB_GLIDE_DIAGNOSTIC
+extern void db_glide_diagnostic_open(),db_glide_diagnostic_close();
+#endif
 static bool initialized;
 static unsigned a20_control;
 static Bitu read_a20(Bitu,Bitu){return a20_control|(MEM_A20_Enabled()?2:0);}
@@ -47,9 +50,15 @@ void db_pc_init(){
 #ifdef DB_EXPANDED
  JOYSTICK_Init(nullptr);JOYSTICK_Enable(0,ad_get(db_shared(),PC_JOYSTICK_ENABLED)!=0);
 #endif
+#ifdef DB_GLIDE_DIAGNOSTIC
+ db_glide_diagnostic_open();
+#endif
  a20_control=0;IO_RegisterReadHandler(0x92,read_a20,IO_MB);IO_RegisterWriteHandler(0x92,write_a20,IO_MB);MEM_A20_Enable(false);
 }
 void db_pc_close(){if(!initialized)return;
+#ifdef DB_GLIDE_DIAGNOSTIC
+ db_glide_diagnostic_close();
+#endif
 #ifdef DB_NETWORK
  db_ipx_close();db_net_device_close();
 #endif

@@ -1,7 +1,8 @@
 # Glidulator reference review
 
 Reviewed [ElTentakel/Glidulator](https://github.com/ElTentakel/Glidulator/tree/8629ed8b6559654ddd0bfb3df2f2ed9e8ec8bcfc)
-at commit `8629ed8b6559654ddd0bfb3df2f2ed9e8ec8bcfc`. No upstream code was imported.
+at commit `8629ed8b6559654ddd0bfb3df2f2ed9e8ec8bcfc`. The MIT ABI metadata is
+now vendored in [abi/](abi/); no renderer or worker implementation is imported.
 
 Useful candidates, in implementation order:
 
@@ -36,9 +37,16 @@ Miles sound drivers and game data. It contains no `DEMOFX.EXE` or `.OVL` file.
 Its README identifies the 8-bit/24-bit demo variants; the shared help file
 also discusses a 3dfx edition. Some 3dfx error strings in DEMO8 alone do not
 establish an accessible dynamically linked Glide renderer. Keep this archive
-as the software-rendered comparison; obtain the matching 3dfx demo before
-claiming a Glide test. No game execution or FPS measurement has occurred.
-Game binaries remain outside this repository.
+as the software-rendered comparison.
+
+The subsequently supplied **GTA ECTS** folder contains `GTADOS/COMPFX.EXE`
+and the original `GLIDE2X.OVL`. In a separate working copy, the experimental
+diagnostic OVL now loads and receives the hardware query. An S3/VESA native
+test reaches the competition build's menu; standard VGA instead fails its
+VESA requirement. The diagnostic reports no board and the game reports that
+query failure. See the [loader evidence](validation/guest-loader/README.md).
+No GTA ARM/FPGA execution or FPS measurement is claimed. Game binaries remain
+outside this repository.
 
 Original Voodoo Graphics Tomb Raider and Carmageddon embed Glide and cannot
 be accelerated simply by replacing an OVL. Tomb Raider's separate Voodoo Rush

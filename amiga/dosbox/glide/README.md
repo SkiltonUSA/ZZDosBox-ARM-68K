@@ -1,6 +1,7 @@
 # Experimental Glide-to-RasterIX translator
 
-This is a standalone **command encoder and offscreen probe**, not yet a guest Glide driver.
+This is an experimental **command encoder, offscreen probe and diagnostic guest gateway**,
+not yet a working guest Glide renderer.
 It translates a small, explicit subset of Glide window-space rendering into
 RasterIX packets for the XACP Core0 submission interface. The released
 ZZDosBox player and launcher do not use it. No GPU throughput or game FPS
@@ -49,6 +50,8 @@ but repeated-run stability remains unresolved.
 
 ## Implemented subset
 
+- Diagnostic DOS/4G `GLIDE2X.OVL`, with bounded guest argument decoding.
+- Optional Glide 2 vertex decoder and perspective-preserving viewport clipper.
 - In-bounds window-space triangles, either winding; degenerate triangles skipped.
 - Upper-left/lower-left origins, interpolated RGB and alpha.
 - One RGB565 texture mip level, nearest filtering, texture × vertex colour.
@@ -93,8 +96,8 @@ Further work before launching a game:
 
 1. Resolve the earlier completion-marker failure; extend offscreen tests to
    repeated batches, texture replacement, shared edges and cancellation.
-2. Guest Glide 2 OVL interception and bounded guest-memory marshalling.
-3. Viewport clipping and pixel-centre/edge-rule comparison against Glide.
+2. Connect the diagnostic OVL gateway to a complete rendering/state transport.
+3. Compare the clipper's pixel-centre and edge rules against Glide rendering.
 4. Depth and W-buffer semantics, texture formats/palettes/mipmaps, additional
    combiners, alpha test, fog, culling and linear-framebuffer locks/readback.
 5. A suitable Glide game's startup, frame correctness, sound and clean exit;
@@ -110,9 +113,10 @@ by this encoder.
 
 The supplied [3Dfx Glide 3.0 Programming Guide, June 1998](http://bitsavers.informatik.uni-stuttgart.de/components/3dfx/Glide_Programming_Guide_3.0_199806.pdf)
 is useful for state, coordinate and blending semantics. Its configurable
-vertex layout is not the DOS Glide 2 binary ABI. This component uses a small
-explicit input structure; a future OVL decoder must translate the actual
-Glide 2 fields into it.
+vertex layout is not the DOS Glide 2 binary ABI. The guest decoder translates
+the 60-byte Glide 2 vertex into the encoder's explicit input structure.
+Global `oow` is used by default; the TMU0 W-difference hint selects its own
+`oow`. The caller must supply that state correctly.
 
 Window-space TMU input is `s/w`, `t/w`, `1/w`. The longest texture axis has
 coordinate extent 256 and the shorter axis scales with aspect ratio. The
@@ -141,6 +145,8 @@ References:
 python3 scripts/test_dosbox_glide.py --arm --firmware /path/to/XACP/firmware/source/XX19d-RIX/arm/ZZ9000_proto.sdk/ZZ9000OS/src/main.c
 # Optional, using Python with Unicorn installed:
 python3 tests/amiga/dosbox/glide/arm_model.py
+python3 scripts/test_dosbox_glide_guest.py
+python3 tests/amiga/dosbox/glide/clip_model.py
 ```
 
 Native tests use Clang with AddressSanitizer and UndefinedBehaviorSanitizer.
@@ -167,4 +173,31 @@ running it; a timeout leaves completion unknown and must stop further GPU tests.
 ## Additional reference
 
 [Glidulator review and GTA archive findings](glidulator-review.md): ABI,
-texture lifetime and capture/replay ideas; no upstream code imported.
+texture lifetime and capture/replay ideas. The MIT ABI table is vendored;
+its renderer and worker implementation are not imported.
+
+## Diagnostic guest gateway
+
+The [GTA ECTS loader test](validation/guest-loader/README.md) reaches our OVL's
+`grGlideInit`, `grSstQueryHardware` and shutdown entry points. The query returns
+false deliberately: no GPU is advertised. The result proves DOS/4G loading and
+argument delivery in the native harness, not playable GTA or ARM performance.
+
+```sh
+python3 scripts/build_dosbox_glide_ovl.py --watcom /path/to/openwatcom
+python3 tests/amiga/dosbox/glide/ovl_model.py
+python3 scripts/build_dosbox_pc.py --compat --x87 --expanded --glide-diagnostic --game fixture
+```
+
+Open Watcom's Linux x64 `wasm` and `wlink` run inside the pinned build container.
+The generated OVL and call table remain under `.context/amiga/glide/ovl`.
+Use a separate copy of game files when replacing an OVL. The diagnostic module
+exports 146 entry points; that count is ABI coverage, **not implemented Glide
+functionality**. The bridge uses private emulated ports, not physical host I/O.
+It is separate from DOSBox-X's Glide protocol.
+
+`grx_clip_triangle()` rejects fully outside triangles and copies fully inside
+triangles without running the four clipping passes. Crossing triangles use
+double intermediates to avoid overflow with extreme finite guest coordinates.
+Clipping interpolates `s/w`, `t/w` and `1/w` directly. These design choices avoid
+unnecessary work, but there is no measured Cortex-A9 speedup yet.

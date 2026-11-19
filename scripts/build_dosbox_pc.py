@@ -155,7 +155,7 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
  return sources
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse','adapters','ems','sb','opl','sb16','beep','dates','x87','cpu','extended','joystick','gus','cms','tandy','serial','tempfile','compatgame'],default='fixture');p.add_argument('--compat',action='store_true');p.add_argument('--x87',action='store_true');p.add_argument('--expanded',action='store_true');args=p.parse_args();sources=prepare()
+ p=argparse.ArgumentParser();p.add_argument('--glide-diagnostic',action='store_true');p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse','adapters','ems','sb','opl','sb16','beep','dates','x87','cpu','extended','joystick','gus','cms','tandy','serial','tempfile','compatgame'],default='fixture');p.add_argument('--compat',action='store_true');p.add_argument('--x87',action='store_true');p.add_argument('--expanded',action='store_true');args=p.parse_args();sources=prepare()
  if args.expanded and not (args.compat and args.x87):p.error('--expanded requires --compat --x87')
  if args.compat:
   from prepare_dosbox_compat import prepare as compat_prepare
@@ -173,8 +173,17 @@ def main():
  if args.expanded:flags+=['-DDB_EXPANDED']
  if args.compat:flags+=['-DDB_COMPAT']
  if args.sanitize:flags+=['-fsanitize=address','-fno-omit-frame-pointer']
+ if args.glide_diagnostic:
+  import build_dosbox_glide_ovl as ovl
+  ovl.OUT.mkdir(parents=True,exist_ok=True)
+  calls=ovl.read_api(ROOT/'amiga/dosbox/glide/abi/glide2x.api')
+  (ovl.OUT/'guest_calls.h').write_text(ovl.generate(calls)[2])
+  flags+=['-DDB_GLIDE_DIAGNOSTIC','-I'+str(ovl.OUT)]
+  sources += [ROOT/'amiga/dosbox/glide/guest.c',ROOT/'amiga/dosbox/glide/guest_port.cpp']
  sources += [SRC/'adapter.cpp',OUT/'frontend.cpp',OUT/'native_drive.cpp',SRC/'devices.cpp',SRC/'cd.cpp',SRC/'midi.cpp',SRC/'boot.cpp',SRC/'video.cpp',SRC/'native.cpp']
- headers=b''.join(x.read_bytes() for d in [OUT/'include',SRC,shell.SRC,ROOT/'amiga/dosbox/dos'] for x in sorted(d.glob('*.h')))
+ headers=(ROOT/'.context/amiga/glide/ovl/guest_calls.h').read_bytes() if args.glide_diagnostic else b''
+ if args.glide_diagnostic:headers+=(ROOT/'amiga/dosbox/glide/guest.h').read_bytes()
+ headers+=b''.join(x.read_bytes() for d in [OUT/'include',SRC,shell.SRC,ROOT/'amiga/dosbox/dos'] for x in sorted(d.glob('*.h')))
  objects=[]
  for i,s in enumerate(sources):
   o=OUT/(f'{i}-'+s.stem+'.native.o');stamp=o.with_suffix('.sha256');objects.append(str(o));extra=(ROOT/'tests/amiga/dosbox/native_interactive.inc').read_bytes() if s==SRC/'native.cpp' else b'';digest=hashlib.sha256(s.read_bytes()+extra+headers+str(flags).encode()).hexdigest()

@@ -3,6 +3,7 @@
  */
 #include "descriptor.h"
 #include "pipeline.h"
+#include "vertex.h"
 
 #define POOL_START 0x06600000u
 #define POOL_END   0x067f0000u
@@ -57,19 +58,12 @@ grx_result grx_begin(grx_packet *p,const grx_config *c)
     }
     return GRX_OK;
 }
-static int finite_vertex(const grx_vertex *v)
-{
-    return __builtin_isfinite(v->x)&&__builtin_isfinite(v->y)&&__builtin_isfinite(v->r)&&__builtin_isfinite(v->g)&&
-           __builtin_isfinite(v->b)&&__builtin_isfinite(v->a)&&__builtin_isfinite(v->sow)&&
-           __builtin_isfinite(v->tow)&&__builtin_isfinite(v->oow);
-}
 grx_result grx_triangle(grx_packet *p,const grx_vertex v[3])
 {
     if(!p||!p->open)return GRX_BAD_STATE;
     if(!v)return GRX_BAD_ARGUMENT;
     for(unsigned i=0;i<3;i++) {
-        if(!finite_vertex(v+i)||v[i].r<0||v[i].r>255||v[i].g<0||v[i].g>255||
-           v[i].b<0||v[i].b>255||v[i].a<0||v[i].a>255||v[i].oow<=0)return GRX_BAD_ARGUMENT;
+        if(!grx_vertex_valid(v+i))return GRX_BAD_ARGUMENT;
         if(v[i].x<0||v[i].x>p->config.width-1||v[i].y<0||v[i].y>p->config.height-1)return GRX_NEEDS_CLIP;
     }
     uint32_t desc[39];

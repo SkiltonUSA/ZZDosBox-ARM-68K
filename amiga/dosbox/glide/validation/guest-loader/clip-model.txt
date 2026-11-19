@@ -1,0 +1,2 @@
+PASS Cortex-A9 soft: 256 clipped triangles bit-identical to native
+PASS Cortex-A9 softfp: 256 clipped triangles bit-identical to native

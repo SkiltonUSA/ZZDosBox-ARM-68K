@@ -1,0 +1,17 @@
+{
+  "scope": "Instruction model only; no hardware timing or GPU coverage claim",
+  "seed": 8871,
+  "bit_identical_triangles": {
+    "soft": 256,
+    "softfp": 256
+  },
+  "compiler": "arm-none-eabi-gcc (GCC) 16.2.0",
+  "sources": {
+    "tests/amiga/dosbox/glide/clip_model.py": "888889e1f04c36a01906de7c5184b82d548cdba3c5c90c0b74fab197c036cb3e",
+    "amiga/dosbox/glide/clip.c": "11a8dea8ea827a0cb174c25e71571be36f89798c24004d1d4697ed3019de9d75",
+    "amiga/dosbox/glide/clip.h": "bc01248ed2c02ce04d332d79f306647a80a194cffa31a2982f3c2ec0265fd803",
+    "amiga/dosbox/glide/vertex.h": "cdd796e7671fe06bd5efb85a632f9f1e7fbada619d84ddd74bb4b70094a32cb5",
+    "amiga/dosbox/glide/translator.h": "ee8994472519b89102048cca603bc23e26afe66ebf27e68042a7fe14c121c069",
+    "amiga/common/arm/memory.c": "0e865abf10ad26ba8503696d30bfd2ba4f5bcfe0720e7d1104189d1e19233d11"
+  }
+}
