@@ -4,15 +4,23 @@ static volatile uint8_t *witness_base;
 static const struct ad_io *witness_io;
 static unsigned witness_seq,witness_mode,witness_reverse,witness_sample;
 static ULONG now(void);
-static int witness_wait(unsigned field) {
+static int witness_wait_at(unsigned reply,unsigned field) {
  ULONG start=now();
  for(unsigned i=0;(ULONG)(now()-start)<1000000u;i++) {
-  witness_io->pull(witness_base+GW_REPLY,64,witness_io->user);
-  if(ad_get(witness_base,GW_REPLY+field)==witness_seq)return 1;
+  witness_io->pull(witness_base+reply,64,witness_io->user);
+  if(ad_get(witness_base,reply+field)==witness_seq)return 1;
   if(SetSignal(0,0)&SIGBREAKF_CTRL_C)break;
   if(witness_mode<3){if(i>=49)break;Delay(1);}
  }
  puts("STOP: Core1 witness timeout");return 0;
+}
+static int witness_wait(unsigned field){return witness_wait_at(GW_REPLY,field);}
+static int witness_wait_early(void) {
+ if(!witness_wait_at(GW_EARLY,GW_EARLY_SEQ))return 0;
+ if(ad_get(witness_base,GW_EARLY+GW_EARLY_ERROR)) {
+  puts("STOP: ARM early marker error");return 0;
+ }
+ return 1;
 }
 static int witness_prepare(unsigned scene,unsigned marker,unsigned offset,unsigned count) {
  volatile uint8_t *c=witness_base+GW_CMD;
@@ -20,6 +28,7 @@ static int witness_prepare(unsigned scene,unsigned marker,unsigned offset,unsign
  ad_put(c,GW_NONCE,witness_seq^ad_get(witness_base,ZZ_CONTROL));
  ad_put(c,GW_SCENE,scene);ad_put(c,GW_MARKER,marker);
  ad_put(c,GW_OFFSET,offset);ad_put(c,GW_COUNT,count);ad_put(c,GW_IDLE,witness_mode==2);ad_put(c,GW_REVERSE,witness_reverse);ad_put(c,GW_SAMPLE,witness_sample);
+ ad_put(c,GW_PUBLISH,witness_mode==5?2:witness_mode==6?1:0);
  witness_io->push(c,64,witness_io->user);witness_io->barrier(witness_io->user);
  ad_put(c,GW_SEQ,witness_seq);witness_io->push(c,4,witness_io->user);
  return witness_wait(GW_ARMED);

@@ -76,5 +76,10 @@ source remain outside Git.
     host pixels at identical offsets; all four ordered controls passed. Twelve
     compiled-worker model cases pass. No production fence promoted.
 
+16. Tested [short ARM acknowledgements](early-gates/README.md): 14 completed
+    runs/58 scenes and one interrupted run. Both early acknowledgements pass
+    completed controls, but timing remains a confounder. Seventeen worker model
+    cases pass; hardware tests stopped with cleanup unknown.
+
 See the [hardware report](hardware/README.md) for pixel evidence and its limits.
 This is not proof of Glide compatibility, audible quality or game performance.

@@ -4,6 +4,12 @@
 #include "probe_readback.h"
 static void barrier(void){__asm__ volatile("dsb sy" ::: "memory");}
 static uint32_t ticks(void){return *(volatile uint32_t *)0xf8f00200u;}
+static void publish(volatile uint8_t *base,unsigned seq,unsigned kind,unsigned error,const unsigned *quick) {
+ volatile uint8_t *e=base+GW_EARLY;
+ ad_put(e,GW_EARLY_ERROR,error);ad_put(e,GW_EARLY_KIND,kind);
+ for(unsigned k=0;k<4;k++)ad_put(e,GW_EARLY_SAMPLES+4*k,kind==2&&!error?quick[k]:0xffffffffu);
+ barrier();ad_put(e,GW_EARLY_SEQ,seq);barrier();
+}
 void zz_worker(volatile uint8_t *base) {
  uint32_t sctlr,midr,mpidr,seq=0;
  __asm__ volatile("mrc p15,0,%0,c1,c0,0":"=r"(sctlr));
@@ -16,9 +22,9 @@ void zz_worker(volatile uint8_t *base) {
   volatile uint8_t *c=base+GW_CMD,*r=base+GW_REPLY;
   unsigned next=ad_get(c,GW_SEQ);if(next==seq)continue;
   barrier();unsigned scene=ad_get(c,GW_SCENE),marker=ad_get(c,GW_MARKER);
-  unsigned offset=ad_get(c,GW_OFFSET),count=ad_get(c,GW_COUNT),idle=ad_get(c,GW_IDLE),reverse=ad_get(c,GW_REVERSE),sample=ad_get(c,GW_SAMPLE);
+  unsigned offset=ad_get(c,GW_OFFSET),count=ad_get(c,GW_COUNT),idle=ad_get(c,GW_IDLE),reverse=ad_get(c,GW_REVERSE),sample=ad_get(c,GW_SAMPLE),publication=ad_get(c,GW_PUBLISH);
   if(next!=seq+1||ad_get(c,GW_NONCE)!=(next^ad_get(base,ZZ_CONTROL))||
-     sample>1||reverse>1||idle>1||scene>=5||!marker||marker>65535||!count||count>64||
+     publication>2||(publication==2&&!sample)||(publication&&idle)||sample>1||reverse>1||idle>1||scene>=5||!marker||marker>65535||!count||count>64||
      offset>GRX_PROBE_BYTES/2-count)return;
   seq=next;ad_put(r,GW_ARMED,seq);barrier();
   /* No pixel reads until the host has written the GPU submit register. */
@@ -33,7 +39,9 @@ void zz_worker(volatile uint8_t *base) {
    if((uint32_t)(ticks()-start)>500000000u){error=1;break;}
   }while(1);
   unsigned quick[4];
+  if(publication==1)publish(base,seq,publication,error,0);
   if(!error&&!idle&&sample){barrier();grx_probe_sample(pixels,quick);}
+  if(publication==2)publish(base,seq,publication,error,quick);
   unsigned elapsed=ticks()-start;
   unsigned verify_start=ticks();struct grx_readback_trace trace;trace.count=0;
   if(!error&&!idle){barrier();bad=grx_probe_verify_order(pixels,scene,&checked,&trace,reverse);}

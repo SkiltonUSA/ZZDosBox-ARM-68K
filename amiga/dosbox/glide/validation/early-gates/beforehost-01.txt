@@ -1,0 +1,47 @@
+[OK]
+OWNED amiga=50000040 arm_candidate=101f0040 size=131072 nonce=0f2f4b48
+BOOTSTRAP amiga=40c78400 arm=00e68400 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c51878 MIDR=413fc090 MPIDR=80000001
+WITNESS mode=beforehost
+GPU id=52495831 version=00020000 caps=0000000b abi=00010000
+ARM scene=0 error=0 checked=4096 bad=0 polls=213 wait_ticks=35745
+ARMREAD reverse=0 verify_ticks=574717 first_offset=4294967295 got=0000 want=0000
+EARLY scene=0 offsets=1616,2704,3344,3368 ARM=0000,0000,0000,0000 HOST=0000,0000,0000,0000
+ORDER scene=0 arm_prepare_us=163 before_host_wait_us=2229
+PREP scene=0 mode=0 us=0 read=0000
+SUBMIT scene=0 mode=memset prepare=0 words=30 before=10000 marker=e169 crc=91ca65b2 ack_us=128
+PIXELS scene=0 checked=4096 bad=0 guards=0 fence_us=107 left=0000 right=0000
+ARM scene=1 error=0 checked=3502 bad=0 polls=263 wait_ticks=40308
+ARMREAD reverse=0 verify_ticks=494789 first_offset=4294967295 got=0000 want=0000
+EARLY scene=1 offsets=1616,2704,3344,3368 ARM=f800,f800,f800,f800 HOST=f800,f800,f800,f800
+ORDER scene=1 arm_prepare_us=9338 before_host_wait_us=16558
+PREP scene=1 mode=0 us=0 read=0000
+SUBMIT scene=1 mode=memset prepare=0 words=67 before=10000 marker=e16a crc=6d2fe914 ack_us=176
+PIXELS scene=1 checked=3502 bad=0 guards=0 fence_us=91 left=f800 right=f800
+ARM scene=2 error=0 checked=3502 bad=0 polls=267 wait_ticks=41235
+ARMREAD reverse=0 verify_ticks=494696 first_offset=4294967295 got=0000 want=0000
+EARLY scene=2 offsets=1616,2704,3344,3368 ARM=ffe0,ffe0,ffe0,ffe0 HOST=ffe0,ffe0,ffe0,ffe0
+ORDER scene=2 arm_prepare_us=8553 before_host_wait_us=16491
+PREP scene=2 mode=0 us=0 read=0000
+SUBMIT scene=2 mode=memset prepare=0 words=67 before=10000 marker=e16b crc=5df72eb0 ack_us=185
+PIXELS scene=2 checked=3502 bad=0 guards=0 fence_us=98 left=ffe0 right=ffe0
+ARM scene=3 error=0 checked=3355 bad=0 polls=302 wait_ticks=46067
+ARMREAD reverse=0 verify_ticks=455256 first_offset=4294967295 got=0000 want=0000
+EARLY scene=3 offsets=1616,2704,3344,3368 ARM=f800,f800,f800,001f HOST=f800,f800,f800,001f
+ORDER scene=3 arm_prepare_us=9451 before_host_wait_us=16392
+PREP scene=3 mode=0 us=0 read=0000
+SUBMIT scene=3 mode=memset prepare=0 words=75 before=10000 marker=e16c crc=45bae41d ack_us=154
+PIXELS scene=3 checked=3355 bad=0 guards=0 fence_us=94 left=f800 right=001f
+ARM scene=4 error=0 checked=3355 bad=0 polls=262 wait_ticks=40215
+ARMREAD reverse=0 verify_ticks=454684 first_offset=4294967295 got=0000 want=0000
+EARLY scene=4 offsets=1616,2704,3344,3368 ARM=f800,f800,f800,800f HOST=f800,f800,f800,800f
+ORDER scene=4 arm_prepare_us=8347 before_host_wait_us=16483
+PREP scene=4 mode=0 us=0 read=0000
+SUBMIT scene=4 mode=memset prepare=0 words=67 before=10000 marker=e16d crc=d87be6d7 ack_us=188
+PIXELS scene=4 checked=3355 bad=0 guards=0 fence_us=100 left=f800 right=800f
+GLIDE PROBE rc=0
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c51878 restored=08c50878
+LAUNCHER exit=0; owned memory released

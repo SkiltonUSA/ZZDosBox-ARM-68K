@@ -1,0 +1,29 @@
+{
+  "image": "docker.io/amigadev/crosstools@sha256:93ca1a47903b61873f6638881b44f9f2d6086a39f1b9b916a26faff3a8ea4d3d",
+  "height": 65,
+  "sources": {
+    "amiga/dosbox/glide/witness_wire.h": "c4042798da7c156f3fb9644844b7a24d39cb25e2b510c9cc063a7c78b8046c95",
+    "amiga/dosbox/glide/probe_readback.h": "450854c7c5aa71c6b908189b62cc2f97205c0d16465604ef4b40352b85d3e484",
+    "amiga/dosbox/glide/translator.c": "b99aaf43cdc89decadde610b6e3ccf3bca3777c7fa16d1aef835833cd7c561c4",
+    "amiga/dosbox/glide/descriptor.h": "02859f7188379d10940073952cf78f4cd01cbd36ed2b600d0dd06fca5384034c",
+    "amiga/dosbox/glide/probe_scene.c": "895eb77421ef8821ffad399fc929c77101ba2a18a832222128fbe0bf90c963d9",
+    "amiga/dosbox/glide/probe_wire.h": "43aebbb744fec36a3a84f3d0bb3f3e21950c47066ed4a759307534ca04b1336d",
+    "amiga/dosbox/glide/witness_worker.c": "b7169411fe544831b7b13024e6fff64a05a64f77aa02b0d34f4822046085213f",
+    "amiga/dosbox/glide/pipeline.h": "6624a41ab6c726c5662027cdddf3e7659d03d71ae2f9d4869cc95629894a40bf",
+    "amiga/dosbox/glide/descriptor.c": "439a94cafd84ec9d52e0ab01b03ae7c0e368a01e81e5ad18b39dc9697b43df03",
+    "amiga/dosbox/glide/translator.h": "ee8994472519b89102048cca603bc23e26afe66ebf27e68042a7fe14c121c069",
+    "amiga/dosbox/glide/probe.c": "829dd7b0de7877801af31a6fa6a2d8e915671af678a967cb12c5ce63615ca3ae",
+    "amiga/dosbox/glide/probe_scene.h": "bdebc90126c926ef77ae7b6ab8dfc76a1f85c8015a5f7a0f077b8999b143442e",
+    "amiga/dosbox/glide/witness_host.inc": "30f9ccc3d054a007895604cb3b2a1cc18c59dea82c049bf8525e45feaedb0fac",
+    "amiga/dosbox/glide/witness_entry.S": "5a39a7684338659b9f90c622c1394e79b9af92d1ec55947a49ef66ea83950c01",
+    "amiga/arm_debug/zz9000/launcher.c": "55c6cc6386c0c7f6c7e3e4a2563ddf8d08067e7594cb0bd30464a97e971c873f",
+    "amiga/arm_debug/zz9000/mapping_probe.S": "ceddcbe4b077c0fd0b723d9f8f1ad06d2380433dc15c3b2d9ca6b7f734439b1d",
+    "amiga/arm_debug/zz9000/payload.ld": "819201e08256373c1c67b74e3be52516d1421a82aa9ec8d8c4802fff400fcb0e",
+    "amiga/arm_debug/zz9000/layout.h": "ad287948f8fed9b54e3bf3ca177d1e2e5c2bb590d55ff209d99eb3ad767f3ff6",
+    "amiga/arm_debug/protocol.h": "66a0b4ffa70ae72c5b2222749ddfccc2706014ce631122bca59ad6635e18c0f4",
+    "scripts/build_dosbox_glide_witness.py": "99cd35a903adcf99543447f7e0bf6a372ca9d37f8ade21952cd60e218dfc0274",
+    "scripts/build_dosbox_glide_probe.py": "fae0240477aee92039c93091f9d1dcfa98f839a7fef397b7d74294ab1410f833",
+    ".context/amiga/glide/fixtures.h": "a931dc99efd755f7ea4c37aa2c7a7e09aec7db374d1938328259a550e61ecb00"
+  },
+  "executable_sha256": "f97a461a93d7f1be5545f1db293352b7d541d56aa232636460c82b0ad1a17c27"
+}

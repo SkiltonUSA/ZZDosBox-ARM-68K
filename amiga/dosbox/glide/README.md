@@ -42,6 +42,9 @@ After recovery, [early pixel sampling](validation/early-samples/README.md) captu
 new ARM pixels alongside previous-scene host pixels in two of four concurrent
 runs. Four ordered controls passed. All eight runs cleaned up successfully;
 this remains diagnostic evidence, not a production fix.
+[Short ARM acknowledgements](validation/early-gates/README.md) also passed their
+completed controls, including publication before interior pixel reads. A later
+run lost connectivity; testing is paused with its cleanup unverified.
 
 ## Implemented subset
 

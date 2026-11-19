@@ -186,8 +186,9 @@ int main(int argc,char **argv)
         /* Ordered observer: no GPU pixel read by 68k until ARM verification
          * and its release barrier are complete. No logging in this interval. */
         unsigned arm_wait_us=0;
-        if(witness_mode==3) {
-            ULONG t=now();if(!witness_wait(GW_DONE))goto done;
+        if(witness_mode==3||witness_mode==5||witness_mode==6) {
+            ULONG t=now();
+            if(!(witness_mode==3?witness_wait(GW_DONE):witness_wait_early()))goto done;
             arm_wait_us=now()-t;
         }
 #endif
@@ -261,14 +262,17 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected) {
  else if(!strcmp(mode,"idle"))witness_mode=2;
  else if(!strcmp(mode,"beforehost"))witness_mode=3;
  else if(!strcmp(mode,"fast"))witness_mode=4;
+ else if(!strcmp(mode,"samplegate"))witness_mode=5;
+ else if(!strcmp(mode,"markergate"))witness_mode=6;
  else if(*mode&&strcmp(mode,"concurrent")){puts("Invalid GLIDEWITNESS mode");return 20;}
- printf("WITNESS mode=%s\n",witness_mode==1?"afterhost":witness_mode==2?"idle":witness_mode==3?"beforehost":witness_mode==4?"fast":"concurrent");
+ printf("WITNESS mode=%s\n",witness_mode==1?"afterhost":witness_mode==2?"idle":witness_mode==3?"beforehost":witness_mode==4?"fast":witness_mode==5?"samplegate":witness_mode==6?"markergate":"concurrent");
  char direction[8]={0};GetVar("GLIDEREVERSE",direction,sizeof(direction)-1,0);
  if(!strcmp(direction,"1"))witness_reverse=1;
  else if(*direction&&strcmp(direction,"0")){puts("Invalid GLIDEREVERSE setting");return 20;}
  char sampling[8]={0};GetVar("GLIDESAMPLE",sampling,sizeof(sampling)-1,0);
  if(!strcmp(sampling,"1"))witness_sample=1;
  else if(*sampling&&strcmp(sampling,"0")){puts("Invalid GLIDESAMPLE setting");return 20;}
+ if(witness_mode==5&&!witness_sample){puts("samplegate requires GLIDESAMPLE 1");return 20;}
  char marker[24];
  char *args[]={"probe","--no-marker-preread","--marker-base",marker};
  /* timer.device is opened by probe_main; nonce provides a fresh run tag. */

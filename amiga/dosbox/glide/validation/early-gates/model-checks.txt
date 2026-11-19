@@ -1,0 +1,17 @@
+PASS witness instruction model: valid
+PASS witness instruction model: corrupt
+PASS witness instruction model: idle
+PASS witness instruction model: bad-nonce
+PASS witness instruction model: bad-range
+PASS witness instruction model: cancel
+PASS witness instruction model: reverse
+PASS witness instruction model: reverse-corrupt
+PASS witness instruction model: bad-order
+PASS witness instruction model: sample
+PASS witness instruction model: sample-corrupt
+PASS witness instruction model: bad-sample
+PASS witness instruction model: early-marker
+PASS witness instruction model: early-sample
+PASS witness instruction model: bad-publish
+PASS witness instruction model: bad-publish-sample
+PASS witness instruction model: early-timeout
