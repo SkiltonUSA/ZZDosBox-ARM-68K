@@ -83,3 +83,9 @@ source remain outside Git.
 
 See the [hardware report](hardware/README.md) for pixel evidence and its limits.
 This is not proof of Glide compatibility, audible quality or game performance.
+
+## Lifecycle control
+
+[Six startup/shutdown controls](lifecycle-controls/) passed without GPU commands.
+The isolated diagnostic wrapper now prints startup progress without buffering.
+This does not resolve the earlier intermittent failures.

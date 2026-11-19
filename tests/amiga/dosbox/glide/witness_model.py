@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parents[4];OUT=ROOT/'.context/amiga/glide/witness'
 subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-Ttext=0x100000','-e','zz_worker',str(OUT/'witness_worker.o'),'-o',str(OUT/'model.elf')],check=True)
 subprocess.run(['arm-none-eabi-objcopy','-O','binary',str(OUT/'model.elf'),str(OUT/'model.bin')],check=True)
 BASE=0x200000;CMD=BASE+0x8800;GO=BASE+0x8880;REPLY=BASE+0x8900;GPU=0x6610000
-for case in ('valid','corrupt','idle','bad-nonce','bad-range','cancel','reverse','reverse-corrupt','bad-order','sample','sample-corrupt','bad-sample','early-marker','early-sample','bad-publish','bad-publish-sample','early-timeout'):
+for case in ('valid','corrupt','idle','bad-nonce','bad-range','cancel','reverse','reverse-corrupt','bad-order','sample','sample-corrupt','bad-sample','early-marker','early-sample','bad-publish','bad-publish-sample','early-timeout','lifecycle'):
  u=Uc(UC_ARCH_ARM,UC_MODE_ARM);u.ctl_set_cpu_model(UC_CPU_ARM_CORTEX_A9)
  u.mem_map(0x100000,0x200000);u.mem_write(0x100000,(OUT/'model.bin').read_bytes())
  u.mem_map(GPU,0x10000);u.mem_map(0xf8f00000,0x1000)
@@ -21,6 +21,7 @@ for case in ('valid','corrupt','idle','bad-nonce','bad-range','cancel','reverse'
  def get(addr):return struct.unpack('>I',u.mem_read(addr,4))[0]
  put(BASE+0x8000,0x12345678)
  for i,v in enumerate((1,0x12345679 if case!='bad-nonce' else 9,0,0x4120,4096 if case!='bad-range' else 999999,64,case=='idle',2 if case=='bad-order' else int(case.startswith('reverse')),2 if case=='bad-sample' else int(case.startswith('sample') or case=='early-sample'),3 if case=='bad-publish' else 2 if case in ('early-sample','bad-publish-sample') else int(case in ('early-marker','early-timeout')))):put(CMD+4*i,v)
+ if case=='lifecycle':put(CMD,0)
  reads=[];writes=[];clock=[0];early=[]
  def code(uc,addr,size,data):
   word=struct.unpack('<I',uc.mem_read(addr,4))[0]
@@ -40,6 +41,12 @@ for case in ('valid','corrupt','idle','bad-nonce','bad-range','cancel','reverse'
  u.reg_write(UC_ARM_REG_R0,BASE);u.reg_write(UC_ARM_REG_SP,0x2ff000);u.reg_write(UC_ARM_REG_LR,0x2fe000)
  u.emu_start(0x100000,0x2fe000,count=50000)
  assert get(BASE+0x8040)==0x41524d31 and not reads and not writes,case
+ if case=='lifecycle':
+  assert get(REPLY)==0 and not early,case
+  put(BASE+0x8080,1)
+  u.emu_start(u.reg_read(UC_ARM_REG_PC),0x2fe000,count=1000)
+  assert u.reg_read(UC_ARM_REG_PC)==0x2fe000 and not reads and not writes,case
+  print('PASS witness instruction model:',case);continue
  if case.startswith('bad-'):
   assert u.reg_read(UC_ARM_REG_PC)==0x2fe000 and get(REPLY)==0,case
  else:

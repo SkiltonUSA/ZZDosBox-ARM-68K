@@ -258,6 +258,10 @@ done:
 int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected) {
  (void)connected; witness_base=base;witness_io=io;
  char mode[32]={0};GetVar("GLIDEWITNESS",mode,sizeof(mode)-1,0);
+ if(!strcmp(mode,"lifecycle")) {
+  puts("LIFECYCLE: mapped worker ready; no GPU query, submit or pixel command");
+  return 0;
+ }
  if(!strcmp(mode,"afterhost"))witness_mode=1;
  else if(!strcmp(mode,"idle"))witness_mode=2;
  else if(!strcmp(mode,"beforehost"))witness_mode=3;

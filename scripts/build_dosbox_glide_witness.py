@@ -31,8 +31,8 @@ image=json.loads((ROOT/'amiga/upstream.json').read_text())['image'];binary=out/'
 run(['podman','--connection',a.connection,'run','--rm','--platform','linux/amd64',
  '-v',f'{ROOT}:/work','-w','/work',image,'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020',
  '-O2','-g','-Wall','-Wextra','-Werror','-DZZ_HEADLESS_BENCH','-DZZ_HEADLESS_ICACHE','-DZZ_RELEASE',
- '-DGRX_WITNESS','-DZZ_APP_NAME="ZZGlideWitness"','-DZZ_APP_VERSION="0.1"','-DZZ_MIN_STACK=65536',
- *common,*includes,zz/'launcher.c',src/'probe.c','-lamiga','-o',binary.relative_to(ROOT)])
+ '-DGRX_WITNESS','-Dmain=grx_launcher_main','-DZZ_APP_NAME="ZZGlideWitness"','-DZZ_APP_VERSION="0.1"','-DZZ_MIN_STACK=65536',
+ *common,*includes,zz/'launcher.c',src/'probe.c',src/'witness_main.c','-lamiga','-o',binary.relative_to(ROOT)])
 assert binary.read_bytes()[:4]==b'\x00\x00\x03\xf3'
 inputs=list((ROOT/src).glob('*.[ch]'))+list((ROOT/src).glob('witness*'))+[
  ROOT/zz/'launcher.c',ROOT/zz/'mapping_probe.S',ROOT/zz/'payload.ld',ROOT/zz/'layout.h',
