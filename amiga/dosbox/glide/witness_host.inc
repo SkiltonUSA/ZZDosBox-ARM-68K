@@ -2,7 +2,7 @@
 #include "witness_wire.h"
 static volatile uint8_t *witness_base;
 static const struct ad_io *witness_io;
-static unsigned witness_seq,witness_mode,witness_reverse;
+static unsigned witness_seq,witness_mode,witness_reverse,witness_sample;
 static ULONG now(void);
 static int witness_wait(unsigned field) {
  ULONG start=now();
@@ -19,7 +19,7 @@ static int witness_prepare(unsigned scene,unsigned marker,unsigned offset,unsign
  ++witness_seq;
  ad_put(c,GW_NONCE,witness_seq^ad_get(witness_base,ZZ_CONTROL));
  ad_put(c,GW_SCENE,scene);ad_put(c,GW_MARKER,marker);
- ad_put(c,GW_OFFSET,offset);ad_put(c,GW_COUNT,count);ad_put(c,GW_IDLE,witness_mode==2);ad_put(c,GW_REVERSE,witness_reverse);
+ ad_put(c,GW_OFFSET,offset);ad_put(c,GW_COUNT,count);ad_put(c,GW_IDLE,witness_mode==2);ad_put(c,GW_REVERSE,witness_reverse);ad_put(c,GW_SAMPLE,witness_sample);
  witness_io->push(c,64,witness_io->user);witness_io->barrier(witness_io->user);
  ad_put(c,GW_SEQ,witness_seq);witness_io->push(c,4,witness_io->user);
  return witness_wait(GW_ARMED);

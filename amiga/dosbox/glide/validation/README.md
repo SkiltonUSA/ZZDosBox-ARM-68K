@@ -71,5 +71,10 @@ source remain outside Git.
     in the [observer-order report](observer-order/README.md). Nine worker model
     checks pass; hardware testing stopped with cleanup unverified.
 
+15. After reboot, eight [early-sample runs](early-samples/README.md) completed
+    cleanly. Two concurrent runs captured new ARM pixels and previous-scene
+    host pixels at identical offsets; all four ordered controls passed. Twelve
+    compiled-worker model cases pass. No production fence promoted.
+
 See the [hardware report](hardware/README.md) for pixel evidence and its limits.
 This is not proof of Glide compatibility, audible quality or game performance.

@@ -198,6 +198,10 @@ int main(int argc,char **argv)
             if(i==marker_count)break;
             if(SetSignal(0,0)&SIGBREAKF_CTRL_C)break;
         }while((ULONG)(now()-start)<1000000u);
+#ifdef GRX_WITNESS
+        unsigned quick[4]={0xffffffffu,0xffffffffu,0xffffffffu,0xffffffffu};
+        if(i==marker_count&&witness_sample)grx_probe_sample(pixels,quick);
+#endif
         unsigned fence_us=now()-start;
         if(i!=marker_count){printf("STOP: FENCE timeout scene=%u got=%04x want=%04x\n",scene,pixels[marker_offset+i],swap(marker));goto done;}
         CacheClearE((APTR)(pixels-64),GRX_PROBE_BYTES+256,CACRF_ClearD);
@@ -207,6 +211,13 @@ int main(int argc,char **argv)
         for(i=0;i<1024;i++)if(texture[i]!=swap(grx_probe_texel(i)))guard++;
 #ifdef GRX_WITNESS
         witness_ok=witness_finish();
+        if(witness_sample&&ad_get(witness_base,GW_REPLY+GW_DONE)==witness_seq) {
+            volatile uint8_t *r=witness_base+GW_REPLY;
+            printf("EARLY scene=%u offsets=1616,2704,3344,3368 ARM=%04x,%04x,%04x,%04x HOST=%04x,%04x,%04x,%04x\n",scene,
+                (unsigned)ad_get(r,GW_SAMPLES),(unsigned)ad_get(r,GW_SAMPLES+4),
+                (unsigned)ad_get(r,GW_SAMPLES+8),(unsigned)ad_get(r,GW_SAMPLES+12),
+                quick[0],quick[1],quick[2],quick[3]);
+        }
         printf("ORDER scene=%u arm_prepare_us=%u before_host_wait_us=%u\n",scene,arm_prepare_us,arm_wait_us);
 #endif
         /* No log I/O between submit, marker polling and the first readback. */
@@ -255,6 +266,9 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected) {
  char direction[8]={0};GetVar("GLIDEREVERSE",direction,sizeof(direction)-1,0);
  if(!strcmp(direction,"1"))witness_reverse=1;
  else if(*direction&&strcmp(direction,"0")){puts("Invalid GLIDEREVERSE setting");return 20;}
+ char sampling[8]={0};GetVar("GLIDESAMPLE",sampling,sizeof(sampling)-1,0);
+ if(!strcmp(sampling,"1"))witness_sample=1;
+ else if(*sampling&&strcmp(sampling,"0")){puts("Invalid GLIDESAMPLE setting");return 20;}
  char marker[24];
  char *args[]={"probe","--no-marker-preread","--marker-base",marker};
  /* timer.device is opened by probe_main; nonce provides a fresh run tag. */

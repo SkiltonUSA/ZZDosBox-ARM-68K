@@ -1,0 +1,42 @@
+[OK]
+OWNED amiga=50000040 arm_candidate=101f0040 size=131072 nonce=0f2cb0e5
+BOOTSTRAP amiga=40c78400 arm=00e68400 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c51878 MIDR=413fc090 MPIDR=80000001
+WITNESS mode=fast
+GPU id=52495831 version=00020000 caps=0000000b abi=00010000
+ARM scene=0 error=0 checked=4096 bad=0 polls=118 wait_ticks=36858
+ARMREAD reverse=0 verify_ticks=574316 first_offset=4294967295 got=0000 want=0000
+EARLY scene=0 offsets=1616,2704,3344,3368 ARM=0000,0000,0000,0000 HOST=0000,0000,0000,0000
+ORDER scene=0 arm_prepare_us=156 before_host_wait_us=0
+PREP scene=0 mode=0 us=0 read=0000
+SUBMIT scene=0 mode=memset prepare=0 words=30 before=10000 marker=1bc6 crc=8daf2845 ack_us=131
+PIXELS scene=0 checked=4096 bad=0 guards=0 fence_us=96 left=0000 right=0000
+ARM scene=1 error=0 checked=3502 bad=0 polls=123 wait_ticks=41005
+ARMREAD reverse=0 verify_ticks=493657 first_offset=4294967295 got=0000 want=0000
+EARLY scene=1 offsets=1616,2704,3344,3368 ARM=f800,f800,f800,f800 HOST=f800,f800,f800,f800
+ORDER scene=1 arm_prepare_us=11321 before_host_wait_us=0
+PREP scene=1 mode=0 us=0 read=0000
+SUBMIT scene=1 mode=memset prepare=0 words=67 before=10000 marker=1bc7 crc=729ca678 ack_us=143
+PIXELS scene=1 checked=3502 bad=0 guards=0 fence_us=94 left=f800 right=f800
+ARM scene=2 error=0 checked=3502 bad=0 polls=118 wait_ticks=40010
+ARMREAD reverse=0 verify_ticks=494258 first_offset=4294967295 got=0000 want=0000
+EARLY scene=2 offsets=1616,2704,3344,3368 ARM=ffe0,ffe0,ffe0,ffe0 HOST=ffe0,ffe0,ffe0,ffe0
+ORDER scene=2 arm_prepare_us=8527 before_host_wait_us=0
+PREP scene=2 mode=0 us=0 read=0000
+SUBMIT scene=2 mode=memset prepare=0 words=67 before=10000 marker=1bc8 crc=49666c1d ack_us=147
+PIXELS scene=2 checked=3502 bad=0 guards=0 fence_us=101 left=ffe0 right=ffe0
+ARM scene=3 error=0 checked=3355 bad=0 polls=140 wait_ticks=46242
+ARMREAD reverse=0 verify_ticks=456609 first_offset=4294967295 got=0000 want=0000
+EARLY scene=3 offsets=1616,2704,3344,3368 ARM=f800,f800,f800,001f HOST=f800,f800,ffe0,ffe0
+ORDER scene=3 arm_prepare_us=150 before_host_wait_us=0
+PREP scene=3 mode=0 us=0 read=0000
+SUBMIT scene=3 mode=memset prepare=0 words=75 before=10000 marker=1bc9 crc=5551a11d ack_us=155
+PIXELS scene=3 checked=3355 bad=28 guards=0 fence_us=96 left=f800 right=001f
+LATE READ scene=3 bad=0 (diagnostic only; run still fails)
+GLIDE PROBE rc=20
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c51878 restored=08c50878
+ZZGlideWitness: Application frontend or ARM transfer failed. See the CLI log for details.
+LAUNCHER exit=20; owned memory released

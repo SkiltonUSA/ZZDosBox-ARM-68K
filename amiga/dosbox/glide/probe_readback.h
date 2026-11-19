@@ -9,6 +9,14 @@ static inline uint16_t grx_probe_pixel(uint16_t v) {
  return v;
 #endif
 }
+/* Fixed interior pixels, including addresses affected in earlier failed reads.
+ * Capture into private storage before verification; no logging or shared writes. */
+static inline void grx_probe_sample(const volatile uint16_t *pixels,unsigned out[4]) {
+    out[0]=grx_probe_pixel(pixels[1616]);
+    out[1]=grx_probe_pixel(pixels[2704]);
+    out[2]=grx_probe_pixel(pixels[3344]);
+    out[3]=grx_probe_pixel(pixels[3368]);
+}
 /* Captures the values used by the verdict, never a second framebuffer read. */
 #define GRX_TRACE_SAMPLES 16u
 struct grx_bad_pixel {unsigned offset,got,want;};

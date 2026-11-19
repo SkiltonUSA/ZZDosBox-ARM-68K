@@ -37,7 +37,11 @@ completion-fence fix has been promoted.
 The [ordered-observer tests](validation/observer-order/README.md) add 45 completed
 runs and one interrupted run. Waiting for ARM verification passed 12/12 runs;
 concurrent and reverse readback still fail intermittently. Hardware testing is
-paused after the interrupted run; its cleanup is unverified.
+paused after the interrupted run; its cleanup was unverified until reboot.
+After recovery, [early pixel sampling](validation/early-samples/README.md) captured
+new ARM pixels alongside previous-scene host pixels in two of four concurrent
+runs. Four ordered controls passed. All eight runs cleaned up successfully;
+this remains diagnostic evidence, not a production fix.
 
 ## Implemented subset
 

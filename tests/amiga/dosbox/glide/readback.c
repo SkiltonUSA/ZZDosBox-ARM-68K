@@ -39,6 +39,11 @@ int main(void) {
  assert(trace.count==GRX_TRACE_SAMPLES && trace.samples[15].offset==15);
  assert(grx_probe_verify_order(pixels,0,&checked,&trace,1)==4096);
  assert(trace.count==GRX_TRACE_SAMPLES && trace.samples[0].offset==4095 && trace.samples[15].offset==4080);
+ unsigned quick[4];
+ for(unsigned i=0;i<GRX_PROBE_BYTES/2;i++)pixels[i]=grx_probe_pixel((uint16_t)i);
+ grx_probe_sample(pixels,quick);
+ assert(quick[0]==1616 && quick[1]==2704 && quick[2]==3344 && quick[3]==3368);
+ puts("PASS early sample offsets and endian conversion");
  puts("PASS mismatch trace records values from the original reads");
  puts("PASS shared readback oracle: five scenes, corruption detected in each");
 }
