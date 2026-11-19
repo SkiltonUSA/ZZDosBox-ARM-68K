@@ -1,0 +1,51 @@
+{
+  "source_sha256": "79da335a19cf014da1405f218a99ca825f9143840d97f903cb2c3a9a61d43af2",
+  "test_sha256": "ccb0a72d3d03e7fbfa01386e518804d3cc4c4434b58a1081584dac58b8341f65",
+  "cases": [
+    "PASS scale=0 skew_cycles=0 phase_ps=1000 lines=512 beats=8192",
+    "PASS scale=0 skew_cycles=0 phase_ps=3500 lines=512 beats=8192",
+    "PASS scale=0 skew_cycles=0 phase_ps=9000 lines=512 beats=8192",
+    "PASS scale=0 skew_cycles=1 phase_ps=1000 lines=512 beats=8192",
+    "PASS scale=0 skew_cycles=1 phase_ps=3500 lines=512 beats=8192",
+    "PASS scale=0 skew_cycles=1 phase_ps=9000 lines=512 beats=8192",
+    "PASS scale=0 skew_cycles=3 phase_ps=1000 lines=512 beats=8192",
+    "PASS scale=0 skew_cycles=3 phase_ps=3500 lines=512 beats=8192",
+    "PASS scale=0 skew_cycles=3 phase_ps=9000 lines=512 beats=8192",
+    "PASS scale=1 skew_cycles=0 phase_ps=1000 lines=256 beats=4096",
+    "PASS scale=1 skew_cycles=0 phase_ps=3500 lines=256 beats=4096",
+    "PASS scale=1 skew_cycles=0 phase_ps=9000 lines=256 beats=4096",
+    "PASS scale=1 skew_cycles=1 phase_ps=1000 lines=256 beats=4096",
+    "PASS scale=1 skew_cycles=1 phase_ps=3500 lines=256 beats=4096",
+    "PASS scale=1 skew_cycles=1 phase_ps=9000 lines=256 beats=4096",
+    "PASS scale=1 skew_cycles=3 phase_ps=1000 lines=256 beats=4096",
+    "PASS scale=1 skew_cycles=3 phase_ps=3500 lines=256 beats=4096",
+    "PASS scale=1 skew_cycles=3 phase_ps=9000 lines=256 beats=4096"
+  ],
+  "injected_long_skew": [
+    {
+      "scale": 0,
+      "inconsistent_sample_cycles": 24,
+      "failure": "FATAL: video_fetch.v:91: Unrequested fetch at 2: completed=3 ready=0 word=0"
+    },
+    {
+      "scale": 1,
+      "inconsistent_sample_cycles": 24,
+      "failure": "FATAL: video_fetch.v:91: Unrequested fetch at 4: completed=3 ready=0 word=0"
+    }
+  ],
+  "mutations": [
+    {
+      "name": "ignore-line-request",
+      "failure": "FATAL: video_fetch.v:82: Missing/extra line at 1: got 0 expected 1"
+    },
+    {
+      "name": "ignore-frame-gate",
+      "failure": "FATAL: video_fetch.v:62: Fetch before frame synchronization"
+    },
+    {
+      "name": "corrupt-payload",
+      "failure": "FATAL: video_fetch.v:87: Payload mismatch line 1 word 0 got 00010001"
+    }
+  ],
+  "scope": "Fetch consumer only; forced beam request and frame-sync stimuli, known initial state, 16-word lines; no reset, full scanout, physical skew or metastability validation"
+}

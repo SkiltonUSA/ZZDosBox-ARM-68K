@@ -92,6 +92,30 @@ board clock. This is **not evidence that emulator crackling originates here**.
 Do not assign an ideal uniform generated clock to the sampled output merely to
 remove unconstrained endpoints: that would omit the demonstrated quantisation.
 
+## Fetch-consumer follow-up
+
+The unchanged formatter passed 18 consumer-side tests: normal and doubled-line
+scaling, three request phases, and zero, one or three AXI periods of deliberately
+inconsistent counter sampling at power-of-two transitions. Each run issued 512
+line-number requests, fetching 512 lines without scaling or 256 with doubling.
+Every 16-word payload was checked, with source VALID stalls and checks for extra
+reads while the request remained unchanged. The initial frame-sync gate was also
+checked. Three compiled mutations were rejected: ignoring line requests, ignoring
+the frame gate and corrupting a stored word.
+
+Holding an inconsistent counter value for 24 AXI periods caused an extra fetch
+in both scaling modes. This is an injected stress case, not a measured hardware
+delay or a derived safe bound. The test holds the video clock stopped, forces
+the source request/frame-sync signals, and initializes a known post-startup
+consumer state. It does not simulate beam generation, scanout, frame wrap,
+mode switching, realistic line lengths or metastability.
+
+The consumer refreshes `last_line_fetch` throughout a fetch, which helps explain
+its tolerance of short inconsistent samples in this fixture. Therefore the CDC
+warning alone does **not** justify replacing the counter transfer immediately.
+A replacement needs an integrated test with actual producer timing and buffer
+ownership, preserving this demonstrated behaviour.
+
 ## Reproduction and next gate
 
 Run from the repository root with Icarus Verilog 13.0 installed:
@@ -99,6 +123,8 @@ Run from the repository root with Icarus Verilog 13.0 installed:
 ```sh
 python3 scripts/test_xacp_audio_clock.py /path/to/upstream/audio_clock.v \
   --output audio-clock-simulation.json
+python3 scripts/test_xacp_video_fetch.py /path/to/upstream/video_formatter.v \
+  --output video-fetch-simulation.json
 ```
 
 The runner also accepts `--iverilog`, `--vvp` and `--ivl-dir` for local toolchains.
