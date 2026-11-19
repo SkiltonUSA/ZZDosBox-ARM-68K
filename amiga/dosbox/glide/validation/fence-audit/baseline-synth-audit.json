@@ -1,0 +1,26 @@
+{
+  "exit_code": 0,
+  "source_checkpoint_sha256": "c2fed18114dd015058f7af0150fcfca85e3cfc306510f123d865345198d2ff0a",
+  "fresh_process_reopen_passed": true,
+  "black_box_count": 2,
+  "black_boxes": [
+    "dbg_hub",
+    "u_ila_0"
+  ],
+  "ps7_count": 1,
+  "e7m_ibuf_net_present": true,
+  "mmcm_clkout1_pin_present": true,
+  "mmcm_clkout1_generated_clock_present": false,
+  "drc": {
+    "errors": 0,
+    "warnings": 41,
+    "advisories": 1
+  },
+  "unrouted_timing": {
+    "setup_wns_ns": -0.454,
+    "hold_whs_ns": -0.374,
+    "setup_failing_endpoints": 18,
+    "hold_failing_endpoints": 1
+  },
+  "scope": "Unrouted synthesized design with debug placeholders; not full timing closure or hardware validation"
+}

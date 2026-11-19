@@ -216,7 +216,7 @@ manager queued jobs and created two empty begin markers, but no child synthesis
 logs or child Vivado processes were observed during the check. That attempt was
 stopped locally; it does not establish a failed RTL synthesis.
 
-A separate copy is being tested with [global synthesis](https://docs.amd.com/r/2025.2-English/ug892-vivado-design-flows-overview/Synthesis):
+A separate copy completed [global synthesis](https://docs.amd.com/r/2025.2-English/ug892-vivado-design-flows-overview/Synthesis):
 
 ```tcl
 set_property SYNTH_CHECKPOINT_MODE NONE [get_files */zz9000_ps.bd]
@@ -226,16 +226,40 @@ synth_design -top zz9000_ps_wrapper -part xc7z020clg400-1
 ```
 
 This changes the build flow from per-IP checkpoints to whole-design synthesis;
-it does not change the supplied RTL. Its result is pending. RTL elaboration and
-constraint processing have completed; the board XDC reported a missing
-`ZORRO_E7M_IBUF` net for `CLOCK_DEDICATED_ROUTE` at line 91. Review this against
-the finished synthesis netlist and implementation constraints; do not silently
-remove the exception or assume that it took effect. False-path rules at lines
-289 and 292 also reference an unavailable MMCM `CLKOUT1` clock. In the supplied
-`mntzorro.v`, that output connects to `e7m_shifted180`, which has no consumer;
-this suggests an obsolete constraint, subject to checking the final netlist.
-The unchanged constraint file is retained for the baseline. Do not substitute
-an incomplete run or a partial netlist for a successful full synthesis result.
+it does not change the supplied RTL. The synthesis stage completed with zero
+errors, zero critical warnings and 1,176 warnings, then wrote the complete
+checkpoint. This stage summary excludes critical warnings during earlier BD
+parsing and later XDC/debug processing; the full-run record retains those.
+
+The outer Python timeout wrapper failed after Vivado logged completion: its
+resumed kqueue wait reported the old deadline and process-group cleanup raised
+an exception. A clean wrapper exit is not claimed. A **fresh Vivado process**
+subsequently opened the checkpoint and completed the independent audit with
+exit 0. See the [synthesis record](../amiga/dosbox/glide/validation/fence-audit/baseline-global-synthesis.json)
+and [checkpoint audit](../amiga/dosbox/glide/validation/fence-audit/baseline-synth-audit.json).
+
+The synthesized baseline uses 22,993/53,200 LUTs (43.22%), 28,362/106,400
+registers (26.66%), 60.5/140 BRAM tiles (43.21%) and 22/220 DSPs (10%). Two
+debug blocks, `u_ila_0` and `dbg_hub`, are still black boxes. AMD documents that
+[debug cores are implemented during optimization](https://docs.amd.com/r/en-US/ug835-vivado-tcl-commands/implement_debug_core).
+These counts therefore do not establish final free resources for a Copper unit.
+
+The board XDC initially could not resolve `ZORRO_E7M_IBUF`; that net exists in
+the completed checkpoint. False-path rules at lines 289/292 also referenced
+MMCM `CLKOUT1`. Its pin exists, but no generated clock is reported for that
+output; its source wire `e7m_shifted180` has no consumers. Preserve the baseline
+constraints and inspect their effective properties during implementation.
+Several debug connections also issued warnings during XDC processing.
+
+The independent synthesized-design DRC has 41 warnings and one advisory,
+without errors. Unrouted timing has setup WNS -0.454 ns and hold WHS -0.374 ns;
+this is **not timing closure**. Optimization, debug-core generation, placement,
+routing, bus-skew/CDC checks and final timing review remain necessary. No new
+bitstream or BOOT image has been produced. Reports:
+[utilization](../amiga/dosbox/glide/validation/fence-audit/baseline-global-utilization.rpt),
+[DRC](../amiga/dosbox/glide/validation/fence-audit/baseline-synth-drc.rpt),
+[clocks](../amiga/dosbox/glide/validation/fence-audit/baseline-synth-clocks.rpt),
+[timing](../amiga/dosbox/glide/validation/fence-audit/baseline-synth-timing.rpt).
 
 ### 2. Regenerate and verify processing-system initialization and FSBL
 
@@ -453,6 +477,13 @@ restart cases, blitter/DMA interactions, clean cancellation and buffer release,
 then matched State of the Art, Acid in the House and AGA scene measurements.
 Report whole-emulator elapsed time and audio underruns alongside renderer time.
 There is no Copper-on-FPGA performance claim at this stage.
+
+The first [resolved-image span experiment](../amiga/dosbox/glide/experimental/copper-spans.md)
+reconstructed three RGB565 captures exactly. Acid's menu and the Banshee briefing
+exceeded its 128 KiB drawing-command budget; a State of the Art silhouette fit.
+This rejects universal whole-frame colour-span replacement under that budget,
+not GPU acceleration in general. It is an offline representation test, not a
+Copper trace, GPU execution or measured speed gain.
 
 ## Additional source-review finding
 

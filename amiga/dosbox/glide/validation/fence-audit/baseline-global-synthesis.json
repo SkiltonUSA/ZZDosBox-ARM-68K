@@ -1,0 +1,44 @@
+{
+  "source_commit": "6e59edbaf24e0d8d2f29cdd31667a10e16c5b283",
+  "tool": "Vivado 2025.2 under Wine 11.0",
+  "flow": "SYNTH_CHECKPOINT_MODE NONE; direct synth_design",
+  "part": "xc7z020clg400-1",
+  "top": "zz9000_ps_wrapper",
+  "synthesis_stage_errors": 0,
+  "synthesis_stage_critical_warnings": 0,
+  "synthesis_stage_warnings": 1176,
+  "whole_run_critical_warnings": [
+    "CRITICAL WARNING: [HDL 9-1206] Syntax error near 'localparam' [fpga/RasterIX_G1/RasterIX/rtl/RasterIX/RasterizerCommands.vh:19]",
+    "CRITICAL WARNING: [HDL 9-1206] Syntax error near 'localparam' [fpga/RasterIX_G1/RasterIX/rtl/RasterIX/RasterizerCommands.vh:19]",
+    "CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:91]",
+    "CRITICAL WARNING: [Vivado 12-4739] set_false_path:No valid object(s) found for '-from [get_clocks -of_objects [get_pins zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKOUT1]]'. [fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:289]",
+    "CRITICAL WARNING: [Vivado 12-4739] set_false_path:No valid object(s) found for '-to [get_clocks -of_objects [get_pins zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKOUT1]]'. [fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:292]",
+    "CRITICAL WARNING: [Vivado 12-4739] set_false_path:No valid object(s) found for '-from [get_clocks -of_objects [get_pins zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKOUT1]]'. [fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:289]",
+    "CRITICAL WARNING: [Vivado 12-4739] set_false_path:No valid object(s) found for '-to [get_clocks -of_objects [get_pins zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKOUT1]]'. [fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:292]",
+    "CRITICAL WARNING: [Vivado 12-1419] Debug core 'u_ila_0' was not found. [fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:295]",
+    "CRITICAL WARNING: [Vivado 12-1419] Debug core 'u_ila_0' was not found. [fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:297]",
+    "CRITICAL WARNING: [Vivado 12-1419] Debug core 'u_ila_0' was not found. [fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:298]",
+    "CRITICAL WARNING: [Vivado 12-1419] Debug core 'u_ila_0' was not found. [fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:299]",
+    "CRITICAL WARNING: [Vivado 12-1419] Debug core 'u_ila_0' was not found. [fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:300]"
+  ],
+  "tcl_completion_marker_observed": true,
+  "tcl_exit_requested": 0,
+  "outer_python_wrapper_exit": 1,
+  "wrapper_limitation": "After synthesis wrote its checkpoint and Vivado logged normal exit, the resumed Python 3.15 kqueue wait raised its expired timeout; process-group cleanup raised PermissionError. No clean outer exit code is claimed. Fresh-process checkpoint audit recorded separately.",
+  "checkpoint_sha256": "c2fed18114dd015058f7af0150fcfca85e3cfc306510f123d865345198d2ff0a",
+  "synthesis_utilization": {
+    "luts": 22993,
+    "lut_available": 53200,
+    "registers": 28362,
+    "register_available": 106400,
+    "bram_tiles": 60.5,
+    "bram_tiles_available": 140,
+    "dsps": 22,
+    "dsps_available": 220
+  },
+  "unimplemented_debug_cells": [
+    "u_ila_0_CV",
+    "dbg_hub_CV"
+  ],
+  "scope": "Synthesis checkpoint only; debug cores, implementation, timing closure and hardware validation pending"
+}

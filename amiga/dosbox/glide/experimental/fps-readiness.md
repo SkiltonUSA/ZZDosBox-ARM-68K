@@ -51,8 +51,10 @@ The unchanged ARM firmware and BSP now build with Arm GNU 13.2.Rel1. The actual
 board project also completed block-design validation, IP generation and XSA
 export under Vivado, with warnings still requiring review. Regenerated PS7
 initialization enabled a separately linked FSBL candidate. These results remove
-several rebuild prerequisites; they do not establish a complete FPGA build or a
-boot-tested replacement. See the [rebuild guide](../../../../docs/xacp-firmware-rebuild.md).
+several rebuild prerequisites. Full-board synthesis has since produced a
+checkpoint, independently reopened and audited with exit 0. Debug blocks remain
+unimplemented and unrouted timing has violations; no complete routed FPGA build
+or boot-tested replacement is established. See the [rebuild guide](../../../../docs/xacp-firmware-rebuild.md).
 
 The full pinned RasterIX and Float sources were downloaded for the next simulator
 stage. An exploratory Icarus elaboration of the complete RasterIX top failed
