@@ -1,0 +1,149 @@
+{
+  "scope": "Post-render RGB565 rectangle feasibility; excludes fences and presentation",
+  "captures": [
+    {
+      "width": 640,
+      "height": 256,
+      "horizontal_runs": 12473,
+      "rectangle_count": 8622,
+      "required_drawing_words": 60364,
+      "drawing_budget_words": 32768,
+      "input": "acid-menu.png",
+      "sha256": "e1b3d5802fbdc92a90fc24653cb1bd7bb1afe3ea88d3a697bcb32e54ab7c32b8",
+      "fits_drawing_budget": false,
+      "drawing_bytes": 241456,
+      "raw_rgb565_bytes": 327680,
+      "command_to_pixel_bytes_ratio": 0.7369,
+      "rgb565_reconstruction": "exact",
+      "limitation": "Offline image grouping only; no Copper trace, GPU execution or FPS measurement",
+      "selective_regions": [
+        {
+          "gpu_pixels": 100546,
+          "drawing_words": 3006,
+          "min_area": 64,
+          "gpu_rectangle_count": 428,
+          "cpu_rectangle_count": 8194,
+          "drawing_bytes": 12024,
+          "gpu_coverage_percent": 61.37,
+          "rgb565_reconstruction": "exact"
+        },
+        {
+          "gpu_pixels": 61172,
+          "drawing_words": 409,
+          "min_area": 256,
+          "gpu_rectangle_count": 57,
+          "cpu_rectangle_count": 8565,
+          "drawing_bytes": 1636,
+          "gpu_coverage_percent": 37.34,
+          "rgb565_reconstruction": "exact"
+        },
+        {
+          "gpu_pixels": 38592,
+          "drawing_words": 31,
+          "min_area": 1024,
+          "gpu_rectangle_count": 3,
+          "cpu_rectangle_count": 8619,
+          "drawing_bytes": 124,
+          "gpu_coverage_percent": 23.55,
+          "rgb565_reconstruction": "exact"
+        }
+      ]
+    },
+    {
+      "width": 640,
+      "height": 256,
+      "horizontal_runs": 10578,
+      "rectangle_count": 7623,
+      "required_drawing_words": 53371,
+      "drawing_budget_words": 32768,
+      "input": "banshee-briefing.png",
+      "sha256": "1f774ab8d27c7f9ead5ab297787c0501182c923283442f95310c2803564dc43c",
+      "fits_drawing_budget": false,
+      "drawing_bytes": 213484,
+      "raw_rgb565_bytes": 327680,
+      "command_to_pixel_bytes_ratio": 0.6515,
+      "rgb565_reconstruction": "exact",
+      "limitation": "Offline image grouping only; no Copper trace, GPU execution or FPS measurement",
+      "selective_regions": [
+        {
+          "gpu_pixels": 138054,
+          "drawing_words": 1466,
+          "min_area": 64,
+          "gpu_rectangle_count": 208,
+          "cpu_rectangle_count": 7415,
+          "drawing_bytes": 5864,
+          "gpu_coverage_percent": 84.26,
+          "rgb565_reconstruction": "exact"
+        },
+        {
+          "gpu_pixels": 125881,
+          "drawing_words": 871,
+          "min_area": 256,
+          "gpu_rectangle_count": 123,
+          "cpu_rectangle_count": 7500,
+          "drawing_bytes": 3484,
+          "gpu_coverage_percent": 76.83,
+          "rgb565_reconstruction": "exact"
+        },
+        {
+          "gpu_pixels": 86504,
+          "drawing_words": 241,
+          "min_area": 1024,
+          "gpu_rectangle_count": 33,
+          "cpu_rectangle_count": 7590,
+          "drawing_bytes": 964,
+          "gpu_coverage_percent": 52.8,
+          "rgb565_reconstruction": "exact"
+        }
+      ]
+    },
+    {
+      "width": 640,
+      "height": 256,
+      "horizontal_runs": 3205,
+      "rectangle_count": 1840,
+      "required_drawing_words": 12890,
+      "drawing_budget_words": 32768,
+      "input": "state-of-art-silhouette.png",
+      "sha256": "25e92e1a0078379e93946e29a931afb810070558d7dcc7d358d2c845c15abfa1",
+      "fits_drawing_budget": true,
+      "drawing_bytes": 51560,
+      "raw_rgb565_bytes": 327680,
+      "command_to_pixel_bytes_ratio": 0.1573,
+      "rgb565_reconstruction": "exact",
+      "limitation": "Offline image grouping only; no Copper trace, GPU execution or FPS measurement",
+      "selective_regions": [
+        {
+          "gpu_pixels": 142102,
+          "drawing_words": 3377,
+          "min_area": 64,
+          "gpu_rectangle_count": 481,
+          "cpu_rectangle_count": 1359,
+          "drawing_bytes": 13508,
+          "gpu_coverage_percent": 86.73,
+          "rgb565_reconstruction": "exact"
+        },
+        {
+          "gpu_pixels": 103552,
+          "drawing_words": 1473,
+          "min_area": 256,
+          "gpu_rectangle_count": 209,
+          "cpu_rectangle_count": 1631,
+          "drawing_bytes": 5892,
+          "gpu_coverage_percent": 63.2,
+          "rgb565_reconstruction": "exact"
+        },
+        {
+          "gpu_pixels": 13380,
+          "drawing_words": 52,
+          "min_area": 1024,
+          "gpu_rectangle_count": 6,
+          "cpu_rectangle_count": 1834,
+          "drawing_bytes": 208,
+          "gpu_coverage_percent": 8.17,
+          "rgb565_reconstruction": "exact"
+        }
+      ]
+    }
+  ]
+}

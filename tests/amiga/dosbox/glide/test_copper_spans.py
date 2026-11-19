@@ -49,5 +49,42 @@ class SpansTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 spans.plan(rows)
 
+    def test_selective_regions_preserve_cpu_fallback(self):
+        rows = [[1] * 8 + [2, 3], [1] * 8 + [3, 2]]
+        result = spans.select_regions(rows, min_area=4, max_words=17)
+        self.assertEqual(result['gpu_rectangles'], [(0, 0, 8, 2, 1)])
+        self.assertEqual(result['gpu_pixels'], 16)
+        self.assertEqual(result['drawing_words'], 17)
+        spans.verify(rows, result['gpu_rectangles'] + result['cpu_rectangles'])
+        for budget in (0, 10, 16):
+            fallback = spans.select_regions(rows, min_area=4, max_words=budget)
+            self.assertEqual(fallback['gpu_rectangles'], [])
+            self.assertEqual(fallback['drawing_words'], 0)
+            spans.verify(rows, fallback['cpu_rectangles'])
+
+    def test_selective_budget_prefers_large_regions_deterministically(self):
+        rows = [[1, 2, 2, 3, 3, 3], [1, 2, 2, 3, 3, 3]]
+        result = spans.select_regions(rows, min_area=1, max_words=24)
+        self.assertEqual(result['gpu_pixels'], 10)
+        self.assertEqual(len(result['gpu_rectangles']), 2)
+        spans.verify(rows, result['gpu_rectangles'] + result['cpu_rectangles'])
+        self.assertEqual(result, spans.select_regions(rows, min_area=1, max_words=24))
+        self.assertEqual(spans.select_regions(rows, min_area=7)['gpu_pixels'], 0)
+        with self.assertRaises(ValueError):
+            spans.select_regions(rows, min_area=0)
+
+    def test_selective_random_partitions(self):
+        rng = random.Random(741)
+        for _ in range(80):
+            rows = [[rng.randrange(3) for _ in range(11)] for _ in range(7)]
+            budget, threshold = rng.randrange(100), rng.randrange(1, 5)
+            r = spans.select_regions(rows, min_area=threshold, max_words=budget)
+            spans.verify(rows, r['gpu_rectangles'] + r['cpu_rectangles'])
+            self.assertLessEqual(r['drawing_words'], budget)
+            self.assertEqual(r['gpu_pixels'], sum((x1-x0)*(y1-y0)
+                for x0, y0, x1, y1, colour in r['gpu_rectangles']))
+            for x0, y0, x1, y1, colour in r['gpu_rectangles']:
+                self.assertGreaterEqual((x1-x0)*(y1-y0), threshold)
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,0 +1,18 @@
+{
+  "baseline": "8 tests passed, including 80 full-frame and 80 selective deterministic random frames",
+  "mutations": [
+    {
+      "mutation": "omit-cpu-fallback",
+      "detected": true
+    },
+    {
+      "mutation": "ignore-command-budget",
+      "detected": true
+    },
+    {
+      "mutation": "select-smallest-first",
+      "detected": true
+    }
+  ],
+  "scope": "Offline selective planning; no hardware execution or FPS measurement"
+}

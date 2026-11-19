@@ -52,6 +52,25 @@ def plan(rows, max_words=32768):
             'rectangles': rectangles if words <= max_words else None}
 
 
+def select_regions(rows, min_area=256, max_words=32768):
+    """Offline partition: largest solid regions first, with exact CPU fallback."""
+    if min_area < 1 or max_words < 0:
+        raise ValueError('Expected positive area and nonnegative budget')
+    full = plan(rows, max_words=10 + 7 * 1024 * 768)
+    rectangles = full['rectangles']
+    def area(rect):
+        return (rect[2] - rect[0]) * (rect[3] - rect[1])
+    eligible = [i for i, rect in enumerate(rectangles) if area(rect) >= min_area]
+    eligible.sort(key=lambda i: (-area(rectangles[i]), i))
+    capacity = max(0, (max_words - 10) // 7)
+    selected = set(eligible[:capacity])
+    gpu = [rect for i, rect in enumerate(rectangles) if i in selected]
+    cpu = [rect for i, rect in enumerate(rectangles) if i not in selected]
+    return {'gpu_rectangles': gpu, 'cpu_rectangles': cpu,
+            'gpu_pixels': sum(area(rect) for rect in gpu),
+            'drawing_words': 10 + 7 * len(gpu) if gpu else 0}
+
+
 def verify(rows, rectangles):
     """Independent exhaustive coverage/pixel check, outside any timing claim."""
     out = [[None] * len(rows[0]) for _ in rows]
@@ -86,6 +105,17 @@ def analyze(path, budget):
                 command_to_pixel_bytes_ratio=round(words * 4 / (width * height * 2), 4),
                 rgb565_reconstruction='exact',
                 limitation='Offline image grouping only; no Copper trace, GPU execution or FPS measurement')
+    selective = []
+    for threshold in (64, 256, 1024):
+        chosen = select_regions(rows, min_area=threshold, max_words=budget)
+        gpu, cpu = chosen.pop('gpu_rectangles'), chosen.pop('cpu_rectangles')
+        verify(rows, gpu + cpu)
+        chosen.update(min_area=threshold, gpu_rectangle_count=len(gpu),
+                      cpu_rectangle_count=len(cpu), drawing_bytes=chosen['drawing_words'] * 4,
+                      gpu_coverage_percent=round(chosen['gpu_pixels'] * 100 / (width * height), 2),
+                      rgb565_reconstruction='exact')
+        selective.append(chosen)
+    full['selective_regions'] = selective
     return full
 
 
