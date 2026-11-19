@@ -44,7 +44,8 @@ runs. Four ordered controls passed. All eight runs cleaned up successfully;
 this remains diagnostic evidence, not a production fix.
 [Short ARM acknowledgements](validation/early-gates/README.md) also passed their
 completed controls, including publication before interior pixel reads. A later
-run lost connectivity; testing is paused with its cleanup unverified.
+run lost connectivity. Reboot recovery and a single direct-output check passed,
+but repeated-run stability remains unresolved.
 
 ## Implemented subset
 
