@@ -1,8 +1,10 @@
 # Tagged completion mailbox — experimental proposal
 
 `completion.v` is a small synchronous RTL prototype for reporting GPU retirement.
-It is not wired into the ZZ9000, exposes no MMIO registers, and assigns no XACP
-opcode or capability bit. It has not undergone FPGA synthesis or timing closure.
+It is not wired into the ZZ9000 and assigns no XACP opcode or capability bit.
+`completion_axil.v` adds a tested, single-clock AXI-Lite register interface with
+local offsets only; it has no assigned ZZ9000 address. Neither module has
+undergone FPGA synthesis or timing closure.
 The released emulator does not use it.
 
 ## Contract
@@ -47,17 +49,53 @@ being accepted on the error cycle. Fault is sticky. Acknowledge and cancel canno
 clear it. Reset is not a GPU abort mechanism: resetting this small module alone
 must never be used as evidence that DMA has stopped touching its resources.
 
-## CPU interface still required
+## Experimental CPU register interface
 
-An eventual register/CDC wrapper should retain the entire acknowledgement while
-software reads it, and consume it only through an explicit write handshake.
-Software must read valid/fault status, read the identity, recheck status, then
-match both fields against its outstanding batch. The wrapper must confirm that
-the consume handshake succeeded without a fault before resources are released;
-software must not assume that issuing an acknowledge write succeeded.
-This assumes exclusive consumer ownership. An identity mismatch is not success.
-The wrapper's ordering, atomic snapshot and error behaviour need their own tests.
-No CPU register address or existing XACP field is appropriated by this proposal.
+The AXI-Lite wrapper retains the acknowledgement during software reads and
+requires an identity-matched write to consume it. It accepts write address and
+data independently, in either order. One read response and one write response
+may be outstanding. Each response stays stable under bus backpressure.
+
+These are **relative offsets within an unassigned experimental peripheral**:
+
+| Offset | Register | Access | Meaning |
+| --- | --- | --- | --- |
+| `0x00` | Status | R | Bit 0 valid, bit 1 busy, bit 2 fault, bit 3 cancelled when valid |
+| `0x04` | Epoch | R | Result epoch, or zero when no valid result |
+| `0x08` | Sequence | R | Result sequence, or zero when no valid result |
+| `0x0c` | Expected epoch | R/W | Stage the identity of the batch to act on |
+| `0x10` | Expected sequence | R/W | Stage the matching sequence |
+| `0x14` | Consume | W | Write 1 to consume a matching retired result |
+| `0x18` | Cancel | W | Write 1 to request cancellation of a matching pending batch |
+
+Both expected fields must be freshly written with all four byte strobes before
+each control attempt. A complete control attempt clears that staging validity,
+even if it fails due to a mismatched identity or premature consume. A partial
+write has no effect. Wrong offsets, misalignment, read-only writes, unsupported
+values, missing identity or an unavailable matching result return AXI `SLVERR`.
+They do not reset the mailbox or clear a GPU fault. Reads have no side effects.
+
+Software must have exclusive submission and result-consumer ownership:
+
+1. Read fresh status; reject fault or wait if no result is valid.
+2. Read both identity fields, recheck status, and match the outstanding batch.
+3. Write both expected identity fields and wait for their successful responses.
+4. Write Consume=1 and wait for its successful write response.
+5. Read fresh status again; quarantine on fault before releasing resources.
+
+The control write is committed when both address and data have been accepted
+and validated. Its response cannot change later while the CPU stalls it.
+An error before commit prevents consumption. An error after commit appears in
+fresh status, even if the queued write response is already `OKAY`. Similarly,
+a read captured before a fault remains an old snapshot until the CPU accepts
+it. The tests exercise both cases. A successful write response alone is not a
+substitute for the final fault check. Transport failure or timeout also does
+not authorize resource release.
+
+The wrapper operates in the mailbox's clock domain. CPU/FPGA clock crossing,
+complete address decoding, ARM memory attributes/barriers, bus endianness and
+physical acknowledgement visibility still need target integration and testing.
+No existing XACP field or ZZ9000 address is appropriated by this proposal.
 
 The submitting controller must prevent reuse of an epoch/sequence pair while an
 old result could still be observed. This module transports identities; it does
@@ -95,7 +133,20 @@ python3 scripts/test_dosbox_glide_fence.py --rtl /path/to/pinned/rtl --completio
 Add `--axi --coalesced --texture` for the complete suite. Generated simulation
 and mutation outputs stay under `.context/amiga/glide/fence-model/`.
 
-Next: implement and test the CPU register/CDC wrapper, choose an explicit
-ordered-token transport with the XACP integration, validate the full drain/error
-path, and obtain a compatible FPGA build before physical testing. Current
-XX19d-RIX firmware alone cannot activate this prototype.
+The additional `--registers` suite tests the AXI-Lite wrapper without upstream
+GPU logic, using injected tokens/drain/errors. Nine cases cover empty and
+premature consumes, either AW/W order, identity mismatch, partial and stale
+staging, cancellation, invalid registers, stale read snapshots and post-commit
+faults. Four mutations are detected: bypassed identity, premature half-write
+execution, retained stale staging and a changing stalled read response.
+The combined suites now pass **61 scenarios and fifteen mutation checks**.
+
+```sh
+python3 scripts/test_dosbox_glide_fence.py --rtl /path/to/pinned/rtl \
+  --axi --coalesced --texture --completion --registers
+```
+
+Next: integrate and test clock-domain crossing as required, choose an explicit
+ordered-token transport with XACP, validate the full drain/error path, and
+obtain a compatible FPGA build before physical testing. Current XX19d-RIX
+firmware alone cannot activate this prototype.

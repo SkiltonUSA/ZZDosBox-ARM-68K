@@ -30,7 +30,8 @@ The published XX19d-RIX
 parser lacks it; compatible FPGA/firmware integration is required before hardware use.
 A [tagged completion prototype](amiga/dosbox/glide/experimental/completion.md)
 adds nine simulation checks for batch identity, cancellation and error handling;
-its CPU register interface and FPGA integration remain pending.
+its AXI-Lite register wrapper adds nine bus/identity checks. Board addressing,
+clock-domain crossing and FPGA integration remain pending.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

@@ -53,8 +53,9 @@ RasterIX command that waits for framebuffer and texture transactions. Its parser
 passes simulation checks, but our inspected XACP ABI rejects that opcode. It is
 an integration candidate, not an installed fix or an explanation of the freezes.
 An experimental [tagged completion mailbox](experimental/completion.md) now
-tests batch identity, cancellation and error quarantine. It still needs a CPU
-register interface and FPGA/XACP integration; it is not an installed service.
+tests batch identity, cancellation and error quarantine. Its single-clock
+AXI-Lite register prototype also passes bus/identity tests. Board addressing,
+clock-domain crossing and FPGA/XACP integration remain; it is not installed.
 
 ## Implemented subset
 

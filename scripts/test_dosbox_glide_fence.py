@@ -44,6 +44,40 @@ def test_completion(simulate, parser):
                         for x in (design, bench)}}
 
 
+def test_registers(simulate):
+    mailbox = ROOT / 'amiga/dosbox/glide/experimental/completion.v'
+    design = ROOT / 'amiga/dosbox/glide/experimental/completion_axil.v'
+    bench = ROOT / 'tests/amiga/dosbox/glide/completion_axil.v'
+    rc, text = simulate(mailbox, 'completion-axil', bench, 'completion_axil_test', (design,))
+    if rc or text.count('PASS AXI mailbox:') != 9:
+        raise SystemExit('AXI-Lite mailbox scenarios failed')
+    original = design.read_text()
+    mutations = (
+        ('axil-no-identity', '(&expected_valid) && expected_epoch==ack_epoch && expected_sequence==ack_sequence',
+         '(&expected_valid)', 'Wrong or unstable write response'),
+        ('axil-half-write', 'aw_held && w_held && !s_bvalid',
+         '(aw_held || w_held) && !s_bvalid', 'Response before complete AXI write'),
+        ('axil-stale-staging', '     expected_valid<=0;',
+         '     expected_valid<=expected_valid;', 'Wrong or unstable write response'),
+        ('axil-moving-snapshot', 'if(s_rvalid && s_rready)s_rvalid<=0;',
+         'if(s_rvalid && s_rready)s_rvalid<=0;\n   if(s_rvalid && !s_rready)s_rdata<=read_data;',
+         'AXI read snapshot changed while stalled'),
+    )
+    for name, old, new, failure in mutations:
+        if original.count(old) != 1:
+            raise SystemExit('Unexpected AXI-Lite design; review mutation: ' + name)
+        mutated = OUT / (name + '.v')
+        mutated.write_text(original.replace(old, new))
+        rc, text = simulate(mailbox, name, bench, 'completion_axil_test', (mutated,))
+        if not rc or failure not in text:
+            raise SystemExit('Test did not detect mutation: ' + name)
+        print('PASS mutation: ' + name)
+    return {'scope': 'Single-clock AXI-Lite register wrapper and mailbox; injected token/drain/error, no CDC or board address',
+            'scenarios': 9, 'mutations_detected': [m[0] for m in mutations],
+            'sources': {str(x.relative_to(ROOT)): hashlib.sha256(x.read_bytes()).hexdigest()
+                        for x in (mailbox, design, bench)}}
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--rtl', type=Path, required=True)
@@ -54,6 +88,7 @@ def main():
     p.add_argument('--coalesced', action='store_true', help='Also test merged bursts at 32 and 64 bits')
     p.add_argument('--texture', action='store_true', help='Also test cached texture reads and replacement')
     p.add_argument('--completion', action='store_true', help='Also test experimental tagged completion mailbox')
+    p.add_argument('--registers', action='store_true', help='Also test experimental AXI-Lite completion registers')
     a = p.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / 'validation.json').unlink(missing_ok=True)
@@ -203,6 +238,8 @@ def main():
                         for x in dependencies + [reader, compatible, testbench]}}
     if a.completion:
         record['completion'] = test_completion(simulate, source)
+    if a.registers:
+        record['registers'] = test_registers(simulate)
     (OUT / 'validation.json').write_text(json.dumps(record, indent=2) + '\n')
 
 

@@ -1,0 +1,6 @@
+PASS AXI mailbox: empty consume rejected
+PASS AXI mailbox: pending work cannot be consumed
+PASS AXI mailbox: split AW/W and exact identity consume
+PASS AXI mailbox: stale and partial identity writes rejected
+FATAL: tests/amiga/dosbox/glide/completion_axil.v:74: Wrong or unstable write response addr=14 got=0 want=2
+       Time: 4290000  Scope: completion_axil_test.write_reg

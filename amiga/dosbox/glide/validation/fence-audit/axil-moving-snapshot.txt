@@ -1,0 +1,9 @@
+PASS AXI mailbox: empty consume rejected
+PASS AXI mailbox: pending work cannot be consumed
+PASS AXI mailbox: split AW/W and exact identity consume
+PASS AXI mailbox: stale and partial identity writes rejected
+PASS AXI mailbox: both identity fields must be freshly staged
+PASS AXI mailbox: cancellation waits for drain
+PASS AXI mailbox: bad offsets and controls do not consume
+FATAL: tests/amiga/dosbox/glide/completion_axil.v:142: AXI read snapshot changed while stalled
+       Time: 8130000  Scope: completion_axil_test

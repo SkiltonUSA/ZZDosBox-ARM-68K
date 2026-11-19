@@ -146,9 +146,11 @@ out-of-order IDs, live DDR, or ARM/68k cache coherence.
 A subsequent [completion-mailbox prototype](../../experimental/completion.md)
 adds nine scenarios and five detected mutations, taking the combined suite to
 52 scenarios and eleven mutations. Its session/batch acknowledgement is held
-until consumed, and errors quarantine work. It is synchronous RTL only: no CPU
-register map, CDC wrapper, XACP opcode or physical installation is provided.
-The `completion*.txt` logs and hashes are included here.
+until consumed, and errors quarantine work. A subsequent single-clock AXI-Lite
+register prototype adds nine bus/identity cases and four mutations, for **61
+scenarios and fifteen detected mutations** overall. It has local offsets only,
+no board address, CDC wrapper, XACP opcode or physical installation.
+The `completion*.txt` and `axil*.txt` logs and hashes are included here.
 
 The published [XX19d-RIX provenance](https://github.com/Xanxi-Amiga/XACP-ZZ9000/blob/6e59edbaf24e0d8d2f29cdd31667a10e16c5b283/firmware/source/XX19d-RIX/PROVENANCE.json)
 records RasterIX revision `9269a01c9bd4c3342bfa70ef8e3cdd751c15c6d0`.
@@ -221,3 +223,7 @@ reader and mutated copies under `.context/`; it leaves supplied RTL untouched.
 Add `--completion` to include the proposed mailbox. All four optional flags run
 52 scenarios and eleven mutation checks. The mailbox RTL is local project code;
 it does not replace any upstream FPGA module or modify the supplied RTL.
+
+Add `--registers` for the AXI-Lite wrapper; all five optional flags run 61
+scenarios and fifteen mutation checks. Register tests use injected tokens and
+retirement/error signals, not the complete GPU pipeline or a physical CPU bus.

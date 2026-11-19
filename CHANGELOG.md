@@ -12,10 +12,14 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Add a single-clock AXI-Lite completion-register prototype with independent
+  address/data writes, exact identity checks, explicit consumption and stable
+  stalled responses. Nine new cases and four detected faults bring the offline
+  suite to 61 scenarios and fifteen mutations. No board address or installation.
 - Add an experimental RTL completion mailbox carrying session and batch identity.
   Nine parser-connected scenarios and five deliberate faults verify stale-idle
-  rejection, retained results, cancellation and sticky error quarantine. No CPU
-  register interface, FPGA installation or released-player change.
+  rejection, retained results, cancellation and sticky error quarantine.
+  No FPGA installation or released-player change.
 - Validate cached texture reads, page remapping and cache hits with delayed
   responses at 32/64-bit widths. The combined suite passes 43 scenarios and
   detects six deliberate faults; CPU-visible completion remains unimplemented.

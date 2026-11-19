@@ -1,0 +1,3 @@
+PASS AXI mailbox: empty consume rejected
+FATAL: tests/amiga/dosbox/glide/completion_axil.v:22: Response before complete AXI write
+       Time: 435000  Scope: completion_axil_test
