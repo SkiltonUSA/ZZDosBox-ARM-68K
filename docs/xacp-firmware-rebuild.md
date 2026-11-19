@@ -265,8 +265,8 @@ checkpoints or completion markers must be rejected to prevent stale results
 from satisfying this check. Never unblock a waiting run by creating a success
 marker before synthesis. Both debug cores completed with exit 0 and verified
 checkpoints; the waiting full-board optimization then completed with exit 0
-and zero remaining black boxes. Placement and routing have started from that
-checkpoint; no bitstream generation or flashing is queued.
+and zero remaining black boxes. Placement and routing subsequently completed
+from that checkpoint; no bitstream generation or flashing is queued.
 The [debug-core record](../amiga/dosbox/glide/validation/fence-audit/baseline-debug-cores.json)
 contains the generated-script and checkpoint hashes with each exit status.
 
@@ -305,6 +305,48 @@ Evidence: [optimization record](../amiga/dosbox/glide/validation/fence-audit/bas
 [utilization](../amiga/dosbox/glide/validation/fence-audit/baseline-opt-utilization.rpt),
 [DRC](../amiga/dosbox/glide/validation/fence-audit/baseline-opt-drc.rpt),
 [CDC](../amiga/dosbox/glide/validation/fence-audit/baseline-opt-cdc.rpt).
+
+### Routed baseline and remaining timing coverage
+
+The full-board placement, physical optimization and routing process exited 0.
+All **54,909 routable nets** are fully routed, with zero routing errors.
+Under the supplied constraints, setup WNS is **+0.156 ns**, hold WHS
+**+0.010 ns**, and pulse-width slack **+3.000 ns**, with no failing endpoints.
+The routed design uses 25,762 LUTs (48.42%), 34,798 registers, 80.5 BRAM tiles
+and 22 DSPs. These figures describe the unchanged baseline, not an integrated
+Glide completion circuit or Copper accelerator.
+
+This is **not complete timing sign-off**. `check_timing` reports 566 clock pins
+without a timing clock, 1,016 unconstrained internal endpoints, 76 ports without
+input delays and 75 without output delays. DRC reports 52 warnings and one
+advisory, without errors. Methodology reports 570 critical warnings, of which
+566 concern the missing clock; there are also 112 warnings. The bus-skew report
+contains both evaluated paths and `NA` entries; it must not be described as a
+complete pass.
+
+Source review identifies two specific issues to investigate:
+
+* The supplied `audio_clock.v` samples `bclk_in` through `clkbuf` on the 100 MHz
+  fabric clock. `clkbuf[2]` then clocks the audio formatter/transmitter/receiver.
+  The board constraints define the external `I2SO_BCLK` clock but no clock at
+  that sampled output. Sampling delay and jitter need modelling; assuming an
+  ideal fixed-phase divider would not establish the real relationship.
+* The clock-wizard IP is configured with `PRIM_SOURCE` set to
+  `Single_ended_clock_capable_pin`, while the block design actually connects its
+  input to PS7 `FCLK_CLK0`. Its generated XDC creates another primary clock on
+  `clk_in1`, producing the reported clock-tree redefinition. Changing the IP
+  input-source configuration is a candidate correction, not a tested fix yet.
+
+The original routed checkpoint and reports are preserved. Constraint experiments
+use separate files, without adding false-path waivers to conceal these findings.
+AMD's [clock-definition guidance](https://docs.amd.com/r/2025.1-English/ug903-vivado-using-constraints/About-Generated-Clocks)
+distinguishes internal generated clocks from independent primary clocks.
+
+Evidence: [route record](../amiga/dosbox/glide/validation/fence-audit/baseline-place-route.json),
+[route status](../amiga/dosbox/glide/validation/fence-audit/baseline-routed-status.rpt),
+[timing](../amiga/dosbox/glide/validation/fence-audit/baseline-routed-timing.rpt),
+[methodology](../amiga/dosbox/glide/validation/fence-audit/baseline-routed-methodology.rpt),
+[bus skew](../amiga/dosbox/glide/validation/fence-audit/baseline-routed-bus-skew.rpt).
 
 ### 2. Regenerate and verify processing-system initialization and FSBL
 

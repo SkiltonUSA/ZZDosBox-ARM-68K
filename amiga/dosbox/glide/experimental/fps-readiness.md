@@ -52,9 +52,12 @@ board project also completed block-design validation, IP generation and XSA
 export under Vivado, with warnings still requiring review. Regenerated PS7
 initialization enabled a separately linked FSBL candidate. These results remove
 several rebuild prerequisites. Full-board synthesis has since produced a
-checkpoint, independently reopened and audited with exit 0. Debug blocks remain
-unimplemented and unrouted timing has violations; no complete routed FPGA build
-or boot-tested replacement is established. See the [rebuild guide](../../../../docs/xacp-firmware-rebuild.md).
+checkpoint, independently reopened and audited with exit 0. Both debug blocks
+and full-board optimization now complete, followed by routing of all 54,909
+routable nets without routing errors. Declared setup/hold constraints pass, but
+566 pins lack a timing clock and 1,016 internal endpoints remain unconstrained.
+Clock-domain and methodology findings remain open; this is not complete timing
+sign-off or a boot-tested replacement. See the [rebuild guide](../../../../docs/xacp-firmware-rebuild.md).
 
 The full pinned RasterIX and Float sources were downloaded for the next simulator
 stage. An exploratory Icarus elaboration of the complete RasterIX top failed

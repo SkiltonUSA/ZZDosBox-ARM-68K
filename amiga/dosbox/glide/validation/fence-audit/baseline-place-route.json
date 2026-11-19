@@ -1,0 +1,46 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 1469.29,
+  "checkpoint_sha256": "71987c95d7f2046c9427e0f9a40ca6ed693d59d2f6157ab207da182e24207790",
+  "optimized_checkpoint_sha256": "12e13f3f3c05197e2a06e878e2f0540501dbc8f5eadb75fa98a455cd6760833e",
+  "routable_nets": 54909,
+  "fully_routed_nets": 54909,
+  "routing_errors": 0,
+  "constrained_timing": {
+    "wns_ns": 0.156,
+    "whs_ns": 0.01,
+    "wpws_ns": 3.0,
+    "failing_endpoints": 0
+  },
+  "coverage_gaps": {
+    "no_clock_pins": 566,
+    "unconstrained_internal_endpoints": 1016,
+    "no_input_delay_ports": 76,
+    "no_output_delay_ports": 75
+  },
+  "drc": {
+    "errors": 0,
+    "warnings": 52,
+    "advisories": 1
+  },
+  "methodology": {
+    "critical_warnings": 570,
+    "warnings": 112
+  },
+  "utilization": {
+    "luts": 25762,
+    "registers": 34798,
+    "bram_tiles": 80.5,
+    "dsps": 22
+  },
+  "original_report_sha256": {
+    "baseline-routed-bus-skew.rpt": "1d487fba98be5adbbd56012d67f30b41f52763e3e3e36e58710145fa98054760",
+    "baseline-routed-cdc.rpt": "faf80cbd0bc30102ba8993091765a207dc1436de4723d557d244572f027043da",
+    "baseline-routed-drc.rpt": "54699b60c829fd82eb13ae20e03f9d321ebfb4b39f329883548e4b74f1a257e2",
+    "baseline-routed-methodology.rpt": "af711a76ceab22aec86d8a1ad4bb31ed6176f8ee841119d99c6db1755a39482c",
+    "baseline-routed-status.rpt": "344424e335e21777993ef9aad75d1658eca0978d3b5e3605c5e9aef6b0cc1ee6",
+    "baseline-routed-timing.rpt": "974473ba434025d613ccdd3e03841d659d2bef70086c8b441d5a5cc9710928aa",
+    "baseline-routed-utilization.rpt": "d978418e78158d148882122d36a2dcd19d432763c8234de5c657bd2247c20c86"
+  },
+  "scope": "Routed unchanged baseline; declared constraints pass, timing coverage and CDC review incomplete. No bitstream or hardware validation."
+}
