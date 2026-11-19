@@ -73,6 +73,15 @@ int main(void) {
   assert(xacpgpu_validate_submit(wire,p.words,&st,&bad,&detail)==0);
  }
  puts("PASS upstream XACP validator: ten offscreen fixtures with completion markers");
+ /* RasterIX's newer OP_FENCE is not part of our inspected submit ABI 1.0.
+    Check the actual validator without issuing an unsupported hardware command. */
+ {
+  uint32_t wire[]={be32(0x90000004),0,be32(0x60000000)};
+  XACPGPU_SafeState st={0};uint32_t bad=0,detail=0;
+  assert(xacpgpu_validate_submit(wire,3,&st,&bad,&detail)==0x4980);
+  assert(bad==2&&detail==0x60000000);
+  puts("PASS upstream XACP validator: new RasterIX fence rejected by submit ABI 1.0");
+ }
 }
 '''
     source = OUT / 'firmware_validator.c'

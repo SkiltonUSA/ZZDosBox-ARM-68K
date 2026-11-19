@@ -1,0 +1,2 @@
+FATAL: tests/amiga/dosbox/glide/fence.v:36: Passed fence with transactions pending
+       Time: 85000  Scope: fence_test.blocked

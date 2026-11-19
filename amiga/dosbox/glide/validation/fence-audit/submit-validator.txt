@@ -1,0 +1,14 @@
+PASS marker retagging: only clear colour changes; standard CRC32 check vectors
+PASS triangle coverage and RGB interpolation against analytic reference
+PASS origin conversion and rectangular perspective-weighted texture coordinates
+PASS blend mapping, unsupported depth, pool bounds, atomic rejection and bounded packets
+PASS probe fixtures: bounded packets, mask restoration, scissor row and marker encoding
+PASS early sample offsets and endian conversion
+PASS mismatch trace records values from the original reads
+PASS shared readback oracle: five scenes, corruption detected in each
+PASS early sample offsets and endian conversion
+PASS mismatch trace records values from the original reads
+PASS shared readback oracle: five scenes, corruption detected in each
+PASS upstream XACP validator: 306 texture/aspect/origin/blend batches and depth rejection
+PASS upstream XACP validator: ten offscreen fixtures with completion markers
+PASS upstream XACP validator: new RasterIX fence rejected by submit ABI 1.0

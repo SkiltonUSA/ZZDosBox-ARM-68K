@@ -1,0 +1,6 @@
+PASS parser fence: framebuffer=1 texture=0
+PASS parser fence: framebuffer=0 texture=1
+PASS parser fence: framebuffer=1 texture=1
+PASS parser fence: framebuffer=0 texture=0
+PASS fence acceptance is not retirement; following command waits for both domains
+tests/amiga/dosbox/glide/fence.v:62: $finish called at 1320000 (1ps)

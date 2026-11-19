@@ -1,0 +1,14 @@
+{
+  "repository": "ToNi3141/RasterIX",
+  "commit": "3e2ee5aa5214b829c2a824250c445ce799ac8dc0",
+  "files": {
+    "rtl/RasterIX/RasterIXCoreEF.v": "8eadf2ff1e30069eb250b6293dd5a640221a3051bb115e808a300f0c7a3ec874",
+    "rtl/RasterIX/StreamFramebuffer.v": "5d84879f7c20b8bd0023a0ac665af1fa11c9979347c7f38f59c036588cd4bd67",
+    "rtl/RasterIX/FramebufferSerializer.v": "de66c2cad5a3f4d683d41458a32b742751d93929ff7b85a8b9eb617484662d13",
+    "rtl/RasterIX/CommandParser.v": "256ab3127d6cdbf18b38e2d8e51b13fac5e2e5e1ece24366526730690a11f7ee",
+    "rtl/RasterIX/RegisterAndDescriptorDefines.vh": "265dc4ae18aea0cd79617e5e63e7e1310b0e8184165fa5a812c95a923b606fd6",
+    "lib/gl/renderer/commands/FenceCmd.hpp": "df6580e43ec1c1c9cc7bb05124c3cea76f18313dcbf2ad60797aa1951a75f78c",
+    "lib/gl/renderer/commands/Op.hpp": "a4f408695e8738fd6aa757e2ba6e1deb78ee1089edd7ef6818eb5326407cebc7",
+    "lib/gl/renderer/Renderer.cpp": "88423433b47c9947b79c5c5acbd838e45009499a557dbc4dc85ba9ead4b301e9"
+  }
+}

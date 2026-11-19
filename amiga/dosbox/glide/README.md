@@ -48,6 +48,11 @@ completed controls, including publication before interior pixel reads. A later
 run lost connectivity. Reboot recovery and a single direct-output check passed,
 but repeated-run stability remains unresolved.
 
+The [upstream fence audit](validation/fence-audit/README.md) identifies a newer
+RasterIX command that waits for framebuffer and texture transactions. Its parser
+passes simulation checks, but our inspected XACP ABI rejects that opcode. It is
+an integration candidate, not an installed fix or an explanation of the freezes.
+
 ## Implemented subset
 
 - Diagnostic DOS/4G `GLIDE2X.OVL`, with bounded guest argument decoding.
@@ -182,6 +187,9 @@ The [GTA ECTS loader test](validation/guest-loader/README.md) reaches our OVL's
 `grGlideInit`, `grSstQueryHardware` and shutdown entry points. The query returns
 false deliberately: no GPU is advertised. The result proves DOS/4G loading and
 argument delivery in the native harness, not playable GTA or ARM performance.
+The [timed original-overlay comparison](validation/timed-gta/README.md) reaches
+the same no-board failure and credits with both overlays. Normal DOS exit is
+still unverified; bounded harness termination must not be called a clean game exit.
 
 ```sh
 python3 scripts/build_dosbox_glide_ovl.py --watcom /path/to/openwatcom

@@ -24,6 +24,8 @@ A [diagnostic Glide overlay](amiga/dosbox/glide/validation/guest-loader/README.m
 now loads in the GTA ECTS native test and receives its hardware query. It reports
 no board; game rendering is not connected or included in the release. Core0
 depth support also remains a blocker. No GTA hardware FPS result is claimed.
+An [upstream fence candidate](amiga/dosbox/glide/validation/fence-audit/README.md)
+passes parser simulation; it requires FPGA/firmware integration before hardware use.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

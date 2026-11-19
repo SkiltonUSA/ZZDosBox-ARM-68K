@@ -12,6 +12,10 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Add timed native keyboard replay and compare GTA ECTS's original and diagnostic
+  overlays. Both reach the no-board error and credits; normal DOS exit remains unverified.
+- Validate upstream RasterIX fence-parser behaviour and confirm the inspected
+  XACP submit ABI rejects the new opcode. No firmware or FPGA update performed.
 - Add an opt-in diagnostic Glide 2 OVL and native DOSBox guest-call hook.
   GTA ECTS loads it and reaches the hardware query; it deliberately reports
   no board. This is not yet a playable accelerated game.
