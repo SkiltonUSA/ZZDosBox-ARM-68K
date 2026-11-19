@@ -601,6 +601,19 @@ ordered RID/RRESP/RLAST. Both compilation and simulation returned zero. The
 includes source hashes. This tests command-read-credit behaviour only; it does
 not simulate the complete GPU, HP3 or physical board.
 
+## Video and audio clock follow-up
+
+The [crossing audit](../amiga/dosbox/glide/experimental/crossing-audit.md) records
+detailed routed CDC findings, audio synchronizer register properties and nine
+passing digital tests of the unchanged sampled audio clock. Both deliberately
+broken simulation controls were detected. Sampling quantises output periods to
+the 100 MHz clock grid; this is not a hardware audio-quality measurement.
+
+The baseline's 75 MHz video timing does not cover all firmware-programmed display
+modes. Active frame/line transfers also need functional review independently of
+long-held configuration signals. No crossing exceptions were added, and no RTL
+or deployed firmware changed during this audit.
+
 ## Evidence required before promotion
 
 First establish the unchanged full build, then compare an experimental build

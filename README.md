@@ -47,6 +47,9 @@ both debug cores. Full-board routing completed with no routing errors and passes
 the declared timing constraints. Missing audio-clock constraints and other timing
 coverage/clock-domain findings still require review before hardware validation.
 No replacement firmware has been flashed.
+The [video/audio crossing audit](amiga/dosbox/glide/experimental/crossing-audit.md)
+adds nine passing audio-clock simulations and identifies runtime display-clock
+coverage and video-counter handoff work still needed before promotion.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

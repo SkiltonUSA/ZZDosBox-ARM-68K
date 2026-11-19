@@ -1,0 +1,29 @@
+{
+  "source_sha256": "60516797c88f7ffb2e491e3bcc348e1531112e7ce7536f85f60515025e933da0",
+  "test_sha256": "5c24aece94319ee3250da976fa0c98d29e7083624c201f871e788764ff13bfbc",
+  "cases": [
+    "PASS half_ps=40000 phase_ps=1000 rises=200 latency_ps=24000:24000 period_ps=80000:80000 divided_rises=25",
+    "PASS half_ps=40000 phase_ps=3500 rises=200 latency_ps=21500:21500 period_ps=80000:80000 divided_rises=25",
+    "PASS half_ps=40000 phase_ps=9000 rises=200 latency_ps=26000:26000 period_ps=80000:80000 divided_rises=25",
+    "PASS half_ps=40690 phase_ps=1000 rises=200 latency_ps=20080:29860 period_ps=80000:90000 divided_rises=25",
+    "PASS half_ps=40690 phase_ps=3500 rises=200 latency_ps=20000:29760 period_ps=80000:90000 divided_rises=25",
+    "PASS half_ps=40690 phase_ps=9000 rises=200 latency_ps=20020:29780 period_ps=80000:90000 divided_rises=25",
+    "PASS half_ps=41000 phase_ps=1000 rises=200 latency_ps=20000:28000 period_ps=80000:90000 divided_rises=25",
+    "PASS half_ps=41000 phase_ps=3500 rises=200 latency_ps=21500:29500 period_ps=80000:90000 divided_rises=25",
+    "PASS half_ps=41000 phase_ps=9000 rises=200 latency_ps=20000:28000 period_ps=80000:90000 divided_rises=25"
+  ],
+  "mutations": [
+    {
+      "name": "missing-sampling-stage",
+      "detected": true,
+      "failure": "FATAL: audio_clock.v:47: Unexpected sampling latency 14000"
+    },
+    {
+      "name": "wrong-divider",
+      "detected": true,
+      "failure": "FATAL: audio_clock.v:62: Divider edge on fall 2, expected 4"
+    }
+  ],
+  "initial_state": "Explicit clkbuf=0, clkgen=0; no reset or startup validation",
+  "scope": "Ideal digital RTL simulation; no metastability, analog timing, or hardware performance claim"
+}

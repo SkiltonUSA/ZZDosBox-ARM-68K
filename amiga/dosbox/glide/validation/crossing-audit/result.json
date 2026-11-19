@@ -1,0 +1,15 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 188.59,
+  "routed_checkpoint_sha256": "71987c95d7f2046c9427e0f9a40ca6ed693d59d2f6157ab207da182e24207790",
+  "original_report_sha256": "f70d3e7864c3ec1950b50db477e5a01ac56d1d833d8c4f6198ac710e35ca2e49",
+  "published_report_sha256": "9216f12a25e959df490fdc7cdc648b3b9113bf5f3554e11f5ea60988cf36d28a",
+  "redaction": "Report host name replaced and trailing blank lines removed; all diagnostic rows retained",
+  "script_sha256": "490af8a10fcfe82588fe300bf243ea5b6de5125fda739896971e0f047ab1e5e2",
+  "audio_register_properties": [
+    "AUDIO_CELL zz9000_ps_i/audio_clock_0/inst/clkbuf_reg[0] INIT=1'b0 ASYNC_REG= LOC=SLICE_X109Y59",
+    "AUDIO_CELL zz9000_ps_i/audio_clock_0/inst/clkbuf_reg[1] INIT=1'b0 ASYNC_REG= LOC=SLICE_X109Y59",
+    "AUDIO_CELL zz9000_ps_i/audio_clock_0/inst/clkbuf_reg[2] INIT=1'b0 ASYNC_REG= LOC=SLICE_X108Y46"
+  ],
+  "scope": "Read-only routed checkpoint audit; no checkpoint or firmware modified"
+}

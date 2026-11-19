@@ -59,6 +59,11 @@ routable nets without routing errors. Declared setup/hold constraints pass, but
 Clock-domain and methodology findings remain open; this is not complete timing
 sign-off or a boot-tested replacement. See the [rebuild guide](../../../../docs/xacp-firmware-rebuild.md).
 
+The [detailed crossing review](crossing-audit.md) identifies runtime display modes
+beyond the 75 MHz timing baseline and the active line-counter transfer. Nine
+digital audio-clock tests pass, including edge-count and divide-by-eight checks;
+they do not close physical sampled-clock timing or establish audio quality.
+
 The full pinned RasterIX and Float sources were downloaded for the next simulator
 stage. An exploratory Icarus elaboration of the complete RasterIX top failed
 on unused constant output destinations and declarations referenced before their
