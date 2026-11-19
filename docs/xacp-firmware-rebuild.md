@@ -403,6 +403,57 @@ not new application allocations. Keep the memory map, firmware validator and
 FPGA enforcement consistent. The current validator also rejects depth, stencil
 and TMU1 enablement; adding a fence alone does not implement full Glide support.
 
+## ZZUAE Copper acceleration opportunity
+
+This is a proposed follow-on experiment, not an enabled firmware feature.
+RasterIX is a [fixed-function pixel renderer](https://github.com/ToNi3141/RasterIX),
+not a programmable compute/shader core. Its texture unit, 100 MHz fabric clock
+and 64-bit HP3 connection do not implement Amiga Copper MOVE/WAIT/SKIP,
+custom-register effects or chipset DMA arbitration. Core0 is an ARM CPU;
+RasterIX executes in FPGA logic, separately from either ARM core.
+
+There are two distinct paths:
+
+| Path | Work to accelerate | Work that remains in ZZUAE initially |
+| --- | --- | --- |
+| RasterIX drawing | Batched colour spans and suitable composition after guest display events are resolved | Copper execution, virtual beam timing, CPU/register ordering, DMA and Paula timing |
+| Dedicated FPGA Copper companion | Copper decode, comparisons and bounded state transitions in new RTL beside RasterIX | Authoritative chipset scheduling and register side effects until an equivalent integrated design is demonstrated |
+
+Start with the drawing path after the completion protocol is validated. Reuse
+its tagged batch completion and buffer-ownership rules, preserve event positions
+within each scanline, and avoid CPU readback of GPU-rendered pixels where the
+presentation path permits it. Retain the cached ARM renderer as the fallback.
+Rendering a completed image with a GPU does not remove the cost of executing
+its Copper list or guarantee faster whole-emulator operation.
+
+The existing ZZUAE experiments already provide useful controls: GPU drawing
+followed by CPU readback/conversion lost against cached CPU drawing, while
+synchronous Core0 Copper transitions also added overhead. Neither should be
+reintroduced as an assumed optimization. Use complete-scene measurements,
+including command preparation, synchronization, presentation and audio gaps.
+
+For a dedicated FPGA unit, first simulate the existing extracted Copper state
+machine against the UAE reference. A request per Copper cycle would recreate
+the handoff problem, so useful batches must end at a proven dependency boundary.
+CPU edits to Copper lists, COPJMP, DMA enable changes, blitter waits, interrupts
+and side-effecting register writes require ordering with the virtual chipset.
+A prefetched list cannot be replayed blindly. FPGA execution must follow guest
+cycle grants, not the monitor's physical scanout clock or raw 100 MHz clock.
+This does not provide a complete AGA implementation.
+
+Before allocating FPGA resources, obtain full-design utilization and routed
+timing, including the completion changes. A separate Copper unit would compete
+for logic, memory/interconnect bandwidth and timing margin; its size and gain
+have not been measured. Keep the existing GPU configuration unchanged while
+establishing the baseline. Do not assign a new opcode, register address or DMA
+region without checking the firmware map and compatibility contract.
+
+Acceptance requires PAL/NTSC event-trace and pixel parity, CPU list edits and
+restart cases, blitter/DMA interactions, clean cancellation and buffer release,
+then matched State of the Art, Acid in the House and AGA scene measurements.
+Report whole-emulator elapsed time and audio underruns alongside renderer time.
+There is no Copper-on-FPGA performance claim at this stage.
+
 ## Additional source-review finding
 
 `fpga/test/RUN_G4C_UNIT_SIM.tcl` references `fpga/rtl/XACPCommandReadCredit.v`,
