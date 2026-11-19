@@ -1,0 +1,17 @@
+{
+  "tool": "Vivado 2025.2",
+  "part": "xc7z020clg400-1",
+  "top": "grx_completion",
+  "exit_code": 0,
+  "procedure": [
+    "fresh Vivado process",
+    "open_checkpoint completion-synth.dcp",
+    "opt_design",
+    "write_checkpoint completion-fresh-default-opt.dcp"
+  ],
+  "input_checkpoint_sha256": "1238b04a7e0b72ae89404e0de452e05cc3ea47324f6a7a7d2bcf0adc77933d25",
+  "output_checkpoint_sha256": "e8412c23bffc722ce0450d37df4b257e1fc2275ea1edf0391738a986ba23cfcd",
+  "default_optimization_completed": true,
+  "inference": "Selected optimization passes are not required to pass opt_design for this checkpoint; separate-process checkpoint reload is a working workaround in this test.",
+  "scope": "Optimization only of the small completion circuit, not full-board implementation"
+}

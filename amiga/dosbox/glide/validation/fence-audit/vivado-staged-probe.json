@@ -1,0 +1,33 @@
+{
+  "tool": "Vivado 2025.2",
+  "environment": "Wine 11.0 / Rosetta on Apple Silicon macOS",
+  "part": "xc7z020clg400-1",
+  "top": "grx_completion",
+  "mode": "out_of_context",
+  "exit_code": 0,
+  "source_sha256": "c9b9115cfbd19f502b1f722bddd57fd946467aee53a997670955722aac812dfb",
+  "synthesis_checkpoint_sha256": "1238b04a7e0b72ae89404e0de452e05cc3ea47324f6a7a7d2bcf0adc77933d25",
+  "routed_checkpoint_sha256": "d7347699398dee34ceeed1980e7e152277179ae8189dedf714077773dddb663e",
+  "sequential_opt_passes": [
+    "retarget",
+    "propconst",
+    "sweep",
+    "bufg_opt",
+    "shift_register_opt"
+  ],
+  "placed": true,
+  "routed": true,
+  "routable_nets": 10,
+  "fully_routed_nets": 10,
+  "routing_errors": 0,
+  "clock_period_ns": 10.0,
+  "internal_setup_wns_ns": 7.154,
+  "internal_hold_whs_ns": 0.246,
+  "unconstrained_input_ports": 70,
+  "unconstrained_output_ports": 69,
+  "drc_warnings": [
+    "ZPS7-1: PS7 block required"
+  ],
+  "scope": "Small mailbox only; no full-board timing signoff, bitstream, firmware change, hardware validation or FPS",
+  "earlier_default_opt_in_synthesis_process_failed": true
+}

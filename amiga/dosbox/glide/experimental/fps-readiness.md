@@ -37,12 +37,15 @@ application was changed.
 The [Wine installation repair](../../../../docs/xacp-firmware-rebuild.md#wine-installation-finding)
 resolved a shared-directory layout problem. Vivado batch mode now loads the Tcl
 probe, reports 2025.2, finds the target part and obtains the synthesis licence.
-The small completion module synthesized with zero warnings or errors, but
-`opt_design` failed with `ERROR: [Synth 20-411]` and no explanatory message
-(process exit 1). Placement and routing were not reached. This is not a full
-firmware build; the implementation failure remains unresolved. No firmware was changed.
-The out-of-context mailbox build is a toolchain probe, not a replacement for
-full board validation or timing closure.
+The small completion module synthesized with zero warnings or errors. Its first
+same-process `opt_design` failed with `ERROR: [Synth 20-411]` and no explanatory
+message. Reopening the synthesis checkpoint in a fresh Vivado process allowed
+the ordinary optimization, placement, physical optimization and routing flow to
+complete. All 10 routable nets routed without errors. The OOC probe's 139 I/O
+ports remain unconstrained and PS7 is absent, so this is a toolchain result,
+not board timing closure. See the
+[default-flow record](../validation/fence-audit/vivado-default-flow.json).
+The underlying same-process failure remains unidentified. No firmware was changed.
 
 The unchanged ARM firmware and BSP now build with Arm GNU 13.2.Rel1. The actual
 board project also completed block-design validation, IP generation and XSA

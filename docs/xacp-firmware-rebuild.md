@@ -45,17 +45,17 @@ without reproducing the complete original toolchain and build conditions.
 
 | Tool | Required configuration / current evidence |
 | --- | --- |
-| Vivado | 2025.2, device `xc7z020clg400-1`, Zynq-7000 support; small out-of-context completion module synthesized under Wine 11.0; implementation failed |
+| Vivado | 2025.2, device `xc7z020clg400-1`, Zynq-7000 support; out-of-context completion module routed under Wine 11.0; fresh-process default optimization also passed |
 | ARM compiler | Arm GNU 13.2.Rel1 with newlib; unchanged BSP and ARM application build passed locally |
 | BSP / FSBL tools | Compatible Xilinx standalone BSP and processing-system initialization generation from the actual hardware design |
-| Bootgen | Zynq boot-image packaging; confirm availability separately from the minimal Vivado installation |
+| Bootgen | 2025.2 startup/help passed under Wine; boot-image packaging not yet tested |
 | GNU make / Python | Firmware and boot-ROM resource build |
 
 Vivado installation completed after authenticated download of the selected
 16.61 GB payload. After the Wine-specific directory repair below, batch mode
 loaded the test Tcl, reported version 2025.2, found the device and obtained the
 synthesis licence. The out-of-context completion module synthesized successfully
-with zero synthesis warnings or errors. Implementation then failed in
+with zero synthesis warnings or errors. In the first run, implementation failed in
 `opt_design` with `ERROR: [Synth 20-411]` and no explanatory message; the process
 returned 1. Placement and routing were not reached. The cause remains unresolved,
 and this result does not establish a defect in Xanxi's firmware. See the
@@ -73,6 +73,52 @@ This was not a warning-free validation: Vivado reported a critical HDL parser
 warning near `localparam` in `RasterizerCommands.vh`, plus interface width and
 address-path warnings. Generation completing does not resolve those diagnostics
 or establish full-board synthesis/timing. No automatic IP upgrade was applied.
+
+A subsequent run reopened the saved synthesis checkpoint and executed
+`opt_design -retarget`, `-propconst`, `-sweep`, `-bufg_opt` and
+`-shift_register_opt` as separate passes. All five passed, followed by
+`place_design` and `route_design` (exit 0). Ten routable nets were fully routed
+with no routing errors. The internal setup/hold slack was +7.154/+0.246 ns
+against a 10 ns clock constraint.
+
+This is a limited toolchain result: 70 input ports and 69 output ports have no
+delay constraints, and the out-of-context DRC warns that the PS7 block is absent.
+It does **not** establish ZZ9000 timing closure. A further control run reopened
+the same synthesis checkpoint in a fresh process and ran plain `opt_design`:
+that also passed (exit 0). The selected passes are therefore not required for
+this small circuit. Separating synthesis and implementation with a checkpoint
+is the simpler observed workaround; the underlying cause of the earlier
+same-process failure remains unidentified. See the
+[fresh-process control](../amiga/dosbox/glide/validation/fence-audit/vivado-fresh-default.json).
+See the [staged probe](../amiga/dosbox/glide/validation/fence-audit/vivado-staged-probe.json)
+and its [routing](../amiga/dosbox/glide/validation/fence-audit/vivado-staged-route.rpt),
+[timing](../amiga/dosbox/glide/validation/fence-audit/vivado-staged-timing.rpt) and
+[DRC](../amiga/dosbox/glide/validation/fence-audit/vivado-staged-drc.rpt) reports.
+
+The fresh-process control was then extended through ordinary `opt_design`,
+`place_design`, `phys_opt_design` and `route_design`. This also completed with
+exit 0: 10/10 routable nets, no routing errors and final reported internal
+setup/hold slack of +7.154/+0.246 ns. The same OOC constraints limitations apply.
+See the [default-flow record](../amiga/dosbox/glide/validation/fence-audit/vivado-default-flow.json)
+and its [timing report](../amiga/dosbox/glide/validation/fence-audit/vivado-default-timing.rpt).
+
+For this environment, save a synthesis checkpoint and end that Vivado process.
+Start a new batch process for implementation:
+
+```tcl
+open_checkpoint completion-synth.dcp
+opt_design
+place_design
+phys_opt_design
+route_design
+report_route_status -file route.rpt
+report_timing_summary -report_unconstrained -file timing.rpt
+report_drc -file drc.rpt
+write_checkpoint -force completion-routed.dcp
+```
+
+This recipe passed for the small completion component. The full-board result
+must be checked separately, including its board and IP constraints.
 
 ### Wine installation finding
 
@@ -160,6 +206,30 @@ closure. Preserve `zz9000.xdc`; a different Zynq-7020 board's pins are unsuitabl
 After the reports are accepted, generate the bitstream and export the matching
 hardware platform for the software stage. Record all tool/IP versions and hashes.
 
+### Local job-manager limitation
+
+The first full-project attempt used `launch_runs synth_1 -jobs 2`. The run
+manager queued jobs and created two empty begin markers, but no child synthesis
+logs or child Vivado processes were observed during the check. That attempt was
+stopped locally; it does not establish a failed RTL synthesis.
+
+A separate copy is being tested with [global synthesis](https://docs.amd.com/r/2025.2-English/ug892-vivado-design-flows-overview/Synthesis):
+
+```tcl
+set_property SYNTH_CHECKPOINT_MODE NONE [get_files */zz9000_ps.bd]
+generate_target all [get_files */zz9000_ps.bd]
+update_compile_order -fileset sources_1
+synth_design -top zz9000_ps_wrapper -part xc7z020clg400-1
+```
+
+This changes the build flow from per-IP checkpoints to whole-design synthesis;
+it does not change the supplied RTL. Its result is pending. RTL elaboration and
+constraint processing have completed; the board XDC reported a missing
+`ZORRO_E7M_IBUF` net for `CLOCK_DEDICATED_ROUTE` at line 91. Review this against
+the finished synthesis netlist and implementation constraints; do not silently
+remove the exception or assume that it took effect. Do not substitute
+an incomplete run or a partial netlist for a successful full synthesis result.
+
 ### 2. Regenerate and verify processing-system initialization and FSBL
 
 The source snapshot does not contain `ps7_init.c`, `ps7_init.h`, an exported
@@ -206,6 +276,10 @@ framebuffer, and the high-DDR service boundaries. Save the ELF, map, size output
 and section addresses. Do not remove a linker guard to make an enlarged image fit.
 
 ### 4. Package only mutually compatible outputs
+
+The installed Bootgen 2025.2 starts successfully and returns zero for `-help`.
+This verifies tool availability only; no new BOOT image has been packaged.
+See the [tool check](../amiga/dosbox/glide/validation/fence-audit/bootgen-availability.json).
 
 Place the reviewed FSBL, bitstream and firmware ELF in a dedicated staging
 directory under the names in the BIF. With the matching BIF beside them:

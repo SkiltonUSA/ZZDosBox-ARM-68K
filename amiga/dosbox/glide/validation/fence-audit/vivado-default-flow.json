@@ -1,0 +1,31 @@
+{
+  "tool": "Vivado 2025.2",
+  "environment": "Wine 11.0 on macOS ARM64/Rosetta",
+  "top": "grx_completion",
+  "part": "xc7z020clg400-1",
+  "exit_code": 0,
+  "procedure": [
+    "fresh Vivado process",
+    "open_checkpoint completion-synth.dcp",
+    "opt_design",
+    "place_design",
+    "phys_opt_design",
+    "route_design",
+    "report_route_status",
+    "report_timing_summary -report_unconstrained",
+    "report_drc",
+    "write_checkpoint completion-default-routed.dcp"
+  ],
+  "input_checkpoint_sha256": "1238b04a7e0b72ae89404e0de452e05cc3ea47324f6a7a7d2bcf0adc77933d25",
+  "routed_checkpoint_sha256": "680e468bd8f7d9cac1633d57f69357bc2095e96c11bf67f98a4ee4c78e69f7a8",
+  "routable_nets": 10,
+  "fully_routed_nets": 10,
+  "routing_errors": 0,
+  "clock_period_ns": 10,
+  "reported_internal_setup_slack_ns": 7.154,
+  "reported_internal_hold_slack_ns": 0.246,
+  "unconstrained_input_ports": 70,
+  "unconstrained_output_ports": 69,
+  "scope": "Out-of-context toolchain probe only; not board timing closure or hardware validation",
+  "limitation": "PS7 absent in this OOC test; I/O delays unassigned. Earlier same-process opt_design failed with Synth 20-411; underlying cause remains unidentified."
+}

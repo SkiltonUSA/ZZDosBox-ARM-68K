@@ -1,0 +1,9 @@
+{
+  "tool": "AMD Bootgen",
+  "version": "2025.2",
+  "build_date": "Oct 23 2025-12:54:55",
+  "command": "bootgen.bat -help",
+  "environment": "Wine 11.0 on macOS ARM64/Rosetta",
+  "exit_code": 0,
+  "scope": "Executable startup/help only; no BOOT image packaged"
+}
