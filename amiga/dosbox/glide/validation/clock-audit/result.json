@@ -1,0 +1,37 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 468.69,
+  "routed_checkpoint_sha256": "71987c95d7f2046c9427e0f9a40ca6ed693d59d2f6157ab207da182e24207790",
+  "original_file_sha256": {
+    "clock-audit-original.xdc": "64aeaf5b907ca148df31c2493a34bd91e008d18b547091d6f09a9f6cd82c4cdf",
+    "clock-audit-inherited.xdc": "427884b62435351561a496cb7701aabfd367fb73e99e15f0280f082b29f3f159",
+    "compare-clock-audit.tcl": "ff162ae79277d58e5078a2a87f1e923e41934ed1191150c8566302a68d8bc201",
+    "clock-control-timing.rpt": "5414dfa9a49a4cc404666864d73cfd63552d1ef7987cf87f2aff0a72a30ac7d3",
+    "clock-inherited-timing.rpt": "57ea3f8ef82e616e4ecd0d68770a50c6399f2e581348291acb84529176e4fff7",
+    "clock-inherited-clocks.rpt": "dd9fbe2f325a58ada7ae72930bad09ff1f369066266b17190c0d8773089846d5",
+    "clock-inherited-methodology.rpt": "49a70fd39351aed4e28437f7897af51b436090b5940f879cf699672dbecab564",
+    "clock-inherited-cdc.rpt": "0457a38e5ea7b050b49d59e450929c005da3c2d1ee4bd02823d2db28a4822cc8",
+    "clock-audit-input.rpt": "eeb4b23e7c5baea79cce940680072f9c44d61a9c766c393dcbd2f8fe67b5e5f8"
+  },
+  "control_roundtrip": {
+    "setup_wns_ns": 0.156,
+    "hold_whs_ns": 0.01,
+    "coverage_counts_unchanged": true
+  },
+  "candidate": {
+    "setup_wns_ns": 0.156,
+    "hold_whs_ns": 0.01,
+    "coverage_counts_unchanged": true,
+    "removed_methodology_rules": [
+      "TIMING-4",
+      "TIMING-27"
+    ],
+    "new_methodology_warnings": {
+      "TIMING-47": 2
+    },
+    "remaining_critical_methodology_checks": 568,
+    "cdc_unsafe_endpoints": 23,
+    "cdc_unknown_endpoints": 173
+  },
+  "scope": "In-memory timing-constraint experiment only; no modified checkpoint saved, no RTL change, no firmware flash, not promoted"
+}

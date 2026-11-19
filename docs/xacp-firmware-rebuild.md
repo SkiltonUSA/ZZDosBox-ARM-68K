@@ -348,6 +348,13 @@ Evidence: [route record](../amiga/dosbox/glide/validation/fence-audit/baseline-p
 [methodology](../amiga/dosbox/glide/validation/fence-audit/baseline-routed-methodology.rpt),
 [bus skew](../amiga/dosbox/glide/validation/fence-audit/baseline-routed-bus-skew.rpt).
 
+The subsequent [clock-inheritance experiment](../amiga/dosbox/glide/experimental/clock-audit.md)
+passed its unchanged-constraint control and preserved setup/hold margins after
+removing the duplicate clock definition. TIMING-4/27 disappear, while two
+TIMING-47 warnings expose existing false paths between related clocks. Missing
+audio timing and unsafe/unknown CDC counts remain unchanged. The candidate is
+not promoted; no modified design checkpoint or firmware was saved.
+
 ### 2. Regenerate and verify processing-system initialization and FSBL
 
 The source snapshot does not contain `ps7_init.c`, `ps7_init.h`, an exported

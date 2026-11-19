@@ -1,0 +1,82 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Thu Nov 19 16:42:53 2026
+| Host         : build-host running 64-bit major release  (build 9200)
+| Command      : report_clocks -file clock-inherited-clocks.rpt
+| Design       : zz9000_ps_wrapper
+| Device       : 7z020-clg400
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Clock Report
+
+
+Attributes
+  P: Propagated
+  G: Generated
+  A: Auto-derived
+  R: Renamed
+  V: Virtual
+  I: Inverted
+  S: Pin phase-shifted with Latency mode
+
+Clock                                                                                       Period(ns)  Waveform(ns)    Attributes  Sources
+amiga_e7m                                                                                   35.000      {0.000 17.500}  P           {ZORRO_E7M}
+clk_fpga_0                                                                                  10.000      {0.000 5.000}   P           {zz9000_ps_i/processing_system7_0/inst/PS7_i/FCLKCLK[0]}
+clk_fpga_1                                                                                  40.000      {0.000 20.000}  P           {zz9000_ps_i/processing_system7_0/inst/PS7_i/FCLKCLK[1]}
+dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst/TCK  33.000      {0.000 16.500}  P           {dbg_hub/inst/BSCANID.u_xsdbm_id/SWITCH_N_EXT_BSCAN.bscan_inst/SERIES7_BSCAN.bscan_inst/TCK}
+i2s_mclk                                                                                    80.000      {0.000 40.000}  P           {I2SO_BCLK}
+clk_out1_zz9000_ps_clk_wiz_0_0_1                                                            13.333      {0.000 6.667}   P,G,A       {zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKOUT0}
+clkfbout_zz9000_ps_clk_wiz_0_0_1                                                            40.000      {0.000 20.000}  P,G,A       {zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKFBOUT}
+clkfbout_zz9000_ps_clk_wiz_1_0                                                              35.000      {0.000 17.500}  P,G,A       {zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKFBOUT}
+e7m_shifted                                                                                 17.500      {0.000 8.750}   P,G,A       {zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKOUT0}
+
+
+====================================================
+Generated Clocks
+====================================================
+
+Generated Clock     : clk_out1_zz9000_ps_clk_wiz_0_0_1
+Master Source       : zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKIN1
+Master Clock        : clk_fpga_0
+Edges               : {1 2 3}
+Edge Shifts(ns)     : {0.000 1.667 3.333}
+Generated Sources   : {zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKOUT0}
+
+Generated Clock     : clkfbout_zz9000_ps_clk_wiz_0_0_1
+Master Source       : zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKIN1
+Master Clock        : clk_fpga_0
+Edges               : {1 2 3}
+Edge Shifts(ns)     : {0.000 15.000 30.000}
+Generated Sources   : {zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKFBOUT}
+
+Generated Clock     : clkfbout_zz9000_ps_clk_wiz_1_0
+Master Source       : zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKIN1
+Master Clock        : amiga_e7m
+Multiply By         : 1
+Generated Sources   : {zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKFBOUT}
+
+Generated Clock     : e7m_shifted
+Master Source       : zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKIN1
+Master Clock        : amiga_e7m
+Multiply By         : 2
+Generated Sources   : {zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKOUT0}
+
+
+
+====================================================
+User Uncertainty
+====================================================
+
+
+
+====================================================
+User Jitter
+====================================================
+
+Clock       Jitter(ns)
+clk_fpga_0  0.300
+clk_fpga_1  1.200
+
