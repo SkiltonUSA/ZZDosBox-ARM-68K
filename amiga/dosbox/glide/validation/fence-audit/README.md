@@ -143,6 +143,13 @@ out-of-order IDs, live DDR, or ARM/68k cache coherence.
 
 ## ZZ9000 integration boundary
 
+A subsequent [completion-mailbox prototype](../../experimental/completion.md)
+adds nine scenarios and five detected mutations, taking the combined suite to
+52 scenarios and eleven mutations. Its session/batch acknowledgement is held
+until consumed, and errors quarantine work. It is synchronous RTL only: no CPU
+register map, CDC wrapper, XACP opcode or physical installation is provided.
+The `completion*.txt` logs and hashes are included here.
+
 The published [XX19d-RIX provenance](https://github.com/Xanxi-Amiga/XACP-ZZ9000/blob/6e59edbaf24e0d8d2f29cdd31667a10e16c5b283/firmware/source/XX19d-RIX/PROVENANCE.json)
 records RasterIX revision `9269a01c9bd4c3342bfa70ef8e3cdd751c15c6d0`.
 The parser in that source distribution has no fence opcode. The manifest and
@@ -210,3 +217,7 @@ Add `--texture` to run all 43 scenarios and six mutation checks. Fetch the
 and `axis_broadcast` modules listed in `upstream-sources.json`, preserving their
 filenames beside the other RTL. The runner generates the Icarus-compatible
 reader and mutated copies under `.context/`; it leaves supplied RTL untouched.
+
+Add `--completion` to include the proposed mailbox. All four optional flags run
+52 scenarios and eleven mutation checks. The mailbox RTL is local project code;
+it does not replace any upstream FPGA module or modify the supplied RTL.

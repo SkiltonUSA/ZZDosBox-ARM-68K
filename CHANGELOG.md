@@ -12,6 +12,10 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Add an experimental RTL completion mailbox carrying session and batch identity.
+  Nine parser-connected scenarios and five deliberate faults verify stale-idle
+  rejection, retained results, cancellation and sticky error quarantine. No CPU
+  register interface, FPGA installation or released-player change.
 - Validate cached texture reads, page remapping and cache hits with delayed
   responses at 32/64-bit widths. The combined suite passes 43 scenarios and
   detects six deliberate faults; CPU-visible completion remains unimplemented.

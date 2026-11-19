@@ -10,6 +10,40 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / '.context/amiga/glide/fence-model'
 
 
+def test_completion(simulate, parser):
+    design = ROOT / 'amiga/dosbox/glide/experimental/completion.v'
+    bench = ROOT / 'tests/amiga/dosbox/glide/completion.v'
+    rc, text = simulate(parser, 'completion', bench, 'completion_test', (design,))
+    if rc or text.count('PASS completion:') != 9:
+        raise SystemExit('Completion mailbox scenarios failed')
+    original = design.read_text()
+    mutations = (
+        ('completion-stale-idle', 'if (pending) begin', 'if (pending || drained) begin',
+         'Premature acknowledgement'),
+        ('completion-no-drain', 'if (drained) begin', "if (1'b1) begin",
+         'Premature acknowledgement'),
+        ('completion-wrong-epoch', 'ack_epoch <= token_epoch;', 'ack_epoch <= token_sequence;',
+         'Wrong or unstable acknowledgement'),
+        ('completion-error-leak', 'assign ack_valid = result_valid && !fault && !bus_error;',
+         'assign ack_valid = result_valid;', 'Error allowed stale result consumption'),
+        ('completion-lost-cancel', 'if (cancel) ack_cancelled <= 1;',
+         'if (cancel) ack_cancelled <= 0;', 'Wrong or unstable acknowledgement'),
+    )
+    for name, old, new, failure in mutations:
+        if original.count(old) != 1:
+            raise SystemExit('Unexpected completion design; review mutation: ' + name)
+        mutated = OUT / (name + '.v')
+        mutated.write_text(original.replace(old, new))
+        rc, text = simulate(parser, name, bench, 'completion_test', (mutated,))
+        if not rc or failure not in text:
+            raise SystemExit('Test did not detect mutation: ' + name)
+        print('PASS mutation: ' + name)
+    return {'scope': 'Experimental mailbox with upstream parser; synthetic drain/error inputs, no MMIO or CDC',
+            'scenarios': 9, 'mutations_detected': [m[0] for m in mutations],
+            'sources': {str(x.relative_to(ROOT)): hashlib.sha256(x.read_bytes()).hexdigest()
+                        for x in (design, bench)}}
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--rtl', type=Path, required=True)
@@ -19,6 +53,7 @@ def main():
     p.add_argument('--axi', action='store_true', help='Also test bypass Coalescer write retirement')
     p.add_argument('--coalesced', action='store_true', help='Also test merged bursts at 32 and 64 bits')
     p.add_argument('--texture', action='store_true', help='Also test cached texture reads and replacement')
+    p.add_argument('--completion', action='store_true', help='Also test experimental tagged completion mailbox')
     a = p.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / 'validation.json').unlink(missing_ok=True)
@@ -166,6 +201,8 @@ def main():
             'adaptation': 'Two unused FIFO output constants replaced with unused wires for Icarus',
             'sources': {x.name: hashlib.sha256(x.read_bytes()).hexdigest()
                         for x in dependencies + [reader, compatible, testbench]}}
+    if a.completion:
+        record['completion'] = test_completion(simulate, source)
     (OUT / 'validation.json').write_text(json.dumps(record, indent=2) + '\n')
 
 

@@ -6,7 +6,7 @@
     "CommandParser.v": "256ab3127d6cdbf18b38e2d8e51b13fac5e2e5e1ece24366526730690a11f7ee",
     "RegisterAndDescriptorDefines.vh": "265dc4ae18aea0cd79617e5e63e7e1310b0e8184165fa5a812c95a923b606fd6",
     "tests/amiga/dosbox/glide/fence.v": "edcbd91a6ee4fae05004b076d8b4c1dcd7415469f82d07dd21ca7d27ba3bda9d",
-    "scripts/test_dosbox_glide_fence.py": "26aec419d36fb8795146b9201a57038c1f20f79a6f5845b47201ddbc5abee1f0"
+    "scripts/test_dosbox_glide_fence.py": "2ea3449f30bd2c06dcee775164c4afedf9d5aff5e735e6dd73171aa4d69a835f"
   },
   "axi": {
     "scope": "Parser plus bypass Coalescer and ValueTrack; simulated AXI slave",
@@ -64,6 +64,21 @@
       "TextureReader.v": "393be504bf98f6ff3608c1341a2f90629a1c81334ed6d6301763f6cc006b4eec",
       "TextureReader-compatible.v": "94738ae91f2f856d4260d644e745644ff3b2f545395bb03f915d2dac406330c8",
       "fence_texture.v": "b9aee07c19b8eed735c5ad8950d8afdf81973a7c8a47976d1e3751b4e138860a"
+    }
+  },
+  "completion": {
+    "scope": "Experimental mailbox with upstream parser; synthetic drain/error inputs, no MMIO or CDC",
+    "scenarios": 9,
+    "mutations_detected": [
+      "completion-stale-idle",
+      "completion-no-drain",
+      "completion-wrong-epoch",
+      "completion-error-leak",
+      "completion-lost-cancel"
+    ],
+    "sources": {
+      "amiga/dosbox/glide/experimental/completion.v": "c9b9115cfbd19f502b1f722bddd57fd946467aee53a997670955722aac812dfb",
+      "tests/amiga/dosbox/glide/completion.v": "84a26b48047b626a534831bc157164bcb66b933561688bc7c85e596555fe48ec"
     }
   }
 }

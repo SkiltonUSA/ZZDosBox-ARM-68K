@@ -28,6 +28,9 @@ An [upstream fence candidate](amiga/dosbox/glide/validation/fence-audit/README.m
 passes parser, merged-write and cached-texture simulations (43 scenarios).
 The published XX19d-RIX
 parser lacks it; compatible FPGA/firmware integration is required before hardware use.
+A [tagged completion prototype](amiga/dosbox/glide/experimental/completion.md)
+adds nine simulation checks for batch identity, cancellation and error handling;
+its CPU register interface and FPGA integration remain pending.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

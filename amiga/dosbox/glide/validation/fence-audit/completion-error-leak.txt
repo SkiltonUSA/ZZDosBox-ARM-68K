@@ -1,0 +1,9 @@
+PASS completion: stale idle cannot acknowledge a batch
+PASS completion: ordered token waits for writes and textures
+PASS completion: cancellation waits for retirement
+PASS completion: epoch and sequence retained together
+PASS completion: unread result backpressures the next token
+PASS completion: cancellation on the drain cycle is retained
+PASS completion: error overrides drain and stays quarantined
+FATAL: tests/amiga/dosbox/glide/completion.v:130: Error allowed stale result consumption
+       Time: 3141000  Scope: completion_test

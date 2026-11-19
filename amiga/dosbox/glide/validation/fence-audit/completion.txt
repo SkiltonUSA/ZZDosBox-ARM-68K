@@ -1,0 +1,10 @@
+PASS completion: stale idle cannot acknowledge a batch
+PASS completion: ordered token waits for writes and textures
+PASS completion: cancellation waits for retirement
+PASS completion: epoch and sequence retained together
+PASS completion: unread result backpressures the next token
+PASS completion: cancellation on the drain cycle is retained
+PASS completion: error overrides drain and stays quarantined
+PASS completion: error suppresses an unconsumed result
+PASS completion: quiesced reset starts a fresh session
+tests/amiga/dosbox/glide/completion.v:136: $finish called at 3580000 (1ps)

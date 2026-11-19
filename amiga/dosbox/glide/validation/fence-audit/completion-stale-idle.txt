@@ -1,0 +1,2 @@
+FATAL: tests/amiga/dosbox/glide/completion.v:44: Premature acknowledgement
+       Time: 130000  Scope: completion_test.quiet

@@ -1,0 +1,4 @@
+PASS completion: stale idle cannot acknowledge a batch
+PASS completion: ordered token waits for writes and textures
+FATAL: tests/amiga/dosbox/glide/completion.v:44: Premature acknowledgement
+       Time: 1030000  Scope: completion_test.quiet

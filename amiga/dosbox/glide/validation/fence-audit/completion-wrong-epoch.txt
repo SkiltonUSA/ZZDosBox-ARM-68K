@@ -1,0 +1,3 @@
+PASS completion: stale idle cannot acknowledge a batch
+FATAL: tests/amiga/dosbox/glide/completion.v:69: Wrong or unstable acknowledgement
+       Time: 810000  Scope: completion_test.expect_ack
