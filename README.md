@@ -42,9 +42,10 @@ a compatible FPGA build and guest renderer integration are still required.
 The [XACP firmware rebuild guide](docs/xacp-firmware-rebuild.md) records Xanxi's
 source baseline, boot-image components and pending integration work. The ARM
 firmware baseline and a regenerated FSBL candidate now build. Full-board FPGA
-synthesis and an independent checkpoint audit completed; the small completion
-component also passes routing. Full-board implementation, timing closure and
-hardware validation remain outstanding.
+synthesis, an independent checkpoint audit and optimization completed, including
+both debug cores. The small completion component also passes routing. Full-board
+placement/routing, timing and clock-domain review, and hardware validation remain
+outstanding.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

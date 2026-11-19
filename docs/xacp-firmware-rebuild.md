@@ -240,7 +240,7 @@ and [checkpoint audit](../amiga/dosbox/glide/validation/fence-audit/baseline-syn
 
 The synthesized baseline uses 22,993/53,200 LUTs (43.22%), 28,362/106,400
 registers (26.66%), 60.5/140 BRAM tiles (43.21%) and 22/220 DSPs (10%). Two
-debug blocks, `u_ila_0` and `dbg_hub`, are still black boxes. AMD documents that
+debug blocks, `u_ila_0` and `dbg_hub`, were black boxes at that stage. AMD documents that
 [debug cores are implemented during optimization](https://docs.amd.com/r/en-US/ug835-vivado-tcl-commands/implement_debug_core).
 These counts therefore do not establish final free resources for a Copper unit.
 
@@ -264,9 +264,9 @@ produced nonempty `<core>.dcp`, and Vivado's own
 checkpoints or completion markers must be rejected to prevent stale results
 from satisfying this check. Never unblock a waiting run by creating a success
 marker before synthesis. Both debug cores completed with exit 0 and verified
-checkpoints; the waiting full-board optimization then resumed. Placement and
-routing are queued behind successful optimization
-and a zero-black-box check; no bitstream generation or flashing is queued.
+checkpoints; the waiting full-board optimization then completed with exit 0
+and zero remaining black boxes. Placement and routing have started from that
+checkpoint; no bitstream generation or flashing is queued.
 The [debug-core record](../amiga/dosbox/glide/validation/fence-audit/baseline-debug-cores.json)
 contains the generated-script and checkpoint hashes with each exit status.
 
@@ -279,13 +279,32 @@ Several debug connections also issued warnings during XDC processing.
 
 The independent synthesized-design DRC has 41 warnings and one advisory,
 without errors. Unrouted timing has setup WNS -0.454 ns and hold WHS -0.374 ns;
-this is **not timing closure**. Optimization, debug-core generation, placement,
-routing, bus-skew/CDC checks and final timing review remain necessary. No new
+this is **not timing closure**. Placement, routing, bus-skew/CDC checks and final
+timing review remain necessary. No new
 bitstream or BOOT image has been produced. Reports:
 [utilization](../amiga/dosbox/glide/validation/fence-audit/baseline-global-utilization.rpt),
 [DRC](../amiga/dosbox/glide/validation/fence-audit/baseline-synth-drc.rpt),
 [clocks](../amiga/dosbox/glide/validation/fence-audit/baseline-synth-clocks.rpt),
 [timing](../amiga/dosbox/glide/validation/fence-audit/baseline-synth-timing.rpt).
+
+After debug-core implementation and optimization, utilization is 27,117 LUTs
+(50.97%), 34,798 registers (32.70%), 80.5 BRAM tiles (57.50%) and 22 DSPs (10%).
+This is an optimized **unrouted** netlist, not final timing or usable headroom.
+The optimization stage reported zero errors and zero critical warnings, with
+74 warnings. The separate DRC still reports 41 warnings and one advisory.
+
+The CDC report also flags three critical clock-domain groups, containing
+23 unsafe and 173 unknown endpoints in total. These are tool classifications
+in the unchanged baseline, not proof of a new fault or proof of safety.
+False-path exceptions do not establish correct synchronization. Review their
+handshakes and source constraints before treating a rebuilt image as validated.
+No warning waivers or clock exceptions were added for this build.
+
+Evidence: [optimization record](../amiga/dosbox/glide/validation/fence-audit/baseline-optimize.json),
+[log](../amiga/dosbox/glide/validation/fence-audit/baseline-optimize.log),
+[utilization](../amiga/dosbox/glide/validation/fence-audit/baseline-opt-utilization.rpt),
+[DRC](../amiga/dosbox/glide/validation/fence-audit/baseline-opt-drc.rpt),
+[CDC](../amiga/dosbox/glide/validation/fence-audit/baseline-opt-cdc.rpt).
 
 ### 2. Regenerate and verify processing-system initialization and FSBL
 

@@ -1,0 +1,54 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 1800.86,
+  "debug_ip": [
+    {
+      "core": "dbg_hub",
+      "exit_code": 0,
+      "verified": true,
+      "elapsed_seconds": 336.74,
+      "script_sha256": "982bf26c165713f315184fcd7f8b65ab5b5aa728381dc837e0bb7b767af3a36b",
+      "checkpoint_sha256": "c94fc3794df4ceb4e3e563564461ffe2ca85d497aad8e6594e7ebd015474f3a5"
+    },
+    {
+      "core": "u_ila_0",
+      "exit_code": 0,
+      "verified": true,
+      "elapsed_seconds": 804.76,
+      "script_sha256": "1d1efd975625cb989b4131e59b07ee807cca34a0aec13179e89f55bd13f41771",
+      "checkpoint_sha256": "eaa7d63eaef8d339e123dfb8494bb3f114dbe1a2f1e447578c9fb29804c4a577"
+    }
+  ],
+  "remaining_black_boxes": 0,
+  "source_checkpoint_sha256": "c2fed18114dd015058f7af0150fcfca85e3cfc306510f123d865345198d2ff0a",
+  "optimized_checkpoint_sha256": "12e13f3f3c05197e2a06e878e2f0540501dbc8f5eadb75fa98a455cd6760833e",
+  "original_report_sha256": {
+    "baseline-opt-utilization.rpt": "07d2d910cd436dff87afc0adfe6d9be07a124d6a8ce6edb6794ad250911dc67a",
+    "baseline-opt-drc.rpt": "b1c5c7686dc90a30e2b86982fc22f3c10ff21d6abb789f41f6004b4734134acf",
+    "baseline-opt-clocks.rpt": "24fc85439b601ef4d3a301b9fb20af5dcd7a47524c3d46ac78727830f59b69b7",
+    "baseline-opt-cdc.rpt": "6eb72a3868d815c64d10e4dc17180d9798dee6178fe34d6c128a1c5b44152368"
+  },
+  "scope": "Optimized unrouted baseline; no bitstream or hardware validation",
+  "utilization": {
+    "luts": 27117,
+    "registers": 34798,
+    "bram_tiles": 80.5,
+    "dsps": 22
+  },
+  "optimization_stage": {
+    "errors": 0,
+    "critical_warnings": 0,
+    "warnings": 74
+  },
+  "drc": {
+    "errors": 0,
+    "warnings": 41,
+    "advisories": 1
+  },
+  "cdc": {
+    "critical_clock_domain_groups": 3,
+    "unsafe_endpoints_in_critical_groups": 23,
+    "unknown_endpoints_in_critical_groups": 173,
+    "review_pending": true
+  }
+}
