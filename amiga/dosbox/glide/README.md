@@ -163,3 +163,8 @@ wire fixtures, so the 68k executable needs no FPU. The build record includes
 source, fixture and executable hashes. Hardware execution requires exclusive GPU
 access, an idle Core1 and the verified XACP GPU submit ABI. Read the report before
 running it; a timeout leaves completion unknown and must stop further GPU tests.
+
+## Additional reference
+
+[Glidulator review and GTA archive findings](glidulator-review.md): ABI,
+texture lifetime and capture/replay ideas; no upstream code imported.
