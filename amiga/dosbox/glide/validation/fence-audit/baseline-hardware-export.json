@@ -18,5 +18,8 @@
   "critical_warnings": [
     "CRITICAL WARNING: [HDL 9-1206] Syntax error near 'localparam'"
   ],
-  "scope": "Hardware description and IP output generation only; no full-board synthesis, placement, routing, bitstream or hardware test"
+  "scope": "Hardware description and IP output generation only; no full-board synthesis, placement, routing, bitstream or hardware test",
+  "arm_pll_mhz": 1333.333,
+  "cpu_peripheral_divisor0": 2,
+  "nominal_cpu_mhz_derived": 666.6665
 }

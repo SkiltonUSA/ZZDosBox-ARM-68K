@@ -66,7 +66,10 @@ build environment.
 The actual published project also opened successfully. Block-design validation,
 IP output generation and a hardware-platform export completed with exit 0.
 This regenerated `ps7_init.c` and `ps7_init.h` from the current design; the
-exported hardware description records HP3 enabled at 64 bits. See the
+exported hardware description records HP3 enabled at 64 bits. Its ARM PLL is
+1333.333 MHz with CPU divisor 2 (approximately 666.667 MHz CPU); the PLL value
+is not the CPU clock. This generated baseline does not incorporate a runtime
+800 MHz selection. No live clock setting was changed by generating it. See the
 [hardware-export record](../amiga/dosbox/glide/validation/fence-audit/baseline-hardware-export.json).
 
 This was not a warning-free validation: Vivado reported a critical HDL parser
@@ -227,7 +230,11 @@ it does not change the supplied RTL. Its result is pending. RTL elaboration and
 constraint processing have completed; the board XDC reported a missing
 `ZORRO_E7M_IBUF` net for `CLOCK_DEDICATED_ROUTE` at line 91. Review this against
 the finished synthesis netlist and implementation constraints; do not silently
-remove the exception or assume that it took effect. Do not substitute
+remove the exception or assume that it took effect. False-path rules at lines
+289 and 292 also reference an unavailable MMCM `CLKOUT1` clock. In the supplied
+`mntzorro.v`, that output connects to `e7m_shifted180`, which has no consumer;
+this suggests an obsolete constraint, subject to checking the final netlist.
+The unchanged constraint file is retained for the baseline. Do not substitute
 an incomplete run or a partial netlist for a successful full synthesis result.
 
 ### 2. Regenerate and verify processing-system initialization and FSBL
