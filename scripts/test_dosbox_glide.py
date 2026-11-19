@@ -101,6 +101,11 @@ def main():
     run('clang++', '-std=c++17', *flags[1:], '-I.',
         'tests/amiga/dosbox/glide/translator.cpp', *objects, '-o', binary)
     run(binary)
+    readback = OUT/'test-readback'
+    for height in (65, 72):
+        run('clang', *flags, '-I.', '-DGRX_PROBE_HEIGHT='+str(height),
+            'tests/amiga/dosbox/glide/readback.c', '-o', readback)
+        run(readback)
     record = {'scope': 'Native encoder tests; no physical GPU or game execution',
               'native_sanitizers': ['address', 'undefined']}
     if args.firmware:

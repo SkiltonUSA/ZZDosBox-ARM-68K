@@ -15,7 +15,8 @@ triangle rasterisation in software.
 
 The encoder itself has no MMIO, guest memory dereferences or display takeover.
 A separate 68k probe submits pre-encoded fixtures through the firmware's validated
-Core0 service. It does not launch Core1, change the display or modify firmware.
+Core0 service. The standalone probe does not launch Core1. A separate diagnostic
+build adds a read-only Core1 witness; neither build changes the display or firmware.
 
 **Physical progress:** clear, solid red, additive green, red/blue texturing and
 source-alpha blending passed guarded readback on the A4000TX. Earlier runs
@@ -26,6 +27,9 @@ The [marker-isolation follow-up](validation/marker-isolation/README.md) reproduc
 the failure without a pre-submit marker read. Fresh colours and triangle markers
 also fail in that mode; sixteen prepared runs pass. The underlying cause remains
 unresolved, so no production fence or guest-game support is claimed.
+The [Core1 witness comparison](validation/core1-witness/README.md) records one
+scene with correct ARM readback and 35 incorrect 68k pixels. Idle and delayed
+observer controls also pass, so visibility and timing still need isolation.
 
 ## Implemented subset
 

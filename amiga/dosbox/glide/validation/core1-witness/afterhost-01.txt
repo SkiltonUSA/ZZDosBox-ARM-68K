@@ -1,0 +1,27 @@
+[OK]
+OWNED amiga=50000040 arm_candidate=101f0040 size=131072 nonce=0c763391
+BOOTSTRAP amiga=40c79780 arm=00e69780 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c51878 MIDR=413fc090 MPIDR=80000001
+WITNESS mode=afterhost
+GPU id=52495831 version=00020000 caps=0000000b abi=00010000
+ARM scene=0 error=0 checked=4096 bad=0 polls=1 wait_ticks=3016
+SUBMIT scene=0 mode=memset prepare=0 words=30 before=10000 marker=8112 crc=78ec313f ack_us=151
+PIXELS scene=0 checked=4096 bad=0 guards=0 fence_us=86 left=0000 right=0000
+ARM scene=1 error=0 checked=3502 bad=0 polls=1 wait_ticks=4311
+SUBMIT scene=1 mode=memset prepare=0 words=67 before=10000 marker=8113 crc=87dfbf02 ack_us=168
+PIXELS scene=1 checked=3502 bad=0 guards=0 fence_us=87 left=f800 right=f800
+ARM scene=2 error=0 checked=3502 bad=0 polls=1 wait_ticks=3022
+SUBMIT scene=2 mode=memset prepare=0 words=67 before=10000 marker=8114 crc=b37d7f0b ack_us=158
+PIXELS scene=2 checked=3502 bad=0 guards=0 fence_us=86 left=ffe0 right=ffe0
+ARM scene=3 error=0 checked=3355 bad=0 polls=1 wait_ticks=3928
+SUBMIT scene=3 mode=memset prepare=0 words=75 before=10000 marker=8115 crc=af4ab20b ack_us=173
+PIXELS scene=3 checked=3355 bad=0 guards=0 fence_us=86 left=f800 right=001f
+ARM scene=4 error=0 checked=3355 bad=0 polls=1 wait_ticks=3386
+SUBMIT scene=4 mode=memset prepare=0 words=67 before=10000 marker=8116 crc=315db25a ack_us=176
+PIXELS scene=4 checked=3355 bad=0 guards=0 fence_us=84 left=f800 right=800f
+GLIDE PROBE rc=0
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c51878 restored=08c50878
+LAUNCHER exit=0; owned memory released

@@ -17,8 +17,10 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 offscreen solid, textured and blended triangles now pass pixel readback on the ZZ9000.
 [Hardware report](amiga/dosbox/glide/validation/hardware/README.md) and
 [marker diagnostics](amiga/dosbox/glide/validation/marker-isolation/README.md) record
-completion failures and the pre-submit read dependency. Not connected to games or
-included in the release; Core0 depth support also remains a blocker.
+completion failures and the pre-submit read dependency. A
+[Core1 witness comparison](amiga/dosbox/glide/validation/core1-witness/README.md)
+now isolates differing ARM/68k pixel observations; the cause remains unresolved.
+Not connected to games or included in the release; Core0 depth support also remains a blocker.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

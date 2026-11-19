@@ -56,5 +56,10 @@ source remain outside Git.
     marker retagging and packet CRC diagnostics; retained all negative results in
     the [isolation report](marker-isolation/README.md).
 
+12. Added a read-only Core1 witness and a shared pixel oracle. Recorded 49
+    physical runs with idle/delayed observer controls; one scene disagreed between
+    ARM and 68k readback. Preserved the failure and confounders in the
+    [Core1 report](core1-witness/README.md). Six compiled-worker model checks pass.
+
 See the [hardware report](hardware/README.md) for pixel evidence and its limits.
 This is not proof of Glide compatibility, audible quality or game performance.
