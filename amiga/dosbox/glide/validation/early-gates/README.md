@@ -82,3 +82,15 @@ GO and no GPU writes. Native sanitizer and unchanged firmware-validator checks
 also pass. Strict 68k and ARM builds pass; [build.json](build.json) records the
 exact diagnostic source and executable hashes. Instruction-model timing is not
 physical hardware timing.
+
+## Recovery check
+
+After the next confirmed reboot, the bridge returned, no runtime port remained
+and the old probe/log were absent from RAM. Clock status was held 800 MHz,
+Core1 idle, 53.7°C. One marker-gate run using direct script output passed all
+five scenes, returned RET1, restored SCTLR and released its allocation; see
+[markergate-recovery01.txt](markergate-recovery01.txt). The temporary executable
+was then removed and the bridge reservation released. This run is separate from
+the interrupted matrix above and does not explain or resolve the repeated
+connection loss. Direct output capture worked for this successful run; capture
+of an interrupted run remains unverified. No long loop was resumed.
