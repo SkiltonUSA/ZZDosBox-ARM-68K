@@ -31,7 +31,9 @@ parser lacks it; compatible FPGA/firmware integration is required before hardwar
 A [tagged completion prototype](amiga/dosbox/glide/experimental/completion.md)
 adds nine simulation checks for batch identity, cancellation and error handling;
 its AXI-Lite register wrapper adds nine bus/identity checks. Board addressing,
-clock-domain crossing and FPGA integration remain pending.
+clock-domain crossing and FPGA integration remain pending; the
+[clock-topology audit](amiga/dosbox/glide/experimental/integration.md) identifies
+an existing AXI converter arrangement to follow.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

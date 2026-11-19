@@ -1,0 +1,399 @@
+{
+  "repository": "Xanxi-Amiga/XACP-ZZ9000",
+  "commit": "6e59edbaf24e0d8d2f29cdd31667a10e16c5b283",
+  "source": "firmware/source/XX19d-RIX/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/sources_1/bd/zz9000_ps/zz9000_ps.bd",
+  "sha256": "09b9c8c3e960deab271c828d46d97ad6f151412d3e07046da92104b0c71f7867",
+  "scope": "Published block-design connectivity only; not installed-bitstream or timing verification",
+  "clocks": {
+    "RasterIX_0/aclk": {
+      "name": "processing_system7_0_FCLK_CLK0",
+      "pins": [
+        "processing_system7_0/FCLK_CLK0",
+        "audio_clock_0/fclk_in",
+        "axi_dwidth_converter_0/s_axi_aclk",
+        "axi_interconnect_0/ACLK",
+        "axi_interconnect_0/M00_ACLK",
+        "axi_interconnect_0/S00_ACLK",
+        "axi_interconnect_1/ACLK",
+        "axi_interconnect_1/M00_ACLK",
+        "axi_interconnect_1/S00_ACLK",
+        "axi_interconnect_2/ACLK",
+        "axi_interconnect_2/M00_ACLK",
+        "axi_interconnect_2/S00_ACLK",
+        "axi_register_slice_1/aclk",
+        "clk_wiz_0/clk_in1",
+        "proc_sys_reset_0/slowest_sync_clk",
+        "processing_system7_0/M_AXI_GP0_ACLK",
+        "processing_system7_0/S_AXI_ACP_ACLK",
+        "processing_system7_0/S_AXI_HP0_ACLK",
+        "processing_system7_0/S_AXI_HP1_ACLK",
+        "video/m_axi_mm2s_aclk",
+        "MNTZorro_v0_1_S00_AXI_0/m00_axi_aclk",
+        "MNTZorro_v0_1_S00_AXI_0/m01_axi_aclk",
+        "MNTZorro_v0_1_S00_AXI_0/S_AXI_ACLK",
+        "processing_system7_0/S_AXI_HP3_ACLK",
+        "axi_interconnect_4/ACLK",
+        "axi_interconnect_4/M00_ACLK",
+        "RasterIX_0/aclk",
+        "axi_interconnect_4/S00_ACLK",
+        "ps7_0_axi_periph/M08_ACLK",
+        "gpu_cmd_fifo/s_axi_aclk"
+      ]
+    },
+    "gpu_cmd_fifo/s_axi_aclk": {
+      "name": "processing_system7_0_FCLK_CLK0",
+      "pins": [
+        "processing_system7_0/FCLK_CLK0",
+        "audio_clock_0/fclk_in",
+        "axi_dwidth_converter_0/s_axi_aclk",
+        "axi_interconnect_0/ACLK",
+        "axi_interconnect_0/M00_ACLK",
+        "axi_interconnect_0/S00_ACLK",
+        "axi_interconnect_1/ACLK",
+        "axi_interconnect_1/M00_ACLK",
+        "axi_interconnect_1/S00_ACLK",
+        "axi_interconnect_2/ACLK",
+        "axi_interconnect_2/M00_ACLK",
+        "axi_interconnect_2/S00_ACLK",
+        "axi_register_slice_1/aclk",
+        "clk_wiz_0/clk_in1",
+        "proc_sys_reset_0/slowest_sync_clk",
+        "processing_system7_0/M_AXI_GP0_ACLK",
+        "processing_system7_0/S_AXI_ACP_ACLK",
+        "processing_system7_0/S_AXI_HP0_ACLK",
+        "processing_system7_0/S_AXI_HP1_ACLK",
+        "video/m_axi_mm2s_aclk",
+        "MNTZorro_v0_1_S00_AXI_0/m00_axi_aclk",
+        "MNTZorro_v0_1_S00_AXI_0/m01_axi_aclk",
+        "MNTZorro_v0_1_S00_AXI_0/S_AXI_ACLK",
+        "processing_system7_0/S_AXI_HP3_ACLK",
+        "axi_interconnect_4/ACLK",
+        "axi_interconnect_4/M00_ACLK",
+        "RasterIX_0/aclk",
+        "axi_interconnect_4/S00_ACLK",
+        "ps7_0_axi_periph/M08_ACLK",
+        "gpu_cmd_fifo/s_axi_aclk"
+      ]
+    },
+    "ps7_0_axi_periph/ACLK": {
+      "name": "S00_ACLK_1",
+      "pins": [
+        "processing_system7_0/FCLK_CLK1",
+        "audio_formatter_0/m_axis_mm2s_aclk",
+        "audio_formatter_0/s_axi_lite_aclk",
+        "audio_formatter_1/s_axi_lite_aclk",
+        "audio_formatter_1/s_axis_s2mm_aclk",
+        "axi_interconnect_3/ACLK",
+        "axi_interconnect_3/M00_ACLK",
+        "axi_interconnect_3/S00_ACLK",
+        "clk_wiz_0/s_axi_aclk",
+        "i2s_receiver_0/m_axis_aud_aclk",
+        "i2s_receiver_0/s_axi_ctrl_aclk",
+        "i2s_transmitter_0/s_axi_ctrl_aclk",
+        "i2s_transmitter_0/s_axis_aud_aclk",
+        "processing_system7_0/M_AXI_GP1_ACLK",
+        "processing_system7_0/S_AXI_HP2_ACLK",
+        "ps7_0_axi_periph/ACLK",
+        "ps7_0_axi_periph/M00_ACLK",
+        "ps7_0_axi_periph/M01_ACLK",
+        "ps7_0_axi_periph/M02_ACLK",
+        "ps7_0_axi_periph/M03_ACLK",
+        "ps7_0_axi_periph/M04_ACLK",
+        "ps7_0_axi_periph/M05_ACLK",
+        "ps7_0_axi_periph/M06_ACLK",
+        "ps7_0_axi_periph/S00_ACLK",
+        "rst_ps7_0_25M/slowest_sync_clk",
+        "video/s_axi_lite_aclk",
+        "xadc_wiz_0/s_axi_aclk",
+        "ps7_0_axi_periph/M07_ACLK",
+        "gpu_id_gpio/s_axi_aclk"
+      ]
+    },
+    "processing_system7_0/M_AXI_GP1_ACLK": {
+      "name": "S00_ACLK_1",
+      "pins": [
+        "processing_system7_0/FCLK_CLK1",
+        "audio_formatter_0/m_axis_mm2s_aclk",
+        "audio_formatter_0/s_axi_lite_aclk",
+        "audio_formatter_1/s_axi_lite_aclk",
+        "audio_formatter_1/s_axis_s2mm_aclk",
+        "axi_interconnect_3/ACLK",
+        "axi_interconnect_3/M00_ACLK",
+        "axi_interconnect_3/S00_ACLK",
+        "clk_wiz_0/s_axi_aclk",
+        "i2s_receiver_0/m_axis_aud_aclk",
+        "i2s_receiver_0/s_axi_ctrl_aclk",
+        "i2s_transmitter_0/s_axi_ctrl_aclk",
+        "i2s_transmitter_0/s_axis_aud_aclk",
+        "processing_system7_0/M_AXI_GP1_ACLK",
+        "processing_system7_0/S_AXI_HP2_ACLK",
+        "ps7_0_axi_periph/ACLK",
+        "ps7_0_axi_periph/M00_ACLK",
+        "ps7_0_axi_periph/M01_ACLK",
+        "ps7_0_axi_periph/M02_ACLK",
+        "ps7_0_axi_periph/M03_ACLK",
+        "ps7_0_axi_periph/M04_ACLK",
+        "ps7_0_axi_periph/M05_ACLK",
+        "ps7_0_axi_periph/M06_ACLK",
+        "ps7_0_axi_periph/S00_ACLK",
+        "rst_ps7_0_25M/slowest_sync_clk",
+        "video/s_axi_lite_aclk",
+        "xadc_wiz_0/s_axi_aclk",
+        "ps7_0_axi_periph/M07_ACLK",
+        "gpu_id_gpio/s_axi_aclk"
+      ]
+    }
+  },
+  "resets": {
+    "RasterIX_0/resetn": {
+      "name": "proc_sys_reset_1_peripheral_aresetn",
+      "pins": [
+        "proc_sys_reset_0/peripheral_aresetn",
+        "axi_dwidth_converter_0/s_axi_aresetn",
+        "axi_interconnect_0/ARESETN",
+        "axi_interconnect_0/M00_ARESETN",
+        "axi_interconnect_0/S00_ARESETN",
+        "axi_interconnect_1/ARESETN",
+        "axi_interconnect_1/M00_ARESETN",
+        "axi_interconnect_1/S00_ARESETN",
+        "axi_interconnect_2/ARESETN",
+        "axi_interconnect_2/M00_ARESETN",
+        "axi_interconnect_2/S00_ARESETN",
+        "axi_register_slice_1/aresetn",
+        "video/aresetn",
+        "MNTZorro_v0_1_S00_AXI_0/m00_axi_aresetn",
+        "MNTZorro_v0_1_S00_AXI_0/m01_axi_aresetn",
+        "MNTZorro_v0_1_S00_AXI_0/S_AXI_ARESETN",
+        "axi_interconnect_4/M00_ARESETN",
+        "axi_interconnect_4/S00_ARESETN",
+        "RasterIX_0/resetn",
+        "ps7_0_axi_periph/M08_ARESETN",
+        "gpu_cmd_fifo/s_axi_aresetn"
+      ]
+    },
+    "gpu_cmd_fifo/s_axi_aresetn": {
+      "name": "proc_sys_reset_1_peripheral_aresetn",
+      "pins": [
+        "proc_sys_reset_0/peripheral_aresetn",
+        "axi_dwidth_converter_0/s_axi_aresetn",
+        "axi_interconnect_0/ARESETN",
+        "axi_interconnect_0/M00_ARESETN",
+        "axi_interconnect_0/S00_ARESETN",
+        "axi_interconnect_1/ARESETN",
+        "axi_interconnect_1/M00_ARESETN",
+        "axi_interconnect_1/S00_ARESETN",
+        "axi_interconnect_2/ARESETN",
+        "axi_interconnect_2/M00_ARESETN",
+        "axi_interconnect_2/S00_ARESETN",
+        "axi_register_slice_1/aresetn",
+        "video/aresetn",
+        "MNTZorro_v0_1_S00_AXI_0/m00_axi_aresetn",
+        "MNTZorro_v0_1_S00_AXI_0/m01_axi_aresetn",
+        "MNTZorro_v0_1_S00_AXI_0/S_AXI_ARESETN",
+        "axi_interconnect_4/M00_ARESETN",
+        "axi_interconnect_4/S00_ARESETN",
+        "RasterIX_0/resetn",
+        "ps7_0_axi_periph/M08_ARESETN",
+        "gpu_cmd_fifo/s_axi_aresetn"
+      ]
+    },
+    "ps7_0_axi_periph/ARESETN": {
+      "name": "rst_ps7_0_25M_peripheral_aresetn",
+      "pins": [
+        "rst_ps7_0_25M/peripheral_aresetn",
+        "audio_formatter_0/m_axis_mm2s_aresetn",
+        "audio_formatter_0/s_axi_lite_aresetn",
+        "audio_formatter_1/s_axi_lite_aresetn",
+        "audio_formatter_1/s_axis_s2mm_aresetn",
+        "axi_interconnect_3/ARESETN",
+        "axi_interconnect_3/M00_ARESETN",
+        "axi_interconnect_3/S00_ARESETN",
+        "clk_wiz_0/s_axi_aresetn",
+        "i2s_receiver_0/m_axis_aud_aresetn",
+        "i2s_receiver_0/s_axi_ctrl_aresetn",
+        "i2s_transmitter_0/s_axi_ctrl_aresetn",
+        "i2s_transmitter_0/s_axis_aud_aresetn",
+        "ps7_0_axi_periph/ARESETN",
+        "ps7_0_axi_periph/M00_ARESETN",
+        "ps7_0_axi_periph/M01_ARESETN",
+        "ps7_0_axi_periph/M02_ARESETN",
+        "ps7_0_axi_periph/M03_ARESETN",
+        "ps7_0_axi_periph/M04_ARESETN",
+        "ps7_0_axi_periph/M05_ARESETN",
+        "ps7_0_axi_periph/M06_ARESETN",
+        "ps7_0_axi_periph/S00_ARESETN",
+        "video/axi_resetn",
+        "xadc_wiz_0/s_axi_aresetn",
+        "ps7_0_axi_periph/M07_ARESETN",
+        "gpu_id_gpio/s_axi_aresetn"
+      ]
+    }
+  },
+  "interfaces": {
+    "processing_system7_0/M_AXI_GP1": {
+      "name": "S00_AXI_2",
+      "pins": [
+        "processing_system7_0/M_AXI_GP1",
+        "ps7_0_axi_periph/S00_AXI"
+      ]
+    },
+    "gpu_cmd_fifo/S_AXI": {
+      "name": "ps7_0_axi_periph_M08_AXI",
+      "pins": [
+        "ps7_0_axi_periph/M08_AXI",
+        "gpu_cmd_fifo/S_AXI"
+      ]
+    },
+    "gpu_cmd_fifo/AXI_STR_TXD": {
+      "name": "gpu_cmd_fifo_AXI_STR_TXD",
+      "pins": [
+        "gpu_cmd_fifo/AXI_STR_TXD",
+        "RasterIX_0/s_cmd_axis"
+      ]
+    },
+    "RasterIX_0/m_axi": {
+      "name": "S00_AXI_5",
+      "pins": [
+        "RasterIX_0/m_axi",
+        "axi_interconnect_4/S00_AXI"
+      ]
+    },
+    "processing_system7_0/S_AXI_HP3": {
+      "name": "axi_interconnect_4_M00_AXI",
+      "pins": [
+        "axi_interconnect_4/M00_AXI",
+        "processing_system7_0/S_AXI_HP3"
+      ]
+    }
+  },
+  "clock_hz": {
+    "PCW_CLK0_FREQ": "100000000",
+    "PCW_CLK1_FREQ": "25000000"
+  },
+  "clock_converter": "xilinx.com:ip:axi_clock_converter:2.1",
+  "converter_outer_connections": {
+    "m08_couplers/S_ACLK": {
+      "name": "ps7_0_axi_periph_ACLK_net",
+      "pins": [
+        "ACLK",
+        "xbar/aclk",
+        "s00_couplers/M_ACLK",
+        "m00_couplers/S_ACLK",
+        "m01_couplers/S_ACLK",
+        "m02_couplers/S_ACLK",
+        "m03_couplers/S_ACLK",
+        "m04_couplers/S_ACLK",
+        "m05_couplers/S_ACLK",
+        "m06_couplers/S_ACLK",
+        "m07_couplers/S_ACLK",
+        "m08_couplers/S_ACLK"
+      ]
+    },
+    "m08_couplers/M_ACLK": {
+      "name": "M08_ACLK_1",
+      "pins": [
+        "M08_ACLK",
+        "m08_couplers/M_ACLK"
+      ]
+    },
+    "m08_couplers/S_ARESETN": {
+      "name": "ps7_0_axi_periph_ARESETN_net",
+      "pins": [
+        "ARESETN",
+        "xbar/aresetn",
+        "s00_couplers/M_ARESETN",
+        "m00_couplers/S_ARESETN",
+        "m01_couplers/S_ARESETN",
+        "m02_couplers/S_ARESETN",
+        "m03_couplers/S_ARESETN",
+        "m04_couplers/S_ARESETN",
+        "m05_couplers/S_ARESETN",
+        "m06_couplers/S_ARESETN",
+        "m07_couplers/S_ARESETN",
+        "m08_couplers/S_ARESETN"
+      ]
+    },
+    "m08_couplers/M_ARESETN": {
+      "name": "M08_ARESETN_1",
+      "pins": [
+        "M08_ARESETN",
+        "m08_couplers/M_ARESETN"
+      ]
+    }
+  },
+  "converter_inner_connections": {
+    "M_ACLK_1": {
+      "ports": [
+        "M_ACLK",
+        "auto_cc/m_axi_aclk"
+      ]
+    },
+    "M_ARESETN_1": {
+      "ports": [
+        "M_ARESETN",
+        "auto_cc/m_axi_aresetn"
+      ]
+    },
+    "S_ACLK_1": {
+      "ports": [
+        "S_ACLK",
+        "auto_cc/s_axi_aclk"
+      ]
+    },
+    "S_ARESETN_1": {
+      "ports": [
+        "S_ARESETN",
+        "auto_cc/s_axi_aresetn"
+      ]
+    }
+  },
+  "peripheral_outputs": "9",
+  "existing_gpu_registers": {
+    "SEG_gpu_cmd_fifo_Mem0": {
+      "address_block": "/gpu_cmd_fifo/S_AXI/Mem0",
+      "offset": "0x83C70000",
+      "range": "64K",
+      "offset_high_param": "C_HIGHADDR"
+    },
+    "SEG_gpu_id_gpio_Reg": {
+      "address_block": "/gpu_id_gpio/S_AXI/Reg",
+      "offset": "0x83C60000",
+      "range": "64K"
+    }
+  },
+  "gpu_memory_segment": {
+    "address_spaces": {
+      "m_axi": {
+        "segments": {
+          "SEG_processing_system7_0_HP3_DDR_LOWOCM": {
+            "address_block": "/processing_system7_0/S_AXI_HP3/HP3_DDR_LOWOCM",
+            "offset": "0x06600000",
+            "range": "2M"
+          }
+        }
+      }
+    }
+  },
+  "gpu_scalar_ports": [
+    "aclk",
+    "fb_addr",
+    "fb_size",
+    "fb_swapped",
+    "perfBusy",
+    "perfRasterizerStall",
+    "perfTriangleRendering",
+    "resetn",
+    "swap_fb",
+    "swap_fb_enable_vsync"
+  ],
+  "command_response_ready": {
+    "name": "gpu_const1_dout",
+    "pins": [
+      "gpu_const1/dout",
+      "RasterIX_0/m_cmd_resp_axis_tready",
+      "RasterIX_0/fb_swapped"
+    ]
+  },
+  "command_response_interfaces": [],
+  "fifo_receive_enabled": "0"
+}

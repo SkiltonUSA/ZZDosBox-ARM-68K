@@ -146,7 +146,11 @@ python3 scripts/test_dosbox_glide_fence.py --rtl /path/to/pinned/rtl \
   --axi --coalesced --texture --completion --registers
 ```
 
-Next: integrate and test clock-domain crossing as required, choose an explicit
+The [published clock-topology audit and integration plan](integration.md) identify
+an existing 25-to-100 MHz AXI converter arrangement for a new register endpoint.
+No custom mailbox-field crossing is needed if that arrangement is retained.
+
+Next: integrate and validate the AXI endpoint and its crossing, choose an explicit
 ordered-token transport with XACP, validate the full drain/error path, and
 obtain a compatible FPGA build before physical testing. Current XX19d-RIX
 firmware alone cannot activate this prototype.

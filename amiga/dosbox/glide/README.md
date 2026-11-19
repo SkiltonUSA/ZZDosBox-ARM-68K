@@ -213,3 +213,7 @@ triangles without running the four clipping passes. Crossing triangles use
 double intermediates to avoid overflow with extreme finite guest coordinates.
 Clipping interpolates `s/w`, `t/w` and `1/w` directly. These design choices avoid
 unnecessary work, but there is no measured Cortex-A9 speedup yet.
+
+The [FPGA integration plan](experimental/integration.md) traces the existing
+CPU/GPU AXI clock conversion and identifies the missing ordered-token, drain
+and error connections. No compatible FPGA build has been installed.

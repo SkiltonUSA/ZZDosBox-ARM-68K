@@ -227,3 +227,10 @@ it does not replace any upstream FPGA module or modify the supplied RTL.
 Add `--registers` for the AXI-Lite wrapper; all five optional flags run 61
 scenarios and fifteen mutation checks. Register tests use injected tokens and
 retirement/error signals, not the complete GPU pipeline or a physical CPU bus.
+
+## Published FPGA clock topology
+
+The [integration plan](../../experimental/integration.md) traces the existing
+25 MHz CPU peripheral path, its AXI converter, and the 100 MHz GPU domain.
+[clock-topology.json](clock-topology.json) records the pinned source and exact
+connections. This is a source audit, not converter simulation or a new FPGA build.

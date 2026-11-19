@@ -12,6 +12,10 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Audit the published FPGA clock/reset topology and document a completion-register
+  integration path using the existing AXI converter arrangement. No firmware,
+  clock setting or released-player change.
+
 - Add a single-clock AXI-Lite completion-register prototype with independent
   address/data writes, exact identity checks, explicit consumption and stable
   stalled responses. Nine new cases and four detected faults bring the offline
