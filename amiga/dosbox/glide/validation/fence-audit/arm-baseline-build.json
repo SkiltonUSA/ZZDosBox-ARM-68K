@@ -1,0 +1,20 @@
+{
+  "source_commit": "6e59edbaf24e0d8d2f29cdd31667a10e16c5b283",
+  "source_files_checked": 475,
+  "changed_source_files": [],
+  "source_manifest_sha256": "4a5dce78f85f1d3871d6cb78cb0b8fe94f881bf3eafbc5f665e20b30a09966b2",
+  "compiler": "arm-none-eabi-gcc (Arm GNU Toolchain 13.2.rel1 (Build arm-13.7)) 13.2.1 20231009",
+  "toolchain_archive_sha256": "39c44f8af42695b7b871df42e346c09fee670ea8dfc11f17083e296ea2b0d279",
+  "bsp_exit_code": 0,
+  "firmware_exit_code": 0,
+  "firmware_elf_sha256": "21ce58ae56fb90e66def3aa0abb1702beb01e3208e4fb8e0a195a232c05fb96c",
+  "elf_file_bytes": 1085948,
+  "bsp_libxil_sha256": "dfaacfe492919ff2aeca7ba4aef9392fbb6c216bb147cf17ae6dc06241572630",
+  "bsp_libxilffs_sha256": "e86524180cfa1c00a6f06ef604ab98088e75a07b8014b734167a330c46817f2f",
+  "low_firmware_end": "0x1c1c6c",
+  "low_safe_limit": "0x1f0000",
+  "guard_margin_bytes": 189332,
+  "undefined_symbols": [],
+  "warnings": "Existing BSP/application warnings remain, including assertion macros, macro redefinitions, and RWX load-segment warning.",
+  "scope": "ARM firmware ELF baseline only; not FSBL, FPGA, BOOT image, or hardware validation"
+}

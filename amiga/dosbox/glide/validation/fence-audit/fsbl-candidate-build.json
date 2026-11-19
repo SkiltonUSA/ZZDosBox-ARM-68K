@@ -1,0 +1,28 @@
+{
+  "source_commit": "6e59edbaf24e0d8d2f29cdd31667a10e16c5b283",
+  "compiler": "Arm GNU 13.2.Rel1",
+  "exit_code": 0,
+  "cpu_flags": [
+    "-mcpu=cortex-a9",
+    "-marm",
+    "-mfpu=vfpv3",
+    "-mfloat-abi=hard"
+  ],
+  "compile_flags": [
+    "-Os",
+    "-g",
+    "-Wall"
+  ],
+  "firmware_source_patches": [],
+  "generated_inputs": {
+    "ps7_init.c": "cd91409ef9512f377535acab68da940572a3c9916ac15ecf9976aedabf6491ec",
+    "ps7_init.h": "05efceeb797ae6532ccff0660ba934d32c03e732f549a6ec95e9111d883240d0"
+  },
+  "elf_sha256": "919ec5ce1d44d8342865d3b010b5a946ced8210c67ec8681a78fa66d1da49595",
+  "elf_bytes": 386420,
+  "undefined_symbols": [],
+  "warnings": [
+    "RWX load segment"
+  ],
+  "scope": "New FSBL candidate compiled/linked with regenerated PS7 initialization and supplied BSP; not equivalent to released FSBL and not hardware validated"
+}

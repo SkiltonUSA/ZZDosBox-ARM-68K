@@ -44,6 +44,13 @@ firmware build; the implementation failure remains unresolved. No firmware was c
 The out-of-context mailbox build is a toolchain probe, not a replacement for
 full board validation or timing closure.
 
+The unchanged ARM firmware and BSP now build with Arm GNU 13.2.Rel1. The actual
+board project also completed block-design validation, IP generation and XSA
+export under Vivado, with warnings still requiring review. Regenerated PS7
+initialization enabled a separately linked FSBL candidate. These results remove
+several rebuild prerequisites; they do not establish a complete FPGA build or a
+boot-tested replacement. See the [rebuild guide](../../../../docs/xacp-firmware-rebuild.md).
+
 The full pinned RasterIX and Float sources were downloaded for the next simulator
 stage. An exploratory Icarus elaboration of the complete RasterIX top failed
 on unused constant output destinations and declarations referenced before their

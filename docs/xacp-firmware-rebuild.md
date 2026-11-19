@@ -46,7 +46,7 @@ without reproducing the complete original toolchain and build conditions.
 | Tool | Required configuration / current evidence |
 | --- | --- |
 | Vivado | 2025.2, device `xc7z020clg400-1`, Zynq-7000 support; small out-of-context completion module synthesized under Wine 11.0; implementation failed |
-| ARM compiler | ARM GNU bare-metal toolchain with newlib, hard-float Cortex-A9 libraries; compiler version must be recorded |
+| ARM compiler | Arm GNU 13.2.Rel1 with newlib; unchanged BSP and ARM application build passed locally |
 | BSP / FSBL tools | Compatible Xilinx standalone BSP and processing-system initialization generation from the actual hardware design |
 | Bootgen | Zynq boot-image packaging; confirm availability separately from the minimal Vivado installation |
 | GNU make / Python | Firmware and boot-ROM resource build |
@@ -62,6 +62,17 @@ and this result does not establish a defect in Xanxi's firmware. See the
 [probe record](../amiga/dosbox/glide/validation/fence-audit/vivado-probe.json).
 This small circuit cannot sign off the board design. Wine remains an unofficial
 build environment.
+
+The actual published project also opened successfully. Block-design validation,
+IP output generation and a hardware-platform export completed with exit 0.
+This regenerated `ps7_init.c` and `ps7_init.h` from the current design; the
+exported hardware description records HP3 enabled at 64 bits. See the
+[hardware-export record](../amiga/dosbox/glide/validation/fence-audit/baseline-hardware-export.json).
+
+This was not a warning-free validation: Vivado reported a critical HDL parser
+warning near `localparam` in `RasterizerCommands.vh`, plus interface width and
+address-path warnings. Generation completing does not resolve those diagnostics
+or establish full-board synthesis/timing. No automatic IP upgrade was applied.
 
 ### Wine installation finding
 
@@ -85,8 +96,10 @@ valid installation or assume symlinks are universally unsupported by Wine.
 
 The default compiler found on the Mac reports GCC 16.2.0, but its `libc.a`
 lookup returned the unresolved filename and its newlib-header probe failed.
-That PATH compiler is not yet a usable firmware toolchain. Finding an executable
-named `arm-none-eabi-gcc` is insufficient.
+That PATH compiler is not a usable firmware toolchain. An isolated Arm GNU
+13.2.Rel1 installation was subsequently verified against Arm's published SHA-256
+and used successfully for the baseline. Finding an executable named
+`arm-none-eabi-gcc` is insufficient; select the toolchain explicitly.
 
 ## Rebuild sequence
 
@@ -205,6 +218,80 @@ Use a distinct experimental filename and build identifier. Retain a manifest
 containing the source revision, patches, tool versions, build flags, timing
 reports and hashes of all three partitions and the resulting image. Packaging
 is not hardware validation. Flashing and recovery are separate steps.
+
+## Verified ARM baseline build
+
+The unchanged ARM application and BSP built with **Arm GNU 13.2.Rel1** for
+macOS ARM64, matching the compiler release named in the upstream Makefile.
+The official archive SHA-256 is
+`39c44f8af42695b7b871df42e346c09fee670ea8dfc11f17083e296ea2b0d279`.
+All 475 supplied files in the application/BSP directories remained unchanged.
+
+From a fresh copy of `arm/ZZ9000_proto.sdk`, with `ARM_TOOLCHAIN_BIN` set to the
+selected toolchain's absolute `bin` directory:
+
+```sh
+mkdir -p zz9000_bsp_new/ps7_cortexa9_0/lib
+PATH="$ARM_TOOLCHAIN_BIN:$PATH" make -C zz9000_bsp_new -j1
+make -C ZZ9000OS -j4 \
+  CC="$ARM_TOOLCHAIN_BIN/arm-none-eabi-gcc" \
+  OBJCOPY="$ARM_TOOLCHAIN_BIN/arm-none-eabi-objcopy" \
+  SIZE="$ARM_TOOLCHAIN_BIN/arm-none-eabi-size" PYTHON=python3
+```
+
+Keep BSP archive generation serial: its component Makefiles update the shared
+`libxil.a`. Both build commands returned zero. The linked ELF has no undefined
+symbols and declares ARMv7, VFPv3/NEON and the hard-float calling convention.
+Its low-memory end is `0x001C1C6C`, leaving **189,332 bytes** before the unchanged
+`0x001F0000` safety boundary. The large BSS reported by `size` includes the
+upstream `NOLOAD` heap reservation; it is not the boot-file payload size.
+
+See the [build record](../amiga/dosbox/glide/validation/fence-audit/arm-baseline-build.json)
+and [ELF attributes](../amiga/dosbox/glide/validation/fence-audit/arm-baseline-attributes.txt).
+This establishes an ARM ELF build only, not an FSBL, FPGA or bootable BOOT image.
+The debug-enabled BSP also embeds build paths, so archive/ELF hashes need not
+match between checkout locations.
+
+Existing warnings remain: BSP assertion macros, macro redefinitions and an RWX
+load-segment warning, among others. A first attempt with Arm GNU 15.3 rejected
+legacy BSP code; using the recorded 13.2 release allowed an unchanged baseline.
+No warning suppression or vendor-source patch was added for these builds.
+
+## FSBL candidate with regenerated initialization
+
+A separate FSBL candidate now compiles and links using the supplied FSBL sources,
+the newly generated `ps7_init.c`/`.h`, Arm GNU 13.2.Rel1 and the rebuilt BSP.
+No supplied FSBL source was patched. Its ELF has no undefined symbols, entry
+point `0x00000000`, and load regions within the supplied OCM linker layout.
+An RWX load-segment warning remains. This is not a reproduction of the released
+`FSBL_exec_HP3_64.elf`, and it has not been boot-tested.
+
+The tested flags were Cortex-A9 ARM mode, VFPv3, hard-float, `-Os -g -Wall`.
+For a separate copy of `ZZ9000FSBL`, set `PS7_DIR` to the generated processing
+system IP directory, `BSP_DIR` to the rebuilt `ps7_cortexa9_0` directory and
+`ARM_TOOLCHAIN_BIN` to the selected compiler's `bin` directory. Then:
+
+```sh
+set -e
+cp "$PS7_DIR/ps7_init.c" "$PS7_DIR/ps7_init.h" src/
+mkdir -p build
+for source in src/*.c src/*.S; do
+  name=${source##*/}
+  "$ARM_TOOLCHAIN_BIN/arm-none-eabi-gcc" \
+    -mcpu=cortex-a9 -marm -mfpu=vfpv3 -mfloat-abi=hard -Os -g -Wall \
+    -I"$BSP_DIR/include" -Isrc -c "$source" -o "build/${name%.*}.o"
+done
+"$ARM_TOOLCHAIN_BIN/arm-none-eabi-gcc" \
+  -mcpu=cortex-a9 -marm -mfpu=vfpv3 -mfloat-abi=hard \
+  -specs=src/Xilinx.spec -Wl,-build-id=none -Wl,-T,src/lscript.ld \
+  -Wl,-Map,build/FSBL.map -L"$BSP_DIR/lib" -o build/FSBL.elf build/*.o \
+  -Wl,--start-group -lxil -lxilffs -lgcc -lc -Wl,--end-group
+```
+
+See the [candidate record](../amiga/dosbox/glide/validation/fence-audit/fsbl-candidate-build.json)
+and [load segments](../amiga/dosbox/glide/validation/fence-audit/fsbl-candidate-segments.txt).
+Review initialization, boot behaviour and the original FSBL differences before
+using this candidate in any boot image. It does not replace the live firmware.
 
 ## Changes needed for our completion path
 

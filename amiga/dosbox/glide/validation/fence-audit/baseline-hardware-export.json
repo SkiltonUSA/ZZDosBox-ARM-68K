@@ -1,0 +1,22 @@
+{
+  "source_commit": "6e59edbaf24e0d8d2f29cdd31667a10e16c5b283",
+  "tool": "Vivado 2025.2 under Wine 11.0",
+  "exit_code": 0,
+  "block_design_validation_completed": true,
+  "ip_generation_completed": true,
+  "xsa_export_completed": true,
+  "xsa_sha256": "0899233c6923434f8af65e5e301ce6f590dcc4601148436119a75d97df158398",
+  "hwh_sha256": "2b93e17c87b894d62e7d5ee6ddc23516f20ab6ffd11113d6ae3b2b5a34eaf889",
+  "hp3_enabled": "1",
+  "hp3_data_width": "64",
+  "generated_ps7_files": {
+    "ps7_init.tcl": "cf613dc47d692b14b15cad3f030c82b298f6f55defa0918845c2793f416ec3e2",
+    "ps7_init.html": "0b088bb36a3ddd415259153df2d33bdbefebb889fae17a9dde240204fe13de46",
+    "ps7_init.c": "cd91409ef9512f377535acab68da940572a3c9916ac15ecf9976aedabf6491ec",
+    "ps7_init.h": "05efceeb797ae6532ccff0660ba934d32c03e732f549a6ec95e9111d883240d0"
+  },
+  "critical_warnings": [
+    "CRITICAL WARNING: [HDL 9-1206] Syntax error near 'localparam'"
+  ],
+  "scope": "Hardware description and IP output generation only; no full-board synthesis, placement, routing, bitstream or hardware test"
+}

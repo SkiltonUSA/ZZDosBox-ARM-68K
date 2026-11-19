@@ -40,7 +40,9 @@ offline experiments; the complete suite passes 79 scenarios and 23 mutation chec
 [Hardware FPS prerequisites](amiga/dosbox/glide/experimental/fps-readiness.md):
 a compatible FPGA build and guest renderer integration are still required.
 The [XACP firmware rebuild guide](docs/xacp-firmware-rebuild.md) records Xanxi's
-source baseline, toolchain, boot-image components and the pending integration work.
+source baseline, boot-image components and pending integration work. The ARM
+firmware baseline and a regenerated FSBL candidate now build; FPGA implementation
+and hardware validation remain outstanding.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·
