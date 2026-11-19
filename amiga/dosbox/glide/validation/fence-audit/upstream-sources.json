@@ -9,6 +9,10 @@
     "rtl/RasterIX/RegisterAndDescriptorDefines.vh": "265dc4ae18aea0cd79617e5e63e7e1310b0e8184165fa5a812c95a923b606fd6",
     "lib/gl/renderer/commands/FenceCmd.hpp": "df6580e43ec1c1c9cc7bb05124c3cea76f18313dcbf2ad60797aa1951a75f78c",
     "lib/gl/renderer/commands/Op.hpp": "a4f408695e8738fd6aa757e2ba6e1deb78ee1089edd7ef6818eb5326407cebc7",
-    "lib/gl/renderer/Renderer.cpp": "88423433b47c9947b79c5c5acbd838e45009499a557dbc4dc85ba9ead4b301e9"
+    "lib/gl/renderer/Renderer.cpp": "88423433b47c9947b79c5c5acbd838e45009499a557dbc4dc85ba9ead4b301e9",
+    "rtl/RasterIX/FramebufferAdapter.v": "b58bfb72717a93f1c4568563bf817eedc5853d45a276b60c05efde19df431910",
+    "rtl/RasterIX/Coalescer.v": "311568dede59103ea05471128c1734b03be1f494224f6ea8eb45cc59279015ea",
+    "rtl/RasterIX/RasterIXRenderCore.v": "cdc31461355d41f157c79c25e207b3fac814c5d6c4128f95968bc698c51b3fc1",
+    "rtl/RasterIX/AxisToAxiAdapter.v": "201ddd21bef58bbb9efa7752a3ace751664e53dceadfff0fdad2ccf17d65669b"
   }
 }

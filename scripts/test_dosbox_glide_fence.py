@@ -16,6 +16,7 @@ def main():
     p.add_argument('--iverilog', default='iverilog')
     p.add_argument('--vvp', default='vvp')
     p.add_argument('--ivl-dir', type=Path)
+    p.add_argument('--axi', action='store_true', help='Also test bypass Coalescer write retirement')
     a = p.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     source = a.rtl.resolve() / 'CommandParser.v'
@@ -27,10 +28,11 @@ def main():
         compiler += ['-B', str(a.ivl_dir.resolve())]
         runtime += ['-M', str(a.ivl_dir.resolve())]
 
-    def simulate(path, name):
+    def simulate(path, name, testbench=bench, top='fence_test', extra=()):
         binary = OUT / (name + '.vvp')
-        subprocess.run(compiler + ['-g2012', '-s', 'fence_test', '-I', str(a.rtl.resolve()),
-                                  '-o', str(binary), str(bench), str(path)], check=True)
+        subprocess.run(compiler + ['-g2012', '-s', top, '-I', str(a.rtl.resolve()),
+                                  '-o', str(binary), str(testbench), str(path)] +
+                       [str(x) for x in extra], check=True)
         result = subprocess.run(runtime + [str(binary)], capture_output=True, text=True)
         text = (result.stdout + result.stderr).replace(str(ROOT) + '/', '')
         (OUT / (name + '.txt')).write_text(text)
@@ -56,6 +58,29 @@ def main():
               'sources': {str(x.relative_to(ROOT)) if x.is_relative_to(ROOT) else x.name:
                           hashlib.sha256(x.read_bytes()).hexdigest()
                           for x in (source, definitions, bench, Path(__file__))}}
+    if a.axi:
+        coalescer = a.rtl.resolve() / 'Coalescer.v'
+        tracker = a.rtl.resolve() / 'ValueTrack.v'
+        axi_bench = ROOT / 'tests/amiga/dosbox/glide/fence_axi.v'
+        rc, text = simulate(source, 'axi-upstream', axi_bench, 'fence_axi_test',
+                            (coalescer, tracker))
+        if rc or text.count('PASS AXI fence:') != 5:
+            raise SystemExit('AXI write retirement scenarios failed')
+        original = coalescer.read_text()
+        condition = '| outstanding_write_active;'
+        if original.count(condition) != 1:
+            raise SystemExit('Unexpected bypass tracker; review before mutation')
+        mutated = OUT / 'without-response-tracking.v'
+        mutated.write_text(original.replace(condition, ';'))
+        rc, text = simulate(source, 'without-response-tracking', axi_bench,
+                            'fence_axi_test', (mutated, tracker))
+        if not rc or 'Passed fence with transactions pending' not in text:
+            raise SystemExit('Test did not detect removed response tracking')
+        print('PASS mutation: removing AXI response tracking is detected')
+        record['axi'] = {'scope': 'Parser plus bypass Coalescer and ValueTrack; simulated AXI slave',
+                         'scenarios': 5, 'removed_response_tracking_detected': True,
+                         'sources': {x.name: hashlib.sha256(x.read_bytes()).hexdigest()
+                                     for x in (coalescer, tracker, axi_bench)}}
     (OUT / 'validation.json').write_text(json.dumps(record, indent=2) + '\n')
 
 

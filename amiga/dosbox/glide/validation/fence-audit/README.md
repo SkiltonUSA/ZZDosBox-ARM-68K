@@ -51,6 +51,51 @@ Integration requires:
 No firmware, clock, installed emulator or release was changed for this audit.
 No hardware performance improvement is claimed.
 
+## Write-response integration test
+
+The additional `--axi` test connects the upstream parser to the unchanged
+`Coalescer` bypass path and its pinned `ValueTrack` dependency. A simulated AXI
+slave delays write responses. Five scenarios cover 1, 3, 8, 32 and 128 writes,
+independent address/data stalls, response backpressure and partial retirement.
+The command following the fence stays blocked until the final response is
+accepted. Removing outstanding-response tracking from a temporary copy makes
+the test fail. Both passing and expected-failure logs are included here.
+
+This covers the bypass path only. It does **not** validate coalesced bursts,
+texture-cache tracking, the DDR controller, CPU cache visibility or a live GPU.
+The test models successful AXI responses; detecting bus errors is a separate
+requirement. No clock or emulator performance measurements were made.
+
+## ZZ9000 integration boundary
+
+The published [XX19d-RIX provenance](https://github.com/Xanxi-Amiga/XACP-ZZ9000/blob/6e59edbaf24e0d8d2f29cdd31667a10e16c5b283/firmware/source/XX19d-RIX/PROVENANCE.json)
+records RasterIX revision `9269a01c9bd4c3342bfa70ef8e3cdd751c15c6d0`.
+The parser in that source distribution has no fence opcode. The manifest and
+source hashes are retained here; this is source provenance, not a live FPGA
+identity check. The reference Vivado project targets `xc7z020clg400-1` and lists
+Vivado 2025.2. No Vivado executable was available in this development session.
+
+Enabling opcode 6 in ARM firmware alone is therefore insufficient. A proposed
+integration needs the upstream transaction-tracking changes **and** fence parser,
+while preserving the ZZ9000-specific command-read-credit/interconnect changes.
+It needs synthesis, implementation and timing closure before board testing.
+
+The firmware completion contract should distinguish submission from retirement:
+
+1. Reject fence use unless the paired, verified bitstream supports it. Do not
+   assign an unofficial XACP capability bit or infer support from a product name.
+2. Keep command, framebuffer and texture allocations owned until an ordered
+   completion observation proves retirement. FIFO transmit-complete is insufficient.
+3. Use a changing completion token after the fence, with a verified memory path
+   and CPU cache synchronization. A trailing buffered NOP is not such a token.
+4. Treat timeout/cancellation as unverified retirement; do not free or reuse
+   buffers that the GPU may still access. Recovery must quiesce the hardware.
+5. Advertise guest rendering only after repeated batches, texture replacement,
+   readback, cancellation and teardown pass on hardware.
+
+No experimental firmware was produced or installed from these tests. The next
+hardware prerequisite is a compatible FPGA build, not another FIFO-delay tweak.
+
 ## Reproduce
 
 Fetch `CommandParser.v` and `RegisterAndDescriptorDefines.vh` from
@@ -65,3 +110,9 @@ The first command needs Icarus Verilog (`iverilog` and `vvp`). Optional
 `--iverilog`, `--vvp` and `--ivl-dir` arguments support a workspace-local tool
 installation. Generated and mutated RTL stays under `.context/`; upstream RTL
 is not copied into this repository.
+
+For the write-response test, also fetch `rtl/RasterIX/Coalescer.v` at the same
+RasterIX revision and `ValueTrack.v` from its Float submodule, using the exact
+path/revision in `tracker-sources.json`. Place both beside the parser and add
+`--axi` to the first command. The pinned Float revision is
+`83485654e380392a726ee67f8e5d2f4f8f73dd32`.

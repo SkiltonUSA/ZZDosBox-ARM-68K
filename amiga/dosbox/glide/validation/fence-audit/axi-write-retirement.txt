@@ -1,0 +1,7 @@
+PASS AXI fence: writes=1 channel_order=0
+PASS AXI fence: writes=3 channel_order=1
+PASS AXI fence: writes=8 channel_order=2
+PASS AXI fence: writes=32 channel_order=0
+PASS AXI fence: writes=128 channel_order=1
+PASS fence waits for every accepted AXI write response
+tests/amiga/dosbox/glide/fence_axi.v:125: $finish called at 51530000 (1ps)

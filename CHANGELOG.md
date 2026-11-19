@@ -12,6 +12,9 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Verify the proposed GPU fence against delayed AXI write responses, including
+  128 outstanding writes and backpressure. Record the XX19d-RIX FPGA prerequisite;
+  firmware-only opcode acceptance would not provide retirement.
 - Add timed native keyboard replay and compare GTA ECTS's original and diagnostic
   overlays. Both reach the no-board error and credits; normal DOS exit remains unverified.
 - Validate upstream RasterIX fence-parser behaviour and confirm the inspected

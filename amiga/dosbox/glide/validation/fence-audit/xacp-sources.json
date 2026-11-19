@@ -1,0 +1,9 @@
+{
+  "repository": "Xanxi-Amiga/XACP-ZZ9000",
+  "commit": "6e59edbaf24e0d8d2f29cdd31667a10e16c5b283",
+  "files": {
+    "firmware/source/XX19d-RIX/PROVENANCE.json": "4b1771d6eaa14f690508b0efcf473c05f8becc2d9a90fc2c3dbd6b89218b19c2",
+    "firmware/source/XX19d-RIX/fpga/RasterIX_G1/RasterIX/rtl/RasterIX/CommandParser.v": "bdf5fe0e9049795b7b5480fbf858174aa16ab8e313849aa1a5d4bcd767fdc72e",
+    "firmware/source/XX19d-RIX/fpga/RasterIX_G1/RasterIX/rtl/RasterIX/RegisterAndDescriptorDefines.vh": "397dad59053e3851b0c9528c02bfb5e94294e57b9faf3b2c9ff459ea3c4838c3"
+  }
+}

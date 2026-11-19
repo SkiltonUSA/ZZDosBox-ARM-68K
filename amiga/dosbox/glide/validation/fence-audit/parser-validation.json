@@ -6,6 +6,16 @@
     "CommandParser.v": "256ab3127d6cdbf18b38e2d8e51b13fac5e2e5e1ece24366526730690a11f7ee",
     "RegisterAndDescriptorDefines.vh": "265dc4ae18aea0cd79617e5e63e7e1310b0e8184165fa5a812c95a923b606fd6",
     "tests/amiga/dosbox/glide/fence.v": "edcbd91a6ee4fae05004b076d8b4c1dcd7415469f82d07dd21ca7d27ba3bda9d",
-    "scripts/test_dosbox_glide_fence.py": "3f5a8aed01e86ed89f8e28be6d1736efb50b62fc5f876dc9754dcbd45ed66967"
+    "scripts/test_dosbox_glide_fence.py": "3cd39fc7a04c5f4cc30e6e0bc51e3be0c455d6f831b9876d33fc45dcb3ca0e20"
+  },
+  "axi": {
+    "scope": "Parser plus bypass Coalescer and ValueTrack; simulated AXI slave",
+    "scenarios": 5,
+    "removed_response_tracking_detected": true,
+    "sources": {
+      "Coalescer.v": "311568dede59103ea05471128c1734b03be1f494224f6ea8eb45cc59279015ea",
+      "ValueTrack.v": "f2383b9581966772e8b8b3aaf928a8faecb1324bc208d4d9eaded0bb958fedd4",
+      "fence_axi.v": "854fbd2bd586c712eb42a80ba7207ee07ee819ba9094146402e92cec6d24fbe3"
+    }
   }
 }
