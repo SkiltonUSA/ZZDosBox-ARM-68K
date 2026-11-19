@@ -1,0 +1,208 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date         : Thu Nov 19 18:14:17 2026
+| Host         : local build host (redacted)
+| Command      : report_timing -to [get_clocks clk_out1_zz9000_ps_clk_wiz_0_0] -max_paths 3 -file video-candidate-1280x1024-paths.rpt
+| Design       : zz9000_ps_wrapper
+| Device       : 7z020-clg400
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             2.555ns  (required time - arrival time)
+  Source:                 zz9000_ps_i/video/video_formatter_0/inst/vga_v_rez_reg[4]/C
+                            (rising edge-triggered cell FDRE clocked by clk_out1_zz9000_ps_clk_wiz_0_0  {rise@0.000ns fall@4.630ns period=9.259ns})
+  Destination:            zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video_reg/CE
+                            (rising edge-triggered cell FDRE clocked by clk_out1_zz9000_ps_clk_wiz_0_0  {rise@0.000ns fall@4.630ns period=9.259ns})
+  Path Group:             clk_out1_zz9000_ps_clk_wiz_0_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            9.259ns  (clk_out1_zz9000_ps_clk_wiz_0_0 rise@9.259ns - clk_out1_zz9000_ps_clk_wiz_0_0 rise@0.000ns)
+  Data Path Delay:        6.284ns  (logic 2.539ns (40.402%)  route 3.745ns (59.598%))
+  Logic Levels:           5  (CARRY4=3 LUT4=1 LUT6=1)
+  Clock Path Skew:        -0.099ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    5.057ns = ( 14.316 - 9.259 )
+    Source Clock Delay      (SCD):    5.545ns
+    Clock Pessimism Removal (CPR):    0.388ns
+  Clock Uncertainty:      0.116ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.221ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_zz9000_ps_clk_wiz_0_0 rise edge)
+                                                      0.000     0.000 r
+    BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  zz9000_ps_i/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=27303, routed)       1.831     1.831    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_in1
+    PLLE2_ADV_X1Y0       PLLE2_ADV (Prop_plle2_adv_CLKIN1_CLKOUT0)
+                                                      0.088     1.919 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.883     3.802    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_out1_zz9000_ps_clk_wiz_0_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101     3.903 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clkout1_buf/O
+                         net (fo=458, routed)         1.642     5.545    zz9000_ps_i/video/video_formatter_0/inst/dvi_clk
+    SLICE_X45Y80         FDRE                                         r  zz9000_ps_i/video/video_formatter_0/inst/vga_v_rez_reg[4]/C
+  -------------------------------------------------------------------    -------------------
+    SLICE_X45Y80         FDRE (Prop_fdre_C_Q)         0.456     6.001 r  zz9000_ps_i/video/video_formatter_0/inst/vga_v_rez_reg[4]/Q
+                         net (fo=6, routed)           1.833     7.834    zz9000_ps_i/video/video_formatter_0/inst/vga_v_rez[4]
+    SLICE_X59Y77         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.656     8.490 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video2_carry_i_9/CO[3]
+                         net (fo=1, routed)           0.000     8.490    zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video2_carry_i_9_n_0
+    SLICE_X59Y78         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.334     8.824 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video2_carry__0_i_5/O[1]
+                         net (fo=2, routed)           0.747     9.571    zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video3__0[9]
+    SLICE_X58Y78         LUT4 (Prop_lut4_I0_O)        0.303     9.874 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video2_carry__0_i_4/O
+                         net (fo=1, routed)           0.000     9.874    zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video2_carry__0_i_4_n_0
+    SLICE_X58Y78         CARRY4 (Prop_carry4_S[0]_CO[1])
+                                                      0.458    10.332 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video2_carry__0/CO[1]
+                         net (fo=1, routed)           0.605    10.937    zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video2__5
+    SLICE_X57Y78         LUT6 (Prop_lut6_I3_O)        0.332    11.269 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video_i_1/O
+                         net (fo=2, routed)           0.561    11.829    zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video_i_1_n_0
+    SLICE_X59Y79         FDRE                                         r  zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video_reg/CE
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_zz9000_ps_clk_wiz_0_0 rise edge)
+                                                      9.259     9.259 r
+    BUFGCTRL_X0Y16       BUFG                         0.000     9.259 r  zz9000_ps_i/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=27303, routed)       1.634    10.894    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_in1
+    PLLE2_ADV_X1Y0       PLLE2_ADV (Prop_plle2_adv_CLKIN1_CLKOUT0)
+                                                      0.083    10.977 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.720    12.697    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_out1_zz9000_ps_clk_wiz_0_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    12.788 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clkout1_buf/O
+                         net (fo=458, routed)         1.529    14.316    zz9000_ps_i/video/video_formatter_0/inst/dvi_clk
+    SLICE_X59Y79         FDRE                                         r  zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video_reg/C
+                         clock pessimism              0.388    14.705
+                         clock uncertainty           -0.116    14.589
+    SLICE_X59Y79         FDRE (Setup_fdre_C_CE)      -0.205    14.384    zz9000_ps_i/video/video_formatter_0/inst/dvi_active_video_reg
+  -------------------------------------------------------------------
+                         required time                         14.384
+                         arrival time                         -11.829
+  -------------------------------------------------------------------
+                         slack                                  2.555
+
+Slack (MET) :             2.556ns  (required time - arrival time)
+  Source:                 zz9000_ps_i/video/video_formatter_0/inst/sprite_buffer_reg_0/CLKBWRCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by clk_out1_zz9000_ps_clk_wiz_0_0  {rise@0.000ns fall@4.630ns period=9.259ns})
+  Destination:            zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb_reg[12]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_zz9000_ps_clk_wiz_0_0  {rise@0.000ns fall@4.630ns period=9.259ns})
+  Path Group:             clk_out1_zz9000_ps_clk_wiz_0_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            9.259ns  (clk_out1_zz9000_ps_clk_wiz_0_0 rise@9.259ns - clk_out1_zz9000_ps_clk_wiz_0_0 rise@0.000ns)
+  Data Path Delay:        6.640ns  (logic 2.826ns (42.558%)  route 3.814ns (57.442%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
+  Clock Path Skew:        -0.023ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    5.212ns = ( 14.471 - 9.259 )
+    Source Clock Delay      (SCD):    5.724ns
+    Clock Pessimism Removal (CPR):    0.489ns
+  Clock Uncertainty:      0.116ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.221ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_zz9000_ps_clk_wiz_0_0 rise edge)
+                                                      0.000     0.000 r
+    BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  zz9000_ps_i/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=27303, routed)       1.831     1.831    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_in1
+    PLLE2_ADV_X1Y0       PLLE2_ADV (Prop_plle2_adv_CLKIN1_CLKOUT0)
+                                                      0.088     1.919 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.883     3.802    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_out1_zz9000_ps_clk_wiz_0_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101     3.903 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clkout1_buf/O
+                         net (fo=458, routed)         1.821     5.724    zz9000_ps_i/video/video_formatter_0/inst/dvi_clk
+    RAMB36_X4Y17         RAMB36E1                                     r  zz9000_ps_i/video/video_formatter_0/inst/sprite_buffer_reg_0/CLKBWRCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X4Y17         RAMB36E1 (Prop_ramb36e1_CLKBWRCLK_DOBDO[4])
+                                                      2.454     8.178 f  zz9000_ps_i/video/video_formatter_0/inst/sprite_buffer_reg_0/DOBDO[4]
+                         net (fo=2, routed)           1.561     9.739    zz9000_ps_i/video/video_formatter_0/inst/sprite_pix[4]
+    SLICE_X104Y86        LUT4 (Prop_lut4_I0_O)        0.124     9.863 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[23]_i_5/O
+                         net (fo=2, routed)           0.464    10.327    zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[23]_i_5_n_0
+    SLICE_X104Y86        LUT5 (Prop_lut5_I4_O)        0.124    10.451 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[23]_i_2/O
+                         net (fo=23, routed)          1.789    12.241    zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[23]_i_2_n_0
+    SLICE_X108Y89        LUT6 (Prop_lut6_I3_O)        0.124    12.365 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[12]_i_1/O
+                         net (fo=1, routed)           0.000    12.365    zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[12]_i_1_n_0
+    SLICE_X108Y89        FDRE                                         r  zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb_reg[12]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_zz9000_ps_clk_wiz_0_0 rise edge)
+                                                      9.259     9.259 r
+    BUFGCTRL_X0Y16       BUFG                         0.000     9.259 r  zz9000_ps_i/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=27303, routed)       1.634    10.894    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_in1
+    PLLE2_ADV_X1Y0       PLLE2_ADV (Prop_plle2_adv_CLKIN1_CLKOUT0)
+                                                      0.083    10.977 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.720    12.697    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_out1_zz9000_ps_clk_wiz_0_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    12.788 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clkout1_buf/O
+                         net (fo=458, routed)         1.684    14.471    zz9000_ps_i/video/video_formatter_0/inst/dvi_clk
+    SLICE_X108Y89        FDRE                                         r  zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb_reg[12]/C
+                         clock pessimism              0.489    14.960
+                         clock uncertainty           -0.116    14.844
+    SLICE_X108Y89        FDRE (Setup_fdre_C_D)        0.077    14.921    zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb_reg[12]
+  -------------------------------------------------------------------
+                         required time                         14.921
+                         arrival time                         -12.365
+  -------------------------------------------------------------------
+                         slack                                  2.556
+
+Slack (MET) :             2.559ns  (required time - arrival time)
+  Source:                 zz9000_ps_i/video/video_formatter_0/inst/sprite_buffer_reg_0/CLKBWRCLK
+                            (rising edge-triggered cell RAMB36E1 clocked by clk_out1_zz9000_ps_clk_wiz_0_0  {rise@0.000ns fall@4.630ns period=9.259ns})
+  Destination:            zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb_reg[21]/D
+                            (rising edge-triggered cell FDRE clocked by clk_out1_zz9000_ps_clk_wiz_0_0  {rise@0.000ns fall@4.630ns period=9.259ns})
+  Path Group:             clk_out1_zz9000_ps_clk_wiz_0_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            9.259ns  (clk_out1_zz9000_ps_clk_wiz_0_0 rise@9.259ns - clk_out1_zz9000_ps_clk_wiz_0_0 rise@0.000ns)
+  Data Path Delay:        6.591ns  (logic 2.826ns (42.874%)  route 3.765ns (57.126%))
+  Logic Levels:           3  (LUT4=1 LUT5=1 LUT6=1)
+  Clock Path Skew:        -0.023ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    5.212ns = ( 14.471 - 9.259 )
+    Source Clock Delay      (SCD):    5.724ns
+    Clock Pessimism Removal (CPR):    0.489ns
+  Clock Uncertainty:      0.116ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.221ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk_out1_zz9000_ps_clk_wiz_0_0 rise edge)
+                                                      0.000     0.000 r
+    BUFGCTRL_X0Y16       BUFG                         0.000     0.000 r  zz9000_ps_i/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=27303, routed)       1.831     1.831    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_in1
+    PLLE2_ADV_X1Y0       PLLE2_ADV (Prop_plle2_adv_CLKIN1_CLKOUT0)
+                                                      0.088     1.919 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.883     3.802    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_out1_zz9000_ps_clk_wiz_0_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.101     3.903 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clkout1_buf/O
+                         net (fo=458, routed)         1.821     5.724    zz9000_ps_i/video/video_formatter_0/inst/dvi_clk
+    RAMB36_X4Y17         RAMB36E1                                     r  zz9000_ps_i/video/video_formatter_0/inst/sprite_buffer_reg_0/CLKBWRCLK
+  -------------------------------------------------------------------    -------------------
+    RAMB36_X4Y17         RAMB36E1 (Prop_ramb36e1_CLKBWRCLK_DOBDO[4])
+                                                      2.454     8.178 f  zz9000_ps_i/video/video_formatter_0/inst/sprite_buffer_reg_0/DOBDO[4]
+                         net (fo=2, routed)           1.561     9.739    zz9000_ps_i/video/video_formatter_0/inst/sprite_pix[4]
+    SLICE_X104Y86        LUT4 (Prop_lut4_I0_O)        0.124     9.863 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[23]_i_5/O
+                         net (fo=2, routed)           0.464    10.327    zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[23]_i_5_n_0
+    SLICE_X104Y86        LUT5 (Prop_lut5_I4_O)        0.124    10.451 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[23]_i_2/O
+                         net (fo=23, routed)          1.741    12.192    zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[23]_i_2_n_0
+    SLICE_X107Y90        LUT6 (Prop_lut6_I3_O)        0.124    12.316 r  zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[21]_i_1/O
+                         net (fo=1, routed)           0.000    12.316    zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb[21]_i_1_n_0
+    SLICE_X107Y90        FDRE                                         r  zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb_reg[21]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk_out1_zz9000_ps_clk_wiz_0_0 rise edge)
+                                                      9.259     9.259 r
+    BUFGCTRL_X0Y16       BUFG                         0.000     9.259 r  zz9000_ps_i/processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O
+                         net (fo=27303, routed)       1.634    10.894    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_in1
+    PLLE2_ADV_X1Y0       PLLE2_ADV (Prop_plle2_adv_CLKIN1_CLKOUT0)
+                                                      0.083    10.977 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst/CLKOUT0
+                         net (fo=1, routed)           1.720    12.697    zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clk_out1_zz9000_ps_clk_wiz_0_0
+    BUFGCTRL_X0Y0        BUFG (Prop_bufg_I_O)         0.091    12.788 r  zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/clkout1_buf/O
+                         net (fo=458, routed)         1.684    14.471    zz9000_ps_i/video/video_formatter_0/inst/dvi_clk
+    SLICE_X107Y90        FDRE                                         r  zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb_reg[21]/C
+                         clock pessimism              0.489    14.960
+                         clock uncertainty           -0.116    14.844
+    SLICE_X107Y90        FDRE (Setup_fdre_C_D)        0.031    14.875    zz9000_ps_i/video/video_formatter_0/inst/dvi_rgb_reg[21]
+  -------------------------------------------------------------------
+                         required time                         14.875
+                         arrival time                         -12.316
+  -------------------------------------------------------------------
+                         slack                                  2.559

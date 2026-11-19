@@ -1,0 +1,56 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 363.16,
+  "baseline_checkpoint_sha256": "71987c95d7f2046c9427e0f9a40ca6ed693d59d2f6157ab207da182e24207790",
+  "files": {
+    "pll-ratio-check.tcl": {
+      "original_sha256": "b26ea891bab4e81dd1c53a8043748a09e8a7967907d9dc6fa2daa1625086886b",
+      "published_sha256": "b26ea891bab4e81dd1c53a8043748a09e8a7967907d9dc6fa2daa1625086886b"
+    },
+    "pll-ratio-check.tsv": {
+      "original_sha256": "f66ae65f3944ee31190962e97721b037c689fe49cafe1ea0cc6cb1d19b63b85a",
+      "published_sha256": "17ec4bda0ecf0c7529032cc5cfe5bd4e13aeea1db1c151e1df50188fb36f0c93"
+    },
+    "pll-ratio-candidate-timing.rpt": {
+      "original_sha256": "bf381920f9f3fe8609bb9dade3d3988d9b1ad367435fc19b58d4c983db5a4409",
+      "published_sha256": "c13c93766c09b600e16ace43cce0e00ceb15d642a7a96cbeb245a86ca10c28d7"
+    },
+    "pll-ratio-original-timing.rpt": {
+      "original_sha256": "15fca58959e1c8b35a650b59f9386e33ff9172de724dc0f725e479b8d06d7bb1",
+      "published_sha256": "b9122539afbb2201c047227828e23dd83dacf7af0323ce417c31de98743632f8"
+    },
+    "pll-ratio-candidate-drc.rpt": {
+      "original_sha256": "b9f04c225c4864e752db5a37bc2dd889d8d166d2b126941dc583a65acb5ae5b7",
+      "published_sha256": "e1f33d910fb1b0a7899b4b352b38437c0a45ed1869173580985a5b761104e259"
+    },
+    "pll-ratio-original-drc.rpt": {
+      "original_sha256": "8b41440bc405fa79b398a70f07e59bf952bc356c163c680895d6f00b24e727ed",
+      "published_sha256": "41b12773dd2f102894bbb9ad84057ce8e06d52067bd75fb02555e4d4dc567252"
+    }
+  },
+  "redaction": "Host names removed; line endings and trailing whitespace normalized",
+  "cases": [
+    {
+      "case": "original",
+      "mult": "41",
+      "div": "2",
+      "outdiv": "14",
+      "period_ns": "6.829",
+      "wns_ns": "-1.453",
+      "whs_ns": "0.010",
+      "pdrc_findings": 1
+    },
+    {
+      "case": "candidate",
+      "mult": "41",
+      "div": "4",
+      "outdiv": "7",
+      "period_ns": "6.829",
+      "wns_ns": "-1.508",
+      "whs_ns": "0.010",
+      "pdrc_findings": 0
+    }
+  ],
+  "control_restored": true,
+  "scope": "Fixed routed logic; in-memory PLL comparison only; no firmware source or hardware changed"
+}

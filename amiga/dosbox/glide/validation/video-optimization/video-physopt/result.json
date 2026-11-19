@@ -1,0 +1,116 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds": 1113.39,
+  "baseline_checkpoint_sha256": "71987c95d7f2046c9427e0f9a40ca6ed693d59d2f6157ab207da182e24207790",
+  "files": {
+    "video-physopt.tcl": {
+      "original_sha256": "9bbf7b0f2b53bc4a451f1a29fbc100362addadf25027851e77fbbf0e563f3605",
+      "published_sha256": "9bbf7b0f2b53bc4a451f1a29fbc100362addadf25027851e77fbbf0e563f3605"
+    },
+    "video-physopt-after-paths.rpt": {
+      "original_sha256": "5eacaa3d8a1eba2ae4407892c5b3fc94cdd062a77015b6951acf4af824f72484",
+      "published_sha256": "f4e4c205f5753f19ea3848f4bdc5f4147f54b40e1a2510962c195f84fb4bafa2"
+    },
+    "video-physopt-after-timing.rpt": {
+      "original_sha256": "9141036b924b00816dbd49b0bfc2c199e9ee3df213fe75d8975d81e10a81fda6",
+      "published_sha256": "747b2307b5d178de322fdabeb6a16b51d23f3070d95ff13db50186f6c728395e"
+    },
+    "video-physopt-before-timing.rpt": {
+      "original_sha256": "ea4b44b9aa7e87a2b0b3fe57ef4211a9efcb603b4936f162d4ec3bf214ffb988",
+      "published_sha256": "273ee40d4a274460646edd5b2ecda762af33139c6456ce7da67303c813591e3f"
+    },
+    "video-physopt-drc.rpt": {
+      "original_sha256": "40d56a718f0feba2f54eba02f5043745679a21668b21eb942cdb152790ddf69b",
+      "published_sha256": "7e8b255e00aed124f71930bc756e5c7f8c44b05661cbfabe613d259194cda996"
+    },
+    "video-physopt-intermediate-timing.rpt": {
+      "original_sha256": "dc88442766153e9119d5d2e3a67fe19dc1824ad929780b1dfcfff516f061384c",
+      "published_sha256": "7f5a119d8b3f9bbeb12ba28d9c864fd942331daa80e9ff137c6e035ef86f1867"
+    },
+    "video-physopt-restored-timing.rpt": {
+      "original_sha256": "16cb589a0056afca6879502bf08fbea342f32b1aea55f99ec2001ca8d85eb5fb",
+      "published_sha256": "dd2227d49c6fcf4712d794a11cf1851daf4d7f5e8c7f64f8f95f0d2ef3744f55"
+    },
+    "video-physopt-route.rpt": {
+      "original_sha256": "385c167dd9b2619a92e9ca4b2ce8ebd72d9752750891a82302920d06d3b0d727",
+      "published_sha256": "1026048f04d379bbd3de12b0718f040c7ba7a555d34b70feb5a4986036c41395"
+    },
+    "video-physopt-utilization.rpt": {
+      "original_sha256": "8b4d08e45d04813fd6de86618b7d818e6b108d859aeca3252eb9d945399d53f9",
+      "published_sha256": "da4d047895a6ae6af8309aac5a1b90ed68aafecc0b83ecdda395df78ece99e2e"
+    }
+  },
+  "redaction": "Host names removed; line endings and trailing whitespace normalized",
+  "timing": {
+    "PHYSOPT_BEFORE": {
+      "wns_ns": -1.621,
+      "whs_ns": 0.01
+    },
+    "PHYSOPT_AFTER": {
+      "wns_ns": 0.021,
+      "whs_ns": 0.01
+    },
+    "PHYSOPT_RESTORED_CLOCK": {
+      "wns_ns": 0.156,
+      "whs_ns": 0.01
+    }
+  },
+  "route_counts": {
+    "logical nets": 79581,
+    "nets not needing routing": 24662,
+    "internally routed nets": 24264,
+    "nets with no loads": 398,
+    "routable nets": 54919,
+    "fully routed nets": 54919,
+    "nets with routing errors": 0
+  },
+  "drc_rules": [
+    [
+      "BUFC-1",
+      "Warning",
+      "1"
+    ],
+    [
+      "DPIP-1",
+      "Warning",
+      "16"
+    ],
+    [
+      "DPOP-1",
+      "Warning",
+      "2"
+    ],
+    [
+      "DPOP-2",
+      "Warning",
+      "17"
+    ],
+    [
+      "PDCN-1569",
+      "Warning",
+      "10"
+    ],
+    [
+      "PLCK-23",
+      "Warning",
+      "1"
+    ],
+    [
+      "REQP-1840",
+      "Warning",
+      "4"
+    ],
+    [
+      "RTSTAT-10",
+      "Warning",
+      "1"
+    ],
+    [
+      "REQP-181",
+      "Advisory",
+      "1"
+    ]
+  ],
+  "candidate_checkpoint_sha256": "1ecb12d178243b47fee3cba746c6ba2f54dbf2ff3c0a19a4d823b0834da49510",
+  "scope": "Diagnostic physical optimization and route at 150 MHz; startup PLL restored before saving isolated candidate; no bitstream or hardware change"
+}

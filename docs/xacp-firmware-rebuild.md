@@ -616,6 +616,18 @@ setup, and two also have PLL VCO-range warnings. All timing coverage counts stay
 unchanged. Restoring the original PLL properties reproduces the original timing.
 This diagnoses our rebuild and does not characterize the released firmware binary.
 
+The [three follow-up experiments](../amiga/dosbox/glide/experimental/video-optimization.md)
+separate PLL legality from physical timing. A corrected 2560 × 1440 ratio preserves
+the pixel frequency while removing its VCO-range warning; the original routed
+design still fails setup. A separate physical optimisation and rerouting run
+improves 150 MHz WNS from −1.621 to +0.021 ns. The candidate restores the original
+startup PLL before saving and leaves the baseline checkpoint intact. No source
+RTL, runtime PLL table or deployed firmware is changed.
+An independent reopen confirms positive setup/hold and pulse-width margins for
+all six checked configurations, including +0.135 ns setup at the corrected
+146.429 MHz ratio. Route, CDC-summary and methodology checks retain the original
+coverage limitations. Reproduction scripts and hashed reports accompany the write-up.
+
 The unchanged line-fetch consumer also passed 18 controlled tests with frame
 gating, vertical doubling and source stalls; three compiled mutations were caught.
 Artificially prolonged inconsistent counter samples produced extra fetches.

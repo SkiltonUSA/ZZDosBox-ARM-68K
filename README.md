@@ -46,6 +46,11 @@ synthesis, an independent checkpoint audit and optimization completed, including
 both debug cores. Full-board routing completed with no routing errors; its 75 MHz
 video baseline passes the declared timing constraints. A [display-clock sweep](amiga/dosbox/glide/experimental/video-modes.md)
 finds setup failures at higher pixel clocks and two PLL-range warnings.
+An isolated [physical optimisation candidate](amiga/dosbox/glide/experimental/video-optimization.md)
+improves the checked 150 MHz video setup margin from −1.621 ns to +0.021 ns,
+with four additional LUTs. This is FPGA timing progress, not a measured FPS gain.
+Independent reopening confirms positive constrained timing across six checked
+clock configurations, including the corrected 146.429 MHz PLL ratio.
 Missing audio-clock constraints and other timing
 coverage/clock-domain findings still require review before hardware validation.
 No replacement firmware has been flashed.

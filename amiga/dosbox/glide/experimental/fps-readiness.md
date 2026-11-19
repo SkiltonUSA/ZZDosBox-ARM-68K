@@ -68,6 +68,11 @@ finds setup failures in the three tested 146–162 MHz cases, with PLL-range war
 in two. The lower tested rates have positive declared timing margins, with all
 previous coverage gaps retained. No replacement firmware is promoted by these tests.
 
+A subsequent [physical optimisation candidate](video-optimization.md) clears the
+checked 150 MHz setup failure with +0.021 ns margin and retains +0.010 ns hold.
+This small margin and the remaining timing-coverage gaps require further review;
+the result does not establish a gameplay speed improvement or hardware readiness.
+
 The full pinned RasterIX and Float sources were downloaded for the next simulator
 stage. An exploratory Icarus elaboration of the complete RasterIX top failed
 on unused constant output destinations and declarations referenced before their
