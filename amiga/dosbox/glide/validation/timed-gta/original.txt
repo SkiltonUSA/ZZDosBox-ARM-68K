@@ -1,0 +1,18 @@
+INPUT tick=110000 planned=110000 key=52 down=1
+INPUT tick=110250 planned=110250 key=52 down=0
+INPUT tick=130000 planned=130000 key=52 down=1
+INPUT tick=130250 planned=130250 key=52 down=0
+FS op=7 dir=GTADOS name=GLIDE2X.OVL err=0 size=338207 date=23885 time=0
+FS op=7 dir=GTADOS name=GLIDE2X.OVL err=0 size=338207 date=23885 time=0
+FS op=1 dir=GTADOS name=GLIDE2X.OVL err=0 size=338207 date=23885 time=0
+INPUT tick=200000 planned=200000 key=49 down=1
+INPUT tick=200500 planned=200500 key=49 down=0
+INPUT tick=205000 planned=205000 key=49 down=1
+INPUT tick=205500 planned=205500 key=49 down=0
+INPUT tick=240000 planned=240000 key=49 down=1
+INPUT tick=240500 planned=240500 key=49 down=0
+INPUT tick=250000 planned=250000 key=49 down=1
+INPUT tick=250500 planned=250500 key=49 down=0
+FILES requests=6973 read=19218467 written=0; handles closed
+PC rc=2 fault=3 detail=DosBox ZZ9000 project                         1.0 Beta
+main: grSstQueryHardware failed!

@@ -142,6 +142,13 @@ int main(int argc,char**argv){
   std::filesystem::copy_file(".context/amiga/dosbox-pc/LoadFix.com",root+"/LOADFIX.COM",std::filesystem::copy_options::skip_existing);
   if(const char*model=getenv("ZZ_GAME_CPU")){db_cpu_model=strtoul(model,nullptr,10);assert(db_cpu_model<DB_CPU_COUNT);}
   interactive=getenv("ZZ_GAME_INTERACTIVE")!=nullptr;
+  if(const char *path=getenv("ZZ_GAME_TIMED_KEYS")){
+   std::ifstream keys(path);
+   if(!interactive||!keys||!timed_keys.load(keys,KBD_LAST)){
+    fprintf(stderr,"Invalid timed keyboard schedule (requires interactive mode): %s\n",path);return 2;
+   }
+   timed_keys_enabled=true;
+  }
   interactive_start=std::chrono::steady_clock::now();
 #ifdef DB_COMPAT
   if(const char*card=getenv("ZZ_GAME_SOUND")){assert(!strcmp(card,"off")||!strcmp(card,"sb16")||!strcmp(card,"sbpro2"));db_sound_card=!strcmp(card,"sb16")?2:!strcmp(card,"sbpro2");}

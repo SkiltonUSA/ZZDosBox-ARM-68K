@@ -186,7 +186,7 @@ def main():
  headers+=b''.join(x.read_bytes() for d in [OUT/'include',SRC,shell.SRC,ROOT/'amiga/dosbox/dos'] for x in sorted(d.glob('*.h')))
  objects=[]
  for i,s in enumerate(sources):
-  o=OUT/(f'{i}-'+s.stem+'.native.o');stamp=o.with_suffix('.sha256');objects.append(str(o));extra=(ROOT/'tests/amiga/dosbox/native_interactive.inc').read_bytes() if s==SRC/'native.cpp' else b'';digest=hashlib.sha256(s.read_bytes()+extra+headers+str(flags).encode()).hexdigest()
+  o=OUT/(f'{i}-'+s.stem+'.native.o');stamp=o.with_suffix('.sha256');objects.append(str(o));extra=b''.join((ROOT/'tests/amiga/dosbox'/n).read_bytes() for n in ('native_interactive.inc','timed_keys.h')) if s==SRC/'native.cpp' else b'';digest=hashlib.sha256(s.read_bytes()+extra+headers+str(flags).encode()).hexdigest()
   if not stamp.exists() or stamp.read_text()!=digest:subprocess.run(['clang++',*flags,'-c',str(s),'-o',str(o)],check=True);stamp.write_text(digest)
  for s in [shell.SRC/'fs_host.c',SRC/'native_fs.c',SRC/'cd_host.c']:
   o=OUT/(s.stem+'.native.o');objects.append(str(o));cf=[f for f in flags if f not in ['-std=c++17','-fno-rtti','-fno-exceptions']]

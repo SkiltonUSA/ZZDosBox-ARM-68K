@@ -2,7 +2,10 @@
  * Input lines: numeric KBD_KEYS value, pressed (0/1). No supplied media in Git. */
 #include <chrono>
 #include <thread>
+#include "timed_keys.h"
 static bool interactive;
+static bool timed_keys_enabled;
+static db_native::TimedKeys timed_keys;
 static unsigned interactive_keys,interactive_mouse;
 static auto interactive_start=std::chrono::steady_clock::now();
 void db_native_exception(Bitu which,Bitu error){
@@ -23,6 +26,10 @@ static std::string interactive_path(const char *name){
 }
 static void interactive_tick(){
  if(!interactive)return;
+ if(timed_keys_enabled)timed_keys.advance(PIC_Ticks,[](const db_native::KeyEvent &e){
+  fprintf(stderr,"INPUT tick=%u planned=%u key=%u down=%u\n",(unsigned)PIC_Ticks,e.tick,e.key,e.down);
+  KEYBOARD_AddKey((KBD_KEYS)e.key,e.down);
+ });
  if(PIC_Ticks%20==0){
   std::ifstream mousefile(interactive_path("mouse.txt"));unsigned mx,my,buttons,valid,mi=0;
   while(mousefile>>mx>>my>>buttons>>valid){if(mi++==interactive_mouse){
@@ -31,8 +38,10 @@ static void interactive_tick(){
     ad_put(shared,p,mx);ad_put(shared,p+4,my);ad_put(shared,p+8,buttons);ad_put(shared,p+12,valid);ad_put(shared,PC_MOUSE_WRITE,w+1);interactive_mouse++;
    }break;
   }}
-  std::ifstream keys(interactive_path("keys.txt"));unsigned key,down,n=0;
-  while(keys>>key>>down){if(n++==interactive_keys){if(key>0&&key<KBD_LAST&&down<2)KEYBOARD_AddKey((KBD_KEYS)key,down);interactive_keys++;break;}}
+  if(!timed_keys_enabled){
+   std::ifstream keys(interactive_path("keys.txt"));unsigned key,down,n=0;
+   while(keys>>key>>down){if(n++==interactive_keys){if(key>0&&key<KBD_LAST&&down<2)KEYBOARD_AddKey((KBD_KEYS)key,down);interactive_keys++;break;}}
+  }
  }
  if(PIC_Ticks%500==0){
   // Opt-in native research snapshot, requested by a file in the supplied drawer.

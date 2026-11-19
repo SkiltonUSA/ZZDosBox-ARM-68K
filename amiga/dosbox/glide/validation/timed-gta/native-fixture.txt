@@ -1,0 +1,3 @@
+FILES requests=100 read=33607 written=269; handles closed
+PC rc=0 fault=0 detail=DosBox ZZ9000 project                         1.0 Beta
+PASS EGA 16-colour planes, 128000 pixels, PIT/BIOS IRQ timing and DOS return

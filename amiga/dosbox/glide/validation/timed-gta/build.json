@@ -1,0 +1,24 @@
+{
+  "scope": "Native diagnostic versus original OVL; no physical GPU or FPS measurement",
+  "settings": {
+    "machine": "S3/VESA",
+    "guest_MiB": 32,
+    "cycles": 3000,
+    "sound": "off",
+    "limit_ms": 310000
+  },
+  "source_sha256": {
+    "amiga/dosbox/pc/native.cpp": "8f983d11643341e42500869afe3bb1addbda5c6ca0caf48d41f0d42f69d2c4aa",
+    "tests/amiga/dosbox/native_interactive.inc": "f1023932465b90417a1ea232b20b289d7102052f7dcf703431a51337867d881d",
+    "tests/amiga/dosbox/timed_keys.h": "303b8af899c08ceff6b01a183bb2fb9240ffe9a2a5de341efed6311538f40ae1",
+    "tests/amiga/dosbox/timed_keys.cpp": "1604317ded7c9b06fc3ebd230f030643fdb700d2f5aa4c530d1ea24e0e6a63c7",
+    "scripts/build_dosbox_pc.py": "5cc82cee84faa447e36cb89a088f05b56c2ffa7f0355c16446a3fd270690bc14",
+    "amiga/dosbox/glide/guest_port.cpp": "1ee1e2ee8d420118a7b7254009306d57f3def1078bb966d13fdc3c7d2a18e094",
+    "amiga/dosbox/glide/guest.c": "3b8f4ff8ffdeaaeab7be8be5f907d5c835d700bf0164e6530dd69856ae11f36d"
+  },
+  "native_binary_sha256": "51b8b24318cf0a21459e58fc0da2acffbbf4c9fbf5ac0bbe30b2b47b791aadaf",
+  "overlay_sha256": {
+    "diagnostic": "ac155154c31d68e62774845c792e37899e282888a6261b05bdbb67f2c82c986d",
+    "original": "e077ab1c5809f7ee1df9a1406f9ca6be99fb92d5822eaee2c67edbdbd351fb23"
+  }
+}

@@ -15,3 +15,6 @@ subprocess.run(['clang','-std=c11','-Wall','-Wextra','-Werror','-fsanitize=addre
  str(root/'amiga/dosbox/glide/guest_vertex.c'),str(root/'amiga/dosbox/glide/clip.c'),
  '-o',str(out/'vertices-test')],check=True)
 subprocess.run([str(out/'vertices-test')],check=True)
+subprocess.run(['clang++','-std=c++17','-Wall','-Wextra','-Werror','-fsanitize=address,undefined',
+ str(root/'tests/amiga/dosbox/timed_keys.cpp'),'-o',str(out/'timed-keys-test')],check=True)
+subprocess.run([str(out/'timed-keys-test')],check=True)
