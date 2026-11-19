@@ -24,6 +24,10 @@ A [diagnostic Glide overlay](amiga/dosbox/glide/validation/guest-loader/README.m
 now loads in the GTA ECTS native test and receives its hardware query. It reports
 no board; game rendering is not connected or included in the release. Core0
 depth support also remains a blocker. No GTA hardware FPS result is claimed.
+The first [A9 encoder measurement](amiga/dosbox/glide/validation/capacity/README.md)
+records **1.077 ms for 320 textured triangles at 800 MHz**, median across 30
+samples. This consumes 3.23% of a 30 FPS budget for command encoding alone;
+it is not GPU rendering or game FPS.
 An [upstream fence candidate](amiga/dosbox/glide/validation/fence-audit/README.md)
 passes parser, merged-write and cached-texture simulations (43 scenarios).
 The published XX19d-RIX

@@ -1,0 +1,105 @@
+{
+  "scope": "Physical A9 encoder cost only; no GPU submission, guest execution or game FPS",
+  "date": "2026-11-19",
+  "arm_mhz": 800,
+  "triangles": 320,
+  "batches": 64,
+  "packet_bytes": 57344,
+  "hash": "58e7d18a",
+  "runs": [
+    {
+      "run": 1,
+      "timer_hz": 399999286,
+      "ticks": [
+        430685,
+        432659,
+        434671,
+        431442,
+        430810,
+        431860,
+        431707,
+        433461,
+        431319,
+        431151
+      ],
+      "median_us": 1078.9381759046441,
+      "min_us": 1076.714421935243,
+      "max_us": 1086.6794397228
+    },
+    {
+      "run": 2,
+      "timer_hz": 399998176,
+      "ticks": [
+        429649,
+        427732,
+        427757,
+        428273,
+        426895,
+        428406,
+        428063,
+        427378,
+        427020,
+        428632
+      ],
+      "median_us": 1069.7798781962447,
+      "min_us": 1067.2423666251918,
+      "max_us": 1074.127398020935
+    },
+    {
+      "run": 3,
+      "timer_hz": 399998584,
+      "ticks": [
+        430272,
+        432415,
+        434926,
+        429769,
+        431472,
+        431560,
+        432080,
+        430566,
+        431340,
+        430921
+      ],
+      "median_us": 1078.5188179566155,
+      "min_us": 1074.4263034691144,
+      "max_us": 1087.3188491087258
+    }
+  ],
+  "summary": {
+    "samples": 30,
+    "warmups_excluded": 3,
+    "median_us": 1077.1666180787036,
+    "min_us": 1067.2423666251918,
+    "max_us": 1087.3188491087258,
+    "us_per_triangle": 3.3661456814959485
+  },
+  "frame_budget": [
+    {
+      "target_fps": 25,
+      "budget_ms": 40.0,
+      "encoder_ms": 1.0771666180787036,
+      "encoder_percent": 2.692916545196759
+    },
+    {
+      "target_fps": 30,
+      "budget_ms": 33.333333333333336,
+      "encoder_ms": 1.0771666180787036,
+      "encoder_percent": 3.2314998542361106
+    },
+    {
+      "target_fps": 60,
+      "budget_ms": 16.666666666666668,
+      "encoder_ms": 1.0771666180787036,
+      "encoder_percent": 6.462999708472221
+    }
+  ],
+  "verification": {
+    "native_asan_ubsan": "pass",
+    "encoder_suite": "pass",
+    "compiled_arm_model": "pass; feature discovery mocked, arithmetic and FP save/restore executed",
+    "physical_runs": "3 clean cancellations, register/cache/MMU/witness restoration and memory release",
+    "post_run_core1_idle": true,
+    "post_run_temperature_c": 58.8,
+    "clock_changed": false
+  }
+}

@@ -5,6 +5,12 @@ no board, and no GTA triangle has reached RasterIX. The 79 passing component
 scenarios establish particular protocol behaviours, not a complete renderer or
 game performance.
 
+An early [physical encoder measurement](../validation/capacity/README.md) now
+provides a CPU cost: 320 textured triangles take 1.077 ms median at 800 MHz,
+or 3.23% of a 30 FPS frame budget. This makes translation cost promising, but
+does not measure GPU rendering or predict GTA FPS. The next useful performance
+gate is a small scene timed through verified GPU completion.
+
 ## Remaining prerequisites
 
 1. **Complete GPU integration and a build environment.** The proposed fence,
@@ -13,9 +19,10 @@ game performance.
    2025.2, now installed locally under Wine with Zynq-7000 support.
    AMD lists supported [x86-64 Windows/Linux operating systems](https://docs.amd.com/r/2025.2-English/ug973-vivado-release-notes-install-license/Supported-Operating-Systems).
    Wine/Rosetta on the current ARM Mac is an unofficial candidate, not ruled out
-   by that support list. Its ability to build this project is unverified. The pinned project
-   must pass block-design validation, synthesis, implementation and timing
-   closure before any new image can be considered for installation.
+   by that support list. The pinned baseline has since completed block-design
+   validation, synthesis and routing. Timing coverage remains incomplete, and
+   the proposed completion extensions still require a full integrated build
+   and validation before any new image can be considered for installation.
 2. **Verified firmware and hardware completion.** The existing submit validator
    rejects the proposed fence/echo sequence. A capability-aware interface,
    matching FPGA image and bounded physical retirement/error/cleanup tests are

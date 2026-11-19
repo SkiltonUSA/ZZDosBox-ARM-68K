@@ -1,0 +1,3 @@
+PASS compiled A9 capacity: normal FP context retained
+PASS compiled A9 capacity: cancel FP context retained
+PASS compiled A9 capacity: unavailable FP context retained

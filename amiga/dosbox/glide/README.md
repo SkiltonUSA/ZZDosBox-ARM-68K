@@ -7,6 +7,11 @@ RasterIX packets for the XACP Core0 submission interface. The released
 ZZDosBox player and launcher do not use it. No GPU throughput or game FPS
 has been measured for this component.
 
+The first [physical A9 encoder benchmark](validation/capacity/README.md) measures
+**1.077 ms median for 320 textured triangles at 800 MHz** across 30 samples and
+three clean launches. That is 3.23% of a 30 FPS frame budget for encoding alone;
+GPU, guest execution, texture uploads and presentation remain unmeasured.
+
 ## Architecture
 
 The intended path is a guest `GLIDE2X.OVL` call, a DOSBox interception hook,
