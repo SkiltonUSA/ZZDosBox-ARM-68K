@@ -1,0 +1,35 @@
+{
+  "repository": "Xanxi-Amiga/XACP-ZZ9000",
+  "commit": "6e59edbaf24e0d8d2f29cdd31667a10e16c5b283",
+  "source_files": 684,
+  "source_bytes": 11472864,
+  "blob_hashes_verified": true,
+  "xpr_sha256": "9654a836d6bbf22845f1a268508263b0435fd00467167e995ea3f951b57009e9",
+  "project_file_references": 100,
+  "resolved_project_file_references": 100,
+  "missing_project_file_references": [],
+  "ps7_init_c_present": false,
+  "ps7_init_h_present": false,
+  "compiled_bsp_archives_present": false,
+  "fsbl_makefile_present": false,
+  "upstream_unit_sim_rtl_reference_resolves": false,
+  "scope": "Static source review, not a firmware build or hardware validation",
+  "hp3_metadata_comparison": {
+    "PCW_USE_S_AXI_HP3": {
+      "block_design": [
+        {
+          "value": "1"
+        }
+      ],
+      "fsbl_xml": "0"
+    },
+    "PCW_S_AXI_HP3_DATA_WIDTH": {
+      "block_design": [
+        {
+          "value": "64"
+        }
+      ],
+      "fsbl_xml": "64"
+    }
+  }
+}

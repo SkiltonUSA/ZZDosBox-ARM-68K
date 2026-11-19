@@ -39,6 +39,8 @@ adds tested batch-identity transport and memory-error quarantine. These remain
 offline experiments; the complete suite passes 79 scenarios and 23 mutation checks.
 [Hardware FPS prerequisites](amiga/dosbox/glide/experimental/fps-readiness.md):
 a compatible FPGA build and guest renderer integration are still required.
+The [XACP firmware rebuild guide](docs/xacp-firmware-rebuild.md) records Xanxi's
+source baseline, toolchain, boot-image components and the pending integration work.
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

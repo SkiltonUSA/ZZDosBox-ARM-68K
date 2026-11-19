@@ -1,0 +1,23 @@
+{
+  "tool": "Vivado 2025.2",
+  "environment": "Wine 11.0 / Rosetta on Apple Silicon macOS",
+  "part": "xc7z020clg400-1",
+  "top": "grx_completion",
+  "mode": "out_of_context",
+  "source": "amiga/dosbox/glide/experimental/completion.v",
+  "source_sha256": "c9b9115cfbd19f502b1f722bddd57fd946467aee53a997670955722aac812dfb",
+  "probe_tcl_sha256": "2d7dc92f4293c031a5adc64cf996aa12657033f584677677b6d2048fc37ef887",
+  "original_log_sha256": "db93a8331510aa8633cbff926f7ccbab75690daf2d048529661443f258fc5e2a",
+  "exit_code": 1,
+  "synthesis_completed": true,
+  "synthesis_warnings": 0,
+  "synthesis_critical_warnings": 0,
+  "synthesis_errors": 0,
+  "failed_command": "opt_design",
+  "error": "[Synth 20-411]",
+  "error_explanation": "No explanatory message in the tool log; cause unresolved",
+  "placement_reached": false,
+  "routing_reached": false,
+  "completion_marker_observed": false,
+  "scope": "Small completion circuit only; no full firmware build, bitstream, board timing signoff, hardware access or accelerated FPS"
+}

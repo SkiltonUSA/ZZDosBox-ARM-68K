@@ -1,0 +1,49 @@
+Vivado 2025.2, xc7z020clg400-1, grx_completion, out_of_context
+Process exit: 1
+Excerpt from synthesis completion through implementation failure:
+
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:02:05 ; elapsed = 00:02:07 . Memory (MB): peak = 0.000 ; gain = 0.000
+Synthesis Optimization Complete : Time (s): cpu = 00:02:05 ; elapsed = 00:02:07 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.011 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: 17489f58
+INFO: [Common 17-83] Releasing license: Synthesis
+12 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:02:19 ; elapsed = 00:02:24 . Memory (MB): peak = 0.000 ; gain = 0.000
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+WARNING: [DRC 23-814] Not all possible (connectivity based) DRCs may have been run because this design is seen as Out of Context.
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 6224bd60
+
+Time (s): cpu = 00:00:45 ; elapsed = 00:00:45 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+18 Infos, 1 Warnings, 0 Critical Warnings and 1 Errors encountered.
+opt_design failed
+opt_design: Time (s): cpu = 00:00:49 ; elapsed = 00:00:49 . Memory (MB): peak = 0.000 ; gain = 0.000
+ERROR: [Synth 20-411]
+
+ERROR: [Synth 20-411]
+
+    while executing
+"opt_design"
+INFO: [Common 17-206] Exiting Vivado at Thu Nov 19 14:05:01 2026...

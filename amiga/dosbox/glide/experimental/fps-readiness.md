@@ -10,9 +10,10 @@ game performance.
 1. **Complete GPU integration and a build environment.** The proposed fence,
    identity receiver, error observer and completion registers need integration
    with the complete GPU and board design. The published design uses Vivado
-   2025.2, which is not available in the current development environment.
+   2025.2, now installed locally under Wine with Zynq-7000 support.
    AMD lists supported [x86-64 Windows/Linux operating systems](https://docs.amd.com/r/2025.2-English/ug973-vivado-release-notes-install-license/Supported-Operating-Systems).
-   An ARM Mac VM is not that supported build environment. The pinned project
+   Wine/Rosetta on the current ARM Mac is an unofficial candidate, not ruled out
+   by that support list. Its ability to build this project is unverified. The pinned project
    must pass block-design validation, synthesis, implementation and timing
    closure before any new image can be considered for installation.
 2. **Verified firmware and hardware completion.** The existing submit validator
@@ -33,10 +34,15 @@ port queries. No emulator held the Core1 ownership port. The reservation was
 released without launching a game or GPU probe. No clock, firmware or installed
 application was changed.
 
-The container VM reported a successful start but then reported stopped, with its
-build connection refusing connections. No Vivado executable or installation was
-found in the checked local locations. An existing supported build machine has
-been requested; none has been identified in this session.
+The [Wine installation repair](../../../../docs/xacp-firmware-rebuild.md#wine-installation-finding)
+resolved a shared-directory layout problem. Vivado batch mode now loads the Tcl
+probe, reports 2025.2, finds the target part and obtains the synthesis licence.
+The small completion module synthesized with zero warnings or errors, but
+`opt_design` failed with `ERROR: [Synth 20-411]` and no explanatory message
+(process exit 1). Placement and routing were not reached. This is not a full
+firmware build; the implementation failure remains unresolved. No firmware was changed.
+The out-of-context mailbox build is a toolchain probe, not a replacement for
+full board validation or timing closure.
 
 The full pinned RasterIX and Float sources were downloaded for the next simulator
 stage. An exploratory Icarus elaboration of the complete RasterIX top failed
