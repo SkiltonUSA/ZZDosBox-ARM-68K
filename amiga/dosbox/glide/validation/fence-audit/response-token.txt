@@ -1,0 +1,10 @@
+PASS response token: stale idle and real DMA echo identity
+PASS response token: echo may precede fence retirement but not completion
+PASS response token: response backpressure preserves identity
+PASS response token: unread result retains the next complete identity
+PASS response token: cancellation does not bypass the fence
+PASS response token: short identity rejected
+PASS response token: overlong identity rejected before extra data
+PASS response token: external memory fault quarantines pending work
+PASS response token: partial identity waits and retains a fault pulse
+tests/amiga/dosbox/glide/response_token.v:139: $finish called at 4290000 (1ps)

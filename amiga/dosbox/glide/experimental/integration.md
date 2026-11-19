@@ -50,8 +50,10 @@ from these published fabric clock settings; no CPU or GPU clock change is propos
    reject out-of-range upper address bits rather than silently aliasing a larger
    segment every 256 bytes.
 4. Deliver an explicit ordered epoch/sequence token after the new fence through
-   the command path. The current FPGA parser does not implement that fence or
-   token. Updating the firmware validator alone cannot provide them.
+   the command path. The [DMA response prototype](response-path.md) tests an
+   existing stream route for the identity, with a dedicated receiver. The
+   published FPGA still lacks the new fence and receiver wiring. Updating the
+   firmware validator alone cannot provide them.
 5. Expose complete drain and sticky error information. The block-design GPU
    scalar ports expose performance signals, not a tagged completion/error port.
    Neither `perfBusy` nor FIFO transmit-complete proves batch retirement.
@@ -83,6 +85,7 @@ register endpoint, not something already available.
 - Only then perform bounded hardware checks with explicit quiescence and cache
   visibility. A reset or timeout never authorizes freeing GPU-owned memory.
 
-The existing offline suite remains 61 scenarios and fifteen detected mutations.
-This topology inspection adds no FPS result and does not resolve the earlier
+The topology inspection itself adds no simulation or FPS result. The subsequent
+[response-path tests](response-path.md) bring the component suite to 79 scenarios
+and 23 detected mutations. Neither stage resolves the earlier
 hardware freezes. The released emulator remains unchanged.

@@ -1,0 +1,10 @@
+PASS response fault: invalid response bits ignored
+PASS response fault: OKAY and EXOKAY do not fault
+PASS response fault: channel 0 error 2 sticky
+PASS response fault: channel 0 error 3 sticky
+PASS response fault: channel 1 error 2 sticky
+PASS response fault: channel 1 error 3 sticky
+PASS response fault: stalled read error overrides apparent drain
+PASS response fault: write error blocks same-cycle ACK consumption
+PASS response fault: simultaneous errors and quiesced recovery
+tests/amiga/dosbox/glide/response_fault.v:99: $finish called at 1220000 (1ps)

@@ -1,0 +1,7 @@
+PASS response token: stale idle and real DMA echo identity
+PASS response token: echo may precede fence retirement but not completion
+PASS response token: response backpressure preserves identity
+PASS response token: unread result retains the next complete identity
+PASS response token: cancellation does not bypass the fence
+FATAL: tests/amiga/dosbox/glide/response_token.v:123: Short response not quarantined
+       Time: 3350000  Scope: response_token_test

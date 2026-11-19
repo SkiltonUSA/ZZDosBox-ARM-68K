@@ -1,0 +1,8 @@
+{
+  "repository": "ToNi3141/RasterIX",
+  "commit": "3e2ee5aa5214b829c2a824250c445ce799ac8dc0",
+  "files": {
+    "rtl/RasterIX/FrameStreamingCore.v": "879f5db054b90c68ed4005c597c3de108349c291bfd8d72201874bbc691c442c",
+    "rtl/RasterIX/LinearAddressGenerator.v": "7aa660da1cc8436fe07f2b10a1ffa9dfd94aee8ea9bbf76f890f4fc3b30c7c45"
+  }
+}

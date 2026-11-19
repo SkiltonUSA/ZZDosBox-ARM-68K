@@ -234,3 +234,17 @@ The [integration plan](../../experimental/integration.md) traces the existing
 25 MHz CPU peripheral path, its AXI converter, and the 100 MHz GPU domain.
 [clock-topology.json](clock-topology.json) records the pinned source and exact
 connections. This is a source audit, not converter simulation or a new FPGA build.
+
+## DMA response and error path
+
+[Response-path report](../../experimental/response-path.md): nine response-error
+checks and nine real DMA/parser identity checks pass. Eight additional mutations
+are detected; combined coverage is 79 scenarios and 23 mutations. The stream
+engine can echo identity before a fence retires, so the completion mailbox still
+waits for the combined drain condition. No new renderer opcode is needed for the
+identity candidate; firmware validation, FPGA wiring and full GPU tests remain.
+
+`response-fault.txt` and `response-token.txt` contain the passing runs. The
+`response-ignore-*`, `response-not-sticky`, `response-late-fault` and `token-*`
+logs contain expected mutation failures. `stream-sources.json` pins the two new
+upstream dependencies. New modules/benches compile without warnings in Icarus.

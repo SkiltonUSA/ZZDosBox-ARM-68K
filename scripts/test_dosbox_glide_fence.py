@@ -10,6 +10,75 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / '.context/amiga/glide/fence-model'
 
 
+def test_response_token(simulate, rtl):
+    design = ROOT / 'amiga/dosbox/glide/experimental/response_token.v'
+    mailbox = ROOT / 'amiga/dosbox/glide/experimental/completion.v'
+    bench = ROOT / 'tests/amiga/dosbox/glide/response_token.v'
+    dependencies = [mailbox] + [rtl / (name + '.v') for name in (
+        'CommandParser', 'FrameStreamingCore', 'LinearAddressGenerator', 'ValueTrack')]
+    rc, text = simulate(design, 'response-token', bench, 'response_token_test', dependencies)
+    if rc or text.count('PASS response token:') != 9:
+        raise SystemExit('DMA response token scenarios failed')
+    original = design.read_text()
+    mutations = (
+        ('token-wrong-epoch', 'token_epoch<=s_data;', "token_epoch<=s_data ^ 1'b1;",
+         'Wrong stream identity'),
+        ('token-short-accepted', '(state==EPOCH && s_last)', "1'b0",
+         'Short response not quarantined'),
+        ('token-long-accepted', '(state==SEQUENCE && !s_last)', "1'b0",
+         'Long response not quarantined'),
+        ('token-fault-not-retained', 'else if(external_fault || malformed)', 'else if(malformed)',
+         'Partial identity fault not retained'),
+    )
+    for name, old, new, failure in mutations:
+        if original.count(old) != 1:
+            raise SystemExit('Unexpected response receiver; review mutation: ' + name)
+        mutated = OUT / (name + '.v')
+        mutated.write_text(original.replace(old, new))
+        rc, text = simulate(mutated, name, bench, 'response_token_test', dependencies)
+        if not rc or failure not in text:
+            raise SystemExit('Test did not detect mutation: ' + name)
+        print('PASS mutation: ' + name)
+    return {'scope': 'Upstream DMA/parser plus token receiver/mailbox; synthetic GPU retirement, no full rendering',
+            'scenarios': 9, 'mutations_detected': [m[0] for m in mutations],
+            'sources': {str(x.relative_to(ROOT)) if x.is_relative_to(ROOT) else x.name:
+                        hashlib.sha256(x.read_bytes()).hexdigest()
+                        for x in dependencies + [design, bench]}}
+
+
+def test_response_fault(simulate):
+    design = ROOT / 'amiga/dosbox/glide/experimental/axi_response_fault.v'
+    mailbox = ROOT / 'amiga/dosbox/glide/experimental/completion.v'
+    bench = ROOT / 'tests/amiga/dosbox/glide/response_fault.v'
+    rc, text = simulate(design, 'response-fault', bench, 'response_fault_test', (mailbox,))
+    if rc or text.count('PASS response fault:') != 9:
+        raise SystemExit('AXI response fault scenarios failed')
+    original = design.read_text()
+    mutations = (
+        ('response-ignore-read', '(rvalid && rresp[1])', "1'b0",
+         'Response error did not immediately quarantine completion'),
+        ('response-not-sticky', 'else if (response_error) latched_fault <= 1;',
+         'else latched_fault <= response_error;', 'Response fault lost quarantine'),
+        ('response-late-fault', '(latched_fault || response_error)', 'latched_fault',
+         'Response error did not immediately quarantine completion'),
+        ('response-ignore-valid', '(bvalid && bresp[1])', 'bresp[1]',
+         'Invalid response caused a fault'),
+    )
+    for name, old, new, failure in mutations:
+        if original.count(old) != 1:
+            raise SystemExit('Unexpected response observer; review mutation: ' + name)
+        mutated = OUT / (name + '.v')
+        mutated.write_text(original.replace(old, new))
+        rc, text = simulate(mutated, name, bench, 'response_fault_test', (mailbox,))
+        if not rc or failure not in text:
+            raise SystemExit('Test did not detect mutation: ' + name)
+        print('PASS mutation: ' + name)
+    return {'scope': 'AXI response observer plus completion mailbox; synthetic responses, not full GPU',
+            'scenarios': 9, 'mutations_detected': [m[0] for m in mutations],
+            'sources': {str(x.relative_to(ROOT)): hashlib.sha256(x.read_bytes()).hexdigest()
+                        for x in (design, mailbox, bench)}}
+
+
 def test_completion(simulate, parser):
     design = ROOT / 'amiga/dosbox/glide/experimental/completion.v'
     bench = ROOT / 'tests/amiga/dosbox/glide/completion.v'
@@ -89,6 +158,8 @@ def main():
     p.add_argument('--texture', action='store_true', help='Also test cached texture reads and replacement')
     p.add_argument('--completion', action='store_true', help='Also test experimental tagged completion mailbox')
     p.add_argument('--registers', action='store_true', help='Also test experimental AXI-Lite completion registers')
+    p.add_argument('--response-fault', action='store_true', help='Also test GPU AXI response fault quarantine')
+    p.add_argument('--response-token', action='store_true', help='Also test identity transport through upstream DMA')
     a = p.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / 'validation.json').unlink(missing_ok=True)
@@ -240,6 +311,10 @@ def main():
         record['completion'] = test_completion(simulate, source)
     if a.registers:
         record['registers'] = test_registers(simulate)
+    if a.response_fault:
+        record['response_fault'] = test_response_fault(simulate)
+    if a.response_token:
+        record['response_token'] = test_response_token(simulate, a.rtl.resolve())
     (OUT / 'validation.json').write_text(json.dumps(record, indent=2) + '\n')
 
 

@@ -217,3 +217,8 @@ unnecessary work, but there is no measured Cortex-A9 speedup yet.
 The [FPGA integration plan](experimental/integration.md) traces the existing
 CPU/GPU AXI clock conversion and identifies the missing ordered-token, drain
 and error connections. No compatible FPGA build has been installed.
+
+The [DMA response/error prototype](experimental/response-path.md) transports batch
+identity through the actual upstream stream engine, waits for retirement and
+quarantines memory errors. Full offline coverage is 79 scenarios and 23 mutations;
+no physical rendering support or performance gain is claimed.

@@ -21,6 +21,11 @@ transmit-complete. All inputs to this prototype belong to the same clock domain;
 a real CPU interface needs a reviewed clock-domain crossing where applicable.
 The module cannot compensate for incomplete or stale upstream drain tracking.
 
+The [DMA response prototype](response-path.md) now tests an identity route using
+the actual upstream stream engine. Its echo can arrive before fence retirement;
+accepting that token still requires waiting for the full drain condition. The
+same report covers immediate/sticky observation of GPU AXI memory errors.
+
 Once a token is accepted, the module waits for `drained` and retains an
 acknowledgement until `ack_ready` consumes it. The acknowledgement carries the
 same epoch, sequence and a cancelled flag. An unread acknowledgement blocks the

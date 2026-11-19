@@ -1,0 +1,2 @@
+FATAL: tests/amiga/dosbox/glide/response_token.v:88: Wrong stream identity
+       Time: 410000  Scope: response_token_test.result

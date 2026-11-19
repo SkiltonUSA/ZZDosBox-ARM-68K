@@ -6,7 +6,7 @@
     "CommandParser.v": "256ab3127d6cdbf18b38e2d8e51b13fac5e2e5e1ece24366526730690a11f7ee",
     "RegisterAndDescriptorDefines.vh": "265dc4ae18aea0cd79617e5e63e7e1310b0e8184165fa5a812c95a923b606fd6",
     "tests/amiga/dosbox/glide/fence.v": "edcbd91a6ee4fae05004b076d8b4c1dcd7415469f82d07dd21ca7d27ba3bda9d",
-    "scripts/test_dosbox_glide_fence.py": "502c2bf837b2e35e0641e9b4dcfcc4a28a62f5b5ec14bffaafbc10675d502a53"
+    "scripts/test_dosbox_glide_fence.py": "47598fd3ea6fc7f8191f364fa514b6a54e84a8c4343f292ee2ac81bbf08bb6fb"
   },
   "axi": {
     "scope": "Parser plus bypass Coalescer and ValueTrack; simulated AXI slave",
@@ -94,6 +94,40 @@
       "amiga/dosbox/glide/experimental/completion.v": "c9b9115cfbd19f502b1f722bddd57fd946467aee53a997670955722aac812dfb",
       "amiga/dosbox/glide/experimental/completion_axil.v": "087a1e47b4a6487a196ebe4dc415924bfc28dbb4bd3ff48ca34aa7f2bc7a7208",
       "tests/amiga/dosbox/glide/completion_axil.v": "49f472241c638a0e033add9a9e7c7ce77d5f0350915a5d4a4def11f5dc79ccf6"
+    }
+  },
+  "response_fault": {
+    "scope": "AXI response observer plus completion mailbox; synthetic responses, not full GPU",
+    "scenarios": 9,
+    "mutations_detected": [
+      "response-ignore-read",
+      "response-not-sticky",
+      "response-late-fault",
+      "response-ignore-valid"
+    ],
+    "sources": {
+      "amiga/dosbox/glide/experimental/axi_response_fault.v": "556365b3a3d8b42384381e1db284844b95bdd1ceee7aae5e328d51dcfc7ab3d1",
+      "amiga/dosbox/glide/experimental/completion.v": "c9b9115cfbd19f502b1f722bddd57fd946467aee53a997670955722aac812dfb",
+      "tests/amiga/dosbox/glide/response_fault.v": "ba57c3affa9844f4951a71f28d59e2042181b1aa752725dd7fe655a447652a79"
+    }
+  },
+  "response_token": {
+    "scope": "Upstream DMA/parser plus token receiver/mailbox; synthetic GPU retirement, no full rendering",
+    "scenarios": 9,
+    "mutations_detected": [
+      "token-wrong-epoch",
+      "token-short-accepted",
+      "token-long-accepted",
+      "token-fault-not-retained"
+    ],
+    "sources": {
+      "amiga/dosbox/glide/experimental/completion.v": "c9b9115cfbd19f502b1f722bddd57fd946467aee53a997670955722aac812dfb",
+      "CommandParser.v": "256ab3127d6cdbf18b38e2d8e51b13fac5e2e5e1ece24366526730690a11f7ee",
+      "FrameStreamingCore.v": "879f5db054b90c68ed4005c597c3de108349c291bfd8d72201874bbc691c442c",
+      "LinearAddressGenerator.v": "7aa660da1cc8436fe07f2b10a1ffa9dfd94aee8ea9bbf76f890f4fc3b30c7c45",
+      "ValueTrack.v": "f2383b9581966772e8b8b3aaf928a8faecb1324bc208d4d9eaded0bb958fedd4",
+      "amiga/dosbox/glide/experimental/response_token.v": "b578e53a47c6ed6b8d0f8e84c4e136de80af328bd9e5808aee54e3dc461da4a4",
+      "tests/amiga/dosbox/glide/response_token.v": "298a50f070ead7a7a1624576ae7e93d0a7273b02ae5408c4051859e7af19aa8f"
     }
   }
 }

@@ -12,6 +12,10 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Prototype batch identity transport through upstream RasterIX DMA responses and
+  immediate/sticky GPU memory-error quarantine. Eighteen added scenarios and eight
+  detected mutations bring the offline suite to 79/23; FPGA integration is pending.
+
 - Audit the published FPGA clock/reset topology and document a completion-register
   integration path using the existing AXI converter arrangement. No firmware,
   clock setting or released-player change.
