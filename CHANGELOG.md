@@ -12,6 +12,13 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Copy completed Core0 readback payloads with bounded NEON loads/stores while
+  retaining channel completion checks and barriers. Readback measured **43.30 →
+  19.09 ms/frame (-55.9%)** and gameplay **6.28 → 7.59 FPS (+21.0%)** across
+  opening-street samples. Bounds/alignment, replay and hardware cleanup tests
+  passed. Retained only in the experimental GTA player.
+  [Evidence and limits](amiga/dosbox/glide/validation/gta-live/readback-copy/README.md).
+
 - NEON RGB565-to-RGB555 conversion and eight-pixel dirty-span scanning reduce
   framebuffer lock/unlock self time **31.03 → 19.85 ms/frame (36.0%)**.
   GTA measured **5.77 → 6.28 FPS (+8.8%)** across opening-street samples of

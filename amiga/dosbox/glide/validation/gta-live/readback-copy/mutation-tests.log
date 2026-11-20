@@ -1,0 +1,2 @@
+Wrong final vector rejected: PASS
+Assertion failed: (!memcmp(dst,src,n)), function check_copy, file pixels.c, line 46.

@@ -42,16 +42,16 @@ this synthetic result does not predict GTA performance.
   synthetic offscreen results; the released player is unchanged.
 - The existing 1.0 Beta release does not include this experimental firmware.
 
-**GTA gameplay: 6.28 FPS** in the latest experimental Glide-to-RasterIX run.
-NEON framebuffer conversion and dirty-span scanning reduced lock/unlock work
-by **36.0%**; the opening-street sample measured **5.77 → 6.28 FPS (+8.8%)**.
-Earlier improvements used checked guest-memory page copies, framebuffer reuse
-and exact NEON display conversion. Tested at 800 MHz, 3,000 cycles, 640×480
-windowed and sound off. Run lengths and player state differ; this is not a
-fixed-replay benchmark.
-[Measurements, screenshot and limits](amiga/dosbox/glide/validation/gta-live/lfb-kernels/README.md).
+**GTA gameplay: 7.59 FPS** in the latest experimental Glide-to-RasterIX run.
+NEON copying from the completed readback channel reduced readback time by
+**55.9%**; gameplay measured **6.28 → 7.59 FPS (+21.0%)**. Earlier improvements
+used checked guest-memory page copies, framebuffer reuse, NEON pixel conversion
+and dirty-span scanning. Tested at 800 MHz, 3,000 cycles, 640×480 windowed and
+sound off. Run lengths and player/camera positions differ; these are opening-street
+samples, not a fixed-replay benchmark.
+[Measurements, screenshot and limits](amiga/dosbox/glide/validation/gta-live/readback-copy/README.md).
 
-![GTA ECTS gameplay through RasterIX](amiga/dosbox/glide/validation/gta-live/lfb-kernels/candidate.png)
+![GTA ECTS gameplay through RasterIX](amiga/dosbox/glide/validation/gta-live/readback-copy/candidate.png)
 
 [Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·
 [Remaining integration](amiga/dosbox/glide/experimental/fps-readiness.md) ·

@@ -1,0 +1,66 @@
+
+dosbox.elf:     file format elf32-littlearm
+
+
+Disassembly of section .entry:
+
+Disassembly of section .text:
+
+000c9134 <grx_readback_copy>:
+   c9134:	e352003f 	cmp	r2, #63	@ 0x3f
+   c9138:	e92d43f0 	push	{r4, r5, r6, r7, r8, r9, lr}
+   c913c:	9a000033 	bls	c9210 <grx_readback_copy+0xdc>
+   c9140:	e2429040 	sub	r9, r2, #64	@ 0x40
+   c9144:	e1a03001 	mov	r3, r1
+   c9148:	e3c9903f 	bic	r9, r9, #63	@ 0x3f
+   c914c:	e2899040 	add	r9, r9, #64	@ 0x40
+   c9150:	e0804009 	add	r4, r0, r9
+   c9154:	e1a0e003 	mov	lr, r3
+   c9158:	e2838020 	add	r8, r3, #32
+   c915c:	e2837030 	add	r7, r3, #48	@ 0x30
+   c9160:	e1a0c000 	mov	ip, r0
+   c9164:	f46e6a0d 	vld1.8	{d22-d23}, [lr]!
+   c9168:	e2806020 	add	r6, r0, #32
+   c916c:	e2805030 	add	r5, r0, #48	@ 0x30
+   c9170:	e2800040 	add	r0, r0, #64	@ 0x40
+   c9174:	f46e4a0f 	vld1.8	{d20-d21}, [lr]
+   c9178:	e1500004 	cmp	r0, r4
+   c917c:	e2833040 	add	r3, r3, #64	@ 0x40
+   c9180:	f4682a0f 	vld1.8	{d18-d19}, [r8]
+   c9184:	f4670a0f 	vld1.8	{d16-d17}, [r7]
+   c9188:	f44c6a0d 	vst1.8	{d22-d23}, [ip]!
+   c918c:	f44c4a0f 	vst1.8	{d20-d21}, [ip]
+   c9190:	f4462a0f 	vst1.8	{d18-d19}, [r6]
+   c9194:	f4450a0f 	vst1.8	{d16-d17}, [r5]
+   c9198:	1affffed 	bne	c9154 <grx_readback_copy+0x20>
+   c919c:	e202203f 	and	r2, r2, #63	@ 0x3f
+   c91a0:	e0811009 	add	r1, r1, r9
+   c91a4:	e352000f 	cmp	r2, #15
+   c91a8:	9a00000f 	bls	c91ec <grx_readback_copy+0xb8>
+   c91ac:	e1a03002 	mov	r3, r2
+   c91b0:	e0845002 	add	r5, r4, r2
+   c91b4:	e081e002 	add	lr, r1, r2
+   c91b8:	e04ec003 	sub	ip, lr, r3
+   c91bc:	e0450003 	sub	r0, r5, r3
+   c91c0:	e2433010 	sub	r3, r3, #16
+   c91c4:	f46c0a0f 	vld1.8	{d16-d17}, [ip]
+   c91c8:	e353000f 	cmp	r3, #15
+   c91cc:	f4400a0f 	vst1.8	{d16-d17}, [r0]
+   c91d0:	8afffff8 	bhi	c91b8 <grx_readback_copy+0x84>
+   c91d4:	e2423010 	sub	r3, r2, #16
+   c91d8:	e202200f 	and	r2, r2, #15
+   c91dc:	e3c3300f 	bic	r3, r3, #15
+   c91e0:	e2833010 	add	r3, r3, #16
+   c91e4:	e0844003 	add	r4, r4, r3
+   c91e8:	e0811003 	add	r1, r1, r3
+   c91ec:	e3520000 	cmp	r2, #0
+   c91f0:	08bd83f0 	popeq	{r4, r5, r6, r7, r8, r9, pc}
+   c91f4:	e2443001 	sub	r3, r4, #1
+   c91f8:	e0812002 	add	r2, r1, r2
+   c91fc:	e4d10001 	ldrb	r0, [r1], #1
+   c9200:	e1510002 	cmp	r1, r2
+   c9204:	e5e30001 	strb	r0, [r3, #1]!
+   c9208:	1afffffb 	bne	c91fc <grx_readback_copy+0xc8>
+   c920c:	e8bd83f0 	pop	{r4, r5, r6, r7, r8, r9, pc}
+   c9210:	e1a04000 	mov	r4, r0
+   c9214:	eaffffe2 	b	c91a4 <grx_readback_copy+0x70>
