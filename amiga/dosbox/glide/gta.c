@@ -5,6 +5,9 @@
 #include "guest_calls.h"
 #include "guest_vertex.h"
 #include <string.h>
+#ifdef DB_GLIDE_LIVE
+#include "pixels_neon.h"
+#endif
 #define COLOR 0x06600000u
 #define TEX_START (COLOR+GRX_GTA_PIXELS*2)
 #define TEX_END 0x067f0000u
@@ -82,7 +85,11 @@ static grx_result draw(grx_gta *s,const grx_guest_call *call,const grx_guest_io 
 static grx_result lock(grx_gta *s,const uint32_t *a,const grx_guest_io *io,uint32_t *reply){
  if(s->locked||a[0]!=1||a[1]!=1||a[2]!=1||a[3]||a[4]!=1||!s->lfb_address||s->lfb_address<io->data_base)return GRX_UNSUPPORTED;
  grx_result r=read_frame(s);if(r!=GRX_OK)return r;
+#ifdef DB_GLIDE_LIVE
+ grx_rgb565_555(s->shadow,s->lfb,GRX_GTA_PIXELS);
+#else
  for(unsigned i=0;i<sizeof(s->lfb);i+=2){unsigned v=get16(s->shadow+i);put16(s->lfb+i,rgb555(v));}
+#endif
  if(!io->write(io->opaque,s->lfb_address,s->lfb,sizeof(s->lfb)))return GRX_BAD_ARGUMENT;
  unsigned char info[20];put32(info,20);put32(info+4,s->lfb_address-io->data_base);put32(info+8,1280);put32(info+12,1);put32(info+16,0);
  if(!writeg(io,a[5],info,20))return GRX_BAD_ARGUMENT;
@@ -94,11 +101,15 @@ static grx_result unlock(grx_gta *s,const uint32_t *a,const grx_guest_io *io,uin
  if(!io->read(io->opaque,s->lfb_address,s->lfb,sizeof(s->lfb)))return GRX_BAD_ARGUMENT;
  for(unsigned y=0;y<480;y++){
   unsigned lo=640,hi=0;
+#ifdef DB_GLIDE_LIVE
+  grx_lfb_dirty_span(s->lfb+y*1280,s->shadow+y*1280,640,&lo,&hi);
+#else
   for(unsigned x=0;x<640;x++){
    unsigned i=(y*640+x)*2,v=get16(s->lfb+i),old=get16(s->shadow+i);old=rgb555(old);
    if(v!=old){if(lo==640)lo=x;hi=x+1;}
    /* Upload only changed runs, preserving untouched RGB565 green LSBs. */
   }
+#endif
   for(unsigned x=lo;x<hi;){
    unsigned i=(y*640+x)*2;
    unsigned old=get16(s->shadow+i);

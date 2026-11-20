@@ -40,5 +40,14 @@ if platform.machine().lower() in ('arm64','aarch64'):
  subprocess.run(['clang','-std=c11','-O2','-Wall','-Wextra','-Werror','-fsanitize=address,undefined',
  '-I'+str(src),str(src/'pixels_neon.c'),str(tests/'pixels.c'),'-o',str(exe)],check=True)
  subprocess.run([str(exe)],env=dict(os.environ,UBSAN_OPTIONS='halt_on_error=1'),check=True)
+ for name in ['gta_lfb']+(['gta_replay'] if args.trace else []):
+  exe=out/(name+'-neon')
+  subprocess.run(['clang','-std=c11','-O2','-ffp-contract=off','-Wall','-Wextra','-Werror',
+   '-fsanitize=address,undefined','-DDB_GLIDE_LIVE','-I'+str(src),'-I'+str(src/'experimental'),
+   '-I'+str(root/'.context/amiga/glide/ovl'),str(tests/(name+'.c')),
+   *[str(src/s) for s in base],str(src/'pixels_neon.c'),*(validator if name=='gta_replay' else []),
+   '-lm','-o',str(exe)],check=True)
+  subprocess.run([str(exe),*([str(args.trace.resolve())] if name=='gta_replay' else [])],
+   env=dict(os.environ,UBSAN_OPTIONS='halt_on_error=1'),check=True)
 else:
  print('SKIP: NEON pixel execution requires an ARM host')
