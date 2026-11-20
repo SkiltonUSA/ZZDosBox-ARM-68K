@@ -104,7 +104,11 @@ Logs and the complete validation manifest are in the same directory.
 Both new tests first failed because their implementation module was absent;
 the completed modules pass, and all eight deliberate defects are detected.
 
-No full FPGA simulation, synthesis, timing closure or physical measurement was
-performed. The previous freezes remain unresolved, and GTA still receives the
+This component stage performed no full FPGA simulation, synthesis, timing
+closure or physical measurement. The previous freezes remain unresolved, and GTA still receives the
 diagnostic no-board response. This work establishes a testable integration route,
 not a playable or faster game.
+
+A later [full renderer test](../validation/full-renderer/README.md) uses these
+components with the upstream GPU and synthetic AXI RAM, checking completed pixels
+and fault quarantine. Board-specific integration and hardware timing remain open.

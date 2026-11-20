@@ -19,6 +19,11 @@ the ARM translator, XACP Core0 submission, then FPGA rasterisation. Core1
 continues PC emulation. Core0 submits GPU commands; it does not perform the
 triangle rasterisation in software.
 
+The [full upstream renderer test](validation/full-renderer/README.md) now checks
+actual pixels, delayed memory responses, cancellation and error quarantine through
+the proposed completion path. The board-specific HP3/firmware integration still
+needs validation before physical GPU timing.
+
 The encoder itself has no MMIO, guest memory dereferences or display takeover.
 A separate 68k probe submits pre-encoded fixtures through the firmware's validated
 Core0 service. The standalone probe does not launch Core1. A separate diagnostic

@@ -1,0 +1,37 @@
+{
+  "upstream": {
+    "RasterIX": "3e2ee5aa5214b829c2a824250c445ce799ac8dc0",
+    "Float": "83485654e380392a726ee67f8e5d2f4f8f73dd32"
+  },
+  "files": {
+    "control/cancel-pixels.log": "fb372f58ce494ceae2521b76bfbab550cc97e8f04f2688a5f2f634d79d2d0902",
+    "control/cancel.log": "4bbbadd78fa1d2346994586ff7cb4479ffe59019c3b643ad0c66728d3fc4d735",
+    "control/commands.hex": "49e78c764de364abc79a0c6c32145d3ded4c649a18374a0c7e27ef5d3cd81587",
+    "control/delayed-pixels.log": "fb372f58ce494ceae2521b76bfbab550cc97e8f04f2688a5f2f634d79d2d0902",
+    "control/delayed.log": "2ddee7c368aee7b780278681caf6cacb53233de738272619435732ddfd4aa20d",
+    "control/gpu_wires.vh": "53ee23269c90051f0608b71c577512807c6a52759e581da2fe5e91124c842b33",
+    "control/normal-pixels.log": "fb372f58ce494ceae2521b76bfbab550cc97e8f04f2688a5f2f634d79d2d0902",
+    "control/normal.log": "6ddafa311e4e7065c57e7252e3741dfe00d8a2c48a3753e1326fc03b227e4f47",
+    "control/read-error-pixels.log": "4b4782fe76e9d3ed82a431235f69c42a9fd2872255530100a8b321efaf7d7c12",
+    "control/read-error.log": "59a1ff9dd50f7610c9013285389070dec5f16dfba9dd74824741ea62a6def499",
+    "control/results.json": "b5cc6540d9a9cea6ace14e36651d826cfe328aed7ef3533aff02444a286750d3",
+    "control/scene_sizes.vh": "7a47e891d8239ce2188686c53d81e396e7d3fd3da21b5622e520aad3a7381c02",
+    "control/unsafe-drain.log": "2d7dfeabea73e3dc0d5f3588dfc8e1ffd5786c818842bcb7d29fe20970ec470f",
+    "control/write-error.log": "ef03f1aca78ba67d7261a72d9afbcd5708c2eea1ed243d2d09cfaec571cdf77c",
+    "ordered/build.log": "b3da57b1a3eb15ec540e0c047fc69238284bca3c91d37f39f07f60af509f6ad3",
+    "ordered/cancel-pixels.log": "fb372f58ce494ceae2521b76bfbab550cc97e8f04f2688a5f2f634d79d2d0902",
+    "ordered/cancel.log": "bb9bcaac218a90fdcca627f4288da4008ac708c95c6bcc2cc4b06de9484c5444",
+    "ordered/commands.hex": "076d7bdf8ba3fa8a4eb01d7cb6f7426b6b40c6648bd7dba606a60b0d44175903",
+    "ordered/delayed-pixels.log": "fb372f58ce494ceae2521b76bfbab550cc97e8f04f2688a5f2f634d79d2d0902",
+    "ordered/delayed.log": "1ecfb3c571d0d2a08e71801d1925ec17339b66f7a06619c3f14cf8408a7af358",
+    "ordered/gpu_wires.vh": "53ee23269c90051f0608b71c577512807c6a52759e581da2fe5e91124c842b33",
+    "ordered/normal-pixels.log": "fb372f58ce494ceae2521b76bfbab550cc97e8f04f2688a5f2f634d79d2d0902",
+    "ordered/normal.log": "733a0acf2ce2f99a6dd62b838623152bf35c47ac1442766afcb4145301453124",
+    "ordered/read-error-pixels.log": "4b4782fe76e9d3ed82a431235f69c42a9fd2872255530100a8b321efaf7d7c12",
+    "ordered/read-error.log": "13911a69b7cafaaac3d749cfe27413bd13067908b0488c4a505110f680ca6cc9",
+    "ordered/results.json": "9af60439ab2cc632a97bed0f4727b96f186fd0530374aac49d255636c1a2d412",
+    "ordered/scene_sizes.vh": "82cd46eb87fb77ca8393ae95856e23939dc2dce6119e1ba5a69def3327fe2053",
+    "ordered/unsafe-drain.log": "0d84a11cbfe74046e456b015606d42627fcfa8e5b95f235e599871145d8ca3d6",
+    "ordered/write-error.log": "098e97c4a8b34748c9677e312e7850bc91a51d18174d39874344e4e50fe37d3f"
+  }
+}

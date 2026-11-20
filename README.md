@@ -41,6 +41,11 @@ an existing AXI converter arrangement to follow.
 The [DMA response/error prototype](amiga/dosbox/glide/experimental/response-path.md)
 adds tested batch-identity transport and memory-error quarantine. These remain
 offline experiments; the complete suite passes 79 scenarios and 23 mutation checks.
+A [full upstream renderer simulation](amiga/dosbox/glide/validation/full-renderer/README.md)
+now passes clear, solid, additive, textured and alpha-blended scenes through the
+completion path, including delayed memory, cancellation and error quarantine.
+A deliberately premature completion is detected. Board/HP3 integration remains
+pending; these pixel checks are not GPU or game FPS.
 [Hardware FPS prerequisites](amiga/dosbox/glide/experimental/fps-readiness.md):
 a compatible FPGA build and guest renderer integration are still required.
 The [XACP firmware rebuild guide](docs/xacp-firmware-rebuild.md) records Xanxi's

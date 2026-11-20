@@ -80,12 +80,14 @@ checked 150 MHz setup failure with +0.021 ns margin and retains +0.010 ns hold.
 This small margin and the remaining timing-coverage gaps require further review;
 the result does not establish a gameplay speed improvement or hardware readiness.
 
-The full pinned RasterIX and Float sources were downloaded for the next simulator
-stage. An exploratory Icarus elaboration of the complete RasterIX top failed
-on unused constant output destinations and declarations referenced before their
-definitions. That run used a preliminary one-TMU/64-bit configuration, not all
-board parameters. It is neither a complete simulation result nor evidence that
-Vivado rejects the design. No source workaround or hardware image was promoted.
+The [full upstream renderer simulation](../validation/full-renderer/README.md)
+now passes five scenes through the proposed completion components, including
+memory backpressure, cancellation, injected errors and a premature-drain mutation.
+The ordinary and additional-marker-fence variants both pass the pixel oracle.
+This supersedes the exploratory Icarus elaboration attempt. It uses Verilator,
+behavioural RAM and a synthetic AXI memory model; Xanxi's board-specific changes,
+HP3 path and CPU mailbox crossing are not included. No physical GPU timing or
+replacement firmware follows from this result.
 
 ## Measurement criteria
 

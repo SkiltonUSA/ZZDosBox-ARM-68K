@@ -81,7 +81,7 @@ register endpoint, not something already available.
   responses, memory errors, cancellation and repeated submissions. Preserve
   Xanxi's command-read-credit and other board-specific changes.
 - Complete FPGA synthesis, implementation and timing closure using the intended
-  toolchain. No compatible build or timing report has been produced in this audit.
+  toolchain. The routed baseline does not include these completion extensions.
 - Only then perform bounded hardware checks with explicit quiescence and cache
   visibility. A reset or timeout never authorizes freeing GPU-owned memory.
 
@@ -89,3 +89,9 @@ The topology inspection itself adds no simulation or FPS result. The subsequent
 [response-path tests](response-path.md) bring the component suite to 79 scenarios
 and 23 detected mutations. Neither stage resolves the earlier
 hardware freezes. The released emulator remains unchanged.
+
+The subsequent [full renderer simulation](../validation/full-renderer/README.md)
+connects the actual upstream renderer to synthetic AXI RAM and the proposed
+receiver/observer/mailbox. Pixel correctness, delayed responses, cancellation
+and error quarantine pass. This addresses the upstream rendering side; it does
+not replace validation of Xanxi's modifications, converters, HP3 or CPU crossing.

@@ -1,0 +1,745 @@
+c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated.o /opt/homebrew/Cellar/verilator/5.054/share/verilator/include/verilated.cpp
+c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_timing.o /opt/homebrew/Cellar/verilator/5.054/share/verilator/include/verilated_timing.cpp
+c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -c -o verilated_threads.o /opt/homebrew/Cellar/verilator/5.054/share/verilator/include/verilated_threads.cpp
+c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -c -x c++-header Vfull_renderer_test__pch.h -o Vfull_renderer_test__pch.h.fast.gch
+c++   -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -c -x c++-header Vfull_renderer_test__pch.h -o Vfull_renderer_test__pch.h.slow.gch
+c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -include-pch Vfull_renderer_test__pch.h.fast.gch -c Vfull_renderer_test.cpp
+c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -include-pch Vfull_renderer_test__pch.h.fast.gch -c Vfull_renderer_test___024root__0.cpp
+c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -include-pch Vfull_renderer_test__pch.h.fast.gch -c Vfull_renderer_test___024root__1.cpp
+c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -include-pch Vfull_renderer_test__pch.h.fast.gch -c Vfull_renderer_test___024root__2.cpp
+c++ -Os  -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -include-pch Vfull_renderer_test__pch.h.fast.gch -c Vfull_renderer_test__main.cpp
+c++   -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -include-pch Vfull_renderer_test__pch.h.slow.gch -c Vfull_renderer_test__ConstPool__0__Slow.cpp
+c++   -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -include-pch Vfull_renderer_test__pch.h.slow.gch -c Vfull_renderer_test___024root__Slow.cpp
+c++   -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -include-pch Vfull_renderer_test__pch.h.slow.gch -c Vfull_renderer_test___024root__0__Slow.cpp
+c++   -I.  -MMD -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include -I/opt/homebrew/Cellar/verilator/5.054/share/verilator/include/vltstd -DVERILATOR=1 -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TIMING=1 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -DVM_TRACE_SAIF=0 -DVM_VPI=0 -faligned-new -fbracket-depth=4096 -fcf-protection=none -Xclang -fno-pch-timestamp -Qunused-arguments -Wno-bool-operation -Wno-c++11-narrowing -Wno-constant-logical-operand -Wno-int-in-bool-context -Wno-non-pod-varargs -Wno-parentheses-equality -Wno-shadow -Wno-sign-compare -Wno-tautological-bitwise-compare -Wno-tautological-compare -Wno-uninitialized -Wno-unnecessary-virtual-specifier -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable -Wno-vla-cxx-extension  -DVM_PREFIX_INCLUDE="<Vfull_renderer_test.h>"   -DVL_TIME_CONTEXT   -std=gnu++20 -include-pch Vfull_renderer_test__pch.h.slow.gch -c Vfull_renderer_test__Syms__Slow.cpp
+c++  -Wl,-U,__Z15vl_time_stamp64v,-U,__Z13sc_time_stampv,-U,_vlog_startup_routines   verilated.o verilated_timing.o verilated_threads.o Vfull_renderer_test__ALL.a    -pthread -lpthread   -o Vfull_renderer_test
+rm Vfull_renderer_test__ALL.verilator_deplist.tmp
+- V e r i l a t i o n   R e p o r t: Verilator 5.054 2026-11-01 rev vUNKNOWN-built20261101
+- Verilator: Built from 99.312 MB sources in 109 modules, into 4.305 MB in 9 C++ files needing 0.000 MB
+- Verilator: Walltime 2.630 s (elab=0.111, cvt=0.264, bld=2.107); cpu 0.535 s on 4 threads; allocated 122.516 MB
+%Warning-PINMISSING: .context/amiga/glide/full-renderer-ordered/gpu_wires.vh:40:70: Instance has missing pin: 'swap_fb'
+   40 |  .RASTERIZER_FIXPOINT_PRECISION(18),.RASTERIZER_FLOAT_PRECISION(24)) gpu(
+      |                                                                      ^~~
+                     tests/amiga/dosbox/glide/full_renderer.v:21:1: ... note: In file included from 'full_renderer.v'
+                     .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIX_EF.v:89:45: ... Location of port declaration
+   89 |     output wire                             swap_fb,
+      |                                             ^~~~~~~
+                     ... For warning description see https://verilator.org/warn/PINMISSING?v=5.054
+                     ... Use "/* verilator lint_off PINMISSING */" and lint_on around source to disable this message.
+%Warning-PINMISSING: .context/amiga/glide/full-renderer-ordered/gpu_wires.vh:40:70: Instance has missing pin: 'swap_fb_enable_vsync'
+   40 |  .RASTERIZER_FIXPOINT_PRECISION(18),.RASTERIZER_FLOAT_PRECISION(24)) gpu(
+      |                                                                      ^~~
+                     tests/amiga/dosbox/glide/full_renderer.v:21:1: ... note: In file included from 'full_renderer.v'
+                     .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIX_EF.v:90:45: ... Location of port declaration
+   90 |     output wire                             swap_fb_enable_vsync,
+      |                                             ^~~~~~~~~~~~~~~~~~~~
+%Warning-PINMISSING: .context/amiga/glide/full-renderer-ordered/gpu_wires.vh:40:70: Instance has missing pin: 'fb_addr'
+   40 |  .RASTERIZER_FIXPOINT_PRECISION(18),.RASTERIZER_FLOAT_PRECISION(24)) gpu(
+      |                                                                      ^~~
+                     tests/amiga/dosbox/glide/full_renderer.v:21:1: ... note: In file included from 'full_renderer.v'
+                     .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIX_EF.v:91:45: ... Location of port declaration
+   91 |     output wire [ADDR_WIDTH - 1 : 0]        fb_addr,
+      |                                             ^~~~~~~
+%Warning-PINMISSING: .context/amiga/glide/full-renderer-ordered/gpu_wires.vh:40:70: Instance has missing pin: 'fb_size'
+   40 |  .RASTERIZER_FIXPOINT_PRECISION(18),.RASTERIZER_FLOAT_PRECISION(24)) gpu(
+      |                                                                      ^~~
+                     tests/amiga/dosbox/glide/full_renderer.v:21:1: ... note: In file included from 'full_renderer.v'
+                     .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIX_EF.v:92:47: ... Location of port declaration
+   92 |     output wire [FB_SIZE_IN_PIXEL_LG - 1 : 0] fb_size,
+      |                                               ^~~~~~~
+%Warning-PINMISSING: .context/amiga/glide/full-renderer-ordered/gpu_wires.vh:40:70: Instance has missing pin: 'perfBusy'
+   40 |  .RASTERIZER_FIXPOINT_PRECISION(18),.RASTERIZER_FLOAT_PRECISION(24)) gpu(
+      |                                                                      ^~~
+                     tests/amiga/dosbox/glide/full_renderer.v:21:1: ... note: In file included from 'full_renderer.v'
+                     .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIX_EF.v:136:45: ... Location of port declaration
+  136 |     output wire                             perfBusy,
+      |                                             ^~~~~~~~
+%Warning-PINMISSING: .context/amiga/glide/full-renderer-ordered/gpu_wires.vh:40:70: Instance has missing pin: 'perfTriangleRendering'
+   40 |  .RASTERIZER_FIXPOINT_PRECISION(18),.RASTERIZER_FLOAT_PRECISION(24)) gpu(
+      |                                                                      ^~~
+                     tests/amiga/dosbox/glide/full_renderer.v:21:1: ... note: In file included from 'full_renderer.v'
+                     .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIX_EF.v:137:45: ... Location of port declaration
+  137 |     output wire                             perfTriangleRendering,
+      |                                             ^~~~~~~~~~~~~~~~~~~~~
+%Warning-PINMISSING: .context/amiga/glide/full-renderer-ordered/gpu_wires.vh:40:70: Instance has missing pin: 'perfRasterizerStall'
+   40 |  .RASTERIZER_FIXPOINT_PRECISION(18),.RASTERIZER_FLOAT_PRECISION(24)) gpu(
+      |                                                                      ^~~
+                     tests/amiga/dosbox/glide/full_renderer.v:21:1: ... note: In file included from 'full_renderer.v'
+                     .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIX_EF.v:138:45: ... Location of port declaration
+  138 |     output wire                             perfRasterizerStall
+      |                                             ^~~~~~~~~~~~~~~~~~~
+%Warning-PINMISSING: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/Coalescer.v:147:15: Instance has missing pin: 'active'
+  147 |             ) coalesce_addr_read_gen_inst (
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+                     .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/CoalesceAddrGen.v:59:49: ... Location of port declaration
+   59 |     output wire                                 active
+      |                                                 ^~~~~~
+%Warning-IMPLICIT: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIXCoreEF.v:706:40: Signal definition not found, creating implicitly: 'colorBufferCmdSwapEnableVsync'
+  706 |         .colorBufferCmdSwapEnableVsync(colorBufferCmdSwapEnableVsync),
+      |                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                   ... For warning description see https://verilator.org/warn/IMPLICIT?v=5.054
+                   ... Use "/* verilator lint_off IMPLICIT */" and lint_on around source to disable this message.
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/TextureMappingUnit.v:327:10: Output port connection 'm_stream_tdata' expects 430 bits on the pin connection, but pin connection's REPLICATE generates 428 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.gpu.rixef.graphicCore.pixelPipeline.tmu0'
+  327 |         .m_stream_tdata({
+      |          ^~~~~~~~~~~~~~
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.054
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/CoalesceAddrGen.v:125:40: Operator GTE expects 32 bits on the LHS, but LHS's VARREF 'axlen' generates 8 bits.
+                                                                                                                                                                                                               : ... note: In instance 'full_renderer_test.gpu.rixef.genblk2.stencilBuffer.coalescer.gen_coalesce.coalesce_addr_write_gen_inst'
+  125 |             max_beats_reached = (axlen >= MAX_BEATS_TO_COALESCE);
+      |                                        ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/priority_encoder.v:88:21: Operator ASSIGNW expects 1 bits on the Assign RHS, but Assign RHS's ARRAYSEL generates 4 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.m_ifaces[0].a_arb_inst.priority_encoder_masked'
+   88 | assign output_valid = stage_valid[LEVELS-1];
+      |                     ^
+                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.054
+                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/priority_encoder.v:89:23: Operator ASSIGNW expects 3 bits on the Assign RHS, but Assign RHS's ARRAYSEL generates 4 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.m_ifaces[0].a_arb_inst.priority_encoder_masked'
+   89 | assign output_encoded = stage_enc[LEVELS-1];
+      |                       ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/StreamSemaphore.v:50:46: Operator LT expects 32 bits on the LHS, but LHS's VARREF 'valuesCounter' generates 8 bits.
+                                                                                                                                                                                                              : ... note: In instance 'full_renderer_test.gpu.rixef.graphicCore.concatSem'
+   50 |     wire free               = (valuesCounter < MAX_NUMBER_OF_ELEMENTS);
+      |                                              ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/Rasterizer.v:353:25: Logical operator IF expects 1 bit on the If, but If's AND generates 6 bits.
+                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.rixef.graphicCore.rasterizer'
+  353 |                         if (rrCmd & RR_CMD_X_INC)
+      |                         ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/Rasterizer.v:364:25: Logical operator IF expects 1 bit on the If, but If's AND generates 6 bits.
+                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.rixef.graphicCore.rasterizer'
+  364 |                         if (rrCmd & RR_CMD_X_DEC)
+      |                         ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/Rasterizer.v:375:25: Logical operator IF expects 1 bit on the If, but If's AND generates 6 bits.
+                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.rixef.graphicCore.rasterizer'
+  375 |                         if (rrCmd & RR_CMD_Y_INC)
+      |                         ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/Rasterizer.v:387:25: Logical operator IF expects 1 bit on the If, but If's AND generates 6 bits.
+                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.rixef.graphicCore.rasterizer'
+  387 |                         if (rrCmd & RR_CMD_PUSH)
+      |                         ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/Rasterizer.v:398:25: Logical operator IF expects 1 bit on the If, but If's AND generates 6 bits.
+                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.rixef.graphicCore.rasterizer'
+  398 |                         if (rrCmd & RR_CMD_POP)
+      |                         ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/ShiftRegisterBank.v:43:51: Operator LT expects 32 bits on the LHS, but LHS's VARREF 'beatCount' generates 6 bits.
+                                                                                                                                                                                                                : ... note: In instance 'full_renderer_test.gpu.rixef.graphicCore.genblk2.triangleParameters'
+   43 |         if (s_axis_tvalid && resetn && (beatCount < BANK_SIZE))
+      |                                                   ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/ShiftRegisterBank.v:61:36: Operator LT expects 32 bits on the LHS, but LHS's VARREF 'beatCount' generates 6 bits.
+                                                                                                                                                                                                                : ... note: In instance 'full_renderer_test.gpu.rixef.graphicCore.genblk2.triangleParameters'
+   61 |                 else if (beatCount < BANK_SIZE)
+      |                                    ^
+%Warning-ASCRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:86:17: Ascending bit range vector: left < right of bit range: [-1:0]
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+   86 |     output wire [$clog2(M_COUNT)-1:0] m_select,
+      |                 ^
+                   ... For warning description see https://verilator.org/warn/ASCRANGE?v=5.054
+                   ... Use "/* verilator lint_off ASCRANGE */" and lint_on around source to disable this message.
+%Warning-ASCRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:93:17: Ascending bit range vector: left < right of bit range: [-1:0]
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+   93 |     output wire [$clog2(M_COUNT)-1:0] m_wc_select,
+      |                 ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:170:38: Logical operator LOGAND expects 1 bit on the LHS, but LHS's SEL generates 32 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  170 |         if (M_ADDR_WIDTH[i*32 +: 32] && (M_ADDR_WIDTH[i*32 +: 32] < 12 || M_ADDR_WIDTH[i*32 +: 32] > ADDR_WIDTH)) begin
+      |                                      ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:178:9: Logical operator IF expects 1 bit on the If, but If's SEL generates 32 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  178 |         if (M_ADDR_WIDTH[i*32 +: 32]) begin
+      |         ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:206:42: Logical operator LOGAND expects 1 bit on the LHS, but LHS's SEL generates 32 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  206 |             if (M_ADDR_WIDTH[i*32 +: 32] && M_ADDR_WIDTH[j*32 +: 32]) begin
+      |                                          ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:206:42: Logical operator LOGAND expects 1 bit on the RHS, but RHS's SEL generates 32 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  206 |             if (M_ADDR_WIDTH[i*32 +: 32] && M_ADDR_WIDTH[j*32 +: 32]) begin
+      |                                          ^~
+%Warning-ASCRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:241:5: Ascending bit range vector: left < right of bit range: [-1:0]
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  241 | reg [CL_M_COUNT-1:0] m_select_reg = 0, m_select_next;
+      |     ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:265:36: Operator GTE expects 32 bits on the LHS, but LHS's VARREF 'trans_count_reg' generates 5 bits.
+                                                                                                                                                                                                                             : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  265 | wire trans_limit = trans_count_reg >= S_ACCEPT && !trans_complete;
+      |                                    ^~
+%Warning-ASCRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:269:5: Ascending bit range vector: left < right of bit range: [-1:0]
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  269 | reg [CL_M_COUNT-1:0] thread_m_reg[S_INT_THREADS-1:0];
+      |     ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:342:43: Operator ASSIGN expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'i' generates 32 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  342 |                             m_select_next = i;
+      |                                           ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:343:48: Operator ASSIGN expects 4 bits on the Assign RHS, but Assign RHS's VARREF 'j' generates 32 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  343 |                             m_axi_aregion_next = j;
+      |                                                ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:341:68: Logical operator LOGAND expects 1 bit on the LHS, but LHS's SEL generates 32 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  341 |                         if (M_ADDR_WIDTH[(i*M_REGIONS+j)*32 +: 32] && (!M_SECURE[i] || !s_axi_aprot[1]) && (M_CONNECT & (1 << (S+i*S_COUNT))) && (s_axi_aaddr >> M_ADDR_WIDTH[(i*M_REGIONS+j)*32 +: 32]) == (M_BASE_ADDR_INT[(i*M_REGIONS+j)*ADDR_WIDTH +: ADDR_WIDTH] >> M_ADDR_WIDTH[(i*M_REGIONS+j)*32 +: 32])) begin
+      |                                                                    ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:341:105: Logical operator LOGAND expects 1 bit on the RHS, but RHS's AND generates 32 or 6 bits.
+                                                                                                                                                                                                                             : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst'
+  341 |                         if (M_ADDR_WIDTH[(i*M_REGIONS+j)*32 +: 32] && (!M_SECURE[i] || !s_axi_aprot[1]) && (M_CONNECT & (1 << (S+i*S_COUNT))) && (s_axi_aaddr >> M_ADDR_WIDTH[(i*M_REGIONS+j)*32 +: 32]) == (M_BASE_ADDR_INT[(i*M_REGIONS+j)*ADDR_WIDTH +: ADDR_WIDTH] >> M_ADDR_WIDTH[(i*M_REGIONS+j)*32 +: 32])) begin
+      |                                                                                                         ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/arbiter.v:109:63: Logical operator LOGNOT expects 1 bit on the LHS, but LHS's AND generates 6 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.m_ifaces[0].a_arb_inst'
+  109 |     end else if (ARB_BLOCK && ARB_BLOCK_ACK && grant_valid && !(grant_reg & acknowledge)) begin
+      |                                                               ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/arbiter.v:104:37: Logical operator LOGAND expects 1 bit on the RHS, but RHS's AND generates 6 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.m_ifaces[0].a_arb_inst'
+  104 |     if (ARB_BLOCK && !ARB_BLOCK_ACK && grant_reg & request) begin
+      |                                     ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/arbiter.v:109:63: Logical operator LOGNOT expects 1 bit on the LHS, but LHS's AND generates 2 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].r_arb_inst'
+  109 |     end else if (ARB_BLOCK && ARB_BLOCK_ACK && grant_valid && !(grant_reg & acknowledge)) begin
+      |                                                               ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/arbiter.v:104:37: Logical operator LOGAND expects 1 bit on the RHS, but RHS's AND generates 2 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].r_arb_inst'
+  104 |     if (ARB_BLOCK && !ARB_BLOCK_ACK && grant_reg & request) begin
+      |                                     ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:254:25: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'm_axi_rdata' generates 64 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  254 |         s_axi_rdata_int = m_axi_rdata;
+      |                         ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:292:37: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'm_axi_rdata' generates 64 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  292 |                     s_axi_rdata_int = m_axi_rdata;
+      |                                     ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:313:25: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'm_axi_rdata' generates 64 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  313 |         s_axi_rdata_int = m_axi_rdata;
+      |                         ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:335:48: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's VARREF 'M_BURST_SIZE' generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  335 |                         master_burst_size_next = M_BURST_SIZE;
+      |                                                ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:337:110: Operator ADD expects 11 bits on the RHS, but RHS's SEL generates 3 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  337 |                             m_axi_arlen_next = (({{S_ADDR_BIT_OFFSET+1{1'b0}}, s_axi_arlen} << s_axi_arsize) + s_axi_araddr[M_ADDR_BIT_OFFSET-1:0]) >> M_BURST_SIZE;
+      |                                                                                                              ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:337:46: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's SHIFTR generates 11 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  337 |                             m_axi_arlen_next = (({{S_ADDR_BIT_OFFSET+1{1'b0}}, s_axi_arlen} << s_axi_arsize) + s_axi_araddr[M_ADDR_BIT_OFFSET-1:0]) >> M_BURST_SIZE;
+      |                                              ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:339:46: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's SHIFTR generates 9 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  339 |                             m_axi_arlen_next = ({1'b0, s_axi_arlen} + s_axi_araddr[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET]) >> $clog2(SEGMENT_COUNT);
+      |                                              ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:341:43: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's VARREF 'M_BURST_SIZE' generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  341 |                         m_axi_arsize_next = M_BURST_SIZE;
+      |                                           ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:332:100: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 's_axi_arsize' generates 3 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  332 |                     if (CONVERT_BURST && s_axi_arcache[1] && (CONVERT_NARROW_BURST || s_axi_arsize == S_BURST_SIZE)) begin
+      |                                                                                                    ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:368:37: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SHIFTR generates 64 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  368 |                     s_axi_rdata_int = m_axi_rdata >> (addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET] * S_DATA_WIDTH);
+      |                                     ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:393:37: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SHIFTR generates 64 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  393 |                     s_axi_rdata_int = m_axi_rdata >> (addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET] * S_DATA_WIDTH);
+      |                                     ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:405:43: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  405 |                     end else if (addr_next[master_burst_size_reg] != addr_reg[master_burst_size_reg]) begin
+      |                                           ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:405:78: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  405 |                     end else if (addr_next[master_burst_size_reg] != addr_reg[master_burst_size_reg]) begin
+      |                                                                              ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:420:37: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's SHIFTR generates 64 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  420 |                     s_axi_rdata_int = data_reg >> (addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET] * S_DATA_WIDTH);
+      |                                     ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:431:43: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  431 |                     end else if (addr_next[master_burst_size_reg] != addr_reg[master_burst_size_reg]) begin
+      |                                           ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:431:78: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  431 |                     end else if (addr_next[master_burst_size_reg] != addr_reg[master_burst_size_reg]) begin
+      |                                                                              ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:445:25: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'data_reg' generates 64 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  445 |         s_axi_rdata_int = data_reg;
+      |                         ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:470:73: Operator SUB expects 32 bits on the LHS, but LHS's VARREF 's_axi_arsize' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  470 |                             master_burst_next = (8'd255 << (s_axi_arsize-M_BURST_SIZE)) | ((~s_axi_araddr & (8'hff >> (8-s_axi_arsize))) >> M_BURST_SIZE);
+      |                                                                         ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:470:57: Operator SHIFTL expects 32 bits on the LHS, but LHS's CONST '8'hff' generates 8 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  470 |                             master_burst_next = (8'd255 << (s_axi_arsize-M_BURST_SIZE)) | ((~s_axi_araddr & (8'hff >> (8-s_axi_arsize))) >> M_BURST_SIZE);
+      |                                                         ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:470:116: Operator SHIFTR expects 32 bits on the LHS, but LHS's CONST '8'hff' generates 8 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  470 |                             master_burst_next = (8'd255 << (s_axi_arsize-M_BURST_SIZE)) | ((~s_axi_araddr & (8'hff >> (8-s_axi_arsize))) >> M_BURST_SIZE);
+      |                                                                                                                    ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:470:47: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's OR generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  470 |                             master_burst_next = (8'd255 << (s_axi_arsize-M_BURST_SIZE)) | ((~s_axi_araddr & (8'hff >> (8-s_axi_arsize))) >> M_BURST_SIZE);
+      |                                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:472:78: Operator SUB expects 32 bits on the LHS, but LHS's VARREF 's_axi_arsize' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  472 |                             master_burst_next = (s_axi_arlen << (s_axi_arsize-M_BURST_SIZE)) | ((~s_axi_araddr & (8'hff >> (8-s_axi_arsize))) >> M_BURST_SIZE);
+      |                                                                              ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:472:62: Operator SHIFTL expects 32 bits on the LHS, but LHS's VARREF 's_axi_arlen' generates 8 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  472 |                             master_burst_next = (s_axi_arlen << (s_axi_arsize-M_BURST_SIZE)) | ((~s_axi_araddr & (8'hff >> (8-s_axi_arsize))) >> M_BURST_SIZE);
+      |                                                              ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:472:121: Operator SHIFTR expects 32 bits on the LHS, but LHS's CONST '8'hff' generates 8 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  472 |                             master_burst_next = (s_axi_arlen << (s_axi_arsize-M_BURST_SIZE)) | ((~s_axi_araddr & (8'hff >> (8-s_axi_arsize))) >> M_BURST_SIZE);
+      |                                                                                                                         ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:472:47: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's OR generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  472 |                             master_burst_next = (s_axi_arlen << (s_axi_arsize-M_BURST_SIZE)) | ((~s_axi_araddr & (8'hff >> (8-s_axi_arsize))) >> M_BURST_SIZE);
+      |                                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:468:59: Operator SUB expects 32 bits on the RHS, but RHS's VARREF 's_axi_arsize' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  468 |                         if (s_axi_arlen >> (8+M_BURST_SIZE-s_axi_arsize) != 0) begin
+      |                                                           ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:474:48: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's VARREF 'M_BURST_SIZE' generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  474 |                         master_burst_size_next = M_BURST_SIZE;
+      |                                                ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:466:38: Operator GT expects 32 bits on the LHS, but LHS's VARREF 's_axi_arsize' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  466 |                     if (s_axi_arsize > M_BURST_SIZE) begin
+      |                                      ^
+%Warning-SELRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:502:39: [1:3] Slice range has ascending bit ordering, perhaps you wanted [3:1]
+                                                                                                                                                                                                                       : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  502 |                     data_next[addr_reg[S_ADDR_BIT_OFFSET-1:M_ADDR_BIT_OFFSET]*SEGMENT_DATA_WIDTH +: SEGMENT_DATA_WIDTH] = m_axi_rdata;
+      |                                       ^
+                   ... For warning description see https://verilator.org/warn/SELRANGE?v=5.054
+                   ... Use "/* verilator lint_off SELRANGE */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:502:121: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'm_axi_rdata' generates 64 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  502 |                     data_next[addr_reg[S_ADDR_BIT_OFFSET-1:M_ADDR_BIT_OFFSET]*SEGMENT_DATA_WIDTH +: SEGMENT_DATA_WIDTH] = m_axi_rdata;
+      |                                                                                                                         ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:503:21: Logical operator IF expects 1 bit on the If, but If's VARREF 'm_axi_rresp' generates 2 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  503 |                     if (m_axi_rresp) begin
+      |                     ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:507:37: Operator ASSIGN expects 32 bits on the Assign RHS, but Assign RHS's VARREF 'data_next' generates 64 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  507 |                     s_axi_rdata_int = data_next;
+      |                                     ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:515:34: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  515 |                     if (addr_next[burst_size_reg] != addr_reg[burst_size_reg]) begin
+      |                                  ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:515:62: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  515 |                     if (addr_next[burst_size_reg] != addr_reg[burst_size_reg]) begin
+      |                                                              ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:525:79: Operator SUB expects 32 bits on the LHS, but LHS's VARREF 'burst_size_reg' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  525 |                             master_burst_next = (burst_next << (burst_size_reg-M_BURST_SIZE)) | (8'hff >> (8-burst_size_reg) >> M_BURST_SIZE);
+      |                                                                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v:521:58: Operator SUB expects 32 bits on the RHS, but RHS's VARREF 'burst_size_reg' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_rd_inst'
+  521 |                         if (burst_next >> (8+M_BURST_SIZE-burst_size_reg) != 0) begin
+      |                                                          ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:285:25: Operator ASSIGN expects 64 bits on the Assign RHS, but Assign RHS's VARREF 's_axi_wdata' generates 32 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  285 |         m_axi_wdata_int = s_axi_wdata;
+      |                         ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:286:25: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's VARREF 's_axi_wstrb' generates 4 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  286 |         m_axi_wstrb_int = s_axi_wstrb;
+      |                         ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:322:37: Operator ASSIGN expects 64 bits on the Assign RHS, but Assign RHS's VARREF 's_axi_wdata' generates 32 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  322 |                     m_axi_wdata_int = s_axi_wdata;
+      |                                     ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:323:37: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's VARREF 's_axi_wstrb' generates 4 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  323 |                     m_axi_wstrb_int = s_axi_wstrb;
+      |                                     ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:359:25: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's VARREF 's_axi_wstrb' generates 4 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  359 |         m_axi_wstrb_int = s_axi_wstrb;
+      |                         ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:383:48: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's VARREF 'M_BURST_SIZE' generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  383 |                         master_burst_size_next = M_BURST_SIZE;
+      |                                                ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:385:110: Operator ADD expects 11 bits on the RHS, but RHS's SEL generates 3 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  385 |                             m_axi_awlen_next = (({{S_ADDR_BIT_OFFSET+1{1'b0}}, s_axi_awlen} << s_axi_awsize) + s_axi_awaddr[M_ADDR_BIT_OFFSET-1:0]) >> M_BURST_SIZE;
+      |                                                                                                              ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:385:46: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's SHIFTR generates 11 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  385 |                             m_axi_awlen_next = (({{S_ADDR_BIT_OFFSET+1{1'b0}}, s_axi_awlen} << s_axi_awsize) + s_axi_awaddr[M_ADDR_BIT_OFFSET-1:0]) >> M_BURST_SIZE;
+      |                                              ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:387:46: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's SHIFTR generates 9 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  387 |                             m_axi_awlen_next = ({1'b0, s_axi_awlen} + s_axi_awaddr[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET]) >> $clog2(SEGMENT_COUNT);
+      |                                              ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:389:43: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's VARREF 'M_BURST_SIZE' generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  389 |                         m_axi_awsize_next = M_BURST_SIZE;
+      |                                           ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:380:100: Operator EQ expects 32 bits on the LHS, but LHS's VARREF 's_axi_awsize' generates 3 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  380 |                     if (CONVERT_BURST && s_axi_awcache[1] && (CONVERT_NARROW_BURST || s_axi_awsize == S_BURST_SIZE)) begin
+      |                                                                                                    ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:417:51: Operator SHIFTL expects 8 bits on the LHS, but LHS's VARREF 's_axi_wstrb' generates 4 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  417 |                     m_axi_wstrb_int = s_axi_wstrb << (addr_reg[M_ADDR_BIT_OFFSET-1:S_ADDR_BIT_OFFSET] * S_STRB_WIDTH);
+      |                                                   ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:454:34: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  454 |                     if (addr_next[master_burst_size_reg] != addr_reg[master_burst_size_reg]) begin
+      |                                  ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:454:69: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  454 |                     if (addr_next[master_burst_size_reg] != addr_reg[master_burst_size_reg]) begin
+      |                                                                     ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:516:73: Operator SUB expects 32 bits on the LHS, but LHS's VARREF 's_axi_awsize' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  516 |                             master_burst_next = (8'd255 << (s_axi_awsize-M_BURST_SIZE)) | ((~s_axi_awaddr & (8'hff >> (8-s_axi_awsize))) >> M_BURST_SIZE);
+      |                                                                         ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:516:57: Operator SHIFTL expects 32 bits on the LHS, but LHS's CONST '8'hff' generates 8 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  516 |                             master_burst_next = (8'd255 << (s_axi_awsize-M_BURST_SIZE)) | ((~s_axi_awaddr & (8'hff >> (8-s_axi_awsize))) >> M_BURST_SIZE);
+      |                                                         ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:516:116: Operator SHIFTR expects 32 bits on the LHS, but LHS's CONST '8'hff' generates 8 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  516 |                             master_burst_next = (8'd255 << (s_axi_awsize-M_BURST_SIZE)) | ((~s_axi_awaddr & (8'hff >> (8-s_axi_awsize))) >> M_BURST_SIZE);
+      |                                                                                                                    ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:516:47: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's OR generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  516 |                             master_burst_next = (8'd255 << (s_axi_awsize-M_BURST_SIZE)) | ((~s_axi_awaddr & (8'hff >> (8-s_axi_awsize))) >> M_BURST_SIZE);
+      |                                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:518:78: Operator SUB expects 32 bits on the LHS, but LHS's VARREF 's_axi_awsize' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  518 |                             master_burst_next = (s_axi_awlen << (s_axi_awsize-M_BURST_SIZE)) | ((~s_axi_awaddr & (8'hff >> (8-s_axi_awsize))) >> M_BURST_SIZE);
+      |                                                                              ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:518:62: Operator SHIFTL expects 32 bits on the LHS, but LHS's VARREF 's_axi_awlen' generates 8 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  518 |                             master_burst_next = (s_axi_awlen << (s_axi_awsize-M_BURST_SIZE)) | ((~s_axi_awaddr & (8'hff >> (8-s_axi_awsize))) >> M_BURST_SIZE);
+      |                                                              ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:518:121: Operator SHIFTR expects 32 bits on the LHS, but LHS's CONST '8'hff' generates 8 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  518 |                             master_burst_next = (s_axi_awlen << (s_axi_awsize-M_BURST_SIZE)) | ((~s_axi_awaddr & (8'hff >> (8-s_axi_awsize))) >> M_BURST_SIZE);
+      |                                                                                                                         ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:518:47: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's OR generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  518 |                             master_burst_next = (s_axi_awlen << (s_axi_awsize-M_BURST_SIZE)) | ((~s_axi_awaddr & (8'hff >> (8-s_axi_awsize))) >> M_BURST_SIZE);
+      |                                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:514:59: Operator SUB expects 32 bits on the RHS, but RHS's VARREF 's_axi_awsize' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  514 |                         if (s_axi_awlen >> (8+M_BURST_SIZE-s_axi_awsize) != 0) begin
+      |                                                           ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:520:48: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's VARREF 'M_BURST_SIZE' generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  520 |                         master_burst_size_next = M_BURST_SIZE;
+      |                                                ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:512:38: Operator GT expects 32 bits on the LHS, but LHS's VARREF 's_axi_awsize' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  512 |                     if (s_axi_awsize > M_BURST_SIZE) begin
+      |                                      ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:548:31: Operator ASSIGN expects 64 bits on the Assign RHS, but Assign RHS's VARREF 's_axi_wdata' generates 32 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  548 |                     data_next = s_axi_wdata;
+      |                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:549:31: Operator ASSIGN expects 8 bits on the Assign RHS, but Assign RHS's VARREF 's_axi_wstrb' generates 4 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  549 |                     strb_next = s_axi_wstrb;
+      |                               ^
+%Warning-SELRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:551:63: [1:3] Slice range has ascending bit ordering, perhaps you wanted [3:1]
+                                                                                                                                                                                                                       : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  551 |                     m_axi_wdata_int = s_axi_wdata >> (addr_reg[S_ADDR_BIT_OFFSET-1:M_ADDR_BIT_OFFSET] * M_DATA_WIDTH);
+      |                                                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:551:51: Operator SHIFTR expects 64 bits on the LHS, but LHS's VARREF 's_axi_wdata' generates 32 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  551 |                     m_axi_wdata_int = s_axi_wdata >> (addr_reg[S_ADDR_BIT_OFFSET-1:M_ADDR_BIT_OFFSET] * M_DATA_WIDTH);
+      |                                                   ^~
+%Warning-SELRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:552:63: [1:3] Slice range has ascending bit ordering, perhaps you wanted [3:1]
+                                                                                                                                                                                                                       : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  552 |                     m_axi_wstrb_int = s_axi_wstrb >> (addr_reg[S_ADDR_BIT_OFFSET-1:M_ADDR_BIT_OFFSET] * M_STRB_WIDTH);
+      |                                                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:552:51: Operator SHIFTR expects 8 bits on the LHS, but LHS's VARREF 's_axi_wstrb' generates 4 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  552 |                     m_axi_wstrb_int = s_axi_wstrb >> (addr_reg[S_ADDR_BIT_OFFSET-1:M_ADDR_BIT_OFFSET] * M_STRB_WIDTH);
+      |                                                   ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:565:43: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  565 |                     end else if (addr_next[burst_size_reg] != addr_reg[burst_size_reg]) begin
+      |                                           ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:565:71: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  565 |                     end else if (addr_next[burst_size_reg] != addr_reg[burst_size_reg]) begin
+      |                                                                       ^
+%Warning-SELRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:579:60: [1:3] Slice range has ascending bit ordering, perhaps you wanted [3:1]
+                                                                                                                                                                                                                       : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  579 |                     m_axi_wdata_int = data_reg >> (addr_reg[S_ADDR_BIT_OFFSET-1:M_ADDR_BIT_OFFSET] * M_DATA_WIDTH);
+      |                                                            ^
+%Warning-SELRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:580:60: [1:3] Slice range has ascending bit ordering, perhaps you wanted [3:1]
+                                                                                                                                                                                                                       : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  580 |                     m_axi_wstrb_int = strb_reg >> (addr_reg[S_ADDR_BIT_OFFSET-1:M_ADDR_BIT_OFFSET] * M_STRB_WIDTH);
+      |                                                            ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:592:43: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  592 |                     end else if (addr_next[burst_size_reg] != addr_reg[burst_size_reg]) begin
+      |                                           ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:592:71: Bit extraction of var[31:0] requires 5 bit index, not 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  592 |                     end else if (addr_next[burst_size_reg] != addr_reg[burst_size_reg]) begin
+      |                                                                       ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:618:74: Operator SUB expects 32 bits on the LHS, but LHS's VARREF 'burst_size_reg' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  618 |                         master_burst_next = (burst_reg << (burst_size_reg-M_BURST_SIZE)) | (8'hff >> (8-burst_size_reg) >> M_BURST_SIZE);
+      |                                                                          ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:614:53: Operator SUB expects 32 bits on the RHS, but RHS's VARREF 'burst_size_reg' generates 3 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  614 |                     if (burst_reg >> (8+M_BURST_SIZE-burst_size_reg) != 0) begin
+      |                                                     ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v:620:44: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's VARREF 'M_BURST_SIZE' generates 32 bits.
+                                                                                                                                                                                                                         : ... note: In instance 'full_renderer_test.gpu.commonAxiAdapter.axi_adapter_wr_inst'
+  620 |                     master_burst_size_next = M_BURST_SIZE;
+      |                                            ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:163:38: Logical operator LOGAND expects 1 bit on the LHS, but LHS's SEL generates 32 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  163 |         if (M_ADDR_WIDTH[i*32 +: 32] && (M_ADDR_WIDTH[i*32 +: 32] < 12 || M_ADDR_WIDTH[i*32 +: 32] > ADDR_WIDTH)) begin
+      |                                      ^~
+%Warning-ASCRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:204:14: Ascending bit range vector: left < right of bit range: [-1:0]
+                                                                                                                                                                                                                        : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  204 |         wire [CL_M_COUNT-1:0] a_select;
+      |              ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:349:49: Operator ASSIGNW expects 3 bits on the Assign RHS, but Assign RHS's SHIFTR generates 9 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  349 |         wire [S_ID_WIDTH-1:0]  m_axi_rid_mux    = {decerr_m_axi_rid_reg, int_m_axi_rid} >> r_grant_encoded*M_ID_WIDTH;
+      |                                                 ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:350:49: Operator ASSIGNW expects 64 bits on the Assign RHS, but Assign RHS's SHIFTR generates 128 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  350 |         wire [DATA_WIDTH-1:0]  m_axi_rdata_mux  = {{DATA_WIDTH{1'b0}}, int_m_axi_rdata} >> r_grant_encoded*DATA_WIDTH;
+      |                                                 ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:351:49: Operator ASSIGNW expects 2 bits on the Assign RHS, but Assign RHS's SHIFTR generates 4 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  351 |         wire [1:0]             m_axi_rresp_mux  = {2'b11, int_m_axi_rresp} >> r_grant_encoded*2;
+      |                                                 ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:352:49: Operator ASSIGNW expects 1 bits on the Assign RHS, but Assign RHS's SHIFTR generates 2 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  352 |         wire                   m_axi_rlast_mux  = {decerr_m_axi_rlast_reg, int_m_axi_rlast} >> r_grant_encoded;
+      |                                                 ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:353:49: Operator ASSIGNW expects 1 bits on the Assign RHS, but Assign RHS's SHIFTR generates 2 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  353 |         wire [RUSER_WIDTH-1:0] m_axi_ruser_mux  = {{RUSER_WIDTH{1'b0}}, int_m_axi_ruser} >> r_grant_encoded*RUSER_WIDTH;
+      |                                                 ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:354:116: Operator AND expects 2 bits on the RHS, but RHS's VARREF 'r_grant_valid' generates 1 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  354 |         wire                   m_axi_rvalid_mux = ({decerr_m_axi_rvalid_reg, int_m_axi_rvalid} >> r_grant_encoded) & r_grant_valid;
+      |                                                                                                                    ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:354:49: Operator ASSIGNW expects 1 bits on the Assign RHS, but Assign RHS's AND generates 2 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  354 |         wire                   m_axi_rvalid_mux = ({decerr_m_axi_rvalid_reg, int_m_axi_rvalid} >> r_grant_encoded) & r_grant_valid;
+      |                                                 ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:436:44: Operator GTE expects 32 bits on the LHS, but LHS's VARREF 'trans_count_reg' generates 4 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  436 |         wire trans_limit = trans_count_reg >= M_ISSUE[n*32 +: 32] && !trans_complete;
+      |                                            ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:475:111: Operator OR expects 6 bits on the LHS, but LHS's SEL generates 3 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  475 |         wire [M_ID_WIDTH-1:0]   s_axi_arid_mux     = int_s_axi_arid[a_grant_encoded*S_ID_WIDTH +: S_ID_WIDTH] | (a_grant_encoded << S_ID_WIDTH);
+      |                                                                                                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:475:130: Operator SHIFTL expects 6 bits on the LHS, but LHS's VARREF 'a_grant_encoded' generates 3 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  475 |         wire [M_ID_WIDTH-1:0]   s_axi_arid_mux     = int_s_axi_arid[a_grant_encoded*S_ID_WIDTH +: S_ID_WIDTH] | (a_grant_encoded << S_ID_WIDTH);
+      |                                                                                                                                  ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:489:93: Operator SHIFTL expects 6 bits on the LHS, but LHS's LOGAND generates 1 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  489 |         assign int_axi_arready[n*S_COUNT +: S_COUNT] = (a_grant_valid && s_axi_arready_mux) << a_grant_encoded;
+      |                                                                                             ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:499:40: Operator ASSIGNW expects 3 bits on the Assign RHS, but Assign RHS's SHIFTR generates 6 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  499 |         wire [CL_S_COUNT-1:0] r_select = m_axi_rid[n*M_ID_WIDTH +: M_ID_WIDTH] >> S_ID_WIDTH;
+      |                                        ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v:501:75: Operator SHIFTL expects 6 bits on the LHS, but LHS's SEL generates 1 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst'
+  501 |         assign int_axi_rvalid[n*S_COUNT +: S_COUNT] = int_m_axi_rvalid[n] << r_select;
+      |                                                                           ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:181:38: Logical operator LOGAND expects 1 bit on the LHS, but LHS's SEL generates 32 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  181 |         if (M_ADDR_WIDTH[i*32 +: 32] && (M_ADDR_WIDTH[i*32 +: 32] < 12 || M_ADDR_WIDTH[i*32 +: 32] > ADDR_WIDTH)) begin
+      |                                      ^~
+%Warning-ASCRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:230:14: Ascending bit range vector: left < right of bit range: [-1:0]
+                                                                                                                                                                                                                        : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  230 |         wire [CL_M_COUNT-1:0] a_select;
+      |              ^
+%Warning-ASCRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:235:14: Ascending bit range vector: left < right of bit range: [-1:0]
+                                                                                                                                                                                                                        : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  235 |         wire [CL_M_COUNT-1:0] m_wc_select;
+      |              ^
+%Warning-ASCRANGE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:310:13: Ascending bit range vector: left < right of bit range: [-1:0]
+                                                                                                                                                                                                                        : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  310 |         reg [CL_M_COUNT-1:0] w_select_reg = 0, w_select_next;
+      |             ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:399:49: Operator ASSIGNW expects 3 bits on the Assign RHS, but Assign RHS's SHIFTR generates 9 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  399 |         wire [S_ID_WIDTH-1:0]  m_axi_bid_mux    = {decerr_m_axi_bid_reg, int_m_axi_bid} >> b_grant_encoded*M_ID_WIDTH;
+      |                                                 ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:400:49: Operator ASSIGNW expects 2 bits on the Assign RHS, but Assign RHS's SHIFTR generates 4 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  400 |         wire [1:0]             m_axi_bresp_mux  = {2'b11, int_m_axi_bresp} >> b_grant_encoded*2;
+      |                                                 ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:401:49: Operator ASSIGNW expects 1 bits on the Assign RHS, but Assign RHS's SHIFTR generates 2 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  401 |         wire [BUSER_WIDTH-1:0] m_axi_buser_mux  = {{BUSER_WIDTH{1'b0}}, int_m_axi_buser} >> b_grant_encoded*BUSER_WIDTH;
+      |                                                 ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:402:116: Operator AND expects 2 bits on the RHS, but RHS's VARREF 'b_grant_valid' generates 1 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  402 |         wire                   m_axi_bvalid_mux = ({decerr_m_axi_bvalid_reg, int_m_axi_bvalid} >> b_grant_encoded) & b_grant_valid;
+      |                                                                                                                    ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:402:49: Operator ASSIGNW expects 1 bits on the Assign RHS, but Assign RHS's AND generates 2 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  402 |         wire                   m_axi_bvalid_mux = ({decerr_m_axi_bvalid_reg, int_m_axi_bvalid} >> b_grant_encoded) & b_grant_valid;
+      |                                                 ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:495:44: Operator GTE expects 32 bits on the LHS, but LHS's VARREF 'trans_count_reg' generates 4 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  495 |         wire trans_limit = trans_count_reg >= M_ISSUE[n*32 +: 32] && !trans_complete;
+      |                                            ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:538:111: Operator OR expects 6 bits on the LHS, but LHS's SEL generates 3 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  538 |         wire [M_ID_WIDTH-1:0]   s_axi_awid_mux     = int_s_axi_awid[a_grant_encoded*S_ID_WIDTH +: S_ID_WIDTH] | (a_grant_encoded << S_ID_WIDTH);
+      |                                                                                                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:538:130: Operator SHIFTL expects 6 bits on the LHS, but LHS's VARREF 'a_grant_encoded' generates 3 bits.
+                                                                                                                                                                                                                            : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  538 |         wire [M_ID_WIDTH-1:0]   s_axi_awid_mux     = int_s_axi_awid[a_grant_encoded*S_ID_WIDTH +: S_ID_WIDTH] | (a_grant_encoded << S_ID_WIDTH);
+      |                                                                                                                                  ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:552:93: Operator SHIFTL expects 6 bits on the LHS, but LHS's LOGAND generates 1 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  552 |         assign int_axi_awready[n*S_COUNT +: S_COUNT] = (a_grant_valid && s_axi_awready_mux) << a_grant_encoded;
+      |                                                                                             ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:569:96: Operator SHIFTL expects 6 bits on the LHS, but LHS's LOGAND generates 1 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  569 |         assign int_axi_wready[n*S_COUNT +: S_COUNT] = (w_select_valid_reg && s_axi_wready_mux) << w_select_reg;
+      |                                                                                                ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:575:68: Logical operator LOGOR expects 1 bit on the RHS, but RHS's VARREF 'a_acknowledge' generates 6 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  575 |             w_select_new_next = w_select_new_reg || !a_grant_valid || a_acknowledge;
+      |                                                                    ^~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:597:40: Operator ASSIGNW expects 3 bits on the Assign RHS, but Assign RHS's SHIFTR generates 6 bits.
+                                                                                                                                                                                                                          : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  597 |         wire [CL_S_COUNT-1:0] b_select = m_axi_bid[n*M_ID_WIDTH +: M_ID_WIDTH] >> S_ID_WIDTH;
+      |                                        ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v:599:75: Operator SHIFTL expects 6 bits on the LHS, but LHS's SEL generates 1 bits.
+                                                                                                                                                                                                                           : ... note: In instance 'full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst'
+  599 |         assign int_axi_bvalid[n*S_COUNT +: S_COUNT] = int_m_axi_bvalid[n] << b_select;
+      |                                                                           ^~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIXCoreEF.v:399:18: Input port connection 's_fetch_araddr' expects 32 bits on the pin connection, but pin connection's VARREF 'm_depth_araddr' generates 20 bits.
+                                                                                                                                                                                                              : ... note: In instance 'full_renderer_test.gpu.rixef'
+  399 |                 .s_fetch_araddr(m_depth_araddr),
+      |                  ^~~~~~~~~~~~~~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIXCoreEF.v:411:18: Input port connection 's_frag_waddr' expects 32 bits on the pin connection, but pin connection's VARREF 'm_depth_waddr' generates 20 bits.
+                                                                                                                                                                                                              : ... note: In instance 'full_renderer_test.gpu.rixef'
+  411 |                 .s_frag_waddr(m_depth_waddr),
+      |                  ^~~~~~~~~~~~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIXCoreEF.v:506:10: Input port connection 's_fetch_araddr' expects 32 bits on the pin connection, but pin connection's VARREF 'm_color_araddr' generates 20 bits.
+                                                                                                                                                                                                              : ... note: In instance 'full_renderer_test.gpu.rixef'
+  506 |         .s_fetch_araddr(m_color_araddr),
+      |          ^~~~~~~~~~~~~~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIXCoreEF.v:518:10: Input port connection 's_frag_waddr' expects 32 bits on the pin connection, but pin connection's VARREF 'm_color_waddr' generates 20 bits.
+                                                                                                                                                                                                              : ... note: In instance 'full_renderer_test.gpu.rixef'
+  518 |         .s_frag_waddr(m_color_waddr),
+      |          ^~~~~~~~~~~~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIXCoreEF.v:580:18: Input port connection 's_fetch_araddr' expects 32 bits on the pin connection, but pin connection's VARREF 'm_stencil_araddr' generates 20 bits.
+                                                                                                                                                                                                              : ... note: In instance 'full_renderer_test.gpu.rixef'
+  580 |                 .s_fetch_araddr(m_stencil_araddr),
+      |                  ^~~~~~~~~~~~~~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIXCoreEF.v:590:18: Input port connection 's_frag_wdata' expects 8 bits on the pin connection, but pin connection's VARREF 'm_stencil_wdata' generates 4 bits.
+                                                                                                                                                                                                              : ... note: In instance 'full_renderer_test.gpu.rixef'
+  590 |                 .s_frag_wdata(m_stencil_wdata),
+      |                  ^~~~~~~~~~~~
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/RasterIX/RasterIXCoreEF.v:592:18: Input port connection 's_frag_waddr' expects 32 bits on the pin connection, but pin connection's VARREF 'm_stencil_waddr' generates 20 bits.
+                                                                                                                                                                                                              : ... note: In instance 'full_renderer_test.gpu.rixef'
+  592 |                 .s_frag_waddr(m_stencil_waddr),
+      |                  ^~~~~~~~~~~~
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:147:48: Operator ASSIGNW expects 15 bits on the Assign RHS, but Assign RHS's SHIFTR generates 18 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.ram'
+  147 | wire [VALID_ADDR_WIDTH-1:0] s_axi_awaddr_valid = s_axi_awaddr >> (ADDR_WIDTH - VALID_ADDR_WIDTH);
+      |                                                ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:148:48: Operator ASSIGNW expects 15 bits on the Assign RHS, but Assign RHS's SHIFTR generates 18 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.ram'
+  148 | wire [VALID_ADDR_WIDTH-1:0] s_axi_araddr_valid = s_axi_araddr >> (ADDR_WIDTH - VALID_ADDR_WIDTH);
+      |                                                ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:149:45: Operator ASSIGNW expects 15 bits on the Assign RHS, but Assign RHS's SHIFTR generates 18 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.ram'
+  149 | wire [VALID_ADDR_WIDTH-1:0] read_addr_valid = read_addr_reg >> (ADDR_WIDTH - VALID_ADDR_WIDTH);
+      |                                             ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:150:46: Operator ASSIGNW expects 15 bits on the Assign RHS, but Assign RHS's SHIFTR generates 18 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.ram'
+  150 | wire [VALID_ADDR_WIDTH-1:0] write_addr_valid = write_addr_reg >> (ADDR_WIDTH - VALID_ADDR_WIDTH);
+      |                                              ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:200:48: Operator LT expects 32 bits on the LHS, but LHS's VARREF 's_axi_awsize' generates 3 bits.
+                                                                                                                                                                                                                   : ... note: In instance 'full_renderer_test.ram'
+  200 |                 write_size_next = s_axi_awsize < $clog2(STRB_WIDTH) ? s_axi_awsize : $clog2(STRB_WIDTH);
+      |                                                ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:200:69: Operator COND expects 32 bits on the Conditional True, but Conditional True's VARREF 's_axi_awsize' generates 3 bits.
+                                                                                                                                                                                                                   : ... note: In instance 'full_renderer_test.ram'
+  200 |                 write_size_next = s_axi_awsize < $clog2(STRB_WIDTH) ? s_axi_awsize : $clog2(STRB_WIDTH);
+      |                                                                     ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:200:33: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's COND generates 32 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.ram'
+  200 |                 write_size_next = s_axi_awsize < $clog2(STRB_WIDTH) ? s_axi_awsize : $clog2(STRB_WIDTH);
+      |                                 ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:303:47: Operator LT expects 32 bits on the LHS, but LHS's VARREF 's_axi_arsize' generates 3 bits.
+                                                                                                                                                                                                                   : ... note: In instance 'full_renderer_test.ram'
+  303 |                 read_size_next = s_axi_arsize < $clog2(STRB_WIDTH) ? s_axi_arsize : $clog2(STRB_WIDTH);
+      |                                               ^
+%Warning-WIDTHEXPAND: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:303:68: Operator COND expects 32 bits on the Conditional True, but Conditional True's VARREF 's_axi_arsize' generates 3 bits.
+                                                                                                                                                                                                                   : ... note: In instance 'full_renderer_test.ram'
+  303 |                 read_size_next = s_axi_arsize < $clog2(STRB_WIDTH) ? s_axi_arsize : $clog2(STRB_WIDTH);
+      |                                                                    ^
+%Warning-WIDTHTRUNC: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:303:32: Operator ASSIGN expects 3 bits on the Assign RHS, but Assign RHS's COND generates 32 bits.
+                                                                                                                                                                                                                  : ... note: In instance 'full_renderer_test.ram'
+  303 |                 read_size_next = s_axi_arsize < $clog2(STRB_WIDTH) ? s_axi_arsize : $clog2(STRB_WIDTH);
+      |                                ^
+%Warning-WIDTHTRUNC: tests/amiga/dosbox/glide/full_renderer.v:31:24: Logical operator COND expects 1 bit on the Conditional Test, but Conditional Test's VARREF 'unsafe_drain' generates 32 bits.
+                                                                                                                                                                : ... note: In instance 'full_renderer_test'
+   31 |   .drained(unsafe_drain?1'b1:idle),.cancel(cancel),.bus_error(memory_fault|token_fault),
+      |                        ^
+%Warning-WIDTHEXPAND: tests/amiga/dosbox/glide/full_renderer.v:49:21: Operator NEQ expects 32 bits on the LHS, but LHS's SEL generates 14 bits.
+                                                                                                                                                                 : ... note: In instance 'full_renderer_test'
+   49 |     if(awaddr[31:18]!=32'h06600000>>18)$fatal(1,"Write escaped test aperture");
+      |                     ^~
+%Warning-WIDTHEXPAND: tests/amiga/dosbox/glide/full_renderer.v:54:21: Operator NEQ expects 32 bits on the LHS, but LHS's SEL generates 14 bits.
+                                                                                                                                                                 : ... note: In instance 'full_renderer_test'
+   54 |     if(araddr[31:18]!=32'h06600000>>18)$fatal(1,"Read escaped test aperture");
+      |                     ^~
+%Warning-WIDTHTRUNC: tests/amiga/dosbox/glide/full_renderer.v:61:55: Logical operator IF expects 1 bit on the If, but If's VARREF 'do_cancel' generates 32 bits.
+                                                                                                                                                                : ... note: In instance 'full_renderer_test'
+   61 |    if(token_valid&&token_ready)begin token_tick<=tick;if(do_cancel)cancel<=1;end
+      |                                                       ^~
+%Warning-WIDTHEXPAND: tests/amiga/dosbox/glide/full_renderer.v:104:20: Operator NEQ expects 32 bits on the LHS, but LHS's VARREF 'ack_cancelled' generates 1 bits.
+                                                                                                                                                                  : ... note: In instance 'full_renderer_test'
+  104 |    if(ack_cancelled!=do_cancel)$fatal(1,"Wrong cancellation state");
+      |                    ^~
+%Warning-WIDTHEXPAND: tests/amiga/dosbox/glide/full_renderer.v:111:47: Operator AND expects 64 bits on the RHS, but RHS's CONST '16'hffff' generates 16 bits.
+                                                                                                                                                                  : ... note: In instance 'full_renderer_test'
+  111 |     if(((ram.mem[32'h20000/8+i/4]>>((i%4)*16))&16'hffff)!=texel)$fatal(1,"Texture modified");
+      |                                               ^
+%Warning-WIDTHEXPAND: tests/amiga/dosbox/glide/full_renderer.v:111:57: Operator NEQ expects 64 bits on the RHS, but RHS's VARREF 'texel' generates 16 bits.
+                                                                                                                                                                  : ... note: In instance 'full_renderer_test'
+  111 |     if(((ram.mem[32'h20000/8+i/4]>>((i%4)*16))&16'hffff)!=texel)$fatal(1,"Texture modified");
+      |                                                         ^~
+%Warning-WIDTHEXPAND: tests/amiga/dosbox/glide/full_renderer.v:114:83: Operator AND expects 64 bits on the RHS, but RHS's CONST '16'hffff' generates 16 bits.
+                                                                                                                                                                  : ... note: In instance 'full_renderer_test'
+  114 |    for(i=0;i<4608;i=i+1)$fdisplay(fd,"%04x",(ram.mem[32'h10000/8+i/4]>>((i%4)*16))&16'hffff);
+      |                                                                                   ^
+%Warning-CASEINCOMPLETE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v:332:5: Case values incompletely covered (example pattern 0x2)
+  332 |     case (state_reg)
+      |     ^~~~
+                         ... For warning description see https://verilator.org/warn/CASEINCOMPLETE?v=5.054
+                         ... Use "/* verilator lint_off CASEINCOMPLETE */" and lint_on around source to disable this message.
+%Warning-CASEINCOMPLETE: .context/amiga/glide/full-renderer-ordered/source/RasterIX/3rdParty/verilog-axi/axi_ram.v:192:5: Case values incompletely covered (example pattern 0x3)
+  192 |     case (write_state_reg)
+      |     ^~~~
