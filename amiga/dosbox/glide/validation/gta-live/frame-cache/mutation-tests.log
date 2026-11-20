@@ -1,0 +1,5 @@
+PASS omitted draw invalidation detected by pixel comparison
+Assertion failed: (!memcmp(pixels,gpu,w*h*2)), function present, file gta.c, line 19.
+
+PASS omitted clear invalidation detected by pixel comparison
+Assertion failed: (w==640&&h==480&&!memcmp(pixels,gpu,BYTES)), function present, file gta_lfb.c, line 24.

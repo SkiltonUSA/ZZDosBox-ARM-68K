@@ -1,0 +1,28 @@
+{
+  "scope": "One pair of opening-street gameplay samples; same settings, not deterministic frame-for-frame replay",
+  "cpu_cycles": 3000,
+  "clock_mhz": 800,
+  "resolution": [
+    640,
+    480
+  ],
+  "display": "window",
+  "audio": "off",
+  "jit_mib": 4,
+  "guest_mib": 32,
+  "exec_mib": 64,
+  "baseline_fps": 3.9589957908780735,
+  "candidate_fps": 4.4976824406549945,
+  "fps_gain_percent": 13.606648711729097,
+  "readback_bytes_per_frame_before": 1843200.0,
+  "readback_bytes_per_frame_after": 1078874.6411483253,
+  "readback_traffic_reduction_percent": 41.46730462519936,
+  "timing_limits": [
+    "Screenshot requested near end of each interval",
+    "Bridge image transfers occurred after exit for both final captures",
+    "Earlier baseline menu capture was transferred before gameplay",
+    "Samples have different lengths and NPC animation is not deterministic"
+  ],
+  "clean_close_both": true,
+  "firmware_changed": false
+}

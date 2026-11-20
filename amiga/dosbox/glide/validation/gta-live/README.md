@@ -1,8 +1,12 @@
 # GTA ECTS live-renderer candidate
 
 The private GTA player renders gameplay on the Cortex-A9 and Amiga through
-RasterIX. **The first visually confirmed run measured 3.68 FPS.** It requires
+RasterIX. **The latest profiled comparison improved from 3.96 to 4.50 FPS.** It requires
 the experimental streaming firmware; the released DOSBox player remains unchanged.
+
+[Framebuffer reuse: implementation, tests and hardware evidence](frame-cache/README.md)
+records the observed +13.6% gain and 41.5% reduction in readback traffic. The first
+3.68 FPS measurement is retained below as the original baseline.
 
 The captured gameplay path uses texture decals with ARGB1555 cutouts, square
 single-level textures, bilinear filtering and RGB555 linear-framebuffer writes.

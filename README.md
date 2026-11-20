@@ -42,14 +42,14 @@ this synthetic result does not predict GTA performance.
   synthetic offscreen results; the released player is unchanged.
 - The existing 1.0 Beta release does not include this experimental firmware.
 
-**First measured GTA gameplay: 3.68 FPS** at 800 MHz ARM, 640×480 windowed,
-3,000 DOS cycles and sound off. The run completed 491 Glide presentations;
-481 intervals after warm-up took 130.81 seconds. GPU close and Core1 restoration
-passed. This is an experimental baseline, with capture/transfer activity during
-the run, not a playable-speed or audio result.
-[Screenshot, method and raw logs](amiga/dosbox/glide/validation/gta-live/README.md#first-measured-gameplay).
+**GTA gameplay: 4.50 FPS**, up from **3.96 FPS (+13.6%)** in the first profiled
+comparison. Reusing the framebuffer while no GPU drawing changes it reduces
+readback traffic by **41.5%**. Both runs use 800 MHz ARM, 640×480 windowed,
+3,000 DOS cycles and sound off, and pass clean shutdown checks. This is one
+opening-street comparison, not yet playable-speed or audio validation.
+[Screenshot, method and raw logs](amiga/dosbox/glide/validation/gta-live/frame-cache/README.md).
 
-![GTA ECTS gameplay through RasterIX](amiga/dosbox/glide/validation/gta-live/gameplay-800mhz/gta-gameplay.png)
+![GTA ECTS gameplay through RasterIX](amiga/dosbox/glide/validation/gta-live/frame-cache/candidate.png)
 
 [Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·
 [Remaining integration](amiga/dosbox/glide/experimental/fps-readiness.md) ·

@@ -12,6 +12,12 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Reuse the exact RGB565 CPU framebuffer until GPU drawing invalidates it.
+  The first profiled gameplay comparison improved **3.96 → 4.50 FPS (+13.6%)**,
+  with **41.5% less readback traffic/frame** and clean teardown. Native pixel,
+  invalidation and captured-call tests pass. Installed in the isolated GTA
+  candidate; the normal release is unchanged. [Evidence and limits](amiga/dosbox/glide/validation/gta-live/frame-cache/README.md).
+
 - Record the first visually confirmed GTA ECTS gameplay baseline: **3.68 FPS**
   at 800 MHz ARM, 640×480 windowed, 3,000 DOS cycles, audio off. Capture, raw
   completed-frame timing, build identities and clean GPU/Core1 teardown are

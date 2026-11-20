@@ -1,5 +1,9 @@
 # GTA FPS readiness
 
+**Latest result: 4.50 FPS**, compared with 3.96 FPS in the reference profiled run
+(+13.6%). Reusing a valid CPU framebuffer avoids redundant GPU readback.
+[Implementation and comparison limits](../validation/gta-live/frame-cache/README.md).
+
 **First accelerated GTA gameplay baseline: 3.68 FPS**, at 800 MHz ARM,
 640×480 windowed, 3,000 DOS cycles and sound off. The street scene is captured,
 and 481 completed-frame intervals took 130.81 seconds after warm-up. Capture
