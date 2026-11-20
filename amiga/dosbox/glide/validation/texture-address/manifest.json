@@ -1,7 +1,7 @@
 {
   "scope": "Offline equivalence and renderer regression only",
   "files": {
-    "README.md": "52d47aab51a26c27b0d4e9017fa7c584aa17d5403bae285e696dff34b62b8274",
+    "README.md": "8d0cbbed84ed1d8753c5b90e8e25e4389ec804bc01af7b55ea340970e0e96fae",
     "hp3/cancel-pixels.log": "fb372f58ce494ceae2521b76bfbab550cc97e8f04f2688a5f2f634d79d2d0902",
     "hp3/cancel.log": "d6fc71433a45453da2f9e8817cc22fbc58d8e9184e5f509f29844d68a3f47ec8",
     "hp3/ddr-cancel-pixels.log": "fb372f58ce494ceae2521b76bfbab550cc97e8f04f2688a5f2f634d79d2d0902",
@@ -35,7 +35,14 @@
     "reference.log": "950941aa00325df05bb9e69a0440f342486bdf98fb8d8c76184eb6a5ff43715b",
     "renderer-results.json": "fd5e2e1792830c438eb5f5ef7c7b30732fb38eb37451e10680e0038ba11a4fff",
     "renderer.log": "630a5fc4652c0183149403bb45dd7ee81470b158c41598c844a8f2adec85d1e4",
-    "results.json": "e29b3d99c7624e3f215d0cfd01960a647595ff4a41f3e22ee8c3e72edd3529ce"
+    "results.json": "e29b3d99c7624e3f215d0cfd01960a647595ff4a41f3e22ee8c3e72edd3529ce",
+    "synthesis/completion-synth-audit-clocks.rpt": "dce663cc4173f8356ede89850530ff1ae218f42d6e6a19ad81079b083384d416",
+    "synthesis/completion-synth-audit-drc.rpt": "f889232dacdb8392116db4bfa833ab09c4e948e61a7b88f9c34c8ff786db5766",
+    "synthesis/completion-synth-audit-timing.rpt": "2097cf314a61b1e5682c654ed80da606d3a5b35793aeab4fd98df6f546da5fe7",
+    "synthesis/completion-synth-audit-utilization.rpt": "4bdde5b9b7aa6759e3b902bcc9ec2257d331f000f9efa1846c23ab37e4c4b1cc",
+    "synthesis/completion-texture-synth-audit.log": "65ba3ae018bd4b3292bcc077d5df63b3cedb76a94a514dbe310c9a4c3ad8295b",
+    "synthesis/completion-texture-synth.log": "cd7f3630443cd523f1bdf9dda376d8de24fd9551d8c74712d6b5a42fef4eafb3",
+    "synthesis/result.json": "758aad43ebe8919883790acdd807d10a7659bf3ebf5100af044e817af3130a9d"
   },
   "patch_sha256": "fa6ab0e53bce8cd35624f7b0a719a85fcdbf47cf8e3d75d60a83e5abd7319844"
 }

@@ -1,0 +1,794 @@
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Nov 19 23:11:40 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source {C:\refine-grx.tcl}
+# set argc 1
+# set argv {C:/grx-board-hp3}
+# source {Z:<workspace>/.context/ZZDosBox-ARM-68K/amiga/dosbox/glide/experimental/refine-route.tcl}
+## if {$argc != 1} {error "Expected isolated board directory"}
+## cd [file normalize [lindex $argv 0]]
+## if {[catch {
+##  set_param general.maxThreads 2
+##  if {[file exists completion-refined.dcp]} {error "Refined checkpoint already exists"}
+##  open_checkpoint completion-routed.dcp
+##  phys_opt_design -directive AggressiveExplore
+##  route_design -directive Explore
+##  report_route_status -file completion-refined-status.rpt
+##  report_timing_summary -report_unconstrained -check_timing_verbose -file completion-refined-timing.rpt
+##  report_drc -file completion-refined-drc.rpt
+##  report_bus_skew -file completion-refined-bus-skew.rpt
+##  report_timing -max_paths 60 -nworst 4 -slack_lesser_than 0 -file completion-refined-failing.rpt
+##  write_checkpoint completion-refined.dcp
+##  puts GRX_REFINED_REQUIRES_TIMING_REVIEW_NOT_INSTALLED
+## } message options]} {
+##  puts stderr $message
+##  puts stderr $options
+##  exit 1
+## }
+Command: open_checkpoint completion-routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.044 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 3419 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.529 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.753 . Memory (MB): peak = 0.000 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.220 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 0.000 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read Physdb Files: Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 0.000 ; gain = 0.000
+Restored from archive | CPU: 6.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 0.000 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.018 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 637 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 476 instances
+  IOBUF => IOBUF (IBUF, OBUFT): 39 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 58 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 7 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 56 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 1 instance
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+WARNING: [Vivado 12-23575] Critical violations of the methodology design rules detected. Critical violations may contribute to timing failures or cause functional issues in hardware. Run report_methodology for more information.
+open_checkpoint: Time (s): cpu = 00:01:57 ; elapsed = 00:01:57 . Memory (MB): peak = 0.000 ; gain = 0.000
+Command: phys_opt_design -directive AggressiveExplore
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Vivado_Tcl 4-241] Physical synthesis in post route mode
+INFO: [Vivado_Tcl 4-137] Directive used for phys_opt_design is: AggressiveExplore
+
+Starting Initial Update Timing Task
+
+Time (s): cpu = 00:00:49 ; elapsed = 00:00:40 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Vivado_Tcl 4-1435] PhysOpt_Tcl_Interface Runtime Before Starting Physical Synthesis Task | CPU: 66.00s |  WALL: 52.91s
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.773 | TNS=-19.821 | WHS=0.009 | THS=0.000 |
+Phase 1 Physical Synthesis Initialization | Checksum: 191a1d441
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:13 . Memory (MB): peak = 0.000 ; gain = 0.000
+WARNING: [Physopt 32-745] Physical Optimization has determined that the magnitude of the negative slack is too large and it is highly unlikely that slack will be improved. Post-Route Physical Optimization is most effective when WNS is above -0.5ns
+
+Phase 2 Critical Path Optimization
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.773 | TNS=-19.821 | WHS=0.009 | THS=0.000 |
+INFO: [Physopt 32-716] Net zz9000_ps_i/processing_system7_0/inst/FCLK_CLK0 has constraints that cannot be copied, and hence, it cannot be cloned. The constraint blocking the replication is create_clock @ C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.gen/sources_1/bd/zz9000_ps/ip/zz9000_ps_clk_wiz_0_0/zz9000_ps_clk_wiz_0_0.xdc:53
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texel0Addr01[14].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/processing_system7_0/inst/FCLK_CLK_unbuffered[0].
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 25 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.756. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[12]_i_4_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[8]_i_4_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_11_n_0.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.754. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_22_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_22_n_0.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 26 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.656. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_11_n_0.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_22_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_22_comp.
+INFO: [Physopt 32-952] Improved path group WNS = -0.603. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_10_n_0.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 26 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.586. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[8]_i_5_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texel0Addr00[14].
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 26 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.556. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[8]_i_5_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[8]_i_5_n_0.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 20 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.543. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_14_n_0.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_22_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_22_comp_1.
+INFO: [Physopt 32-952] Improved path group WNS = -0.512. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_11_n_0.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 26 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.495. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[8]_i_5_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[8]_i_5_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_14_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_16_n_0.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.493. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_32_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_10_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_19_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_37_n_0.
+INFO: [Physopt 32-952] Improved path group WNS = -0.480. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0[14]_i_3_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0[14]_i_3_n_0.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 26 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.463. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0[14]_i_8_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_32_n_0.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.457. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_40_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_40_n_0.
+INFO: [Physopt 32-952] Improved path group WNS = -0.447. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0[14]_i_7_n_0.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 14 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.416. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0[14]_i_7_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texel0Addr11[14].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[4]_i_4_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_8_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_12_n_0.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_12_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_12_comp.
+INFO: [Physopt 32-952] Improved path group WNS = -0.390. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[0]_i_4_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texel0Addr10[14].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_5_n_0.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_5_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_5_comp.
+INFO: [Physopt 32-952] Improved path group WNS = -0.384. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_9_n_0_repN.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0[14]_i_7_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0_reg[14]_i_4_n_6.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[9]_i_6_n_0.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 19 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.375. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[9]_i_3_n_0.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_12_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_12_comp_1.
+INFO: [Physopt 32-952] Improved path group WNS = -0.353. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[0]_i_4_n_0_repN.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 22 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.339. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_11_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_11_n_0.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_11_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_11_comp.
+INFO: [Physopt 32-952] Improved path group WNS = -0.315. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[0]_i_6_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_9_n_0_repN_1.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 23 pins.
+INFO: [Physopt 32-952] Improved path group WNS = -0.293. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_6_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_5_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr000[14].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step0_texelT[9].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texel0Addr00[14].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/processing_system7_0/inst/FCLK_CLK_unbuffered[0].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[8]_i_5_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_14_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_16_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_32_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_40_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0[14]_i_7_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0_reg[14]_i_4_n_6.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_5_n_0.
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr000[14].
+INFO: [Physopt 32-953] Path group WNS did not improve. Path group: clk_fpga_0. Processed net: zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step0_texelT[9].
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.293 | TNS=-6.209 | WHS=0.009 | THS=0.000 |
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.020 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 2 Critical Path Optimization | Checksum: 191a1d441
+
+Time (s): cpu = 00:09:51 ; elapsed = 00:09:04 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3 Hold Fix Optimization
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.293 | TNS=-6.209 | WHS=0.009 | THS=0.000 |
+INFO: [Physopt 32-1493] The number of hold_fix net fail limit is 5.
+INFO: [Physopt 32-66] No high hold slack nets found for hold slack optimization.
+INFO: [Physopt 32-668] Current Timing Summary | WNS=-0.293 | TNS=-6.209 | WHS=0.009 | THS=0.000 |
+Phase 3 Hold Fix Optimization | Checksum: 191a1d441
+
+Time (s): cpu = 00:09:51 ; elapsed = 00:09:04 . Memory (MB): peak = 0.000 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Physopt 32-669] Post Physical Optimization Timing Summary | WNS=-0.293 | TNS=-6.209 | WHS=0.009 | THS=0.000 |
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization   |  WNS Gain (ns)  |  TNS Gain (ns)  |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Critical Path  |          0.480  |         13.612  |            0  |              0  |                    22  |           0  |           1  |  00:08:50  |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Summary of Hold Fix Optimizations
+=================================
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization               |  WHS Gain (ns)  |  THS Gain (ns)  |  Added LUTs  |  Added FFs  |  Optimized Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LUT1 and ZHOLD Insertion   |          0.000  |          0.000  |           0  |          0  |               0  |           0  |           0  |  00:00:00  |
+|  Total                      |          0.000  |          0.000  |           0  |          0  |               0  |           0  |           0  |  00:00:00  |
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.020 . Memory (MB): peak = 0.000 ; gain = 0.000
+Ending Physical Synthesis Task | Checksum: 282fd95e7
+
+Time (s): cpu = 00:09:51 ; elapsed = 00:09:04 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+111 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+phys_opt_design: Time (s): cpu = 00:10:55 ; elapsed = 00:09:57 . Memory (MB): peak = 0.000 ; gain = 0.000
+Command: route_design -directive Explore
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+
+Starting Routing Task
+INFO: [Route 35-270] Using Router directive 'Explore'.
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 2 CPUs
+
+Phase 1 Build RT Design
+Checksum: PlaceDB: a9ea118f ConstDB: 0 ShapeSum: 909108a6 RouteDB: 6e55bd69
+Post Restoration Checksum: NetGraph: d0527917 | NumContArr: fdc6823b | Constraints: c2a8fa9d | Timing: c2a8fa9d
+Phase 1 Build RT Design | Checksum: 3536af08c
+
+Time (s): cpu = 00:01:37 ; elapsed = 00:01:17 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2 Router Initialization
+
+Phase 2.1 Fix Topology Constraints
+Phase 2.1 Fix Topology Constraints | Checksum: 3536af08c
+
+Time (s): cpu = 00:01:38 ; elapsed = 00:01:17 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2.2 Pre Route Cleanup
+Phase 2.2 Pre Route Cleanup | Checksum: 3536af08c
+
+Time (s): cpu = 00:01:39 ; elapsed = 00:01:18 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2.3 Timing Verification
+
+Phase 2.3.1 Update Timing
+Phase 2.3.1 Update Timing | Checksum: 25d60f2df
+
+Time (s): cpu = 00:02:53 ; elapsed = 00:02:16 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.293 | TNS=-6.209 | WHS=0.009  | THS=0.000  |
+
+Phase 2.3 Timing Verification | Checksum: 25d60f2df
+
+Time (s): cpu = 00:02:53 ; elapsed = 00:02:17 . Memory (MB): peak = 0.000 ; gain = 0.000
+ Number of Nodes with overlaps = 0
+
+Phase 2.4 Update Timing
+Phase 2.4 Update Timing | Checksum: 2c893e734
+
+Time (s): cpu = 00:04:47 ; elapsed = 00:03:55 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.302 | TNS=-7.108 | WHS=-0.681 | THS=-722.003|
+
+
+Phase 2.5 Update Timing for Bus Skew
+
+Phase 2.5.1 Update Timing
+Phase 2.5.1 Update Timing | Checksum: 239ea8fda
+
+Time (s): cpu = 00:06:05 ; elapsed = 00:05:08 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.302 | TNS=-6.293 | WHS=0.005  | THS=0.000  |
+
+Phase 2.5 Update Timing for Bus Skew | Checksum: 289763e22
+
+Time (s): cpu = 00:06:08 ; elapsed = 00:05:11 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2.6 Soft Constraint Pins - Fast Budgeting
+Phase 2.6 Soft Constraint Pins - Fast Budgeting | Checksum: 289763e22
+
+Time (s): cpu = 00:06:12 ; elapsed = 00:05:15 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 20.7111 %
+  Global Horizontal Routing Utilization  = 21.9061 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Phase 2 Router Initialization | Checksum: 29accfa7a
+
+Time (s): cpu = 00:06:17 ; elapsed = 00:05:19 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3 Global Routing
+Phase 3 Global Routing | Checksum: 29accfa7a
+
+Time (s): cpu = 00:06:17 ; elapsed = 00:05:19 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 4 Initial Routing
+
+Phase 4.1 Initial Net Routing Pass
+Phase 4.1 Initial Net Routing Pass | Checksum: 20e05910a
+
+Time (s): cpu = 00:06:18 ; elapsed = 00:05:20 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 4 Initial Routing | Checksum: 20e05910a
+
+Time (s): cpu = 00:06:18 ; elapsed = 00:05:20 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 5 Rip-up And Reroute
+
+Phase 5.1 Global Iteration 0
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.297 | TNS=-6.885 | WHS=N/A    | THS=N/A    |
+
+Phase 5.1 Global Iteration 0 | Checksum: 185ddbc79
+
+Time (s): cpu = 00:07:04 ; elapsed = 00:06:01 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 5.2 Global Iteration 1
+ Number of Nodes with overlaps = 1660
+ Number of Nodes with overlaps = 1051
+ Number of Nodes with overlaps = 512
+ Number of Nodes with overlaps = 214
+ Number of Nodes with overlaps = 109
+ Number of Nodes with overlaps = 46
+ Number of Nodes with overlaps = 11
+ Number of Nodes with overlaps = 11
+ Number of Nodes with overlaps = 2
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.550 | TNS=-13.698| WHS=N/A    | THS=N/A    |
+
+Phase 5.2 Global Iteration 1 | Checksum: 205984c63
+
+Time (s): cpu = 00:08:13 ; elapsed = 00:06:56 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 5 Rip-up And Reroute | Checksum: 205984c63
+
+Time (s): cpu = 00:08:13 ; elapsed = 00:06:56 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 6 Delay and Skew Optimization
+
+Phase 6.1 Delay CleanUp
+
+Phase 6.1.1 Update Timing
+Phase 6.1.1 Update Timing | Checksum: 2373d82a3
+
+Time (s): cpu = 00:08:23 ; elapsed = 00:07:05 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.297 | TNS=-6.354 | WHS=N/A    | THS=N/A    |
+
+ Number of Nodes with overlaps = 0
+Phase 6.1 Delay CleanUp | Checksum: 1fd4e8041
+
+Time (s): cpu = 00:08:26 ; elapsed = 00:07:07 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 6.2 Clock Skew Optimization
+Phase 6.2 Clock Skew Optimization | Checksum: 1fd4e8041
+
+Time (s): cpu = 00:08:26 ; elapsed = 00:07:07 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 6 Delay and Skew Optimization | Checksum: 1fd4e8041
+
+Time (s): cpu = 00:08:26 ; elapsed = 00:07:07 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 7 Post Hold Fix
+
+Phase 7.1 Hold Fix Iter
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.297 | TNS=-6.258 | WHS=0.009  | THS=0.000  |
+
+Phase 7.1 Hold Fix Iter | Checksum: 1d370b50f
+
+Time (s): cpu = 00:08:34 ; elapsed = 00:07:13 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 7 Post Hold Fix | Checksum: 1d370b50f
+
+Time (s): cpu = 00:08:34 ; elapsed = 00:07:13 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 8 Timing Verification
+
+Phase 8.1 Update Timing
+Phase 8.1 Update Timing | Checksum: 1fc44eb75
+
+Time (s): cpu = 00:08:45 ; elapsed = 00:07:21 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.297 | TNS=-6.258 | WHS=0.009  | THS=0.000  |
+
+Phase 8 Timing Verification | Checksum: 1fc44eb75
+
+Time (s): cpu = 00:08:45 ; elapsed = 00:07:21 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 9 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 20.7117 %
+  Global Horizontal Routing Utilization  = 21.9059 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+
+--GLOBAL Congestion:
+Utilization threshold used for congestion level computation: 0.85
+Congestion Report
+North Dir 2x2 Area, Max Cong = 91.8919%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X20Y106 -> INT_R_X21Y107
+   INT_L_X20Y104 -> INT_R_X21Y105
+   INT_L_X20Y100 -> INT_R_X21Y101
+   INT_L_X20Y96 -> INT_R_X21Y97
+   INT_L_X22Y96 -> INT_R_X23Y97
+South Dir 2x2 Area, Max Cong = 89.4144%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X20Y108 -> INT_R_X21Y109
+   INT_L_X20Y106 -> INT_R_X21Y107
+   INT_L_X18Y104 -> INT_R_X19Y105
+   INT_L_X18Y102 -> INT_R_X19Y103
+   INT_L_X20Y102 -> INT_R_X21Y103
+East Dir 1x1 Area, Max Cong = 92.6471%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_R_X43Y116 -> INT_R_X43Y116
+   INT_L_X56Y115 -> INT_L_X56Y115
+   INT_R_X41Y109 -> INT_R_X41Y109
+   INT_R_X19Y108 -> INT_R_X19Y108
+   INT_L_X22Y107 -> INT_L_X22Y107
+West Dir 2x2 Area, Max Cong = 86.7647%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X20Y48 -> INT_R_X21Y49
+
+------------------------------
+Reporting congestion hotspots
+------------------------------
+Direction: North
+----------------
+Congested clusters found at Level 1
+Effective congestion level: 3 Aspect Ratio: 0.5 Sparse Ratio: 0.625
+Direction: South
+----------------
+Congested clusters found at Level 1
+Effective congestion level: 3 Aspect Ratio: 0.428571 Sparse Ratio: 0.875
+Direction: East
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 1 Aspect Ratio: 0.666667 Sparse Ratio: 1
+Direction: West
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 1 Aspect Ratio: 0.666667 Sparse Ratio: 1
+
+Phase 9 Route finalize | Checksum: 1fc44eb75
+
+Time (s): cpu = 00:08:46 ; elapsed = 00:07:21 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 10 Verifying routed nets
+
+ Verification completed successfully
+Phase 10 Verifying routed nets | Checksum: 1fc44eb75
+
+Time (s): cpu = 00:08:46 ; elapsed = 00:07:21 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 11 Depositing Routes
+Phase 11 Depositing Routes | Checksum: 199b5bf96
+
+Time (s): cpu = 00:09:11 ; elapsed = 00:07:45 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 12 Incr Placement Change
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.027 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Place 30-746] Post Placement Timing Summary WNS=-0.241. For the most accurate timing information please run report_timing.
+Ending IncrPlace Task | Checksum: fbd78ff1
+
+Time (s): cpu = 00:02:35 ; elapsed = 00:02:26 . Memory (MB): peak = 0.000 ; gain = 0.000
+Google Cpuprofiler is only supported on Linux.
+Phase 12 Incr Placement Change | Checksum: fbd78ff1
+
+Time (s): cpu = 00:11:47 ; elapsed = 00:10:12 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 13 Build RT Design
+Checksum: PlaceDB: 1013ac55 ConstDB: 0 ShapeSum: 294abe9b RouteDB: c2792501
+Post Restoration Checksum: NetGraph: ba1de12e | NumContArr: 2b00d503 | Constraints: c2a8fa9d | Timing: c2a8fa9d
+Phase 13 Build RT Design | Checksum: 26a70ab6b
+
+Time (s): cpu = 00:13:09 ; elapsed = 00:11:20 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 14 Router Initialization
+
+Phase 14.1 Fix Topology Constraints
+Phase 14.1 Fix Topology Constraints | Checksum: 26a70ab6b
+
+Time (s): cpu = 00:13:10 ; elapsed = 00:11:21 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 14.2 Pre Route Cleanup
+Phase 14.2 Pre Route Cleanup | Checksum: 1fbc15ed0
+
+Time (s): cpu = 00:13:10 ; elapsed = 00:11:21 . Memory (MB): peak = 0.000 ; gain = 0.000
+ Number of Nodes with overlaps = 0
+
+Phase 14.3 Update Timing
+Phase 14.3 Update Timing | Checksum: 23880e269
+
+Time (s): cpu = 00:15:29 ; elapsed = 00:13:24 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.230 | TNS=-2.426 | WHS=-0.681 | THS=-722.003|
+
+
+Phase 14.4 Update Timing for Bus Skew
+
+Phase 14.4.1 Update Timing
+Phase 14.4.1 Update Timing | Checksum: 2452c9ecb
+
+Time (s): cpu = 00:17:20 ; elapsed = 00:15:09 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.230 | TNS=-2.015 | WHS=0.005  | THS=0.000  |
+
+Phase 14.4 Update Timing for Bus Skew | Checksum: 299969822
+
+Time (s): cpu = 00:17:24 ; elapsed = 00:15:14 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 14.5 Soft Constraint Pins - Fast Budgeting
+Phase 14.5 Soft Constraint Pins - Fast Budgeting | Checksum: 299969822
+
+Time (s): cpu = 00:17:31 ; elapsed = 00:15:20 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 20.6768 %
+  Global Horizontal Routing Utilization  = 21.8644 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 153
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 45
+  Number of Partially Routed Nets     = 108
+  Number of Node Overlaps             = 0
+
+Phase 14 Router Initialization | Checksum: 299969822
+
+Time (s): cpu = 00:17:36 ; elapsed = 00:15:25 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 15 Global Routing
+Phase 15 Global Routing | Checksum: 299969822
+
+Time (s): cpu = 00:17:36 ; elapsed = 00:15:26 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 16 Initial Routing
+
+Phase 16.1 Initial Net Routing Pass
+Phase 16.1 Initial Net Routing Pass | Checksum: 2ab48e610
+
+Time (s): cpu = 00:17:38 ; elapsed = 00:15:26 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 16 Initial Routing | Checksum: 2ab48e610
+
+Time (s): cpu = 00:17:38 ; elapsed = 00:15:27 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 17 Rip-up And Reroute
+
+Phase 17.1 Global Iteration 0
+ Number of Nodes with overlaps = 458
+ Number of Nodes with overlaps = 245
+ Number of Nodes with overlaps = 145
+ Number of Nodes with overlaps = 65
+ Number of Nodes with overlaps = 31
+ Number of Nodes with overlaps = 9
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.415 | TNS=-5.303 | WHS=N/A    | THS=N/A    |
+
+Phase 17.1 Global Iteration 0 | Checksum: 1061a6349
+
+Time (s): cpu = 00:19:05 ; elapsed = 00:16:45 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 17.2 Global Iteration 1
+ Number of Nodes with overlaps = 990
+ Number of Nodes with overlaps = 413
+ Number of Nodes with overlaps = 121
+ Number of Nodes with overlaps = 68
+ Number of Nodes with overlaps = 32
+ Number of Nodes with overlaps = 20
+ Number of Nodes with overlaps = 2
+ Number of Nodes with overlaps = 4
+ Number of Nodes with overlaps = 2
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.870 | TNS=-17.490| WHS=N/A    | THS=N/A    |
+
+Phase 17.2 Global Iteration 1 | Checksum: 2bec89965
+
+Time (s): cpu = 00:19:55 ; elapsed = 00:17:29 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 17 Rip-up And Reroute | Checksum: 2bec89965
+
+Time (s): cpu = 00:19:55 ; elapsed = 00:17:29 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 18 Delay and Skew Optimization
+
+Phase 18.1 Delay CleanUp
+
+Phase 18.1.1 Update Timing
+Phase 18.1.1 Update Timing | Checksum: 25f60e539
+
+Time (s): cpu = 00:20:06 ; elapsed = 00:17:38 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.415 | TNS=-4.989 | WHS=N/A    | THS=N/A    |
+
+ Number of Nodes with overlaps = 0
+Phase 18.1 Delay CleanUp | Checksum: 2b099de52
+
+Time (s): cpu = 00:20:09 ; elapsed = 00:17:41 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 18.2 Clock Skew Optimization
+Phase 18.2 Clock Skew Optimization | Checksum: 2b099de52
+
+Time (s): cpu = 00:20:09 ; elapsed = 00:17:41 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 18 Delay and Skew Optimization | Checksum: 2b099de52
+
+Time (s): cpu = 00:20:10 ; elapsed = 00:17:41 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 19 Post Hold Fix
+
+Phase 19.1 Hold Fix Iter
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.286 | TNS=-3.708 | WHS=0.009  | THS=0.000  |
+
+Phase 19.1 Hold Fix Iter | Checksum: 2e731547c
+
+Time (s): cpu = 00:20:18 ; elapsed = 00:17:48 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 19 Post Hold Fix | Checksum: 2e731547c
+
+Time (s): cpu = 00:20:18 ; elapsed = 00:17:48 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 20 Timing Verification
+
+Phase 20.1 Update Timing
+Phase 20.1 Update Timing | Checksum: 2cb31e5a4
+
+Time (s): cpu = 00:20:30 ; elapsed = 00:17:57 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.286 | TNS=-3.708 | WHS=0.009  | THS=0.000  |
+
+Phase 20 Timing Verification | Checksum: 2cb31e5a4
+
+Time (s): cpu = 00:20:30 ; elapsed = 00:17:57 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 21 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 20.6897 %
+  Global Horizontal Routing Utilization  = 21.8482 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+
+--GLOBAL Congestion:
+Utilization threshold used for congestion level computation: 0.85
+Congestion Report
+North Dir 4x4 Area, Max Cong = 85.4167%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X20Y102 -> INT_R_X23Y105
+South Dir 2x2 Area, Max Cong = 88.2883%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X20Y108 -> INT_R_X21Y109
+   INT_L_X18Y106 -> INT_R_X19Y107
+   INT_L_X18Y104 -> INT_R_X19Y105
+   INT_L_X20Y100 -> INT_R_X21Y101
+   INT_L_X20Y96 -> INT_R_X21Y97
+East Dir 1x1 Area, Max Cong = 94.1176%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_R_X43Y116 -> INT_R_X43Y116
+   INT_L_X56Y115 -> INT_L_X56Y115
+   INT_R_X41Y109 -> INT_R_X41Y109
+   INT_R_X19Y108 -> INT_R_X19Y108
+   INT_L_X22Y107 -> INT_L_X22Y107
+West Dir 1x1 Area, Max Cong = 97.0588%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X24Y117 -> INT_L_X24Y117
+   INT_R_X17Y49 -> INT_R_X17Y49
+   INT_L_X18Y49 -> INT_L_X18Y49
+   INT_R_X19Y49 -> INT_R_X19Y49
+   INT_L_X20Y49 -> INT_L_X20Y49
+
+------------------------------
+Reporting congestion hotspots
+------------------------------
+Direction: North
+----------------
+Congested clusters found at Level 1
+Effective congestion level: 3 Aspect Ratio: 0.5 Sparse Ratio: 0.625
+Direction: South
+----------------
+Congested clusters found at Level 1
+Effective congestion level: 3 Aspect Ratio: 0.428571 Sparse Ratio: 0.8125
+Direction: East
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 1 Aspect Ratio: 0.5 Sparse Ratio: 0.5
+Direction: West
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 1 Aspect Ratio: 0.4 Sparse Ratio: 1.75
+
+Phase 21 Route finalize | Checksum: 2cb31e5a4
+
+Time (s): cpu = 00:20:31 ; elapsed = 00:17:57 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 22 Verifying routed nets
+
+ Verification completed successfully
+Phase 22 Verifying routed nets | Checksum: 2cb31e5a4
+
+Time (s): cpu = 00:20:31 ; elapsed = 00:17:57 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 23 Depositing Routes
+Phase 23 Depositing Routes | Checksum: 25df910e3
+
+Time (s): cpu = 00:20:51 ; elapsed = 00:18:16 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 24 Post Process Routing
+Phase 24 Post Process Routing | Checksum: 25df910e3
+
+Time (s): cpu = 00:20:52 ; elapsed = 00:18:17 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 25 Post Router Timing
+INFO: [Route 35-20] Post Routing Timing Summary | WNS=-0.282 | TNS=-3.612 | WHS=0.009  | THS=0.000  |
+
+Phase 25 Post Router Timing | Checksum: 25e269d2d
+
+Time (s): cpu = 00:21:58 ; elapsed = 00:19:08 . Memory (MB): peak = 0.000 ; gain = 0.000
+CRITICAL WARNING: [Route 35-39] The design did not meet timing requirements. Please run report_timing_summary for detailed reports.
+Resolution: Verify that the timing was met or had small violations at all previous steps (synthesis, placement, power_opt, and phys_opt). Run report_timing_summary and analyze individual timing paths.
+INFO: [Route 35-253] TNS is the sum of the worst slack violation on every endpoint in the design. Review the paths with the biggest WNS violations in the timing reports and modify your constraints or your design to improve both WNS and TNS.
+Total Elapsed time in route_design: 1148.34 secs
+
+Phase 26 Post-Route Event Processing
+Phase 26 Post-Route Event Processing | Checksum: 10ad959a1
+
+Time (s): cpu = 00:21:58 ; elapsed = 00:19:08 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-16] Router Completed Successfully
+Ending Routing Task | Checksum: 10ad959a1
+
+Time (s): cpu = 00:21:59 ; elapsed = 00:19:09 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Routing Is Done.
+INFO: [Common 17-83] Releasing license: Implementation
+137 Infos, 2 Warnings, 1 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+route_design: Time (s): cpu = 00:22:01 ; elapsed = 00:19:11 . Memory (MB): peak = 0.000 ; gain = 0.000
+report_route_status: Time (s): cpu = 00:00:10 ; elapsed = 00:00:08 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-436] There are set_bus_skew constraint(s) in this design. Please run report_bus_skew to ensure that bus skew requirements are met.
+report_timing_summary: Time (s): cpu = 00:01:15 ; elapsed = 00:01:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+Command: report_drc -file completion-refined-drc.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/grx-board-hp3/completion-refined-drc.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:26 ; elapsed = 00:00:22 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 60 -nworst 4 -delay_type max -sort_by slack.
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Wrote PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 0.000 ; gain = 0.000
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Write ShapeDB Complete: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 0.000 ; gain = 0.000
+Writing XDEF routing special nets.
+Wrote RouteStorage: Time (s): cpu = 00:00:14 ; elapsed = 00:00:12 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote PlaceStorage: Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.072 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 0.000 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:23 ; elapsed = 00:00:17 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/grx-board-hp3/completion-refined.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:27 ; elapsed = 00:00:21 . Memory (MB): peak = 0.000 ; gain = 0.000
+GRX_REFINED_REQUIRES_TIMING_REVIEW_NOT_INSTALLED
+## exit 0
+INFO: [Common 17-206] Exiting Vivado at Thu Nov 19 23:44:47 2026...

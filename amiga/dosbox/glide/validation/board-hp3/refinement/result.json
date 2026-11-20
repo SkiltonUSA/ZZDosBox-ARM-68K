@@ -1,0 +1,26 @@
+{
+  "scope": "Refinement completed; setup timing FAILED; not installed",
+  "run": {
+    "exit_code": 0,
+    "elapsed_seconds": 1992.17,
+    "script": "C:\\refine-grx.tcl"
+  },
+  "input_checkpoint_sha256": "4dad5492c0084164cea667d307f4aec28d1eef362744c36f57ed7378e17a6448",
+  "output_checkpoint_sha256": "6df9c81e88106b15f4ddad6aa9ce3b7acec16a354021fe84e365783f859b84c7",
+  "original_sha256": {
+    "completion-refined-status.rpt": "f54e8eaeb7e7a24b5be515958851b595866d6959e0dea9ef6e10c6f4a06285dd",
+    "completion-refined-timing.rpt": "ff35cdaf2c98e30c31a3da115e0c37e639e126dbd9855b4c95ced367f3b0a9fc",
+    "completion-refined-drc.rpt": "effb0230f5fa59e6672fdae824ccf846750754bd4f166d14f460366f2535eed4",
+    "completion-refined-bus-skew.rpt": "5889aa77d31723d049c90bb12bbd81ff0923edbac979d99a6718484a4e81ebdb",
+    "completion-refined-failing.rpt": "f85dcf292478f2ee8cca5c6e1afacff140616f0ec0d7992bc7db6ebcc84e5d36",
+    "completion-hp3-refine.log": "cddf2c67e33020c8d15ad2663eaf6cc0530a59f9da3cb33ad6ab755f65962369"
+  },
+  "retained_text_normalization": "Host/workspace names redacted; trailing whitespace removed; original hashes retained",
+  "wns_ns": -0.282,
+  "tns_ns": -3.612,
+  "failing_setup_endpoints": 31,
+  "whs_ns": 0.009,
+  "failing_hold_endpoints": 0,
+  "fully_routed_nets": 55985,
+  "routing_errors": 0
+}

@@ -1,0 +1,28 @@
+{
+  "synthesis": {
+    "exit_code": 0,
+    "elapsed_seconds": 1908.64,
+    "script": "C:\\grx-board-texture\\completion\\synthesize-board.tcl"
+  },
+  "independent_audit": {
+    "exit_code": 0,
+    "elapsed_seconds": 187.4,
+    "script": "C:\\audit-grx-texture.tcl"
+  },
+  "checkpoint_sha256": "1a84039e377ff88fcd0cc49d48decf6eefd64a75ee58ce62ae3f271ca9a0d438",
+  "staging_sha256": "f7c5a19f02f58409e24592c45c073f3b3eb66183e22a155a342c0e6e9a99a85f",
+  "scope": "Carry-free full-board synthesis and independent checkpoint audit only; not routed or installed",
+  "slice_luts": 23308,
+  "slice_registers": 29100,
+  "bram36_equivalents": 60.5,
+  "dsps": 22,
+  "original_sha256": {
+    "completion-synth-audit-utilization.rpt": "c9f8b54097c083e0834996f7ec97ef155105ee12419eb8c691e81557cf1f01f9",
+    "completion-synth-audit-drc.rpt": "3a4cd76626a2d0d0a1bf68da51c182bcc2dd94ae96a9ff792bd6bdbf6a337f6e",
+    "completion-synth-audit-clocks.rpt": "c424de4a7bb8bbabfb45196ab08210b34f8480114906fd2e0f2b218fa9e82e4c",
+    "completion-synth-audit-timing.rpt": "5c49aa23686b070b1d8c207f2c6b01545730bd41177d7aecac8d96696bb5361d",
+    "completion-texture-synth.log": "f2e29963e5c74a05d56d108d243a1049540194d2f9e8562597bae7f7a1375c8f",
+    "completion-texture-synth-audit.log": "c2660a705df60ecde84e12a033d4a0b8b4d61ff0a4dfc951c5650eb01966227b"
+  },
+  "retained_text_normalization": "Host/workspace names redacted; trailing whitespace removed"
+}

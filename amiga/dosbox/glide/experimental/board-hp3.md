@@ -165,12 +165,19 @@ DRC retains 52 warnings and one advisory. Missing clocks, unconstrained paths
 and the existing methodology findings remain. Bus-skew reports contain MET and
 NA entries; NA is not a pass. [Routed evidence](../validation/board-hp3/routing/result.json).
 
-`refine-route.tcl` runs physical optimization and rerouting from a separate
-checkpoint without changing clocks, RTL or timing exceptions. A second,
-carry-free texture-address candidate is also under investigation: the LOD base
-and coordinate fields are disjoint, so OR can replace their addition. It passes
-4,096 field combinations, 262,144 side-by-side sampler cycles, the existing
-full-renderer regression and all 10 generated-HP3 converter tests (32 verified
-framebuffers). [Candidate evidence](../validation/texture-address/README.md).
-Its full-board synthesis is running; no timing gain or physical FPS follows
-from those simulation results.
+`refine-route.tcl` completed physical optimization and rerouting without changing
+clocks, RTL or timing exceptions. Setup still fails: WNS **−0.282 ns**, TNS
+**−3.612 ns**, 31 failing endpoints. Hold remains +0.009 ns; all 55,985 nets
+route without errors. [Refinement evidence](../validation/board-hp3/refinement/result.json).
+Placement refinement alone did not remove the texture-address critical path.
+
+The separate carry-free texture-address candidate replaces addition with OR
+where the LOD base and coordinate fields are disjoint. It passes 4,096 field
+combinations, 262,144 side-by-side sampler cycles, the full-renderer regression
+and all 10 generated-HP3 converter tests (32 verified framebuffers). Full-board
+synthesis and its independent checkpoint audit also passed. The synthesized
+design uses 23,308 LUTs and 29,100 registers: 60 fewer LUTs and 20 fewer registers
+than the corrected reference at the same stage. BRAM and DSP use are unchanged.
+[Candidate evidence](../validation/texture-address/README.md). Debug-core
+implementation and optimization are in progress; routed timing and physical
+FPS remain unmeasured for this candidate.
