@@ -1,0 +1,4 @@
+PASS tagged submission: five accepted scene packets
+PASS tagged submission: reserved tail capacity, invalid sizes and guards
+PASS tagged submission: validation and output use private snapshot
+PASS tagged submission: client fence/echo attempts rejected; live state unchanged

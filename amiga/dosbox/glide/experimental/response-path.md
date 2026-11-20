@@ -24,6 +24,12 @@ check; concatenating the envelopes also violates the current length contract.
 A future firmware interface needs explicit capability negotiation and exclusive
 submission ownership. Do not bypass the current validator to try this on hardware.
 
+The [tagged submission preparer](tagged-submission.md) now validates a private
+copy with that unchanged validator, then adds the firmware-only fence and echo.
+Its five generated scene streams match the ordinary renderer fixtures. A new
+service and physical transport are still pending; this does not enable the
+suffix through the released ABI.
+
 The receiver expects epoch first, then sequence with TLAST. It retains the pair
 until the mailbox accepts it. A short or overlong response latches a protocol
 fault. An external memory fault also blocks input and token delivery, and remains

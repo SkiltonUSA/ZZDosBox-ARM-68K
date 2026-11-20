@@ -8,8 +8,8 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-import re
 import subprocess
+from glide_firmware import validator_source
 
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / 'amiga/dosbox/glide'
@@ -21,12 +21,8 @@ def run(*args):
 
 
 def firmware_test(path, flags, objects):
-    text = path.read_text()
-    start = text.index('typedef struct {\n    uint32_t color_base;')
-    end = text.index('static int xacpgpu_fifo_send_be', start)
     # Compile upstream's unchanged validator, not a reimplementation of it.
-    validator = text[start:end]
-    defines = '\n'.join(re.findall(r'^#define XACPGPU_.*$', text, re.M))
+    defines, validator = validator_source(path)
     harness = r'''
 #include <assert.h>
 #include <stdint.h>
@@ -128,7 +124,7 @@ def main():
                     '-o', OUT/(source.stem+'.'+abi+'.o'))
         record['arm_compile_only'] = ['cortex-a9 ARM32 soft', 'cortex-a9 ARM32 softfp VFPv3']
     inputs = [*sources, SRC/'descriptor.h', SRC/'translator.h', SRC/'vertex.h', SRC/'probe_scene.h', SRC/'pipeline.h', SRC/'probe_wire.h',
-              ROOT/'tests/amiga/dosbox/glide/translator.cpp', Path(__file__)]
+              ROOT/'tests/amiga/dosbox/glide/translator.cpp', ROOT/'scripts/glide_firmware.py', Path(__file__)]
     record['source_sha256'] = {str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
     (OUT/'validation.json').write_text(json.dumps(record, indent=2)+'\n')
     print('Record:', OUT/'validation.json')

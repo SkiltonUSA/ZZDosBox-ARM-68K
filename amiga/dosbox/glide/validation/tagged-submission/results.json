@@ -1,0 +1,34 @@
+{
+  "scope": "Offline firmware preparation; no service, FIFO/MMIO, GPU execution or FPS",
+  "main_c_sha256": "84a7caff07162d591825bb2a4fc1278eabfa7576af975b84fce74a1a63f019d5",
+  "validator_sha256": "80a4a395735e92c3b6cf30c589ebe5ac1e70628ea8519574999f3f024a9e2610",
+  "board_sha256": "040dffe44ca92495c8ee122a982a3fb6675ff40c940b4855d2d455a20c3e0ee7",
+  "board_fifo_words": 512,
+  "maximum_client_words": 505,
+  "native_sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "matching_renderer_scenes": 5,
+  "commands_sha256": "49e78c764de364abc79a0c6c32145d3ded4c649a18374a0c7e27ef5d3cd81587",
+  "arm_compile_only": [
+    "soft",
+    "softfp"
+  ],
+  "source_sha256": {
+    "amiga/dosbox/glide/experimental/submit_prepare.inc": "661932b4b095f7259f63a8a9671b02d69d523e93efe86e2bdfa5ebab8c198d5e",
+    "tests/amiga/dosbox/glide/submit_prepare.c": "58638746413d4450e5d1acda9ae8ce6806ea7ce690fc3b3077e80028f506e876",
+    "scripts/glide_firmware.py": "091aa06614f91383cf8cd1c770cd6b102ce5a029c1439d1f2e04e7b14f6be0e3",
+    "scripts/test_dosbox_glide_submit.py": "d4d23e42e4f33d523706279df9517e3e1f431191dc06a74e365fbfba73621e6b",
+    "tests/amiga/dosbox/glide/full_renderer_fixtures.c": "1451cb5eb6b675cb131b1b407a5ed344ddfc167abb73c027fc52a8cd38205bdd",
+    "amiga/dosbox/glide/translator.c": "5df9d815de67193108bab8e0879f855f38ba86b5825dc704e222b3dee0c20928",
+    "amiga/dosbox/glide/descriptor.c": "439a94cafd84ec9d52e0ab01b03ae7c0e368a01e81e5ad18b39dc9697b43df03",
+    "amiga/dosbox/glide/probe_scene.c": "895eb77421ef8821ffad399fc929c77101ba2a18a832222128fbe0bf90c963d9",
+    "amiga/dosbox/glide/probe_readback.h": "450854c7c5aa71c6b908189b62cc2f97205c0d16465604ef4b40352b85d3e484",
+    "amiga/dosbox/glide/probe_scene.h": "bdebc90126c926ef77ae7b6ab8dfc76a1f85c8015a5f7a0f077b8999b143442e",
+    "amiga/dosbox/glide/translator.h": "ee8994472519b89102048cca603bc23e26afe66ebf27e68042a7fe14c121c069",
+    "amiga/dosbox/glide/vertex.h": "cdd796e7671fe06bd5efb85a632f9f1e7fbada619d84ddd74bb4b70094a32cb5",
+    "amiga/dosbox/glide/descriptor.h": "02859f7188379d10940073952cf78f4cd01cbd36ed2b600d0dd06fca5384034c",
+    "amiga/dosbox/glide/pipeline.h": "6624a41ab6c726c5662027cdddf3e7659d03d71ae2f9d4869cc95629894a40bf"
+  }
+}

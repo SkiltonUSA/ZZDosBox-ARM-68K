@@ -32,6 +32,9 @@ gate is a small scene timed through verified GPU completion.
    scenarios, including late faults. The existing firmware's MMIO helpers do
    not return AXI errors and its data-abort handlers stop execution, so a
    physical transport that satisfies the reader's contract is still required.
+   A [tagged submission preparer](tagged-submission.md) also passes tests against
+   the unchanged firmware validator: it validates a private command copy before
+   adding the firmware-only fence and identity. Service integration is pending.
 3. **Guest renderer integration.** The overlay's 146 exports are diagnostic
    stubs, not 146 implemented Glide functions. Drawing dispatch, texture
    allocation/upload, guest state, required depth/LFB behaviour and presentation
