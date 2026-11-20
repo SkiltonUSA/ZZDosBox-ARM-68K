@@ -53,7 +53,7 @@ static void grx_stream_command(void *data){
    }
   }
  }else if(op==2){
-  if(!zc_idle()||!grx_stream_close(&grx_live,nonce))error=0x31005;
+  if(!zc_workers_idle()||!grx_stream_close(&grx_live,nonce))error=0x31005;
   else grx_stream_active=0;
  }
  zc_put(p,GRX_STREAM_MAGIC);zc_put(p+4,1);zc_put(p+8,error);zc_put(p+12,grx_stream_active);

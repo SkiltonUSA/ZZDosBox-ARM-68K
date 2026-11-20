@@ -13,7 +13,16 @@ static void XTime_GetTime(XTime *t){*t=(clock_ticks+=1000);}
 static void Xil_DCacheInvalidateRange(uintptr_t p,unsigned n){(void)p;(void)n;}
 static void Xil_DCacheFlushRange(uintptr_t p,unsigned n){(void)p;(void)n;}
 static uint32_t Xil_In32(uintptr_t p){(void)p;return 0;}
-static int zc_idle(void){return test_failure!=1;}
+static int grx_owns_gpu(void);
+unsigned test_worker_busy;
+static int zz_clock_core1_idle(void){return test_failure!=1&&!(test_worker_busy&1);}
+#define ZAY_CLOSED 0
+static unsigned zay_status(void){return (test_worker_busy&2)!=0;}
+struct test_service_info {struct {unsigned active;} info;};
+static struct test_service_info *zpm_address(void){static struct test_service_info s;s.info.active=(test_worker_busy&4)!=0;return &s;}
+static struct test_service_info *zcu_address(void){static struct test_service_info s;s.info.active=(test_worker_busy&8)!=0;return &s;}
+#include "clock_idle.inc"
+unsigned test_clock_idle(void){return zc_idle();}
 static uint32_t zc_get(const unsigned char *p)
 {return (uint32_t)p[0]<<24|(uint32_t)p[1]<<16|(uint32_t)p[2]<<8|p[3];}
 static void zc_put(unsigned char *p,uint32_t x)

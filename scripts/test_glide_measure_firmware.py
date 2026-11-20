@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Execute the ARM measurement service with explicit modeled hardware I/O."""
-import argparse,hashlib,json,struct,subprocess
+import argparse,hashlib,json,re,struct,subprocess
 from pathlib import Path
 from glide_firmware import validator_source
 from unicorn import Uc,UC_ARCH_ARM,UC_MODE_ARM,UC_HOOK_CODE
@@ -12,6 +12,12 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--firmware',type=Path,required=True)
     a=p.parse_args();OUT.mkdir(parents=True,exist_ok=True)
     defines,validator=validator_source(a.firmware)
+    # Execute the installed build's real idle predicates; only worker signals
+    # are modeled. A constant idle stub hid a self-owned GPU close failure.
+    clock=a.firmware.parent/'zz-clock/firmware.h'
+    predicates=re.findall(r'static int zc_(?:workers_)?idle\(void\)\s*\{[^}]+\}',clock.read_text())
+    assert predicates, 'Missing firmware idle predicates'
+    (OUT/'clock_idle.inc').write_text('\n'.join(predicates)+'\n')
     c=OUT/'service.c';c.write_text('#include <stdint.h>\nstatic uint32_t be32(uint32_t x){return __builtin_bswap32(x);}\n'+defines+'\n'+validator+
         '\n#include "tests/amiga/dosbox/glide/measure_firmware.c"\n')
     objects=[]
@@ -20,7 +26,7 @@ def main():
               'draw_stream.c','guest_vertex.c','clip.c']]]
     for n,source in enumerate(sources):
         obj=OUT/f'{n}.o';objects.append(obj)
-        run(['arm-none-eabi-gcc','-I.','-I'+str(SRC),'-I'+str(SRC/'experimental'),'-I'+str(ROOT/'.context/amiga/glide/ovl'),
+        run(['arm-none-eabi-gcc','-I.','-I'+str(OUT),'-I'+str(SRC),'-I'+str(SRC/'experimental'),'-I'+str(ROOT/'.context/amiga/glide/ovl'),
              '-mcpu=cortex-a9','-marm','-mfpu=vfpv3','-mfloat-abi=softfp','-ffreestanding','-ffp-contract=off','-O2','-c',source,'-o',obj])
     elf=OUT/'service.elf';binary=OUT/'service.bin'
     run(['arm-none-eabi-gcc','-nostdlib','-mcpu=cortex-a9','-marm','-mfpu=vfpv3','-mfloat-abi=softfp','-Wl,-Ttext=0x10000','-Wl,-e,test_command',*objects,'-lgcc','-o',elf])
@@ -101,7 +107,15 @@ def main():
         return struct.unpack('>11I',u.mem_read(ptr,44))
     def result():
         return struct.unpack('<4I',u.mem_read(call('test_stream_result'),16))
-    assert stream(0)[2:4]==(0,0)
+    assert stream(0)[2:4]==(0,0) and call('test_clock_idle')==1
+    # Opening/closing an empty session must work without GPU submissions.
+    assert stream(1,41)[2:4]==(0,1) and call('test_clock_idle')==0
+    for busy in (1,2,4,8):
+        u.mem_write(syms['test_worker_busy'],struct.pack('<I',busy))
+        assert stream(2,41)[2]!=0 and call('test_claimed')==1
+    u.mem_write(syms['test_worker_busy'],struct.pack('<I',0))
+    assert stream(2,999)[2]!=0 and call('test_claimed')==1
+    assert stream(2,41)[2:4]==(0,0) and call('test_clock_idle')==1
     assert stream(1)[2:4]==(0,1) and call('test_claimed')==1
     assert command(1,2,123)[3] and call('test_claimed')==1
     count=call('test_stream_request',2,42,1);call('test_poll')

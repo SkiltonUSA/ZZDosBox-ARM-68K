@@ -76,7 +76,12 @@ def main():
     main=once(main,'\t\t\tzcu_poll();','\t\t\tzcu_poll();\n\t\t\tgrx_firmware_poll();')
     (fw/'src/main.c').write_text(main)
     clock=fw/'src/zz-clock/firmware.h'
-    clock.write_text(once(clock.read_text(),'return zz_clock_core1_idle()','return !grx_owns_gpu()&&zz_clock_core1_idle()'))
+    # Clock changes require no GPU lease. Closing our own lease only requires
+    # other workers to be idle; testing zc_idle there would reject itself.
+    clock_text=once(clock.read_text(),'static int zc_idle(void)','static int zc_workers_idle(void)')
+    clock_text=once(clock_text,'static unsigned zc_transition(unsigned target)',
+        'static int zc_idle(void)\n{return !grx_owns_gpu()&&zc_workers_idle();}\nstatic unsigned zc_transition(unsigned target)')
+    clock.write_text(clock_text)
     make=(fw/'Makefile').read_text()
     # BSP vector references the guard; put its object directly into the link so
     # archive order cannot discard the exception hook.
