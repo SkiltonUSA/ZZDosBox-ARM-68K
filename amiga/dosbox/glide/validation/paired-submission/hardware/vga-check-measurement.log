@@ -1,0 +1,6 @@
+[OK]
+MEASURE RC=0
+Global timer 399999916 Hz; offscreen 640x480 / 320 textured triangles / 65 submissions, 1 frames
+GPU completed 1/1
+GPU_COMPLETED frames=1 ticks=8705161 FPS=45.949
+Offscreen batch throughput including Core0 submission/polling; NOT gameplay or display FPS.

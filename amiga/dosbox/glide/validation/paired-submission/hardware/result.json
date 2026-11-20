@@ -1,0 +1,311 @@
+{
+  "scope": "Physical synthetic offscreen workload; not game execution or display presentation",
+  "cpu_mhz": 800,
+  "gpu_mhz_design": 100,
+  "triangles_per_frame": 320,
+  "baseline_submissions_per_frame": 65,
+  "paired_submissions_per_frame": 33,
+  "color_commits_per_frame_both_paths": 65,
+  "texture": "single 16x16 RGB565 nearest-filtered red/blue stripe texture",
+  "scene": "20x16 non-overlapping triangle grid; no depth, scene traversal or timed texture uploads",
+  "timing_includes": [
+    "Core0 fixture preparation",
+    "guest vertex decoding",
+    "clipping and encoding",
+    "FIFO submission",
+    "all packet retirements"
+  ],
+  "timing_excludes": [
+    "initial five correctness scenes",
+    "final pixel verification",
+    "startup and close",
+    "display presentation",
+    "DOS guest/game execution"
+  ],
+  "summaries": [
+    {
+      "resolution": "320x240",
+      "baseline_profile": 1,
+      "paired_profile": 3,
+      "runs_per_path": 3,
+      "frames_per_run": 100,
+      "baseline_fps": [
+        54.429,
+        54.375,
+        54.384
+      ],
+      "paired_fps": [
+        56.895,
+        56.834,
+        56.899
+      ],
+      "baseline_mean_fps": 54.396,
+      "paired_mean_fps": 56.876000000000005,
+      "throughput_gain_percent": 4.559158761673654,
+      "frame_time_reduction_percent": 4.360362894718339
+    },
+    {
+      "resolution": "640x480",
+      "baseline_profile": 2,
+      "paired_profile": 4,
+      "runs_per_path": 3,
+      "frames_per_run": 100,
+      "baseline_fps": [
+        45.516,
+        45.514,
+        45.517
+      ],
+      "paired_fps": [
+        47.229,
+        47.25,
+        47.238
+      ],
+      "baseline_mean_fps": 45.51566666666667,
+      "paired_mean_fps": 47.239,
+      "throughput_gain_percent": 3.786242099789816,
+      "frame_time_reduction_percent": 3.6481156106888957
+    }
+  ],
+  "longer_640x480_check": {
+    "frames_per_path": 1000,
+    "baseline_fps": 45.506,
+    "paired_fps": 47.235,
+    "throughput_gain_percent": 3.799498967169157,
+    "scope": "One roughly 22-second baseline and 21-second paired interval; not endurance testing"
+  },
+  "runs": [
+    {
+      "name": "tiny-check",
+      "profile": 0,
+      "frames": 1,
+      "elapsed_ticks": 42170,
+      "fps": 9485.383,
+      "timer_hz_before": 399995141,
+      "temperature_c_before": 54.7,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-check",
+      "profile": 1,
+      "frames": 1,
+      "elapsed_ticks": 7295956,
+      "fps": 54.824,
+      "timer_hz_before": 399995351,
+      "temperature_c_before": 55.7,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-pair-check",
+      "profile": 3,
+      "frames": 1,
+      "elapsed_ticks": 6979872,
+      "fps": 57.307,
+      "timer_hz_before": 399996471,
+      "temperature_c_before": 55.5,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-check",
+      "profile": 2,
+      "frames": 1,
+      "elapsed_ticks": 8705161,
+      "fps": 45.949,
+      "timer_hz_before": 399999916,
+      "temperature_c_before": 55.3,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-pair-check",
+      "profile": 4,
+      "frames": 1,
+      "elapsed_ticks": 8459253,
+      "fps": 47.285,
+      "timer_hz_before": 400002202,
+      "temperature_c_before": 54.6,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-100-a",
+      "profile": 1,
+      "frames": 100,
+      "elapsed_ticks": 735838379,
+      "fps": 54.429,
+      "timer_hz_before": 401003459,
+      "temperature_c_before": 56.1,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-pair-100-a",
+      "profile": 3,
+      "frames": 100,
+      "elapsed_ticks": 703062961,
+      "fps": 56.895,
+      "timer_hz_before": 400004546,
+      "temperature_c_before": 56.0,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-100-a",
+      "profile": 2,
+      "frames": 100,
+      "elapsed_ticks": 878836606,
+      "fps": 45.516,
+      "timer_hz_before": 400010879,
+      "temperature_c_before": 55.7,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-pair-100-a",
+      "profile": 4,
+      "frames": 100,
+      "elapsed_ticks": 846935321,
+      "fps": 47.229,
+      "timer_hz_before": 399992083,
+      "temperature_c_before": 55.3,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-pair-100-b",
+      "profile": 3,
+      "frames": 100,
+      "elapsed_ticks": 703840456,
+      "fps": 56.834,
+      "timer_hz_before": 400033241,
+      "temperature_c_before": 56.5,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-100-b",
+      "profile": 1,
+      "frames": 100,
+      "elapsed_ticks": 735684071,
+      "fps": 54.375,
+      "timer_hz_before": 400004079,
+      "temperature_c_before": 55.2,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-pair-100-b",
+      "profile": 4,
+      "frames": 100,
+      "elapsed_ticks": 846560375,
+      "fps": 47.25,
+      "timer_hz_before": 399992531,
+      "temperature_c_before": 55.7,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-100-b",
+      "profile": 2,
+      "frames": 100,
+      "elapsed_ticks": 878852215,
+      "fps": 45.514,
+      "timer_hz_before": 399996717,
+      "temperature_c_before": 55.2,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-100-c",
+      "profile": 1,
+      "frames": 100,
+      "elapsed_ticks": 735518207,
+      "fps": 54.384,
+      "timer_hz_before": 399998641,
+      "temperature_c_before": 55.7,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-pair-100-c",
+      "profile": 3,
+      "frames": 100,
+      "elapsed_ticks": 703004352,
+      "fps": 56.899,
+      "timer_hz_before": 400001303,
+      "temperature_c_before": 55.5,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-100-c",
+      "profile": 2,
+      "frames": 100,
+      "elapsed_ticks": 878770117,
+      "fps": 45.517,
+      "timer_hz_before": 399997338,
+      "temperature_c_before": 55.6,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-pair-100-c",
+      "profile": 4,
+      "frames": 100,
+      "elapsed_ticks": 846746747,
+      "fps": 47.238,
+      "timer_hz_before": 399994645,
+      "temperature_c_before": 55.6,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-1000",
+      "profile": 2,
+      "frames": 1000,
+      "elapsed_ticks": 8789922924,
+      "fps": 45.506,
+      "timer_hz_before": 399991159,
+      "temperature_c_before": 56.0,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true,
+      "transport_note": "Original command returned RC0; full log transfer timed out. Final counter retrieved with Search; read-only status confirmed DONE/error0/claimed0 before releasing lease."
+    },
+    {
+      "name": "vga-pair-1000",
+      "profile": 4,
+      "frames": 1000,
+      "elapsed_ticks": 8468311321,
+      "fps": 47.235,
+      "timer_hz_before": 399996256,
+      "temperature_c_before": 55.0,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    }
+  ],
+  "build_commit": "3996d1f",
+  "boot_source_sha256": "04cea076010881c61c02c2c9ead3d17d0d569e8c87b415e192581827c64edbd4",
+  "measurement_host_binary_sha256": "271580406057c238fb75e08f53babdd3bb8341182e0ae5db8f3e8b967fd35e74",
+  "identity": "Runtime ABI2 profile mask 0x1f, selected profile checked; hashes identify staged sources, not live firmware readback"
+}

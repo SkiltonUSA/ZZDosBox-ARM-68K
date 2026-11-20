@@ -36,7 +36,9 @@ preparation, submission and completion polling. This is a small rendering test;
   checks and clean shutdown pass. These are offscreen synthetic results, not GTA FPS.
 - [Paired draw submissions](amiga/dosbox/glide/validation/paired-submission/README.md)
   reduce completion waits from 65 to 33 per frame while retaining all colour
-  commits. Offline checks pass; the hardware performance comparison is pending.
+  commits: **56.88 FPS at 320×240 (+4.56%)** and **47.24 FPS at 640×480 (+3.79%)**
+  in matched hardware tests. A longer VGA run confirms the gain. These remain
+  synthetic offscreen results; the released player is unchanged.
 - The existing 1.0 Beta release does not include this experimental firmware.
 
 [Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·

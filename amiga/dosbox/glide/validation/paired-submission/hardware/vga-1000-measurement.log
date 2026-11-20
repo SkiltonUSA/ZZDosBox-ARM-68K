@@ -1,0 +1,5 @@
+MEASURE RC=0 (from original execution; final log retrieved separately)
+[OK]
+GPU_STATUS profiles=0x0000001f state=3 error=0x00000000 claimed=0 selected=2
+     1 Global timer 399991159 Hz; offscreen 640x480 / 320 textured triangles / 65 submissions, 1000 frames
+   637 GPU_COMPLETED frames=1000 ticks=8789922924 FPS=45.506

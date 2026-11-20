@@ -132,6 +132,14 @@ when the firmware hash, base provenance and recorded source hashes match.
 320×240/640×480 commands and colour commits, but join two drawing packets
 before a single completion fence. The clear remains separate: 33 retirements
 complete a frame. Profiles 1/2 remain the baseline. Native checks, the ARM
-service model and renderer simulation pass; hardware comparison is pending.
+service model and renderer simulation pass. Matched hardware tests measure
+**54.396 → 56.876 FPS (+4.56%)** at 320×240 and
+**45.516 → 47.239 FPS (+3.79%)** at 640×480, averaging three 100-frame runs per
+path at 800 MHz. A 1,000-frame VGA comparison confirms +3.80%. These remain
+offscreen measurements. Profiles 3/4 are the preferred experimental path.
 ABI2 capability bits 3/4 advertise the new profiles. This changes the private
 test service, not the published XACP GPU ABI or a released DOSBox player.
+
+The host's `--status` option reads capabilities and current service state without
+starting a GPU workload. It can distinguish the baseline firmware's mask `0x7`
+from the paired firmware's mask `0x1f` before scheduling tests.

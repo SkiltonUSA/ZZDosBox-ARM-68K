@@ -1,0 +1,60 @@
+[OK]
+MEASURE RC=0
+Global timer 401003459 Hz; offscreen 320x240 / 320 textured triangles / 65 submissions, 100 frames
+GPU completed 1/100
+GPU completed 3/100
+GPU completed 5/100
+GPU completed 7/100
+GPU completed 8/100
+GPU completed 10/100
+GPU completed 12/100
+GPU completed 14/100
+GPU completed 16/100
+GPU completed 19/100
+GPU completed 20/100
+GPU completed 22/100
+GPU completed 24/100
+GPU completed 26/100
+GPU completed 28/100
+GPU completed 29/100
+GPU completed 31/100
+GPU completed 33/100
+GPU completed 35/100
+GPU completed 37/100
+GPU completed 39/100
+GPU completed 41/100
+GPU completed 42/100
+GPU completed 44/100
+GPU completed 46/100
+GPU completed 48/100
+GPU completed 50/100
+GPU completed 51/100
+GPU completed 53/100
+GPU completed 55/100
+GPU completed 57/100
+GPU completed 59/100
+GPU completed 61/100
+GPU completed 63/100
+GPU completed 64/100
+GPU completed 66/100
+GPU completed 68/100
+GPU completed 70/100
+GPU completed 72/100
+GPU completed 73/100
+GPU completed 75/100
+GPU completed 77/100
+GPU completed 79/100
+GPU completed 81/100
+GPU completed 83/100
+GPU completed 85/100
+GPU completed 86/100
+GPU completed 88/100
+GPU completed 90/100
+GPU completed 92/100
+GPU completed 94/100
+GPU completed 95/100
+GPU completed 97/100
+GPU completed 99/100
+GPU completed 100/100
+GPU_COMPLETED frames=100 ticks=735838379 FPS=54.429
+Offscreen batch throughput including Core0 submission/polling; NOT gameplay or display FPS.

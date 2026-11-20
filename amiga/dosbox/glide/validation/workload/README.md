@@ -54,6 +54,8 @@ stops the session and retains the GPU claim until recovery.
 firmware. `GRXBASE.bin` remains the earlier recovery image. No released player or
 launcher was changed. This does not implement the GTA renderer or game FPS.
 
-The next [paired-submission experiment](../paired-submission/README.md)
+The subsequent [paired-submission experiment](../paired-submission/README.md)
 retains these baselines and every colour commit while reducing completion
-waits to 33 per frame. Its offline checks pass; hardware FPS is pending.
+waits to 33 per frame. Matched hardware runs measure **56.88 FPS at 320×240**
+and **47.24 FPS at 640×480**, gains of 4.56% and 3.79% over the same-build
+baseline. These remain synthetic offscreen results.

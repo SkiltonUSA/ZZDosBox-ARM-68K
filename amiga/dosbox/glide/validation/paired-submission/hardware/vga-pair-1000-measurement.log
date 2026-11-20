@@ -1,0 +1,4 @@
+[OK]
+MEASURE RC=0
+     1 Global timer 399996256 Hz; offscreen 640x480 / 320 textured triangles / 33 submissions, 1000 frames
+   594 GPU_COMPLETED frames=1000 ticks=8468311321 FPS=47.235
