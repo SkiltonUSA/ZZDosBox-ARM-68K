@@ -54,11 +54,28 @@ The FPGA is unchanged from the tested carry-free texture-address build. Existing
 board timing/CDC limitations still apply. The new Core0 service is experimental
 and has not yet passed physical validation.
 
-## Deployment status
+## First physical lifecycle and close correction
 
-The candidate boot image and isolated player have been staged on the test Amiga.
-Upload hashes and successful firmware-writer receipts were checked; this is not
-boot-card readback verification. The proven paired firmware was preserved as
-`GRXPAIR.bin`. The candidate requires a cold power cycle before testing. The
-bridge was responsive and unreserved after staging; no live GTA GPU run has
-been attempted on it yet.
+The initial streaming firmware booted at 800 MHz; global-timer calibration was
+399,995,327 Hz. An empty DOS session completed its command and restored Core1
+registers/MMU/cache state, but returned RC20 because GPU close failed. The
+channel remained active with no requests processed, no work pending and no GPU
+error. No GTA gameplay or additional GPU test followed.
+
+The cause was the close precondition: `zc_idle()` required no GPU reservation,
+including the very reservation close was meant to release. The correction
+separates worker-idle from clock-transition eligibility. Close still checks
+Core1, AY, Paula and Copper workers, the matching nonce, outstanding requests
+and failed GPU work. Clock changes remain blocked while the GPU is reserved.
+
+The earlier ARM test stub returned idle without considering GPU ownership.
+The revised fixture executes the actual generated firmware idle predicates.
+It reproduced the physical failure before the fix. Empty-session close, busy
+workers, wrong nonce, delayed retirement, failed-lease retention and all 25
+existing measurement scenarios now pass in the ARM model.
+
+[Close-fix evidence](close-fix/) records the physical failure, corrected build
+and tests. The corrected boot image has been staged, with upload checksum and
+writer RC0 verified; boot-card readback has not been performed. The FPGA and isolated DOS player are unchanged. Physical validation
+of the correction remains pending a cold restart; **there is still no GTA FPS
+result**. The proven paired firmware remains available as `GRXPAIR.bin`.

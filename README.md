@@ -41,7 +41,7 @@ preparation, submission and completion polling. This is a small rendering test;
   synthetic offscreen results; the released player is unchanged.
 - The existing 1.0 Beta release does not include this experimental firmware.
 
-The [live GTA candidate](amiga/dosbox/glide/validation/gta-live/README.md) now builds and passes captured-call and streaming-channel tests. Physical gameplay FPS remains pending.
+The [live GTA candidate](amiga/dosbox/glide/validation/gta-live/README.md) builds and passes captured-call tests. Its first physical startup/exit check exposed a GPU-close bug; the correction passes ARM model tests and awaits hardware validation. Gameplay FPS remains pending.
 
 [Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·
 [Remaining integration](amiga/dosbox/glide/experimental/fps-readiness.md) ·
