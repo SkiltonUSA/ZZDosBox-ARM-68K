@@ -1,0 +1,158 @@
+{
+  "scope": "Physical synthetic offscreen workload; not game execution or display presentation",
+  "cpu_mhz": 800,
+  "gpu_mhz_design": 100,
+  "triangles_per_frame": 320,
+  "packets_per_frame": 65,
+  "texture": "single 16x16 RGB565 nearest-filtered red/blue stripe texture",
+  "scene": "20x16 grid of non-overlapping textured triangles; no depth, scene traversal or texture uploads in timed interval",
+  "timing_includes": [
+    "Core0 fixture preparation",
+    "guest vertex decoding",
+    "clipping and encoding",
+    "FIFO submission",
+    "all packet retirements"
+  ],
+  "timing_excludes": [
+    "initial five correctness scenes",
+    "final pixel verification",
+    "startup and close",
+    "display presentation",
+    "DOS guest/game execution"
+  ],
+  "summaries": [
+    {
+      "profile": 1,
+      "resolution": "320x240",
+      "runs": 3,
+      "frames_per_run": 100,
+      "mean_fps": 54.46966666666667,
+      "median_fps": 54.473,
+      "min_fps": 54.459,
+      "max_fps": 54.477
+    },
+    {
+      "profile": 2,
+      "resolution": "640x480",
+      "runs": 3,
+      "frames_per_run": 100,
+      "mean_fps": 45.57333333333334,
+      "median_fps": 45.569,
+      "min_fps": 45.564,
+      "max_fps": 45.587
+    }
+  ],
+  "runs": [
+    {
+      "name": "tiny-check",
+      "profile": 0,
+      "frames": 1,
+      "elapsed_ticks": 42033,
+      "fps": 9517.115,
+      "timer_hz_before": 400069678,
+      "temperature_c_before": 54.5,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-check",
+      "profile": 1,
+      "frames": 1,
+      "elapsed_ticks": 7282686,
+      "fps": 54.924,
+      "timer_hz_before": 399993652,
+      "temperature_c_before": 55.0,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-check",
+      "profile": 2,
+      "frames": 1,
+      "elapsed_ticks": 8696646,
+      "fps": 45.994,
+      "timer_hz_before": 400000257,
+      "temperature_c_before": 54.5,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-100-a",
+      "profile": 1,
+      "frames": 100,
+      "elapsed_ticks": 734496347,
+      "fps": 54.459,
+      "timer_hz_before": 400001031,
+      "temperature_c_before": 55.3,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-100-a",
+      "profile": 2,
+      "frames": 100,
+      "elapsed_ticks": 877812882,
+      "fps": 45.569,
+      "timer_hz_before": 399999792,
+      "temperature_c_before": 54.5,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-100-b",
+      "profile": 1,
+      "frames": 100,
+      "elapsed_ticks": 734360807,
+      "fps": 54.473,
+      "timer_hz_before": 400042884,
+      "temperature_c_before": 54.3,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-100-b",
+      "profile": 2,
+      "frames": 100,
+      "elapsed_ticks": 877892093,
+      "fps": 45.564,
+      "timer_hz_before": 400006266,
+      "temperature_c_before": 54.5,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "qvga-100-c",
+      "profile": 1,
+      "frames": 100,
+      "elapsed_ticks": 734305172,
+      "fps": 54.477,
+      "timer_hz_before": 400065819,
+      "temperature_c_before": 55.1,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    },
+    {
+      "name": "vga-100-c",
+      "profile": 2,
+      "frames": 100,
+      "elapsed_ticks": 877888801,
+      "fps": 45.587,
+      "timer_hz_before": 400394916,
+      "temperature_c_before": 55.3,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "reservation_released": true
+    }
+  ],
+  "boot_source_sha256": "02b66e93f7772cfe954ac1d784a85a03211d6bd41fca39a7199f58479196ce29",
+  "host_source_sha256": "353d2b4b5fc651ff7df9c7c91fe9962ac6448b503404669f6c9693bf1be1bba0",
+  "identity": "ABI2 capabilities and selected profile checked at runtime; hashes identify staged sources, not live firmware readback"
+}

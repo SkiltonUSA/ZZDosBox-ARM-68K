@@ -116,8 +116,10 @@ The [ABI2 extension](../validation/workload/README.md) adds 320×240 and 640×48
 profiles, each with 320 textured triangles per frame. Packets pass the same
 validator, tagged completion and error handling. The frame counter waits for
 all 65 packets; it never reports packet throughput as frame throughput. ABI1
-remains supported for the original test. Firmware is staged; larger-workload
-hardware timing awaits restart.
+remains supported for the original test. Physical testing now passes at
+54.47 FPS (320×240) and 45.57 FPS (640×480), averaged across three 100-frame
+runs per resolution at 800 MHz ARM. These are synthetic offscreen workloads;
+DOS guest execution and presentation remain outside the measurement.
 
 Build and check with `test_glide_workload.py --firmware <main.c>`,
 `test_glide_measure_firmware.py --firmware <main.c>` and

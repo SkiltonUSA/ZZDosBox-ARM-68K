@@ -1,7 +1,7 @@
 {
-  "scope": "Offline tests and firmware staging; larger physical FPS pending",
+  "scope": "Offline tests, staging and physical workload measurements",
   "files": {
-    "README.md": "219df342aa074d87e1d02f2bf93c6bbbf9b057018888e85eaeaf6330a4b59555",
+    "README.md": "80c6d903067fb5c1f60799870f8fdaf62b65b1f89ad515af2c79a7001795c080",
     "counter-mutant.log": "a0b3d8ae7a6f279fc24419b4cc92b6d9721a8013c2e08dee0cabbe806a7c6f8f",
     "counter-tests.json": "22c66040544d3fb227a648e3cf5ed41a5f9acf867e3af55b512233ab9148951f",
     "counter-tests.log": "2580788c692d46caf180dc5c4233bcb60274e866a8eaace7abba75586eeb6570",
@@ -10,6 +10,7 @@
     "packet-tests.json": "77783ce9c4064e596ae03aa47d30c59d8c01d7f9caba90e5b339d48ada2a4962",
     "packet-tests.log": "2d15108f74798088f2f42eba72771f134227c1309d95a9225afa44565e49ddd0",
     "service-model.json": "2acae704fec7de8517715e3b99e0f0ef1a20b726ef9ccbbf350ccbfdc44dc9cb",
-    "staging.json": "75c4877840ae3d51c47295157028735fe3d78d7b65c5e6a68d85f86f477b8000"
+    "staging.json": "75c4877840ae3d51c47295157028735fe3d78d7b65c5e6a68d85f86f477b8000",
+    "hardware/manifest.json": "95153a8ed7de30bee37a5d075d4ba2267cdcc57f959dc2b3468bef50a8f2969b"
   }
 }

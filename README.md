@@ -31,8 +31,9 @@ preparation, submission and completion polling. This is a small rendering test;
   native, firmware-validator and Cortex-A9 model checks, including packet rollover
   and failed-submission handling. Live guest transport is still pending.
 - The [larger workload test](amiga/dosbox/glide/validation/workload/README.md)
-  adds 320 textured triangles at 320×240 and 640×480. Firmware is staged;
-  physical timing awaits restart.
+  renders 320 textured triangles at **54.47 FPS (320×240)** and **45.57 FPS
+  (640×480)**, averaged across three 100-frame runs at each resolution. Pixel
+  checks and clean shutdown pass. These are offscreen synthetic results, not GTA FPS.
 - The existing 1.0 Beta release does not include this experimental firmware.
 
 [Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·
