@@ -45,7 +45,7 @@
     "amiga/dosbox/glide/experimental/measure.h": "571f9a65249a5765aaad13110f6cfbd031c977a9a03226a4061c575e8f88ca6a",
     "amiga/dosbox/glide/experimental/measure_host.c": "5e5ed3b9627fda0b33e05308674510611abc9e80acc5017e990c4ed829f83edc",
     "amiga/dosbox/glide/experimental/measure.c": "51279d6296eeaa42abf4627b6e0e7058a629660800be3a6b0036ee411f68ed16",
-    "amiga/dosbox/glide/experimental/measurement.md": "c3cd6aa5cb7036e3dcdbd1a91666848d7ad763d4e3a305422f3d4d738bf78882",
+    "amiga/dosbox/glide/experimental/measurement.md": "d1d130e7c940141acb27dd061dd2237b6e577f7bca74a02272909d2a35981805",
     "scripts/test_dosbox_glide_mmio.py": "f16f29e0a54ed3822eea57196ccaed9cea43ad4ca100970bd17edec846ca0b03",
     "scripts/test_glide_measure_firmware.py": "201f8cdccab6628eb3dc254e813b115400620e0c980a74fdd0d68756ab3ae0f2",
     "tests/amiga/dosbox/glide/measure_firmware.c": "1dac387ea3d2ff4acf85ff8487bc6eeaf1ca1cd9a5036ef69ee0e1d8ca70d331",
@@ -55,7 +55,7 @@
     "scripts/test_dosbox_glide_measure.py": "ed04dbb71725c196e4b313d83fa5855016150f3f6eddf5462209f84755592f16"
   },
   "files": {
-    "README.md": "04c634fc7c55f49aa65107c8a3e7d1b1b2676320979ff99434923bd12631d682",
+    "README.md": "fb4e3bb6fd3c301c8439c522a476f10558dfe6a1f74dba0c3f3beb52154eb29a",
     "abort-mutant.log": "d4fa58bb9196f61173c46b6fbe21bb726ec40d024d47dffe833fab3066938b26",
     "abort-results.json": "8b33244260158647f55e20fc79adc0d95b8fd4447ad5d95f29419566d0a2d4f7",
     "boot-inputs.json": "e0a7b16c293c8a5382e9641af8f27905da7d5b8b9efdc6bb3d2ae37f131ae278",
@@ -66,6 +66,7 @@
     "service-results.json": "7fc95a8b901e7569b23889df4b6efafca9ac0f113cfbe2a9b5d7b5a583fb4bec",
     "boot-roundtrip.json": "1ba02d5b1c049295abb2cf432e7454bd6f973b036106c381e984216dc591ac34",
     "package-test.json": "f77e81f1d4d2c87db0eafafb8b5027aa3ec81b566b147a6b62b09ede822533b3",
-    "host-usage.json": "2ca6ac2a7ea437cceec6c207802dc33b3db62267cb17a4df4cbb985715832f28"
+    "host-usage.json": "2ca6ac2a7ea437cceec6c207802dc33b3db62267cb17a4df4cbb985715832f28",
+    "staging.json": "c01e73c0b8fe8b430af2c151b17ce13a390068a6cea24b10508954de694797a3"
   }
 }

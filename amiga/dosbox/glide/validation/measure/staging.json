@@ -1,0 +1,26 @@
+{
+  "scope": "Firmware staging only; activation and physical GPU validation pending",
+  "writes": [
+    {
+      "source": "RECOVER.bin",
+      "destination": "GRXBASE.bin",
+      "sha256": "c0e81e720e3a55a26d517b9bd5c06f1d71c89c243f8d60b37d92ec59cb6c8537",
+      "state": "writer_completed",
+      "reply": "[OK]\nFWUP RC=0\n     3 Done. 4618560 bytes written to 0:/GRXBASE.bin in 8.0s (559 KB/s)"
+    },
+    {
+      "source": "CANDIDATE.bin",
+      "destination": "BOOT.bin",
+      "sha256": "ccee9478fbfe0560becbfa5320728ed4712c2a6c2a79d4203d01ccff68b72642",
+      "state": "writer_completed",
+      "reply": "[OK]\nFWUP RC=0\n     3 Done. 4622144 bytes written to 0:/BOOT.bin in 6.5s (690 KB/s)"
+    }
+  ],
+  "source_uploads_md5_verified": true,
+  "bootcard_readback": false,
+  "bridge_responding_after_writes": true,
+  "gateway_reservation_released": true,
+  "clock_setting_changed": false,
+  "gpu_test_launched": false,
+  "cold_power_cycle_required": true
+}

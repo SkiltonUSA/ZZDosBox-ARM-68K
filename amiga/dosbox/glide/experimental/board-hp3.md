@@ -196,4 +196,9 @@ and **+0.011 ns hold**, with zero failing endpoints. DRC, methodology and CDC
 summary findings match the reference. Ten bus-skew NA rows and existing timing
 coverage gaps remain; this is not complete timing signoff.
 [Routed candidate evidence](../validation/texture-address/routing/result.json).
-Bitstream generation is in progress. Physical GPU FPS remains unmeasured.
+The bitstream and boot package have been generated and verified. A separate
+steady-state check of the observed 1920x800 Workbench preset (125 MHz) passes
+at +0.040 ns setup / +0.011 ns hold, with no PLL findings. Original PLL
+properties were restored after analysis; no hardware clock was changed.
+[Workbench mode evidence](../validation/texture-address/workbench125/result.json).
+Physical GPU FPS remains unmeasured.

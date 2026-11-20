@@ -19,7 +19,9 @@ gate is a small scene timed through verified GPU completion.
    path. Physical refinement still failed at -0.282 ns. The carry-free address
    candidate now routes all 55,899 nets and meets declared setup/hold constraints
    at +0.055/+0.011 ns, with zero failing endpoints. Existing timing coverage
-   and CDC findings remain. Matching bitstream generation is in progress. Vivado 2025.2 runs under Wine/Rosetta on the ARM Mac; this is an
+   and CDC findings remain. The matching bitstream and boot image are packaged.
+   The observed 1920x800 preset also passes steady-state 125 MHz timing; live
+   mode transitions and physical operation remain untested. Vivado 2025.2 runs under Wine/Rosetta on the ARM Mac; this is an
    unofficial tool environment, not an AMD-supported operating system.
 2. **Verified firmware and hardware completion.** The existing submit validator
    rejects the proposed fence/echo sequence. A capability-aware interface,
@@ -34,7 +36,7 @@ gate is a small scene timed through verified GPU completion.
    A [tagged submission preparer](tagged-submission.md) also passes tests against
    the unchanged firmware validator: it validates a private command copy before
    adding the firmware-only fence and identity. The experimental counter uses it;
-   installed firmware remains unchanged.
+   the matching boot image is staged, awaiting a cold start.
 3. **Guest renderer integration.** The overlay's 146 exports are diagnostic
    stubs, not 146 implemented Glide functions. Drawing dispatch, texture
    allocation/upload, guest state, required depth/LFB behaviour and presentation
@@ -43,10 +45,12 @@ gate is a small scene timed through verified GPU completion.
 
 ## Latest environment check
 
-The Mac bridge services are running, but the latest connection attempt could
-not reach the Amiga. Physical measurement is pending target connectivity and
-a timing-reviewed FPGA build. No clock, firmware or installed application was
-changed during this round.
+The bridge connection recovered. The carry-free FPGA build and steady-state
+Workbench clock audit passed their declared timing checks. The firmware writer
+reported successful writes of the recovery image and experimental boot image;
+the Amiga remained responsive. Activation awaits a cold power-cycle. There has
+been no GPU execution or FPS measurement with this image yet. See the
+[staging receipt](../validation/measure/staging.json). No clock setting changed.
 
 The [Wine installation repair](../../../../docs/xacp-firmware-rebuild.md#wine-installation-finding)
 resolved a shared-directory layout problem. Vivado batch mode now loads the Tcl

@@ -61,8 +61,9 @@ path requirement by 0.773 ns; physical refinement reduced that to 0.282 ns but
 still failed. A carry-free texture-address candidate passes simulation, synthesis
 and an independent optimized-checkpoint audit. Its completed route meets declared
 timing constraints at **+0.055 ns setup / +0.011 ns hold**, with no routing errors.
-Existing timing-coverage gaps remain. Bitstream generation is in progress;
-no physical GPU FPS result is claimed.
+The 1920×800 Workbench preset also meets declared timing at 125 MHz. Existing
+timing-coverage gaps remain. The experimental boot image is staged for a cold start; physical
+GPU validation and FPS measurement remain pending.
 The experimental [firmware completion reader](amiga/dosbox/glide/experimental/completion-client.md)
 passes 20 scenarios against the mailbox RTL, including faults after consumption.
 The separate [completion-driven counter](amiga/dosbox/glide/experimental/measurement.md)

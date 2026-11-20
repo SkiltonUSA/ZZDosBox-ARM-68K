@@ -5,7 +5,7 @@ expressions passes 262,144 cycles across 4,096 dimension/LOD combinations,
 including stalls, wrap/clamp and half-pixel offsets. A changed-address mutant
 fails. The full-renderer regression also passes, including error/quarantine
 and outstanding-command detection. These are digital simulations, not timing
-closure or hardware FPS. The candidate remains separate from the routed board.
+closure or hardware FPS. The subsequent board implementation is recorded below.
 
 Run `scripts/test_glide_texture_address.py --renderer /path/to/RasterIX`.
 The change is retained as `experimental/texture-address.patch`; original and
@@ -44,5 +44,10 @@ pulse-width constraints pass: +0.055 ns setup and +0.011 ns hold, with zero
 failing endpoints. DRC, methodology and CDC summary findings match the reviewed
 reference. Bus-skew reports have no violated entries, but retain ten NA rows;
 unclocked/unconstrained paths also remain. This is not complete timing signoff
-or hardware validation. See [routed evidence](routing/result.json). Bitstream
-generation is in progress; no physical GPU FPS result exists.
+or hardware validation. See [routed evidence](routing/result.json). The FPGA bitstream and boot package have been generated and verified. The
+observed 1920x800 Workbench preset also passes steady-state 125 MHz analysis
+at +0.040 ns setup / +0.011 ns hold, with no PLL findings. The original clock
+model was restored; live mode transitions are not tested by this analysis.
+See [bitstream/package evidence](bitstream/result.json) and
+[Workbench mode evidence](workbench125/result.json). Physical GPU FPS remains
+unmeasured.

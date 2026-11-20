@@ -1,0 +1,35 @@
+{
+  "scope": "125 MHz steady-state display timing model; not mode-transition or hardware validation",
+  "run": {
+    "exit_code": 0,
+    "elapsed_seconds": 312.58,
+    "script": "C:\\workbench-grx-texture.tcl"
+  },
+  "setup_wns_ns": 0.04,
+  "hold_whs_ns": 0.011,
+  "pulse_wpws_ns": 3.0,
+  "setup_failing_endpoints": 0,
+  "hold_failing_endpoints": 0,
+  "pulse_failing_endpoints": 0,
+  "pll_findings": 0,
+  "bus_skew_violations": 0,
+  "bus_skew_na_rows": 10,
+  "routed_checkpoint_sha256": "2fee97cca93475c1ac7a660cb4c7e1681207abac0c210e7534cf7bbc6c40d69c",
+  "fpga_bit_sha256": "3a129f822e60f27747d458b0f67b278ae6a7bbb40dcbb5f2aea134c5bd01c90e",
+  "firmware_video_source_sha256": "ac54096007a658d88ba6f3a02ced91e8c29106e129fa3a4c04061c5975c49b12",
+  "preset": {
+    "resolution": "1920x800",
+    "multiply": 15,
+    "input_divide": 1,
+    "output_divide": 12,
+    "pixel_clock_mhz": 125
+  },
+  "original_clock_restored": true,
+  "original_sha256": {
+    "completion-texture-workbench.log": "d9dd1ff4ec6d6293dd06ef47c9c389799f4cdbf1be11c634573469dbd336b9ef",
+    "completion-workbench125-timing.rpt": "d2c41f1ffd3413ce80e9d2605b91a8847daf7a91f143526e9ebd701473923683",
+    "completion-workbench125-paths.rpt": "bc705d21976ad76cbbfe9f29b4d07fbee0f90bbc3bec9ddc5340f07da844f5d4",
+    "completion-workbench125-pll.rpt": "09c63505c3a538ff825d177e82f99a4cd4ae532bf6aa20ffec6163597006e7c1",
+    "completion-workbench125-bus-skew.rpt": "f9e5eb4c6987ce95310f5c1230d8dbb84b56f5c1127927c1cc981317bf4c1577"
+  }
+}

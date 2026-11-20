@@ -1,0 +1,104 @@
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Fri Nov 20 08:11:20 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source {C:\workbench-grx-texture.tcl}
+# set argc 1
+# set argv {C:/grx-board-texture}
+# source {Z:\Users\builder\conductor\workspaces\sixies_development\port-louis\.context\ZZDosBox-ARM-68K\amiga\dosbox\glide\experimental\audit-workbench-clock.tcl}
+## if {$argc != 1} {error "Expected isolated board directory"}
+## cd [file normalize [lindex $argv 0]]
+## set_param general.maxThreads 2
+## proc worst {kind} {return [get_property SLACK [get_timing_paths -delay_type $kind -max_paths 1]]}
+## if {[catch {
+##  open_checkpoint completion-routed.dcp
+##  set pll [get_cells zz9000_ps_i/clk_wiz_0/inst/CLK_CORE_DRP_I/clk_inst/plle2_adv_inst]
+##  if {[llength $pll] != 1} {error "Expected one video PLL"}
+##  set original [list CLKFBOUT_MULT [get_property CLKFBOUT_MULT $pll] DIVCLK_DIVIDE [get_property DIVCLK_DIVIDE $pll] CLKOUT0_DIVIDE [get_property CLKOUT0_DIVIDE $pll]]
+##  set before_max [worst max]
+##  set before_min [worst min]
+##  # Recorded video.c preset: 100 MHz * 15 / 1 / 12 = 125 MHz.
+##  set_property -dict {CLKFBOUT_MULT 15 DIVCLK_DIVIDE 1 CLKOUT0_DIVIDE 12} $pll
+##  update_timing
+##  set period [get_property PERIOD [get_clocks clk_out1_zz9000_ps_clk_wiz_0_0]]
+##  if {abs($period-8.0)>0.002} {error "125 MHz clock did not propagate"}
+##  puts "GRX_WORKBENCH_125 WNS=[worst max] WHS=[worst min]"
+##  report_timing_summary -report_unconstrained -check_timing_verbose -file completion-workbench125-timing.rpt
+##  report_timing -max_paths 10 -file completion-workbench125-paths.rpt
+##  report_drc -checks [get_drc_checks PDRC-*] -file completion-workbench125-pll.rpt
+##  report_bus_skew -file completion-workbench125-bus-skew.rpt
+##  set_property -dict $original $pll
+##  update_timing
+##  if {abs([worst max]-$before_max)>0.00001 || abs([worst min]-$before_min)>0.00001} {
+##   error "Restored timing differs from original"
+##  }
+##  puts GRX_WORKBENCH_CLOCK_AUDIT_COMPLETE_REVIEW_REPORTS_NO_HARDWARE_CHANGE
+## } message options]} {
+##  puts stderr $message
+##  puts stderr $options
+##  exit 1
+## }
+Command: open_checkpoint completion-routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.047 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 3404 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.792 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.780 . Memory (MB): peak = 0.000 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.229 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 0.000 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read Physdb Files: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 0.000 ; gain = 0.000
+Restored from archive | CPU: 7.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 0.000 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.020 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 637 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 476 instances
+  IOBUF => IOBUF (IBUF, OBUFT): 39 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 58 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 7 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 56 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 1 instance
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+WARNING: [Vivado 12-23575] Critical violations of the methodology design rules detected. Critical violations may contribute to timing failures or cause functional issues in hardware. Run report_methodology for more information.
+open_checkpoint: Time (s): cpu = 00:02:01 ; elapsed = 00:02:01 . Memory (MB): peak = 0.000 ; gain = 0.000
+get_timing_paths: Time (s): cpu = 00:00:58 ; elapsed = 00:00:45 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-2] Deriving generated clocks
+update_timing: Time (s): cpu = 00:01:03 ; elapsed = 00:00:50 . Memory (MB): peak = 0.000 ; gain = 0.000
+GRX_WORKBENCH_125 WNS=0.040 WHS=0.011
+WARNING: [Timing 38-436] There are set_bus_skew constraint(s) in this design. Please run report_bus_skew to ensure that bus skew requirements are met.
+report_timing_summary: Time (s): cpu = 00:00:13 ; elapsed = 00:00:12 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-78] ReportTimingParams: -max_paths 10 -nworst 1 -delay_type max -sort_by slack.
+Command: report_drc -checks {PDRC-2 PDRC-3 PDRC-4 PDRC-5 PDRC-6 PDRC-7 PDRC-8 PDRC-9 PDRC-10 PDRC-11 PDRC-12 PDRC-13 PDRC-14 PDRC-15 PDRC-16 PDRC-17 PDRC-18 PDRC-19 PDRC-20 PDRC-21 PDRC-22 PDRC-23 PDRC-24 PDRC-25 PDRC-26 PDRC-27 PDRC-28 PDRC-29 PDRC-30 PDRC-33 PDRC-34 PDRC-35 PDRC-36 PDRC-37 PDRC-38 PDRC-39 PDRC-42 PDRC-43 PDRC-44 PDRC-45 PDRC-46 PDRC-47 PDRC-48 PDRC-49 PDRC-50 PDRC-51 PDRC-52 PDRC-53 PDRC-54 PDRC-55 PDRC-56 PDRC-57 PDRC-58 PDRC-59 PDRC-60 PDRC-61 PDRC-62 PDRC-63 PDRC-64 PDRC-65 PDRC-66 PDRC-67 PDRC-68 PDRC-69 PDRC-70 PDRC-71 PDRC-72 PDRC-73 PDRC-74 PDRC-75 PDRC-76 PDRC-77 PDRC-78 PDRC-79 PDRC-80 PDRC-81 PDRC-82 PDRC-83 PDRC-84 PDRC-85 PDRC-86 PDRC-87 PDRC-88 PDRC-89 PDRC-90 PDRC-91 PDRC-92 PDRC-93 PDRC-94 PDRC-95 PDRC-96 PDRC-97 PDRC-98 PDRC-99 PDRC-100 PDRC-101 PDRC-102 PDRC-103 PDRC-131 PDRC-132 PDRC-133 PDRC-134 PDRC-135 PDRC-136 PDRC-137 PDRC-138 PDRC-139 PDRC-140 PDRC-141 PDRC-142 PDRC-143 PDRC-144 PDRC-145 PDRC-146 PDRC-149 PDRC-150 PDRC-151 PDRC-152 PDRC-153 PDRC-154 PDRC-155 PDRC-156 PDRC-157 PDRC-158 PDRC-159 PDRC-160 PDRC-161 PDRC-162 PDRC-163 PDRC-164 PDRC-165 PDRC-166 PDRC-167 PDRC-168 PDRC-169 PDRC-170 PDRC-171 PDRC-172 PDRC-173 PDRC-174 PDRC-175 PDRC-176 PDRC-177 PDRC-178 PDRC-179 PDRC-180 PDRC-181 PDRC-182 PDRC-183 PDRC-184 PDRC-185 PDRC-186 PDRC-187 PDRC-191 PDRC-192 PDRC-193 PDRC-195 PDRC-196 PDRC-197 PDRC-198 PDRC-199 PDRC-200 PDRC-201 PDRC-202 PDRC-203 PDRC-205 PDRC-206 PDRC-207 PDRC-208 PDRC-209 PDRC-211 PDRC-213 PDRC-216 PDRC-217 PDRC-219 PDRC-220 PDRC-221 PDRC-222 PDRC-223 PDRC-224 PDRC-225 PDRC-226 PDRC-227 PDRC-228 PDRC-229 PDRC-230 PDRC-231 PDRC-232 PDRC-233 PDRC-234 PDRC-235 PDRC-236 PDRC-237 PDRC-238 PDRC-239 PDRC-240 PDRC-241 PDRC-243 PDRC-244 PDRC-245 PDRC-246 PDRC-248 PDRC-249 PDRC-250 PDRC-251 PDRC-252 PDRC-253 PDRC-254 PDRC-255 PDRC-256 PDRC-257 PDRC-258 PDRC-259 PDRC-260 PDRC-261 PDRC-263 PDRC-266 PDRC-267 PDRC-268 PDRC-269 PDRC-270} -file completion-workbench125-pll.rpt
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/grx-board-texture/completion-workbench125-pll.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:21 ; elapsed = 00:00:17 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-2] Deriving generated clocks
+update_timing: Time (s): cpu = 00:01:02 ; elapsed = 00:00:49 . Memory (MB): peak = 0.000 ; gain = 0.000
+GRX_WORKBENCH_CLOCK_AUDIT_COMPLETE_REVIEW_REPORTS_NO_HARDWARE_CHANGE
+## exit 0
+INFO: [Common 17-206] Exiting Vivado at Fri Nov 20 08:16:28 2026...

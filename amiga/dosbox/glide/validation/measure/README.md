@@ -13,8 +13,8 @@
 
 - `boot-inputs.json`: the staged bootloader payload matches the existing boot
   image byte for byte. The candidate and published baseline have identical PS7
-  components (567 parameters). The matching FPGA bitstream is still absent;
-  no new boot image has been packaged.
+  components (567 parameters). This receipt predates the matching FPGA build; see the later
+  [bitstream/package evidence](../texture-address/bitstream/result.json).
 - `boot-roundtrip.json`: native Bootgen reproduces all five existing partition
   payloads, load/entry addresses, attributes and the BootROM header unchanged.
   The complete file differs because three raw ARM payloads have separate image
@@ -31,4 +31,10 @@
 
 See the [measurement contract](../../experimental/measurement.md). The
 independent [FPGA routing report](../board-hp3/routing/result.json) records a
-failed setup constraint; passing software/model tests do not waive that failure.
+failed setup constraint for the earlier candidate. The subsequent
+[carry-free candidate](../texture-address/routing/result.json) passes declared
+setup/hold constraints, with remaining timing-coverage limitations.
+
+- `staging.json`: firmware-writer completion for recovery and candidate images,
+  verified source uploads and a responsive Amiga afterward. No bootcard readback
+  or GPU execution is claimed. A cold power-cycle is required before measurement.
