@@ -1,0 +1,45 @@
+{
+  "scope": "Resumed full-board routing; timing/coverage review required; no hardware FPS or installation",
+  "run": {
+    "exit_code": 0,
+    "elapsed_seconds": 724.69,
+    "script": "C:\\resume-route-grx-texture.tcl"
+  },
+  "resume_inputs": {
+    "scope": "Resume offline routing from preserved placement; original route interrupted without final checkpoint or exit status",
+    "placed_checkpoint_sha256": "84f0ef3863e0b1b4dfd95d6768eb6be2cffcf6b3870129287323f22a11179217",
+    "route_script_sha256": "42c4e2abc4fef30e58ca103ed99dede4cb1212a5921bca102b117991a3d51310",
+    "original_route_log_sha256": "afee63b00d9c8d03c2901b3fcb39ccd6fa8cbab4e26ca4f90e360bfbd34d318a"
+  },
+  "routed_checkpoint_sha256": "2fee97cca93475c1ac7a660cb4c7e1681207abac0c210e7534cf7bbc6c40d69c",
+  "timing_summary": {
+    "setup_wns_ns": 0.055,
+    "setup_tns_ns": 0.0,
+    "setup_failing_endpoints": 0,
+    "setup_total_endpoints": 82614,
+    "hold_whs_ns": 0.011,
+    "hold_ths_ns": 0.0,
+    "hold_failing_endpoints": 0,
+    "hold_total_endpoints": 82334,
+    "pulse_wpws_ns": 3.0,
+    "pulse_tpws_ns": 0.0,
+    "pulse_failing_endpoints": 0,
+    "pulse_total_endpoints": 38558
+  },
+  "route_status": {
+    "routable_nets": 55899,
+    "fully_routed_nets": 55899,
+    "nets_with_routing_errors": 0
+  },
+  "original_sha256": {
+    "completion-routed-status.rpt": "75903a6075a6425d0dc73a184f4981c19fafe59d119ed0d3e3cafffcc288e8ad",
+    "completion-routed-timing.rpt": "9bfb556ae6c0222ac0a657bd288328e3f71732aeed4123ef24d39f228e1dc7f0",
+    "completion-routed-utilization.rpt": "0bd8bba7d295979acac054eea34f1316d85c4f54c737b079e2a420f386c7f94e",
+    "completion-routed-drc.rpt": "8892ed97d81cb2e05578d1e43ed263a87d5aac39373c9b6e7179d92fca364a33",
+    "completion-routed-methodology.rpt": "ebd001711cbede11a14eb147ce2606dd0958660a88ddec7e2ca58f02ffcbd4fd",
+    "completion-routed-cdc.rpt": "1c7bbb9ac47a35b4f5641946afe3d04047b210ebf0dd4c737a3d4c59518d2cfd",
+    "completion-routed-bus-skew.rpt": "2fb445fdbc32f38a2a53a70222b9b1f64655af56736abd842c0afd7f8d76958c",
+    "completion-texture-route-resume.log": "b93e54d2b2ccd8594f61e44e678ed2ee64ebf311fef3b820a92ac782b2689dfb"
+  },
+  "retained_text_normalization": "Host/workspace names redacted; trailing whitespace and terminal blank lines removed"
+}

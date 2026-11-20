@@ -1,0 +1,25 @@
+{
+  "scope": "Permit local bitstream generation; existing timing coverage gaps remain; not full timing signoff or hardware validation",
+  "routed_checkpoint_sha256": "2fee97cca93475c1ac7a660cb4c7e1681207abac0c210e7534cf7bbc6c40d69c",
+  "reference_summary_matches": {
+    "drc": true,
+    "methodology": true,
+    "cdc": true
+  },
+  "skew_violations": 0,
+  "skew_na_summary_rows": 10,
+  "timing_summary": {
+    "setup_wns_ns": 0.055,
+    "setup_tns_ns": 0.0,
+    "setup_failing_endpoints": 0,
+    "setup_total_endpoints": 82614,
+    "hold_whs_ns": 0.011,
+    "hold_ths_ns": 0.0,
+    "hold_failing_endpoints": 0,
+    "hold_total_endpoints": 82334,
+    "pulse_wpws_ns": 3.0,
+    "pulse_tpws_ns": 0.0,
+    "pulse_failing_endpoints": 0,
+    "pulse_total_endpoints": 38558
+  }
+}

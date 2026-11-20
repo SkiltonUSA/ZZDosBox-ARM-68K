@@ -38,5 +38,11 @@ constraint/CDC warnings remain; this is not timing signoff. The original
 optimization wrapper lost its exit status, which is recorded as unknown rather
 than inferred from its completion marker. The independent audit and both
 debug-core runs have captured successful exits. See
-[optimization evidence](optimization/result.json). Placement and routing are
-next; no new FPGA bitstream or physical FPS result exists.
+[optimization evidence](optimization/result.json). Routing resumed from the saved placement after the Mac restart and completed
+with exit zero. All 55,899 nets route without errors. Declared setup, hold and
+pulse-width constraints pass: +0.055 ns setup and +0.011 ns hold, with zero
+failing endpoints. DRC, methodology and CDC summary findings match the reviewed
+reference. Bus-skew reports have no violated entries, but retain ten NA rows;
+unclocked/unconstrained paths also remain. This is not complete timing signoff
+or hardware validation. See [routed evidence](routing/result.json). Bitstream
+generation is in progress; no physical GPU FPS result exists.

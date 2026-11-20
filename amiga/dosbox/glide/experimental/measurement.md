@@ -2,7 +2,8 @@
 
 The experimental firmware and `ZZGlide-Measure` host application build, but have
 **not run on the physical GPU**. No GPU or GTA FPS is claimed. The matching FPGA
-candidate has a setup-timing failure; it is not an installable release.
+carry-free candidate meets declared routed setup/hold constraints; bitstream
+generation and hardware validation remain. It is not a release.
 
 The first measurement is deliberately small: a 64 × 72 RGB565 offscreen target
 with a solid triangle. Five correctness scenes first check clearing, solid

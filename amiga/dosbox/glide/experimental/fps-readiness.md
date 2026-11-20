@@ -16,9 +16,10 @@ gate is a small scene timed through verified GPU completion.
 1. **FPGA timing closure.** The fence, identity receiver, error observer and
    completion registers are integrated. The corrected board routes all 55,980
    nets, but setup timing fails by 0.773 ns at 56 endpoints in the 100 MHz texture
-   path. A physical-optimization pass and a separately tested carry-free
-   address candidate are in progress. Existing timing coverage and CDC findings
-   also remain. Vivado 2025.2 runs under Wine/Rosetta on the ARM Mac; this is an
+   path. Physical refinement still failed at -0.282 ns. The carry-free address
+   candidate now routes all 55,899 nets and meets declared setup/hold constraints
+   at +0.055/+0.011 ns, with zero failing endpoints. Existing timing coverage
+   and CDC findings remain. Matching bitstream generation is in progress. Vivado 2025.2 runs under Wine/Rosetta on the ARM Mac; this is an
    unofficial tool environment, not an AMD-supported operating system.
 2. **Verified firmware and hardware completion.** The existing submit validator
    rejects the proposed fence/echo sequence. A capability-aware interface,
@@ -102,8 +103,8 @@ actual HP3/converter path is now covered separately by the
 [four-state renderer test](board-hp3.md). Its corrected build passes 32
 framebuffer checks. The corrected board has completed synthesis and a fresh
 checkpoint audit, followed by debug-core implementation and optimization with
-zero remaining black boxes. Placement and routing are running; routed timing
-and physical testing remain outstanding.
+zero remaining black boxes. The carry-free candidate subsequently passed
+declared routed timing; matching firmware and physical testing remain outstanding.
 Physical HP3/DDR operation and firmware integration remain. The
 [board endpoint](board-endpoint.md) adds validated project wiring and six digital
 tests through the generated CPU mailbox clock converter; this is not a physical

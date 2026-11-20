@@ -188,5 +188,12 @@ implementation and optimization have completed. A separate checkpoint audit
 passed with exit zero and no black boxes. The optimized candidate retains
 27,439 LUTs, 35,544 registers, 80.5 BRAM36 equivalents and 22 DSPs, including
 debug cores. DRC findings, CDC summary groups and clock definitions match the
-reviewed reference. Routed timing and physical FPS remain unmeasured for this
-candidate.
+reviewed reference.
+
+The carry-free candidate has now routed all **55,899 nets**, with zero routing
+errors. Declared setup, hold and pulse-width constraints pass: **+0.055 ns setup**
+and **+0.011 ns hold**, with zero failing endpoints. DRC, methodology and CDC
+summary findings match the reference. Ten bus-skew NA rows and existing timing
+coverage gaps remain; this is not complete timing signoff.
+[Routed candidate evidence](../validation/texture-address/routing/result.json).
+Bitstream generation is in progress. Physical GPU FPS remains unmeasured.

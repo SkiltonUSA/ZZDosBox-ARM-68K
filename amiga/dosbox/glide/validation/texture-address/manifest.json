@@ -1,7 +1,7 @@
 {
   "scope": "Offline equivalence and renderer regression only",
   "files": {
-    "README.md": "dded1eacc3b0798f220489face95444839cf00bb3de8ece5f9386fdd571e5633",
+    "README.md": "79f1294c6241967db893fde1f37bcecd3e1cb3a9f1f0bb3588a9b93d6121f4d7",
     "hp3/cancel-pixels.log": "fb372f58ce494ceae2521b76bfbab550cc97e8f04f2688a5f2f634d79d2d0902",
     "hp3/cancel.log": "d6fc71433a45453da2f9e8817cc22fbc58d8e9184e5f509f29844d68a3f47ec8",
     "hp3/ddr-cancel-pixels.log": "fb372f58ce494ceae2521b76bfbab550cc97e8f04f2688a5f2f634d79d2d0902",
