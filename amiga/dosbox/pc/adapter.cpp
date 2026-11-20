@@ -262,6 +262,9 @@ static int run_guest(const uint8_t *program,unsigned bytes,unsigned limit,Dosbox
 #endif
 #ifdef DB_COMPAT
  db_memory_services_open();
+#if defined(DB_GLIDE_SURVEY)||defined(DB_GLIDE_LIVE)
+ extern void db_glide_survey_memory_open();db_glide_survey_memory_open();
+#endif
 #endif
 #ifdef DB_NETWORK
  extern void db_ipx_open();db_ipx_open();

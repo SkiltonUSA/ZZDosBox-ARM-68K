@@ -7,6 +7,7 @@ module full_renderer_test;
  wire [31:0] resp_data;
  reg [31:0] commands[0:2047];
  integer starts[0:4],sizes[0:4];
+ integer gta_alpha=0;
  integer tick=0,scene=0,aw_count=0,b_count=0,ar_count=0,rlast_count=0;
  integer ddr_commands=0,unaligned=0,ddr_words;
  integer b_delay=0,r_delay=0,b_wait=0,r_wait=0;
@@ -102,11 +103,12 @@ module full_renderer_test;
   if($value$plusargs("cancel=%d",do_cancel))begin end
   if($value$plusargs("unsafe=%d",unsafe_drain))begin end
   `include "scene_sizes.vh"
+  gta_alpha=$test$plusargs("gta_alpha");
   $readmemh("commands.hex",commands,0,starts[4]+sizes[4]-1);
   repeat(5)@(negedge clk);
   for(i=0;i<65536/8;i=i+1)ram.mem[32'h10000/8+i]=64'ha55aa55aa55aa55a;
   for(i=0;i<1024;i=i+4)begin
-   for(k=0;k<4;k=k+1)begin texel=((i+k)%16<8)?16'hf800:16'h001f;texword[k*16+:16]=texel;end
+   for(k=0;k<4;k=k+1)begin texel=((i+k)%16<8)?16'hf800:(gta_alpha?16'h003f:16'h001f);texword[k*16+:16]=texel;end
    ram.mem[32'h20000/8+i/4]=texword;
   end
   ram.mem[32'h10000/8-1]=64'hfeedface1234abcd;
@@ -148,7 +150,7 @@ module full_renderer_test;
    $display("PASS full renderer: scene=%0d cycles=%0d token_cycle=%0d ack_cycle=%0d writes=%0d reads=%0d cancel=%0d",scene,tick-first_tick,token_tick,ack_tick,aw_count-before_aw,ar_count-before_ar,ack_cancelled);
    if(ram.mem[32'h10000/8-1]!=64'hfeedface1234abcd || ram.mem[(32'h10000+9216)/8]!=64'hdeadcafe9876abcd)$fatal(1,"Framebuffer guard changed");
    for(i=0;i<1024;i=i+1)begin
-    texel=(i%16<8)?16'hf800:16'h001f;
+    texel=(i%16<8)?16'hf800:(gta_alpha?16'h003f:16'h001f);
     if(((ram.mem[32'h20000/8+i/4]>>((i%4)*16))&16'hffff)!=texel)$fatal(1,"Texture modified");
    end
    dump_name=$sformatf("pixels-%0d.hex",scene);fd=$fopen(dump_name,"w");

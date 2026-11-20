@@ -9,7 +9,7 @@ static void reg(grx_packet *p,unsigned r,uint32_t v){append(p,0x10000000|r);appe
 static int scene_head(grx_packet *p,unsigned scene,grx_config *config)
 {
     if(scene>=GRX_PROBE_SCENES)return 0;
-    grx_config c={GRX_PROBE_WIDTH,GRX_PROBE_HEIGHT,GRX_PROBE_COLOR,0,0,0,GRX_LOWER_LEFT,GRX_OPAQUE,0};
+    grx_config c={GRX_PROBE_WIDTH,GRX_PROBE_HEIGHT,GRX_PROBE_COLOR,0,0,0,GRX_LOWER_LEFT,GRX_OPAQUE,0,0,0};
     if(scene==2)c.blend=GRX_ADDITIVE;
     if(scene==3){c.texture_width=c.texture_height=16;c.texture_address=GRX_PROBE_TEXTURE;}
     if(scene==4)c.blend=GRX_ALPHA;

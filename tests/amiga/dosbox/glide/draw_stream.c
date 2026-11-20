@@ -42,7 +42,7 @@ static void vertices(const grx_vertex v[3])
  }
 }
 static grx_config config(unsigned texture,unsigned origin,unsigned blend)
-{return (grx_config){640,480,0x06600000,texture?256:0,texture?256:0,texture?0x066a0000:0,origin,blend,0};}
+{return (grx_config){640,480,0x06600000,texture?256:0,texture?256:0,texture?0x066a0000:0,origin,blend,0,0,0};}
 static void reset(void){captured=wanted=calls=fail_at=0;}
 static void compare(void)
 {

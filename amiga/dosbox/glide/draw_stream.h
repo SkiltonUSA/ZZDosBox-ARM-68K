@@ -24,6 +24,7 @@ grx_result grx_draw_configure(grx_draw_stream *,const grx_config *);
 /* Only grDrawTriangle is supported. Does not advertise a board or implement swap.
  * Guest decoding or clipping errors append nothing. An encoding/transport error after fan
  * emission starts makes the stream terminal; the caller must stop the session. */
+grx_result grx_draw_vertices(grx_draw_stream *,const grx_vertex [3]);
 grx_result grx_draw_call(grx_draw_stream *,const grx_guest_call *,const grx_guest_io *,int tmu_w);
 #ifdef __cplusplus
 }

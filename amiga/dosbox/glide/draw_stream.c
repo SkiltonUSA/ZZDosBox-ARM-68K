@@ -60,8 +60,15 @@ grx_result grx_draw_call(grx_draw_stream *s,const grx_guest_call *call,
     if(s->failed)return GRX_BAD_STATE;
     if(call->id!=GRX_CALL_grDrawTriangle)return GRX_UNSUPPORTED;
     if(call->count!=3)return GRX_BAD_ARGUMENT;
-    grx_vertex tri[3],polygon[GRX_CLIP_VERTICES];unsigned count;
+    grx_vertex tri[3];
     if(!grx_guest_vertices(tri,call->args,tmu_w,io))return GRX_BAD_ARGUMENT;
+    return grx_draw_vertices(s,tri);
+}
+
+grx_result grx_draw_vertices(grx_draw_stream *s,const grx_vertex tri[3])
+{
+    if(s->failed)return GRX_BAD_STATE;
+    grx_vertex polygon[GRX_CLIP_VERTICES];unsigned count;
     grx_result rc=grx_clip_triangle(tri,s->packet.config.width,
                                   s->packet.config.height,polygon,&count);
     if(rc!=GRX_OK)return rc;

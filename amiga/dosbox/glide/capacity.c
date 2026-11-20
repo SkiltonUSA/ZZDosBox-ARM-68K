@@ -19,7 +19,7 @@ int grx_capacity(struct gc_result *result,int (*stop)(void),uint32_t (*clock)(vo
     uint32_t begin=clock?clock():0;
     for(unsigned b=0;b<GC_BATCHES;b++) {
         if(stop && stop())return 2;
-        grx_config c={640,480,0x06600000,64,32,0x06700000,b%2,b%3,0};
+        grx_config c={640,480,0x06600000,64,32,0x06700000,b%2,b%3,0,0,0};
         grx_packet *p=&output[b].packet;
         if(grx_begin(p,&c)!=GRX_OK)return 1;
         for(unsigned t=0;t<5;t++)if(grx_triangle(p,vertices[b][t])!=GRX_OK)return 1;

@@ -44,7 +44,7 @@ int main(void) {
  for(unsigned w=1;w<=256;w*=2)for(unsigned h=1;h<=256;h*=2) {
   if(w>8*h||h>8*w)continue;
   for(unsigned blend=0;blend<3;blend++)for(unsigned origin=0;origin<2;origin++) {
-   grx_config c={640,480,0x06600000,w,h,0x066a0000,(grx_origin)origin,(grx_blend)blend,0};
+   grx_config c={640,480,0x06600000,w,h,0x066a0000,(grx_origin)origin,(grx_blend)blend,0,0,0};
    grx_packet p;assert(grx_begin(&p,&c)==GRX_OK);
    grx_vertex v[3]={{0,0,255,0,0,255,0,0,1},
     {639,0,0,255,0,255,128,0,.5f},{0,479,0,0,255,255,0,64,.25f}};

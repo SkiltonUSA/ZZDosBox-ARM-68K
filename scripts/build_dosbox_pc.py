@@ -155,7 +155,7 @@ Bit8u imageDisk::Write_AbsoluteSector(Bit32u sector,void*data){return db_image_s
  return sources
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--glide-diagnostic',action='store_true');p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse','adapters','ems','sb','opl','sb16','beep','dates','x87','cpu','extended','joystick','gus','cms','tandy','serial','tempfile','compatgame'],default='fixture');p.add_argument('--compat',action='store_true');p.add_argument('--x87',action='store_true');p.add_argument('--expanded',action='store_true');args=p.parse_args();sources=prepare()
+ p=argparse.ArgumentParser();p.add_argument('--glide-diagnostic',action='store_true');p.add_argument('--glide-survey',action='store_true',help='Native-only API discovery; not rendering');p.add_argument('--prepare-only',action='store_true');p.add_argument('--sanitize',action='store_true');p.add_argument('--game',choices=['keen','vette','elite','fixture','boot','hdd-install','hdd','cd','cdboot','midi','welcome','wfw','mouse','adapters','ems','sb','opl','sb16','beep','dates','x87','cpu','extended','joystick','gus','cms','tandy','serial','tempfile','compatgame'],default='fixture');p.add_argument('--compat',action='store_true');p.add_argument('--x87',action='store_true');p.add_argument('--expanded',action='store_true');args=p.parse_args();args.glide_diagnostic=args.glide_diagnostic or args.glide_survey;sources=prepare()
  if args.expanded and not (args.compat and args.x87):p.error('--expanded requires --compat --x87')
  if args.compat:
   from prepare_dosbox_compat import prepare as compat_prepare
@@ -180,9 +180,13 @@ def main():
   (ovl.OUT/'guest_calls.h').write_text(ovl.generate(calls)[2])
   flags+=['-DDB_GLIDE_DIAGNOSTIC','-I'+str(ovl.OUT)]
   sources += [ROOT/'amiga/dosbox/glide/guest.c',ROOT/'amiga/dosbox/glide/guest_port.cpp']
+  if args.glide_survey:
+   flags+=['-DDB_GLIDE_SURVEY','-I'+str(ROOT/'tests/amiga/dosbox/glide'),'-I'+str(ROOT/'amiga/dosbox/glide')]
+   sources += [ROOT/'tests/amiga/dosbox/glide/survey.c',ROOT/'tests/amiga/dosbox/glide/survey_capture.cpp']
  sources += [SRC/'adapter.cpp',OUT/'frontend.cpp',OUT/'native_drive.cpp',SRC/'devices.cpp',SRC/'cd.cpp',SRC/'midi.cpp',SRC/'boot.cpp',SRC/'video.cpp',SRC/'native.cpp']
  headers=(ROOT/'.context/amiga/glide/ovl/guest_calls.h').read_bytes() if args.glide_diagnostic else b''
  if args.glide_diagnostic:headers+=(ROOT/'amiga/dosbox/glide/guest.h').read_bytes()
+ if args.glide_survey:headers+=(ROOT/'tests/amiga/dosbox/glide/survey.h').read_bytes()
  headers+=b''.join(x.read_bytes() for d in [OUT/'include',SRC,shell.SRC,ROOT/'amiga/dosbox/dos'] for x in sorted(d.glob('*.h')))
  objects=[]
  for i,s in enumerate(sources):

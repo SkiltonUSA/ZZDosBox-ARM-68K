@@ -24,7 +24,7 @@ int grx_workload_packet(grx_packet *packet,unsigned profile,unsigned batch)
 {
  unsigned w=grx_workload_width(profile),h=grx_workload_height(profile);
  if(!w||batch>=GRX_WORKLOAD_PACKETS)return 0;
- grx_config config={w,h,GRX_WORKLOAD_COLOR,16,16,GRX_WORKLOAD_TEXTURE,GRX_LOWER_LEFT,GRX_OPAQUE,0};
+ grx_config config={w,h,GRX_WORKLOAD_COLOR,16,16,GRX_WORKLOAD_TEXTURE,GRX_LOWER_LEFT,GRX_OPAQUE,0,0,0};
  if(!batch){
   config.texture_width=config.texture_height=config.texture_address=0;
   if(grx_begin(packet,&config)!=GRX_OK)return 0;

@@ -20,6 +20,9 @@ typedef struct {
     uint32_t origin; /* grx_origin; fixed storage across ARM enum ABIs. */
     uint32_t blend;  /* grx_blend */
     unsigned depth_test; /* ABI 1.0: any nonzero value returns UNSUPPORTED. */
+    /* Zero preserves the original RGB565/nearest path. */
+    unsigned texture_options; /* bit0 RGBA5551, bit1 linear min, bit2 linear mag */
+    unsigned alpha_gt128; /* GTA subset: reject alpha <= 128; 0 disables */
 } grx_config;
 typedef struct {
     float x,y,r,g,b,a;  /* Window pixels and Glide 0..255 colours. */

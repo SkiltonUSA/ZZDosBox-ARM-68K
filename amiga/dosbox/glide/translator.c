@@ -25,6 +25,7 @@ static unsigned log2size(unsigned n) {unsigned s=0;while(n>1){n>>=1;s++;}return 
 static grx_result check_config(const grx_config *c)
 {
     if(c->depth_test)return GRX_UNSUPPORTED;
+    if(c->texture_options>7||c->alpha_gt128>1)return GRX_BAD_ARGUMENT;
     if(!c->width||!c->height||c->width>1024||c->height>768||
        (c->color_address&1)||!span(c->color_address,c->width*c->height*2)||
        (c->origin!=GRX_LOWER_LEFT&&c->origin!=GRX_UPPER_LEFT)||
@@ -49,9 +50,11 @@ grx_result grx_begin(grx_packet *p,const grx_config *c)
     reg(p,0,grx_features(c));reg(p,3,grx_fragment(c));reg(p,8,0);
     reg(p,9,(c->height<<16)|c->width);reg(p,16,c->color_address);
     if(c->texture_address) {
-        /* RGB565, nearest, no mipmapping; texture modulates vertex RGBA. */
+        /* RGB565 or RGBA5551; no mipmapping. Texture modulates vertex RGBA. */
         reg(p,10,0x00a9c709u);reg(p,11,0);
-        reg(p,12,0x2000u|log2size(c->texture_width)|(log2size(c->texture_height)<<4));
+        reg(p,12,((c->texture_options&1)?0x1000u:0x2000u)|
+            ((c->texture_options&2)?0x800u:0)|((c->texture_options&4)?0x400u:0)|
+            log2size(c->texture_width)|(log2size(c->texture_height)<<4));
         unsigned pages=(c->texture_width*c->texture_height*2+PAGE_BYTES-1)/PAGE_BYTES;
         append(p,0x50000000u|pages);
         for(unsigned i=0;i<pages;i++)append(p,c->texture_address+i*PAGE_BYTES);
