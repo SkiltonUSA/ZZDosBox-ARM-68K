@@ -18,3 +18,6 @@ subprocess.run([str(out/'vertices-test')],check=True)
 subprocess.run(['clang++','-std=c++17','-Wall','-Wextra','-Werror','-fsanitize=address,undefined',
  str(root/'tests/amiga/dosbox/timed_keys.cpp'),'-o',str(out/'timed-keys-test')],check=True)
 subprocess.run([str(out/'timed-keys-test')],check=True)
+
+# Exercise decoded draw calls through clipping, batching and retirement failure.
+subprocess.run([sys.executable,str(root/'scripts/test_dosbox_glide_draw.py')],check=True)
