@@ -18,7 +18,7 @@ extern int grx_check_firmware(const grx_packet *);
 #define grx_check_firmware(p) 1
 #endif
 static int submit(void *p,const grx_packet *v){(void)p;assert(v->words&&v->words<=GRX_PACKET_WORDS);assert(grx_check_firmware(v));packets++;return 1;}
-static int present(void *p,uint32_t a,unsigned w,unsigned h){(void)p;assert(a==0x06600000&&w==640&&h==480);presents++;return 1;}
+static int present(void *p,const unsigned char *pixels,unsigned w,unsigned h){(void)p;assert(w==640&&h==480);assert(!memcmp(pixels,gpu,w*h*2));presents++;return 1;}
 static unsigned word(FILE *f){unsigned char b[4];assert(fread(b,1,4,f)==4);return b[0]|(unsigned)b[1]<<8|(unsigned)b[2]<<16|(unsigned)b[3]<<24;}
 int main(int argc,char **argv){
  assert(argc==2);FILE *f=fopen(argv[1],"rb");assert(f);assert(word(f)==0x31415447);

@@ -55,11 +55,10 @@ static int transfer(unsigned op,uint32_t address,void *data,unsigned n){
 static int upload(void *,uint32_t a,const void *p,unsigned n){return transfer(GRX_STREAM_UPLOAD,a,const_cast<void*>(p),n);}
 static int readback(void *,uint32_t a,void *p,unsigned n){return transfer(GRX_STREAM_READ,a,p,n);}
 static int submit(void *,const grx_packet *p){return exchange(GRX_STREAM_SUBMIT,0,(void*)p->bytes,p->words*4);}
-static int present(void *,uint32_t a,unsigned w,unsigned h){
- if(!readback(nullptr,a,game.lfb,w*h*2))return 0;
+static int present(void *,const unsigned char *pixels,unsigned w,unsigned h){
  db_width=w;db_height=h;db_bpp=32;
  uint64_t convert=pc_clock_ticks();
- for(unsigned i=0;i<w*h;i++){unsigned v=game.lfb[2*i]|(unsigned)game.lfb[2*i+1]<<8;
+ for(unsigned i=0;i<w*h;i++){unsigned v=pixels[2*i]|(unsigned)pixels[2*i+1]<<8;
   unsigned r=v>>11,g=(v>>5)&63,b=v&31;db_pixels[i]=((r*255/31)<<16)|((g*255/63)<<8)|(b*255/31);}
  account(3,w*h*4,convert);
  uint64_t paint=pc_clock_ticks();db_frames++;db_video_present();

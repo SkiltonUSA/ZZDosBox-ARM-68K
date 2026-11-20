@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """GTA subset and Core0 channel tests; no game data or hardware required."""
-import argparse, subprocess
+import argparse, os, subprocess
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 src=root/'amiga/dosbox/glide';tests=root/'tests/amiga/dosbox/glide'
@@ -20,9 +20,10 @@ int grx_check_firmware(const grx_packet *p){
 ''')
  validator=['-DGRX_REAL_VALIDATOR',str(v)]
 base=['gta.c','draw_stream.c','guest_vertex.c','clip.c','translator.c','descriptor.c','guest.c']
-for name,sources in [('channel',[]),('stream',['experimental/stream.c']),('gta_texture',['translator.c','descriptor.c']),('gta',base)]+([('gta_replay',base)] if args.trace else []):
+for name,sources in [('channel',[]),('stream',['experimental/stream.c']),('gta_texture',['translator.c','descriptor.c']),('gta',base),('gta_lfb',base)]+([('gta_replay',base)] if args.trace else []):
  exe=out/name
  subprocess.run(['clang','-std=c11','-O2','-ffp-contract=off','-Wall','-Wextra','-Werror','-fsanitize=address,undefined',
  '-I'+str(src),'-I'+str(src/'experimental'),'-I'+str(root/'.context/amiga/glide/ovl'),
  str(tests/(name+'.c')),*[str(src/s) for s in sources],*(validator if name in ('gta','gta_replay') else []),'-lm','-o',str(exe)],check=True)
- subprocess.run([str(exe),*([str(args.trace.resolve())] if name=='gta_replay' else [])],check=True)
+ subprocess.run([str(exe),*([str(args.trace.resolve())] if name=='gta_replay' else [])],
+                env=dict(os.environ,UBSAN_OPTIONS='halt_on_error=1'),check=True)

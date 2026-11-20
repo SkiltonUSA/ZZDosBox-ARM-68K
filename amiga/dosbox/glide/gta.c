@@ -9,6 +9,7 @@
 #define TEX_START (COLOR+GRX_GTA_PIXELS*2)
 #define TEX_END 0x067f0000u
 static unsigned get16(const unsigned char *p){return p[0]|(unsigned)p[1]<<8;}
+static unsigned rgb555(unsigned v){return ((v>>1)&0x7fe0)|(v&31);}
 static void put16(unsigned char *p,unsigned v){p[0]=v;p[1]=v>>8;}
 static void put32(unsigned char *p,unsigned v){for(unsigned i=0;i<4;i++)p[i]=v>>(8*i);}
 static int readg(const grx_guest_io *io,unsigned ptr,void *dst,unsigned n){
@@ -24,6 +25,14 @@ void grx_gta_init(grx_gta *s,const grx_gta_backend *b,uint32_t lfb){
 }
 static grx_result flush(grx_gta *s){
  grx_result r=grx_draw_flush(&s->stream);return r==GRX_EMPTY?GRX_OK:r;
+}
+static grx_result read_frame(grx_gta *s){
+ grx_result r=flush(s);if(r!=GRX_OK)return r;
+ if(!s->frame_valid){
+  if(!s->backend.readback(s->backend.context,COLOR,s->shadow,sizeof(s->shadow)))return GRX_BAD_STATE;
+  s->frame_valid=1;
+ }
+ return GRX_OK;
 }
 static int power2(unsigned n){return n&&n<=256&&!(n&(n-1));}
 static grx_result allocate(grx_gta *s,const uint32_t *a,uint32_t *reply){
@@ -62,6 +71,7 @@ static grx_result draw(grx_gta *s,const grx_guest_call *call,const grx_guest_io 
  if(s->locked||!s->selected||s->colour!=4||s->alpha!=1||s->alpha_func!=4||s->alpha_ref!=128)return GRX_UNSUPPORTED;
  grx_gta_texture *t=&s->textures[s->selected-1];if(!t->downloaded)return GRX_BAD_STATE;
  grx_vertex v[3];if(!grx_guest_vertices(v,call->args,0,io))return GRX_BAD_ARGUMENT;
+ s->frame_valid=0; /* A queued draw can change the GPU framebuffer. */
  grx_result r=resident(s,t);if(r!=GRX_OK)return r;
  grx_config c={640,480,COLOR,t->width,t->height,t->resident,GRX_UPPER_LEFT,GRX_OPAQUE,0,t->options,1};
  if(memcmp(&c,&s->stream.packet.config,sizeof(c))){r=grx_draw_configure(&s->stream,&c);if(r!=GRX_OK)return r;}
@@ -71,39 +81,42 @@ static grx_result draw(grx_gta *s,const grx_guest_call *call,const grx_guest_io 
 }
 static grx_result lock(grx_gta *s,const uint32_t *a,const grx_guest_io *io,uint32_t *reply){
  if(s->locked||a[0]!=1||a[1]!=1||a[2]!=1||a[3]||a[4]!=1||!s->lfb_address||s->lfb_address<io->data_base)return GRX_UNSUPPORTED;
- grx_result r=flush(s);if(r!=GRX_OK)return r;
- if(!s->backend.readback(s->backend.context,COLOR,s->lfb,sizeof(s->lfb)))return GRX_BAD_STATE;
- for(unsigned i=0;i<sizeof(s->lfb);i+=2){unsigned v=get16(s->lfb+i);put16(s->before+i,((v>>1)&0x7fe0)|(v&31));}
- if(!io->write(io->opaque,s->lfb_address,s->before,sizeof(s->before)))return GRX_BAD_ARGUMENT;
+ grx_result r=read_frame(s);if(r!=GRX_OK)return r;
+ for(unsigned i=0;i<sizeof(s->lfb);i+=2){unsigned v=get16(s->shadow+i);put16(s->lfb+i,rgb555(v));}
+ if(!io->write(io->opaque,s->lfb_address,s->lfb,sizeof(s->lfb)))return GRX_BAD_ARGUMENT;
  unsigned char info[20];put32(info,20);put32(info+4,s->lfb_address-io->data_base);put32(info+8,1280);put32(info+12,1);put32(info+16,0);
  if(!writeg(io,a[5],info,20))return GRX_BAD_ARGUMENT;
  s->locked=1;*reply=1;return GRX_OK;
 }
+static int changed(grx_gta *s,unsigned i){unsigned old=get16(s->shadow+i);return get16(s->lfb+i)!=rgb555(old);}
 static grx_result unlock(grx_gta *s,const uint32_t *a,const grx_guest_io *io,uint32_t *reply){
  if(!s->locked||a[0]!=1||a[1]!=1)return GRX_BAD_STATE;
  if(!io->read(io->opaque,s->lfb_address,s->lfb,sizeof(s->lfb)))return GRX_BAD_ARGUMENT;
  for(unsigned y=0;y<480;y++){
   unsigned lo=640,hi=0;
   for(unsigned x=0;x<640;x++){
-   unsigned i=(y*640+x)*2,v=get16(s->lfb+i),old=get16(s->before+i);
+   unsigned i=(y*640+x)*2,v=get16(s->lfb+i),old=get16(s->shadow+i);old=rgb555(old);
    if(v!=old){if(lo==640)lo=x;hi=x+1;}
    /* Upload only changed runs, preserving untouched RGB565 green LSBs. */
   }
   for(unsigned x=lo;x<hi;){
    unsigned i=(y*640+x)*2;
-   if(get16(s->lfb+i)==get16(s->before+i)){x++;continue;}
+   unsigned old=get16(s->shadow+i);
+   if(get16(s->lfb+i)==rgb555(old)){x++;continue;}
    unsigned start=x;
    do {
     i=(y*640+x)*2;unsigned v=get16(s->lfb+i),g=(v>>5)&31;
     put16(s->lfb+i,((v&0x7c00)<<1)|(g<<6)|((g>>4)<<5)|(v&31));x++;
-   }while(x<hi&&get16(s->lfb+(y*640+x)*2)!=get16(s->before+(y*640+x)*2));
+   }while(x<hi&&changed(s,(y*640+x)*2));
    if(!s->backend.upload(s->backend.context,COLOR+(y*640+start)*2,s->lfb+(y*640+start)*2,(x-start)*2))return GRX_BAD_STATE;
+   memcpy(s->shadow+(y*640+start)*2,s->lfb+(y*640+start)*2,(x-start)*2);
   }
  }
  s->locked=0;*reply=1;return GRX_OK;
 }
 static void packet_word(grx_packet *p,unsigned v){for(unsigned i=0;i<4;i++)p->bytes[p->words*4+i]=v>>(24-8*i);p->words++;}
 static grx_result clear(grx_gta *s,const uint32_t *a){
+ s->frame_valid=0;
  if(s->locked||a[0]||a[1]||a[2]!=65535)return GRX_UNSUPPORTED;
  grx_result r=flush(s);if(r!=GRX_OK)return r;
  grx_config c={640,480,COLOR,0,0,0,GRX_UPPER_LEFT,GRX_OPAQUE,0,0,0};grx_packet p;
@@ -151,8 +164,8 @@ static grx_result dispatch(grx_gta *s,const grx_guest_call *c,const grx_guest_io
  case GRX_CALL_grBufferClear:return clear(s,a);
  case GRX_CALL_grBufferSwap:{
   if(s->locked||a[0]>1)return GRX_UNSUPPORTED;
-  grx_result r=flush(s);if(r!=GRX_OK)return r;
-  if(!s->backend.present(s->backend.context,COLOR,640,480))return GRX_BAD_STATE;
+  grx_result r=read_frame(s);if(r!=GRX_OK)return r;
+  if(!s->backend.present(s->backend.context,s->shadow,640,480))return GRX_BAD_STATE;
   s->frames++;return GRX_OK;
  }
  default:return GRX_UNSUPPORTED;

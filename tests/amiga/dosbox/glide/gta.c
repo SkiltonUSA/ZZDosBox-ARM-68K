@@ -5,18 +5,18 @@
 #include "gta.h"
 #include "guest_calls.h"
 static unsigned char mem[2*1024*1024],gpu[2*1024*1024];
-static unsigned sends,presents;
+static unsigned sends,presents,reads;
 static int readg(void *p,uint32_t a,void *v,unsigned n){(void)p;if(a>sizeof(mem)||n>sizeof(mem)-a)return 0;memcpy(v,mem+a,n);return 1;}
 static int writeg(void *p,uint32_t a,const void *v,unsigned n){(void)p;if(a>sizeof(mem)||n>sizeof(mem)-a)return 0;memcpy(mem+a,v,n);return 1;}
 static int upload(void *p,uint32_t a,const void *v,unsigned n){(void)p;assert(a>=0x06600000&&a+n<=0x067f0000);memcpy(gpu+(a-0x06600000),v,n);return 1;}
-static int readback(void *p,uint32_t a,void *v,unsigned n){(void)p;assert(a==0x06600000&&n==640*480*2);memcpy(v,gpu,n);return 1;}
+static int readback(void *p,uint32_t a,void *v,unsigned n){(void)p;assert(a==0x06600000&&n==640*480*2);reads++;memcpy(v,gpu,n);return 1;}
 #ifdef GRX_REAL_VALIDATOR
 extern int grx_check_firmware(const grx_packet *);
 #else
 #define grx_check_firmware(p) 1
 #endif
 static int submit(void *p,const grx_packet *v){(void)p;assert(v->words&&v->words<=GRX_PACKET_WORDS);assert(grx_check_firmware(v));sends++;return 1;}
-static int present(void *p,uint32_t a,unsigned w,unsigned h){(void)p;assert(a==0x06600000&&w==640&&h==480);presents++;return 1;}
+static int present(void *p,const unsigned char *pixels,unsigned w,unsigned h){(void)p;assert(w==640&&h==480);assert(!memcmp(pixels,gpu,w*h*2));presents++;return 1;}
 int main(void){
  grx_gta *s=calloc(1,sizeof(*s));assert(s);
  grx_gta_backend b={0,upload,readback,submit,present};grx_guest_io io={readg,writeg,0,0};uint32_t reply;
@@ -27,18 +27,38 @@ int main(void){
  assert(grx_gta_call(s,&c,&io,&reply)==GRX_OK&&reply==1);
  memset(mem+1024,255,128);c=(grx_guest_call){GRX_CALL_guTexDownloadMipMap,3,{1,1024,0}};
  assert(grx_gta_call(s,&c,&io,&reply)==GRX_OK&&s->textures[0].downloaded);
+ gpu[4]=0x20;
  c=(grx_guest_call){GRX_CALL_grLfbLock,6,{1,1,1,0,1,128}};
  assert(grx_gta_call(s,&c,&io,&reply)==GRX_OK&&reply==1&&mem[128]==20);
  /* Only the changed pixel is written back; preserve untouched green LSBs. */
- gpu[4]=0x20;mem[0x10000]=0;mem[0x10001]=0x7c;
+ mem[0x10000]=0;mem[0x10001]=0x7c;
  c=(grx_guest_call){GRX_CALL_grLfbUnlock,2,{1,1}};
  assert(grx_gta_call(s,&c,&io,&reply)==GRX_OK&&reply==1);
  assert(gpu[0]==0&&gpu[1]==0xf8&&gpu[4]==0x20);
  c=(grx_guest_call){GRX_CALL_grBufferSwap,1,{1}};
  assert(grx_gta_call(s,&c,&io,&reply)==GRX_OK&&presents==1&&s->frames==1);
+ assert(reads==1); /* Lock and presentation share the same GPU read. */
+ grx_guest_call setup[]={
+  {GRX_CALL_guColorCombineFunction,1,{4}},
+  {GRX_CALL_grAlphaCombine,5,{3,8,1,1,0}},
+  {GRX_CALL_grAlphaTestReferenceValue,1,{128}},
+  {GRX_CALL_grAlphaTestFunction,1,{4}},
+  {GRX_CALL_guTexSource,1,{1}}
+ };
+ for(unsigned i=0;i<sizeof(setup)/sizeof(*setup);i++)assert(grx_gta_call(s,&setup[i],&io,&reply)==GRX_OK);
+ for(unsigned i=0;i<3;i++){
+  float x=i==1?40:2,y=i==2?40:2,w=1;uint32_t bits;unsigned char *v=mem+0x2000+i*60;
+  memcpy(&bits,&x,4);for(unsigned j=0;j<4;j++)v[j]=bits>>(j*8);
+  memcpy(&bits,&y,4);for(unsigned j=0;j<4;j++)v[4+j]=bits>>(j*8);
+  memcpy(&bits,&w,4);for(unsigned j=0;j<4;j++)v[32+j]=bits>>(j*8);
+ }
+ c=(grx_guest_call){GRX_CALL_grDrawTriangle,3,{0x2000,0x203c,0x2078}};assert(grx_gta_call(s,&c,&io,&reply)==GRX_OK);
+ gpu[20]^=0x40; /* Model a colour write from the queued draw. */
+ c=(grx_guest_call){GRX_CALL_grBufferSwap,1,{1}};
+ assert(grx_gta_call(s,&c,&io,&reply)==GRX_OK&&presents==2&&reads==2);
  c=(grx_guest_call){GRX_CALL_grDepthBufferMode,1,{1}};
  assert(grx_gta_call(s,&c,&io,&reply)==GRX_UNSUPPORTED&&s->failed);
  c=(grx_guest_call){GRX_CALL_grBufferSwap,1,{1}};
- assert(grx_gta_call(s,&c,&io,&reply)==GRX_BAD_STATE&&presents==1);
- free(s);puts("PASS GTA allocation, LFB changed-pixel preservation, presentation and terminal unsupported state");
+ assert(grx_gta_call(s,&c,&io,&reply)==GRX_BAD_STATE&&presents==2);
+ free(s);puts("PASS GTA allocation, LFB changed-pixel preservation, presentation, draw invalidation and terminal unsupported state");
 }
