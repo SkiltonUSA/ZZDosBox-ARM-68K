@@ -1,20 +1,28 @@
 # Run separately after reviewing the optimized checkpoint and its reports.
-# Usage: -source route-board.tcl -tclargs <isolated-board-directory>
+# Usage: -source route-board.tcl -tclargs <isolated-board-directory> [--resume-placed]
 # Routing completion does not establish timing sign-off. No bitstream is made.
-if {$argc != 1} {error "Expected one isolated board directory"}
+if {$argc < 1 || $argc > 2} {error "Expected board directory and optional --resume-placed"}
+set resume [expr {$argc == 2}]
+if {$resume && [lindex $argv 1] ne "--resume-placed"} {error "Unknown resume option"}
 cd [file normalize [lindex $argv 0]]
 if {[catch {
  set_param general.maxThreads 2
- if {[file exists completion-placed.dcp] || [file exists completion-routed.dcp]} {
+ if {[file exists completion-routed.dcp] || (!$resume && [file exists completion-placed.dcp])} {
   error "Placement/routing output already exists"
  }
- open_checkpoint completion-optimized.dcp
+ if {$resume} {
+  open_checkpoint completion-placed.dcp
+ } else {
+  open_checkpoint completion-optimized.dcp
+ }
  if {[llength [get_cells -hierarchical -filter {IS_BLACKBOX == 1}]]} {
   error "Unimplemented cells in optimized checkpoint"
  }
- place_design
- report_timing_summary -file completion-placed-timing.rpt
- write_checkpoint completion-placed.dcp
+ if {!$resume} {
+  place_design
+  report_timing_summary -file completion-placed-timing.rpt
+  write_checkpoint completion-placed.dcp
+ }
  phys_opt_design
  route_design
  report_route_status -file completion-routed-status.rpt

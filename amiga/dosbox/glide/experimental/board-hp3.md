@@ -142,7 +142,10 @@ one Tcl argument: the isolated board directory containing `completion-synth.dcp`
    timing, DRC, methodology, CDC and bus-skew reports for review.
 
 No script generates a bitstream or programs hardware. Existing optimization or
-routing outputs are not overwritten. The known Wine debug-runner workaround
+routed checkpoints are not overwritten. After an interrupted run has exited,
+`route-board.tcl` accepts `--resume-placed` after the board directory. This
+reopens `completion-placed.dcp`, repeats physical optimization and routing, and
+skips placement. It does not treat an interrupted route as complete. The known Wine debug-runner workaround
 in the [rebuild guide](../../../../docs/xacp-firmware-rebuild.md) may still be
 required; a stalled debug job must not be marked successful without executing
 its generated synthesis script and checking the new checkpoint.
