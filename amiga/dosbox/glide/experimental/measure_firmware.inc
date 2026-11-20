@@ -10,7 +10,7 @@
 static grx_measure grx_meter;
 static grx_mmio_transport grx_transport;
 static GRX_TaggedSubmission grx_packet_private;
-static grx_packet grx_source;
+static grx_packet grx_source,grx_source_second;
 static volatile unsigned grx_claimed,grx_queued,grx_target,grx_epoch,grx_profile;
 static unsigned grx_last_epoch;
 static unsigned grx_detail,grx_checked;
@@ -23,9 +23,16 @@ static uint64_t grx_ticks(void *unused)
 static int grx_send_scene(void *unused,unsigned scene,uint32_t epoch,uint32_t sequence)
 {
     uint32_t bad,detail,isr;int result;(void)unused;
+    unsigned paired=grx_profile>=3&&scene>5;
+    unsigned batch=paired?(scene-5)*2-1:scene-5;
     if(scene<5 ? !grx_probe_scene(&grx_source,scene,0x4120+scene) :
-       !grx_workload_packet(&grx_source,grx_profile,scene-5))return 0;
-    result=grx_prepare_tagged(&grx_packet_private,(const volatile uint32_t*)grx_source.bytes,
+       !grx_workload_packet(&grx_source,grx_profile,batch))return 0;
+    if(paired){
+        if(!grx_workload_packet(&grx_source_second,grx_profile,batch+1))return 0;
+        result=grx_prepare_tagged_pair(&grx_packet_private,(const volatile uint32_t*)grx_source.bytes,
+                            grx_source.words,(const volatile uint32_t*)grx_source_second.bytes,
+                            grx_source_second.words,epoch,sequence,&bad,&detail);
+    }else result=grx_prepare_tagged(&grx_packet_private,(const volatile uint32_t*)grx_source.bytes,
                             grx_source.words,epoch,sequence,&bad,&detail);
     if(result){grx_detail=(unsigned)result;return 0;}
     result=xacpgpu_fifo_send_be(grx_packet_private.wire,grx_packet_private.words,&isr);
@@ -60,7 +67,7 @@ static void grx_publish(void)
     grx_reply[6]=(uint32_t)grx_meter.elapsed;grx_reply[7]=grx_meter.elapsed>>32;
     grx_reply[8]=(uint32_t)now;grx_reply[9]=now>>32;
     grx_reply[10]=grx_checked;grx_reply[11]=grx_detail;grx_reply[12]=grx_claimed;
-    grx_reply[13]=7;grx_reply[14]=grx_profile;
+    grx_reply[13]=31;grx_reply[14]=grx_profile;
     __asm__ volatile("msr cpsr_c,%0"::"r"(cpsr):"memory");
 }
 
@@ -97,7 +104,7 @@ static void grx_firmware_poll(void)
         /* At either supported CPU clock this exceeds one second. Frequency
          * calibration belongs to the host; this is only a liveness deadline. */
         (void)grx_measure_begin_batches(&grx_meter,grx_epoch,grx_target,800000000ull,
-                                     grx_profile?GRX_WORKLOAD_PACKETS:1);
+                                     grx_profile?grx_workload_submissions(grx_profile):1);
     }
     grx_measure_poll(&grx_meter,&io);
     grx_publish();
@@ -110,7 +117,7 @@ static void grx_firmware_command(void *data)
     unsigned op=zc_get(p),abi=zc_get(p+4),frames=zc_get(p+8),epoch=zc_get(p+12);
     unsigned profile=abi==2?zc_get(p+16):0;
     uint32_t error=0;
-    if((abi!=1&&abi!=2)||op>2||profile>2)error=0x30001;
+    if((abi!=1&&abi!=2)||op>2||profile>4)error=0x30001;
     else if(op==1) {
         if(grx_claimed||!zc_idle()||xacpgpu_submit_pending||xacpgpu_test2_pending||
            !frames||frames>1000||!epoch||epoch==grx_last_epoch)error=0x30002;
@@ -129,6 +136,6 @@ static void grx_firmware_command(void *data)
     zc_put(p+32,(uint32_t)now);zc_put(p+36,now>>32);
     if(error)zc_put(p+12,error);
     zc_put(p,GRX_MEASURE_MAGIC);zc_put(p+4,abi==2?2:1);zc_put(p+48,grx_claimed);
-    zc_put(p+52,7);zc_put(p+56,grx_profile);
+    zc_put(p+52,31);zc_put(p+56,grx_profile);
     Xil_DCacheFlushRange(aligned,64);
 }

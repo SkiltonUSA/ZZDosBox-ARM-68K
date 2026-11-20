@@ -43,7 +43,7 @@ static uint32_t be32(uint32_t value) {
     common=[SRC/name for name in ['translator.c','descriptor.c','probe_scene.c']]
     flags=['-std=c11','-O1','-g','-Wall','-Wextra','-Werror','-I.', '-fsanitize=address,undefined']
     run(['clang',*flags,harness,*common,'-o',OUT/'test'],'build')
-    log=run([OUT/'test',OUT/'commands.hex'],'test')
+    log=run([OUT/'test',OUT/'commands.hex',OUT/'commands-paired.hex',OUT/'sizes-paired.vh'],'test')
     oracle=ROOT/'tests/amiga/dosbox/glide/full_renderer_fixtures.c'
     run(['clang',*flags,oracle,*common,'-o',OUT/'oracle'],'oracle-build')
     expected=run([OUT/'oracle'],'oracle')
@@ -52,7 +52,8 @@ static uint32_t be32(uint32_t value) {
     # Compile the same validator/preparer pair for the eventual firmware build.
     arm=OUT/'arm.c'
     arm.write_text(prelude+'\n#include "amiga/dosbox/glide/experimental/submit_prepare.inc"\n'
-      +'int grx_prepare_arm(GRX_TaggedSubmission *p,const volatile uint32_t *s,uint32_t n,uint32_t e,uint32_t q,uint32_t *b,uint32_t *d) {return grx_prepare_tagged(p,s,n,e,q,b,d);}\n')
+      +'int grx_prepare_arm(GRX_TaggedSubmission *p,const volatile uint32_t *s,uint32_t n,uint32_t e,uint32_t q,uint32_t *b,uint32_t *d) {return grx_prepare_tagged(p,s,n,e,q,b,d);}\n'
+      +'int grx_prepare_pair_arm(GRX_TaggedSubmission *p,const volatile uint32_t *s,uint32_t n,const volatile uint32_t *t,uint32_t m,uint32_t e,uint32_t q,uint32_t *b,uint32_t *d) {return grx_prepare_tagged_pair(p,s,n,t,m,e,q,b,d);}\n')
     for abi in ['soft','softfp']:
         run(['arm-none-eabi-gcc','-std=c11','-O2','-Wall','-Wextra','-Werror','-I.',
           '-mcpu=cortex-a9','-marm','-mfpu=vfpv3','-mfloat-abi='+abi,'-ffreestanding',

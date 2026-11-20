@@ -19,7 +19,7 @@ def main():
  (out/'test.log').write_text(result.stdout+result.stderr);result.check_returncode();print(result.stdout,end='')
  paths=[*sources,src/'experimental/workload.h',Path(__file__)]
  (out/'result.json').write_text(json.dumps({'scope':'Offline packet and verifier checks; not GPU pixels or FPS',
-  'packets_validated':130,'profiles':['320x240','640x480'],'triangles_per_frame':320,
+  'packets_validated':260,'profiles':['320x240','640x480','320x240 paired','640x480 paired'],'triangles_per_frame':320,
   'source_sha256':{str(n.relative_to(ROOT)):hashlib.sha256(n.read_bytes()).hexdigest() for n in paths},
   'firmware_sha256':hashlib.sha256(a.firmware.read_bytes()).hexdigest()},indent=2)+'\n')
 if __name__=='__main__':main()

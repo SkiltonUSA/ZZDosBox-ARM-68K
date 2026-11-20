@@ -34,6 +34,9 @@ preparation, submission and completion polling. This is a small rendering test;
   renders 320 textured triangles at **54.47 FPS (320×240)** and **45.57 FPS
   (640×480)**, averaged across three 100-frame runs at each resolution. Pixel
   checks and clean shutdown pass. These are offscreen synthetic results, not GTA FPS.
+- [Paired draw submissions](amiga/dosbox/glide/validation/paired-submission/README.md)
+  reduce completion waits from 65 to 33 per frame while retaining all colour
+  commits. Offline checks pass; the hardware performance comparison is pending.
 - The existing 1.0 Beta release does not include this experimental firmware.
 
 [Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·

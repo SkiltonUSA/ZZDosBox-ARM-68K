@@ -1,0 +1,25 @@
+{
+  "scope": "Firmware staged, not yet cold-booted; no paired hardware FPS",
+  "uploads_md5_verified": true,
+  "bootcard_readback": false,
+  "recovery": "GRXWORK.bin",
+  "writes": [
+    {
+      "source": "RECOVER.bin",
+      "destination": "GRXWORK.bin",
+      "sha256": "02b66e93f7772cfe954ac1d784a85a03211d6bd41fca39a7199f58479196ce29",
+      "state": "writer_completed",
+      "reply": "[OK]\nFWUP RC=0\n     3 Done. 4626560 bytes written to 0:/GRXWORK.bin in 7.4s (605 KB/s)"
+    },
+    {
+      "source": "CANDIDATE.bin",
+      "destination": "BOOT.bin",
+      "sha256": "04cea076010881c61c02c2c9ead3d17d0d569e8c87b415e192581827c64edbd4",
+      "state": "writer_completed",
+      "reply": "[OK]\nFWUP RC=0\n     3 Done. 4627200 bytes written to 0:/BOOT.bin in 7.3s (617 KB/s)"
+    }
+  ],
+  "clock_before": "[OK]\nCLOCK_HOST command=0 elapsed_us=76 (includes 20ms polling)\nCLOCK_SESSION error=0 target_div=48 temp=55.7 C ctrl=00030008 cfg=000fa240 cpu=1f000200 nonce=800171117 fault=0 core1_idle=1\nCLOCK_KEEP held=1",
+  "post_write_ping": "Amiga alive",
+  "lease_released": true
+}

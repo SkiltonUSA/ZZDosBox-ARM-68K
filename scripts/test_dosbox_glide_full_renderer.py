@@ -56,9 +56,13 @@ def main():
     p.add_argument('--board',action='store_true',help='Use the minimally patched XX19d-RIX renderer')
     p.add_argument('--output',type=Path,default=OUT,help='Generated build and evidence directory')
     p.add_argument('--ordered-state',action='store_true');p.add_argument('--build-only',action='store_true')
+    p.add_argument('--prepared-stream',type=Path,help='Use five prepared scene streams with the original pixel oracle')
+    p.add_argument('--prepared-sizes',type=Path,help='Matching scene_sizes.vh for --prepared-stream')
     p.add_argument('--prepare-only',action='store_true',help='Write input list for an external simulator')
     p.add_argument('--hp3-generated',type=Path,help='Generated board zz9000_ps directory for AXI3 conversion')
     a=p.parse_args()
+    if bool(a.prepared_stream)!=bool(a.prepared_sizes):p.error('Provide both prepared stream and sizes')
+    if a.prepared_stream and a.ordered_state:p.error('Prepared streams already define ordering')
     if a.hp3_generated and not a.board:p.error('--hp3-generated requires --board')
     out=a.output.resolve();out.mkdir(parents=True,exist_ok=True)
     src=out/'source';src.mkdir(exist_ok=True)
@@ -76,6 +80,9 @@ def main():
     fixture=subprocess.run([native,*(["--ordered-state"] if a.ordered_state else [])],capture_output=True,text=True,check=True)
     (out/'commands.hex').write_text(fixture.stdout)
     (out/'scene_sizes.vh').write_text('\n'.join(f'starts[{i}]={row.split()[0]};sizes[{i}]={row.split()[1]};' for i,row in enumerate(fixture.stderr.splitlines())))
+    if a.prepared_stream:
+        shutil.copyfile(a.prepared_stream,out/'commands.hex')
+        shutil.copyfile(a.prepared_sizes,out/'scene_sizes.vh')
     (out/'gpu_wires.vh').write_text(wires(a.board,bool(a.hp3_generated)))
     deps=[base/'experimental'/x for x in ['completion.v','response_token.v','axi_response_fault.v']]
     rtl=sorted([* (src/'RasterIX/RasterIX').glob('*.v'), * (src/'Float/float').glob('*.v'), * (src/'RasterIX/3rdParty/verilog-axi').glob('*.v'), * (src/'RasterIX/3rdParty/verilog-axis').glob('*.v'), src/'RasterIX/3rdParty/sfifo.v', src/'RasterIX/3rdParty/skidbuffer.v'])
@@ -135,6 +142,12 @@ def main():
         (out/'results.json').write_text(json.dumps(record,indent=2)+'\n')
     if a.board:
         # Prove the new upstream-of-width-adapter drain condition is necessary.
+        # This mutation depends on the original packet's unaligned DDR tail.
+        # Prepared streams have different lengths and may not expose it.
+        prepared={name:(out/name).read_bytes() for name in ('commands.hex','scene_sizes.vh')}
+        if a.prepared_stream:
+            (out/'commands.hex').write_text(fixture.stdout)
+            (out/'scene_sizes.vh').write_text('\n'.join(f'starts[{i}]={row.split()[0]};sizes[{i}]={row.split()[1]};' for i,row in enumerate(fixture.stderr.splitlines())))
         top=src/'RasterIX/RasterIX/RasterIX_EF.v'
         original_top=top.read_text()
         guard=' && !commonReadsPending'
@@ -151,9 +164,10 @@ def main():
             (out/'command-drain-mutation.log').write_text(log)
             if not mutant.returncode or 'Unread DDR padding acknowledged' not in log:
                 raise SystemExit('Missing command drain was not detected')
-            record['cases'].append(dict(name='command-drain-mutation',detected=True,exit=mutant.returncode))
+            record['cases'].append(dict(name='command-drain-mutation',detected=True,exit=mutant.returncode,fixture='original unaligned DDR tail'))
             (out/'results.json').write_text(json.dumps(record,indent=2)+'\n')
             print('PASS command-read drain mutation detected')
         finally:
             top.write_text(original_top)
+            for name,data in prepared.items():(out/name).write_bytes(data)
 if __name__=='__main__':main()

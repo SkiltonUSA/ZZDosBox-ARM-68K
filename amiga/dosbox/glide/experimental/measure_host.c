@@ -55,9 +55,9 @@ int main(int argc,char **argv)
     struct ConfigDev *cd;int claimed=0,opened=0,rc=20,active=0;
     unsigned frames=100,seen=0;ULONG base,start,total;unsigned long long elapsed;
     ULONG before,after;unsigned long long fps_milli;
-    if(argc<2||strcmp(argv[1],"--candidate")){puts("Use --candidate [frames 1..1000] [profile 0=tiny,1=320x240,2=640x480]. Requires matching experimental firmware.");return 20;}
+    if(argc<2||strcmp(argv[1],"--candidate")){puts("Use --candidate [frames 1..1000] [profile 0=tiny,1=320x240,2=640x480,3=320x240 paired,4=640x480 paired]. Requires matching experimental firmware.");return 20;}
     if(argc>2){char *end;unsigned long v=strtoul(argv[2],&end,10);if(*end||v<1||v>1000)return 20;frames=v;}
-    if(argc>3){char *end;unsigned long v=strtoul(argv[3],&end,10);if(*end||v>2)return 20;profile=v;}
+    if(argc>3){char *end;unsigned long v=strtoul(argv[3],&end,10);if(*end||v>4)return 20;profile=v;}
     if(argc>4)return 20;
     ExpansionBase=(struct ExpansionBase*)OpenLibrary("expansion.library",37);if(!ExpansionBase)goto done;
     owner=CreateMsgPort();port=CreateMsgPort();if(!owner||!port)goto done;
@@ -72,8 +72,10 @@ int main(int argc,char **argv)
     if(OpenDevice(TIMERNAME,UNIT_MICROHZ,(struct IORequest*)timer,0))goto done;
     opened=1;TimerBase=timer->tr_node.io_Device;
     before=calibrate();if(before<300000000u||before>450000000u){puts("Timer calibration failed.");goto done;}
-    printf("Global timer %u Hz; offscreen %s, %u frames\n",before,
-        profile==1?"320x240 / 320 textured triangles":profile==2?"640x480 / 320 textured triangles":"64x72 solid triangle",frames);
+    static const char *names[]={"64x72 solid triangle","320x240 / 320 textured triangles / 65 submissions",
+        "640x480 / 320 textured triangles / 65 submissions","320x240 / 320 textured triangles / 33 submissions",
+        "640x480 / 320 textured triangles / 33 submissions"};
+    printf("Global timer %u Hz; offscreen %s, %u frames\n",before,names[profile],frames);
     active=1;
     if(!request(1,frames,now()|1u)||reply[3]||!reply[12]||(profile&&reply[14]!=profile))goto done;
     start=now();

@@ -1,0 +1,18 @@
+{
+  "scope": "Native counter tests and ARM compile; no physical FPS",
+  "pending_count_mutant_rejected": true,
+  "source_sha256": {
+    "tests/amiga/dosbox/glide/measure.c": "b55e0289736db06736cd8ed3b2388b6ca35bbfb5ab388ca39e73bb2d5714ccee",
+    "amiga/dosbox/glide/experimental/measure.c": "0b66a81599e633341bc4101f677a69c5717ce3bdd1f29fdc37df4a7d7d193adb",
+    "amiga/dosbox/glide/experimental/measure.h": "551b5c6a83ddcfe39b9e2903d0f7659d9e65436092660a91532a3f559bd798b3",
+    "amiga/dosbox/glide/experimental/measure_host.c": "1600cac5372bd7acd2d7c6cf5c6bffb71039ebd58b8ffc7e6c5a2a4c598bb3ff",
+    "amiga/dosbox/glide/experimental/completion_client.c": "bec400019debbdf039d372bde286a74a85a62ea074ef2a780c921069bffb9932",
+    "amiga/dosbox/glide/experimental/completion_client.h": "ae160326f5aa73b24995d916dab47503a889f6a76ccdc4498cd6afd9985e5888",
+    "scripts/test_dosbox_glide_measure.py": "ed04dbb71725c196e4b313d83fa5855016150f3f6eddf5462209f84755592f16"
+  },
+  "host": {
+    "image": "docker.io/amigadev/crosstools@sha256:93ca1a47903b61873f6638881b44f9f2d6086a39f1b9b916a26faff3a8ea4d3d",
+    "bytes": 17180,
+    "sha256": "271580406057c238fb75e08f53babdd3bb8341182e0ae5db8f3e8b967fd35e74"
+  }
+}

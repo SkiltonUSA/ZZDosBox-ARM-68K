@@ -2,8 +2,9 @@
 #include "workload.h"
 #include "draw_stream.h"
 #include "guest_calls.h"
-unsigned grx_workload_width(unsigned p){return p==1?320:p==2?640:0;}
-unsigned grx_workload_height(unsigned p){return p==1?240:p==2?480:0;}
+unsigned grx_workload_width(unsigned p){return p==1||p==3?320:p==2||p==4?640:0;}
+unsigned grx_workload_height(unsigned p){return p==1||p==3?240:p==2||p==4?480:0;}
+unsigned grx_workload_submissions(unsigned p){return p==1||p==2?65:p==3||p==4?33:0;}
 static void word(grx_packet *p,unsigned i,uint32_t w)
 {for(unsigned b=0;b<4;b++)p->bytes[i*4+b]=(uint8_t)(w>>(24-b*8));}
 static int read_guest(void *p,uint32_t a,void *dst,unsigned n)

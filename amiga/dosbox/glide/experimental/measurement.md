@@ -125,3 +125,13 @@ Build and check with `test_glide_workload.py --firmware <main.c>`,
 `test_glide_measure_firmware.py --firmware <main.c>` and
 `test_dosbox_glide_measure.py --host`. Packaging accepts `--build-record` only
 when the firmware hash, base provenance and recorded source hashes match.
+
+## Paired submission experiment
+
+[Profiles 3 and 4](../validation/paired-submission/README.md) retain the same
+320×240/640×480 commands and colour commits, but join two drawing packets
+before a single completion fence. The clear remains separate: 33 retirements
+complete a frame. Profiles 1/2 remain the baseline. Native checks, the ARM
+service model and renderer simulation pass; hardware comparison is pending.
+ABI2 capability bits 3/4 advertise the new profiles. This changes the private
+test service, not the published XACP GPU ABI or a released DOSBox player.

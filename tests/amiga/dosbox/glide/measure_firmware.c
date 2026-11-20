@@ -6,6 +6,7 @@ typedef uint64_t XTime;
 static uint64_t clock_ticks;
 static uint32_t token_epoch,token_sequence,token_valid;
 unsigned test_failure,test_sends,test_profile;
+unsigned test_words,test_max_words,test_payload_hash=2166136261u;
 static int xacpgpu_submit_pending,xacpgpu_test2_pending;
 static void XTime_GetTime(XTime *t){*t=(clock_ticks+=1000);}
 static void Xil_DCacheInvalidateRange(uintptr_t p,unsigned n){(void)p;(void)n;}
@@ -33,6 +34,10 @@ static int xacpgpu_fifo_send_be(const volatile uint32_t *words,uint32_t n,uint32
 {
     test_sends++;*isr=0;
     if(test_failure==3)return -4;
+    XACPGPU_SafeState next;uint32_t bad,detail;
+    if(n>512||n<10||xacpgpu_validate_submit(words,n-7,&next,&bad,&detail))return -98;
+    if(n>test_max_words)test_max_words=n;
+    for(unsigned i=2;i<n-7;++i){test_words++;test_payload_hash=(test_payload_hash^be32(words[i]))*16777619u;}
     token_epoch=be32(words[n-2]);token_sequence=be32(words[n-1]);token_valid=1;
     return 0;
 }
@@ -47,3 +52,5 @@ uint32_t *test_command(unsigned op,unsigned frames,unsigned epoch)
 }
 void test_poll(void){grx_firmware_poll();}
 unsigned test_claimed(void){return grx_owns_gpu();}
+unsigned test_stat(unsigned i)
+{return i==0?test_sends:i==1?test_words:i==2?test_payload_hash:test_max_words;}

@@ -6,8 +6,8 @@ extern int grx_check_firmware(const grx_packet *);
 static uint16_t pixels[640*480];
 int main(void){
  grx_packet p;unsigned checked;
- assert(!grx_workload_packet(&p,0,0));assert(!grx_workload_packet(&p,3,0));
- for(unsigned profile=1;profile<=2;profile++){
+ assert(!grx_workload_packet(&p,0,0));assert(!grx_workload_packet(&p,5,0));
+ for(unsigned profile=1;profile<=4;profile++){
   unsigned w=grx_workload_width(profile),h=grx_workload_height(profile);
   for(unsigned batch=0;batch<65;batch++){
    assert(grx_workload_packet(&p,profile,batch));assert(grx_check_firmware(&p));
@@ -24,5 +24,5 @@ int main(void){
   pixels[(h-1-2)*w+2]=0;
   assert(grx_workload_verify(pixels,profile,&checked)==1);
  }
- puts("PASS 130 workload packets through firmware validator; dimensions, texture bounds and pixel verifier");
+ puts("PASS 260 workload packets through firmware validator; dimensions, texture bounds and pixel verifier");
 }

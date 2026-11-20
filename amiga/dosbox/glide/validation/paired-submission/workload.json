@@ -1,0 +1,23 @@
+{
+  "scope": "Offline packet and verifier checks; not GPU pixels or FPS",
+  "packets_validated": 260,
+  "profiles": [
+    "320x240",
+    "640x480",
+    "320x240 paired",
+    "640x480 paired"
+  ],
+  "triangles_per_frame": 320,
+  "source_sha256": {
+    "tests/amiga/dosbox/glide/workload.c": "61defca97865ba99c5ec184e2da6966c980e1a577984641d927e97dfce720986",
+    "amiga/dosbox/glide/experimental/workload.c": "e466d71039c6be0963fa659abe831687bbdd8ddf4f074631c2ead57fa4005d68",
+    "amiga/dosbox/glide/draw_stream.c": "1c197b5d8394c00b3d269bf33440e3b6e8dea0b4829052b21436b5ca93be99de",
+    "amiga/dosbox/glide/guest_vertex.c": "4affd2228924bff88add06bc980acdbdab045425393f01be0a5a92f25a1fb7d1",
+    "amiga/dosbox/glide/clip.c": "11a8dea8ea827a0cb174c25e71571be36f89798c24004d1d4697ed3019de9d75",
+    "amiga/dosbox/glide/translator.c": "5df9d815de67193108bab8e0879f855f38ba86b5825dc704e222b3dee0c20928",
+    "amiga/dosbox/glide/descriptor.c": "439a94cafd84ec9d52e0ab01b03ae7c0e368a01e81e5ad18b39dc9697b43df03",
+    "amiga/dosbox/glide/experimental/workload.h": "fb81965d7a3b7d9fffb24806d4f7fdb5558b72f6528ecf60f26a1ea41e72a100",
+    "scripts/test_glide_workload.py": "5275aeb4bda95681d0db1a3b730f73fb63ce066725d132c82cad396f74fbb116"
+  },
+  "firmware_sha256": "3c3b2bf148a3cdec22fbca10c07664738aa092a23591cafa95071c892f461fb4"
+}

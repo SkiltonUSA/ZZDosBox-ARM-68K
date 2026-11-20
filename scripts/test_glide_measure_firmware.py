@@ -27,7 +27,8 @@ def main():
     run(['arm-none-eabi-objcopy','-O','binary',elf,binary])
     syms={p[2]:int(p[0],16) for line in run(['arm-none-eabi-nm',elf]).splitlines() if len(p:=line.split())==3}
     results=[]
-    for scenario in range(15):
+    successful={}
+    for scenario in range(25):
         profile,failure=divmod(scenario,5)
         u=Uc(UC_ARCH_ARM,UC_MODE_ARM);u.mem_map(0x10000,0x80000)
         u.mem_write(0x10000,binary.read_bytes());u.mem_map(0x06610000,0xc0000)
@@ -40,7 +41,7 @@ def main():
             if pc==syms['grx_verify_scene']:
                 scene=uc.reg_read(UC_ARM_REG_R1)
                 if scene>=5:
-                    w,h=(320,240) if profile==1 else (640,480)
+                    w,h=(320,240) if profile in (1,3) else (640,480)
                     pixels=[0]*(w*h)
                     for row in range(16):
                         for col in range(20):
@@ -81,12 +82,18 @@ def main():
                 assert command(2)[3]==0x30003 and call('test_claimed')==1
             else:
                 assert reply[2]==3 and reply[4]==2 and reply[10]>(19000 if profile else 20000),reply
+                stats=[call('test_stat',i) for i in range(4)]
+                assert stats[0]==5+2*(1 if profile==0 else 65 if profile<3 else 33),stats
+                assert stats[3]<=512,stats
+                successful[profile]=stats
                 assert command(2)[3]==0 and call('test_claimed')==0
                 reply=command(1,2,124)
                 assert reply[2]==0 and reply[4]==0 and reply[12]==1,reply
         results.append({'profile':profile,'modeled_failure':failure,'reply':list(reply)})
+    for profile in (1,2):
+        assert successful[profile][1:3]==successful[profile+2][1:3],successful
     record={'scope':'ARM service execution with modeled MMIO/FIFO/pixels; no physical FPS',
-            'scenarios':results,'elf_sha256':hashlib.sha256(elf.read_bytes()).hexdigest()}
+            'scenarios':results,'successful_packet_stats':successful,'elf_sha256':hashlib.sha256(elf.read_bytes()).hexdigest()}
     (OUT/'results.json').write_text(json.dumps(record,indent=2)+'\n')
     print('PASS ARM service: start, correctness warmup, counting, close/restart, busy, mapping, FIFO and pixel failures')
 if __name__=='__main__':main()

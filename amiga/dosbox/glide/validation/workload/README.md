@@ -53,3 +53,7 @@ stops the session and retains the GPU claim until recovery.
 `GRXONE.bin` on the firmware card preserves the previous, tested completion
 firmware. `GRXBASE.bin` remains the earlier recovery image. No released player or
 launcher was changed. This does not implement the GTA renderer or game FPS.
+
+The next [paired-submission experiment](../paired-submission/README.md)
+retains these baselines and every colour commit while reducing completion
+waits to 33 per frame. Its offline checks pass; hardware FPS is pending.
