@@ -1,0 +1,34 @@
+{
+  "scope": "Inputs staged only; bitstream absent; no boot image produced or installed",
+  "reference_boot_sha256": "c0e81e720e3a55a26d517b9bd5c06f1d71c89c243f8d60b37d92ec59cb6c8537",
+  "fsbl_elf_sha256": "185c8795326d800a1943865c1ed01723a71546690fbc81d892e08848dcde607b",
+  "fsbl_payload_sha256": "eb3166ca673c3be217b1486eed9eed3d4208aae12d120be9f42625e9209c9655",
+  "firmware_elf_sha256": "db8397784de37d5db22c2d45b37f2cdd72ccf7e86f5592435e13179bd526b8f9",
+  "firmware_segments": [
+    {
+      "load": "0x100000",
+      "entry": "0x100000",
+      "bytes": 447448,
+      "sha256": "3dfc57c8ea58c64a46aae1f3dcc38173ab6e49f70322c284e19951aa6dca3524"
+    },
+    {
+      "load": "0x170000",
+      "entry": "0x0",
+      "bytes": 16588,
+      "sha256": "bd52ceba6708f1983fe6efd58d706162b0e40987bf8a03bf1f2da000d36fda91"
+    },
+    {
+      "load": "0x3fcf0000",
+      "entry": "0x0",
+      "bytes": 8192,
+      "sha256": "3f3fba956e45c253d38917ce45cca696597b7e11c99906590b25f3e45b84b9c4"
+    }
+  ],
+  "pending": "Reviewed routed timing and matching FPGA bitstream; cold boot and physical validation",
+  "processing_system_component": {
+    "comparison": "Published baseline versus texture candidate: entire component identical",
+    "parameters": 567,
+    "sha256": "018f62e84f857121dd57340938ab5168427257db1afed9b9012d0c2c3bae21fd",
+    "limitation": "Source configuration comparison, not physical verification of a new boot image"
+  }
+}

@@ -51,9 +51,10 @@
     "tests/amiga/dosbox/glide/measure_firmware.c": "1dac387ea3d2ff4acf85ff8487bc6eeaf1ca1cd9a5036ef69ee0e1d8ca70d331"
   },
   "files": {
-    "README.md": "f0a8ac2659801026726034c479ea1836e52c3bd99c91925df823887c74ca1237",
+    "README.md": "3da8b707ad4be189b4994ed6f5d3cd4bed4576dc9307e0c7a07ffbfc8c90173d",
     "abort-mutant.log": "d4fa58bb9196f61173c46b6fbe21bb726ec40d024d47dffe833fab3066938b26",
     "abort-results.json": "8b33244260158647f55e20fc79adc0d95b8fd4447ad5d95f29419566d0a2d4f7",
+    "boot-inputs.json": "e0a7b16c293c8a5382e9641af8f27905da7d5b8b9efdc6bb3d2ae37f131ae278",
     "counter-mutant.log": "a0b3d8ae7a6f279fc24419b4cc92b6d9721a8013c2e08dee0cabbe806a7c6f8f",
     "counter-results.json": "941a0148b9d9c9626b39edfaa131c0bd35c78bb870b6f55249bdc006fce7d5fc",
     "counter.log": "0cc079f86c1d2f85257ff0e4a24c5497106ef1df73a56473b8ec98601e600570",

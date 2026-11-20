@@ -11,6 +11,11 @@
 - `firmware-build.json`: recorded base, source and ELF hashes; preserved Core0
   services and linker-space result. Build only, not installed.
 
+- `boot-inputs.json`: the staged bootloader payload matches the existing boot
+  image byte for byte. The candidate and published baseline have identical PS7
+  components (567 parameters). The matching FPGA bitstream is still absent;
+  no new boot image has been packaged.
+
 See the [measurement contract](../../experimental/measurement.md). The
 independent [FPGA routing report](../board-hp3/routing/result.json) records a
 failed setup constraint; passing software/model tests do not waive that failure.
