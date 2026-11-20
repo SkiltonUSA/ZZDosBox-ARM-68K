@@ -92,7 +92,10 @@ replacement firmware follows from this result.
 The [board-renderer backport](board-completion.md) now passes the same scene
 oracle with Xanxi’s command-credit path, including DDR command transfers and
 a pre-adapter drain check. This supersedes the renderer-only gap above; the
-actual HP3/converter path and firmware integration remain. The
+actual HP3/converter path is now covered separately by the
+[four-state renderer test](board-hp3.md). Its corrected build passes 32
+framebuffer checks, and a newly generated board project is being synthesized.
+Physical HP3/DDR operation and firmware integration remain. The
 [board endpoint](board-endpoint.md) adds validated project wiring and six digital
 tests through the generated CPU mailbox clock converter; this is not a physical
 GPU timing result.

@@ -21,7 +21,7 @@
   },
   "RasterIX/rtl/RasterIX/CommandParser.v": {
     "before": "bdf5fe0e9049795b7b5480fbf858174aa16ab8e313849aa1a5d4bcd767fdc72e",
-    "after": "8d8da5cfe0ad12d70947f75a885ba6ba9ca178c6d7a65528b550b742fd423648"
+    "after": "8c725b7449bfee49818ac167382f750ff36b7e490dd811be1907d654848ed3cd"
   },
   "RasterIX/rtl/RasterIX/FrameStreamingCore.v": {
     "before": "6a2bf1948292b728f2bd0d7b8c7a0d5ffc759a8bbd5f261182c1e26c2bea0941",
@@ -41,7 +41,7 @@
   },
   "RasterIX/rtl/RasterIX/RasterIXCoreEF.v": {
     "before": "499927bde401edef56bf3fe0f3f0e4dfac480c507010ca131840ddf841bf29b0",
-    "after": "eaa7079564de28e5e06fbdf70ab06ede2deb71767f1673988584498d95ff228a"
+    "after": "debe4e43a8c73c03f5ed55a38efb98c90d1ee8717273d00942227fde6c849c6e"
   },
   "RasterIX/rtl/RasterIX/RasterIXRenderCore.v": {
     "before": "fc5adcde28fae9e575db356084cd459e0abf1771aa8926e62a160ff043c5723b",
@@ -62,5 +62,17 @@
   "RasterIX/rtl/RasterIX/XACPCommandReadCredit.v": {
     "before": "b80c25957169593eed5cb3270dad52cd1af2582ff7db53d4a69b00827dcb10be",
     "after": "f5b3bb5956c9dfddad4e8c654245a4c03d538aaf5c2f3ebad9d965cf5060fe12"
+  },
+  "Float/rtl/float/FloatToInt.v": {
+    "before": "43c96e385117f2bf124503dca4462e2f193f78ba94556c3c0ef910060f14fd7c",
+    "after": "a564776606cb3ed7aaf795f7734fc929bd0653510245cf2b5bdae6a03cf4db51"
+  },
+  "RasterIX/rtl/Float/rtl/float/FloatToInt.v": {
+    "before": "43c96e385117f2bf124503dca4462e2f193f78ba94556c3c0ef910060f14fd7c",
+    "after": "a564776606cb3ed7aaf795f7734fc929bd0653510245cf2b5bdae6a03cf4db51"
+  },
+  "RasterIX/rtl/RasterIX/ColorBlender.v": {
+    "before": "c0db280443d9d9a627cccf27482380341cc806dfedf084a821d05f91ae6cba7d",
+    "after": "f11b8a6181f86d7abeeac182f2b56b86974afdbb71744a29ce830a6017b78f16"
   }
 }

@@ -22,12 +22,14 @@ retains their GPL-3.0-or-later source headers and licences.
   output for its existing state.
 - Track command-read completion **before the 64-to-32-bit width adapter** as well
   as the credit queue. Returned 64-bit beats may still contain unread 32-bit words.
-- Reset the tracker status explicitly. Retain the board's existing clear engine,
+- Reset tracker and framebuffer-apply status explicitly. Retain the board's existing clear engine,
   triangle register bank and texture implementation.
+- Zero-extend framebuffer offsets, handle zero-shift Float rounding and remove
+  a clocked blend-register race found by the [four-state HP3 test](board-hp3.md).
 
 This is a backport, not a wholesale replacement with the newer upstream renderer.
-The patch changes 16 staged files, including two copies of the same Float helper
-needed by the simulation directory layout.
+The patch changes 19 staged files, including duplicated Float helpers needed by
+the simulation directory layout.
 
 ## Tests and finding
 
@@ -88,8 +90,9 @@ credit logic, but **not** the actual AXI4-to-AXI3 converter, PS7 HP3/DDR arbitra
 CPU caches, mailbox clock crossing, display scanout or firmware validator.
 Depth is not exercised. Simulation cycles are not measured ZZ9000 throughput.
 
-The [board endpoint](board-endpoint.md) now supplies experimental wiring and
-generated mailbox-converter tests. The GPU HP3 converter still needs integrated
-validation, followed by routed timing with reviewed constraints. Firmware needs a matching capability and
+The [board endpoint](board-endpoint.md) supplies experimental wiring and
+generated mailbox-converter tests. The [four-state HP3 tests](board-hp3.md) add
+the generated GPU converter and document the resulting corrections. Routed
+timing with reviewed constraints remains pending. Firmware needs a matching capability and
 validated submission route. Only after those gates can a bounded hardware scene
 provide trustworthy GPU elapsed time. Existing release binaries remain unchanged.

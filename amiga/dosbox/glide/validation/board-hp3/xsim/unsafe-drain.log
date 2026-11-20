@@ -1,0 +1,44 @@
+
+****** xsim v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Nov 19 21:18:36 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/hp3/xsim_script.tcl
+# xsim {hp3} -testplusarg unsafe=1 -testplusarg b_delay=37 -testplusarg r_delay=3 -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+PASS full renderer: scene=0 cycles=20531 token_cycle=20544 ack_cycle=20546 writes=525 reads=0 cancel=0
+Fatal: Acknowledged outstanding memory transactions at HP3
+Time: 205465 ns  Iteration: 0  Process: /full_renderer_test/Always248_849  Scope: full_renderer_test  File: Z:.context/amiga/glide/hp3-reviewed/gpu_wires.vh Line: 267
+$finish called at time : 205465 ns
+exit
+HP3 traffic: writes=525 GPU_writes=525 reads=0 GPU_reads=0 max_write_beats=4
+INFO: [Common 17-206] Exiting xsim at Thu Nov 19 21:18:45 2026...

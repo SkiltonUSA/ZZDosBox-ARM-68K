@@ -5,10 +5,11 @@ a CPU-readable endpoint. It preserves the existing PS7 settings, device address
 map and GPU memory aperture. **No replacement firmware is installed and no GPU
 or game FPS is claimed.**
 
-Full-board synthesis has been started but has no completed result in this
-record. Integration validation and an exported XSA are not synthesis, routing or
-timing signoff. The existing `ZORRO_E7M_IBUF` constraint lookup warning also
-appears during synthesis; check its resolved property in the resulting netlist.
+The earlier candidate completed full-board synthesis with 23,372 LUTs, 29,120
+registers, 60.5 BRAM36 equivalents and 22 DSPs. It predates the
+[four-state HP3 corrections](board-hp3.md). Debug-core placeholders and
+`ZORRO_E7M_IBUF`/`CLKOUT1` constraint lookup warnings remain; this is not routing
+or timing signoff. [Scoped synthesis evidence](../validation/board-endpoint/pre-hp3-synthesis/result.json).
 
 ## Wiring and interface
 
@@ -50,6 +51,9 @@ tests. They do not include PS7 execution, the HP3 converter, DDR arbitration or
 actual display scanout. Reset during an in-flight bus transaction remains a
 separate test. AMD IP remains in the locally generated project and is not
 redistributed here.
+
+The separate [HP3 renderer test](board-hp3.md) exercises the generated GPU
+protocol converter and AMD FIFO using XSim and behavioural RAM.
 
 ## Reproduce
 

@@ -8,7 +8,7 @@ module full_renderer_test;
  reg [31:0] commands[0:2047];
  integer starts[0:4],sizes[0:4];
  integer tick=0,scene=0,aw_count=0,b_count=0,ar_count=0,rlast_count=0;
- integer ddr_commands=0,unaligned=0;
+ integer ddr_commands=0,unaligned=0,ddr_words;
  integer b_delay=0,r_delay=0,b_wait=0,r_wait=0;
  integer inject_error=0,do_cancel=0,unsafe_drain=0,ack_tick=0,token_tick=0;
  reg ack_ready=0,cancel=0;
@@ -19,8 +19,13 @@ module full_renderer_test;
  wire [31:0] token_epoch,token_sequence,ack_epoch,ack_sequence;
  wire ack_cancelled;
  `include "gpu_wires.vh"
+`ifdef GRX_HP3
+ assign observed_bresp=bresp;
+ assign observed_rresp=rresp;
+`else
  assign observed_bresp=inject_error==1 ? 2'b10 : ram_bresp;
  assign observed_rresp=inject_error==2 ? 2'b10 : ram_rresp;
+`endif
  grx_response_token token(.clk(clk),.resetn(resetn),.s_valid(resp_valid),.s_ready(resp_ready),
   .s_data(resp_data),.s_last(resp_last),.external_fault(memory_fault),
   .token_valid(token_valid),.token_ready(token_ready),.token_epoch(token_epoch),
@@ -60,18 +65,18 @@ module full_renderer_test;
   if(resetn)begin
    if(awvalid&&awready)begin
     aw_count<=aw_count+1;
-    if(awaddr[31:18]!=32'h06600000>>18)$fatal(1,"Write escaped test aperture");
+    if(awaddr[31:18]!==32'h06600000>>18)$fatal(1,"Write escaped test aperture or has unknown address");
    end
    if(bvalid&&bready)b_count<=b_count+1;
    if(arvalid&&arready)begin
     ar_count<=ar_count+1;
-    if(araddr[31:18]!=32'h06600000>>18)$fatal(1,"Read escaped test aperture");
+    if(araddr[31:18]!==32'h06600000>>18)$fatal(1,"Read escaped test aperture or has unknown address");
    end
    if(rvalid&&rready&&rlast)rlast_count<=rlast_count+1;
    if(ram_bvalid&&!b_allow)b_wait<=b_wait+1;
-   if(bvalid&&bready)b_wait<=0;
+   if(ram_bvalid&&ram_bready)b_wait<=0;
    if(ram_rvalid&&!r_allow)r_wait<=r_wait+1;
-   if(rvalid&&rready)r_wait<=0;
+   if(ram_rvalid&&ram_rready)r_wait<=0;
    if(token_valid&&token_ready)begin token_tick<=tick;if(do_cancel)cancel<=1;end
    if(ack_valid)begin
     if(aw_count!=b_count||ar_count!=rlast_count)$fatal(1,"Acknowledged outstanding memory transactions");
@@ -86,7 +91,7 @@ module full_renderer_test;
   @(negedge clk);cmd_valid=0;
  end
  endtask
- integer i,k,fd,ddr_words,first_tick,before_aw,before_ar;reg [63:0] texword;reg [15:0] texel;
+ integer i,k,fd,first_tick,before_aw,before_ar;reg [63:0] texword;reg [15:0] texel;
  string dump_name;
  initial begin
   if($value$plusargs("unaligned=%d",unaligned))begin end

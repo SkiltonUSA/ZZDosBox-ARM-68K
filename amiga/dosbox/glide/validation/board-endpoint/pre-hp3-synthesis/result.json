@@ -1,0 +1,30 @@
+{
+  "scope": "Earlier 01ca7e1 board endpoint candidate, before HP3 four-state corrections; synthesis only, not routed or installed",
+  "runner": {
+    "exit_code": 0,
+    "elapsed_seconds": 4306.52,
+    "script": "C:\\grx-board-final\\completion\\synthesize-board.tcl"
+  },
+  "resources": {
+    "slice_luts": 23372,
+    "slice_registers": 29120,
+    "bram36_equivalents": 60.5,
+    "dsps": 22
+  },
+  "blackboxes": [
+    "dbg_hub",
+    "u_ila_0"
+  ],
+  "pending": [
+    "Resolve debug cores during opt_design",
+    "Review ZORRO_E7M_IBUF and CLKOUT1 constraint lookup warnings",
+    "Repeat synthesis with four-state simulation corrections",
+    "Place/route and timing review"
+  ],
+  "drc": {
+    "warnings": 41,
+    "advisories": 1
+  },
+  "input_staging_sha256": "d4264d95da14688e7b18e7b01e6ddffe810b04ecc5fa4b6f5721774174ee5a22",
+  "checkpoint_sha256": "80d1270479273f89ca607178e2efe72c61987f0309294c3182948df3b0db0233"
+}
