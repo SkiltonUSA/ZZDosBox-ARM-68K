@@ -1,0 +1,2 @@
+%Error-PINNOTFOUND: .context/amiga/glide/board-baseline-test/gpu_wires.vh:52:2: Pin not found: 'idle'
+                    ... For error description see https://verilator.org/warn/PINNOTFOUND?v=5.054

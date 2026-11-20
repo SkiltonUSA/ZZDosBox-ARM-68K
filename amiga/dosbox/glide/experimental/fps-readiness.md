@@ -89,6 +89,11 @@ behavioural RAM and a synthetic AXI memory model; Xanxi's board-specific changes
 HP3 path and CPU mailbox crossing are not included. No physical GPU timing or
 replacement firmware follows from this result.
 
+The [board-renderer backport](board-completion.md) now passes the same scene
+oracle with Xanxi’s command-credit path, including DDR command transfers and
+a pre-adapter drain check. This supersedes the renderer-only gap above; the
+actual HP3/converter path, CPU mailbox crossing and firmware integration remain.
+
 ## Measurement criteria
 
 Once a real guest renderer passes the prerequisites, compare the same GTA build,

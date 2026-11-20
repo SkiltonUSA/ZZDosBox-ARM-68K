@@ -46,6 +46,10 @@ now passes clear, solid, additive, textured and alpha-blended scenes through the
 completion path, including delayed memory, cancellation and error quarantine.
 A deliberately premature completion is detected. Board/HP3 integration remains
 pending; these pixel checks are not GPU or game FPS.
+The [XX19d-RIX completion backport](amiga/dosbox/glide/experimental/board-completion.md)
+also passes 64 framebuffer checks with Xanxi’s renderer, including DDR-fed
+commands. A new check prevents completion while command words remain buffered
+across the memory-width adapter. Full-board wiring and physical validation remain.
 [Hardware FPS prerequisites](amiga/dosbox/glide/experimental/fps-readiness.md):
 a compatible FPGA build and guest renderer integration are still required.
 The [XACP firmware rebuild guide](docs/xacp-firmware-rebuild.md) records Xanxi's

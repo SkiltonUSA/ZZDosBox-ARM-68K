@@ -1,0 +1,30 @@
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+PASS full renderer: unread DDR padding keeps completion pending
+- tests/amiga/dosbox/glide/full_renderer.v:129: Verilog $finish
+- tests/amiga/dosbox/glide/full_renderer.v:156: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.054 2026-11-01
+- Verilator: $finish at 53us; walltime 0.006 s; speed 9.133 ms/s
+- Verilator: cpu 0.006 s on 1 threads; allocated 3 MB

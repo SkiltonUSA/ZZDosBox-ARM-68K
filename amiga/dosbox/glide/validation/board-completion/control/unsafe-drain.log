@@ -1,0 +1,28 @@
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+PASS full renderer: scene=0 cycles=20132 token_cycle=20145 ack_cycle=20147 writes=516 reads=0 cancel=0
+[201475000] %Fatal: full_renderer.v:77: Assertion failed in full_renderer_test: Acknowledged outstanding memory transactions
+%Error: tests/amiga/dosbox/glide/full_renderer.v:77: Verilog $stop
+Aborting...

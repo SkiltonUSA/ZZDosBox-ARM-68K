@@ -1,0 +1,66 @@
+{
+  "Float/rtl/float/ValueTrack.v": {
+    "before": "032c2a16e47bca776c637a0e7e5db2f2d338b54b39968d774fcfe1139a0378cd",
+    "after": "f2383b9581966772e8b8b3aaf928a8faecb1324bc208d4d9eaded0bb958fedd4"
+  },
+  "RasterIX/rtl/Float/rtl/float/ValueTrack.v": {
+    "before": "032c2a16e47bca776c637a0e7e5db2f2d338b54b39968d774fcfe1139a0378cd",
+    "after": "f2383b9581966772e8b8b3aaf928a8faecb1324bc208d4d9eaded0bb958fedd4"
+  },
+  "RasterIX/rtl/RasterIX/CoalesceAddrGen.v": {
+    "before": "3bdabd6a0ca850019ba35525636d10ddc65f69e5852884d53ef58fd511c6ff48",
+    "after": "ba58de084d97e22f2b95ddf7a9ac9c18e43949d535ea64afa882dadb01e14ad1"
+  },
+  "RasterIX/rtl/RasterIX/CoalesceFiFo.v": {
+    "before": "ad150ddc622fb9f42113f18b28f95cf716f4a05543e8e905e01d6154850f1ed2",
+    "after": "17558eba8367e6c8b4efd3265947e804f5f4ea22385f4656bff853defa51e321"
+  },
+  "RasterIX/rtl/RasterIX/Coalescer.v": {
+    "before": "0071f7fda8a1b7914e6818f8c626de0b1f112f35eeca2465f114f26aa3cf41e2",
+    "after": "311568dede59103ea05471128c1734b03be1f494224f6ea8eb45cc59279015ea"
+  },
+  "RasterIX/rtl/RasterIX/CommandParser.v": {
+    "before": "bdf5fe0e9049795b7b5480fbf858174aa16ab8e313849aa1a5d4bcd767fdc72e",
+    "after": "8d8da5cfe0ad12d70947f75a885ba6ba9ca178c6d7a65528b550b742fd423648"
+  },
+  "RasterIX/rtl/RasterIX/FrameStreamingCore.v": {
+    "before": "6a2bf1948292b728f2bd0d7b8c7a0d5ffc759a8bbd5f261182c1e26c2bea0941",
+    "after": "879f5db054b90c68ed4005c597c3de108349c291bfd8d72201874bbc691c442c"
+  },
+  "RasterIX/rtl/RasterIX/FramebufferAdapter.v": {
+    "before": "a25eaa925cd6eab35b519b50b6d4ae32d72bf519ac320c54628fa7575d51002f",
+    "after": "b58bfb72717a93f1c4568563bf817eedc5853d45a276b60c05efde19df431910"
+  },
+  "RasterIX/rtl/RasterIX/FramebufferPacker.v": {
+    "before": "5a2b5c24d71f6d078f2298e06808fddbd4c8f51fba53041f383ca0c87a36a01b",
+    "after": "b9c485bdc977dbc7b0f0a47402dc588875c8e7af1448b67da784236362917194"
+  },
+  "RasterIX/rtl/RasterIX/PagedMemoryReader.v": {
+    "before": "b20f0176b1fa026ca1eb513d442b01c5493f61653e0bf2d0f012bed8cab912de",
+    "after": "082b4d0b23fbcf5ef0907f7ef7b086fe4770aa4b366b8bd7f20509b04191331d"
+  },
+  "RasterIX/rtl/RasterIX/RasterIXCoreEF.v": {
+    "before": "499927bde401edef56bf3fe0f3f0e4dfac480c507010ca131840ddf841bf29b0",
+    "after": "eaa7079564de28e5e06fbdf70ab06ede2deb71767f1673988584498d95ff228a"
+  },
+  "RasterIX/rtl/RasterIX/RasterIXRenderCore.v": {
+    "before": "fc5adcde28fae9e575db356084cd459e0abf1771aa8926e62a160ff043c5723b",
+    "after": "38503cb386e2abc1191a5e4fc7218f202f15b9892e619868854ea45ccd3cef35"
+  },
+  "RasterIX/rtl/RasterIX/RasterIX_EF.v": {
+    "before": "c7e70de180a31e4bfb9e6ca2e668b1caf45f1bedf0c9a8be2e9d990a43ab27e9",
+    "after": "cc4aabbdd1791e91263c9646f90b35e17a16532923a433fc68857a5c32d21715"
+  },
+  "RasterIX/rtl/RasterIX/RegisterAndDescriptorDefines.vh": {
+    "before": "397dad59053e3851b0c9528c02bfb5e94294e57b9faf3b2c9ff459ea3c4838c3",
+    "after": "16139a53ee3881d62b878fafd5df807c4b143821557adeb730cba196f6b21ba1"
+  },
+  "RasterIX/rtl/RasterIX/StreamFramebuffer.v": {
+    "before": "96d30dcf1e7d68c8004d95bdfd4c942e7f7351ed8ae9712f4c7806b501eb2a9b",
+    "after": "01ea90c6b7bf3cc8d3b0e099f8ac8bbab0d77382a1b65139527e035cb41eff42"
+  },
+  "RasterIX/rtl/RasterIX/XACPCommandReadCredit.v": {
+    "before": "b80c25957169593eed5cb3270dad52cd1af2582ff7db53d4a69b00827dcb10be",
+    "after": "f5b3bb5956c9dfddad4e8c654245a4c03d538aaf5c2f3ebad9d965cf5060fe12"
+  }
+}

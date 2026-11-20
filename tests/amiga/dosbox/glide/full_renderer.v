@@ -8,6 +8,7 @@ module full_renderer_test;
  reg [31:0] commands[0:2047];
  integer starts[0:4],sizes[0:4];
  integer tick=0,scene=0,aw_count=0,b_count=0,ar_count=0,rlast_count=0;
+ integer ddr_commands=0,unaligned=0;
  integer b_delay=0,r_delay=0,b_wait=0,r_wait=0;
  integer inject_error=0,do_cancel=0,unsafe_drain=0,ack_tick=0,token_tick=0;
  reg ack_ready=0,cancel=0;
@@ -31,6 +32,19 @@ module full_renderer_test;
   .drained(unsafe_drain?1'b1:idle),.cancel(cancel),.bus_error(memory_fault|token_fault),
   .ack_valid(ack_valid),.ack_ready(ack_ready),.ack_epoch(ack_epoch),
   .ack_sequence(ack_sequence),.ack_cancelled(ack_cancelled),.fault(fault),.busy());
+ integer command_seen=0;
+ always @(posedge clk) if(resetn && gpu.cmd_axis_tvalid && gpu.cmd_axis_tready)begin
+  if(ddr_commands)begin
+   if(command_seen < sizes[scene]-9)begin
+    if(gpu.cmd_axis_tdata !== commands[starts[scene]+2+command_seen])
+     $fatal(1,"Command mismatch scene=%0d word=%0d got=%h wanted=%h",scene,command_seen,gpu.cmd_axis_tdata,commands[starts[scene]+2+command_seen]);
+   end else if(command_seen<ddr_words)begin
+    if(gpu.cmd_axis_tdata!==0)$fatal(1,"DDR padding is not NOP");
+   end else if(command_seen!=ddr_words || gpu.cmd_axis_tdata!==32'h60000000)
+    $fatal(1,"Unexpected trailing DDR command");
+   command_seen<=command_seen+1;
+  end
+ end
  integer fifo_in=0,fifo_out=0,fifo_sent=0;
  always @(posedge clk) if(resetn)begin
   if(gpu.rixef.colorBuffer.coalescer.gen_coalesce.coalesce_fifo_write_inst.s_mem_axi_wvalid && gpu.rixef.colorBuffer.coalescer.gen_coalesce.coalesce_fifo_write_inst.s_mem_axi_wready)fifo_in<=fifo_in+1;
@@ -72,9 +86,11 @@ module full_renderer_test;
   @(negedge clk);cmd_valid=0;
  end
  endtask
- integer i,k,fd,first_tick,before_aw,before_ar;reg [63:0] texword;reg [15:0] texel;
+ integer i,k,fd,ddr_words,first_tick,before_aw,before_ar;reg [63:0] texword;reg [15:0] texel;
  string dump_name;
  initial begin
+  if($value$plusargs("unaligned=%d",unaligned))begin end
+  if($value$plusargs("ddr=%d",ddr_commands))begin end
   if($value$plusargs("b_delay=%d",b_delay))begin end
   if($value$plusargs("r_delay=%d",r_delay))begin end
   if($value$plusargs("error=%d",inject_error))begin end
@@ -92,8 +108,26 @@ module full_renderer_test;
   ram.mem[(32'h10000+9216)/8]=64'hdeadcafe9876abcd;
   resetn=1;repeat(10)@(negedge clk);
   for(scene=0;scene<5;scene=scene+1)begin
-   first_tick=tick;before_aw=aw_count;before_ar=ar_count;token_tick=0;
-   for(i=starts[scene];i<starts[scene]+sizes[scene];i=i+1)send(commands[i]);
+   command_seen=0;first_tick=tick;before_aw=aw_count;before_ar=ar_count;token_tick=0;
+   if(ddr_commands)begin
+    // Feed the render payload through the board's real command DDR reader.
+    // Exclude the two-word inline envelope and seven-word fence/response tail.
+    // The existing reader issues complete 16-word bursts: pad with NOPs.
+    ddr_words=unaligned ? ((sizes[scene]-9)|1) : ((sizes[scene]-9+15)/16)*16;
+    for(i=0;i<ddr_words;i=i+1)
+     ram.mem[(32'h30000+scene*4096)/8+i/2][(i%2)*32+:32]=
+      i<sizes[scene]-9 ? commands[starts[scene]+2+i] : 0;
+    send(32'hb0000000 | (ddr_words*4));
+    send(32'h06630000+scene*4096);
+    for(i=starts[scene]+sizes[scene]-7;i<starts[scene]+sizes[scene];i=i+1)send(commands[i]);
+   end else begin
+    for(i=starts[scene];i<starts[scene]+sizes[scene];i=i+1)send(commands[i]);
+   end
+   if(unaligned)begin
+    repeat(500)@(negedge clk);
+    if(ack_valid||idle)$fatal(1,"Unread DDR padding acknowledged");
+    $display("PASS full renderer: unread DDR padding keeps completion pending");$finish;
+   end
    if(inject_error==1 || (inject_error==2&&scene==2))begin
     repeat(500)@(negedge clk);
     if(!fault||ack_valid)$fatal(1,"Error not quarantined");
@@ -103,6 +137,8 @@ module full_renderer_test;
    if(ack_epoch!=32'habcddcba||ack_sequence!=scene+1)$fatal(1,"Wrong scene identity");
    if(ack_cancelled!=do_cancel)$fatal(1,"Wrong cancellation state");
    if(aw_count==before_aw)$fatal(1,"No framebuffer writes");
+   if(ddr_commands&&command_seen!=ddr_words+1)$fatal(1,"Missing DDR commands");
+   if(ddr_commands&&ar_count==before_ar)$fatal(1,"No command DDR reads");
    if(scene==3&&ar_count==before_ar)$fatal(1,"No texture reads");
    $display("PASS full renderer: scene=%0d cycles=%0d token_cycle=%0d ack_cycle=%0d writes=%0d reads=%0d cancel=%0d",scene,tick-first_tick,token_tick,ack_tick,aw_count-before_aw,ar_count-before_ar,ack_cancelled);
    if(ram.mem[32'h10000/8-1]!=64'hfeedface1234abcd || ram.mem[(32'h10000+9216)/8]!=64'hdeadcafe9876abcd)$fatal(1,"Framebuffer guard changed");
@@ -114,7 +150,7 @@ module full_renderer_test;
    for(i=0;i<4608;i=i+1)$fdisplay(fd,"%04x",(ram.mem[32'h10000/8+i/4]>>((i%4)*16))&16'hffff);
    $fclose(fd);
    /* Result and identity must remain stable while the CPU is stalled. */
-   repeat(25)begin @(negedge clk);if(!ack_valid||ack_sequence!=scene+1)$fatal(1,"Lost retained result");end
+   repeat(25)begin @(negedge clk);if(!ack_valid||ack_sequence!=scene+1||ack_epoch!=32'habcddcba||ack_cancelled!=do_cancel)$fatal(1,"Lost retained result");end
    ack_ready=1;@(negedge clk);ack_ready=0;cancel=0;repeat(3)@(negedge clk);
   end
   $finish;

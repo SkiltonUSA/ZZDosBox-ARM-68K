@@ -1,0 +1,33 @@
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+PASS full renderer: scene=0 cycles=20389 token_cycle=20148 ack_cycle=20404 writes=521 reads=0 cancel=0
+PASS full renderer: scene=1 cycles=5964 token_cycle=26141 ack_cycle=26397 writes=148 reads=0 cancel=0
+PASS full renderer: scene=2 cycles=5964 token_cycle=32134 ack_cycle=32390 writes=148 reads=158 cancel=0
+PASS full renderer: scene=3 cycles=7027 token_cycle=39190 ack_cycle=39446 writes=148 reads=16 cancel=0
+PASS full renderer: scene=4 cycles=5964 token_cycle=45183 ack_cycle=45439 writes=148 reads=158 cancel=0
+- tests/amiga/dosbox/glide/full_renderer.v:156: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.054 2026-11-01
+- Verilator: $finish at 455us; walltime 0.051 s; speed 8.998 ms/s
+- Verilator: cpu 0.050 s on 1 threads; allocated 3 MB

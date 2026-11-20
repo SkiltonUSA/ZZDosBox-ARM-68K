@@ -24,6 +24,11 @@ actual pixels, delayed memory responses, cancellation and error quarantine throu
 the proposed completion path. The board-specific HP3/firmware integration still
 needs validation before physical GPU timing.
 
+A [minimal XX19d-RIX backport](experimental/board-completion.md) now passes
+inline and DDR-command rendering tests with Xanxi’s command-read credit logic.
+It adds completion tracking across the memory-width adapter; board/firmware
+integration is still pending.
+
 The encoder itself has no MMIO, guest memory dereferences or display takeover.
 A separate 68k probe submits pre-encoded fixtures through the firmware's validated
 Core0 service. The standalone probe does not launch Core1. A separate diagnostic

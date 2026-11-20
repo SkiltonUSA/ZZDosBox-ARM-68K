@@ -1,0 +1,610 @@
+--- a/Float/rtl/float/ValueTrack.v
++++ b/Float/rtl/float/ValueTrack.v
+@@ -36,6 +36,7 @@
+         if (!resetn)
+         begin
+             valuesCounter <= 0;
++            valueInPipeline <= 0;
+         end
+         else
+         begin
+--- a/RasterIX/rtl/Float/rtl/float/ValueTrack.v
++++ b/RasterIX/rtl/Float/rtl/float/ValueTrack.v
+@@ -36,6 +36,7 @@
+         if (!resetn)
+         begin
+             valuesCounter <= 0;
++            valueInPipeline <= 0;
+         end
+         else
+         begin
+--- a/RasterIX/rtl/RasterIX/CoalesceAddrGen.v
++++ b/RasterIX/rtl/RasterIX/CoalesceAddrGen.v
+@@ -53,7 +53,10 @@
+     output wire [ 3 : 0]                        m_mem_axi_axcache,
+     output wire [ 2 : 0]                        m_mem_axi_axprot, 
+     output reg                                  m_mem_axi_axvalid,
+-    input  wire                                 m_mem_axi_axready
++    input  wire                                 m_mem_axi_axready,
++
++    // Indicates address requests held or buffered by the coalescer.
++    output wire                                 active
+ );
+     localparam TIMEOUT_MAX = (DATA_WIDTH / 8) + 1; // In cycles
+     localparam ADDR_BOUNDARY_MASK = ~(4096 - 1); // AXI requires a 4KB boundary
+@@ -75,6 +78,8 @@
+     assign m_mem_axi_axlock = 0;
+     assign m_mem_axi_axcache = 4'b0011;
+     assign m_mem_axi_axprot = 0;
++    assign active = s_mem_axi_axvalid | coalescer_valid | mem_req_pending
++        | skid_valid | m_mem_axi_axvalid;
+ 
+     always @(posedge aclk) 
+     begin
+--- a/RasterIX/rtl/RasterIX/CoalesceFiFo.v
++++ b/RasterIX/rtl/RasterIX/CoalesceFiFo.v
+@@ -73,7 +73,10 @@
+     input  wire [ID_WIDTH - 1 : 0]              m_mem_axi_bid,
+     input  wire [ 1 : 0]                        m_mem_axi_bresp,
+     input  wire                                 m_mem_axi_bvalid,
+-    output wire                                 m_mem_axi_bready
++    output wire                                 m_mem_axi_bready,
++
++    // Indicates buffered addresses or data that have not drained to memory.
++    output wire                                 active
+ );
+     localparam DATA_WIDTH_LG = $clog2(DATA_WIDTH / 8);
+ 
+@@ -93,6 +96,7 @@
+     wire                        fifo_empty;
+     reg                         fifo_read;
+     wire                        fifo_ready;
++    wire                        outstanding_write_active;
+ 
+     reg  [DATA_WIDTH - 1: 0]    skid_wdata;
+     reg  [STRB_WIDTH - 1 : 0]   skid_wstrb;
+@@ -137,6 +141,17 @@
+     assign s_mem_axi_bid = m_mem_axi_bid;
+     assign s_mem_axi_bresp = m_mem_axi_bresp;
+     assign s_mem_axi_bvalid = m_mem_axi_bvalid;
++    ValueTrack outstandingWriteTrack (
++        .aclk(aclk),
++        .resetn(resetn),
++        .sigIncomingValue(m_mem_axi_awvalid && m_mem_axi_awready),
++        .sigOutgoingValue(m_mem_axi_bvalid && m_mem_axi_bready),
++        .valueInPipeline(outstanding_write_active)
++    );
++
++    assign active = s_mem_axi_awvalid | s_mem_axi_wvalid
++        | m_mem_axi_awvalid | m_mem_axi_wvalid | skid_valid
++        | (awcount != 0) | !fifo_empty | outstanding_write_active;
+ 
+     always @(posedge aclk)
+     begin
+--- a/RasterIX/rtl/RasterIX/Coalescer.v
++++ b/RasterIX/rtl/RasterIX/Coalescer.v
+@@ -110,7 +110,9 @@
+     input  wire [ 1 : 0]                        m_mem_axi_rresp,
+     input  wire                                 m_mem_axi_rlast,
+     input  wire                                 m_mem_axi_rvalid,
+-    output wire                                 m_mem_axi_rready
++    output wire                                 m_mem_axi_rready,
++
++    output wire                                 active
+ );
+ 
+     assign s_mem_axi_rdata = m_mem_axi_rdata;
+@@ -123,6 +125,8 @@
+     generate
+         if (MAX_BEATS_TO_COALESCE > 1)
+         begin : gen_coalesce
++            wire                        write_addr_active;
++            wire                        write_fifo_active;
+             wire [ID_WIDTH - 1 : 0]     mem_axi_awid;
+             wire [ADDR_WIDTH - 1 : 0]   mem_axi_awaddr;
+             wire [ 7 : 0]               mem_axi_awlen; 
+@@ -197,7 +201,8 @@
+                 .m_mem_axi_axcache(mem_axi_awcache),
+                 .m_mem_axi_axprot(mem_axi_awprot),
+                 .m_mem_axi_axvalid(mem_axi_awvalid),
+-                .m_mem_axi_axready(mem_axi_awready)
++                .m_mem_axi_axready(mem_axi_awready),
++                .active(write_addr_active)
+             );
+ 
+             CoalesceFiFo #(
+@@ -252,11 +257,23 @@
+                 .m_mem_axi_bid(m_mem_axi_bid),
+                 .m_mem_axi_bresp(m_mem_axi_bresp),
+                 .m_mem_axi_bvalid(m_mem_axi_bvalid),
+-                .m_mem_axi_bready(m_mem_axi_bready)
++                .m_mem_axi_bready(m_mem_axi_bready),
++                .active(write_fifo_active)
+             );
++            assign active = write_addr_active | write_fifo_active;
+         end
+         else
+         begin : gen_bypass
++            wire outstanding_write_active;
++
++            ValueTrack outstandingWriteTrack (
++                .aclk(aclk),
++                .resetn(resetn),
++                .sigIncomingValue(m_mem_axi_awvalid && m_mem_axi_awready),
++                .sigOutgoingValue(m_mem_axi_bvalid && m_mem_axi_bready),
++                .valueInPipeline(outstanding_write_active)
++            );
++
+             // Bypass coalescing entirely: connect slave AW/W/B/AR channels directly to master
+             assign m_mem_axi_awid = s_mem_axi_awid;
+             assign m_mem_axi_awaddr = s_mem_axi_awaddr;
+@@ -290,6 +307,9 @@
+             assign m_mem_axi_arprot = s_mem_axi_arprot;
+             assign m_mem_axi_arvalid = s_mem_axi_arvalid;
+             assign s_mem_axi_arready = m_mem_axi_arready;
++
++            assign active = s_mem_axi_awvalid | s_mem_axi_wvalid
++                | m_mem_axi_awvalid | m_mem_axi_wvalid | outstanding_write_active;
+         end
+     endgenerate
+ 
+--- a/RasterIX/rtl/RasterIX/CommandParser.v
++++ b/RasterIX/rtl/RasterIX/CommandParser.v
+@@ -47,6 +47,8 @@
+     input  wire             rasterizerRunning,
+     input  wire             pixelInPipeline,
+     input  wire             dataInTriangleInterpolator,
++    input  wire             memoryPending,
++    output wire             idle,
+ 
+     // Color/Depth buffer control
+     output reg                                  colorBufferApply,
+@@ -82,6 +84,7 @@
+     localparam WAIT_FOR_IDLE = 5'd0;
+     localparam COMMAND_IN = 5'd1;
+     localparam EXEC_STREAM = 5'd2;
++    localparam EXEC_FENCE = 5'd3;
+ 
+     localparam MUX_NONE = 5'd0;
+     localparam MUX_TRIANGLE_STREAM = 5'd1;
+@@ -125,6 +128,9 @@
+     assign m_cmd_config_axis_tvalid      = (mux == MUX_RENDER_CONFIG) ? tvalid : 0;
+ 
+     assign perfBusy = state != COMMAND_IN;
++    assign idle = (state == COMMAND_IN) && !s_cmd_axis_tvalid
++        && !pixelInPipeline && !memoryPending;
++
+     assign perfTriangleRendering = rasterizerRunning && pixelInPipeline && dataInTriangleInterpolator;
+ 
+     assign framebufferCommandApplied = colorBufferApplied & depthBufferApplied & stencilBufferApplied;
+@@ -268,6 +274,11 @@
+                             | (s_cmd_axis_tdata[OP_FRAMEBUFFER_STENCIL_BUFFER_SELECT_POS] && !s_cmd_axis_tdata[OP_FRAMEBUFFER_SWAP_POS]);
+                         state <= WAIT_FOR_IDLE;
+                     end
++                    OP_FENCE:
++                    begin
++                        s_cmd_axis_tready <= 0;
++                        state <= EXEC_FENCE;
++                    end
+                     OP_NOP_STREAM:
+                     begin
+                         s_cmd_axis_tready <= 0;
+@@ -275,6 +286,11 @@
+                     end
+                     endcase
+                 end
++            end
++            EXEC_FENCE:
++            begin
++                if (!memoryPending && !pixelInPipeline)
++                    state <= WAIT_FOR_IDLE;
+             end
+             EXEC_STREAM:
+             begin : Stream
+--- a/RasterIX/rtl/RasterIX/FrameStreamingCore.v
++++ b/RasterIX/rtl/RasterIX/FrameStreamingCore.v
+@@ -86,6 +86,9 @@
+     input  wire                         aclk,
+     input  wire                         resetn,
+ 
++    // High when waiting for a command and no memory transaction is outstanding
++    output wire                         idle,
++
+     // Stream interface (Channel 0)
+     output wire                         m_st0_axis_tvalid,
+     input  wire                         m_st0_axis_tready,
+@@ -251,6 +254,21 @@
+     wire [ 2 : 0]               mem_axi_axprot;
+     wire                        mem_axi_axvalid;
+     wire                        mem_axi_axready;
++    wire                        outstandingWriteActive;
++
++    ValueTrack outstandingWriteTrack (
++        .aclk(aclk),
++        .resetn(resetn),
++        .sigIncomingValue(m_mem_axi_awvalid && m_mem_axi_awready),
++        .sigOutgoingValue(m_mem_axi_bvalid && m_mem_axi_bready),
++        .valueInPipeline(outstandingWriteActive)
++    );
++    
++    assign idle = !AUTO_LOAD
++        && (state == COMMAND) // Reads are complete in COMMAND because the stream consumes every requested beat.
++        && !s_st0_axis_tvalid // No incoming command
++        && !enableAddressChannel
++        && !outstandingWriteActive;
+ 
+     LinearAddressGenerator #(
+         .ADDR_WIDTH(ADDR_WIDTH),
+--- a/RasterIX/rtl/RasterIX/FramebufferAdapter.v
++++ b/RasterIX/rtl/RasterIX/FramebufferAdapter.v
+@@ -29,11 +29,15 @@
+     parameter ID_WIDTH = 8,
+ 
+     // Size of the pixels
+-    parameter PIXEL_WIDTH = 16
++    parameter PIXEL_WIDTH = 16,
++
++    // The active signals tracks also write responses
++    parameter TRACK_WRITE_RESPONSES = 1
+ )
+ (
+     input  wire                             aclk,
+     input  wire                             resetn,
++    output wire                             active,
+ 
+     /////////////////////////
+     // Read Side - Fragment Interface
+@@ -115,6 +119,7 @@
+     generate
+         if (DATA_WIDTH < PIXEL_WIDTH) begin
+             $error("FramebufferAdapter: DATA_WIDTH must be >= PIXEL_WIDTH. DATA_WIDTH=%0d, PIXEL_WIDTH=%0d", DATA_WIDTH, PIXEL_WIDTH);
++            assign active = 0;
+         end else if (DATA_WIDTH == PIXEL_WIDTH) begin
+             // Pass-through mode: DATA_WIDTH == PIXEL_WIDTH
+             // No conversion needed - direct connection of read and write paths
+@@ -141,6 +146,7 @@
+             wire [ 1 : 0] bcast_m_axis_tready;
+             wire [2 * PIXEL_WIDTH - 1 : 0] bcast_m_axis_tdata;
+             wire [2 * USER_WIDTH_FRAG - 1 : 0] bcast_m_axis_tuser;
++            assign active = s_frag_wvalid | (|bcast_m_axis_tvalid);
+             
+             axis_broadcast #(
+                 .M_COUNT(2),
+@@ -249,10 +255,12 @@
+                 .ADDR_WIDTH(ADDR_WIDTH),
+                 .STRB_WIDTH(STRB_WIDTH),
+                 .ID_WIDTH(ID_WIDTH),
+-                .PIXEL_WIDTH(PIXEL_WIDTH)
++                .PIXEL_WIDTH(PIXEL_WIDTH),
++                .TRACK_WRITE_RESPONSES(TRACK_WRITE_RESPONSES)
+             ) writer (
+                 .aclk(aclk),
+                 .resetn(resetn),
++                .active(active),
+ 
+                 .s_frag_tvalid(s_frag_wvalid),
+                 .s_frag_tlast(s_frag_wlast),
+--- a/RasterIX/rtl/RasterIX/FramebufferPacker.v
++++ b/RasterIX/rtl/RasterIX/FramebufferPacker.v
+@@ -36,6 +36,10 @@
+     // Width of ID signal
+     parameter ID_WIDTH = 8,
+ 
++    // The active signals tracks also write responses together 
++    // with an ongoing packing
++    parameter TRACK_WRITE_RESPONSES = 1,
++
+     // Size of the pixels
+     parameter PIXEL_WIDTH = 16,
+     localparam PIXEL_MASK_WIDTH = PIXEL_WIDTH / 8,
+@@ -43,6 +47,7 @@
+ ) (
+     input   wire                            aclk,
+     input   wire                            resetn,
++    output  wire                            active,
+ 
+     /////////////////////////
+     // Fragment interface
+@@ -109,9 +114,30 @@
+ 
+     wire [INDEX_TAG_WIDTH - 1 : 0]      tag;
+     wire [INDEX_BYTE_WIDTH - 1 : 0]     bytePos;
++    wire                                outstandingWriteActive;
++
++    generate
++        if (TRACK_WRITE_RESPONSES)
++        begin
++            ValueTrack outstandingWriteTrack (
++                .aclk(aclk),
++                .resetn(resetn),
++                .sigIncomingValue(m_mem_axi_awvalid && m_mem_axi_awready),
++                .sigOutgoingValue(m_mem_axi_bvalid && m_mem_axi_bready),
++                .valueInPipeline(outstandingWriteActive)
++            );
++        end
++        else
++        begin
++            assign outstandingWriteActive = 1'b0;
++        end
++    endgenerate
+             
+     assign tag = s_frag_taddr[INDEX_TAG_POS +: INDEX_TAG_WIDTH];
+     assign bytePos = s_frag_taddr[INDEX_BYTE_POS +: INDEX_BYTE_WIDTH];
++    assign active = s_frag_tvalid | !s_frag_tready | memRequest
++        | (|lineStrobe) | (|lineStrobeSkid) | lastSkid | wasLast
++        | m_mem_axi_awvalid | m_mem_axi_wvalid | outstandingWriteActive;
+ 
+     always @(posedge aclk)
+     begin
+--- a/RasterIX/rtl/RasterIX/PagedMemoryReader.v
++++ b/RasterIX/rtl/RasterIX/PagedMemoryReader.v
+@@ -60,7 +60,9 @@
+     input  wire [ 1 : 0]                m_mem_axi_rresp,
+     input  wire                         m_mem_axi_rlast,
+     input  wire                         m_mem_axi_rvalid,
+-    output reg                          m_mem_axi_rready
++    output reg                          m_mem_axi_rready,
++
++    output wire                         memoryTransactionsPending
+ );
+     localparam BYTES_PER_BEAT = DATA_WIDTH / 8;
+     localparam LG_BEAT_SIZE = $clog2(BYTES_PER_BEAT);
+@@ -93,6 +95,14 @@
+     localparam WAIT_FOR_MEMORY = 2;
+     localparam LAST_TRANSFER = 3;
+ 
++    ValueTrack outstandingReadsTrack (
++        .aclk(aclk),
++        .resetn(resetn),
++        .sigIncomingValue(m_mem_axi_arvalid & m_mem_axi_arready),
++        .sigOutgoingValue(m_mem_axi_rvalid & m_mem_axi_rready & m_mem_axi_rlast),
++        .valueInPipeline(memoryTransactionsPending)
++    );
++
+     reg  [15 : 0]               index;
+     reg  [ADDR_WIDTH - 1 : 0]   addr;
+     reg  [ 1 : 0]               state;
+--- a/RasterIX/rtl/RasterIX/RasterIXCoreEF.v
++++ b/RasterIX/rtl/RasterIX/RasterIXCoreEF.v
+@@ -267,6 +267,7 @@
+     output wire                             m_tmu1_axi_rready,
+ 
+     // Performance signals
++    output wire                             idle,
+     output wire                             perfBusy,
+     output wire                             perfTriangleRendering,
+     output wire                             perfRasterizerStall
+@@ -310,6 +311,8 @@
+     wire [SCREEN_POS_WIDTH - 1 : 0]                  framebufferParamYOffset;
+     wire [SCREEN_POS_WIDTH - 1 : 0]                  framebufferParamXResolution;
+     wire [SCREEN_POS_WIDTH - 1 : 0]                  framebufferParamYResolution;
++
++    wire colorActive, depthActive, stencilActive;
+ 
+     // Color buffer access
+     wire [PIPELINE_PIXEL_WIDTH - 1 : 0]              colorBufferClearColor;
+@@ -410,6 +413,7 @@
+                 .PIXEL_WIDTH(DEPTH_WIDTH),
+                 .STRB_WIDTH(STRB_WIDTH)
+             ) depthBuffer (
++                .active(depthActive),
+                 .aclk(aclk),
+                 .resetn(resetn),
+ 
+@@ -494,6 +498,7 @@
+             assign m_depth_rdata = 16'hffff;
+             assign m_depth_wready = 1;
+             assign depthBufferApplied = 1;
++            assign depthActive = 0;
+             
+             // Tie off depth outputs when depth buffer is disabled
+             assign m_depth_axi_awid = 0;
+@@ -533,6 +538,7 @@
+         .PIXEL_WIDTH(PIXEL_WIDTH),
+         .STRB_WIDTH(STRB_WIDTH)
+     ) colorBuffer (
++            .active(colorActive),
+         .aclk(aclk),
+         .resetn(resetn),
+ 
+@@ -623,6 +629,7 @@
+                 .PIXEL_WIDTH(8),
+                 .STRB_WIDTH(STRB_WIDTH)
+             ) stencilBuffer (
++                .active(stencilActive),
+                 .aclk(aclk),
+                 .resetn(resetn),
+ 
+@@ -707,6 +714,7 @@
+             assign m_stencil_rdata = 0;
+             assign m_stencil_wready = 1;
+             assign stencilBufferApplied = 1;
++            assign stencilActive = 0;
+             
+             // Tie off stencil outputs when stencil buffer is disabled
+             assign m_stencil_axi_awid = 0;
+@@ -882,6 +890,8 @@
+         .m_tmu1_axi_rvalid(m_tmu1_axi_rvalid),
+         .m_tmu1_axi_rready(m_tmu1_axi_rready),
+ 
++        .idle(idle),
++        .framebufferWritesPending(colorActive | depthActive | stencilActive),
+         .perfBusy(perfBusy),
+         .perfTriangleRendering(perfTriangleRendering),
+         .perfRasterizerStall(perfRasterizerStall)
+--- a/RasterIX/rtl/RasterIX/RasterIXRenderCore.v
++++ b/RasterIX/rtl/RasterIX/RasterIXRenderCore.v
+@@ -232,6 +232,8 @@
+     output wire                                 m_tmu1_axi_rready,
+ 
+     // Performance signals
++    input wire                                  framebufferWritesPending,
++    output wire                                 idle,
+     output wire                                 perfBusy,
+     output wire                                 perfTriangleRendering,
+     output wire                                 perfRasterizerStall
+@@ -315,6 +317,7 @@
+     wire             cmd_config_axis_tready;
+     // Control
+     wire             pixelInPipeline;
++    wire tmu0Pending, tmu1Pending;
+     wire             dataInTriangleInterpolator;
+     wire             startRendering;
+     wire             rasterizerRunning;
+@@ -345,7 +348,9 @@
+         // Rasterizer
+         // Control
+         .rasterizerRunning(rasterizerRunning),
+-        .pixelInPipeline(pixelInPipeline),
++        .pixelInPipeline(pixelInPipeline | (|framebuffer_bc_wvalid)),
++        .memoryPending(framebufferWritesPending | tmu0Pending | tmu1Pending),
++        .idle(idle),
+         .dataInTriangleInterpolator(dataInTriangleInterpolator),
+ 
+         // applied
+@@ -529,6 +534,7 @@
+     wire                                axis_tmu0_tlast;
+     wire  [TMU_MEMORY_WIDTH - 1 : 0]    axis_tmu0_tdata;
+     PagedMemoryReader pagedMemoryReaderTmu0 (
++        .memoryTransactionsPending(tmu0Pending),
+         .aclk(aclk),
+         .resetn(resetn),
+ 
+@@ -616,6 +622,7 @@
+             wire                                axis_tmu1_tlast;
+             wire  [TMU_MEMORY_WIDTH - 1 : 0]    axis_tmu1_tdata;
+             PagedMemoryReader pagedMemoryReaderTmu1 (
++        .memoryTransactionsPending(tmu1Pending),
+                 .aclk(aclk),
+                 .resetn(resetn),
+ 
+@@ -677,6 +684,7 @@
+         end
+         else
+         begin
++            assign tmu1Pending = 0;
+             assign texel1Input00 = 0;
+             assign texel1Input01 = 0;
+             assign texel1Input10 = 0;
+--- a/RasterIX/rtl/RasterIX/RasterIX_EF.v
++++ b/RasterIX/rtl/RasterIX/RasterIX_EF.v
+@@ -127,6 +127,7 @@
+     output wire                             m_axi_rready,
+ 
+     // Performance signals
++    output reg                              idle,
+     output wire                             perfBusy,
+     output wire                             perfTriangleRendering,
+     output wire                             perfRasterizerStall
+@@ -456,6 +457,7 @@
+         .DATA_WIDTH(DATA_WIDTH),
+         .DEPTH_LOG2(6)  // 64 x 64-bit response beats reserved
+     ) cmdReadCredit (
++        .active(commandReadsPending),
+         .clk(aclk),
+         .resetn(resetn),
+         .s_arid(cmd_rcredit_arid),
+@@ -497,6 +499,18 @@
+     wire                             cmd_axis_tlast;
+     wire [CMD_STREAM_WIDTH - 1 : 0]  cmd_axis_tdata;
+ 
++    wire dmaIdle, renderCoreIdle, commandReadsPending, commonReadsPending;
++    ValueTrack commonReadTrack (
++        .aclk(aclk), .resetn(resetn),
++        .sigIncomingValue(common_axi_arvalid && common_axi_arready),
++        .sigOutgoingValue(common_axi_rvalid && common_axi_rready && common_axi_rlast),
++        .valueInPipeline(commonReadsPending)
++    );
++    always @(posedge aclk) begin
++        if (!resetn) idle <= 0;
++        else idle <= dmaIdle && renderCoreIdle && !commandReadsPending && !commonReadsPending;
++    end
++
+     FrameStreamingCore #(
+         .STREAM_WIDTH(CMD_STREAM_WIDTH),
+         .ADDR_WIDTH(ADDR_WIDTH),
+@@ -504,6 +518,7 @@
+     ) dma (
+         .aclk(aclk),
+         .resetn(resetn),
++        .idle(dmaIdle),
+ 
+         .m_st1_axis_tvalid(cmd_axis_tvalid),
+         .m_st1_axis_tready(cmd_axis_tready),
+@@ -754,6 +769,7 @@
+         .m_tmu1_axi_rvalid(xbar_axi_rvalid[5 * 1 +: 1]),
+         .m_tmu1_axi_rready(xbar_axi_rready[5 * 1 +: 1]),
+ 
++        .idle(renderCoreIdle),
+         .perfBusy(perfBusy),
+         .perfTriangleRendering(perfTriangleRendering),
+         .perfRasterizerStall(perfRasterizerStall)
+--- a/RasterIX/rtl/RasterIX/RegisterAndDescriptorDefines.vh
++++ b/RasterIX/rtl/RasterIX/RegisterAndDescriptorDefines.vh
+@@ -42,6 +42,7 @@
+ //  +-----------------------+
+ // Steam size 0 32bit value.
+ localparam OP_NOP_STREAM = 0;
++localparam OP_FENCE = 6;
+ 
+ //---------------------------------------------------------------------------------------------------------
+ // Register writing
+--- a/RasterIX/rtl/RasterIX/StreamFramebuffer.v
++++ b/RasterIX/rtl/RasterIX/StreamFramebuffer.v
+@@ -51,6 +51,7 @@
+ (
+     input  wire                             aclk,
+     input  wire                             resetn,
++    output wire                             active,
+ 
+     /////////////////////////
+     // Configs
+@@ -220,6 +221,10 @@
+     wire                             coal_rvalid;
+     wire                             coal_rready;
+ 
++    wire adapter_active, coalescer_active;
++    assign active = adapter_active | coalescer_active | apply | !applied
++        | frag_tvalid | scissor_tvalid | strobegen_tvalid | write_mmu_tvalid;
++
+     FramebufferMMU #(
+         .ADDR_WIDTH(ADDR_WIDTH),
+         .PIXEL_WIDTH(PIXEL_WIDTH)
+@@ -246,8 +251,10 @@
+         .ADDR_WIDTH(ADDR_WIDTH),
+         .STRB_WIDTH(STRB_WIDTH),
+         .ID_WIDTH(ID_WIDTH),
+-        .PIXEL_WIDTH(PIXEL_WIDTH)
++        .PIXEL_WIDTH(PIXEL_WIDTH),
++        .TRACK_WRITE_RESPONSES(0)
+     ) fba (
++        .active(adapter_active),
+         .aclk(aclk),
+         .resetn(resetn),
+ 
+@@ -316,6 +323,7 @@
+         .STRB_WIDTH(STRB_WIDTH),
+         .MAX_BEATS_TO_COALESCE(MAX_BEATS_TO_COALESCE)
+     ) coalescer (
++        .active(coalescer_active),
+         .aclk(aclk),
+         .resetn(resetn),
+ 
+--- a/RasterIX/rtl/RasterIX/XACPCommandReadCredit.v
++++ b/RasterIX/rtl/RasterIX/XACPCommandReadCredit.v
+@@ -17,6 +17,7 @@
+ )(
+     input wire clk,
+     input wire resetn,
++    output wire active,
+ 
+     // Requester (commonAxiAdapter master)
+     input wire [ID_WIDTH-1:0] s_arid,
+@@ -91,6 +92,7 @@
+     assign s_rvalid = resetn && (wr_ptr != rd_ptr);
+     assign m_rready = resetn;
+ 
++    assign active = (reserved_count != 0) | s_arvalid | s_rvalid;
+     wire push = resetn && m_rvalid && m_rready;
+     wire pop = s_rvalid && s_rready;
+     wire [COUNT_WIDTH-1:0] add_beats = beats_needed[COUNT_WIDTH-1:0];

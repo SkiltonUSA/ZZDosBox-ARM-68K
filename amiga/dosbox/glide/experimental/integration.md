@@ -95,3 +95,7 @@ connects the actual upstream renderer to synthetic AXI RAM and the proposed
 receiver/observer/mailbox. Pixel correctness, delayed responses, cancellation
 and error quarantine pass. This addresses the upstream rendering side; it does
 not replace validation of Xanxi's modifications, converters, HP3 or CPU crossing.
+
+The [minimal board backport](board-completion.md) now preserves Xanxi’s renderer
+and command-credit logic while adding tested fence/drain propagation. Its
+synthetic-memory tests do not validate the converter, HP3 or CPU crossing.
