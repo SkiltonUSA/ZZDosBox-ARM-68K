@@ -37,7 +37,22 @@ static void check_lfb(unsigned n,unsigned offset){
  }
  free(dst);free(raw);
 }
-int main(void){for(unsigned o=0;o<16;o++){
+static void check_copy(unsigned n,unsigned src_offset,unsigned dst_offset){
+ unsigned char *a=malloc(n+src_offset),*b=malloc(n+dst_offset+1);
+ unsigned char *src=a+src_offset,*dst=b+dst_offset;
+ for(unsigned i=0;i<n;i++)src[i]=(i*37u+(i>>8))&255;
+ memset(b,0xa5,n+dst_offset+1);
+ grx_readback_copy(dst,src,n);
+ assert(!memcmp(dst,src,n));
+ for(unsigned i=0;i<dst_offset;i++)assert(b[i]==0xa5);
+ assert(dst[n]==0xa5);free(b);free(a);
+}
+int main(void){
+ for(unsigned a=0;a<16;a++)for(unsigned b=0;b<16;b++){
+  for(unsigned n=0;n<130;n++)check_copy(n,a,b);
+  check_copy(32767,a,b);check_copy(32768,a,b);check_copy(32769,a,b);
+ }
+ for(unsigned o=0;o<16;o++){
  for(unsigned n=0;n<32;n++){check(n,o);check_lfb(n,o);}
  check(65536,o);check(640*480,o);check_lfb(65536,o);check_lfb(640*480,o);
-}puts("NEON pixels: all colours, LFB conversion/dirty spans, tails, alignment and bounds PASS");}
+}puts("NEON pixels: all colours, LFB conversion/dirty spans and readback copies, tails, alignment and bounds PASS");}

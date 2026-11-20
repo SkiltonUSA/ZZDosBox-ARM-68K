@@ -47,7 +47,9 @@ static int exchange(unsigned op,uint32_t address,void *data,unsigned n){
   db_shell_poll();barrier();
  }
  barrier();if(channel->result.nonce!=nonce||channel->result.error||channel->result.bytes!=n)return 0;
- if(op==GRX_STREAM_READ)memcpy(data,(const void*)channel->data,n);
+ /* Only completed payload RAM, mapped normal non-cacheable by channel_plan;
+  * never vector-read request/result registers or cross the returned payload. */
+ if(op==GRX_STREAM_READ)grx_readback_copy(data,(const void*)channel->data,n);
  account(op-1,n,elapsed);
  sequence++;return 1;
 }

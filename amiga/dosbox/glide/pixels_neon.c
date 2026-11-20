@@ -2,6 +2,17 @@
  * Little-endian byte loads permit unaligned framebuffer input. */
 #include "pixels_neon.h"
 #include <arm_neon.h>
+void grx_readback_copy(void *destination,const void *source,unsigned bytes){
+ unsigned char *dst=destination;const unsigned char *src=source;
+ while(bytes>=64){
+  uint8x16_t a=vld1q_u8(src),b=vld1q_u8(src+16);
+  uint8x16_t c=vld1q_u8(src+32),d=vld1q_u8(src+48);
+  vst1q_u8(dst,a);vst1q_u8(dst+16,b);vst1q_u8(dst+32,c);vst1q_u8(dst+48,d);
+  src+=64;dst+=64;bytes-=64;
+ }
+ while(bytes>=16){vst1q_u8(dst,vld1q_u8(src));src+=16;dst+=16;bytes-=16;}
+ while(bytes--)*dst++=*src++;
+}
 void grx_rgb565_xrgb(const unsigned char *src, uint32_t *dst, unsigned count)
 {
  while (count >= 8) {
