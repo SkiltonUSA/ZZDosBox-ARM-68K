@@ -1,0 +1,62 @@
+{
+  "scope": "Physical 64x72 RGB565 offscreen solid-triangle batch throughput including Core0 scene preparation/submission/polling; not gameplay or display FPS",
+  "cpu_mhz": 800,
+  "gpu_mhz_design": 100,
+  "boot_sha256": "ccee9478fbfe0560becbfa5320728ed4712c2a6c2a79d4203d01ccff68b72642",
+  "host_sha256": "fee9b2dc974d2015fd8f0db9712a575afbc426cd1fcf635ecce15ff438db5476",
+  "identity": "Private firmware ABI 1 and FPGA GRX1 accepted at runtime; staged boot hash is a source hash, not a live firmware readback",
+  "checks": "Five preflight scenes (clear, solid, additive, texture, alpha), final timed-scene pixels, matching retired tokens, timer calibration within 1%, successful CLOSE",
+  "timing": "Timed interval begins before first measured submit and ends at last retirement; excludes preflight scenes, final readback and startup/close",
+  "runs": [
+    {
+      "name": "first",
+      "frames": 1,
+      "ticks": 41996,
+      "fps": 9524.927,
+      "global_timer_hz_before": 399999284,
+      "temperature_c_before": 55.7,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "lease_released": true
+    },
+    {
+      "name": "ten",
+      "frames": 10,
+      "ticks": 421032,
+      "fps": 9500.304,
+      "global_timer_hz_before": 399997065,
+      "temperature_c_before": 56.3,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "lease_released": true
+    },
+    {
+      "name": "hundred",
+      "frames": 100,
+      "ticks": 4210573,
+      "fps": 9499.805,
+      "global_timer_hz_before": 399998057,
+      "temperature_c_before": 56.3,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "lease_released": true
+    },
+    {
+      "name": "thousand",
+      "frames": 1000,
+      "ticks": 43000743,
+      "fps": 9302.194,
+      "global_timer_hz_before": 399997812,
+      "temperature_c_before": 55.4,
+      "clean_close": true,
+      "bridge_responding_after": true,
+      "lease_released": true
+    }
+  ],
+  "limits": [
+    "No game rendering or display presentation",
+    "No physical fault injection",
+    "No long-duration stability test",
+    "No full timing-coverage signoff"
+  ]
+}

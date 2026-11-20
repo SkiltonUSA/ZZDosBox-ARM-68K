@@ -8,8 +8,8 @@ game performance.
 An early [physical encoder measurement](../validation/capacity/README.md) now
 provides a CPU cost: 320 textured triangles take 1.077 ms median at 800 MHz,
 or 3.23% of a 30 FPS frame budget. This makes translation cost promising, but
-does not measure GPU rendering or predict GTA FPS. The next useful performance
-gate is a small scene timed through verified GPU completion.
+does not measure GPU rendering or predict GTA FPS. The small completion-timed scene now passes on hardware: 9,302.194 offscreen
+FPS over 1,000 frames. [Scope and evidence](../validation/measure/hardware/README.md).
 
 ## Remaining prerequisites
 
@@ -21,7 +21,7 @@ gate is a small scene timed through verified GPU completion.
    at +0.055/+0.011 ns, with zero failing endpoints. Existing timing coverage
    and CDC findings remain. The matching bitstream and boot image are packaged.
    The observed 1920x800 preset also passes steady-state 125 MHz timing; live
-   mode transitions and physical operation remain untested. Vivado 2025.2 runs under Wine/Rosetta on the ARM Mac; this is an
+   mode transitions remain untested; normal offscreen operation now passes. Vivado 2025.2 runs under Wine/Rosetta on the ARM Mac; this is an
    unofficial tool environment, not an AMD-supported operating system.
 2. **Verified firmware and hardware completion.** The existing submit validator
    rejects the proposed fence/echo sequence. A capability-aware interface,
@@ -31,12 +31,12 @@ gate is a small scene timed through verified GPU completion.
    The [C completion reader](completion-client.md) now passes 20 RTL-backed
    scenarios, including late faults. A [guarded transport and counter](measurement.md)
    now build against the recorded Core0 firmware. Its 96 ARM abort-model cases
-   and service lifecycle tests pass; physical MMIO, retirement and cleanup tests
-   remain required.
+   and service lifecycle tests pass. Normal physical MMIO, retirement, Core0
+   readback and cleanup now pass; fault injection remains required.
    A [tagged submission preparer](tagged-submission.md) also passes tests against
    the unchanged firmware validator: it validates a private command copy before
    adding the firmware-only fence and identity. The experimental counter uses it;
-   the matching boot image is staged, awaiting a cold start.
+   the matching boot image is active and the fixed-scene counter passes.
 3. **Guest renderer integration.** The overlay's 146 exports are diagnostic
    stubs, not 146 implemented Glide functions. Drawing dispatch, texture
    allocation/upload, guest state, required depth/LFB behaviour and presentation
@@ -45,12 +45,10 @@ gate is a small scene timed through verified GPU completion.
 
 ## Latest environment check
 
-The bridge connection recovered. The carry-free FPGA build and steady-state
-Workbench clock audit passed their declared timing checks. The firmware writer
-reported successful writes of the recovery image and experimental boot image;
-the Amiga remained responsive. Activation awaits a cold power-cycle. There has
-been no GPU execution or FPS measurement with this image yet. See the
-[staging receipt](../validation/measure/staging.json). No clock setting changed.
+The user restarted after staging. Runtime firmware ABI and FPGA identity checks
+pass, followed by five correctness scenes and four timed batches. All runs close
+cleanly; the bridge remains responsive. ARM clock stays at 800 MHz. No GTA
+workload or physical fault injection has run. [Physical evidence](../validation/measure/hardware/README.md).
 
 The [Wine installation repair](../../../../docs/xacp-firmware-rebuild.md#wine-installation-finding)
 resolved a shared-directory layout problem. Vivado batch mode now loads the Tcl

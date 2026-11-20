@@ -14,84 +14,25 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 ## Development builds
 
 **Experimental [Glide-to-RasterIX translator](amiga/dosbox/glide/README.md):**
-offscreen solid, textured and blended triangles now pass pixel readback on the ZZ9000.
-[Hardware report](amiga/dosbox/glide/validation/hardware/README.md) and
-[marker diagnostics](amiga/dosbox/glide/validation/marker-isolation/README.md) record
-completion failures and the pre-submit read dependency. A
-[Core1 witness comparison](amiga/dosbox/glide/validation/core1-witness/README.md)
-now isolates differing ARM/68k pixel observations; the cause remains unresolved.
-A [diagnostic Glide overlay](amiga/dosbox/glide/validation/guest-loader/README.md)
-now loads in the GTA ECTS native test and receives its hardware query. It reports
-no board; game rendering is not connected or included in the release. Core0
-depth support also remains a blocker. No GTA hardware FPS result is claimed.
-The first [A9 encoder measurement](amiga/dosbox/glide/validation/capacity/README.md)
-records **1.077 ms for 320 textured triangles at 800 MHz**, median across 30
-samples. This consumes 3.23% of a 30 FPS budget for command encoding alone;
-it is not GPU rendering or game FPS.
-An [upstream fence candidate](amiga/dosbox/glide/validation/fence-audit/README.md)
-passes parser, merged-write and cached-texture simulations (43 scenarios).
-The published XX19d-RIX
-parser lacks it; compatible FPGA/firmware integration is required before hardware use.
-A [tagged completion prototype](amiga/dosbox/glide/experimental/completion.md)
-adds nine simulation checks for batch identity, cancellation and error handling;
-its AXI-Lite register wrapper adds nine bus/identity checks. The
-[board endpoint](amiga/dosbox/glide/experimental/board-endpoint.md) now has
-validated experimental wiring and six tests through the generated AXI clock
-converter. Physical validation and matching firmware remain pending.
-The [DMA response/error prototype](amiga/dosbox/glide/experimental/response-path.md)
-adds tested batch-identity transport and memory-error quarantine. These remain
-offline experiments; the complete suite passes 79 scenarios and 23 mutation checks.
-A [full upstream renderer simulation](amiga/dosbox/glide/validation/full-renderer/README.md)
-now passes clear, solid, additive, textured and alpha-blended scenes through the
-completion path, including delayed memory, cancellation and error quarantine.
-A deliberately premature completion is detected. Physical board integration
-remains pending; these pixel checks are not GPU or game FPS.
-The [XX19d-RIX completion backport](amiga/dosbox/glide/experimental/board-completion.md)
-also passes 64 framebuffer checks with Xanxi’s renderer, including DDR-fed
-commands. A new check prevents completion while command words remain buffered
-across the memory-width adapter. The isolated board project includes the new
-endpoint; physical validation remains.
-The [four-state HP3 test](amiga/dosbox/glide/experimental/board-hp3.md)
-adds the generated memory converter and catches reset, address-width, rounding
-and blend-pipeline issues missed by two-state simulation. The corrected build
-passes 32 framebuffer checks. Corrected board synthesis, an independent
-checkpoint audit and optimization have passed, with both debug cores implemented
-and no unresolved blocks. The first routed candidate missed the 100 MHz texture
-path requirement by 0.773 ns; physical refinement reduced that to 0.282 ns but
-still failed. A carry-free texture-address candidate passes simulation, synthesis
-and an independent optimized-checkpoint audit. Its completed route meets declared
-timing constraints at **+0.055 ns setup / +0.011 ns hold**, with no routing errors.
-The 1920×800 Workbench preset also meets declared timing at 125 MHz. Existing
-timing-coverage gaps remain. The experimental boot image is staged for a cold start; physical
-GPU validation and FPS measurement remain pending.
-The experimental [firmware completion reader](amiga/dosbox/glide/experimental/completion-client.md)
-passes 20 scenarios against the mailbox RTL, including faults after consumption.
-The separate [completion-driven counter](amiga/dosbox/glide/experimental/measurement.md)
-and guarded MMIO firmware now build. ARM model tests cover 96 bus-access cases
-and service start/count/close/failure paths. Physical validation remains pending.
-The [tagged submission preparer](amiga/dosbox/glide/experimental/tagged-submission.md)
-validates a private command copy before adding the fence and identity. Its
-five scene streams match the existing renderer fixtures; it is not yet installed.
-[Hardware FPS prerequisites](amiga/dosbox/glide/experimental/fps-readiness.md):
-a compatible FPGA build and guest renderer integration are still required.
-The [XACP firmware rebuild guide](docs/xacp-firmware-rebuild.md) records Xanxi's
-source baseline, boot-image components and pending integration work. The ARM
-firmware baseline and a regenerated FSBL candidate now build. Full-board FPGA
-synthesis, an independent checkpoint audit and optimization completed, including
-both debug cores. Full-board routing completed with no routing errors; its 75 MHz
-video baseline passes the declared timing constraints. A [display-clock sweep](amiga/dosbox/glide/experimental/video-modes.md)
-finds setup failures at higher pixel clocks and two PLL-range warnings.
-An isolated [physical optimisation candidate](amiga/dosbox/glide/experimental/video-optimization.md)
-improves the checked 150 MHz video setup margin from −1.621 ns to +0.021 ns,
-with four additional LUTs. This is FPGA timing progress, not a measured FPS gain.
-Independent reopening confirms positive constrained timing across six checked
-clock configurations, including the corrected 146.429 MHz PLL ratio.
-Missing audio-clock constraints and other timing
-coverage/clock-domain findings still require review before hardware validation.
-No replacement firmware has been flashed.
-The [video/audio crossing audit](amiga/dosbox/glide/experimental/crossing-audit.md)
-adds nine passing audio-clock simulations and 18 passing fetch-consumer tests.
-Integrated video handoff and timing coverage work remain before promotion.
+the matching FPGA/firmware now completes physical GPU batches with pixel
+verification and clean shutdown. At 800 MHz ARM, the 1,000-frame test measured
+**9,302 offscreen FPS** for a **64 × 72 RGB565 solid triangle**, including Core0
+preparation, submission and completion polling. This is a small rendering test;
+**GTA gameplay FPS has not been measured**.
+[Results and raw logs](amiga/dosbox/glide/validation/measure/hardware/README.md).
+
+- Clear, solid, additive, textured and alpha-blended correctness scenes pass.
+- Batches of 1, 10, 100 and 1,000 frames complete and release the GPU cleanly.
+- The carry-free texture-address build meets declared routed setup/hold timing,
+  including the current 1920×800 Workbench mode. Timing-coverage gaps remain.
+- The diagnostic GTA ECTS overlay loads but still reports no board. Guest drawing,
+  textures/state, required depth/LFB behaviour and presentation need integration.
+- The existing 1.0 Beta release does not include this experimental firmware.
+
+[Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·
+[Remaining integration](amiga/dosbox/glide/experimental/fps-readiness.md) ·
+[FPGA build evidence](amiga/dosbox/glide/validation/texture-address/README.md) ·
+[XACP rebuild guide](docs/xacp-firmware-rebuild.md).
 
 **Current release: 1.0 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·

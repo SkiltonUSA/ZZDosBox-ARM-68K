@@ -38,3 +38,10 @@ setup/hold constraints, with remaining timing-coverage limitations.
 - `staging.json`: firmware-writer completion for recovery and candidate images,
   verified source uploads and a responsive Amiga afterward. No bootcard readback
   or GPU execution is claimed. A cold power-cycle is required before measurement.
+
+## Physical completion results
+
+The subsequent [hardware runs](hardware/README.md) pass normal retirement, Core0
+pixel verification and clean close. The 1,000-frame batch measures 9,302.194
+offscreen FPS at 800 MHz ARM. Earlier staging/build receipts retain their
+original scope; they are not current deployment-status statements.

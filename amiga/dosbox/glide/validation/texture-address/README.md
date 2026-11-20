@@ -49,5 +49,6 @@ observed 1920x800 Workbench preset also passes steady-state 125 MHz analysis
 at +0.040 ns setup / +0.011 ns hold, with no PLL findings. The original clock
 model was restored; live mode transitions are not tested by this analysis.
 See [bitstream/package evidence](bitstream/result.json) and
-[Workbench mode evidence](workbench125/result.json). Physical GPU FPS remains
-unmeasured.
+[Workbench mode evidence](workbench125/result.json). The subsequent [physical counter](../measure/hardware/README.md) passes at
+9,302.194 offscreen FPS for the 1,000-frame tiny-scene batch. No gameplay FPS
+is claimed.

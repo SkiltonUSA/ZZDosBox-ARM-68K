@@ -1,10 +1,10 @@
 # Completion-driven GPU counter
 
-The experimental firmware and `ZZGlide-Measure` host application build, but have
-**not run on the physical GPU**. No GPU or GTA FPS is claimed. The matching FPGA
-carry-free candidate meets declared routed setup/hold constraints; bitstream
-generation and packaging have passed. Hardware validation remains; this is
-not a release.
+The experimental firmware and `ZZGlide-Measure` now pass physical GPU runs of
+1, 10, 100 and 1,000 frames. The largest batch measured **9,302.194 offscreen FPS**
+at 800 MHz ARM, with pixel checks and clean CLOSE. This is not GTA or display FPS.
+[Results and raw logs](../validation/measure/hardware/README.md). The build remains
+experimental and is not included in the release.
 
 The first measurement is deliberately small: a 64 × 72 RGB565 offscreen target
 with a solid triangle. Five correctness scenes first check clearing, solid
@@ -58,8 +58,8 @@ handler. The hook uses only core registers and restores the original exception
 frame and IRQ/FIQ mask.
 
 This handles a returned `SLVERR`/`DECERR`; it cannot recover from an interconnect
-that never responds. Physical error injection, retirement, cache visibility and
-cleanup still need validation with the matching FPGA image.
+that never responds. Normal-path retirement, Core0 pixel visibility and cleanup passed with the
+matching image. Physical error injection remains untested.
 
 ## Reproduce offline checks
 
