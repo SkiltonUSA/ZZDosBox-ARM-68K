@@ -12,6 +12,12 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Record the first visually confirmed GTA ECTS gameplay baseline: **3.68 FPS**
+  at 800 MHz ARM, 640×480 windowed, 3,000 DOS cycles, audio off. Capture, raw
+  completed-frame timing, build identities and clean GPU/Core1 teardown are
+  retained in [the report](amiga/dosbox/glide/validation/gta-live/README.md#first-measured-gameplay).
+  Capture/transfer activity limits this initial sample. The released player is unchanged.
+
 - Add an experimental full-address completion endpoint and isolated board-project
   builder. Validate generated wiring and preserve existing device addresses,
   renderer settings and PS7 configuration. Eleven endpoint scenarios and six

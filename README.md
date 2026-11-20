@@ -18,18 +18,19 @@ the matching FPGA/firmware now completes physical GPU batches with pixel
 verification and clean shutdown. At 800 MHz ARM, the 1,000-frame test measured
 **9,302 offscreen FPS** for a **64 × 72 RGB565 solid triangle**, including Core0
 preparation, submission and completion polling. This is a small rendering test;
-**GTA gameplay FPS has not been measured**.
+this synthetic result does not predict GTA performance.
 [Results and raw logs](amiga/dosbox/glide/validation/measure/hardware/README.md).
 
 - Clear, solid, additive, textured and alpha-blended correctness scenes pass.
 - Batches of 1, 10, 100 and 1,000 frames complete and release the GPU cleanly.
 - The carry-free texture-address build meets declared routed setup/hold timing,
   including the current 1920×800 Workbench mode. Timing-coverage gaps remain.
-- The diagnostic GTA ECTS overlay loads but still reports no board. Guest drawing,
-  textures/state, required depth/LFB behaviour and presentation need integration.
+- The live GTA ECTS candidate now renders a captured street scene through
+  RasterIX, including textures and framebuffer edits. General Glide compatibility
+  and comprehensive visual validation remain unfinished.
 - [Guest triangle batching](amiga/dosbox/glide/experimental/guest-draw.md) now passes
   native, firmware-validator and Cortex-A9 model checks, including packet rollover
-  and failed-submission handling. Live guest transport is still pending.
+  and failed-submission handling. Live guest transport now runs on hardware.
 - The [larger workload test](amiga/dosbox/glide/validation/workload/README.md)
   renders 320 textured triangles at **54.47 FPS (320×240)** and **45.57 FPS
   (640×480)**, averaged across three 100-frame runs at each resolution. Pixel
@@ -41,7 +42,14 @@ preparation, submission and completion polling. This is a small rendering test;
   synthetic offscreen results; the released player is unchanged.
 - The existing 1.0 Beta release does not include this experimental firmware.
 
-The [live GTA candidate](amiga/dosbox/glide/validation/gta-live/README.md) builds and passes captured-call tests. The GPU-close correction now passes physical startup/exit checks. The first GTA run awaits recovery after a bridge screenshot timeout; gameplay FPS remains pending.
+**First measured GTA gameplay: 3.68 FPS** at 800 MHz ARM, 640×480 windowed,
+3,000 DOS cycles and sound off. The run completed 491 Glide presentations;
+481 intervals after warm-up took 130.81 seconds. GPU close and Core1 restoration
+passed. This is an experimental baseline, with capture/transfer activity during
+the run, not a playable-speed or audio result.
+[Screenshot, method and raw logs](amiga/dosbox/glide/validation/gta-live/README.md#first-measured-gameplay).
+
+![GTA ECTS gameplay through RasterIX](amiga/dosbox/glide/validation/gta-live/gameplay-800mhz/gta-gameplay.png)
 
 [Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·
 [Remaining integration](amiga/dosbox/glide/experimental/fps-readiness.md) ·

@@ -1,0 +1,48 @@
+{
+  "scope": "GTA ECTS live gameplay; completed Glide presentations, first visually confirmed run",
+  "date": "2026-11-20",
+  "clock_mhz": 800,
+  "cpu_cycles": 3000,
+  "memory_mib": 32,
+  "jit_cache_mib": 4,
+  "exec_allocation_mib": 64,
+  "resolution": [
+    640,
+    480
+  ],
+  "display": "Workbench window",
+  "audio": "off",
+  "speaker": false,
+  "completed_frames": 491,
+  "warmup_frames": 10,
+  "measured_intervals": 481,
+  "first_tick": 922631194123,
+  "last_tick": 974954472373,
+  "elapsed_ticks": 52323278250,
+  "timer_hz_before": 400010729,
+  "timer_hz_after": 399991260,
+  "timer_hz_used": 399991260,
+  "elapsed_seconds": 130.81105384652653,
+  "fps": 3.6770592840290925,
+  "visual_confirmation": true,
+  "visual_scope": "Street scene with car, buildings and HUD; not comprehensive rendering validation",
+  "clean_close": true,
+  "glide_error": 0,
+  "glide_status": 0,
+  "channel_requests": 501868,
+  "limitations": [
+    "One visually confirmed sample",
+    "Screenshot and bridge transfer activity occurred during the run",
+    "Audio disabled; no audio stability claim",
+    "No matched software renderer or cycle-setting comparison"
+  ],
+  "builds": {
+    "player_sha256": "874c71e3251a4338e6a8ac62d6c0d052319af4ab2225d8fe5d2e182588ee4483",
+    "arm_elf_sha256": "47906412fc9b17f040e51b4f2bc867952ff71e5fdfdbdc6d2a36a80ea9f2d54d",
+    "boot_sha256": "6b0b1fc930c54b7bd2687bf946bcd1595672ff63573ca18d858d9581e071192c",
+    "firmware_elf_sha256": "e0f0b0922a144cb1f24384702d3a0be3680955727ba715fe512af37b2963ca23",
+    "fpga_sha256": "3a129f822e60f27747d458b0f67b278ae6a7bbb40dcbb5f2aea134c5bd01c90e",
+    "overlay_md5": "f5a5f083d02708961049cc5453b9675e",
+    "game_executable_md5": "ae2a20edbf0cf0bfa0bcc7691565a674"
+  }
+}

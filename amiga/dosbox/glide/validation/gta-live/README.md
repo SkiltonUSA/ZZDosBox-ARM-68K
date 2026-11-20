@@ -1,8 +1,8 @@
 # GTA ECTS live-renderer candidate
 
-The private GTA player now builds for the Cortex-A9 and Amiga. **Hardware GTA
-FPS is not measured yet.** It requires the new streaming firmware; the released
-DOSBox player remains unchanged.
+The private GTA player renders gameplay on the Cortex-A9 and Amiga through
+RasterIX. **The first visually confirmed run measured 3.68 FPS.** It requires
+the experimental streaming firmware; the released DOSBox player remains unchanged.
 
 The captured gameplay path uses texture decals with ARGB1555 cutouts, square
 single-level textures, bilinear filtering and RGB555 linear-framebuffer writes.
@@ -23,8 +23,8 @@ subset and stops on unsupported calls. This is not general Glide compatibility.
   This initial route includes copy and synchronization costs.
 - The frame counter waits for a window paint or fullscreen PAN acknowledgement.
   It records completed swaps and raw timer intervals after ten warm-up swaps.
-  A gameplay screenshot, stable timer calibration and clean teardown are still
-  required before reporting gameplay FPS.
+  The first measured run has a gameplay screenshot, timer calibration and clean
+  teardown. Broader rendering and performance validation remains necessary.
 
 ## Validation
 
@@ -42,17 +42,17 @@ results using synthetic pixels. These tests do not replace physical execution.
 
 ## Next hardware checks
 
-1. Cold-boot the streaming candidate and query its identity and idle state.
-2. Verify an empty DOS session opens and closes the channel cleanly.
-3. Run GTA, inspect rendered gameplay and capture the display.
+1. Repeat a controlled gameplay interval without capture or file transfers.
+2. Profile request submission, framebuffer edits, readback and x86 execution.
+3. Compare the same scene against a reference renderer for missing or incorrect pixels.
 4. Measure matched gameplay intervals, retaining frame counts, timer calibration,
    CPU cycles, resolution, clock, audio mode and all build identities.
 5. Verify Core1 restoration and GPU close after every run. Stop after any
    unverified cleanup; do not retry a possibly active GPU client.
 
 The FPGA is unchanged from the tested carry-free texture-address build. Existing
-board timing/CDC limitations still apply. The new Core0 service is experimental. Its empty-session lifecycle now passes
-on hardware; live drawing and gameplay measurement remain unverified.
+board timing/CDC limitations still apply. The new Core0 service is experimental.
+Empty-session and gameplay startup/exit checks pass on hardware.
 
 ## First physical lifecycle and close correction
 
@@ -83,7 +83,62 @@ and an inactive channel with no pending work or failure. ARM remained at
 800 MHz. The proven paired firmware remains available as `GRXPAIR.bin`.
 
 The first actual GTA session was launched windowed at 640×480, 3,000 DOS cycles,
-32 MiB guest RAM and sound disabled. The bridge screenshot request timed out;
-network pings and bridge heartbeats continued. No rendered-gameplay capture or
-completed-frame result was recovered. Further commands were stopped pending
-session recovery. **There is still no measured GTA gameplay FPS.**
+32 MiB guest RAM and sound disabled. A bridge screenshot request timed out;
+network pings and bridge heartbeats continued. After the session was closed,
+its recovered log showed 484 completed Glide presentations and clean teardown.
+That interval measured 3.70 FPS, but had no visual confirmation. It is retained
+as an unconfirmed-scene measurement, not a separate validated gameplay sample.
+
+## First measured gameplay
+
+The fifth physical run reached the GTA ECTS street scene. A player-generated
+Ctrl+F5 capture shows the car, road, buildings and HUD. This establishes visible
+game rendering; it does not establish complete pixel correctness or compatibility.
+
+![GTA ECTS through RasterIX](gameplay-800mhz/gta-gameplay.png)
+
+| Setting / result | Value |
+| --- | --- |
+| ARM / GPU clock | 800 MHz / 100 MHz, one TMU |
+| Display | 640×480 Workbench window, S3 adapter |
+| DOS cycles / guest RAM | 3,000 / 32 MiB |
+| JIT cache / Exec allocation | 4 MiB / 64 MiB |
+| Audio / PC speaker | Off / off |
+| Completed Glide presentations | 491 |
+| Warm-up / measured intervals | 10 presentations / 481 intervals |
+| Measured elapsed time | 130.811 seconds |
+| Completed-frame rate | **3.677 FPS**, rounded **3.68 FPS** |
+| Exit | RC0, `GLIDE_CLOSE OK`, owned memory released |
+
+The counter advances only after a completed window paint (or fullscreen PAN
+acknowledgement). It is separate from the 25,401 VGA presentation events in the
+whole-session log. Timing starts at presentation 10 and ends at presentation 491:
+
+```text
+first = 922631194123 ticks
+last  = 974954472373 ticks
+timer = 399991260 Hz
+FPS   = (491 - 10) * timer / (last - first) = 3.677059284
+```
+
+Timer calibration before/after was 400,010,729 / 399,991,260 Hz; the reported
+calculation uses the latter. ARM stayed at 800 MHz. After exit, temperature was
+59.7°C, Core1 idle, GPU channel inactive with no failure or work pending, and
+register/MMU/cache restoration checks passed. The bridge reservation was released.
+
+This is one visually confirmed baseline. Screenshot capture and bridge transfers
+occurred during the run and can affect its timing. Sound was disabled. Three
+intermediate runs stopped at menus/loading with zero Glide presentations; their
+VGA refresh counts are not game FPS. They provide no valid cycle-setting comparison.
+Held Return input finally advanced the menu, avoiding short injected taps that
+were unreliable in this test.
+
+[Measurement and build identities](gameplay-800mhz/measurement.json) ·
+[Raw run log](gameplay-800mhz/run.log) ·
+[Released channel](gameplay-800mhz/channel-after.log) ·
+[Clock and temperature](gameplay-800mhz/clock-after.log) ·
+[Artifact hashes](gameplay-800mhz/sha256.json).
+
+The result proves the guest-to-RasterIX route runs on hardware, but 3.68 FPS is
+not yet satisfactory gameplay performance. Request batching and framebuffer
+transfer costs are profiling candidates; no gain is claimed for them yet.

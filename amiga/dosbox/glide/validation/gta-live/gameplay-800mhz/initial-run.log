@@ -1,0 +1,70 @@
+[OK]
+GPU_STREAM active=0 channel=0017e000 bytes=32896 nonce=0f78acf3 next=515124 failed=0 working=0 capacity=32768
+CLOCK_HOST command=0 elapsed_us=80 (includes 20ms polling)
+CLOCK_SESSION error=0 target_div=48 temp=59.2 C ctrl=00030008 cfg=000fa240 cpu=1f000200 nonce=800171117 fault=0 core1_idle=1
+CLOCK_KEEP held=1
+OWNED amiga=50000040 arm_candidate=101f0040 size=67108864 nonce=0f78acf3
+BOOTSTRAP amiga=40c78400 arm=00e68400 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+GLIDE_OPEN channel=0017e000 bytes=32896 nonce=0f78acf3
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+EXPANDED cpu=0 memory_services=0 joystick=0 extra_sound=0 cycle_mode=0 serial=0 paged_jit=0
+COMPAT ems=1 xms=1 sound=off speaker=0
+DISPLAY_CONFIG mode=window fps=0 system=embedded DOS 5
+SETTINGS memory_mb=32 machine=3 cycles=3000 live=1
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+VIDEO adapter=3 source=640x480 monochrome=0
+JIT magic=4a495431 commits=595529 witness=1 dispatches=16089568 cache_bytes=4194304 heap_peak=6084800 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+CPU_CYCLES applied=3000
+ARM_FPS tenths=0
+PC frames=10890 emulated_ms=323037 wall_ms=308433 timed_done=0
+POLL ms=1 calls=122296 wait_us=174277894 max_us=20062
+SHELL result=2 guest_exit=0 slices=1227665 bytes=378 hash=5dd988dc mismatches=0
+DosBox ZZ9000 project                         1.0 Beta
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>PLAYGTA.BAT
+DOS/4GW Professional Protected Mode Run-time  Version 2.00
+Copyright (c) Tenberry Software, Inc. 1995
+
+SHELL PASS mode=0
+FILES_TIME calls=5561 read_us=21336865 write_us=0 other_us=2606424 max_us=223599 (totals saturate at 4294967295)
+FILES_OP op=open calls=65 total_us=833014 max_us=104077
+FILES_OP op=close calls=62 total_us=75477 max_us=6930
+FILES_OP op=read calls=4871 total_us=21336865 max_us=223599
+FILES_OP op=seek calls=494 total_us=507903 max_us=18032
+FILES_OP op=stat calls=68 total_us=1185240 max_us=103828
+FILES_OP op=testdir calls=1 total_us=4790 max_us=4790
+DISK host_seeks=0
+FILES requests=5561 read=13855103 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=10334000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=10890 flips=0 wait_us=0 background_waits=0
+COPY observed_us=46984336 max_us=15502
+PIPELINE enabled=0 overlaps=0 releases=10890
+GTA_PRESENT magic=47544c31 frames=484 warmup=10 first=00000039a97aa58e last=000000459418e5af call_error=0 status=0
+GLIDE_CLOSE OK
+LAUNCHER exit=0; owned memory released
+GTA RC=0
