@@ -1,0 +1,20 @@
+{
+  "cases": [
+    {
+      "case": "extra",
+      "rejected_before_output": true,
+      "exit": 1
+    },
+    {
+      "case": "changed",
+      "rejected_before_output": true,
+      "exit": 1
+    },
+    {
+      "case": "nested",
+      "rejected_before_output": true,
+      "exit": 2
+    }
+  ],
+  "script_sha256": "049ee8af7ee9231a866c8e21994d4614d12678c17522f6c588b156d5bdf6269c"
+}

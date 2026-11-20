@@ -1,22 +1,22 @@
 // Experimental 32-bit AXI-Lite interface, single clock, one transaction/channel.
 // Offsets are local to this unassigned peripheral, not ZZ9000/XACP addresses.
-module grx_completion_axil (
+module grx_completion_axil #(parameter ADDR_WIDTH=8) (
  input wire clk, input wire resetn,
  input wire token_valid, output wire token_ready,
  input wire [31:0] token_epoch, input wire [31:0] token_sequence,
  input wire drained, input wire bus_error,
- input wire [7:0] s_awaddr, input wire s_awvalid, output wire s_awready,
+ input wire [ADDR_WIDTH-1:0] s_awaddr, input wire s_awvalid, output wire s_awready,
  input wire [31:0] s_wdata, input wire [3:0] s_wstrb,
  input wire s_wvalid, output wire s_wready,
  output reg [1:0] s_bresp, output reg s_bvalid, input wire s_bready,
- input wire [7:0] s_araddr, input wire s_arvalid, output wire s_arready,
+ input wire [ADDR_WIDTH-1:0] s_araddr, input wire s_arvalid, output wire s_arready,
  output reg [31:0] s_rdata, output reg [1:0] s_rresp,
  output reg s_rvalid, input wire s_rready
 );
  localparam STATUS=8'h00, EPOCH=8'h04, SEQUENCE=8'h08;
  localparam EXPECT_EPOCH=8'h0c, EXPECT_SEQUENCE=8'h10, CONSUME=8'h14, CANCEL=8'h18;
  reg aw_held,w_held;
- reg [7:0] write_address;
+ reg [ADDR_WIDTH-1:0] write_address;
  reg [31:0] write_data,expected_epoch,expected_sequence;
  reg [3:0] write_strobe;
  reg [1:0] expected_valid;
@@ -55,6 +55,7 @@ module grx_completion_axil (
  always @* begin
   read_data=0;read_response=0;
   case(s_araddr)
+   8'h1c:read_data=32'h47525831; // GRX1 experimental endpoint identity
    STATUS:read_data={28'b0,(ack_valid && ack_cancelled),(fault || bus_error),busy,ack_valid};
    EPOCH:read_data=ack_valid?ack_epoch:0;
    SEQUENCE:read_data=ack_valid?ack_sequence:0;

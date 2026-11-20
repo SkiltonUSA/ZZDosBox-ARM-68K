@@ -34,10 +34,10 @@ The published XX19d-RIX
 parser lacks it; compatible FPGA/firmware integration is required before hardware use.
 A [tagged completion prototype](amiga/dosbox/glide/experimental/completion.md)
 adds nine simulation checks for batch identity, cancellation and error handling;
-its AXI-Lite register wrapper adds nine bus/identity checks. Board addressing,
-clock-domain crossing and FPGA integration remain pending; the
-[clock-topology audit](amiga/dosbox/glide/experimental/integration.md) identifies
-an existing AXI converter arrangement to follow.
+its AXI-Lite register wrapper adds nine bus/identity checks. The
+[board endpoint](amiga/dosbox/glide/experimental/board-endpoint.md) now has
+validated experimental wiring and six tests through the generated AXI clock
+converter. Physical validation and matching firmware remain pending.
 The [DMA response/error prototype](amiga/dosbox/glide/experimental/response-path.md)
 adds tested batch-identity transport and memory-error quarantine. These remain
 offline experiments; the complete suite passes 79 scenarios and 23 mutation checks.
@@ -49,7 +49,8 @@ pending; these pixel checks are not GPU or game FPS.
 The [XX19d-RIX completion backport](amiga/dosbox/glide/experimental/board-completion.md)
 also passes 64 framebuffer checks with Xanxi’s renderer, including DDR-fed
 commands. A new check prevents completion while command words remain buffered
-across the memory-width adapter. Full-board wiring and physical validation remain.
+across the memory-width adapter. The isolated board project includes the new
+endpoint; physical validation remains.
 [Hardware FPS prerequisites](amiga/dosbox/glide/experimental/fps-readiness.md):
 a compatible FPGA build and guest renderer integration are still required.
 The [XACP firmware rebuild guide](docs/xacp-firmware-rebuild.md) records Xanxi's

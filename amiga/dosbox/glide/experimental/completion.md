@@ -1,10 +1,10 @@
 # Tagged completion mailbox — experimental proposal
 
 `completion.v` is a small synchronous RTL prototype for reporting GPU retirement.
-It is not wired into the ZZ9000 and assigns no XACP opcode or capability bit.
-`completion_axil.v` adds a tested, single-clock AXI-Lite register interface with
-local offsets only; it has no assigned ZZ9000 address. Neither module has
-undergone FPGA synthesis or timing closure.
+It assigns no released XACP opcode or capability bit.
+`completion_axil.v` provides the AXI-Lite register interface. The experimental
+[board endpoint](board-endpoint.md) connects it in an isolated Vivado project
+at candidate address `0x83c80000`; this is not an installed firmware ABI.
 The released emulator does not use it.
 
 ## Contract
@@ -61,7 +61,7 @@ requires an identity-matched write to consume it. It accepts write address and
 data independently, in either order. One read response and one write response
 may be outstanding. Each response stays stable under bus backpressure.
 
-These are **relative offsets within an unassigned experimental peripheral**:
+These are relative offsets within the experimental peripheral:
 
 | Offset | Register | Access | Meaning |
 | --- | --- | --- | --- |
@@ -72,6 +72,7 @@ These are **relative offsets within an unassigned experimental peripheral**:
 | `0x10` | Expected sequence | R/W | Stage the matching sequence |
 | `0x14` | Consume | W | Write 1 to consume a matching retired result |
 | `0x18` | Cancel | W | Write 1 to request cancellation of a matching pending batch |
+| `0x1c` | Identity | R | `0x47525831` (`GRX1`), experimental endpoint revision |
 
 Both expected fields must be freshly written with all four byte strobes before
 each control attempt. A complete control attempt clears that staging validity,

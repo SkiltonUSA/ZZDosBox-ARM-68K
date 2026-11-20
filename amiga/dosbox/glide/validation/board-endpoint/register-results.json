@@ -1,0 +1,27 @@
+{
+  "cases": [
+    {
+      "name": "registers",
+      "exit": 0,
+      "mutation_detected": false
+    },
+    {
+      "name": "endpoint",
+      "exit": 0,
+      "mutation_detected": false
+    },
+    {
+      "name": "address-alias",
+      "exit": 1,
+      "mutation_detected": true
+    }
+  ],
+  "sha256": {
+    "scripts/test_dosbox_glide_endpoint.py": "5cdf1a7b691980e6a50bfcf146f5805154748cfc3bdf6cf952a91abc3f8b6ad2",
+    "tests/amiga/dosbox/glide/completion_axil.v": "2488b7739ca8e77189019f3b7d14bacd98893a48d4197e508fe8ce46efff0c1c",
+    "amiga/dosbox/glide/experimental/completion.v": "c9b9115cfbd19f502b1f722bddd57fd946467aee53a997670955722aac812dfb",
+    "amiga/dosbox/glide/experimental/completion_axil.v": "9aaa4aece21020ac6ac42c678c08f4536ea6fcd47b35606c8e5da8a2ea8fc214",
+    "amiga/dosbox/glide/experimental/response_token.v": "b578e53a47c6ed6b8d0f8e84c4e136de80af328bd9e5808aee54e3dc461da4a4",
+    "amiga/dosbox/glide/experimental/completion_endpoint.v": "e30f91de40c89b68d9ac574b6f0616d672d627b3e1f3e95d6e4cd467123a8e9e"
+  }
+}

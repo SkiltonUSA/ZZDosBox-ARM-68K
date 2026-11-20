@@ -1,0 +1,25 @@
+WARNING: [filemgmt 56-3] IPUserFilesDir: Could not find the directory 'STAGED_BOARD/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.ip_user_files'.
+WARNING: [Project 1-5713] Board part '' set for the project  is not found. BoardPart property will be unset. Please select board from latest repo build
+WARNING: [filemgmt 56-12] File 'STAGED_BOARD/completion/axi_response_fault.v' cannot be added to the project because it already exists in the project, skipping this file
+WARNING: [filemgmt 56-12] File 'STAGED_BOARD/completion/completion.v' cannot be added to the project because it already exists in the project, skipping this file
+WARNING: [filemgmt 56-12] File 'STAGED_BOARD/completion/completion_axil.v' cannot be added to the project because it already exists in the project, skipping this file
+WARNING: [filemgmt 56-12] File 'STAGED_BOARD/completion/completion_endpoint.v' cannot be added to the project because it already exists in the project, skipping this file
+WARNING: [filemgmt 56-12] File 'STAGED_BOARD/completion/response_token.v' cannot be added to the project because it already exists in the project, skipping this file
+CRITICAL WARNING: [HDL 9-1206] Syntax error near 'localparam' [STAGED_BOARD/fpga/RasterIX_G1/RasterIX/rtl/RasterIX/RasterizerCommands.vh:19]
+WARNING: [IP_Flow 19-11770] Clock interface 'aclk' has no FREQ_HZ parameter.
+CRITICAL WARNING: [HDL 9-1206] Syntax error near 'localparam' [STAGED_BOARD/fpga/RasterIX_G1/RasterIX/rtl/RasterIX/RasterizerCommands.vh:19]
+WARNING: [IP_Flow 19-11770] Clock interface 'aclk' has no FREQ_HZ parameter.
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'gpu_fault'
+WARNING: [IP_Flow 19-4698] Upgrade has added port 'gpu_idle'
+WARNING: [IP_Flow 19-3298] Detected external port differences while upgrading 'zz9000_ps_RasterIX_0_0'. These changes may impact your design.
+CRITICAL WARNING: [Coretcl 2-1280] The upgrade of 'zz9000_ps_RasterIX_0_0' has identified issues that may require user intervention. Please verify that the instance is correctly configured, and review any upgrade messages.
+WARNING: [BD 41-2670] Found an incomplete address path from address space '/audio_formatter_1/m_axi_s2mm' to master interface '/audio_formatter_1/m_axi_s2mm'. Please either complete or remove this path to resolve.
+WARNING: [BD 41-237] Bus Interface property AWUSER_WIDTH does not match between /processing_system7_0/S_AXI_ACP(5) and /axi_register_slice_1/M_AXI(0)
+WARNING: [BD 41-237] Bus Interface property ARUSER_WIDTH does not match between /processing_system7_0/S_AXI_ACP(5) and /axi_register_slice_1/M_AXI(0)
+WARNING: [BD 41-237] Bus Interface property ARUSER_WIDTH does not match between /processing_system7_0/S_AXI_HP2(0) and /axi_interconnect_3/s00_couplers/auto_pc/M_AXI(4)
+WARNING: [BD 41-2384] Width mismatch when connecting pin: '/i2s_transmitter_0/s_axis_aud_tid'(3) to pin: '/audio_formatter_0/m_axis_mm2s_tid'(8) - Only lower order bits will be connected.
+WARNING: [BD 41-2384] Width mismatch when connecting pin: '/audio_formatter_1/s_axis_s2mm_tid'(8) to pin: '/i2s_receiver_0/m_axis_aud_tid'(3) - Only lower order bits will be connected.
+WARNING: [BD 41-2384] Width mismatch when connecting pin: '/i2s_transmitter_0/s_axis_aud_tid'(3) to pin: '/audio_formatter_0/m_axis_mm2s_tid'(8) - Only lower order bits will be connected.
+WARNING: [BD 41-2384] Width mismatch when connecting pin: '/audio_formatter_1/s_axis_s2mm_tid'(8) to pin: '/i2s_receiver_0/m_axis_aud_tid'(3) - Only lower order bits will be connected.
+WARNING: [BD 41-2925] The design that will be created by this Tcl script contains the following module references: MNTZorro_v0_1_S00_AXI, audio_clock, RasterIX, grx_completion_endpoint, video_formatter.
+GRX_BOARD_INTEGRATION_VALIDATED_NO_BITSTREAM

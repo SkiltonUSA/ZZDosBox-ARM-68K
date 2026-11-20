@@ -4,7 +4,8 @@ The published XX19d-RIX design already contains a CPU-to-GPU AXI clock
 converter. Keep the experimental completion mailbox and its register wrapper
 on the GPU clock; use Vivado's AXI infrastructure for the CPU connection.
 A bespoke synchronizer for each mailbox field is unnecessary with this design.
-This is a source-based integration plan, not a synthesized or installed change.
+This records the original source-based plan. The [board endpoint](board-endpoint.md)
+now implements its wiring in an isolated project; no replacement is installed.
 
 ## Evidence
 

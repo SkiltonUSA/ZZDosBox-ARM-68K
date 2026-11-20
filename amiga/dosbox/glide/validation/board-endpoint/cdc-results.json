@@ -1,0 +1,21 @@
+{
+  "scope": "Generated M09 AXI CDC plus endpoint; no PS7, HP3, GPU or metastability model",
+  "cases": 6,
+  "cpu_mhz": 25,
+  "gpu_mhz": 100,
+  "gpu_phase_ns": 3,
+  "sha256": {
+    "test_dosbox_glide_cdc.py": "089dcdf80083b9bc5256d2f8f17806ec3090731f35de1000a5d41a3d03f25a4f",
+    "axi_infrastructure_v1_1_0.vh": "6f75042bd294dd05d9e4d326fe845e6bd44ec51637b1ad8ce66fbc295f16cc52",
+    "completion_cdc.v": "27cc4f3957ef9c293f271e5b0fe27fe0e5d2fda193c5c5ce46b6a5de7ffeadbd",
+    "zz9000_ps_ps7_0_axi_periph_imp_auto_cc_1.v": "e48470bd4dbf23c00b941335d0eda1aa6ca683674cd3ae2c14f03c580399751a",
+    "axi_clock_converter_v2_1_vl_rfs.v": "1afe7102b8566153b75433851b4bd9d14bd0f8d88a9a2dd7e4d73651bcf6e1eb",
+    "axi_infrastructure_v1_1_vl_rfs.v": "64a5966a7f6c9f296102fb2816e0f4ac4808888b2b64bc0bdafae9ea019a72c4",
+    "xpm_cdc.sv": "27592359d8363d7e6575298f9d0faa7c9f9258ea77f19c9a38946fbaf3783f09",
+    "glbl.v": "6270251cf35e1fce3119fc79f8fb968912f7983027e43cf030409ba68f048936",
+    "completion.v": "c9b9115cfbd19f502b1f722bddd57fd946467aee53a997670955722aac812dfb",
+    "completion_axil.v": "9aaa4aece21020ac6ac42c678c08f4536ea6fcd47b35606c8e5da8a2ea8fc214",
+    "completion_endpoint.v": "e30f91de40c89b68d9ac574b6f0616d672d627b3e1f3e95d6e4cd467123a8e9e",
+    "response_token.v": "b578e53a47c6ed6b8d0f8e84c4e136de80af328bd9e5808aee54e3dc461da4a4"
+  }
+}

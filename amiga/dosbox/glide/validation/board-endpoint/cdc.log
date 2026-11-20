@@ -1,0 +1,10 @@
+PASS CDC: identity, empty status and no high-address alias
+PASS CDC: pending work cannot be consumed
+PASS CDC: identity match, split channels and backpressure
+PASS CDC: cancellation retains work until drain
+PASS CDC: fault quarantines result and remains sticky
+PASS CDC: clean restart with reversed reset release
+- tests/amiga/dosbox/glide/completion_cdc.v:198: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.054 2026-11-01
+- Verilator: $finish at 32us; walltime 0.002 s; speed 19.269 ms/s
+- Verilator: cpu 0.002 s on 1 threads; allocated 2 MB

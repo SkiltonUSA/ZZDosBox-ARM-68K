@@ -1,0 +1,26 @@
+{
+  "scope": "CommandParser simulation with injected pending signals; not full AXI or installed FPGA",
+  "scenarios": 4,
+  "removed_wait_detected": true,
+  "sources": {
+    ".context/amiga/glide/full-renderer/source/RasterIX/RasterIX/CommandParser.v": "256ab3127d6cdbf18b38e2d8e51b13fac5e2e5e1ece24366526730690a11f7ee",
+    ".context/amiga/glide/full-renderer/source/RasterIX/RasterIX/RegisterAndDescriptorDefines.vh": "265dc4ae18aea0cd79617e5e63e7e1310b0e8184165fa5a812c95a923b606fd6",
+    "tests/amiga/dosbox/glide/fence.v": "edcbd91a6ee4fae05004b076d8b4c1dcd7415469f82d07dd21ca7d27ba3bda9d",
+    "scripts/test_dosbox_glide_fence.py": "47598fd3ea6fc7f8191f364fa514b6a54e84a8c4343f292ee2ac81bbf08bb6fb"
+  },
+  "registers": {
+    "scope": "Single-clock AXI-Lite register wrapper and mailbox; injected token/drain/error, no CDC or board address",
+    "scenarios": 9,
+    "mutations_detected": [
+      "axil-no-identity",
+      "axil-half-write",
+      "axil-stale-staging",
+      "axil-moving-snapshot"
+    ],
+    "sources": {
+      "amiga/dosbox/glide/experimental/completion.v": "c9b9115cfbd19f502b1f722bddd57fd946467aee53a997670955722aac812dfb",
+      "amiga/dosbox/glide/experimental/completion_axil.v": "9aaa4aece21020ac6ac42c678c08f4536ea6fcd47b35606c8e5da8a2ea8fc214",
+      "tests/amiga/dosbox/glide/completion_axil.v": "2488b7739ca8e77189019f3b7d14bacd98893a48d4197e508fe8ce46efff0c1c"
+    }
+  }
+}

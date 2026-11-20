@@ -1,0 +1,34 @@
+{
+  "scope": "Isolated Vivado integration and digital simulation; no hardware access",
+  "integration": {
+    "exit": 0,
+    "elapsed_seconds": 159.88,
+    "raw_log_sha256": "b367cd7c3f839e0fb3fd46cfdb55eebac12f5e0414713ae0daa48ca056c50006"
+  },
+  "sources_sha256": {
+    "scripts/prepare_glide_board_project.py": "049ee8af7ee9231a866c8e21994d4614d12678c17522f6c588b156d5bdf6269c",
+    "scripts/audit_glide_board_endpoint.py": "5637f23b7efa83084ce5f31773c31fb50dd3b53edd69be86fe2d703a0bc97e31",
+    "amiga/dosbox/glide/experimental/integrate-board.tcl": "af1eae461c30cfcd55163cc005ae5719721d1ab73c63c51180b8f8d18e07e7d5",
+    "amiga/dosbox/glide/experimental/synthesize-board.tcl": "8bfc8425e04bbc388fc9f1523d05535206ad491545c17ea84b95a01cf86e6636"
+  },
+  "evidence_sha256": {
+    "staging.json": "b8c5213c2b60ac19a3f2c1825bd2fc19ec3589c50daf0f4eee6ead89631f48d5",
+    "register-regression.json": "49bf34792faa046e55029b9830ab3db923931203755c9453d386ea82460689a8",
+    "cdc-results.json": "ac949f9b9314e7096d20e7629a18baab9672edd0c83b8ef9f5f2add4cb448004",
+    "registers.log": "0eb8edd38a69f5da5012bac54f871aaa8ef6fb8bbc1dd04a665a132f672654f4",
+    "register-results.json": "d5b90795860d5cf9d9bb603c3ed4a833dcc52571320e4f5e451e5ddb5e7c48bd",
+    "address-alias.log": "3e0a04091e4f2fe58bfadb8dbf24051c077694afcc1a5546fbcb007690ea6a8c",
+    "endpoint.log": "d93c3ee4d18ae3de23f68091fc74740b615ba37cd33b34de21ae0dc15c6f866c",
+    "completion-topology.txt": "463a75ff773a54518d67ad71bf1ba70f09470d0f111ce7cbdc894633404b96b5",
+    "README.md": "e26948ea1e88cf5643b0312ed363e5e6cd4d7163a044eb3dbbdda83c2e3edb0e",
+    "source-rejection.json": "7796f51776d11d2f62677b5e0cf4c428f4f15a6bb79abcff966ce14d51c0a8d7",
+    "integration-messages.txt": "e2d1058f16ee09b20abecbaa6d8886a4662c5d2899319a14958c5f1ecc38213d",
+    "completion-ip-status.rpt": "e27fee30c769a256cd29125794f7ed8f8cbe205f8efa4a8c682266f54be242f7",
+    "topology.json": "d2099f1c0498ad9b6fe9405487f5971536bd9a9c7b7eb66a4099a8b7308613a4",
+    "cdc.log": "b34c76ec572905be52dee8d57a908f0685cd28d7b51463fa37fa709311164c6a"
+  },
+  "synthesis": {
+    "status": "started; result pending",
+    "hardware_programmed": false
+  }
+}

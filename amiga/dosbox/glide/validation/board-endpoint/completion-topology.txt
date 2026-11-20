@@ -1,0 +1,5 @@
+Candidate only; no released XACP ABI or installed firmware
+Completion register block: /grx_completion_0/S_AXI/reg0
+grx_completion_0 xilinx.com:module_ref:grx_completion_endpoint:1.0
+ps7_0_axi_periph/m09_couplers/auto_cc xilinx.com:ip:axi_clock_converter:2.1
+axi_interconnect_4 xilinx.com:ip:axi_interconnect:2.1

@@ -88,8 +88,8 @@ credit logic, but **not** the actual AXI4-to-AXI3 converter, PS7 HP3/DDR arbitra
 CPU caches, mailbox clock crossing, display scanout or firmware validator.
 Depth is not exercised. Simulation cycles are not measured ZZ9000 throughput.
 
-Next wire the completion/error endpoint into the board project and validate
-the actual converter and mailbox crossing, then synthesize and route that
-candidate with reviewed constraints. Firmware needs a matching capability and
+The [board endpoint](board-endpoint.md) now supplies experimental wiring and
+generated mailbox-converter tests. The GPU HP3 converter still needs integrated
+validation, followed by routed timing with reviewed constraints. Firmware needs a matching capability and
 validated submission route. Only after those gates can a bounded hardware scene
 provide trustworthy GPU elapsed time. Existing release binaries remain unchanged.

@@ -5,7 +5,12 @@ reg clk=0,resetn=0;
 reg token_valid=0,drained=0,bus_error=0;
 reg [31:0] epoch=1,seq=1;
 wire token_ready;
-reg [7:0] awaddr=0,araddr=0;
+`ifdef GRX_ENDPOINT_TEST
+localparam [31:0] BASE=32'h83c80000;
+`else
+localparam [31:0] BASE=0;
+`endif
+reg [31:0] awaddr=BASE,araddr=BASE;
 reg awvalid=0,wvalid=0,bready=0,arvalid=0,rready=0;
 reg [31:0] wdata=0;
 reg [3:0] wstrb=15;
@@ -23,7 +28,21 @@ always @(posedge clk)begin
   if(bvalid&&bready)begin address_seen=0;data_seen=0;end
  end
 end
-grx_completion_axil dut(
+`ifdef GRX_ENDPOINT_TEST
+reg response_last=0;
+reg [31:0] response_data=0;
+grx_completion_endpoint dut(
+ .aclk(clk),.aresetn(resetn),.gpu_idle(drained),.gpu_fault(bus_error),
+ .s_resp_axis_tvalid(token_valid),.s_resp_axis_tready(token_ready),
+ .s_resp_axis_tdata(response_data),.s_resp_axis_tlast(response_last),
+ .s_axi_awaddr(awaddr),.s_axi_awprot(3'b0),.s_axi_awvalid(awvalid),.s_axi_awready(awready),
+ .s_axi_wdata(wdata),.s_axi_wstrb(wstrb),.s_axi_wvalid(wvalid),.s_axi_wready(wready),
+ .s_axi_bresp(bresp),.s_axi_bvalid(bvalid),.s_axi_bready(bready),
+ .s_axi_araddr(araddr),.s_axi_arprot(3'b0),.s_axi_arvalid(arvalid),.s_axi_arready(arready),
+ .s_axi_rdata(rdata),.s_axi_rresp(rresp),.s_axi_rvalid(rvalid),.s_axi_rready(rready)
+);
+`else
+grx_completion_axil #(.ADDR_WIDTH(32)) dut(
  .clk(clk),.resetn(resetn),.token_valid(token_valid),.token_ready(token_ready),
  .token_epoch(epoch),.token_sequence(seq),.drained(drained),.bus_error(bus_error),
  .s_awaddr(awaddr),.s_awvalid(awvalid),.s_awready(awready),
@@ -32,6 +51,7 @@ grx_completion_axil dut(
  .s_araddr(araddr),.s_arvalid(arvalid),.s_arready(arready),
  .s_rdata(rdata),.s_rresp(rresp),.s_rvalid(rvalid),.s_rready(rready)
 );
+`endif
 task reset;
  begin
   @(negedge clk);resetn=0;token_valid=0;drained=0;bus_error=0;
@@ -41,15 +61,23 @@ task reset;
 endtask
 task token(input reg[31:0] e,input reg[31:0] s);
  begin
+`ifdef GRX_ENDPOINT_TEST
+  @(negedge clk);response_data=e;response_last=0;token_valid=1;
+  @(posedge clk);while(!token_ready)@(posedge clk);
+  @(negedge clk);response_data=s;response_last=1;
+  @(posedge clk);while(!token_ready)@(posedge clk);
+  @(negedge clk);token_valid=0;repeat(3)@(negedge clk);
+`else
   @(negedge clk);epoch=e;seq=s;token_valid=1;
   @(posedge clk);while(!token_ready)@(posedge clk);
   @(negedge clk);token_valid=0;
+`endif
  end
 endtask
-task send_address(input reg[7:0] a,input integer delay_cycles);
+task send_address(input reg[31:0] a,input integer delay_cycles);
  begin
   repeat(delay_cycles)@(negedge clk);
-  @(negedge clk);awaddr=a;awvalid=1;
+  @(negedge clk);awaddr=BASE+a;awvalid=1;
   @(posedge clk);while(!awready)@(posedge clk);
   @(negedge clk);awvalid=0;
  end
@@ -62,7 +90,7 @@ task send_data(input reg[31:0] d,input reg[3:0] strobe,input integer delay_cycle
   @(negedge clk);wvalid=0;
  end
 endtask
-task write_reg(input reg[7:0] a,input reg[31:0] d,input reg[3:0] strobe,
+task write_reg(input reg[31:0] a,input reg[31:0] d,input reg[3:0] strobe,
                input integer order,input reg[1:0] response);
  begin
   fork
@@ -77,9 +105,9 @@ task write_reg(input reg[7:0] a,input reg[31:0] d,input reg[3:0] strobe,
   bready=1;@(negedge clk);bready=0;
  end
 endtask
-task read_reg(input reg[7:0] a,input reg[31:0] expected,input reg[1:0] response);
+task read_reg(input reg[31:0] a,input reg[31:0] expected,input reg[1:0] response);
  begin
-  @(negedge clk);araddr=a;arvalid=1;
+  @(negedge clk);araddr=BASE+a;arvalid=1;
   @(posedge clk);while(!arready)@(posedge clk);
   @(negedge clk);arvalid=0;
   while(!rvalid)@(negedge clk);
@@ -98,6 +126,12 @@ task retire;
 endtask
 initial begin
  reset();read_reg(0,0,0);
+`ifdef GRX_ENDPOINT_TEST
+ read_reg(32'h1c,32'h47525831,0);
+ read_reg(32'h100,0,2);read_reg(32'h1001c,0,2);
+ write_reg(32'h1000c,1,15,0,2);write_reg(32'h10014,1,15,0,2);
+ $display("PASS AXI mailbox: endpoint identity and full address decode");
+`endif
  write_reg(8'h14,1,15,0,2);
  $display("PASS AXI mailbox: empty consume rejected");
  token(32'h10203040,32'h50607080);read_reg(0,2,0);
@@ -133,7 +167,7 @@ initial begin
  $display("PASS AXI mailbox: bad offsets and controls do not consume");
  token(5,5);repeat(4)@(negedge clk);identity(5,5);
  // Hold a previously captured read response while a new fault arrives.
- @(negedge clk);araddr=0;arvalid=1;
+ @(negedge clk);araddr=BASE;arvalid=1;
  @(posedge clk);while(!arready)@(posedge clk);
  @(negedge clk);arvalid=0;
  while(!rvalid)@(negedge clk);
@@ -155,6 +189,14 @@ initial begin
  bus_error=0;bready=1;@(negedge clk);bready=0;
  read_reg(0,6,0);
  $display("PASS AXI mailbox: post-commit fault reported by fresh status");
+`ifdef GRX_ENDPOINT_TEST
+ reset();
+ @(negedge clk);response_data=7;response_last=1;token_valid=1;
+ @(posedge clk);while(!token_ready)@(posedge clk);
+ @(negedge clk);token_valid=0;repeat(3)@(negedge clk);
+ read_reg(0,6,0);
+ $display("PASS AXI mailbox: malformed response stream quarantined");
+`endif
  $finish;
 end
 initial begin #500000;$fatal(1,"AXI mailbox simulation deadline");end

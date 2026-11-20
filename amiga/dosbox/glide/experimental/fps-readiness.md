@@ -92,7 +92,10 @@ replacement firmware follows from this result.
 The [board-renderer backport](board-completion.md) now passes the same scene
 oracle with Xanxi’s command-credit path, including DDR command transfers and
 a pre-adapter drain check. This supersedes the renderer-only gap above; the
-actual HP3/converter path, CPU mailbox crossing and firmware integration remain.
+actual HP3/converter path and firmware integration remain. The
+[board endpoint](board-endpoint.md) adds validated project wiring and six digital
+tests through the generated CPU mailbox clock converter; this is not a physical
+GPU timing result.
 
 ## Measurement criteria
 

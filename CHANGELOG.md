@@ -12,6 +12,11 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Add an experimental full-address completion endpoint and isolated board-project
+  builder. Validate generated wiring and preserve existing device addresses,
+  renderer settings and PS7 configuration. Eleven endpoint scenarios and six
+  generated clock-converter tests pass. No installed firmware or FPS claim.
+
 - Prototype batch identity transport through upstream RasterIX DMA responses and
   immediate/sticky GPU memory-error quarantine. Eighteen added scenarios and eight
   detected mutations bring the offline suite to 79/23; FPGA integration is pending.

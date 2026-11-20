@@ -1,0 +1,3 @@
+[280000] %Fatal: completion_axil.v:115: Assertion failed in completion_axil_test.read_reg.unnamedblk1_6: Wrong or unstable read addr=00000100 got=00000000 want=00000000
+%Error: tests/amiga/dosbox/glide/completion_axil.v:115: Verilog $stop
+Aborting...

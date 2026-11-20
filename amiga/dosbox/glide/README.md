@@ -237,3 +237,7 @@ The [DMA response/error prototype](experimental/response-path.md) transports bat
 identity through the actual upstream stream engine, waits for retirement and
 quarantines memory errors. Full offline coverage is 79 scenarios and 23 mutations;
 no physical rendering support or performance gain is claimed.
+
+The [board completion endpoint](experimental/board-endpoint.md) now has an
+experimental register bank, validated Vivado wiring and tests through the actual
+generated AXI clock converter. The published FPGA/firmware ABI is unchanged.
