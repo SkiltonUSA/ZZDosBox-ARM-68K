@@ -80,4 +80,3 @@ Clock                               Jitter(ns)
 clk_fpga_0                          0.300
 clk_fpga_1                          1.200
 zz9000_ps_i/clk_wiz_0/inst/clk_in1  0.100
-

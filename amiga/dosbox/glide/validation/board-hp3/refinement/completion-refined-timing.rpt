@@ -5486,8 +5486,3 @@ Slack:                    inf
     BUFGCTRL_X0Y3        BUFG (Prop_bufg_I_O)         0.029     2.214 r  zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/e7m_shifted_BUFG_inst/O
                          net (fo=89, routed)          0.906     3.120    zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/e7m_shifted_BUFG
     SLICE_X112Y62        FDRE                                         r  zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/videocap_hs_reg[0]/C
-
-
-
-
-
