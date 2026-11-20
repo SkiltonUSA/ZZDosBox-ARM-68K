@@ -1,0 +1,40 @@
+{
+  "scope": "Corrected full-board synthesis, independently reopened; not routed or installed",
+  "synthesis_original_process_exit_code": null,
+  "reason": "Original wrapper disappeared; no exit code invented",
+  "synthesis_exact_completion_marker": true,
+  "independent_audit": {
+    "exit_code": 0,
+    "elapsed_seconds": 161.86,
+    "script": "C:\\audit-grx-hp3.tcl"
+  },
+  "checkpoint_sha256": "9514b6feba2282c4674067e3085829aa5aad001b2c7ba44bee0bff6470fdb818",
+  "black_boxes": [
+    "dbg_hub",
+    "u_ila_0"
+  ],
+  "critical_warnings": [
+    "CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:91]",
+    "CRITICAL WARNING: [Vivado 12-4739] set_false_path:No valid object(s) found for '-from [get_clocks -of_objects [get_pins zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKOUT1]]'. [C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:289]",
+    "CRITICAL WARNING: [Vivado 12-4739] set_false_path:No valid object(s) found for '-to [get_clocks -of_objects [get_pins zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKOUT1]]'. [C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:292]",
+    "CRITICAL WARNING: [Vivado 12-4739] set_false_path:No valid object(s) found for '-from [get_clocks -of_objects [get_pins zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKOUT1]]'. [C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:289]",
+    "CRITICAL WARNING: [Vivado 12-4739] set_false_path:No valid object(s) found for '-to [get_clocks -of_objects [get_pins zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst/CLKOUT1]]'. [C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:292]",
+    "CRITICAL WARNING: [Vivado 12-1419] Debug core 'u_ila_0' was not found. [C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:295]",
+    "CRITICAL WARNING: [Vivado 12-1419] Debug core 'u_ila_0' was not found. [C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:297]",
+    "CRITICAL WARNING: [Vivado 12-1419] Debug core 'u_ila_0' was not found. [C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:298]",
+    "CRITICAL WARNING: [Vivado 12-1419] Debug core 'u_ila_0' was not found. [C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:299]",
+    "CRITICAL WARNING: [Vivado 12-1419] Debug core 'u_ila_0' was not found. [C:/grx-board-hp3/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.srcs/constrs_1/imports/new/zz9000.xdc:300]"
+  ],
+  "original_sha256": {
+    "completion-synth-utilization.rpt": "f3c675c943d61cf65a704d60b1b09c410215151c05c0911a6e0fe9f149df5e09",
+    "completion-synth-drc.rpt": "35bd7cd3c58777d19f425f4fb9d98789225d1bd0b137be0f42fa5879abec75f8",
+    "completion-synth-blackboxes.txt": "8780faec89f82211d566cf36a7f54e2a3406d23eae8ef8f1fba5002586c25cae",
+    "completion-synth-audit-utilization.rpt": "5fce92549096a7bfd0c5ca9835a0fa8474f1ffe0a62f02369cc9e8aaacda641a",
+    "completion-synth-audit-drc.rpt": "632914f77baf449d50314104a837c75972a24132cc6b7217623a09c08e9685c0",
+    "completion-synth-audit-clocks.rpt": "70f5a18562b8abed8b9f080a69bec27dc39e8bcf0d123d161746a8f37b63d438",
+    "completion-synth-audit-timing.rpt": "162d220ec664d855a04f9a752c33e75a5b8dd62e38482f11f33d996b9752e8d6",
+    "staging.json": "f7c5a19f02f58409e24592c45c073f3b3eb66183e22a155a342c0e6e9a99a85f",
+    "completion-hp3-synthesis.log": "af1bc7dd084a0b059aa0eb38dea3268906c064c5a5a920110087d326f6c00014",
+    "completion-hp3-synth-audit.log": "a2681df8f744f26e7b1c9263b28ded284448c065181d3ee57476481e34d892ca"
+  }
+}

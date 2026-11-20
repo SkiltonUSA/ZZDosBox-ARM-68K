@@ -98,7 +98,17 @@ before physical GPU measurement.
 The corrected project has since passed integration and XSA export. Its PS7
 settings, address map and GPU aperture pass the topology audit. All eight
 generated converter/vendor/header inputs match the tested inputs byte for byte.
-Corrected full-board synthesis is running; no completed result is claimed yet.
+Corrected full-board synthesis has completed and the checkpoint passed a fresh
+Vivado audit (exit 0). It uses 23,368 LUTs, 29,120 registers, 60.5 BRAM36
+equivalents and 22 DSPs: four fewer LUTs than the superseded candidate, with
+the other counts unchanged. The audit found only the expected `dbg_hub` and
+`u_ila_0` placeholders. The DRC report contains 41 warnings and one advisory.
+See [the corrected synthesis record](../validation/board-hp3/synthesis/result.json).
+
+This is an unrouted checkpoint. Its setup/hold estimates are −0.454/−0.374 ns;
+602 clock pins and 1,032 internal endpoints lack timing coverage. These figures
+are not timing signoff. Constraint lookup and debug warnings remain in the
+archived logs. Optimization and debug-core implementation are now running.
 
 Implementation continues in separate Vivado processes. These scripts accept
 one Tcl argument: the isolated board directory containing `completion-synth.dcp`:
@@ -116,9 +126,9 @@ in the [rebuild guide](../../../../docs/xacp-firmware-rebuild.md) may still be
 required; a stalled debug job must not be marked successful without executing
 its generated synthesis script and checking the new checkpoint.
 
-The current synthesis wrapper disappeared while Vivado continued running.
+The original synthesis wrapper disappeared while Vivado continued running.
 Its original exit code therefore cannot be claimed. The local continuation
 waits for Vivado to end, requires its completion marker and a nonempty checkpoint,
 checks the staged source hashes, then runs the independent checkpoint audit.
-Only a successful fresh audit starts optimization. Routing remains a separate
-reviewed step. The audit and optimization results are pending at this update.
+That audit passed and optimization started. Routing remains a separate reviewed
+step. No bitstream or physical FPS result follows from synthesis.

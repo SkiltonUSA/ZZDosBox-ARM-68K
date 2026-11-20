@@ -21,6 +21,10 @@ The corrected renderer passes **10 XSim cases and 32 framebuffer checks**, with
   newly generated board project are byte-identical to the tested inputs.
 - `integration.json`: revised project validation and XSA export succeeded.
 - `manifest.json`: retained evidence hashes and tested patch identity.
+- `synthesis/`: corrected full-board synthesis and independent checkpoint audit,
+  including source/checkpoint hashes, utilization, DRC, clocks and unrouted
+  timing. The original wrapper's exit code is unknown; the separate audit
+  exited zero. Only the two expected debug placeholders remain at this stage.
 
 The forced-drain case must fail with an outstanding-transaction assertion. That
 failure is the expected detection of a deliberately broken completion signal.

@@ -11,6 +11,12 @@ registers, 60.5 BRAM36 equivalents and 22 DSPs. It predates the
 `ZORRO_E7M_IBUF`/`CLKOUT1` constraint lookup warnings remain; this is not routing
 or timing signoff. [Scoped synthesis evidence](../validation/board-endpoint/pre-hp3-synthesis/result.json).
 
+The corrected HP3 candidate has now completed synthesis and an independent
+checkpoint audit: 23,368 LUTs, with register/BRAM/DSP counts unchanged. Its
+debug-core implementation and optimization are in progress. The
+[corrected record](../validation/board-hp3/synthesis/result.json) remains separate
+from the earlier checkpoint; neither is an installed firmware image.
+
 ## Wiring and interface
 
 - Keep the endpoint, response receiver and fault observer on FCLK0, 100 MHz.
