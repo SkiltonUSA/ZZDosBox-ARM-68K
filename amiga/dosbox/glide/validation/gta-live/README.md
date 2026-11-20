@@ -1,8 +1,10 @@
 # GTA ECTS live-renderer candidate
 
 The private GTA player renders gameplay on the Cortex-A9 and Amiga through
-RasterIX. **The latest profiled comparison improved from 3.96 to 4.50 FPS.** It requires
+RasterIX. **The latest test reached 4.73 FPS with exact NEON conversion.** It requires
 the experimental streaming firmware; the released DOSBox player remains unchanged.
+
+[Exact NEON conversion: 4.50 → 4.73 FPS, evidence and limits](neon-conversion/README.md).
 
 [Framebuffer reuse: implementation, tests and hardware evidence](frame-cache/README.md)
 records the observed +13.6% gain and 41.5% reduction in readback traffic. The first

@@ -1,0 +1,2 @@
+Dropped green low bit rejected: PASS
+Assertion failed: (d[i+1]==expected), function check, file pixels.c, line 14.

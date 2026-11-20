@@ -1,0 +1,52 @@
+{
+  "completed_frames": 324,
+  "intervals": 314,
+  "timer_hz": 400000341,
+  "first_tick": 2402449856355,
+  "last_tick": 2428983529744,
+  "seconds": 66.3341269226568,
+  "fps": 4.733611710396259,
+  "stages": {
+    "submit": {
+      "calls": 15053,
+      "bytes": 7907084,
+      "ticks": 1944120554,
+      "seconds": 4.8602972415966015,
+      "percent": 7.326993611091819,
+      "calls_per_frame": 47.939490445859875
+    },
+    "upload": {
+      "calls": 396565,
+      "bytes": 11964430,
+      "ticks": 582668620,
+      "seconds": 1.4566703081885624,
+      "percent": 2.195959117524811,
+      "calls_per_frame": 1262.9458598726114
+    },
+    "readback": {
+      "calls": 10963,
+      "bytes": 354508800,
+      "ticks": 5143112997,
+      "seconds": 12.85777153124977,
+      "percent": 19.383343277045718,
+      "calls_per_frame": 34.9140127388535
+    },
+    "convert": {
+      "calls": 314,
+      "bytes": 385843200,
+      "ticks": 472968060,
+      "seconds": 1.1824191419876815,
+      "percent": 1.7825200946208872,
+      "calls_per_frame": 1.0
+    },
+    "display": {
+      "calls": 314,
+      "bytes": 385843200,
+      "ticks": 2412151681,
+      "seconds": 6.030374061606112,
+      "percent": 9.090907412767054,
+      "calls_per_frame": 1.0
+    }
+  },
+  "unaccounted_percent": 60.220276486949714
+}

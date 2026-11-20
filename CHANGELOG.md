@@ -12,6 +12,10 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Experimental GTA presentation now expands RGB565 pixels with exact ARMv7 NEON
+  arithmetic. Conversion measured 12.09 → 3.77 ms/frame; gameplay measured
+  4.50 → 4.73 FPS in one opening-street pair. Exhaustive colour/bounds tests,
+  Glide replay and physical clean shutdown passed. [Evidence](amiga/dosbox/glide/validation/gta-live/neon-conversion/README.md).
 - Reuse the exact RGB565 CPU framebuffer until GPU drawing invalidates it.
   The first profiled gameplay comparison improved **3.96 → 4.50 FPS (+13.6%)**,
   with **41.5% less readback traffic/frame** and clean teardown. Native pixel,

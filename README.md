@@ -42,14 +42,14 @@ this synthetic result does not predict GTA performance.
   synthetic offscreen results; the released player is unchanged.
 - The existing 1.0 Beta release does not include this experimental firmware.
 
-**GTA gameplay: 4.50 FPS**, up from **3.96 FPS (+13.6%)** in the first profiled
-comparison. Reusing the framebuffer while no GPU drawing changes it reduces
-readback traffic by **41.5%**. Both runs use 800 MHz ARM, 640×480 windowed,
-3,000 DOS cycles and sound off, and pass clean shutdown checks. This is one
-opening-street comparison, not yet playable-speed or audio validation.
-[Screenshot, method and raw logs](amiga/dosbox/glide/validation/gta-live/frame-cache/README.md).
+**GTA gameplay: 4.73 FPS** in the latest experimental Glide-to-RasterIX run.
+Framebuffer reuse previously improved **3.96 → 4.50 FPS**; exact NEON pixel
+conversion then measured **4.50 → 4.73 FPS (+5.2%)**, reducing conversion time
+by **68.8%**. These are opening-street samples at 800 MHz, 3,000 cycles,
+640×480 windowed and sound off. This remains experimental.
+[Measurements, screenshot and limits](amiga/dosbox/glide/validation/gta-live/neon-conversion/README.md).
 
-![GTA ECTS gameplay through RasterIX](amiga/dosbox/glide/validation/gta-live/frame-cache/candidate.png)
+![GTA ECTS gameplay through RasterIX](amiga/dosbox/glide/validation/gta-live/neon-conversion/candidate.png)
 
 [Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·
 [Remaining integration](amiga/dosbox/glide/experimental/fps-readiness.md) ·
