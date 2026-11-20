@@ -27,5 +27,16 @@ Full-board synthesis and an independent checkpoint audit passed with real
 exit codes of zero. The design uses 23,308 LUTs, 29,100 registers, 60.5 BRAM36
 equivalents and 22 DSPs. Compared with the corrected reference synthesis, this
 removes 60 LUTs and 20 registers; it is not a speed measurement. See
-[synthesis evidence](synthesis/result.json). Debug-core implementation and
-optimization are pending; no new FPGA bitstream has been produced.
+[synthesis evidence](synthesis/result.json).
+
+Debug-core implementation and optimization are complete. An independent Vivado
+process reopened the optimized checkpoint and passed with exit zero, with no
+remaining black boxes. It uses 27,439 LUTs, 35,544 registers, 80.5 BRAM36
+equivalents and 22 DSPs including debug instrumentation. DRC findings, CDC
+summary groups and clock definitions match the reviewed reference. Existing
+constraint/CDC warnings remain; this is not timing signoff. The original
+optimization wrapper lost its exit status, which is recorded as unknown rather
+than inferred from its completion marker. The independent audit and both
+debug-core runs have captured successful exits. See
+[optimization evidence](optimization/result.json). Placement and routing are
+next; no new FPGA bitstream or physical FPS result exists.

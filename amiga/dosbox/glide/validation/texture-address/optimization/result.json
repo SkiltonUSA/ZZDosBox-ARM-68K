@@ -1,0 +1,45 @@
+{
+  "original_optimization_exit_code": null,
+  "original_scope": "Original wrapper disappeared; completion and zero-blackbox markers observed, independent checkpoint audit passed",
+  "debug_core_runs": [
+    {
+      "core": "dbg_hub",
+      "exit_code": 0,
+      "verified": true,
+      "elapsed_seconds": 342.29,
+      "script_sha256": "ae9c9b5a3c23f639268f4eac9fb8a2587c9836d4af896eca722b273a85c4272a",
+      "checkpoint_sha256": "eaa3296c98261402aea992c13d9c80757b372e74ece9cb5afaff5f83065c04a7"
+    },
+    {
+      "core": "u_ila_0",
+      "exit_code": 0,
+      "verified": true,
+      "elapsed_seconds": 805.69,
+      "script_sha256": "7fd24b4974a0171d481957f28facfa77d959441322021245ab73003cb6b709d1",
+      "checkpoint_sha256": "3bf3589d977ab889e5bd8113cd1e1ed73dbdc5cd51f7c0a681af1cad44eb00c6"
+    }
+  ],
+  "independent_audit": {
+    "exit_code": 0,
+    "elapsed_seconds": 171.73,
+    "script": "C:\\audit-opt-grx-texture.tcl"
+  },
+  "input_checkpoint_sha256": "1a84039e377ff88fcd0cc49d48decf6eefd64a75ee58ce62ae3f271ca9a0d438",
+  "optimized_checkpoint_sha256": "5a9d8c5a5b2d3785cadd331f9c1e8109ad4df2ed11f1527431f1b38405458d85",
+  "scope": "Optimized checkpoint reopened successfully; no timing closure, bitstream or physical FPS",
+  "slice_luts": 27439,
+  "slice_registers": 35544,
+  "bram36_equivalents": 80.5,
+  "dsps": 22,
+  "remaining_blackboxes": 0,
+  "original_sha256": {
+    "completion-opt-audit-utilization.rpt": "29119c496e1c14a36ed5c6793167cae703025dff7896d116b81524d97f34bcaa",
+    "completion-opt-audit-drc.rpt": "44ba8a0ab006e37877219d92711529499319628b6e33dedf82d3bd262b191fae",
+    "completion-opt-audit-clocks.rpt": "ee29ef56e2cc141bc7add63920999c1585add6cd0f5f9b646689f72568833526",
+    "completion-opt-audit-cdc.rpt": "589693793784620aa15e1e0d444f8e60dff827e7be32f4b135745d19aa168a3d",
+    "completion-opt-audit-timing.rpt": "3d8c5bb9e3310748ba3100017a060d016b5c9767132189792808b6d8c007c3aa",
+    "completion-texture-optimize.log": "02310f7cbd36a72130a18c03dd76979dcda58c012b50feb8ff736896a050e26a",
+    "completion-texture-opt-audit.log": "ced9ac49679bffbdb23c4b5b47e34297aaa9c27f4d793b937168441beddea387"
+  },
+  "retained_text_normalization": "Host/workspace names redacted; trailing whitespace and terminal blank lines removed"
+}

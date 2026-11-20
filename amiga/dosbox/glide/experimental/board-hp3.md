@@ -136,6 +136,8 @@ one Tcl argument: the isolated board directory containing `completion-synth.dcp`
    presence and expected debug placeholders, then reports DRC, clocks and timing.
 2. `optimize-board.tcl` resolves debug cores through `opt_design`, rejects remaining
    black boxes and writes `completion-optimized.dcp` with fresh reports.
+   `audit-optimized-board.tcl` can independently reopen that checkpoint and
+   repeat its reports when the original process exit was not retained.
 3. `route-board.tcl` places and routes that optimized checkpoint, retaining route,
    timing, DRC, methodology, CDC and bus-skew reports for review.
 
@@ -179,5 +181,9 @@ synthesis and its independent checkpoint audit also passed. The synthesized
 design uses 23,308 LUTs and 29,100 registers: 60 fewer LUTs and 20 fewer registers
 than the corrected reference at the same stage. BRAM and DSP use are unchanged.
 [Candidate evidence](../validation/texture-address/README.md). Debug-core
-implementation and optimization are in progress; routed timing and physical
-FPS remain unmeasured for this candidate.
+implementation and optimization have completed. A separate checkpoint audit
+passed with exit zero and no black boxes. The optimized candidate retains
+27,439 LUTs, 35,544 registers, 80.5 BRAM36 equivalents and 22 DSPs, including
+debug cores. DRC findings, CDC summary groups and clock definitions match the
+reviewed reference. Routed timing and physical FPS remain unmeasured for this
+candidate.
