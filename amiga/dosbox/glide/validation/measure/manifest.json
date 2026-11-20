@@ -43,12 +43,16 @@
     "amiga/dosbox/glide/experimental/mmio_transport.h": "07d17990bcb98d711809c662c9063b8a99c58ddf5162f149f9ab39403cf6202f",
     "amiga/dosbox/glide/experimental/measure_firmware.inc": "751e539b514de18d11e62be0e0547d3e6135250d3b6204a3ac9499ac0e31d221",
     "amiga/dosbox/glide/experimental/measure.h": "571f9a65249a5765aaad13110f6cfbd031c977a9a03226a4061c575e8f88ca6a",
-    "amiga/dosbox/glide/experimental/measure_host.c": "4361cda01227b5c99a86fea9f0d1ef6068cb116a26ad3837e648e502fe89ce84",
+    "amiga/dosbox/glide/experimental/measure_host.c": "5e5ed3b9627fda0b33e05308674510611abc9e80acc5017e990c4ed829f83edc",
     "amiga/dosbox/glide/experimental/measure.c": "51279d6296eeaa42abf4627b6e0e7058a629660800be3a6b0036ee411f68ed16",
     "amiga/dosbox/glide/experimental/measurement.md": "ed26274f5f520d80d6127c51c0352879fb9c2939762ac3fc240f3026990fd63e",
     "scripts/test_dosbox_glide_mmio.py": "f16f29e0a54ed3822eea57196ccaed9cea43ad4ca100970bd17edec846ca0b03",
     "scripts/test_glide_measure_firmware.py": "201f8cdccab6628eb3dc254e813b115400620e0c980a74fdd0d68756ab3ae0f2",
-    "tests/amiga/dosbox/glide/measure_firmware.c": "1dac387ea3d2ff4acf85ff8487bc6eeaf1ca1cd9a5036ef69ee0e1d8ca70d331"
+    "tests/amiga/dosbox/glide/measure_firmware.c": "1dac387ea3d2ff4acf85ff8487bc6eeaf1ca1cd9a5036ef69ee0e1d8ca70d331",
+    "tests/amiga/dosbox/glide/measure.c": "9b42bdb00f483b2b2ef214680a8ca22958b83009b50f238ce714c20f82df3686",
+    "amiga/dosbox/glide/experimental/completion_client.c": "bec400019debbdf039d372bde286a74a85a62ea074ef2a780c921069bffb9932",
+    "amiga/dosbox/glide/experimental/completion_client.h": "ae160326f5aa73b24995d916dab47503a889f6a76ccdc4498cd6afd9985e5888",
+    "scripts/test_dosbox_glide_measure.py": "ed04dbb71725c196e4b313d83fa5855016150f3f6eddf5462209f84755592f16"
   },
   "files": {
     "README.md": "3da8b707ad4be189b4994ed6f5d3cd4bed4576dc9307e0c7a07ffbfc8c90173d",
@@ -56,7 +60,7 @@
     "abort-results.json": "8b33244260158647f55e20fc79adc0d95b8fd4447ad5d95f29419566d0a2d4f7",
     "boot-inputs.json": "e0a7b16c293c8a5382e9641af8f27905da7d5b8b9efdc6bb3d2ae37f131ae278",
     "counter-mutant.log": "a0b3d8ae7a6f279fc24419b4cc92b6d9721a8013c2e08dee0cabbe806a7c6f8f",
-    "counter-results.json": "941a0148b9d9c9626b39edfaa131c0bd35c78bb870b6f55249bdc006fce7d5fc",
+    "counter-results.json": "ded146d136a0a7ca45bb2da705b7c85316661131a9afc2ed84cc350b2067ba3d",
     "counter.log": "0cc079f86c1d2f85257ff0e4a24c5497106ef1df73a56473b8ec98601e600570",
     "firmware-build.json": "acad2f4d1793f338b9f12c6c21123f7d19af87d8f9a04540204770f676483da1",
     "service-results.json": "7fc95a8b901e7569b23889df4b6efafca9ac0f113cfbe2a9b5d7b5a583fb4bec"

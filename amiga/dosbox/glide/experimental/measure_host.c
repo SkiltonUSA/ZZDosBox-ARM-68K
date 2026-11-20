@@ -90,7 +90,12 @@ int main(int argc,char **argv)
     puts("Offscreen batch throughput including Core0 submission/polling; NOT gameplay or display FPS.");
     rc=0;
 done:
-    if(active)puts("STOP: GPU session was not cleanly closed. Do not start another GPU client; cold reboot required.");
+    if(active) {
+        if(reply[0]==0x47524d31&&reply[1]==1)
+            printf("Last valid reply: state=%u error=0x%08x completed=%u/%u checked=%u detail=0x%08x claimed=%u\n",
+                   reply[2],reply[3],reply[4],reply[5],reply[10],reply[11],reply[12]);
+        puts("STOP: GPU session was not cleanly closed. Do not start another GPU client; cold reboot required.");
+    }
     if(opened)CloseDevice((struct IORequest*)timer);
     if(timer)DeleteIORequest((struct IORequest*)timer);
     if(port)DeleteMsgPort(port);

@@ -15,7 +15,9 @@ Each frame carries a unique epoch/sequence token after the renderer fence.
 Only a matching retired result, successfully consumed and followed by a clean
 mailbox status, increments the counter. FIFO transmission, cancellation and
 timeouts do not count. Errors retain GPU ownership until recovery; an elapsed
-deadline does not prove DMA has stopped.
+deadline does not prove DMA has stopped. The host prints the last valid reply
+on failure, including state, error/detail codes, completed frames and checked
+pixels. A last reply is not a fresh status observation after a timeout.
 
 The host calibrates the ARM global timer against `timer.device` before and after
 the run. It rejects a change exceeding 1%, and uses integer arithmetic so the
