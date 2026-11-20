@@ -8,6 +8,7 @@
 #include "profile.h"
 #include "live_wire.h"
 #include "pixels_neon.h"
+#include "guest_calls.h"
 #include "channel_plan.h"
 extern "C" {
 #include "gta.h"
@@ -21,7 +22,8 @@ static volatile grx_stream_channel *channel;
 static uint32_t sequence,nonce,*l1,section;
 static uint64_t first,last;
 static unsigned completed;
-/* Exclusive elapsed ticks: submit, upload, readback, conversion, display wait.
+/* Exclusive elapsed ticks: transport/presentation plus lock, unlock, draw and
+ * other Glide-call self time (subtract nested transport/presentation costs).
  * Snapshot only complete frames after warm-up; publish once during teardown. */
 struct stage_stat {uint32_t calls;uint64_t bytes,ticks;};
 static stage_stat stages[PC_GLIDE_PROFILE_STAGES],measured[PC_GLIDE_PROFILE_STAGES];
@@ -95,7 +97,21 @@ void db_glide_live_open(uint32_t lfb){
 uint32_t db_glide_live_call(const grx_guest_call *c,const grx_guest_io *io){
  if(c->id==0)E_Exit("Invalid Glide call");
  unsigned was_open=game.opened;
+ unsigned stage=8;
+ if(c->id==GRX_CALL_grLfbLock)stage=5;
+ else if(c->id==GRX_CALL_grLfbUnlock)stage=6;
+ else if(c->id==GRX_CALL_grDrawTriangle||c->id==GRX_CALL_guDrawTriangleWithClip)stage=7;
+ /* Swap resets warm-up counters and snapshots complete frames inside present.
+  * Its transport/conversion/display work is already counted separately. */
+ bool profile=c->id!=GRX_CALL_grBufferSwap;
+ uint64_t nested=0,start=0;
+ if(profile){for(unsigned i=0;i<5;i++)nested+=stages[i].ticks;start=pc_clock_ticks();}
  uint32_t reply;grx_result r=grx_gta_call(&game,c,io,&reply);
+ if(profile){
+  uint64_t elapsed=pc_clock_ticks()-start,after=0;
+  for(unsigned i=0;i<5;i++)after+=stages[i].ticks;
+  stages[stage].calls++;stages[stage].ticks+=elapsed-(after-nested);
+ }
  if(r!=GRX_OK){ad_put(db_shared(),PC_GLIDE_REPORT+24,c->id);ad_put(db_shared(),PC_GLIDE_REPORT+28,r);E_Exit("Glide call %u failed (%u)",c->id,r);}
  if(was_open&&!game.opened)db_glide_restore_video();
  return reply;
