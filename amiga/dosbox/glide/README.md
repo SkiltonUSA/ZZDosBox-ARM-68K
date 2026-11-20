@@ -3,14 +3,17 @@
 This is an experimental **command encoder, offscreen probe and diagnostic guest gateway**,
 not yet a working guest Glide renderer.
 It translates a small, explicit subset of Glide window-space rendering into
-RasterIX packets for the XACP Core0 submission interface. The released
-ZZDosBox player and launcher do not use it. No GPU throughput or game FPS
-has been measured for this component.
+RasterIX packets for the XACP Core0 submission interface. The released ZZDosBox player and launcher do not use it.
+The [completion-driven GPU test](validation/measure/hardware/README.md) measures
+9,302 offscreen FPS for a 64×72 solid triangle at 800 MHz ARM. This is not game
+or display FPS. The new [guest triangle batching component](experimental/guest-draw.md)
+passes native, firmware-validator and Cortex-A9 instruction-model checks; it
+has not yet been connected to the DOSBox runtime or live transport.
 
 The first [physical A9 encoder benchmark](validation/capacity/README.md) measures
 **1.077 ms median for 320 textured triangles at 800 MHz** across 30 samples and
 three clean launches. That is 3.23% of a 30 FPS frame budget for encoding alone;
-GPU, guest execution, texture uploads and presentation remain unmeasured.
+Guest execution, texture uploads and presentation remain unmeasured.
 
 ## Architecture
 
@@ -21,18 +24,24 @@ triangle rasterisation in software.
 
 The [full upstream renderer test](validation/full-renderer/README.md) now checks
 actual pixels, delayed memory responses, cancellation and error quarantine through
-the proposed completion path. The board-specific HP3/firmware integration still
-needs validation before physical GPU timing.
+the proposed completion path. The subsequent HP3/firmware build passes the small physical completion-driven
+benchmark linked above; larger workloads and physical fault recovery remain.
 
 A [minimal XX19d-RIX backport](experimental/board-completion.md) now passes
 inline and DDR-command rendering tests with Xanxi’s command-read credit logic.
-It adds completion tracking across the memory-width adapter; board/firmware
-integration is still pending.
+It adds completion tracking across the memory-width adapter. The matching
+experimental board/firmware now passes normal-path physical tests.
 
 The encoder itself has no MMIO, guest memory dereferences or display takeover.
 A separate 68k probe submits pre-encoded fixtures through the firmware's validated
 Core0 service. The standalone probe does not launch Core1. A separate diagnostic
 build adds a read-only Core1 witness; neither build changes the display or firmware.
+
+## Earlier hardware diagnostics
+
+These reports precede the matching completion firmware. The newer normal-path
+counter passes; it does not resolve every earlier observer discrepancy or prove
+physical error recovery.
 
 **Physical progress:** clear, solid red, additive green, red/blue texturing and
 source-alpha blending passed guarded readback on the A4000TX. Earlier runs
@@ -70,7 +79,8 @@ an integration candidate, not an installed fix or an explanation of the freezes.
 An experimental [tagged completion mailbox](experimental/completion.md) now
 tests batch identity, cancellation and error quarantine. Its single-clock
 AXI-Lite register prototype also passes bus/identity tests. Board addressing,
-clock-domain crossing and FPGA/XACP integration remain; it is not installed.
+clock-domain crossing and FPGA/XACP integration were subsequently completed
+for the fixed-scene experimental counter; production integration remains.
 
 ## Implemented subset
 
@@ -230,8 +240,8 @@ Clipping interpolates `s/w`, `t/w` and `1/w` directly. These design choices avoi
 unnecessary work, but there is no measured Cortex-A9 speedup yet.
 
 The [FPGA integration plan](experimental/integration.md) traces the existing
-CPU/GPU AXI clock conversion and identifies the missing ordered-token, drain
-and error connections. No compatible FPGA build has been installed.
+CPU/GPU AXI clock conversion and the ordered-token, drain and error connections
+implemented in the installed experimental build. It remains outside the release.
 
 The [DMA response/error prototype](experimental/response-path.md) transports batch
 identity through the actual upstream stream engine, waits for retirement and

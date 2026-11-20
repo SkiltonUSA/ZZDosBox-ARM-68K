@@ -1,0 +1,8 @@
+{
+  "scope": "Offline guest batching checks; no new hardware performance result",
+  "files": {
+    "mutant.log": "789ce499ba3be52867f773aa5e61ebf8dc4b884dfd4b59b052250a8f22ab1c25",
+    "native.log": "eb6d9bf0c286f9faea440ddad0f765f39bdb97dfff468af423ba1478294a5207",
+    "result.json": "3724deb3467932cbcb250fa20f0b6d303689dacc8519a4822dc9e7bb706bb382"
+  }
+}

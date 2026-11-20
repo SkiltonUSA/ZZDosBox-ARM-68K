@@ -27,6 +27,9 @@ preparation, submission and completion polling. This is a small rendering test;
   including the current 1920×800 Workbench mode. Timing-coverage gaps remain.
 - The diagnostic GTA ECTS overlay loads but still reports no board. Guest drawing,
   textures/state, required depth/LFB behaviour and presentation need integration.
+- [Guest triangle batching](amiga/dosbox/glide/experimental/guest-draw.md) now passes
+  native, firmware-validator and Cortex-A9 model checks, including packet rollover
+  and failed-submission handling. Live guest transport is still pending.
 - The existing 1.0 Beta release does not include this experimental firmware.
 
 [Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·

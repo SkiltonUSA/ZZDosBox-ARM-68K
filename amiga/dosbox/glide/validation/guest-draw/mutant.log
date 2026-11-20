@@ -1,0 +1,1 @@
+Assertion failed: (grx_draw_flush(&s)==GRX_BAD_STATE), function boundaries, file draw_stream.c, line 131.

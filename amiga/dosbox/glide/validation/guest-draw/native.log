@@ -1,0 +1,5 @@
+PASS guest draw: 320 triangles, texture/origin/blend variants, ordered packet rollover
+PASS clipped fan crosses packets, TMU W and state boundary preserve ordering
+PASS bad guest pointers/state rejected, empty draws suppressed, failed transport stops stream
+PASS mid-stream retirement failure stops after accepted prefix without replay
+DRAW_DIGEST=05c053fd
