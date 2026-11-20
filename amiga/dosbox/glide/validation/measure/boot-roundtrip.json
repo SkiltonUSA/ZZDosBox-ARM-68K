@@ -1,0 +1,55 @@
+{
+  "scope": "Offline round-trip of existing reference only; no new FPGA image or installation",
+  "tool": "Bootgen 2025.1-Merged (native macOS)",
+  "tool_sha256": "b6514dcf56a2cd32d34745d27836dddae327f10ba5ae89530ef31ae61477b177",
+  "exit_code": 0,
+  "reference_boot_sha256": "c0e81e720e3a55a26d517b9bd5c06f1d71c89c243f8d60b37d92ec59cb6c8537",
+  "roundtrip_sha256": "dd1294cacfa3234799802e7c2ea1a094949f096208fa9a0506e4702ca487ab4c",
+  "all_partition_payloads_and_metadata_identical": true,
+  "boot_header_identical": true,
+  "whole_file_identical": false,
+  "partitions": [
+    {
+      "load": "0x0",
+      "entry": "0x0",
+      "attributes": "0x10",
+      "bytes": 98312,
+      "sha256": "eb3166ca673c3be217b1486eed9eed3d4208aae12d120be9f42625e9209c9655"
+    },
+    {
+      "load": "0x0",
+      "entry": "0x0",
+      "attributes": "0x20",
+      "bytes": 4045568,
+      "sha256": "6f015220dad66f75b488c291936d0839615339619aa3782d2a7869a37233c560"
+    },
+    {
+      "load": "0x100000",
+      "entry": "0x100000",
+      "attributes": "0x10",
+      "bytes": 443888,
+      "sha256": "0248e52c57d8f2d1cb7ae26257165d65799ccc3a0c3df2cecd26d458f5f51613"
+    },
+    {
+      "load": "0x170000",
+      "entry": "0x0",
+      "attributes": "0x10",
+      "bytes": 16588,
+      "sha256": "4c84e62c733ea2bd2c57538a273b538bea10e00499a62b6bc4a7084ad421cd96"
+    },
+    {
+      "load": "0x3fcf0000",
+      "entry": "0x0",
+      "attributes": "0x10",
+      "bytes": 8192,
+      "sha256": "3f3fba956e45c253d38917ce45cca696597b7e11c99906590b25f3e45b84b9c4"
+    }
+  ],
+  "partition_comparison_fields": [
+    "load address",
+    "entry address",
+    "attributes",
+    "payload bytes"
+  ],
+  "container_difference": "Image headers group the three raw ARM payloads separately instead of under one ELF; names, image-header links/counts and associated partition header checksums differ. Payloads and the BootROM header are unchanged."
+}
