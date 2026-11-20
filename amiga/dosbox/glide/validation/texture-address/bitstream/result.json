@@ -1,0 +1,25 @@
+{
+  "scope": "Local bitstream generated; not installed; actual Workbench clock audit still pending",
+  "run": {
+    "exit_code": 0,
+    "elapsed_seconds": 307.94,
+    "script": "C:\\bit-grx-texture.tcl"
+  },
+  "routed_checkpoint_sha256": "2fee97cca93475c1ac7a660cb4c7e1681207abac0c210e7534cf7bbc6c40d69c",
+  "bitstream_sha256": "3a129f822e60f27747d458b0f67b278ae6a7bbb40dcbb5f2aea134c5bd01c90e",
+  "bitstream_bytes": 4045693,
+  "script_sha256": "9c5afb3357e0be51c0ec91757b2abbf46a907575d20982ab3bb71eb0aa7545b3",
+  "original_sha256": {
+    "completion-texture-bit.log": "bd01454719bf51bf8ef779bc19eb148946a116da368e4f5a49fc4f56d349897b",
+    "completion-bit-timing.rpt": "20c66722f0167df83412f6ff27cc798db17321ebde9bbd80be90a5f8904ef630",
+    "completion-bit-drc.rpt": "12f695613df47987937660aed4edee59e36efdf3c243f181593197ceed978649"
+  },
+  "bootgen_padding": "Vivado payload is 4,045,564 bytes; Bootgen adds one 0x20000000 NOP for 32-byte PCAP DMA alignment. Every input byte and the exact padding match.",
+  "bootgen_source_commit": "0e336a00dcff5842648f4a1e9f919abf7c960d97",
+  "bootgen_source_location": "zynq/src/imageheadertable-zynq.cpp:338",
+  "packager_sources": {
+    "scripts/glide_boot_image.py": "d6d683c3e195f3af4237c7e9a1f65b8840a9111f7f7cd66635e0770a770a8d0e",
+    "scripts/package_glide_measure.py": "9a36de5d3741024ba1c4cb7bb01f6e43a73588a104a899fc2f8902f4436e7dab",
+    "scripts/test_glide_boot_image.py": "e4bdd867740ad659489c5ca48eb949c3a0fc1b8510a2f8812a9123c428fbb650"
+  }
+}

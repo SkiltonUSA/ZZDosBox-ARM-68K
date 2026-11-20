@@ -45,7 +45,7 @@
     "amiga/dosbox/glide/experimental/measure.h": "571f9a65249a5765aaad13110f6cfbd031c977a9a03226a4061c575e8f88ca6a",
     "amiga/dosbox/glide/experimental/measure_host.c": "5e5ed3b9627fda0b33e05308674510611abc9e80acc5017e990c4ed829f83edc",
     "amiga/dosbox/glide/experimental/measure.c": "51279d6296eeaa42abf4627b6e0e7058a629660800be3a6b0036ee411f68ed16",
-    "amiga/dosbox/glide/experimental/measurement.md": "0535f405ff99100be171d93e430d91062dd50d9365395d390f3a3465b8eae055",
+    "amiga/dosbox/glide/experimental/measurement.md": "c3cd6aa5cb7036e3dcdbd1a91666848d7ad763d4e3a305422f3d4d738bf78882",
     "scripts/test_dosbox_glide_mmio.py": "f16f29e0a54ed3822eea57196ccaed9cea43ad4ca100970bd17edec846ca0b03",
     "scripts/test_glide_measure_firmware.py": "201f8cdccab6628eb3dc254e813b115400620e0c980a74fdd0d68756ab3ae0f2",
     "tests/amiga/dosbox/glide/measure_firmware.c": "1dac387ea3d2ff4acf85ff8487bc6eeaf1ca1cd9a5036ef69ee0e1d8ca70d331",

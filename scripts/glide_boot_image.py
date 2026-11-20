@@ -107,4 +107,7 @@ def bit_payload(data):
     payload = take(size)
     if not size or size % 4 or position != len(data):
         raise ValueError('Invalid bitstream extent')
-    return b''.join(payload[i:i+4][::-1] for i in range(0, size, 4))
+    words = b''.join(payload[i:i+4][::-1] for i in range(0, size, 4))
+    # Bootgen's Zynq imageheadertable-zynq.cpp pads PCAP DMA transfers to
+    # 32 bytes with configuration NOP words (0x20000000), not zero bytes.
+    return words + b'\x00\x00\x00\x20' * ((-size % 32) // 4)

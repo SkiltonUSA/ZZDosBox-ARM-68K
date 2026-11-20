@@ -1,0 +1,117 @@
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Fri Nov 20 08:07:42 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source {C:\bit-grx-texture.tcl}
+# set argc 1
+# set argv {C:/grx-board-texture}
+# source {Z:\Users\builder\conductor\workspaces\sixies_development\port-louis\.context\ZZDosBox-ARM-68K\amiga\dosbox\glide\experimental\bitstream-board.tcl}
+## if {$argc != 1} {error "Expected isolated board directory"}
+## cd [file normalize [lindex $argv 0]]
+## if {[catch {
+##  set_param general.maxThreads 2
+##  if {[file exists completion.bit]} {error "Bitstream already exists"}
+##  open_checkpoint completion-routed.dcp
+##  if {[get_property PART [current_design]] ne "xc7z020clg400-1"} {error "Wrong device"}
+##  if {![llength [get_cells -hier -filter {NAME =~ *grx_completion_0*}]]} {
+##   error "Missing completion endpoint"
+##  }
+##  if {[llength [get_cells -hier -filter {IS_BLACKBOX == 1}]]} {error "Unimplemented cells"}
+##  foreach delay {max min} {
+##   set paths [get_timing_paths -delay_type $delay -max_paths 1]
+##   if {![llength $paths]} {error "Missing $delay timing path"}
+##   if {[get_property SLACK [lindex $paths 0]] < 0} {error "Failed $delay timing"}
+##  }
+##  report_timing_summary -report_unconstrained -check_timing_verbose -file completion-bit-timing.rpt
+##  report_drc -file completion-bit-drc.rpt
+##  write_bitstream completion.bit
+##  puts GRX_BITSTREAM_WRITTEN_NOT_INSTALLED
+## } message options]} {
+##  puts stderr $message
+##  puts stderr $options
+##  exit 1
+## }
+Command: open_checkpoint completion-routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.044 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 3404 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.725 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.840 . Memory (MB): peak = 0.000 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.227 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 0.000 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:02 ; elapsed = 00:00:01 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read Physdb Files: Time (s): cpu = 00:00:06 ; elapsed = 00:00:05 . Memory (MB): peak = 0.000 ; gain = 0.000
+Restored from archive | CPU: 6.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 0.000 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 637 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 476 instances
+  IOBUF => IOBUF (IBUF, OBUFT): 39 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 58 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 7 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 56 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 1 instance
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+WARNING: [Vivado 12-23575] Critical violations of the methodology design rules detected. Critical violations may contribute to timing failures or cause functional issues in hardware. Run report_methodology for more information.
+open_checkpoint: Time (s): cpu = 00:02:03 ; elapsed = 00:02:04 . Memory (MB): peak = 0.000 ; gain = 0.000
+WARNING: [Vivado 12-180] No cells matched 'get_cells -hier -filter {IS_BLACKBOX == 1}'.
+get_timing_paths: Time (s): cpu = 00:00:56 ; elapsed = 00:00:43 . Memory (MB): peak = 0.000 ; gain = 0.000
+WARNING: [Timing 38-436] There are set_bus_skew constraint(s) in this design. Please run report_bus_skew to ensure that bus skew requirements are met.
+report_timing_summary: Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 0.000 ; gain = 0.000
+Command: report_drc -file completion-bit-drc.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/grx-board-texture/completion-bit-drc.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:27 ; elapsed = 00:00:22 . Memory (MB): peak = 0.000 ; gain = 0.000
+Command: write_bitstream completion.bit
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+Running DRC as a precondition to command write_bitstream
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado 12-3199] DRC finished with 0 Errors
+INFO: [Vivado 12-3200] Please refer to the DRC report (report_drc) for more information.
+Integrating Hard IP ELF/MEM with the PDI.
+INFO: [Designutils 20-2272] Running write_bitstream with 2 threads.
+Loading data files...
+Loading site data...
+Loading route data...
+Processing options...
+Creating bitmap...
+Creating bitstream...
+Writing bitstream ./completion.bit...
+INFO: [Vivado 12-1842] Bitgen Completed Successfully.
+INFO: [Common 17-83] Releasing license: Implementation
+25 Infos, 3 Warnings, 0 Critical Warnings and 0 Errors encountered.
+write_bitstream completed successfully
+write_bitstream: Time (s): cpu = 00:01:48 ; elapsed = 00:01:29 . Memory (MB): peak = 0.000 ; gain = 0.000
+GRX_BITSTREAM_WRITTEN_NOT_INSTALLED
+## exit 0
+INFO: [Common 17-206] Exiting Vivado at Fri Nov 20 08:12:44 2026...

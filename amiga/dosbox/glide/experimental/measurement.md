@@ -88,7 +88,8 @@ rejection, mapping failure, FIFO failure and bad pixels. These are not hardware 
 `package_glide_measure.py` preserves the recorded bootloader and accepts the
 recorded measurement ELF plus a supplied `7z020clg400` bitstream. It first
 round-trips the reference image, then checks every candidate payload against
-its input and verifies that the BootROM header remains unchanged. It writes
+its input (including Bootgen’s 32-byte PCAP DMA padding) and verifies that the
+BootROM header remains unchanged. It writes
 only to a fresh local directory. It does not install firmware or establish
 that the FPGA implements the required endpoint.
 
