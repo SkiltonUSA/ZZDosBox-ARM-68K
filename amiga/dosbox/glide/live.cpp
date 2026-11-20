@@ -7,6 +7,7 @@
 #include "shell_api.h"
 #include "profile.h"
 #include "live_wire.h"
+#include "pixels_neon.h"
 #include "channel_plan.h"
 extern "C" {
 #include "gta.h"
@@ -58,8 +59,7 @@ static int submit(void *,const grx_packet *p){return exchange(GRX_STREAM_SUBMIT,
 static int present(void *,const unsigned char *pixels,unsigned w,unsigned h){
  db_width=w;db_height=h;db_bpp=32;
  uint64_t convert=pc_clock_ticks();
- for(unsigned i=0;i<w*h;i++){unsigned v=pixels[2*i]|(unsigned)pixels[2*i+1]<<8;
-  unsigned r=v>>11,g=(v>>5)&63,b=v&31;db_pixels[i]=((r*255/31)<<16)|((g*255/63)<<8)|(b*255/31);}
+ grx_rgb565_xrgb(pixels,db_pixels,w*h);
  account(3,w*h*4,convert);
  uint64_t paint=pc_clock_ticks();db_frames++;db_video_present();
  /* Copy completion alone is insufficient: count only a host-painted window

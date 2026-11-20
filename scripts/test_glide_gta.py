@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """GTA subset and Core0 channel tests; no game data or hardware required."""
-import argparse, os, subprocess
+import argparse, os, platform, subprocess
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 src=root/'amiga/dosbox/glide';tests=root/'tests/amiga/dosbox/glide'
@@ -27,3 +27,12 @@ for name,sources in [('channel',[]),('stream',['experimental/stream.c']),('gta_t
  str(tests/(name+'.c')),*[str(src/s) for s in sources],*(validator if name in ('gta','gta_replay') else []),'-lm','-o',str(exe)],check=True)
  subprocess.run([str(exe),*([str(args.trace.resolve())] if name=='gta_replay' else [])],
                 env=dict(os.environ,UBSAN_OPTIONS='halt_on_error=1'),check=True)
+
+# Execute real NEON on an ARM host; do not substitute scalar results on x86.
+if platform.machine().lower() in ('arm64','aarch64'):
+ exe=out/'pixels-neon'
+ subprocess.run(['clang','-std=c11','-O2','-Wall','-Wextra','-Werror','-fsanitize=address,undefined',
+ '-I'+str(src),str(src/'pixels_neon.c'),str(tests/'pixels.c'),'-o',str(exe)],check=True)
+ subprocess.run([str(exe)],env=dict(os.environ,UBSAN_OPTIONS='halt_on_error=1'),check=True)
+else:
+ print('SKIP: NEON pixel execution requires an ARM host')

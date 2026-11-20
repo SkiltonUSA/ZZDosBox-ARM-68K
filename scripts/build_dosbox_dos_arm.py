@@ -233,7 +233,7 @@ if args.pc_glide_live:
  subprocess.run(['python3',str(ROOT/'scripts/build_dosbox_glide_ovl.py'),'--generate-only'],check=True)
  glide=BASE/'glide'
  flags+=['-DDB_GLIDE_DIAGNOSTIC','-DDB_GLIDE_LIVE','-I'+inside(glide),'-I'+inside(ROOT/'.context/amiga/glide/ovl')]
- sources += [glide/n for n in ['guest.c','guest_port.cpp','live.cpp','gta.c','draw_stream.c','guest_vertex.c','clip.c','translator.c','descriptor.c']]
+ sources += [glide/n for n in ['guest.c','guest_port.cpp','live.cpp','pixels_neon.c','gta.c','draw_stream.c','guest_vertex.c','clip.c','translator.c','descriptor.c']]
 header_digest=hashlib.sha256(b''.join(p.read_bytes() for p in sorted((BASE/'network').glob('*.h')) if args.pc_network)+b''.join(p.read_bytes() for p in sorted((BASE/'tinygl_raster').glob('*.h')) if args.pc_tinygl_raster)+b''.join(p.read_bytes() for p in sorted((BASE/'tinygl_bench').glob('*.h')) if args.pc_tinygl_bench)+b''.join(p.read_bytes() for p in sorted(OUT.rglob('*.h')) if p.name not in ('zz_payload.h','expected.h'))+b''.join(p.read_bytes() for p in sorted(SRC.glob('*.h')))+b''.join(p.read_bytes() for p in sorted((BASE/'developer').glob('*.h')) if args.pc_memory_debug)+b''.join(p.read_bytes() for p in sorted((BASE/'matrix').glob('*.h')) if args.pc_matrix_bench)+b''.join(p.read_bytes() for p in sorted(console.glob('*.h')))+b''.join(p.read_bytes() for p in sorted(shell.glob('*.h')))+b''.join(p.read_bytes() for p in sorted(pc.glob('*.h')) if p.name not in ('display.h','fullscreen.h','windowed.h','window_geometry.h','present_plan.h','video_trace_host.h','video_debug_host.h'))).digest()
 if args.pc_glide_live:header_digest+=b''.join(p.read_bytes() for p in sorted((BASE/'glide').rglob('*.h')))
 objects=[];overrides={}
@@ -261,7 +261,7 @@ for i,src in enumerate(sources):
  if (args.pc_opengl or args.pc_matrix_bench) and (src.parent==OUT/'tinygl/src' or src.parent==BASE/'opengl' or src==OUT/'raster-scene.c'):
   extra+=['-std=c99','-O2','-mfloat-abi=softfp','-mfpu=neon','-DNO_DEBUG_OUTPUT']
   if args.pc_tinygl_bench:extra+=['-ffp-contract=off','-fno-tree-vectorize']
- if src.name=='pixels_neon.cpp':
+ if src.name in ('pixels_neon.cpp','pixels_neon.c'):
   extra+=['-O2','-mfloat-abi=softfp','-mfpu=neon'];overrides[str(src.relative_to(ROOT))]=['-O2','-mfloat-abi=softfp','-mfpu=neon']
  if args.pc_matrix_bench and (src.parent==BASE/'matrix' or src.parent==BASE/'tinygl_bench' or src.parent==BASE/'tinygl_raster' or src.parent==BASE/'hlslpp' or src==OUT/'hlsl-bench.cpp' or src.parent==OUT/'cmsis-dsp/Source/MatrixFunctions'):
   extra+=['-O2','-mfloat-abi=softfp','-mfpu=vfpv3' if src.name=='scalar.c' else '-mfpu=neon','-ffp-contract=off','-fno-tree-vectorize','-DARM_MATH_NEON','-DARM_MATH_MATRIX_CHECK','-D__GNUC_PYTHON__','-DARM_MATH_L1_CACHE_SIZE=16384','-DARM_MATH_L2_CACHE_SIZE=32768','-DARM_MATH_L3_CACHE_SIZE=32768']
