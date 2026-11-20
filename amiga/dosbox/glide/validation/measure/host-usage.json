@@ -1,0 +1,9 @@
+{
+  "scope": "Physical 68k executable usage path only; no GPU request, firmware change or FPS",
+  "host_sha256": "fee9b2dc974d2015fd8f0db9712a575afbc426cd1fcf635ecce15ff438db5476",
+  "upload": "Transferred 16672 bytes in 0.7s (22723 B/s), 17 chunks, CRC32 verified",
+  "result": "[OK]\nUse --candidate [frames 1..1000] with the matching experimental boot image.\nMEASURE_USAGE_RETURNED",
+  "cleanup": "[OK]\nRAM:ZZGlide-Measure-Usage  Deleted\nMEASURE_USAGE_REMOVED",
+  "final_ping": "Amiga alive - clients: 0, chip: 2026888 bytes, fast: 617234504 bytes",
+  "arm_port_absent_after": true
+}

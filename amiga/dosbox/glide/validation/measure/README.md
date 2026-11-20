@@ -25,6 +25,10 @@
   and old FPGA payload. This deliberately incompatible test package is not for
   installation; it proves payload preservation and rejects malformed containers.
 
+- `host-usage.json`: the 68k executable displays its usage screen on the real
+  Amiga, returns cleanly, and is removed from RAM. The bridge remains responsive.
+  This path sends no GPU request and supplies no FPS measurement.
+
 See the [measurement contract](../../experimental/measurement.md). The
 independent [FPGA routing report](../board-hp3/routing/result.json) records a
 failed setup constraint; passing software/model tests do not waive that failure.
