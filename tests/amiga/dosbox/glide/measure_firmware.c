@@ -1,6 +1,7 @@
 /* ARM integration fixture; the preceding validator is the pinned firmware's.
  * Hardware callbacks are modeled. Pixel expectations come from the independent
  * Python fixture, while the production verifier executes unchanged. */
+#include <string.h>
 #include "amiga/dosbox/glide/experimental/mmio_transport.h"
 typedef uint64_t XTime;
 static uint64_t clock_ticks;
@@ -54,3 +55,15 @@ void test_poll(void){grx_firmware_poll();}
 unsigned test_claimed(void){return grx_owns_gpu();}
 unsigned test_stat(unsigned i)
 {return i==0?test_sends:i==1?test_words:i==2?test_payload_hash:test_max_words;}
+
+uint32_t *test_stream_command(unsigned op,unsigned nonce){
+ zc_put(message,op);zc_put(message+4,1);zc_put(message+8,nonce);
+ grx_stream_command(message);return (uint32_t*)message;
+}
+unsigned test_stream_request(unsigned op,unsigned nonce,unsigned seq){
+ grx_stream_request q={.sequence=seq,.nonce=nonce,.op=op,.address=0x06610000,.bytes=8};
+ memset(grx_channel.data,0x5a,8);
+ if(op==GRX_STREAM_SUBMIT){grx_packet p;grx_probe_scene(&p,0,0x1234);q.address=0;q.bytes=p.words*4;memcpy(grx_channel.data,p.bytes,q.bytes);}
+ grx_channel.request=q;return q.bytes;
+}
+uint32_t *test_stream_result(void){return (uint32_t*)&grx_channel.result;}

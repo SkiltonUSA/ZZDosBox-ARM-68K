@@ -16,7 +16,7 @@ def main():
         '\n#include "tests/amiga/dosbox/glide/measure_firmware.c"\n')
     objects=[]
     sources=[c,ROOT/'amiga/common/arm/memory.c',*[SRC/n for n in ['translator.c','descriptor.c','probe_scene.c',
-              'experimental/measure.c','experimental/completion_client.c','experimental/workload.c',
+              'experimental/stream.c','experimental/measure.c','experimental/completion_client.c','experimental/workload.c',
               'draw_stream.c','guest_vertex.c','clip.c']]]
     for n,source in enumerate(sources):
         obj=OUT/f'{n}.o';objects.append(obj)
@@ -31,7 +31,7 @@ def main():
     for scenario in range(25):
         profile,failure=divmod(scenario,5)
         u=Uc(UC_ARCH_ARM,UC_MODE_ARM);u.mem_map(0x10000,0x80000)
-        u.mem_write(0x10000,binary.read_bytes());u.mem_map(0x06610000,0xc0000)
+        u.mem_write(0x10000,binary.read_bytes());u.mem_map(0x06600000,0x1f0000)
         u.reg_write(UC_ARM_REG_CPSR,0x13);u.reg_write(UC_ARM_REG_FPEXC,0x40000000)
         u.cpr_write(15,0,1,0,2,0,False,0xf00000)
         u.mem_write(syms['test_profile'],struct.pack('<I',profile))
@@ -90,6 +90,33 @@ def main():
                 reply=command(1,2,124)
                 assert reply[2]==0 and reply[4]==0 and reply[12]==1,reply
         results.append({'profile':profile,'modeled_failure':failure,'reply':list(reply)})
+    # Fresh ARM service: live channel shares exclusion with measured scenes.
+    u=Uc(UC_ARCH_ARM,UC_MODE_ARM);u.mem_map(0x10000,0x80000)
+    u.mem_write(0x10000,binary.read_bytes());u.mem_map(0x06600000,0x1f0000)
+    u.reg_write(UC_ARM_REG_CPSR,0x13);u.reg_write(UC_ARM_REG_FPEXC,0x40000000)
+    u.cpr_write(15,0,1,0,2,0,False,0xf00000)
+    u.hook_add(UC_HOOK_CODE,lambda uc,pc,size,data: uc.emu_stop() if pc==0x80000 else None)
+    def stream(op,nonce=42):
+        ptr=call('test_stream_command',op,nonce)
+        return struct.unpack('>11I',u.mem_read(ptr,44))
+    def result():
+        return struct.unpack('<4I',u.mem_read(call('test_stream_result'),16))
+    assert stream(0)[2:4]==(0,0)
+    assert stream(1)[2:4]==(0,1) and call('test_claimed')==1
+    assert command(1,2,123)[3] and call('test_claimed')==1
+    count=call('test_stream_request',2,42,1);call('test_poll')
+    assert result()==(1,42,0,count) and bytes(u.mem_read(0x06610000,8))==b'\x5a'*8
+    count=call('test_stream_request',3,42,2);call('test_poll')
+    assert result()==(2,42,0,count)
+    count=call('test_stream_request',1,42,3);call('test_poll')
+    assert result()[0]==2 and stream(2)[2]!=0
+    call('test_poll');assert result()==(3,42,0,count)
+    assert stream(2)[2:4]==(0,0) and call('test_claimed')==0
+    assert stream(1)[2]!=0 # nonce reuse rejected
+    assert stream(1,43)[2]==0
+    call('test_stream_request',2,999,1);call('test_poll')
+    assert result()[2]!=0 and stream(2,43)[2]!=0 and call('test_claimed')==1
+    print('PASS ARM streaming: exclusion, uploads, reads, deferred retirement, clean close and failed-lease quarantine')
     for profile in (1,2):
         assert successful[profile][1:3]==successful[profile+2][1:3],successful
     record={'scope':'ARM service execution with modeled MMIO/FIFO/pixels; no physical FPS',

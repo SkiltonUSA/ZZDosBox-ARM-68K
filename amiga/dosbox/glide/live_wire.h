@@ -1,0 +1,7 @@
+#ifndef GRX_LIVE_WIRE_H
+#define GRX_LIVE_WIRE_H
+#define PC_GLIDE_HOST 0x188e00u
+#define PC_GLIDE_REPORT 0x188e40u
+#define PC_GLIDE_DISPLAY_ACK (PC_GLIDE_HOST+16u)
+#define PC_GLIDE_MAGIC 0x47544c31u
+#endif

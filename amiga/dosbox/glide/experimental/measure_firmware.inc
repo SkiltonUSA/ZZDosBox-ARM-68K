@@ -16,7 +16,9 @@ static unsigned grx_last_epoch;
 static unsigned grx_detail,grx_checked;
 static volatile uint32_t grx_reply[15];
 
-static int grx_owns_gpu(void) { return grx_claimed!=0; }
+static volatile unsigned grx_stream_active;
+static void grx_stream_idle_poll(void);
+static int grx_owns_gpu(void) { return grx_claimed!=0||grx_stream_active; }
 static uint64_t grx_ticks(void *unused)
 { (void)unused;XTime t;XTime_GetTime(&t);return t; }
 
@@ -73,6 +75,7 @@ static void grx_publish(void)
 
 static void grx_firmware_poll(void)
 {
+    grx_stream_idle_poll();
     if(!grx_claimed)return;
     const grx_measure_io io={0,grx_send_scene,grx_verify_scene,grx_ticks,
                             {&grx_transport,grx_mmio_read,grx_mmio_write}};
@@ -119,7 +122,7 @@ static void grx_firmware_command(void *data)
     uint32_t error=0;
     if((abi!=1&&abi!=2)||op>2||profile>4)error=0x30001;
     else if(op==1) {
-        if(grx_claimed||!zc_idle()||xacpgpu_submit_pending||xacpgpu_test2_pending||
+        if(grx_owns_gpu()||!zc_idle()||xacpgpu_submit_pending||xacpgpu_test2_pending||
            !frames||frames>1000||!epoch||epoch==grx_last_epoch)error=0x30002;
         else {
             grx_target=frames;grx_epoch=epoch;grx_profile=profile;
@@ -139,3 +142,5 @@ static void grx_firmware_command(void *data)
     zc_put(p+52,31);zc_put(p+56,grx_profile);
     Xil_DCacheFlushRange(aligned,64);
 }
+
+#include "stream_firmware.inc"

@@ -17,6 +17,7 @@ static volatile UWORD *command;
 static volatile ULONG *mailbox;
 static ULONG reply[15];
 static unsigned profile;
+static int stream_query;
 static ULONG now(void)
 {struct timeval t;GetSysTime(&t);return t.tv_secs*1000000u+t.tv_micro;}
 static unsigned long long ticks(const ULONG *r,unsigned low)
@@ -28,12 +29,14 @@ static int request(unsigned op,unsigned frames,unsigned epoch)
     for(n=0;n<15;n++)mailbox[n]=0;
     mailbox[0]=op;mailbox[1]=profile?2:1;mailbox[2]=frames;mailbox[3]=epoch;mailbox[4]=profile;
     CacheClearE((APTR)mailbox,64,CACRF_ClearD);
-    start=now();*command=0x7a20;
+    start=now();*command=stream_query?0x7a21:0x7a20;
     while(*command!=2&&*command!=3&&(ULONG)(now()-start)<1000000u) {}
+    if(*command==3){*command=0;return 0;}
     if(*command!=2)return 0;
     CacheClearE((APTR)mailbox,64,CACRF_ClearD);
     for(n=0;n<15;n++)reply[n]=mailbox[n];
     *command=0;
+    if(stream_query)return reply[0]==0x47525331&&reply[1]==1&&!reply[2];
     return reply[0]==0x47524d31&&reply[1]==(profile?2u:1u)&&
            (!profile||(reply[13]&(1u<<profile)));
 }
@@ -55,8 +58,10 @@ int main(int argc,char **argv)
     struct ConfigDev *cd;int claimed=0,opened=0,rc=20,active=0;
     unsigned frames=100,seen=0;ULONG base,start,total;unsigned long long elapsed;
     ULONG before,after;unsigned long long fps_milli;
+    stream_query=argc==2&&!strcmp(argv[1],"--stream-status");
+    int clock_only=argc==2&&!strcmp(argv[1],"--clock");
     int status_only=argc==2&&!strcmp(argv[1],"--status");
-    if(!status_only&&(argc<2||strcmp(argv[1],"--candidate"))){puts("Use --status, or --candidate [frames 1..1000] [profile 0=tiny,1=320x240,2=640x480,3=320x240 paired,4=640x480 paired]. Requires matching experimental firmware.");return 20;}
+    if(!status_only&&!stream_query&&!clock_only&&(argc<2||strcmp(argv[1],"--candidate"))){puts("Use --status, or --candidate [frames 1..1000] [profile 0=tiny,1=320x240,2=640x480,3=320x240 paired,4=640x480 paired]. Requires matching experimental firmware.");return 20;}
     if(argc>2){char *end;unsigned long v=strtoul(argv[2],&end,10);if(*end||v<1||v>1000)return 20;frames=v;}
     if(argc>3){char *end;unsigned long v=strtoul(argv[3],&end,10);if(*end||v>4)return 20;profile=v;}
     if(argc>4)return 20;
@@ -72,6 +77,11 @@ int main(int argc,char **argv)
     timer=(struct timerequest*)CreateIORequest(port,sizeof(*timer));if(!timer)goto done;
     if(OpenDevice(TIMERNAME,UNIT_MICROHZ,(struct IORequest*)timer,0))goto done;
     opened=1;TimerBase=timer->tr_node.io_Device;
+    if(stream_query){
+        if(!request(0,0,0))goto done;
+        printf("GPU_STREAM active=%u channel=%08x bytes=%u nonce=%08x next=%u failed=%u working=%u capacity=%u\n",reply[3],reply[4],reply[5],reply[6],reply[7],reply[8],reply[9],reply[10]);rc=0;goto done;
+    }
+    if(clock_only){before=calibrate();if(before<300000000u||before>450000000u)goto done;printf("GLOBAL_TIMER_HZ=%u\n",before);rc=0;goto done;}
     if(status_only){
         if(!request(0,0,0))goto done;
         printf("GPU_STATUS profiles=0x%08x state=%u error=0x%08x claimed=%u selected=%u\n",

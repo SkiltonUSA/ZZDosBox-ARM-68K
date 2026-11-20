@@ -9,10 +9,18 @@
 unsigned db_width,db_height,db_frames,db_bpp,db_lines;
 uint32_t db_pixels[PC_VIDEO_MAX_WIDTH*PC_VIDEO_MAX_HEIGHT];static uint32_t palette[256];static bool updating;
 Render_t render;
+#ifdef DB_GLIDE_LIVE
+extern bool db_glide_live_active();
+static unsigned vga_width,vga_height,vga_bpp;
+void db_glide_restore_video(){db_width=vga_width;db_height=vga_height;db_bpp=vga_bpp;updating=false;}
+#endif
 #ifndef DB_NATIVE
 extern void db_video_present();
 #endif
 static void line(const void *data){
+#ifdef DB_GLIDE_LIVE
+ if(db_glide_live_active())return;
+#endif
  if(!updating||db_lines>=db_height)E_Exit("Video scanline bound");
  pc_prof_enter(PP_CAPTURE);
  auto p=(const uint8_t*)data;uint32_t *dst=db_pixels+db_lines*db_width;
@@ -22,10 +30,22 @@ static void line(const void *data){
 ScalerLineHandler_t RENDER_DrawLine=line;
 void RENDER_SetSize(Bitu w,Bitu h,Bitu bpp,float,double,bool,bool){
  if(!w||!h||w>PC_VIDEO_MAX_WIDTH||h>PC_VIDEO_MAX_HEIGHT||(bpp!=8&&bpp!=15&&bpp!=16&&bpp!=32))E_Exit("Video mode bound %u %u %u",w,h,bpp);
+#ifdef DB_GLIDE_LIVE
+ vga_width=w;vga_height=h;vga_bpp=bpp;
+ if(db_glide_live_active()){updating=false;return;}
+#endif
  db_width=w;db_height=h;db_bpp=bpp;updating=false;
 }
-bool RENDER_StartUpdate(){db_lines=0;updating=true;return true;}
-void RENDER_EndUpdate(bool abort){if(updating&&!abort){if(db_lines!=db_height)E_Exit("Incomplete VGA frame");db_frames++;
+bool RENDER_StartUpdate(){
+#ifdef DB_GLIDE_LIVE
+ if(db_glide_live_active()){updating=false;return false;}
+#endif
+ db_lines=0;updating=true;return true;}
+void RENDER_EndUpdate(bool abort){
+#ifdef DB_GLIDE_LIVE
+ if(db_glide_live_active()){updating=false;return;}
+#endif
+ if(updating&&!abort){if(db_lines!=db_height)E_Exit("Incomplete VGA frame");db_frames++;
 #ifndef DB_NATIVE
  db_video_present();
 #endif

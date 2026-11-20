@@ -1,3 +1,7 @@
+#ifdef DB_GLIDE_LIVE
+#include "../glide/live_wire.h"
+static unsigned glide_flip_sequence;
+#endif
 /* GPL-3.0-or-later. Completed-frame/P96 lock and XACP deferred PAN. */
 #include <exec/memory.h>
 #include <devices/timer.h>
@@ -45,8 +49,8 @@ static UBYTE *direct_readback;
 static UBYTE *grant_target;
 static ULONG grant_span,grant_nonce;
 static ULONG us(void){struct timeval t;GetSysTime(&t);return t.tv_secs*1000000u+t.tv_micro;}
-#include "fullscreen.h"
 static void publish(unsigned offset,ULONG n){ad_put(shared,offset,n);syncio->push(shared+offset,4,NULL);syncio->barrier(NULL);}
+#include "fullscreen.h"
 /* Diagnostic reads occur only after ARM publishes completion. The bitmap
  * remains locked; values observed here may differ from the earlier ARM read. */
 static void display_transfer_error(ULONG error){

@@ -1,0 +1,89 @@
+/* Private candidate only. Firmware-owned channel mapped NC, never guest MMIO. */
+#include "dosbox.h"
+#include "mem.h"
+#include "pc.h"
+#include "pc_wire.h"
+#include "mmu.h"
+#include "shell_api.h"
+#include "profile.h"
+#include "live_wire.h"
+#include "channel_plan.h"
+extern "C" {
+#include "gta.h"
+#include "experimental/stream.h"
+}
+#include <string.h>
+extern "C" volatile uint8_t *db_shared();
+extern void db_video_present();
+static grx_gta game;
+static volatile grx_stream_channel *channel;
+static uint32_t sequence,nonce,*l1,section;
+static uint64_t first,last;
+static unsigned completed;
+extern void db_glide_restore_video();
+bool db_glide_live_active(){return game.opened!=0;}
+static void barrier(){__asm__ volatile("dsb sy":::"memory");}
+static void tlb(){unsigned z=0;__asm__ volatile("dsb sy\n mcr p15,0,%0,c8,c7,0\n dsb sy\n isb"::"r"(z):"memory");}
+static int exchange(unsigned op,uint32_t address,void *data,unsigned n){
+ if(!channel||!sequence)return 0;
+ if(op!=GRX_STREAM_READ)memcpy((void*)channel->data,data,n);
+ volatile grx_stream_request *q=&channel->request;
+ q->nonce=nonce;q->op=op;q->address=address;q->bytes=n;barrier();q->sequence=sequence;barrier();
+ uint64_t start=pc_clock_ticks();
+ while(channel->result.sequence!=sequence){
+  if(pc_clock_ticks()-start>1200000000ull)return 0;
+  /* Poll host input/file services; never release an outstanding GPU request. */
+  db_shell_poll();barrier();
+ }
+ barrier();if(channel->result.nonce!=nonce||channel->result.error||channel->result.bytes!=n)return 0;
+ if(op==GRX_STREAM_READ)memcpy(data,(const void*)channel->data,n);
+ sequence++;return 1;
+}
+static int transfer(unsigned op,uint32_t address,void *data,unsigned n){
+ auto *p=(unsigned char*)data;
+ while(n){unsigned part=n>GRX_STREAM_BYTES?GRX_STREAM_BYTES:n;if(!exchange(op,address,p,part))return 0;address+=part;p+=part;n-=part;}return 1;
+}
+static int upload(void *,uint32_t a,const void *p,unsigned n){return transfer(GRX_STREAM_UPLOAD,a,const_cast<void*>(p),n);}
+static int readback(void *,uint32_t a,void *p,unsigned n){return transfer(GRX_STREAM_READ,a,p,n);}
+static int submit(void *,const grx_packet *p){return exchange(GRX_STREAM_SUBMIT,0,(void*)p->bytes,p->words*4);}
+static int present(void *,uint32_t a,unsigned w,unsigned h){
+ if(!readback(nullptr,a,game.lfb,w*h*2))return 0;
+ db_width=w;db_height=h;db_bpp=32;
+ for(unsigned i=0;i<w*h;i++){unsigned v=game.lfb[2*i]|(unsigned)game.lfb[2*i+1]<<8;
+  unsigned r=v>>11,g=(v>>5)&63,b=v&31;db_pixels[i]=((r*255/31)<<16)|((g*255/63)<<8)|(b*255/31);}
+ db_frames++;db_video_present();
+ /* Copy completion alone is insufficient: count only a host-painted window
+  * or acknowledged fullscreen PAN. Errors unwind without a completed frame. */
+ uint32_t wanted=ad_get(db_shared(),PC_VIDEO);uint64_t wait=pc_clock_ticks();
+ while(ad_get(db_shared(),PC_GLIDE_DISPLAY_ACK)!=wanted){
+  if(pc_clock_ticks()-wait>1200000000ull)return 0;
+  db_shell_poll();barrier();
+ }
+ completed++;
+ uint64_t now=pc_clock_ticks();if(completed==10)first=now;if(completed>10)last=now;
+ volatile uint8_t *shared=db_shared();
+ ad_put(shared,PC_GLIDE_REPORT+4,completed);ad_put(shared,PC_GLIDE_REPORT+8,first>>32);ad_put(shared,PC_GLIDE_REPORT+12,first);
+ ad_put(shared,PC_GLIDE_REPORT+16,last>>32);ad_put(shared,PC_GLIDE_REPORT+20,last);barrier();ad_put(shared,PC_GLIDE_REPORT,PC_GLIDE_MAGIC);return 1;
+}
+void db_glide_live_open(uint32_t lfb){
+ volatile uint8_t *shared=db_shared();
+ uint32_t address=ad_get(shared,PC_GLIDE_HOST+4),bytes=ad_get(shared,PC_GLIDE_HOST+8);
+ nonce=ad_get(shared,PC_GLIDE_HOST+12);
+ if(ad_get(shared,PC_GLIDE_HOST)!=PC_GLIDE_MAGIC||address<0x100000||address>=0x200000||
+    bytes!=sizeof(grx_stream_channel)||bytes>0x200000-address||(address&4095)||!nonce)E_Exit("Glide channel admission failed");
+ uint32_t *state=(uint32_t*)(shared+MB_MMU_STATE);
+ l1=(uint32_t*)state[15];uint32_t table=state[15]+16384+MB_L2_BYTES+4096;
+ if(table+1024>(uintptr_t)shared+MB_TABLE_END||!grx_channel_map(l1,(uint32_t*)table,table,address,bytes))E_Exit("Glide channel mapping conflict");
+ section=address>>20;tlb();
+ channel=(volatile grx_stream_channel*)address;sequence=1;completed=0;first=last=0;
+ grx_gta_backend backend={nullptr,upload,readback,submit,present};grx_gta_init(&game,&backend,lfb);
+}
+uint32_t db_glide_live_call(const grx_guest_call *c,const grx_guest_io *io){
+ if(c->id==0)E_Exit("Invalid Glide call");
+ unsigned was_open=game.opened;
+ uint32_t reply;grx_result r=grx_gta_call(&game,c,io,&reply);
+ if(r!=GRX_OK){ad_put(db_shared(),PC_GLIDE_REPORT+24,c->id);ad_put(db_shared(),PC_GLIDE_REPORT+28,r);E_Exit("Glide call %u failed (%u)",c->id,r);}
+ if(was_open&&!game.opened)db_glide_restore_video();
+ return reply;
+}
+void db_glide_live_close(){if(channel){l1[section]=0;tlb();channel=nullptr;}}

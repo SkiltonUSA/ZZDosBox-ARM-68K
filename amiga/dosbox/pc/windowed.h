@@ -86,6 +86,9 @@ static int window_service(void){
   if(ad_get(shared,PC_VIDEO+40)){display_transfer_error(ad_get(shared,PC_VIDEO+40));return 0;}
   complete=active;active=0;frames++;full_unlock();locked_memory=NULL;releases++;
   window_ready=1;paint_width=window_width;paint_height=window_height;window_paint();
+#ifdef DB_GLIDE_LIVE
+  publish(PC_GLIDE_DISPLAY_ACK,complete);
+#endif
  }
  if((event=window_events())<=0)return event;
  screenshot_save();

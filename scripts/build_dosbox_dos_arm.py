@@ -15,9 +15,12 @@ parser.add_argument('--pc-jit-reuse-span',type=int,choices=(1,8),default=1,help=
 parser.add_argument('--pc-jit-write',action='store_true',help='Experimental guarded inline writes through the live writable TLB')
 parser.add_argument('--pc-audio-batch',action='store_true',help='Experimental host PCM batch drain before presentation')
 parser.add_argument('--pc-row-cache',action='store_true',help='Experimental per-frame reuse of converted vertically repeated rows')
+parser.add_argument('--pc-glide-live',action='store_true',help='Private GTA subset; requires streaming candidate firmware')
 parser.add_argument('--base',type=Path,help='Inherit options from a verified recorded build; explicit flags override')
 parser.add_argument('--output',type=Path,help='Isolated build directory within .context')
 args=parser.parse_args()
+if args.pc_glide_live and not (args.pc and args.pc_compat and args.pc_expanded and args.output):parser.error('Glide candidate requires PC/Compat/Expanded and isolated output')
+if args.pc_glide_live and (args.pc_presentation or args.pc_opengl or args.pc_memory_debug or args.pc_matrix_bench or args.pc_network or args.pc_video_trace or args.pc_descent_clock or args.pc_duke_clock or args.pc_doom_clock):parser.error('Glide live requires exclusive report and presentation control')
 base_record=None
 if args.base:
  base_path=args.base.resolve();base_file=base_path/'build.json'
@@ -226,7 +229,13 @@ if args.pc_matrix_bench:
   flags += ['-DDB_TINYGL_BENCH','-I'+inside(BASE/'tinygl_bench')]
  else:sources += prepare_matrix(OUT)+prepare_scene(OUT)+[BASE/'opengl/messages.c']+sorted((BASE/'matrix').glob('*.c'))+sorted((BASE/'matrix').glob('*.cpp'))
  flags += ['-DDB_MATRIX_BENCH','-I'+inside(BASE/'matrix'),'-I'+inside(OUT/'tinygl/include'),'-I'+inside(OUT/'cmsis-dsp/Include'),'-I'+inside(OUT/'cmsis-dsp/PrivateInclude')]
+if args.pc_glide_live:
+ subprocess.run(['python3',str(ROOT/'scripts/build_dosbox_glide_ovl.py'),'--generate-only'],check=True)
+ glide=BASE/'glide'
+ flags+=['-DDB_GLIDE_DIAGNOSTIC','-DDB_GLIDE_LIVE','-I'+inside(glide),'-I'+inside(ROOT/'.context/amiga/glide/ovl')]
+ sources += [glide/n for n in ['guest.c','guest_port.cpp','live.cpp','gta.c','draw_stream.c','guest_vertex.c','clip.c','translator.c','descriptor.c']]
 header_digest=hashlib.sha256(b''.join(p.read_bytes() for p in sorted((BASE/'network').glob('*.h')) if args.pc_network)+b''.join(p.read_bytes() for p in sorted((BASE/'tinygl_raster').glob('*.h')) if args.pc_tinygl_raster)+b''.join(p.read_bytes() for p in sorted((BASE/'tinygl_bench').glob('*.h')) if args.pc_tinygl_bench)+b''.join(p.read_bytes() for p in sorted(OUT.rglob('*.h')) if p.name not in ('zz_payload.h','expected.h'))+b''.join(p.read_bytes() for p in sorted(SRC.glob('*.h')))+b''.join(p.read_bytes() for p in sorted((BASE/'developer').glob('*.h')) if args.pc_memory_debug)+b''.join(p.read_bytes() for p in sorted((BASE/'matrix').glob('*.h')) if args.pc_matrix_bench)+b''.join(p.read_bytes() for p in sorted(console.glob('*.h')))+b''.join(p.read_bytes() for p in sorted(shell.glob('*.h')))+b''.join(p.read_bytes() for p in sorted(pc.glob('*.h')) if p.name not in ('display.h','fullscreen.h','windowed.h','window_geometry.h','present_plan.h','video_trace_host.h','video_debug_host.h'))).digest()
+if args.pc_glide_live:header_digest+=b''.join(p.read_bytes() for p in sorted((BASE/'glide').rglob('*.h')))
 objects=[];overrides={}
 for i,src in enumerate(sources):
  obj=OUT/(str(i)+'-'+src.stem+'.arm.o');objects.append(obj)
@@ -234,6 +243,7 @@ for i,src in enumerate(sources):
  extra=['-std=c++17','-fno-exceptions','-fno-rtti','-fno-threadsafe-statics','-fno-use-cxa-atexit'] if cpp else []
  if cpp and args.shell:extra+=['-include',inside(shell/'cxx_config.h')]
  if cpp and ('src/cpu' not in src.as_posix() or (args.pc and src.name in ('paging.cpp','core_dynrec.cpp'))):extra+=['-fno-freestanding'] # banked TLB needs malloc declarations; implementation stays our owned heap
+ if args.pc_glide_live and src.parent==BASE/'glide':extra+=['-O2','-mfloat-abi=softfp','-mfpu=vfpv3','-ffp-contract=off']
  if args.pc and src==shell/'remote_drive.cpp':
   extra+=['-DDB_DISK_CACHE_SETS='+str(args.pc_disk_cache_kib//16)];overrides[str(src.relative_to(ROOT))]=extra.copy()
  if args.pc_capture_unroll and src==pc/'video.cpp':
@@ -335,13 +345,19 @@ if args.pc_descent_clock or args.pc_duke_clock:
  addition='   {unsigned o=PC_VIDEO+0xe00;syncio->pull(shared+o,96,NULL);printf("DESCENTCLOCK magic=%08x address=%08x rejected=%u first=%u last=%u sim_first=%u sim_last=%u start=%08x%08x end=%08x%08x samples=%u\\n",ad_get(shared,o),ad_get(shared,o+4),ad_get(shared,o+8),ad_get(shared,o+12),ad_get(shared,o+16),ad_get(shared,o+20),ad_get(shared,o+24),ad_get(shared,o+28),ad_get(shared,o+32),ad_get(shared,o+36),ad_get(shared,o+40),ad_get(shared,o+44));for(unsigned i=0;i<6;i++)printf("DESCENTPROFILE bucket=%u ticks=%08x%08x\\n",i,ad_get(shared,o+48+i*8),ad_get(shared,o+52+i*8));}\n'
  if args.pc_duke_clock:addition=addition.replace('DESCENTCLOCK','DUKECLOCK').replace('DESCENTPROFILE','DUKEPROFILE')
  assert marker in text;(OUT/'host.c').write_text(text.replace(marker,addition+marker))
-relative=OUT.relative_to(ROOT);binary=OUT/('ZZDosBox-Net-JIT' if args.pc_network and args.pc_compat and args.pc_dynrec else 'ZZDosBox-Expanded' if args.pc_expanded else 'ZZDosBox-Compat' if args.pc_compat else 'ZZDosBox-Dynrec' if args.pc_dynrec else 'ZZDosBox' if args.console else 'ZZDosBox-DOS')
+relative=OUT.relative_to(ROOT);binary=OUT/('ZZDosBox-Glide-GTA' if args.pc_glide_live else 'ZZDosBox-Net-JIT' if args.pc_network and args.pc_compat and args.pc_dynrec else 'ZZDosBox-Expanded' if args.pc_expanded else 'ZZDosBox-Compat' if args.pc_compat else 'ZZDosBox-Dynrec' if args.pc_dynrec else 'ZZDosBox' if args.console else 'ZZDosBox-DOS')
 launcher=ROOT/'amiga/arm_debug/zz9000/launcher.c'
 if args.console:
  # Local staging only: consume application arguments before generic launcher CLI.
  text=launcher.read_text().replace('int main(int argc,char **argv)','extern int db_arguments(int,char **);\nint main(int argc,char **argv)')
  text=text.replace('    struct ConfigDev *gfx=0,*ram=0;', '    argc=db_arguments(argc,argv);if(argc<0)return 20;\n    struct ConfigDev *gfx=0,*ram=0;')
  launcher=OUT/'launcher.c';launcher.write_text(text)
+if args.pc_glide_live:
+ text=launcher.read_text()
+ text=text.replace('int main(int argc,char **argv)', '#include "amiga/dosbox/glide/live_host.inc"\nint main(int argc,char **argv)')
+ text=text.replace('    sync_range(mem,ZZ_BLOCK_SIZE,0);', '    if(!glide_prepare(board,mem,nonce))goto done;\n    sync_range(mem,ZZ_BLOCK_SIZE,0);')
+ text=text.replace('    if(mem)FreeMem(mem,ZZ_BLOCK_SIZE);', '    if(!glide_finish(mem))rc=20;\n    if(mem)FreeMem(mem,ZZ_BLOCK_SIZE);')
+ launcher.write_text(text)
 if args.pc_jit_reuse:
  text=(OUT/'host.c').read_text();marker='   printf("CPU_CYCLES applied=%u\\n",receive(PC_CYCLE_APPLIED));'
  assert marker in text
@@ -368,7 +384,7 @@ if args.pc:
  version=re.search(r'#define ZZ_DOSBOX_VERSION "([^"]+)"',(BASE/'version.h').read_text())[1]
 if args.pc_network:subprocess.run(['python3',str(ROOT/'scripts/build_dosbox_network.py'),'--library'],check=True,cwd=ROOT)
 subprocess.run([*host_command,'run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-Wall','-Wextra','-Werror',
- *(['-DDB_AUDIO_BATCH'] if args.pc_audio_batch else []),*(['-DDB_EXPANDED'] if args.pc_expanded else []),*(['-DDB_COMPAT'] if args.pc_compat else []),*(['-DDB_NETWORK'] if args.pc_network else []),*(['-DDB_MEMORY_DEBUG','-Iamiga/dosbox/developer'] if args.pc_memory_debug else []),*(['-DDB_VIDEO_TRACE'] if args.pc_video_trace else []),*(['-DDB_OPENGL'] if args.pc_opengl else []),*(['-DDB_SCANLINE_TEST'] if args.pc_scanlines else []),*(['-DDB_PRESENT_TEST'] if args.pc_presentation else []),*(['-DDB_PIPELINE_DEFAULT=1'] if args.pc_pipeline else []),*(['-DFF_DIRECT','-DZZ_PC_CD'] if args.pc else []),'-DZZ_HEADLESS_BENCH','-DZZ_RELEASE','-DZZ_BLOCK_SIZE='+hex(allocation),'-DZZ_CONTROL=0x180000','-DMB_ALLOCATION='+hex(allocation),'-DDB_JIT_MIB='+str(args.pc_jit_mib),'-DZZ_APP_NAME="'+binary.name+'"','-DZZ_APP_VERSION="'+version+'"','-DZZ_MIN_STACK=65536','-DMB_MMU','-DMB_DCACHE','-DZZ_HEADLESS_MMU','-DZZ_HEADLESS_ICACHE',
+ *(['-DDB_GLIDE_LIVE','-I.'] if args.pc_glide_live else []),*(['-DDB_AUDIO_BATCH'] if args.pc_audio_batch else []),*(['-DDB_EXPANDED'] if args.pc_expanded else []),*(['-DDB_COMPAT'] if args.pc_compat else []),*(['-DDB_NETWORK'] if args.pc_network else []),*(['-DDB_MEMORY_DEBUG','-Iamiga/dosbox/developer'] if args.pc_memory_debug else []),*(['-DDB_VIDEO_TRACE'] if args.pc_video_trace else []),*(['-DDB_OPENGL'] if args.pc_opengl else []),*(['-DDB_SCANLINE_TEST'] if args.pc_scanlines else []),*(['-DDB_PRESENT_TEST'] if args.pc_presentation else []),*(['-DDB_PIPELINE_DEFAULT=1'] if args.pc_pipeline else []),*(['-DFF_DIRECT','-DZZ_PC_CD'] if args.pc else []),'-DZZ_HEADLESS_BENCH','-DZZ_RELEASE','-DZZ_BLOCK_SIZE='+hex(allocation),'-DZZ_CONTROL=0x180000','-DMB_ALLOCATION='+hex(allocation),'-DDB_JIT_MIB='+str(args.pc_jit_mib),'-DZZ_APP_NAME="'+binary.name+'"','-DZZ_APP_VERSION="'+version+'"','-DZZ_MIN_STACK=65536','-DMB_MMU','-DMB_DCACHE','-DZZ_HEADLESS_MMU','-DZZ_HEADLESS_ICACHE',
  '-I'+str(relative),'-Iamiga/dosbox/pc','-Iamiga/arm_debug','-Iamiga/arm_debug/zz9000','-Iamiga/common/arm','-Iamiga/dosbox/dos','-Iamiga/dosbox/console','-Iamiga/dosbox/shell','-Iamiga/dosbox/pc',str(launcher.relative_to(ROOT)),str(relative/'host.c'),*(['amiga/dosbox/console/window.c'] if args.console else []),*(['amiga/dosbox/shell/fs_host.c'] if args.shell else []),*(['amiga/dosbox/pc/display.c','amiga/dosbox/pc/cd_host.c','amiga/dosbox/pc/midi_host.c'] if args.pc else []),*(['amiga/dosbox/pc/audio_host.c'] if args.pc_compat else []),*(['amiga/dosbox/pc/serial_host.c'] if args.pc_expanded else []),*(['.context/amiga/dosbox-network/amiga/libzznetwork.a'] if args.pc_network else []),'-lamiga','-o',str(relative/binary.name)],cwd=ROOT,check=True)
 assert binary.read_bytes()[:4]==b'\0\0\x03\xf3'
 record={'expanded':args.pc_expanded,'guest_ram_max_mb':32 if args.pc_expanded and args.pc_jit_mib!=32 else 8,'x87':args.pc_x87,'upstream':json.loads((BASE/'upstream.json').read_text()),'scope':('EMS/XMS, SBPro2/DBOPL and batched AHI compatibility runtime' if args.pc_compat else 'PC BIOS/PIT/keyboard/EGA, CD and external CAMD MIDI prototype; no PCM audio; no game-speed claim' if args.pc else 'Upstream DOS shell with live flat C drive; no VGA/audio/PC BIOS' if args.shell else 'Real DOS kernel, external COM/EXE loading and bounded private file drive; no VGA/audio/shell yet'), 'image_bytes':len(image),'relocations':len(rel),'allocation':allocation,
@@ -376,6 +392,9 @@ record={'expanded':args.pc_expanded,'guest_ram_max_mb':32 if args.pc_expanded an
  'row_cache':args.pc_row_cache,'file_readahead_bytes':4096 if args.pc_file_readahead else 0,'network':args.pc_network,'simd_context':args.pc,'disk_cache_kib':args.pc_disk_cache_kib,'capture_unroll':args.pc_capture_unroll,'raster_fixed':args.pc_raster_fixed,'raster_compiler':args.pc_raster_compiler,'tinygl_raster':args.pc_tinygl_raster,'tinygl_bench':args.pc_tinygl_bench,'matrix_bench':args.pc_matrix_bench,'hlslpp':json.loads((OUT/'hlslpp-provenance.json').read_text()) if args.pc_hlslpp else None,'cmsis':json.loads((OUT/'cmsis-provenance.json').read_text()) if args.pc_matrix_bench and not args.pc_tinygl_bench and not args.pc_hlslpp else None,'memory_debug':args.pc_memory_debug,'neon_dispatch':args.pc_neon_dispatch,'pixel_bench':args.pc_pixel_bench,'pic_vfp':args.pc_pic_vfp,'video_trace':args.pc_video_trace,'software_opengl':args.pc_opengl,'tinygl':json.loads((OUT/'tinygl-provenance.json').read_text()) if (args.pc_opengl or args.pc_matrix_bench) else None,'video_adapters':['vga','ega','cga','s3','tandy','pcjr','hercules'] if args.pc else [],'audio_batch':args.pc_audio_batch,'jit_write':args.pc_jit_write,'jit_inline':args.pc_jit_inline,'jit_reuse':args.pc_jit_reuse,'jit_reuse_span':args.pc_jit_reuse_span,'jit_value':args.pc_jit_value,'jit_hot':args.pc_jit_hot,'duke_clock':args.pc_duke_clock,'descent_clock':args.pc_descent_clock,'doom_clock':args.pc_doom_clock,'dynrec':args.pc_dynrec,'jit_mib':args.pc_jit_mib,'neon':args.pc_neon,'pipeline_default':args.pc_pipeline,'scanline_test':args.pc_scanlines,'presentation_test':args.pc_presentation,'console':args.console,'shell':args.shell,'pc':args.pc,'version':version,
  'source_hashes':{str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [*sources,*SRC.glob('*.*'),*console.glob('*.*'),*shell.glob('*.*'),*pc.glob('*.*'),ROOT/'amiga/common/flip_plan.h',BASE/'version.h',BASE/'elf.py',launcher,ROOT/'scripts/build_dosbox.py',ROOT/'scripts/build_dosbox_dos.py',*([ROOT/'scripts/build_dosbox_shell.py',shell/'vendor/upstream.json'] if args.shell else []),*([ROOT/'scripts/build_dosbox_pc.py',ROOT/'amiga/dosbox/launcher/session.h'] if args.pc else []),*([ROOT/'scripts/prepare_dosbox_dynrec.py'] if args.pc_dynrec else []),*([ROOT/'scripts/prepare_dosbox_jit_value.py'] if args.pc_jit_value else []),*([ROOT/'scripts/prepare_dosbox_jit_reuse.py'] if args.pc_jit_reuse else []),*([ROOT/'scripts/prepare_dosbox_jit_inline.py'] if args.pc_jit_inline else []),*([ROOT/'scripts/prepare_dosbox_jit_write.py'] if args.pc_jit_write else []),*([ROOT/'scripts/prepare_dosbox_x87.py'] if args.pc_x87 else []),*([ROOT/'scripts/prepare_dosbox_expanded.py'] if args.pc_expanded else []),*([ROOT/'scripts/prepare_dosbox_compat.py',ROOT/'scripts/prepare_dosbox_audio.py'] if args.pc_compat else []),Path(__file__),ROOT/'amiga/arm_debug/zz9000/launcher.c',ROOT/'amiga/arm_debug/zz9000/layout.h',ROOT/'amiga/arm_debug/zz9000/mapping_probe.S',OUT/'host.c',OUT/'mmu_plan.h'] if p.is_file()},
  'arm_flags':flags,'arm_overrides':overrides,'compiler':subprocess.check_output([*cmd,'arm-none-eabi-g++','--version'],text=True)}
+if args.pc_glide_live:
+ record['scope']='Experimental GTA ECTS Glide subset; requires private Core0 streaming firmware; not a release'
+ record['glide_sources']={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (BASE/'glide').rglob('*') if p.suffix in ('.h','.c','.cpp','.inc')}
 if args.pc_network:
  record['network_backend']=json.loads((ROOT/'.context/amiga/dosbox-network/amiga/library-build.json').read_text())
  record['network_sources']={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [*(BASE/'network').rglob('*'),ROOT/'scripts/prepare_dosbox_network.py',ROOT/'scripts/build_dosbox_network.py',ROOT/'scripts/prepare_dosbox_ipx.py'] if p.is_file()}

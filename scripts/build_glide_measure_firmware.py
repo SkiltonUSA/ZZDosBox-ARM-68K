@@ -36,7 +36,7 @@ def main():
             'draw_stream.c','draw_stream.h','guest_vertex.c','guest_vertex.h','guest.h','clip.c','clip.h']]
     inputs+= [SRC/'experimental'/name for name in ['measure.h','measure.c','measure_firmware.inc',
         'submit_prepare.inc','completion_client.h','completion_client.c','mmio_guard.h',
-        'mmio_guard.c','mmio_guard.S','mmio_transport.h','mmio_transport.c','workload.h','workload.c']]
+        'mmio_guard.c','mmio_guard.S','mmio_transport.h','mmio_transport.c','workload.h','workload.c','stream.h','stream.c','stream_firmware.inc']]
     subprocess.run(['python3',str(ROOT/'scripts/build_dosbox_glide_ovl.py'),'--generate-only'],check=True)
     inputs.append(ROOT/'.context/amiga/glide/ovl/guest_calls.h')
     for source in inputs:shutil.copyfile(source,dest/source.name)
@@ -61,7 +61,11 @@ def main():
     main=once(main,'#include "zz-clock/firmware.h"','static int grx_owns_gpu(void);\n#include "zz-clock/firmware.h"')
     main=once(main,'static void xacpgpu_submit_idle_poll(void)',
               '#include "grx-measure/measure_firmware.inc"\n\nstatic void xacpgpu_submit_idle_poll(void)')
-    main=once(main,'    if (cmd == OP_GPU_QUERY) {','''    if (cmd == GRX_MEASURE_OPCODE) {
+    main=once(main,'    if (cmd == OP_GPU_QUERY) {','''    if (cmd == GRX_STREAM_OPCODE) {
+        grx_stream_command((uint8_t*)video_state->framebuffer + XACP_CMD_OFFSET);
+        x_error=0; x_status=XACP_STATUS_DONE; break;
+    }
+    if (cmd == GRX_MEASURE_OPCODE) {
         grx_firmware_command((uint8_t*)video_state->framebuffer + XACP_CMD_OFFSET);
         x_error=0; x_status=XACP_STATUS_DONE; break;
     }

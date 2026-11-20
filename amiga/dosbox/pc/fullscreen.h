@@ -29,7 +29,11 @@ static int full_poll(void){
  int status;UWORD observed;
  if(full_slots.pending<0)return !full_fault;
  observed=full_ack_count();status=nf_ack(&full_slots,observed);
- if(status==1){full_wait_us+=us()-full_pending_us;return 1;}
+ if(status==1){full_wait_us+=us()-full_pending_us;
+#ifdef DB_GLIDE_LIVE
+ publish(PC_GLIDE_DISPLAY_ACK,glide_flip_sequence);
+#endif
+ return 1;}
  if(status<0 || (ULONG)(us()-full_pending_us)>100000u){
   /* A second copy may still own slot zero. Cancel pending, retain the lock,
    * and restore the origin only in cleanup after synchronous Core1 reset. */
@@ -41,6 +45,9 @@ static int full_poll(void){
 static int full_queue(void){
  if(!direct_locked || !full_attached || !pc_flow_queue(&flow,&full_slots,full_ack_count()))return 0;
  full_pending_us=us();
+#ifdef DB_GLIDE_LIVE
+ glide_flip_sequence=complete;
+#endif
  full_usedpan=1;
  full_pan(full_origin+(ULONG)full_slots.pending*480*full_pitch,1);
  return 1;
