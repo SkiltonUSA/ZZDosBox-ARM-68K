@@ -28,6 +28,10 @@ gate is a small scene timed through verified GPU completion.
    matching FPGA image and bounded physical retirement/error/cleanup tests are
    needed. Previous readback discrepancies and freezes remain unresolved.
    Successful TCP connectivity does not establish GPU correctness.
+   The [C completion reader](completion-client.md) now passes 20 RTL-backed
+   scenarios, including late faults. The existing firmware's MMIO helpers do
+   not return AXI errors and its data-abort handlers stop execution, so a
+   physical transport that satisfies the reader's contract is still required.
 3. **Guest renderer integration.** The overlay's 146 exports are diagnostic
    stubs, not 146 implemented Glide functions. Drawing dispatch, texture
    allocation/upload, guest state, required depth/LFB behaviour and presentation

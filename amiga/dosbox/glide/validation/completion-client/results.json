@@ -1,0 +1,17 @@
+{
+  "scope": "C completion reader against mailbox RTL; no hardware MMIO, submission, DDR or FPS",
+  "scenarios": 20,
+  "arm_compile_only": [
+    "Cortex-A9 ARM32 soft",
+    "Cortex-A9 ARM32 softfp"
+  ],
+  "missing_final_observation_mutation_detected": true,
+  "sha256": {
+    "amiga/dosbox/glide/experimental/completion_client.c": "bec400019debbdf039d372bde286a74a85a62ea074ef2a780c921069bffb9932",
+    "amiga/dosbox/glide/experimental/completion_client.h": "ae160326f5aa73b24995d916dab47503a889f6a76ccdc4498cd6afd9985e5888",
+    "tests/amiga/dosbox/glide/completion_client.cpp": "ba4f3bcb0363329b0ef8ecae65344e20ed9619e8ace2cdb5f2ffd872e1798ffe",
+    "amiga/dosbox/glide/experimental/completion.v": "c9b9115cfbd19f502b1f722bddd57fd946467aee53a997670955722aac812dfb",
+    "amiga/dosbox/glide/experimental/completion_axil.v": "9aaa4aece21020ac6ac42c678c08f4536ea6fcd47b35606c8e5da8a2ea8fc214",
+    "scripts/test_dosbox_glide_completion_client.py": "2d244e5dd97b7bb7601a6b8ebe7ed88005019672fe04e4e9c29cd9cf8e89b03c"
+  }
+}

@@ -1,0 +1,6 @@
+PASS completion client: idle, delayed drain, retirement and no retry
+PASS completion client: cancellation still waits for drain
+PASS completion client: wrong epoch and sequence retained
+PASS completion client: existing fault quarantines
+PASS completion client: GPU fault between observations, including after consume
+PASS completion client: failure at each of eight transactions

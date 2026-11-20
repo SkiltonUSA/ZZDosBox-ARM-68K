@@ -1,0 +1,13 @@
+{
+  "upstream_commit": "6e59edbaf24e0d8d2f29cdd31667a10e16c5b283",
+  "sha256": {
+    "zz9000_bsp_new/ps7_cortexa9_0/libsrc/standalone_v6_8/src/xil_io.h": "21591f0b68af92b4ac2db1b56f8b97019de374cd4827cd355d61022d139ecad0",
+    "zz9000_bsp_new/ps7_cortexa9_0/libsrc/standalone_v6_8/src/xil_exception.c": "7551e442a21dbe200d8200efa92dcce21730e7c03ce82d83160bf9dba264b4dc",
+    "ZZ9000OS/src/core2.c": "5666323312f92d5ff2eea31f0faa853dd43faa1a076c3174c8ceda9c8c03ca2e"
+  },
+  "findings": [
+    "Xil_In32 is a volatile load; ordinary Xil_Out32 is a volatile store, without a returned AXI status.",
+    "The BSP default and registered firmware data-abort handlers loop indefinitely."
+  ],
+  "scope": "Source inspection only; no physical abort handling tested or changed"
+}

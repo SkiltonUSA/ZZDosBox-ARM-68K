@@ -160,3 +160,7 @@ Next: integrate and validate the AXI endpoint and its crossing, choose an explic
 ordered-token transport with XACP, validate the full drain/error path, and
 obtain a compatible FPGA build before physical testing. Current XX19d-RIX
 firmware alone cannot activate this prototype.
+
+The [C completion reader](completion-client.md) now tests the software observation
+sequence against this mailbox, including failures during consumption. Its
+physical MMIO transport and firmware service integration are still pending.

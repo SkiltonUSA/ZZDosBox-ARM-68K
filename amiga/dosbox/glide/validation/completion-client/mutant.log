@@ -1,0 +1,5 @@
+PASS completion client: idle, delayed drain, retirement and no retry
+PASS completion client: cancellation still waits for drain
+PASS completion client: wrong epoch and sequence retained
+PASS completion client: existing fault quarantines
+FAIL wrong completion state

@@ -55,6 +55,9 @@ The [four-state HP3 test](amiga/dosbox/glide/experimental/board-hp3.md)
 adds the generated memory converter and catches reset, address-width, rounding
 and blend-pipeline issues missed by two-state simulation. The corrected build
 passes 32 framebuffer checks; its new board synthesis is underway.
+The experimental [firmware completion reader](amiga/dosbox/glide/experimental/completion-client.md)
+passes 20 scenarios against the mailbox RTL, including faults after consumption.
+Physical MMIO error handling and service integration remain pending.
 [Hardware FPS prerequisites](amiga/dosbox/glide/experimental/fps-readiness.md):
 a compatible FPGA build and guest renderer integration are still required.
 The [XACP firmware rebuild guide](docs/xacp-firmware-rebuild.md) records Xanxi's

@@ -99,3 +99,26 @@ The corrected project has since passed integration and XSA export. Its PS7
 settings, address map and GPU aperture pass the topology audit. All eight
 generated converter/vendor/header inputs match the tested inputs byte for byte.
 Corrected full-board synthesis is running; no completed result is claimed yet.
+
+Implementation continues in separate Vivado processes. These scripts accept
+one Tcl argument: the isolated board directory containing `completion-synth.dcp`:
+
+1. `audit-synth-board.tcl` reopens the checkpoint and checks the part, endpoint
+   presence and expected debug placeholders, then reports DRC, clocks and timing.
+2. `optimize-board.tcl` resolves debug cores through `opt_design`, rejects remaining
+   black boxes and writes `completion-optimized.dcp` with fresh reports.
+3. `route-board.tcl` places and routes that optimized checkpoint, retaining route,
+   timing, DRC, methodology, CDC and bus-skew reports for review.
+
+No script generates a bitstream or programs hardware. Existing optimization or
+routing outputs are not overwritten. The known Wine debug-runner workaround
+in the [rebuild guide](../../../../docs/xacp-firmware-rebuild.md) may still be
+required; a stalled debug job must not be marked successful without executing
+its generated synthesis script and checking the new checkpoint.
+
+The current synthesis wrapper disappeared while Vivado continued running.
+Its original exit code therefore cannot be claimed. The local continuation
+waits for Vivado to end, requires its completion marker and a nonempty checkpoint,
+checks the staged source hashes, then runs the independent checkpoint audit.
+Only a successful fresh audit starts optimization. Routing remains a separate
+reviewed step. The audit and optimization results are pending at this update.
