@@ -1,0 +1,75 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=67108864 nonce=0f1b5e3a
+BOOTSTRAP amiga=40c78400 arm=00e68400 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+GLIDE_OPEN channel=0017e000 bytes=32896 nonce=0f1b5e3a
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+EXPANDED cpu=0 memory_services=0 joystick=0 extra_sound=0 cycle_mode=0 serial=0 paged_jit=0
+COMPAT ems=1 xms=1 sound=off speaker=0
+DISPLAY_CONFIG mode=window fps=0 system=embedded DOS 5
+SETTINGS memory_mb=32 machine=3 cycles=3000 live=1
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+SCREENSHOT saved SD032G:Dev/Glide-GTA/pagecopy2.ppm (640x480)
+VIDEO adapter=3 source=640x480 monochrome=0
+JIT magic=4a495431 commits=92600 witness=1 dispatches=14258522 cache_bytes=4194304 heap_peak=6084800 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+CPU_CYCLES applied=3000
+ARM_FPS tenths=0
+PC frames=14103 emulated_ms=314611 wall_ms=301095 timed_done=0
+POLL ms=1 calls=107268 wait_us=153082172 max_us=91541
+SHELL result=2 guest_exit=0 slices=1212814 bytes=378 hash=5dd988dc mismatches=0
+DosBox ZZ9000 project                         1.0 Beta
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>PLAYGTA.BAT
+DOS/4GW Professional Protected Mode Run-time  Version 2.00
+Copyright (c) Tenberry Software, Inc. 1995
+
+SHELL PASS mode=0
+FILES_TIME calls=4169 read_us=19911739 write_us=0 other_us=2155002 max_us=71069 (totals saturate at 4294967295)
+FILES_OP op=open calls=65 total_us=635436 max_us=30071
+FILES_OP op=close calls=62 total_us=65724 max_us=7735
+FILES_OP op=read calls=3480 total_us=19911739 max_us=24213
+FILES_OP op=seek calls=493 total_us=579907 max_us=15574
+FILES_OP op=stat calls=68 total_us=870207 max_us=71069
+FILES_OP op=testdir calls=1 total_us=3728 max_us=3728
+DISK host_seeks=0
+FILES requests=4169 read=13496159 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=10334000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=1
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00000000 restored=00000000
+REGISTER n=2 original=02000001 restored=02000001
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=00000000 restored=00000000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600101d3 restored=600101d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00000000 restored=00000000
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=14103 flips=0 wait_us=0 background_waits=0
+COPY observed_us=62147992 max_us=13862
+PIPELINE enabled=0 overlaps=0 releases=14103
+GTA_PRESENT magic=47544c31 frames=419 warmup=10 first=000002c286c0363c last=000002c9216fbff3 call_error=0 status=0
+GTA_STAGE stage=0 calls=19423 bytes=00000000009bc46c ticks=000000009629daad
+GTA_STAGE stage=1 calls=417812 bytes=0000000000d5c778 ticks=000000002517b44f
+GTA_STAGE stage=2 calls=14573 bytes=000000001c16a000 ticks=00000001977e65d8
+GTA_STAGE stage=3 calls=409 bytes=000000001df4c000 ticks=0000000024acc0ca
+GTA_STAGE stage=4 calls=409 bytes=000000001df4c000 ticks=00000000ab8976b0
+GTA_STAGE stage=5 calls=818 bytes=0000000000000000 ticks=000000008a7c9687
+GTA_STAGE stage=6 calls=818 bytes=0000000000000000 ticks=00000000a422ed09
+GTA_STAGE stage=7 calls=110646 bytes=0000000000000000 ticks=0000000017942db4
+GTA_STAGE stage=8 calls=55738 bytes=0000000000000000 ticks=0000000001522002
+GLIDE_CLOSE OK
+LAUNCHER exit=0; owned memory released
+GTA RC=0

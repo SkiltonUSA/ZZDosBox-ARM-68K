@@ -1,0 +1,5 @@
+lost-green rejected: PASS
+Assertion failed: (word(dst+1+2*i)==to555(word(src+2*i))), function check_lfb, file pixels.c, line 24.
+
+lost-last-pixel rejected: PASS
+Assertion failed: (lo<=i&&hi>i&&hi<=n&&hi-lo<=8), function check_lfb, file pixels.c, line 32.

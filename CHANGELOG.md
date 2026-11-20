@@ -12,6 +12,13 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- NEON RGB565-to-RGB555 conversion and eight-pixel dirty-span scanning reduce
+  framebuffer lock/unlock self time **31.03 → 19.85 ms/frame (36.0%)**.
+  GTA measured **5.77 → 6.28 FPS (+8.8%)** across opening-street samples of
+  different lengths/player state. Exact pixel/replay tests and hardware teardown
+  pass. Retained in the isolated GTA player; compiler-only `-O2` was rejected.
+  [Evidence and limits](amiga/dosbox/glide/validation/gta-live/lfb-kernels/README.md).
+
 - Experimental GTA guest-memory transfers use existing direct TLB mappings in
   bounded page spans, retaining checked handlers for faults, devices and JIT
   code writes. Extended profiling measured **4.72 → 5.77 FPS (+22.2%)** and
