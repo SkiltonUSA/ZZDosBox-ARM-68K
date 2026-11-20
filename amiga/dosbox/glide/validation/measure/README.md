@@ -21,6 +21,10 @@
   headers instead of one ELF image header. This checks the packaging tool with
   the existing FPGA payload; it does not validate a new FPGA bitstream.
 
+- `package-test.json`: the standalone packager passes with the recorded firmware
+  and old FPGA payload. This deliberately incompatible test package is not for
+  installation; it proves payload preservation and rejects malformed containers.
+
 See the [measurement contract](../../experimental/measurement.md). The
 independent [FPGA routing report](../board-hp3/routing/result.json) records a
 failed setup constraint; passing software/model tests do not waive that failure.

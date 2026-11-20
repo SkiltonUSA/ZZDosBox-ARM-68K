@@ -1,0 +1,56 @@
+{
+  "scope": "Packaging regression using the old FPGA payload; not a compatible measurement image and not installed",
+  "reference_boot_sha256": "c0e81e720e3a55a26d517b9bd5c06f1d71c89c243f8d60b37d92ec59cb6c8537",
+  "fsbl_elf_sha256": "185c8795326d800a1943865c1ed01723a71546690fbc81d892e08848dcde607b",
+  "firmware_elf_sha256": "db8397784de37d5db22c2d45b37f2cdd72ccf7e86f5592435e13179bd526b8f9",
+  "fpga_bit_sha256": "8a73d4966b2b9823e0e18b410728b29ab9afdf2302660ef15269d75f3e9ee428",
+  "bootgen_sha256": "b6514dcf56a2cd32d34745d27836dddae327f10ba5ae89530ef31ae61477b177",
+  "boot_bytes": 4622144,
+  "boot_sha256": "2d895ac2278e9869ed85bfe4b153afaf6debd7502c967b2f98f8568ca4e52115",
+  "reference_roundtrip_payloads_and_boot_header_identical": true,
+  "candidate_payloads_match_inputs": true,
+  "fpga_is_reference_payload": true,
+  "partitions": [
+    {
+      "load": "0x0",
+      "entry": "0x0",
+      "attributes": "0x10",
+      "bytes": 98312,
+      "sha256": "eb3166ca673c3be217b1486eed9eed3d4208aae12d120be9f42625e9209c9655"
+    },
+    {
+      "load": "0x0",
+      "entry": "0x0",
+      "attributes": "0x20",
+      "bytes": 4045568,
+      "sha256": "6f015220dad66f75b488c291936d0839615339619aa3782d2a7869a37233c560"
+    },
+    {
+      "load": "0x100000",
+      "entry": "0x100000",
+      "attributes": "0x10",
+      "bytes": 447448,
+      "sha256": "3dfc57c8ea58c64a46aae1f3dcc38173ab6e49f70322c284e19951aa6dca3524"
+    },
+    {
+      "load": "0x170000",
+      "entry": "0x0",
+      "attributes": "0x10",
+      "bytes": 16588,
+      "sha256": "bd52ceba6708f1983fe6efd58d706162b0e40987bf8a03bf1f2da000d36fda91"
+    },
+    {
+      "load": "0x3fcf0000",
+      "entry": "0x0",
+      "attributes": "0x10",
+      "bytes": 8192,
+      "sha256": "3f3fba956e45c253d38917ce45cca696597b7e11c99906590b25f3e45b84b9c4"
+    }
+  ],
+  "parser_checks": "Passed: reference partition parsing, FPGA word order, truncated containers, damaged checksum, wrong FPGA part and extra container data rejected",
+  "source_sha256": {
+    "scripts/glide_boot_image.py": "deb5c73aea56e30b2bb8c1657343aa13802c2c0bbfc79046806dcd5f2eb69638",
+    "scripts/package_glide_measure.py": "9a36de5d3741024ba1c4cb7bb01f6e43a73588a104a899fc2f8902f4436e7dab",
+    "scripts/test_glide_boot_image.py": "cd26548900b6f3059578d50a9c171452d4f1a8151b6d1cf6d50aff98045dd874"
+  }
+}

@@ -81,3 +81,28 @@ pixel verifier with modeled MMIO/FIFO inputs: normal completion/restart, busy
 rejection, mapping failure, FIFO failure and bad pixels. These are not hardware tests.
 
 [Retained evidence](../validation/measure/README.md).
+
+## Offline boot packaging
+
+`package_glide_measure.py` preserves the recorded bootloader and accepts the
+recorded measurement ELF plus a supplied `7z020clg400` bitstream. It first
+round-trips the reference image, then checks every candidate payload against
+its input and verifies that the BootROM header remains unchanged. It writes
+only to a fresh local directory. It does not install firmware or establish
+that the FPGA implements the required endpoint.
+
+```sh
+python3 scripts/test_glide_boot_image.py --reference /path/to/reference-BOOT.bin
+python3 scripts/package_glide_measure.py \
+  --reference /path/to/reference-BOOT.bin \
+  --fsbl /path/to/preserved-fsbl.elf \
+  --firmware /path/to/ZZ9000OS-measure.elf \
+  --bitstream /path/to/reviewed-completion.bit \
+  --bootgen /path/to/bootgen --output /path/to/fresh-package
+```
+
+The packaging regression uses the old FPGA payload deliberately. Its receipt
+sets `fpga_is_reference_payload: true`; that package cannot run the new
+completion counter and must not be installed for the GPU test. Hardware testing
+requires the matching routed, timing-reviewed FPGA build. No such image has
+been installed by this packaging check.
