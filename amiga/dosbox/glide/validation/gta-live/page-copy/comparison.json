@@ -1,0 +1,7 @@
+{
+  "fps_gain_percent": 22.214807814337778,
+  "lock_unlock_time_reduction_percent": 51.26816990437057,
+  "baseline_lfb_ms_per_frame": 63.68330649137172,
+  "candidate_lfb_ms_per_frame": 31.034040718654207,
+  "scope": "One opening-street gameplay pair, same instrumentation/settings; different lengths and NPC activity; sound off"
+}

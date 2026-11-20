@@ -1,0 +1,8 @@
+cross-page mutation rejected: PASS
+Assertion failed: (!memcmp(input,output,sizeof(input))), function compare, file guest_memory.cpp, line 45.
+
+write-permission mutation rejected: PASS
+Assertion failed: (reads==nr&&writes==nw), function compare, file guest_memory.cpp, line 45.
+
+fault-result mutation rejected: PASS
+Assertion failed: (got==want), function compare, file guest_memory.cpp, line 44.

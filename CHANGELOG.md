@@ -12,6 +12,12 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Experimental GTA guest-memory transfers use existing direct TLB mappings in
+  bounded page spans, retaining checked handlers for faults, devices and JIT
+  code writes. Extended profiling measured **4.72 → 5.77 FPS (+22.2%)** and
+  **51.3% less framebuffer lock/unlock self time** in one opening-street pair.
+  Native fault/handler tests and physical clean shutdown passed.
+  [Evidence and limits](amiga/dosbox/glide/validation/gta-live/page-copy/README.md).
 - Experimental GTA presentation now expands RGB565 pixels with exact ARMv7 NEON
   arithmetic. Conversion measured 12.09 → 3.77 ms/frame; gameplay measured
   4.50 → 4.73 FPS in one opening-street pair. Exhaustive colour/bounds tests,
