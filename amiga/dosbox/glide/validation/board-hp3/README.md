@@ -25,6 +25,11 @@ The corrected renderer passes **10 XSim cases and 32 framebuffer checks**, with
   including source/checkpoint hashes, utilization, DRC, clocks and unrouted
   timing. The original wrapper's exit code is unknown; the separate audit
   exited zero. Only the two expected debug placeholders remain at this stage.
+- `synthesis/comparison.json`: comparison with baseline synthesis, retaining
+  the hashes of both timing reports.
+- `optimization/`: both debug cores implemented, full-board optimization exited
+  zero, and no black boxes remain. Reports retain the unresolved timing/CDC
+  findings; placement, routing and physical validation are separate steps.
 
 The forced-drain case must fail with an outstanding-transaction assertion. That
 failure is the expected detection of a deliberately broken completion signal.

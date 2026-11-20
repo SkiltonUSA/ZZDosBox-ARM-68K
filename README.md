@@ -54,9 +54,10 @@ endpoint; physical validation remains.
 The [four-state HP3 test](amiga/dosbox/glide/experimental/board-hp3.md)
 adds the generated memory converter and catches reset, address-width, rounding
 and blend-pipeline issues missed by two-state simulation. The corrected build
-passes 32 framebuffer checks. Corrected board synthesis and an independent
-checkpoint audit have passed; debug-core implementation and optimization are
-underway. This remains an unrouted experiment, with no new hardware FPS result.
+passes 32 framebuffer checks. Corrected board synthesis, an independent
+checkpoint audit and optimization have passed, with both debug cores implemented
+and no unresolved blocks. Placement and routing are running; no new hardware
+FPS result is claimed.
 The experimental [firmware completion reader](amiga/dosbox/glide/experimental/completion-client.md)
 passes 20 scenarios against the mailbox RTL, including faults after consumption.
 Physical MMIO error handling and service integration remain pending.

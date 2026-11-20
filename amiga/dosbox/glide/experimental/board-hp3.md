@@ -108,7 +108,26 @@ See [the corrected synthesis record](../validation/board-hp3/synthesis/result.js
 This is an unrouted checkpoint. Its setup/hold estimates are −0.454/−0.374 ns;
 602 clock pins and 1,032 internal endpoints lack timing coverage. These figures
 are not timing signoff. Constraint lookup and debug warnings remain in the
-archived logs. Optimization and debug-core implementation are now running.
+archived logs. A [same-stage comparison](../validation/board-hp3/synthesis/comparison.json)
+finds the same 602 unclocked audio pins and worst setup/hold margins in the
+unchanged baseline; its unconstrained internal endpoint count is 1,034.
+Optimization and debug-core implementation have now passed with exit 0 and
+zero remaining black boxes. Wine again failed to start its generated debug
+jobs; running their unchanged Tcl directly produced verified checkpoints for
+both cores. The [optimization record](../validation/board-hp3/optimization/result.json)
+retains the actual exits and source/checkpoint hashes.
+
+The optimized design uses 27,499 LUTs (51.69%), 35,564 registers (33.42%),
+80.5 BRAM36 equivalents (57.50%) and 22 DSPs (10%). Relative to the optimized
+baseline, this is 382 more LUTs and 766 more registers, with BRAM/DSP counts
+unchanged. These totals include debug instrumentation.
+
+DRC still reports 41 warnings and one advisory, without errors. The critical
+CDC groups match the baseline; the added peripheral/endpoint converter adds
+five crossings in each direction, all classified safe. CDC analysis excludes
+unclocked logic: 566 clock pins and 1,014 internal endpoints still lack timing
+coverage. Pre-route setup/hold margins remain −0.454/−0.374 ns. Placement and
+routing are running; this is not timing signoff or a hardware measurement.
 
 Implementation continues in separate Vivado processes. These scripts accept
 one Tcl argument: the isolated board directory containing `completion-synth.dcp`:
@@ -130,5 +149,6 @@ The original synthesis wrapper disappeared while Vivado continued running.
 Its original exit code therefore cannot be claimed. The local continuation
 waits for Vivado to end, requires its completion marker and a nonempty checkpoint,
 checks the staged source hashes, then runs the independent checkpoint audit.
-That audit passed and optimization started. Routing remains a separate reviewed
-step. No bitstream or physical FPS result follows from synthesis.
+That audit and optimization passed. After reviewing utilization, DRC, CDC and
+unrouted timing, the separate placement/routing script was started. It will
+retain its reports and checkpoint without generating or installing a bitstream.

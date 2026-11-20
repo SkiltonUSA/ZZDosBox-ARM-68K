@@ -1,0 +1,36 @@
+{
+  "scope": "Corrected full-board optimization; no remaining black boxes; not routed or installed",
+  "run": {
+    "exit_code": 0,
+    "elapsed_seconds": 1578.15,
+    "script": "C:\\optimize-grx-hp3.tcl"
+  },
+  "debug_core_runs": [
+    {
+      "core": "dbg_hub",
+      "exit_code": 0,
+      "verified": true,
+      "elapsed_seconds": 349.87,
+      "script_sha256": "3300b19468ea997e7294870533c528a0a1c6e577c00b6e406f51c86d29c9fea1",
+      "checkpoint_sha256": "e18b36fb541744bef27d714c1e71ef4ea1dd8a4fdbd15e58f68144a9e43b51d8"
+    },
+    {
+      "core": "u_ila_0",
+      "exit_code": 0,
+      "verified": true,
+      "elapsed_seconds": 843.85,
+      "script_sha256": "45dc7363c8e28753dd8776a11715b78124fa9990415d3731441eaf826d39ee5f",
+      "checkpoint_sha256": "f7dd17e8e264c78881ac347cb7110ccac3764f9a680d41439029b61f4e0175a6"
+    }
+  ],
+  "input_checkpoint_sha256": "9514b6feba2282c4674067e3085829aa5aad001b2c7ba44bee0bff6470fdb818",
+  "output_checkpoint_sha256": "186443b5f153281f0f59e522d08614f892cf96593d30a7fd9eab2bd881c64f1e",
+  "original_sha256": {
+    "completion-opt-utilization.rpt": "cf42c3feb01b5ca1d3ae61fe49c8cf133d642a694599eb92be213a530e008d7a",
+    "completion-opt-drc.rpt": "fd33d3d93ed0b258939852c1b85db171bff17a4724e8de0d6eabad34ad51026b",
+    "completion-opt-clocks.rpt": "d0cf4a2b78c105f7c0afe8b9ecbc47e25da3f8c08a7388c84d399dda333f82eb",
+    "completion-opt-cdc.rpt": "7e9f7decc4f45ad1d24a5ca2d45094a5f5478e5e1d2cb9f4df5834591e1659e4",
+    "completion-opt-timing.rpt": "b5b0a3e18f6a76412e037e1374fda0471b30a41269834ad76dc5c352641cf1fb",
+    "completion-hp3-optimize.log": "7d9b9c7d93a0a98f40e2d6a65789e48bc5855444b27b11914f4cf679ccc674e1"
+  }
+}

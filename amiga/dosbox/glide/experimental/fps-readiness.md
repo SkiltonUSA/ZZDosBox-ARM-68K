@@ -102,7 +102,9 @@ a pre-adapter drain check. This supersedes the renderer-only gap above; the
 actual HP3/converter path is now covered separately by the
 [four-state renderer test](board-hp3.md). Its corrected build passes 32
 framebuffer checks. The corrected board has completed synthesis and a fresh
-checkpoint audit; debug-core implementation and optimization are running.
+checkpoint audit, followed by debug-core implementation and optimization with
+zero remaining black boxes. Placement and routing are running; routed timing
+and physical testing remain outstanding.
 Physical HP3/DDR operation and firmware integration remain. The
 [board endpoint](board-endpoint.md) adds validated project wiring and six digital
 tests through the generated CPU mailbox clock converter; this is not a physical

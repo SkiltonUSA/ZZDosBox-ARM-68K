@@ -1,0 +1,21 @@
+{
+  "scope": "Same-stage synthesized timing estimates; not routed timing or hardware performance",
+  "reports": {
+    "baseline": {
+      "path": "fence-audit/baseline-synth-timing.rpt",
+      "sha256": "c7c543fd80f77a8f2c600de4600f3cd7b501a24f4b5e76486eb86e2474e1fd55",
+      "no_clock_pins": 602,
+      "unconstrained_internal_endpoints": 1034,
+      "setup_wns_ns": -0.454,
+      "hold_whs_ns": -0.374
+    },
+    "corrected": {
+      "path": "board-hp3/synthesis/completion-synth-audit-timing.rpt",
+      "sha256": "de1cc9805b820464713e88149dae009a0fd943ad34c149394ec3d20dc8e23436",
+      "no_clock_pins": 602,
+      "unconstrained_internal_endpoints": 1032,
+      "setup_wns_ns": -0.454,
+      "hold_whs_ns": -0.374
+    }
+  }
+}
