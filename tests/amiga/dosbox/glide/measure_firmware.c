@@ -1,0 +1,48 @@
+/* ARM integration fixture; the preceding validator is the pinned firmware's.
+ * Hardware callbacks are modeled. Pixel expectations come from the independent
+ * Python fixture, while the production verifier executes unchanged. */
+#include "amiga/dosbox/glide/experimental/mmio_transport.h"
+typedef uint64_t XTime;
+static uint64_t clock_ticks;
+static uint32_t token_epoch,token_sequence,token_valid;
+unsigned test_failure,test_sends;
+static int xacpgpu_submit_pending,xacpgpu_test2_pending;
+static void XTime_GetTime(XTime *t){*t=(clock_ticks+=1000);}
+static void Xil_DCacheInvalidateRange(uintptr_t p,unsigned n){(void)p;(void)n;}
+static void Xil_DCacheFlushRange(uintptr_t p,unsigned n){(void)p;(void)n;}
+static uint32_t Xil_In32(uintptr_t p){(void)p;return 0;}
+static int zc_idle(void){return test_failure!=1;}
+static uint32_t zc_get(const unsigned char *p)
+{return (uint32_t)p[0]<<24|(uint32_t)p[1]<<16|(uint32_t)p[2]<<8|p[3];}
+static void zc_put(unsigned char *p,uint32_t x)
+{p[0]=x>>24;p[1]=x>>16;p[2]=x>>8;p[3]=x;}
+int grx_mmio_init(grx_mmio_transport *t){t->ready=1;return test_failure!=2;}
+int grx_mmio_read(void *p,unsigned offset,uint32_t *value)
+{
+    (void)p;
+    if(offset==28)*value=0x47525831;
+    else if(offset==0)*value=token_valid;
+    else if(offset==4)*value=token_epoch;
+    else if(offset==8)*value=token_sequence;
+    else return 0;
+    return 1;
+}
+int grx_mmio_write(void *p,unsigned offset,uint32_t value)
+{(void)p;(void)value;if(offset==20)token_valid=0;return 1;}
+static int xacpgpu_fifo_send_be(const volatile uint32_t *words,uint32_t n,uint32_t *isr)
+{
+    test_sends++;*isr=0;
+    if(test_failure==3)return -4;
+    token_epoch=be32(words[n-2]);token_sequence=be32(words[n-1]);token_valid=1;
+    return 0;
+}
+#include "amiga/dosbox/glide/experimental/measure_firmware.inc"
+static unsigned char message[64];
+uint32_t *test_command(unsigned op,unsigned frames,unsigned epoch)
+{
+    zc_put(message,op);zc_put(message+4,1);zc_put(message+8,frames);zc_put(message+12,epoch);
+    grx_firmware_command(message);
+    return (uint32_t*)message;
+}
+void test_poll(void){grx_firmware_poll();}
+unsigned test_claimed(void){return grx_owns_gpu();}

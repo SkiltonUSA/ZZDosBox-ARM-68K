@@ -1,0 +1,12 @@
+{
+  "scope": "Offline equivalence and renderer regression only",
+  "files": {
+    "README.md": "4633cfb69c41d4b2fa9491e82c581ce17746c33554718b2381df13b6271a2866",
+    "mutant.log": "9141b7fcb57d348e79f21faf4dd98011497a1b3eec0838f9955e91c60bb57f75",
+    "reference.log": "950941aa00325df05bb9e69a0440f342486bdf98fb8d8c76184eb6a5ff43715b",
+    "renderer-results.json": "fd5e2e1792830c438eb5f5ef7c7b30732fb38eb37451e10680e0038ba11a4fff",
+    "renderer.log": "630a5fc4652c0183149403bb45dd7ee81470b158c41598c844a8f2adec85d1e4",
+    "results.json": "e29b3d99c7624e3f215d0cfd01960a647595ff4a41f3e22ee8c3e72edd3529ce"
+  },
+  "patch_sha256": "fa6ab0e53bce8cd35624f7b0a719a85fcdbf47cf8e3d75d60a83e5abd7319844"
+}

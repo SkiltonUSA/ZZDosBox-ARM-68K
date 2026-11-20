@@ -1,0 +1,5 @@
+PASS texture address: 4096 configurations, 262144 cycles, unchanged latency and backpressure
+- <workspace>/.context/ZZDosBox-ARM-68K/.context/amiga/glide/texture-address/tb.sv:50: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.054 2026-11-01
+- Verilator: $finish at 3us; walltime 0.099 s; speed 26.400 us/s
+- Verilator: cpu 0.099 s on 1 threads; allocated 2 MB

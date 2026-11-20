@@ -1,0 +1,63 @@
+{
+  "scope": "Firmware build and model tests only; no physical FPS",
+  "opcode": "0x7a20",
+  "elf_sha256": "db8397784de37d5db22c2d45b37f2cdd72ccf7e86f5592435e13179bd526b8f9",
+  "low_end": "0x1e24fc",
+  "remaining_bytes": 56068,
+  "base": {
+    "ZZ9000OS/src/main.c": "c9ab713bbe81ce1891811a7bc2794ef93f30fd57e6e72553431c8b8e00978e5c",
+    "ZZ9000OS/Makefile": "7b0c20764d2deec89548ea3b28b04afbe1071fbde7c691225e6a6f8f6b0716e5",
+    "zz9000_bsp_new/ps7_cortexa9_0/lib/libxil.a": "229572878687511fddadb2e52663027d8733c511408c014e31807b867d744948"
+  },
+  "bsp_vectors_original": "e807cec176192d54140ae57a1b9a6f991049b4db1d3143405c5852639da7f59c",
+  "bsp_vectors_patched": "930b9c96d04917a9756d7aad9ead7f2a517671615e0437f73d25de1e75bd8b80",
+  "sources": {
+    "amiga/dosbox/glide/translator.c": "5df9d815de67193108bab8e0879f855f38ba86b5825dc704e222b3dee0c20928",
+    "amiga/dosbox/glide/descriptor.c": "439a94cafd84ec9d52e0ab01b03ae7c0e368a01e81e5ad18b39dc9697b43df03",
+    "amiga/dosbox/glide/probe_scene.c": "895eb77421ef8821ffad399fc929c77101ba2a18a832222128fbe0bf90c963d9",
+    "amiga/dosbox/glide/translator.h": "ee8994472519b89102048cca603bc23e26afe66ebf27e68042a7fe14c121c069",
+    "amiga/dosbox/glide/descriptor.h": "02859f7188379d10940073952cf78f4cd01cbd36ed2b600d0dd06fca5384034c",
+    "amiga/dosbox/glide/vertex.h": "cdd796e7671fe06bd5efb85a632f9f1e7fbada619d84ddd74bb4b70094a32cb5",
+    "amiga/dosbox/glide/pipeline.h": "6624a41ab6c726c5662027cdddf3e7659d03d71ae2f9d4869cc95629894a40bf",
+    "amiga/dosbox/glide/probe_scene.h": "bdebc90126c926ef77ae7b6ab8dfc76a1f85c8015a5f7a0f077b8999b143442e",
+    "amiga/dosbox/glide/probe_readback.h": "450854c7c5aa71c6b908189b62cc2f97205c0d16465604ef4b40352b85d3e484",
+    "amiga/dosbox/glide/experimental/measure.h": "571f9a65249a5765aaad13110f6cfbd031c977a9a03226a4061c575e8f88ca6a",
+    "amiga/dosbox/glide/experimental/measure.c": "51279d6296eeaa42abf4627b6e0e7058a629660800be3a6b0036ee411f68ed16",
+    "amiga/dosbox/glide/experimental/measure_firmware.inc": "751e539b514de18d11e62be0e0547d3e6135250d3b6204a3ac9499ac0e31d221",
+    "amiga/dosbox/glide/experimental/submit_prepare.inc": "661932b4b095f7259f63a8a9671b02d69d523e93efe86e2bdfa5ebab8c198d5e",
+    "amiga/dosbox/glide/experimental/completion_client.h": "ae160326f5aa73b24995d916dab47503a889f6a76ccdc4498cd6afd9985e5888",
+    "amiga/dosbox/glide/experimental/completion_client.c": "bec400019debbdf039d372bde286a74a85a62ea074ef2a780c921069bffb9932",
+    "amiga/dosbox/glide/experimental/mmio_guard.h": "4b76ecb3040ee541837a3882cdd04808037ee97ccc041c28a77a858ec24f2ca7",
+    "amiga/dosbox/glide/experimental/mmio_guard.c": "c3903a4a9f9cdd172b0c063c92e828c598ff7841420833ccdbd89f8ae24cb288",
+    "amiga/dosbox/glide/experimental/mmio_guard.S": "b4aa13626d8b80146658bbe1457cbc50fbedc18007297a715a901476af028e90",
+    "amiga/dosbox/glide/experimental/mmio_transport.h": "07d17990bcb98d711809c662c9063b8a99c58ddf5162f149f9ab39403cf6202f",
+    "amiga/dosbox/glide/experimental/mmio_transport.c": "3408b80aae926166abc54c10af20c37c3f18426ad1622bd4228972c1919801c9",
+    "scripts/build_glide_measure_firmware.py": "a3aed5b0daf4e6c28e444126bd9b61b1936d209995562528fbf49f78b9fdf628",
+    "scripts/glide_abort.py": "88aaea2b83d90bf85315cae5a62b6d0d559a51440fd5eda703af76046de7b7aa"
+  },
+  "source_sha256": {
+    "amiga/dosbox/glide/experimental/mmio_guard.c": "c3903a4a9f9cdd172b0c063c92e828c598ff7841420833ccdbd89f8ae24cb288",
+    "amiga/dosbox/glide/experimental/mmio_transport.c": "3408b80aae926166abc54c10af20c37c3f18426ad1622bd4228972c1919801c9",
+    "amiga/dosbox/glide/experimental/mmio_guard.h": "4b76ecb3040ee541837a3882cdd04808037ee97ccc041c28a77a858ec24f2ca7",
+    "amiga/dosbox/glide/experimental/mmio_guard.S": "b4aa13626d8b80146658bbe1457cbc50fbedc18007297a715a901476af028e90",
+    "amiga/dosbox/glide/experimental/mmio_transport.h": "07d17990bcb98d711809c662c9063b8a99c58ddf5162f149f9ab39403cf6202f",
+    "amiga/dosbox/glide/experimental/measure_firmware.inc": "751e539b514de18d11e62be0e0547d3e6135250d3b6204a3ac9499ac0e31d221",
+    "amiga/dosbox/glide/experimental/measure.h": "571f9a65249a5765aaad13110f6cfbd031c977a9a03226a4061c575e8f88ca6a",
+    "amiga/dosbox/glide/experimental/measure_host.c": "4361cda01227b5c99a86fea9f0d1ef6068cb116a26ad3837e648e502fe89ce84",
+    "amiga/dosbox/glide/experimental/measure.c": "51279d6296eeaa42abf4627b6e0e7058a629660800be3a6b0036ee411f68ed16",
+    "amiga/dosbox/glide/experimental/measurement.md": "ed26274f5f520d80d6127c51c0352879fb9c2939762ac3fc240f3026990fd63e",
+    "scripts/test_dosbox_glide_mmio.py": "f16f29e0a54ed3822eea57196ccaed9cea43ad4ca100970bd17edec846ca0b03",
+    "scripts/test_glide_measure_firmware.py": "201f8cdccab6628eb3dc254e813b115400620e0c980a74fdd0d68756ab3ae0f2",
+    "tests/amiga/dosbox/glide/measure_firmware.c": "1dac387ea3d2ff4acf85ff8487bc6eeaf1ca1cd9a5036ef69ee0e1d8ca70d331"
+  },
+  "files": {
+    "README.md": "f0a8ac2659801026726034c479ea1836e52c3bd99c91925df823887c74ca1237",
+    "abort-mutant.log": "d4fa58bb9196f61173c46b6fbe21bb726ec40d024d47dffe833fab3066938b26",
+    "abort-results.json": "8b33244260158647f55e20fc79adc0d95b8fd4447ad5d95f29419566d0a2d4f7",
+    "counter-mutant.log": "a0b3d8ae7a6f279fc24419b4cc92b6d9721a8013c2e08dee0cabbe806a7c6f8f",
+    "counter-results.json": "941a0148b9d9c9626b39edfaa131c0bd35c78bb870b6f55249bdc006fce7d5fc",
+    "counter.log": "0cc079f86c1d2f85257ff0e4a24c5497106ef1df73a56473b8ec98601e600570",
+    "firmware-build.json": "acad2f4d1793f338b9f12c6c21123f7d19af87d8f9a04540204770f676483da1",
+    "service-results.json": "7fc95a8b901e7569b23889df4b6efafca9ac0f113cfbe2a9b5d7b5a583fb4bec"
+  }
+}

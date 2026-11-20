@@ -1,0 +1,1129 @@
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Thu Nov 19 22:44:53 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source {C:\route-grx-hp3.tcl}
+# set argc 1
+# set argv {C:/grx-board-hp3}
+# source {Z:\Users\builder\conductor\workspaces\sixies_development\port-louis\.context\ZZDosBox-ARM-68K\amiga\dosbox\glide\experimental\route-board.tcl}
+## if {$argc != 1} {error "Expected one isolated board directory"}
+## cd [file normalize [lindex $argv 0]]
+## if {[catch {
+##  set_param general.maxThreads 2
+##  if {[file exists completion-placed.dcp] || [file exists completion-routed.dcp]} {
+##   error "Placement/routing output already exists"
+##  }
+##  open_checkpoint completion-optimized.dcp
+##  if {[llength [get_cells -hierarchical -filter {IS_BLACKBOX == 1}]]} {
+##   error "Unimplemented cells in optimized checkpoint"
+##  }
+##  place_design
+##  report_timing_summary -file completion-placed-timing.rpt
+##  write_checkpoint completion-placed.dcp
+##  phys_opt_design
+##  route_design
+##  report_route_status -file completion-routed-status.rpt
+##  report_timing_summary -report_unconstrained -check_timing_verbose -file completion-routed-timing.rpt
+##  report_utilization -file completion-routed-utilization.rpt
+##  report_drc -file completion-routed-drc.rpt
+##  report_methodology -file completion-routed-methodology.rpt
+##  report_cdc -file completion-routed-cdc.rpt
+##  report_bus_skew -file completion-routed-bus-skew.rpt
+##  write_checkpoint completion-routed.dcp
+##  puts GRX_BOARD_ROUTED_REQUIRES_TIMING_REVIEW_NOT_INSTALLED
+## } message options]} {
+##  puts stderr $message
+##  puts stderr $options
+##  exit 1
+## }
+Command: open_checkpoint completion-optimized.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.047 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 3419 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2025.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.611 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 0.000 ; gain = 0.000
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.211 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read placeStorage: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.094 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.009 . Memory (MB): peak = 0.000 ; gain = 0.000
+Read Physdb Files: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.359 . Memory (MB): peak = 0.000 ; gain = 0.000
+Restored from archive | CPU: 1.000000 secs | Memory: 0.000000 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.844 . Memory (MB): peak = 0.000 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 637 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 476 instances
+  IOBUF => IOBUF (IBUF, OBUFT): 39 instances
+  RAM32M => RAM32M (RAMD32(x6), RAMS32(x2)): 58 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 7 instances
+  RAM64M => RAM64M (RAMD64E(x4)): 56 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 1 instance
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2025.2 (64-bit) build 6299465
+open_checkpoint: Time (s): cpu = 00:01:53 ; elapsed = 00:01:54 . Memory (MB): peak = 0.000 ; gain = 0.000
+WARNING: [Vivado 12-180] No cells matched 'get_cells -hierarchical -filter {IS_BLACKBOX == 1}'.
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-83] Releasing license: Implementation
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors, 4 Warnings
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 2 CPUs
+
+Starting Placer Task
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: 2d05bab8
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.104 . Memory (MB): peak = 0.000 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+WARNING: [Place 30-575] Sub-optimal placement for a clock-capable IO pin and MMCM pair. This is normally an ERROR but the CLOCK_DEDICATED_ROUTE constraint is set to FALSE allowing your design to continue. The use of this override is highly discouraged as it may lead to very poor timing results. It is recommended that this error condition be corrected in the design.
+
+	ZORRO_E7M_IBUF_inst (IBUF.O) is locked to IOB_X1Y87
+	zz9000_ps_i/MNTZorro_v0_1_S00_AXI_0/inst/mmcm_adv_inst (MMCME2_ADV.CLKIN1) is provisionally placed by clockplacer on MMCME2_ADV_X1Y0
+Resolution: A dedicated routing path between the two can be used if: (a) The clock-capable IO (CCIO) is placed on a CCIO capable site (b) The MMCM is placed in the same clock region as the CCIO pin. If the IOB is driving multiple MMCMs, all MMCMs must be placed in the same clock region, one clock region above or one clock region below the IOB. Both the above conditions must be met at the same time, else it may lead to longer and less predictable clock insertion delays.
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: 13e439848
+
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:08 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 1.3 Build Placer Netlist Model
+Phase 1.3 Build Placer Netlist Model | Checksum: 138cd8e48
+
+Time (s): cpu = 00:01:16 ; elapsed = 00:01:10 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 1.4 Constrain Clocks/Macros
+Phase 1.4 Constrain Clocks/Macros | Checksum: 138cd8e48
+
+Time (s): cpu = 00:01:16 ; elapsed = 00:01:10 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 1 Placer Initialization | Checksum: 138cd8e48
+
+Time (s): cpu = 00:01:16 ; elapsed = 00:01:10 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2 Global Placement
+
+Phase 2.1 Floorplanning
+Phase 2.1 Floorplanning | Checksum: 1d5476fe7
+
+Time (s): cpu = 00:01:41 ; elapsed = 00:01:30 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2.2 Update Timing before SLR Path Opt
+Phase 2.2 Update Timing before SLR Path Opt | Checksum: 18f0d1c0e
+
+Time (s): cpu = 00:01:56 ; elapsed = 00:01:42 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2.3 Post-Processing in Floorplanning
+Phase 2.3 Post-Processing in Floorplanning | Checksum: 18f0d1c0e
+
+Time (s): cpu = 00:01:56 ; elapsed = 00:01:43 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2.4 Global Place Phase1
+Phase 2.4 Global Place Phase1 | Checksum: 22f9c6d71
+
+Time (s): cpu = 00:04:50 ; elapsed = 00:03:26 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2.5 Global Place Phase2
+
+Phase 2.5.1 UpdateTiming Before Physical Synthesis
+Phase 2.5.1 UpdateTiming Before Physical Synthesis | Checksum: 22f9c6d71
+
+Time (s): cpu = 00:05:22 ; elapsed = 00:03:44 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2.5.2 Physical Synthesis In Placer
+INFO: [Physopt 32-1035] Found 0 LUTNM shape to break, 1637 LUT instances to create LUTNM shape
+INFO: [Physopt 32-1044] Break lutnm for timing: one critical 0, two critical 0, total 0, new lutff created 0
+INFO: [Physopt 32-1138] End 1 Pass. Optimized 707 nets or LUTs. Breaked 0 LUT, combined 707 existing LUTs and moved 0 existing LUT
+INFO: [Physopt 32-65] No nets found for high-fanout optimization.
+INFO: [Physopt 32-232] Optimized 0 net. Created 0 new instance.
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+INFO: [Physopt 32-670] No setup violation found.  DSP Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  Shift Register to Pipeline Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  Shift Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  BRAM Register Optimization was not performed.
+INFO: [Physopt 32-670] No setup violation found.  URAM Register Optimization was not performed.
+INFO: [Physopt 32-949] No candidate nets found for dynamic/static region interface net replication
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.024 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization                                     |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+|  LUT Combining                                    |            0  |            707  |                   707  |           0  |           1  |  00:00:05  |
+|  Retime                                           |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Very High Fanout                                 |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  DSP Register                                     |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Shift Register to Pipeline                       |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Shift Register                                   |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  BRAM Register                                    |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  URAM Register                                    |            0  |              0  |                     0  |           0  |           0  |  00:00:00  |
+|  Dynamic/Static Region Interface Net Replication  |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Total                                            |            0  |            707  |                   707  |           0  |           4  |  00:00:05  |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Phase 2.5.2 Physical Synthesis In Placer | Checksum: 1fe8ccd74
+
+Time (s): cpu = 00:05:58 ; elapsed = 00:04:08 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 2.5 Global Place Phase2 | Checksum: 11c86f9dc
+
+Time (s): cpu = 00:06:31 ; elapsed = 00:04:28 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 2 Global Placement | Checksum: 11c86f9dc
+
+Time (s): cpu = 00:06:31 ; elapsed = 00:04:28 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3 Detail Placement
+
+Phase 3.1 Commit Multi Column Macros
+Phase 3.1 Commit Multi Column Macros | Checksum: 1a4224d7f
+
+Time (s): cpu = 00:06:56 ; elapsed = 00:04:44 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3.2 Commit Most Macros & LUTRAMs
+Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: 1bd3c05c3
+
+Time (s): cpu = 00:07:46 ; elapsed = 00:05:15 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3.3 Area Swap Optimization
+Phase 3.3 Area Swap Optimization | Checksum: fe6c68c0
+
+Time (s): cpu = 00:07:48 ; elapsed = 00:05:16 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3.4 Pipeline Register Optimization
+Phase 3.4 Pipeline Register Optimization | Checksum: 1dc7a958d
+
+Time (s): cpu = 00:07:48 ; elapsed = 00:05:17 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3.5 Fast Optimization
+Phase 3.5 Fast Optimization | Checksum: f24207ed
+
+Time (s): cpu = 00:08:41 ; elapsed = 00:05:49 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3.6 Small Shape Detail Placement
+Phase 3.6 Small Shape Detail Placement | Checksum: 1d293e62e
+
+Time (s): cpu = 00:10:15 ; elapsed = 00:07:06 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3.7 Re-assign LUT pins
+Phase 3.7 Re-assign LUT pins | Checksum: 1e8391a84
+
+Time (s): cpu = 00:10:21 ; elapsed = 00:07:10 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3.8 Pipeline Register Optimization
+Phase 3.8 Pipeline Register Optimization | Checksum: 1995871bd
+
+Time (s): cpu = 00:10:22 ; elapsed = 00:07:11 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3.9 Fast Optimization
+Phase 3.9 Fast Optimization | Checksum: 173bedeb4
+
+Time (s): cpu = 00:11:48 ; elapsed = 00:08:02 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 3 Detail Placement | Checksum: 173bedeb4
+
+Time (s): cpu = 00:11:48 ; elapsed = 00:08:02 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 4 Post Placement Optimization and Clean-Up
+
+Phase 4.1 Post Commit Optimization
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+
+Phase 4.1.1 Post Placement Optimization
+Post Placement Optimization Initialization | Checksum: 820bec9c
+
+Phase 4.1.1.1 BUFG Insertion
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-1.471 | TNS=-75.838 |
+Phase 1 Physical Synthesis Initialization | Checksum: 7b83c33a
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:04 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Place 46-33] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/streamConcatFifo/stream0_fifo/w_wr0, BUFG insertion was skipped due to placement/routing conflicts.
+INFO: [Place 46-33] Processed net zz9000_ps_i/clk_wiz_0/inst/AXI_LITE_IPIF_I/I_SLAVE_ATTACHMENT/rst_reg_0, BUFG insertion was skipped due to placement/routing conflicts.
+INFO: [Place 46-56] BUFG insertion identified 2 candidate nets. Inserted BUFG: 0, Replicated BUFG Driver: 0, Skipped due to Placement/Routing Conflicts: 2, Skipped due to Timing Degradation: 0, Skipped due to netlist editing failed: 0.
+Ending Physical Synthesis Task | Checksum: aafb6fa2
+
+Time (s): cpu = 00:00:09 ; elapsed = 00:00:06 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 4.1.1.1 BUFG Insertion | Checksum: 820bec9c
+
+Time (s): cpu = 00:12:55 ; elapsed = 00:08:42 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 4.1.1.2 Post Placement Timing Optimization
+INFO: [Place 30-746] Post Placement Timing Summary WNS=-0.614. For the most accurate timing information please run report_timing.
+Phase 4.1.1.2 Post Placement Timing Optimization | Checksum: 19235ab9e
+
+Time (s): cpu = 00:14:49 ; elapsed = 00:09:58 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Time (s): cpu = 00:14:49 ; elapsed = 00:09:58 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 4.1 Post Commit Optimization | Checksum: 19235ab9e
+
+Time (s): cpu = 00:14:50 ; elapsed = 00:09:58 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 4.2 Post Placement Cleanup
+Phase 4.2 Post Placement Cleanup | Checksum: 19235ab9e
+
+Time (s): cpu = 00:14:51 ; elapsed = 00:09:59 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 4.3 Placer Reporting
+
+Phase 4.3.1 Print Estimated Congestion
+INFO: [Place 30-612] Post-Placement Estimated Congestion
+ ____________________________________________________
+|           | Global Congestion | Short Congestion  |
+| Direction | Region Size       | Region Size       |
+|___________|___________________|___________________|
+|      North|                4x4|                2x2|
+|___________|___________________|___________________|
+|      South|                1x1|                1x1|
+|___________|___________________|___________________|
+|       East|                1x1|                2x2|
+|___________|___________________|___________________|
+|       West|                1x1|                1x1|
+|___________|___________________|___________________|
+
+Phase 4.3.1 Print Estimated Congestion | Checksum: 19235ab9e
+
+Time (s): cpu = 00:14:52 ; elapsed = 00:10:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 4.3 Placer Reporting | Checksum: 19235ab9e
+
+Time (s): cpu = 00:14:52 ; elapsed = 00:10:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 4.4 Final Placement Cleanup
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.026 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Time (s): cpu = 00:14:52 ; elapsed = 00:10:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 4 Post Placement Optimization and Clean-Up | Checksum: 194658d18
+
+Time (s): cpu = 00:14:52 ; elapsed = 00:10:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+Ending Placer Task | Checksum: b8cb2e87
+
+Time (s): cpu = 00:14:53 ; elapsed = 00:10:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+42 Infos, 2 Warnings, 0 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+place_design: Time (s): cpu = 00:15:05 ; elapsed = 00:10:10 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-436] There are set_bus_skew constraint(s) in this design. Please run report_bus_skew to ensure that bus skew requirements are met.
+report_timing_summary: Time (s): cpu = 00:00:54 ; elapsed = 00:00:28 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Wrote PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Wrote RouteStorage: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.153 . Memory (MB): peak = 0.000 ; gain = 0.000
+Write ShapeDB Complete: Time (s): cpu = 00:00:07 ; elapsed = 00:00:05 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote PlaceStorage: Time (s): cpu = 00:00:24 ; elapsed = 00:00:13 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.075 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.015 . Memory (MB): peak = 0.000 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:25 ; elapsed = 00:00:13 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/grx-board-hp3/completion-placed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:29 ; elapsed = 00:00:16 . Memory (MB): peak = 0.000 ; gain = 0.000
+Command: phys_opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Vivado_Tcl 4-1435] PhysOpt_Tcl_Interface Runtime Before Starting Physical Synthesis Task | CPU: 1.00s |  WALL: 0.24s
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Starting Physical Synthesis Task
+
+Phase 1 Physical Synthesis Initialization
+INFO: [Physopt 32-721] Multithreading enabled for phys_opt_design using a maximum of 2 CPUs
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.614 | TNS=-18.327 |
+Phase 1 Physical Synthesis Initialization | Checksum: 1e0967aeb
+
+Time (s): cpu = 00:00:54 ; elapsed = 00:00:27 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.614 | TNS=-18.327 |
+
+Phase 2 DSP Register Optimization
+INFO: [Physopt 32-456] No candidate cells for DSP register optimization found in the design.
+INFO: [Physopt 32-775] End 2 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+Phase 2 DSP Register Optimization | Checksum: 1e0967aeb
+
+Time (s): cpu = 00:00:56 ; elapsed = 00:00:28 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3 Critical Path Optimization
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.614 | TNS=-18.327 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texel0Addr01[14]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/processing_system7_0/inst/FCLK_CLK_unbuffered[0]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01_reg[12]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01_reg[8]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01_reg[4]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_5_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.586 | TNS=-17.742 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texel0Addr00[14]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00_reg[12]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00_reg[8]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 26 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[8]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.582 | TNS=-17.486 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[8]_i_4_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_11_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_17_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-81] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_12_n_0. Replicated 1 times.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_12_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.550 | TNS=-16.586 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 18 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_12_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.535 | TNS=-16.326 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_35_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_46_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.517 | TNS=-15.636 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00_reg[4]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_5_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.473 | TNS=-15.054 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_2_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.471 | TNS=-13.770 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_5_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 22 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_10_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.469 | TNS=-13.706 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_12_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_12_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_12_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0[14]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.463 | TNS=-13.594 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_46_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.461 | TNS=-13.434 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 22 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_10_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.445 | TNS=-13.242 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_10_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_4_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_4_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_4_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_10_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.443 | TNS=-13.218 |
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_4_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_4_comp_1.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_11_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.402 | TNS=-12.702 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_16_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_32_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[16]_i_40_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0[14]_i_5_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0_reg[14]_i_9_n_6. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV0_reg[14]_i_10_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step0_texelT_reg[16]_0[0]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0_reg[13]_i_2_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 26 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_7_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.372 | TNS=-10.812 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texel0Addr10[14]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10_reg[12]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10_reg[8]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10_reg[4]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_4_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_4_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_4_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_11_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.369 | TNS=-10.319 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texel0Addr11[14]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11_reg[12]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11_reg[8]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11_reg[4]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[4]_i_4_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 22 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_11_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.366 | TNS=-10.283 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 22 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_11_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.348 | TNS=-10.031 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_4_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_8_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_8
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_8_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.345 | TNS=-9.912 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[4]_i_5_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 22 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_9_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.338 | TNS=-9.755 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_5_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.331 | TNS=-8.966 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 20 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_8_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.329 | TNS=-8.807 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 25 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_2_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.321 | TNS=-8.411 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[8]_i_3_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_8_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_8
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_8_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.319 | TNS=-8.341 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[8]_i_5_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[8]_i_5_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[8]_i_5_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_14_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.311 | TNS=-8.277 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_14_n_0_repN_1. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 28 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_16_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.298 | TNS=-7.965 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/lodCalculator/Q[1]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[2]_i_4_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[2]_i_4
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[2]_i_4_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.295 | TNS=-7.874 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/lodCalculator/Q[0]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/registerMem_reg[12][4]_5[0]. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[0]_i_1_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[0]_i_4_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.290 | TNS=-7.651 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_5_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_9_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_9
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_9_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.290 | TNS=-7.501 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_texel01[25]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/registerMem_reg[12][15]_1[21].  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/step2_skid_texel01[25]_i_1
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/registerMem_reg[12][15]_1[21]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.275 | TNS=-7.230 |
+INFO: [Physopt 32-81] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_9_n_0. Replicated 1 times.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_9_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.272 | TNS=-6.854 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[12]_i_5_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 21 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_14_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.272 | TNS=-6.854 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_8_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.267 | TNS=-6.814 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_11_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_22_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_22_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_22_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_6_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.265 | TNS=-6.794 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[4]_i_2_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_2_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_3_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_7_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_7
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_7_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.263 | TNS=-6.745 |
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_14_n_0_repN.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_14_comp
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_14_n_0_repN. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.262 | TNS=-6.669 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_14_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_16_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_30_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 21 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_40_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.261 | TNS=-6.601 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_5_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_4_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_4_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_9_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.245 | TNS=-6.174 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_4_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_10_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_10
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_10_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.242 | TNS=-6.147 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_6_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_7_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_7_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_7_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_9_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.236 | TNS=-6.084 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[4]_i_3_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_7_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_7
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_7_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.235 | TNS=-6.005 |
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_22_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_22_comp_1.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_5_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.231 | TNS=-5.969 |
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_22_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_22_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_7_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.227 | TNS=-5.836 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 26 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[8]_i_4_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.221 | TNS=-5.548 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 26 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_10_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.221 | TNS=-5.506 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS1/colorMixer/V10_reg_n_0_[15]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS1/colorMixer/V100__60_carry__1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS1/colorMixer/V100__60_carry__0_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 23 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_subCoordU_reg[14]__0_7[2]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.218 | TNS=-5.077 |
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_5_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_5
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_5_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.216 | TNS=-4.424 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[2]_i_4_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[2]_i_4_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[2]_i_4_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/pixelPipeline/tmu0/lodCalculator/diffMax__7[5]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.215 | TNS=-4.208 |
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[12]_i_5_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[12]_i_5_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_15_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.209 | TNS=-4.184 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_8_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_8_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_8_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[14]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.209 | TNS=-4.184 |
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_4_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_4_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_10_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.206 | TNS=-3.964 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_subCoordU_reg[14]__0_6[1]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_subCoordU_reg[14]__0_6[1]. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V100__60_carry__1_i_7__0_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_texel11_reg[6]_0[1]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.182 | TNS=-3.903 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 21 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_9_n_0_repN. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.182 | TNS=-3.587 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 21 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_texel11_reg[6]_0[0]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.178 | TNS=-3.510 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_31_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_31_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_31_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[14]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.168 | TNS=-3.491 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_5_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_5_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[0]_i_5_comp_2.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[14]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.165 | TNS=-3.486 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 23 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_5_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.165 | TNS=-3.163 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr10[16]_i_8_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.160 | TNS=-3.107 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[14]_i_3_n_0_repN_1. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-134] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[14]_i_5_n_0. Rewiring did not optimize the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[14]_i_5_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1_reg[14]_i_10_n_5. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1_reg[15]_i_2_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1_reg[12]_i_2_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1_reg[8]_i_2_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 18 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[8]_i_6_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.158 | TNS=-2.669 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS0/colorMixer/V01_reg_n_0_[15]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS0/colorMixer/V010__60_carry__1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS0/colorMixer/V010__60_carry__0_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_texel00_reg[11]_0[2].  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V010__60_carry__0_i_1__0
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_texel00_reg[11]_0[2]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.134 | TNS=-2.347 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 16 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_9_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.133 | TNS=-2.287 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0_reg[9]_i_2_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[9]_i_6_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[9]_i_3_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[9]_i_3
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[9]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.116 | TNS=-1.981 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorT/colorMixer/V10_reg_n_0_[15]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorT/colorMixer/V100__60_carry__1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorT/colorMixer/V100__60_carry__0_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS1/colorMixer/mixedColor_reg[4]_1[1]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-601] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS1/colorMixer/mixedColor_reg[3]_0[1]. Net driver zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS1/colorMixer/V100__60_carry__0_i_2__1 was replaced.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS1/colorMixer/mixedColor_reg[3]_0[1]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.115 | TNS=-1.639 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorT/colorMixer/V00_reg_n_0_[15]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorT/colorMixer/V000__60_carry__1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorT/colorMixer/V000__60_carry__0_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/intensityTDelay/delay_reg[0][14]_0[1]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/intensityTDelay/delay_reg[0][14]_1[2].  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/intensityTDelay/V000__60_carry__0_i_1__1
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/intensityTDelay/delay_reg[0][14]_1[2]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.105 | TNS=-1.432 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_subCoordU_reg[14]__0_7[2]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_subCoordU_reg[14]__0_7[2]. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V100__60_carry__0_i_5__0_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_texel11_reg[5]_5[2]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.103 | TNS=-1.191 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 15 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[15]_i_4_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.102 | TNS=-1.188 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_9_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_12_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_12
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_12_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.093 | TNS=-1.124 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_7_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-601] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_3_n_0. Net driver zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_3 was replaced.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.091 | TNS=-1.116 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 25 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[9]_i_7_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.086 | TNS=-1.036 |
+INFO: [Physopt 32-601] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_texel00_reg[11]_0[2]. Net driver zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V010__60_carry__0_i_1__0 was replaced.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_texel00_reg[11]_0[2]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.081 | TNS=-0.803 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_9_n_0_repN. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_6_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_6_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_6_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU0[12]_i_1_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.080 | TNS=-0.803 |
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_6_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_6_comp_1.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[0]_i_15_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.079 | TNS=-0.753 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[0]_i_4_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[0]_i_4_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[0]_i_4_comp_2.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/pixelPipeline/tmu0/lodCalculator/diffMax__7[0]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.076 | TNS=-0.750 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[0]_i_4_n_0_repN. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[0]_i_4_n_0_repN. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[0]_i_4_comp_3.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/pixelPipeline/tmu0/lodCalculator/diffMax__7[6]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.074 | TNS=-0.717 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 18 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[12]_i_5_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.067 | TNS=-0.703 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 18 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[8]_i_4_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.066 | TNS=-0.693 |
+INFO: [Physopt 32-81] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_7_n_0. Replicated 1 times.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr00[4]_i_7_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.065 | TNS=-0.657 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_5_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr010[14]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step0_texelT[10].  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step0_texelT_reg[10]
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step0_texelT[10]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.062 | TNS=-0.565 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 18 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[8]_i_5_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.061 | TNS=-0.563 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[0]_i_3_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[0]_i_3_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[0]_i_3_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU1[12]_i_1_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.054 | TNS=-0.549 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_8_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_11_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_11
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[4]_i_11_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.052 | TNS=-0.543 |
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/intensityTDelay/delay_reg[0][14]_0[1]. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/intensityTDelay/V000__60_carry__0_i_5__1_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/intensityTDelay/delay_reg[0][14]_1[2]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.051 | TNS=-0.414 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 18 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[12]_i_6_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.050 | TNS=-0.350 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU0[8]_i_1_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.045 | TNS=-0.289 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_texel11_reg[6]_0[1]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V100__60_carry__1_i_10__0_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V100__60_carry__1_i_10__0
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V100__60_carry__1_i_10__0_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.043 | TNS=-0.264 |
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/pixelPipeline/tmu0/lodCalculator/diffMax__7[3].  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/m_lod[2]_i_3
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/pixelPipeline/tmu0/lodCalculator/diffMax__7[3]. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.042 | TNS=-0.220 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 19 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[9]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.025 | TNS=-0.105 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS0/colorMixer/V02_reg_n_0_[15]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/texFilter/interpolatorS0/colorMixer/V020__60_carry__1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_subCoordU_reg[14]__0_rep_9[2]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V020__60_carry__1_i_13__0_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V020__60_carry__1_i_13__0
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V020__60_carry__1_i_13__0_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.020 | TNS=-0.080 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step3_texel11_reg[6]_0[0]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-81] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V100__60_carry__0_i_12__0_n_0. Replicated 1 times.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/V100__60_carry__0_i_12__0_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.019 | TNS=-0.060 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/renderConfigsRegBank/registerMem_reg[12][15]_1[21]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/textureBufferTMU0/texCacheEvenS/ram1/texelAddrForDecoding01_reg[0]_11[2]. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 24 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/textureBufferTMU0/texCacheEvenS/ram1/step2_skid_texel01[30]_i_2_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.018 | TNS=-0.041 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU0[8]_i_1_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU0[14]_i_3_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU0[14]_i_5_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU0[14]_i_5
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU0[14]_i_5_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.017 | TNS=-0.037 |
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 18 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelV1[12]_i_3_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.014 | TNS=-0.025 |
+INFO: [Physopt 32-710] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU0[14]_i_3_n_0. Critical path length was reduced through logic transformation on cell zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU0[14]_i_3_comp.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step1_texelU0[14]_i_5_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.006 | TNS=-0.011 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_8_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-608] Optimized 1 net.  Swapped 18 pins.
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/step2_delay/step1_texelV0[13]_i_4_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-0.005 | TNS=-0.005 |
+INFO: [Physopt 32-702] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr11[8]_i_4_n_0. Optimizations did not improve timing on the net.
+INFO: [Physopt 32-663] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[8]_i_7_n_0.  Re-placed instance zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[8]_i_7
+INFO: [Physopt 32-735] Processed net zz9000_ps_i/RasterIX_0/inst/rixef/rixef/graphicCore/pixelPipeline/tmu0/textureSampler/texelAddr01[8]_i_7_n_0. Optimization improves timing on the net.
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.002 | TNS=0.000 |
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.002 | TNS=0.000 |
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.107 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 3 Critical Path Optimization | Checksum: 1e0967aeb
+
+Time (s): cpu = 00:02:02 ; elapsed = 00:01:14 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 4 Critical Path Optimization
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.002 | TNS=0.000 |
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=0.002 | TNS=0.000 |
+INFO: [Common 17-14] Message 'Physopt 32-619' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 4 Critical Path Optimization | Checksum: 1e0967aeb
+
+Time (s): cpu = 00:02:02 ; elapsed = 00:01:14 . Memory (MB): peak = 0.000 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.023 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Physopt 32-603] Post Physical Optimization Timing Summary | WNS=0.002 | TNS=0.000 |
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization   |  WNS Gain (ns)  |  TNS Gain (ns)  |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+|  DSP Register   |          0.000  |          0.000  |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Critical Path  |          0.617  |         18.327  |            4  |              0  |                    94  |           0  |           2  |  00:00:46  |
+|  Total          |          0.617  |         18.327  |            4  |              0  |                    94  |           0  |           3  |  00:00:46  |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.022 . Memory (MB): peak = 0.000 ; gain = 0.000
+Ending Physical Synthesis Task | Checksum: 11c50557e
+
+Time (s): cpu = 00:02:03 ; elapsed = 00:01:14 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+450 Infos, 3 Warnings, 0 Critical Warnings and 0 Errors encountered.
+phys_opt_design completed successfully
+phys_opt_design: Time (s): cpu = 00:02:03 ; elapsed = 00:01:15 . Memory (MB): peak = 0.000 ; gain = 0.000
+Command: route_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+
+Starting Routing Task
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 2 CPUs
+
+Phase 1 Build RT Design
+Checksum: PlaceDB: c4c05dd2 ConstDB: 0 ShapeSum: 1a92c4ca RouteDB: 15f972f0
+Post Restoration Checksum: NetGraph: 33c787c1 | NumContArr: 3a870488 | Constraints: c2a8fa9d | Timing: c2a8fa9d
+Phase 1 Build RT Design | Checksum: 1f3a08183
+
+Time (s): cpu = 00:01:59 ; elapsed = 00:01:10 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2 Router Initialization
+
+Phase 2.1 Fix Topology Constraints
+Phase 2.1 Fix Topology Constraints | Checksum: 1f3a08183
+
+Time (s): cpu = 00:01:59 ; elapsed = 00:01:11 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2.2 Pre Route Cleanup
+Phase 2.2 Pre Route Cleanup | Checksum: 1f3a08183
+
+Time (s): cpu = 00:01:59 ; elapsed = 00:01:11 . Memory (MB): peak = 0.000 ; gain = 0.000
+ Number of Nodes with overlaps = 0
+
+Phase 2.3 Update Timing
+Phase 2.3 Update Timing | Checksum: 27021aca3
+
+Time (s): cpu = 00:03:33 ; elapsed = 00:02:08 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.029 | TNS=-0.054 | WHS=-0.681 | THS=-723.832|
+
+
+Phase 2.4 Update Timing for Bus Skew
+
+Phase 2.4.1 Update Timing
+Phase 2.4.1 Update Timing | Checksum: 21b2845a6
+
+Time (s): cpu = 00:05:41 ; elapsed = 00:03:33 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.029 | TNS=0.000  | WHS=-0.663 | THS=-4.312 |
+
+Phase 2.4 Update Timing for Bus Skew | Checksum: 2848814d7
+
+Time (s): cpu = 00:05:42 ; elapsed = 00:03:34 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 2.5 Soft Constraint Pins - Fast Budgeting
+Phase 2.5 Soft Constraint Pins - Fast Budgeting | Checksum: 2848814d7
+
+Time (s): cpu = 00:05:48 ; elapsed = 00:03:38 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 0.00792172 %
+  Global Horizontal Routing Utilization  = 0.00490196 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 55964
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 55964
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Phase 2 Router Initialization | Checksum: 1d8a2c778
+
+Time (s): cpu = 00:05:55 ; elapsed = 00:03:43 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 3 Global Routing
+Phase 3 Global Routing | Checksum: 1d8a2c778
+
+Time (s): cpu = 00:05:55 ; elapsed = 00:03:43 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 4 Initial Routing
+
+Phase 4.1 Initial Net Routing Pass
+Phase 4.1 Initial Net Routing Pass | Checksum: 1e77588c6
+
+Time (s): cpu = 00:06:51 ; elapsed = 00:04:13 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 4 Initial Routing | Checksum: 1e77588c6
+
+Time (s): cpu = 00:06:51 ; elapsed = 00:04:13 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 5 Rip-up And Reroute
+
+Phase 5.1 Global Iteration 0
+ Number of Nodes with overlaps = 7955
+ Number of Nodes with overlaps = 1559
+ Number of Nodes with overlaps = 438
+ Number of Nodes with overlaps = 113
+ Number of Nodes with overlaps = 31
+ Number of Nodes with overlaps = 21
+ Number of Nodes with overlaps = 4
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.791 | TNS=-28.908| WHS=N/A    | THS=N/A    |
+
+Phase 5.1 Global Iteration 0 | Checksum: 27162adb9
+
+Time (s): cpu = 00:10:20 ; elapsed = 00:06:23 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 5.2 Global Iteration 1
+ Number of Nodes with overlaps = 817
+ Number of Nodes with overlaps = 277
+ Number of Nodes with overlaps = 71
+ Number of Nodes with overlaps = 55
+ Number of Nodes with overlaps = 19
+ Number of Nodes with overlaps = 9
+ Number of Nodes with overlaps = 8
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.764 | TNS=-17.989| WHS=N/A    | THS=N/A    |
+
+Phase 5.2 Global Iteration 1 | Checksum: 29087e87a
+
+Time (s): cpu = 00:11:39 ; elapsed = 00:07:14 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 5.3 Global Iteration 2
+ Number of Nodes with overlaps = 743
+ Number of Nodes with overlaps = 195
+ Number of Nodes with overlaps = 66
+ Number of Nodes with overlaps = 10
+ Number of Nodes with overlaps = 11
+ Number of Nodes with overlaps = 5
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.846 | TNS=-20.551| WHS=N/A    | THS=N/A    |
+
+Phase 5.3 Global Iteration 2 | Checksum: 28e8f6387
+
+Time (s): cpu = 00:12:24 ; elapsed = 00:07:41 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 5 Rip-up And Reroute | Checksum: 28e8f6387
+
+Time (s): cpu = 00:12:24 ; elapsed = 00:07:41 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 6 Delay and Skew Optimization
+
+Phase 6.1 Delay CleanUp
+
+Phase 6.1.1 Update Timing
+Phase 6.1.1 Update Timing | Checksum: 21d9c77e7
+
+Time (s): cpu = 00:12:36 ; elapsed = 00:07:49 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.764 | TNS=-17.675| WHS=N/A    | THS=N/A    |
+
+ Number of Nodes with overlaps = 0
+Phase 6.1 Delay CleanUp | Checksum: 202069060
+
+Time (s): cpu = 00:12:41 ; elapsed = 00:07:52 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 6.2 Clock Skew Optimization
+Phase 6.2 Clock Skew Optimization | Checksum: 202069060
+
+Time (s): cpu = 00:12:41 ; elapsed = 00:07:52 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 6 Delay and Skew Optimization | Checksum: 202069060
+
+Time (s): cpu = 00:12:41 ; elapsed = 00:07:52 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 7 Post Hold Fix
+
+Phase 7.1 Hold Fix Iter
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-0.743 | TNS=-19.128| WHS=0.009  | THS=0.000  |
+
+Phase 7.1 Hold Fix Iter | Checksum: 185c8455f
+
+Time (s): cpu = 00:12:50 ; elapsed = 00:07:57 . Memory (MB): peak = 0.000 ; gain = 0.000
+Phase 7 Post Hold Fix | Checksum: 185c8455f
+
+Time (s): cpu = 00:12:50 ; elapsed = 00:07:57 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 8 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 20.6805 %
+  Global Horizontal Routing Utilization  = 21.8324 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+    (Failed Nets is the sum of unrouted and partially routed nets)
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+
+--GLOBAL Congestion:
+Utilization threshold used for congestion level computation: 0.85
+Congestion Report
+North Dir 2x2 Area, Max Cong = 91.8919%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X20Y106 -> INT_R_X21Y107
+   INT_L_X20Y104 -> INT_R_X21Y105
+   INT_L_X20Y100 -> INT_R_X21Y101
+   INT_L_X20Y96 -> INT_R_X21Y97
+   INT_L_X22Y96 -> INT_R_X23Y97
+South Dir 2x2 Area, Max Cong = 89.4144%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X20Y108 -> INT_R_X21Y109
+   INT_L_X20Y106 -> INT_R_X21Y107
+   INT_L_X18Y104 -> INT_R_X19Y105
+   INT_L_X18Y102 -> INT_R_X19Y103
+   INT_L_X20Y102 -> INT_R_X21Y103
+East Dir 1x1 Area, Max Cong = 92.6471%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_R_X43Y116 -> INT_R_X43Y116
+   INT_L_X56Y115 -> INT_L_X56Y115
+   INT_R_X41Y109 -> INT_R_X41Y109
+   INT_R_X19Y108 -> INT_R_X19Y108
+   INT_L_X22Y107 -> INT_L_X22Y107
+West Dir 2x2 Area, Max Cong = 86.0294%, Congestion bounded by tiles (Lower Left Tile -> Upper Right Tile):
+   INT_L_X20Y48 -> INT_R_X21Y49
+
+------------------------------
+Reporting congestion hotspots
+------------------------------
+Direction: North
+----------------
+Congested clusters found at Level 1
+Effective congestion level: 3 Aspect Ratio: 0.5 Sparse Ratio: 0.625
+Direction: South
+----------------
+Congested clusters found at Level 1
+Effective congestion level: 3 Aspect Ratio: 0.428571 Sparse Ratio: 0.875
+Direction: East
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 1 Aspect Ratio: 0.666667 Sparse Ratio: 1
+Direction: West
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 1 Aspect Ratio: 0.4 Sparse Ratio: 1.75
+
+Phase 8 Route finalize | Checksum: 185c8455f
+
+Time (s): cpu = 00:12:51 ; elapsed = 00:07:57 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 9 Verifying routed nets
+
+ Verification completed successfully
+Phase 9 Verifying routed nets | Checksum: 185c8455f
+
+Time (s): cpu = 00:12:51 ; elapsed = 00:07:58 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 10 Depositing Routes
+Phase 10 Depositing Routes | Checksum: 20866859b
+
+Time (s): cpu = 00:13:18 ; elapsed = 00:08:15 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 11 Post Process Routing
+Phase 11 Post Process Routing | Checksum: 20866859b
+
+Time (s): cpu = 00:13:19 ; elapsed = 00:08:16 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Phase 12 Post Router Timing
+INFO: [Route 35-57] Estimated Timing Summary | WNS=-0.743 | TNS=-19.128| WHS=0.009  | THS=0.000  |
+
+WARNING: [Route 35-328] Router estimated timing not met.
+Resolution: For a complete and accurate timing signoff, report_timing_summary must be run after route_design. Alternatively, route_design can be run with the -timing_summary option to enable a complete timing signoff at the end of route_design.
+Phase 12 Post Router Timing | Checksum: 20866859b
+
+Time (s): cpu = 00:13:19 ; elapsed = 00:08:16 . Memory (MB): peak = 0.000 ; gain = 0.000
+Total Elapsed time in route_design: 495.705 secs
+
+Phase 13 Post-Route Event Processing
+Phase 13 Post-Route Event Processing | Checksum: f49fd073
+
+Time (s): cpu = 00:13:19 ; elapsed = 00:08:16 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Route 35-16] Router Completed Successfully
+Ending Routing Task | Checksum: f49fd073
+
+Time (s): cpu = 00:13:19 ; elapsed = 00:08:16 . Memory (MB): peak = 0.000 ; gain = 0.000
+
+Routing Is Done.
+INFO: [Common 17-83] Releasing license: Implementation
+465 Infos, 4 Warnings, 0 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+route_design: Time (s): cpu = 00:13:21 ; elapsed = 00:08:17 . Memory (MB): peak = 0.000 ; gain = 0.000
+report_route_status: Time (s): cpu = 00:00:16 ; elapsed = 00:00:09 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+WARNING: [Timing 38-436] There are set_bus_skew constraint(s) in this design. Please run report_bus_skew to ensure that bus skew requirements are met.
+report_timing_summary: Time (s): cpu = 00:02:05 ; elapsed = 00:01:17 . Memory (MB): peak = 0.000 ; gain = 0.000
+Command: report_drc -file completion-routed-drc.rpt
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/AMDDesignTools/2025.2/Vivado/data/ip'.
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 2-168] The results of DRC are in file C:/grx-board-hp3/completion-routed-drc.rpt.
+report_drc completed successfully
+report_drc: Time (s): cpu = 00:00:43 ; elapsed = 00:00:26 . Memory (MB): peak = 0.000 ; gain = 0.000
+Command: report_methodology -file completion-routed-methodology.rpt
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [DRC 23-133] Running Methodology with 2 threads
+INFO: [Vivado_Tcl 2-1520] The results of Report Methodology are in file C:/grx-board-hp3/completion-routed-methodology.rpt.
+report_methodology completed successfully
+report_methodology: Time (s): cpu = 00:01:41 ; elapsed = 00:01:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-433] Consider using Xilinx recommended XPM_CDC modules to avoid Critical severities
+INFO: [Timing 38-314] The report_cdc command only analyzes and reports clock domain crossing paths where clocks have been defined on both source and destination sides. Ports with no input delay constraint are skipped. Please run check_timing to verify there are no missing clock definitions in your design, nor any unconstrained input port.
+report_cdc: Time (s): cpu = 00:01:01 ; elapsed = 00:00:37 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 2 CPUs
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Wrote PlaceDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 0.000 ; gain = 0.000
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Write ShapeDB Complete: Time (s): cpu = 00:00:11 ; elapsed = 00:00:07 . Memory (MB): peak = 0.000 ; gain = 0.000
+Writing XDEF routing special nets.
+Wrote RouteStorage: Time (s): cpu = 00:00:26 ; elapsed = 00:00:16 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote PlaceStorage: Time (s): cpu = 00:00:12 ; elapsed = 00:00:06 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.075 . Memory (MB): peak = 0.000 ; gain = 0.000
+Wrote Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.014 . Memory (MB): peak = 0.000 ; gain = 0.000
+Write Physdb Complete: Time (s): cpu = 00:00:38 ; elapsed = 00:00:22 . Memory (MB): peak = 0.000 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/grx-board-hp3/completion-routed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:43 ; elapsed = 00:00:26 . Memory (MB): peak = 0.000 ; gain = 0.000
+GRX_BOARD_ROUTED_REQUIRES_TIMING_REVIEW_NOT_INSTALLED
+## exit 0
+INFO: [Common 17-206] Exiting Vivado at Thu Nov 19 23:11:26 2026...

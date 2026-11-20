@@ -1,0 +1,3 @@
+[16] %Fatal: tb.sv:46: Assertion failed in texture_address_tb: Sampler mismatch config=0 cycle=0 reference=00000000000000000 candidate=00000000000000001
+%Error: <workspace>/.context/ZZDosBox-ARM-68K/.context/amiga/glide/texture-address/tb.sv:46: Verilog $stop
+Aborting...

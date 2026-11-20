@@ -14,7 +14,8 @@ or timing signoff. [Scoped synthesis evidence](../validation/board-endpoint/pre-
 The corrected HP3 candidate has now completed synthesis and an independent
 checkpoint audit: 23,368 LUTs, with register/BRAM/DSP counts unchanged. Its
 debug-core implementation and optimization have also passed with zero unresolved
-blocks; placement and routing are running. The
+blocks. All nets now route, but setup timing fails by 0.773 ns in the texture
+sampler; further timing work is in progress. The
 [corrected record](../validation/board-hp3/synthesis/result.json) remains separate
 from the earlier checkpoint; neither is an installed firmware image.
 

@@ -1,0 +1,32 @@
+{
+  "scope": "All nets routed; setup timing FAILED; no bitstream or installation",
+  "run": {
+    "exit_code": 0,
+    "elapsed_seconds": 1601.24,
+    "script": "C:\\route-grx-hp3.tcl"
+  },
+  "checkpoint_sha256": "4dad5492c0084164cea667d307f4aec28d1eef362744c36f57ed7378e17a6448",
+  "input_checkpoint_sha256": "186443b5f153281f0f59e522d08614f892cf96593d30a7fd9eab2bd881c64f1e",
+  "routable_nets": 55980,
+  "fully_routed_nets": 55980,
+  "routing_errors": 0,
+  "wns_ns": -0.773,
+  "tns_ns": -19.821,
+  "failing_setup_endpoints": 56,
+  "whs_ns": 0.009,
+  "failing_hold_endpoints": 0,
+  "critical_path": "RasterIX textureSampler step0_heightPow2minus1 to texelAddr01, clk_fpga_0 at 100 MHz",
+  "drc_warnings": 52,
+  "drc_advisories": 1,
+  "original_sha256": {
+    "completion-routed-status.rpt": "52f2211acd9eb3a8610049ee78a95f8662b5706227de58c72df39ed0b2f5cafa",
+    "completion-routed-bus-skew.rpt": "be6161217f8d78cce7a07c17d4b321bfed6205caefdabaa7efc7aa0eec796e08",
+    "completion-routed-cdc.rpt": "7f5f9c6422c529d5b4adee8b5dc12bd3683ce77f6bb32898b726809cacf4ce04",
+    "completion-routed-methodology.rpt": "66c84be284307bd441a0cc3bbf53935be63392ff77db70396a7a50274f97b3f9",
+    "completion-routed-drc.rpt": "a9b30ff6069fc40aef3a9a73cb6de6fd864296b02a912568ab5ffc098bc088f1",
+    "completion-routed-timing.rpt": "8a49a76e18c17d1b1787dbfacb9481856e0687a8b4d90958bc1b18b2beba9235",
+    "completion-routed-utilization.rpt": "1825039b1859cc88a02c4cb91619fdc652a0647060acbe25bf834212ee03628a",
+    "completion-hp3-route.log": "8f5654a3c44e2ce85348e5dcde519d1ab8444ed3dda31d953c5419c70e2c8279"
+  },
+  "retained_text_normalization": "Host/workspace names redacted; trailing whitespace removed; original hashes retained"
+}

@@ -56,11 +56,14 @@ adds the generated memory converter and catches reset, address-width, rounding
 and blend-pipeline issues missed by two-state simulation. The corrected build
 passes 32 framebuffer checks. Corrected board synthesis, an independent
 checkpoint audit and optimization have passed, with both debug cores implemented
-and no unresolved blocks. Placement and routing are running; no new hardware
-FPS result is claimed.
+and no unresolved blocks. All 55,980 nets are now routed, but the 100 MHz texture
+path fails setup timing by 0.773 ns. Timing optimization is in progress; no new
+hardware FPS result is claimed.
 The experimental [firmware completion reader](amiga/dosbox/glide/experimental/completion-client.md)
 passes 20 scenarios against the mailbox RTL, including faults after consumption.
-Physical MMIO error handling and service integration remain pending.
+The separate [completion-driven counter](amiga/dosbox/glide/experimental/measurement.md)
+and guarded MMIO firmware now build. ARM model tests cover 96 bus-access cases
+and service start/count/close/failure paths. Physical validation remains pending.
 The [tagged submission preparer](amiga/dosbox/glide/experimental/tagged-submission.md)
 validates a private command copy before adding the fence and identity. Its
 five scene streams match the existing renderer fixtures; it is not yet installed.

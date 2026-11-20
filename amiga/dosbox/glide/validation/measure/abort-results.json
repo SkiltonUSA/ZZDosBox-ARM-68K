@@ -1,0 +1,776 @@
+{
+  "scope": "ARM instruction model, not physical AXI error injection",
+  "cases": [
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 19,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 0,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 64,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 128,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": false,
+      "irq_fiq_mask": 192,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 0,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 64,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 128,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "none",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "slverr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "decerr",
+      "returned": true,
+      "fallback": false
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "async",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "wrong-address",
+      "returned": false,
+      "fallback": true
+    },
+    {
+      "mode": 31,
+      "write": true,
+      "irq_fiq_mask": 192,
+      "fault": "wrong-direction",
+      "returned": false,
+      "fallback": true
+    }
+  ],
+  "bsp_vectors_sha256": "e807cec176192d54140ae57a1b9a6f991049b4db1d3143405c5852639da7f59c",
+  "patched_vectors_sha256": "930b9c96d04917a9756d7aad9ead7f2a517671615e0437f73d25de1e75bd8b80",
+  "elf_sha256": "3695dbc21e8f8881e58cf02deb13bb06f0ff1eca6f0202263a6a5b1994d8d31f"
+}

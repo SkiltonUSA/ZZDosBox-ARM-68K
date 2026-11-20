@@ -13,28 +13,27 @@ gate is a small scene timed through verified GPU completion.
 
 ## Remaining prerequisites
 
-1. **Complete GPU integration and a build environment.** The proposed fence,
-   identity receiver, error observer and completion registers need integration
-   with the complete GPU and board design. The published design uses Vivado
-   2025.2, now installed locally under Wine with Zynq-7000 support.
-   AMD lists supported [x86-64 Windows/Linux operating systems](https://docs.amd.com/r/2025.2-English/ug973-vivado-release-notes-install-license/Supported-Operating-Systems).
-   Wine/Rosetta on the current ARM Mac is an unofficial candidate, not ruled out
-   by that support list. The pinned baseline has since completed block-design
-   validation, synthesis and routing. Timing coverage remains incomplete, and
-   the proposed completion extensions still require a full integrated build
-   and validation before any new image can be considered for installation.
+1. **FPGA timing closure.** The fence, identity receiver, error observer and
+   completion registers are integrated. The corrected board routes all 55,980
+   nets, but setup timing fails by 0.773 ns at 56 endpoints in the 100 MHz texture
+   path. A physical-optimization pass and a separately tested carry-free
+   address candidate are in progress. Existing timing coverage and CDC findings
+   also remain. Vivado 2025.2 runs under Wine/Rosetta on the ARM Mac; this is an
+   unofficial tool environment, not an AMD-supported operating system.
 2. **Verified firmware and hardware completion.** The existing submit validator
    rejects the proposed fence/echo sequence. A capability-aware interface,
    matching FPGA image and bounded physical retirement/error/cleanup tests are
    needed. Previous readback discrepancies and freezes remain unresolved.
    Successful TCP connectivity does not establish GPU correctness.
    The [C completion reader](completion-client.md) now passes 20 RTL-backed
-   scenarios, including late faults. The existing firmware's MMIO helpers do
-   not return AXI errors and its data-abort handlers stop execution, so a
-   physical transport that satisfies the reader's contract is still required.
+   scenarios, including late faults. A [guarded transport and counter](measurement.md)
+   now build against the recorded Core0 firmware. Its 96 ARM abort-model cases
+   and service lifecycle tests pass; physical MMIO, retirement and cleanup tests
+   remain required.
    A [tagged submission preparer](tagged-submission.md) also passes tests against
    the unchanged firmware validator: it validates a private command copy before
-   adding the firmware-only fence and identity. Service integration is pending.
+   adding the firmware-only fence and identity. The experimental counter uses it;
+   installed firmware remains unchanged.
 3. **Guest renderer integration.** The overlay's 146 exports are diagnostic
    stubs, not 146 implemented Glide functions. Drawing dispatch, texture
    allocation/upload, guest state, required depth/LFB behaviour and presentation
@@ -43,10 +42,10 @@ gate is a small scene timed through verified GPU completion.
 
 ## Latest environment check
 
-The local bridge services were restored and the Amiga answered ping and public
-port queries. No emulator held the Core1 ownership port. The reservation was
-released without launching a game or GPU probe. No clock, firmware or installed
-application was changed.
+The Mac bridge services are running, but the latest connection attempt could
+not reach the Amiga. Physical measurement is pending target connectivity and
+a timing-reviewed FPGA build. No clock, firmware or installed application was
+changed during this round.
 
 The [Wine installation repair](../../../../docs/xacp-firmware-rebuild.md#wine-installation-finding)
 resolved a shared-directory layout problem. Vivado batch mode now loads the Tcl

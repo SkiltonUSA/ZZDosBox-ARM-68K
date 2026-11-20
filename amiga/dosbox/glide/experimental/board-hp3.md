@@ -126,8 +126,8 @@ DRC still reports 41 warnings and one advisory, without errors. The critical
 CDC groups match the baseline; the added peripheral/endpoint converter adds
 five crossings in each direction, all classified safe. CDC analysis excludes
 unclocked logic: 566 clock pins and 1,014 internal endpoints still lack timing
-coverage. Pre-route setup/hold margins remain −0.454/−0.374 ns. Placement and
-routing are running; this is not timing signoff or a hardware measurement.
+coverage. Pre-route setup/hold margins were −0.454/−0.374 ns. Routing has now
+completed; the separate results below supersede those estimates.
 
 Implementation continues in separate Vivado processes. These scripts accept
 one Tcl argument: the isolated board directory containing `completion-synth.dcp`:
@@ -150,5 +150,25 @@ Its original exit code therefore cannot be claimed. The local continuation
 waits for Vivado to end, requires its completion marker and a nonempty checkpoint,
 checks the staged source hashes, then runs the independent checkpoint audit.
 That audit and optimization passed. After reviewing utilization, DRC, CDC and
-unrouted timing, the separate placement/routing script was started. It will
-retain its reports and checkpoint without generating or installing a bitstream.
+unrouted timing, the separate placement/routing script completed with exit zero.
+It retained reports and a checkpoint without generating or installing a bitstream.
+
+## Routed result and timing work
+
+All **55,980 routable nets** routed with zero routing errors. Setup timing fails:
+WNS **−0.773 ns**, TNS **−19.821 ns**, 56 failing endpoints. Hold passes at
++0.009 ns with no failing endpoints. The worst path is the 100 MHz texture
+sampler, from `step0_heightPow2minus1` to `texelAddr01`; it contains 16 logic
+levels. This is a failed candidate, not a usable 100 MHz claim.
+
+DRC retains 52 warnings and one advisory. Missing clocks, unconstrained paths
+and the existing methodology findings remain. Bus-skew reports contain MET and
+NA entries; NA is not a pass. [Routed evidence](../validation/board-hp3/routing/result.json).
+
+`refine-route.tcl` runs physical optimization and rerouting from a separate
+checkpoint without changing clocks, RTL or timing exceptions. A second,
+carry-free texture-address candidate is also under investigation: the LOD base
+and coordinate fields are disjoint, so OR can replace their addition. It passes
+4,096 field combinations, 262,144 side-by-side sampler cycles and the existing
+full-renderer regression. Its full-board synthesis is running; no timing gain
+or physical FPS follows from those simulation results.

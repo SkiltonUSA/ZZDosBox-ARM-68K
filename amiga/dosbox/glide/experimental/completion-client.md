@@ -3,8 +3,9 @@
 The experimental C reader implements the CPU observation sequence for the
 [tagged mailbox](completion.md). It passes **20 scenarios against the actual
 mailbox RTL**, and compiles for Cortex-A9 ARM32 with both soft and softfp ABIs.
-It is not yet connected to physical MMIO, published as an XACP service, or used
-by the released emulator. These tests provide no GPU or GTA FPS result.
+It now has a guarded MMIO transport in a separately built experimental firmware,
+but neither transport nor counter has run on hardware. It is not published as an
+XACP service or used by the released emulator. These tests provide no GPU or GTA FPS result.
 
 ## Resource lifetime
 
@@ -26,7 +27,7 @@ must verify the endpoint identity before using the reader. The reader does not
 create tokens, establish exclusivity, cancel work, reset hardware or allocate
 the GPU aperture.
 
-## Transport still required
+## Transport integration
 
 The transport callbacks must report failure on an unsuccessful transaction and
 provide the device-memory ordering required by the ARM mapping. They must not
@@ -39,12 +40,15 @@ Both the BSP default data-abort handler and the firmware's registered
 `arm_exception_handler_id_data_abort` loop indefinitely. A callback that simply
 wraps those accesses and returns success would therefore violate this contract:
 a rejected mailbox control write could stop firmware execution instead of
-quarantining the batch. This must be resolved in the physical transport before
-enabling a capability or running the GPU measurement.
+quarantining the batch. The [experimental transport](measurement.md#guarded-completion-accesses)
+now adds a narrowly scoped abort hook and verifies the Strongly-ordered mapping.
+Its ARM model tests pass; physical transport validation remains required before
+enabling a capability or claiming a GPU measurement.
 
 This source finding concerns the pinned firmware at XACP commit
 `6e59edbaf24e0d8d2f29cdd31667a10e16c5b283`; it does not identify the cause of a
-previous hardware freeze. No exception handlers or installed firmware changed.
+previous hardware freeze. Only the separate candidate’s exception handler was
+changed; installed firmware remains unchanged.
 
 ## Tests
 

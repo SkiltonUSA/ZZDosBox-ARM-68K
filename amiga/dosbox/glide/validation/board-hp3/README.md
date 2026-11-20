@@ -30,6 +30,8 @@ The corrected renderer passes **10 XSim cases and 32 framebuffer checks**, with
 - `optimization/`: both debug cores implemented, full-board optimization exited
   zero, and no black boxes remain. Reports retain the unresolved timing/CDC
   findings; placement, routing and physical validation are separate steps.
+- `routing/`: 55,980 fully routed nets, no route errors, but 56 failed setup
+  endpoints at 100 MHz. No bitstream or hardware installation.
 
 The forced-drain case must fail with an outstanding-transaction assertion. That
 failure is the expected detection of a deliberately broken completion signal.

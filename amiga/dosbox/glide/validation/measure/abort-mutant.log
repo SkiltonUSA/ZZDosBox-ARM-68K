@@ -1,0 +1,9 @@
+PASS guarded MMIO: precise faults recover; unrelated faults unchanged; strongly ordered identity mapping required
+Traceback (most recent call last):
+  File "<workspace>/.context/ZZDosBox-ARM-68K/scripts/test_dosbox_glide_mmio.py", line 112, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "<workspace>/.context/ZZDosBox-ARM-68K/scripts/test_dosbox_glide_mmio.py", line 97, in main
+    assert u.reg_read(UC_ARM_REG_R0)==int(fault=='none')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
