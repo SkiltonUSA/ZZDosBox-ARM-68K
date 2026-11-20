@@ -56,9 +56,11 @@ adds the generated memory converter and catches reset, address-width, rounding
 and blend-pipeline issues missed by two-state simulation. The corrected build
 passes 32 framebuffer checks. Corrected board synthesis, an independent
 checkpoint audit and optimization have passed, with both debug cores implemented
-and no unresolved blocks. All 55,980 nets are now routed, but the 100 MHz texture
-path fails setup timing by 0.773 ns. Timing optimization is in progress; no new
-hardware FPS result is claimed.
+and no unresolved blocks. The first routed candidate missed the 100 MHz texture
+path requirement by 0.773 ns; physical refinement reduced that to 0.282 ns but
+still failed. A carry-free texture-address candidate passes simulation, synthesis
+and an independent optimized-checkpoint audit; placement and routing are in
+progress. No physical GPU FPS result is claimed.
 The experimental [firmware completion reader](amiga/dosbox/glide/experimental/completion-client.md)
 passes 20 scenarios against the mailbox RTL, including faults after consumption.
 The separate [completion-driven counter](amiga/dosbox/glide/experimental/measurement.md)
