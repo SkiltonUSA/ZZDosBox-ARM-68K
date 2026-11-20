@@ -28,6 +28,12 @@ for name,sources in [('channel',[]),('stream',['experimental/stream.c']),('gta_t
  subprocess.run([str(exe),*([str(args.trace.resolve())] if name=='gta_replay' else [])],
                 env=dict(os.environ,UBSAN_OPTIONS='halt_on_error=1'),check=True)
 
+# Compare page-span copying with the original checked-byte semantics.
+exe=out/'guest-memory'
+subprocess.run(['clang++','-std=c++17','-O2','-Wall','-Wextra','-Werror','-fsanitize=address,undefined',
+ '-I'+str(src),str(tests/'guest_memory.cpp'),'-o',str(exe)],check=True)
+subprocess.run([str(exe)],env=dict(os.environ,UBSAN_OPTIONS='halt_on_error=1'),check=True)
+
 # Execute real NEON on an ARM host; do not substitute scalar results on x86.
 if platform.machine().lower() in ('arm64','aarch64'):
  exe=out/'pixels-neon'

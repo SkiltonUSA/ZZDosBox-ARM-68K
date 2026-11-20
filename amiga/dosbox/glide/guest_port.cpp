@@ -5,6 +5,7 @@
 #include "regs.h"
 #include "mem.h"
 #include "paging.h"
+#include "guest_memory.h"
 #include "inout.h"
 #include "pic.h"
 #include "guest.h"
@@ -28,16 +29,10 @@ extern uint32_t db_glide_live_call(const grx_guest_call *,const grx_guest_io *);
 static uint32_t reply;
 static unsigned counts[GRX_CALL_COUNT];
 static int read_bytes(void *,uint32_t a,void *out,unsigned n){
- uint8_t *p=(uint8_t *)out;
- if(n&&a>UINT32_MAX-(n-1))return 0;
- for(unsigned i=0;i<n;i++)if(mem_readb_checked(a+i,p+i))return 0;
- return 1;
+ return grx_guest_read_checked(a,out,n);
 }
 static int write_bytes(void *,uint32_t a,const void *in,unsigned n){
- const uint8_t *p=(const uint8_t *)in;
- if(n&&a>UINT32_MAX-(n-1))return 0;
- for(unsigned i=0;i<n;i++)if(mem_writeb_checked(a+i,p[i]))return 0;
- return 1;
+ return grx_guest_write_checked(a,in,n);
 }
 static Bitu read_port(Bitu port,Bitu){return port==GRX_GATE_PORT?GRX_GATE_MAGIC:reply;}
 static void write_port(Bitu,Bitu id,Bitu){
