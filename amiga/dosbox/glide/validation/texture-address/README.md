@@ -10,3 +10,7 @@ closure or hardware FPS. The candidate remains separate from the routed board.
 Run `scripts/test_glide_texture_address.py --renderer /path/to/RasterIX`.
 The change is retained as `experimental/texture-address.patch`; original and
 candidate source hashes are in `results.json`.
+
+The carry-free candidate also passes the generated HP3 converter in XSim:
+10 cases, 32 verified framebuffers, delayed memory responses, cancellation,
+error quarantine and the premature-completion mutation. See [HP3 results](hp3/hp3-results.json).

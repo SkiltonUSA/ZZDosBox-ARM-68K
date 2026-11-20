@@ -1,0 +1,263 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "Z:tests/amiga/dosbox/glide/full_renderer.v" into library work
+INFO: [VRFC 10-311] analyzing module full_renderer_test
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:amiga/dosbox/glide/experimental/completion.v" into library work
+INFO: [VRFC 10-311] analyzing module grx_completion
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:amiga/dosbox/glide/experimental/response_token.v" into library work
+INFO: [VRFC 10-311] analyzing module grx_response_token
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:amiga/dosbox/glide/experimental/axi_response_fault.v" into library work
+INFO: [VRFC 10-311] analyzing module grx_axi_response_fault
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/Float/float/ComputeRecip.v" into library work
+INFO: [VRFC 10-311] analyzing module ComputeRecip
+INFO: [VRFC 10-311] analyzing module NewtonRaphsonIteration
+INFO: [VRFC 10-311] analyzing module NewtonRaphsonIterationInit
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/xsim-FloatAdd.v" into library work
+INFO: [VRFC 10-311] analyzing module FloatAdd
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/Float/float/FloatFastRecip.v" into library work
+INFO: [VRFC 10-311] analyzing module FloatFastRecip
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/Float/float/FloatMul.v" into library work
+INFO: [VRFC 10-311] analyzing module FloatMul
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/Float/float/FloatRecip.v" into library work
+INFO: [VRFC 10-311] analyzing module FloatRecip
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/Float/float/FloatSub.v" into library work
+INFO: [VRFC 10-311] analyzing module FloatSub
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/Float/float/FloatToInt.v" into library work
+INFO: [VRFC 10-311] analyzing module FloatToInt
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/xsim-IntToFloat.v" into library work
+INFO: [VRFC 10-311] analyzing module IntToFloat
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/Float/float/LeadingOneFinder.v" into library work
+INFO: [VRFC 10-311] analyzing module LeadingOneFinder
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/Float/float/ValueDelay.v" into library work
+INFO: [VRFC 10-311] analyzing module ValueDelay
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/Float/float/ValueTrack.v" into library work
+INFO: [VRFC 10-311] analyzing module ValueTrack
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/Float/float/XRecip.v" into library work
+INFO: [VRFC 10-311] analyzing module XRecip
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/sfifo.v" into library work
+INFO: [VRFC 10-311] analyzing module sfifo
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/skidbuffer.v" into library work
+INFO: [VRFC 10-311] analyzing module skidbuffer
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/arbiter.v" into library work
+INFO: [VRFC 10-311] analyzing module arbiter
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/axi_adapter.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_adapter
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/axi_adapter_rd.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_adapter_rd
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/axi_adapter_wr.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_adapter_wr
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/axi_crossbar.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_crossbar
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_addr.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_crossbar_addr
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_rd.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_crossbar_rd
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/axi_crossbar_wr.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_crossbar_wr
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/axi_ram.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_ram
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/axi_register_rd.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_register_rd
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/axi_register_wr.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_register_wr
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axi/priority_encoder.v" into library work
+INFO: [VRFC 10-311] analyzing module priority_encoder
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axis/axis_adapter.v" into library work
+INFO: [VRFC 10-311] analyzing module axis_adapter
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axis/axis_broadcast.v" into library work
+INFO: [VRFC 10-311] analyzing module axis_broadcast
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/3rdParty/verilog-axis/axis_mux.v" into library work
+INFO: [VRFC 10-311] analyzing module axis_mux
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/AttributeF2XConverter.v" into library work
+INFO: [VRFC 10-311] analyzing module AttributeF2XConverter
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/AttributeInterpolationX.v" into library work
+INFO: [VRFC 10-311] analyzing module AttributeInterpolationX
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/AttributeInterpolator.v" into library work
+INFO: [VRFC 10-311] analyzing module AttributeInterpolator
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/AttributeInterpolatorX.v" into library work
+INFO: [VRFC 10-311] analyzing module AttributeInterpolatorX
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/AttributePerspectiveCorrectionX.v" into library work
+INFO: [VRFC 10-311] analyzing module AttributePerspectiveCorrectionX
+INFO: [VRFC 10-311] analyzing module ExponentNormalizer
+INFO: [VRFC 10-311] analyzing module PerspectiveCorrection
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/AxisToAxiAdapter.v" into library work
+INFO: [VRFC 10-311] analyzing module AxisToAxiAdapter
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/AxisToAxiCrossbar.v" into library work
+INFO: [VRFC 10-311] analyzing module AxisToAxiCrossbar
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/CoalesceAddrGen.v" into library work
+INFO: [VRFC 10-311] analyzing module CoalesceAddrGen
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/CoalesceFiFo.v" into library work
+INFO: [VRFC 10-311] analyzing module CoalesceFiFo
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/Coalescer.v" into library work
+INFO: [VRFC 10-311] analyzing module Coalescer
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/ColorBlender.v" into library work
+INFO: [VRFC 10-311] analyzing module ColorBlender
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/ColorInterpolator.v" into library work
+INFO: [VRFC 10-311] analyzing module ColorInterpolator
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/ColorMixer.v" into library work
+INFO: [VRFC 10-311] analyzing module ColorMixer
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/ColorMixerSigned.v" into library work
+INFO: [VRFC 10-311] analyzing module ColorMixerSigned
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/CommandParser.v" into library work
+INFO: [VRFC 10-311] analyzing module CommandParser
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/DualPortRam.v" into library work
+INFO: [VRFC 10-311] analyzing module DualPortRam
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/Fog.v" into library work
+INFO: [VRFC 10-311] analyzing module Fog
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FrameStreamingCore.v" into library work
+INFO: [VRFC 10-311] analyzing module FrameStreamingCore
+INFO: [VRFC 10-311] analyzing module FrameStreamingCoreBusTerminate
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FramebufferAdapter.v" into library work
+INFO: [VRFC 10-311] analyzing module FramebufferAdapter
+WARNING: [VRFC 10-9042] illegal elaboration system task error [Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FramebufferAdapter.v:121]
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FramebufferMMU.v" into library work
+INFO: [VRFC 10-311] analyzing module FramebufferMMU
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FramebufferPacker.v" into library work
+INFO: [VRFC 10-311] analyzing module FramebufferPacker
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FramebufferReader.v" into library work
+INFO: [VRFC 10-311] analyzing module FramebufferReader
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FramebufferScissor.v" into library work
+INFO: [VRFC 10-311] analyzing module FramebufferScissor
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FramebufferSerializer.v" into library work
+INFO: [VRFC 10-311] analyzing module FramebufferSerializer
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FramebufferWriterClear.v" into library work
+INFO: [VRFC 10-311] analyzing module FramebufferWriterClear
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FramebufferWriterStrobeGen.v" into library work
+INFO: [VRFC 10-311] analyzing module FramebufferWriterStrobeGen
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/FunctionInterpolator.v" into library work
+INFO: [VRFC 10-311] analyzing module FunctionInterpolator
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/InternalFramebuffer.v" into library work
+INFO: [VRFC 10-311] analyzing module InternalFramebuffer
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/InternalFramebufferCommandHandler.v" into library work
+INFO: [VRFC 10-311] analyzing module InternalFramebufferCommandHandler
+INFO: [VRFC 10-311] analyzing module InternalFramebufferScissor
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/InternalFramebufferRam.v" into library work
+INFO: [VRFC 10-311] analyzing module InternalFramebufferRam
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/InternalFramebufferReader.v" into library work
+INFO: [VRFC 10-311] analyzing module InternalFramebufferReader
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/InternalFramebufferWriter.v" into library work
+INFO: [VRFC 10-311] analyzing module InternalFramebufferWriter
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/LinearAddressGenerator.v" into library work
+INFO: [VRFC 10-311] analyzing module LinearAddressGenerator
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/LodCalculator.v" into library work
+INFO: [VRFC 10-311] analyzing module LodCalculator
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/LogicOp.v" into library work
+INFO: [VRFC 10-311] analyzing module LogicOp
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/MemoryReadRequestGenerator.v" into library work
+INFO: [VRFC 10-311] analyzing module MemoryReadRequestGenerator
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/MipmapOptimizedRam.v" into library work
+INFO: [VRFC 10-311] analyzing module MipmapOptimizedRam
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/PagedMemoryReader.v" into library work
+INFO: [VRFC 10-311] analyzing module PagedMemoryReader
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/PerFragmentPipeline.v" into library work
+INFO: [VRFC 10-311] analyzing module PerFragmentPipeline
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/PixelPipeline.v" into library work
+INFO: [VRFC 10-311] analyzing module PixelPipeline
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RasterIX.v" into library work
+INFO: [VRFC 10-311] analyzing module RasterIX
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RasterIXCoreEF.v" into library work
+INFO: [VRFC 10-311] analyzing module RasterIXCoreEF
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RasterIXCoreIF.v" into library work
+INFO: [VRFC 10-311] analyzing module RasterIXCoreIF
+WARNING: [VRFC 10-8956] extra semicolon is not allowed here in this dialect; use SystemVerilog mode instead [Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RasterIXCoreIF.v:463]
+WARNING: [VRFC 10-8956] extra semicolon is not allowed here in this dialect; use SystemVerilog mode instead [Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RasterIXCoreIF.v:464]
+WARNING: [VRFC 10-8956] extra semicolon is not allowed here in this dialect; use SystemVerilog mode instead [Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RasterIXCoreIF.v:467]
+WARNING: [VRFC 10-8956] extra semicolon is not allowed here in this dialect; use SystemVerilog mode instead [Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RasterIXCoreIF.v:476]
+WARNING: [VRFC 10-8956] extra semicolon is not allowed here in this dialect; use SystemVerilog mode instead [Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RasterIXCoreIF.v:477]
+WARNING: [VRFC 10-8956] extra semicolon is not allowed here in this dialect; use SystemVerilog mode instead [Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RasterIXCoreIF.v:480]
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/xsim-RasterIXRenderCore.v" into library work
+INFO: [VRFC 10-311] analyzing module RasterIXRenderCore
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/xsim-RasterIX_EF.v" into library work
+INFO: [VRFC 10-311] analyzing module RasterIX_EF
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RasterIX_IF.v" into library work
+INFO: [VRFC 10-311] analyzing module RasterIX_IF
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/Rasterizer.v" into library work
+INFO: [VRFC 10-311] analyzing module Rasterizer
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/RegisterBank.v" into library work
+INFO: [VRFC 10-311] analyzing module RegisterBank
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/StencilOp.v" into library work
+INFO: [VRFC 10-311] analyzing module StencilOp
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/StreamConcatFifo.v" into library work
+INFO: [VRFC 10-311] analyzing module StreamConcatFifo
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/StreamFramebuffer.v" into library work
+INFO: [VRFC 10-311] analyzing module StreamFramebuffer
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/StreamSemaphore.v" into library work
+INFO: [VRFC 10-311] analyzing module StreamSemaphore
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/TestFunc.v" into library work
+INFO: [VRFC 10-311] analyzing module TestFunc
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/TexEnv.v" into library work
+INFO: [VRFC 10-311] analyzing module TexEnv
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/TextureBuffer.v" into library work
+INFO: [VRFC 10-311] analyzing module TextureBuffer
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/TextureFilter.v" into library work
+INFO: [VRFC 10-311] analyzing module TextureFilter
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/TextureMappingUnit.v" into library work
+INFO: [VRFC 10-311] analyzing module TextureMappingUnit
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/TextureSampler.v" into library work
+INFO: [VRFC 10-311] analyzing module TextureSampler
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/TriangleStreamF2XConverter.v" into library work
+INFO: [VRFC 10-311] analyzing module TriangleStreamF2XConverter
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/TrueDualPortRam.v" into library work
+INFO: [VRFC 10-311] analyzing module TrueDualPortRam
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:.context/amiga/glide/texture-hp3-test/source/RasterIX/RasterIX/XACPCommandReadCredit.v" into library work
+INFO: [VRFC 10-311] analyzing module XACPCommandReadCredit
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:<workspace>/.context/amiga/glide-audit-1119/wine-check/prefix/drive_c/grx-board-texture/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.gen/sources_1/bd/zz9000_ps/ip/zz9000_ps_axi_interconnect_4_imp_auto_pc_0/sim/zz9000_ps_axi_interconnect_4_imp_auto_pc_0.v" into library work
+INFO: [VRFC 10-311] analyzing module zz9000_ps_axi_interconnect_4_imp_auto_pc_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:<workspace>/.context/amiga/glide-audit-1119/wine-check/prefix/drive_c/grx-board-texture/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.gen/sources_1/bd/zz9000_ps/ipshared/d98a/hdl/axi_protocol_converter_v2_1_vl_rfs.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_a_axi3_conv
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_axi3_conv
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_axilite_conv
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_r_axi3_conv
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_w_axi3_conv
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b_downsizer
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_decerr_slave
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s_simple_fifo
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s_wrap_cmd
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s_incr_cmd
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s_wr_cmd_fsm
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s_rd_cmd_fsm
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s_cmd_translator
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s_b_channel
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s_r_channel
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s_aw_channel
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s_ar_channel
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_b2s
+INFO: [VRFC 10-311] analyzing module axi_protocol_converter_v2_1_37_axi_protocol_converter
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:<workspace>/.context/amiga/glide-audit-1119/wine-check/prefix/drive_c/grx-board-texture/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.gen/sources_1/bd/zz9000_ps/ipshared/bc4b/hdl/axi_register_slice_v2_1_vl_rfs.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_test_master
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_test_slave
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_tdm_sample
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_auto_slr
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_auto_src
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_auto_dest
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_srl_rtl
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_axic_register_slice
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_multi_slr
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_middle_region_slr
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_source_region_slr
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_dest_region_slr
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_single_slr
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_axic_reg_srl_fifo
+INFO: [VRFC 10-311] analyzing module axi_register_slice_v2_1_36_axi_register_slice
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:<workspace>/.context/amiga/glide-audit-1119/wine-check/prefix/drive_c/grx-board-texture/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.gen/sources_1/bd/zz9000_ps/ipshared/fb46/hdl/axi_data_fifo_v2_1_vl_rfs.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_data_fifo_v2_1_36_axic_fifo
+INFO: [VRFC 10-311] analyzing module axi_data_fifo_v2_1_36_fifo_gen
+INFO: [VRFC 10-311] analyzing module axi_data_fifo_v2_1_36_axic_srl_fifo
+INFO: [VRFC 10-311] analyzing module axi_data_fifo_v2_1_36_axic_reg_srl_fifo
+INFO: [VRFC 10-311] analyzing module axi_data_fifo_v2_1_36_ndeep_srl
+INFO: [VRFC 10-311] analyzing module axi_data_fifo_v2_1_36_axi_data_fifo
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:<workspace>/.context/amiga/glide-audit-1119/wine-check/prefix/drive_c/grx-board-texture/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.gen/sources_1/bd/zz9000_ps/ipshared/ec67/hdl/axi_infrastructure_v1_1_vl_rfs.v" into library work
+INFO: [VRFC 10-311] analyzing module axi_infrastructure_v1_1_0_axi2vector
+INFO: [VRFC 10-311] analyzing module axi_infrastructure_v1_1_0_axic_srl_fifo
+INFO: [VRFC 10-311] analyzing module axi_infrastructure_v1_1_0_vector2axi
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:<workspace>/.context/amiga/glide-audit-1119/wine-check/prefix/drive_c/grx-board-texture/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.gen/sources_1/bd/zz9000_ps/ipshared/d654/hdl/fifo_generator_v13_2_rfs.v" into library work
+INFO: [VRFC 10-311] analyzing module fifo_generator_v13_2_14
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:<workspace>/.context/amiga/glide-audit-1119/wine-check/prefix/drive_c/grx-board-texture/fpga/XACPGPU_G4C/ZZ9000_proto/ZZ9000_proto.gen/sources_1/bd/zz9000_ps/ipshared/d654/simulation/fifo_generator_vlog_beh.v" into library work
+INFO: [VRFC 10-311] analyzing module fifo_generator_vlog_beh
+INFO: [VRFC 10-311] analyzing module fifo_generator_v13_2_14_CONV_VER
+INFO: [VRFC 10-311] analyzing module fifo_generator_v13_2_14_sync_stage
+INFO: [VRFC 10-311] analyzing module fifo_generator_v13_2_14_bhv_ver_as
+INFO: [VRFC 10-311] analyzing module fifo_generator_v13_2_14_beh_ver_ll_afifo
+INFO: [VRFC 10-311] analyzing module fifo_generator_v13_2_14_bhv_ver_ss
+INFO: [VRFC 10-311] analyzing module fifo_generator_v13_2_14_bhv_ver_preload0
+INFO: [VRFC 10-311] analyzing module fifo_generator_v13_2_14_axic_reg_slice
+INFO: [VRFC 10-2263] Analyzing Verilog file "Z:<workspace>/.context/amiga/glide-audit-1119/wine-check/prefix/drive_c/AMDDesignTools/2025.2/Vivado/data/verilog/src/glbl.v" into library work
+INFO: [VRFC 10-311] analyzing module glbl

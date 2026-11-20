@@ -169,6 +169,8 @@ NA entries; NA is not a pass. [Routed evidence](../validation/board-hp3/routing/
 checkpoint without changing clocks, RTL or timing exceptions. A second,
 carry-free texture-address candidate is also under investigation: the LOD base
 and coordinate fields are disjoint, so OR can replace their addition. It passes
-4,096 field combinations, 262,144 side-by-side sampler cycles and the existing
-full-renderer regression. Its full-board synthesis is running; no timing gain
-or physical FPS follows from those simulation results.
+4,096 field combinations, 262,144 side-by-side sampler cycles, the existing
+full-renderer regression and all 10 generated-HP3 converter tests (32 verified
+framebuffers). [Candidate evidence](../validation/texture-address/README.md).
+Its full-board synthesis is running; no timing gain or physical FPS follows
+from those simulation results.

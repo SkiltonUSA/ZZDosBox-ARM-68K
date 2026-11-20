@@ -1,0 +1,56 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Nov 19 23:31:59 2026
+# Process ID         : 1932
+# Current directory  : Z:<workspace>/.context/ZZDosBox-ARM-68K/.context/amiga/glide/texture-hp3-test
+# Command line       : xsim.exe -mode tcl -source {xsim.dir/hp3/xsim_script.tcl}
+# Log file           : Z:<workspace>/.context/ZZDosBox-ARM-68K/.context/amiga/glide/texture-hp3-test/xsim.log
+# Journal file       : Z:<workspace>/.context/ZZDosBox-ARM-68K/.context/amiga/glide/texture-hp3-test\xsim.jou
+# Running On         : build-host
+# Platform           : Windows Server 2012 or Windows 8
+# Operating System   : 19045
+# Processor Detail   : VirtualApple @ 2.50GHz
+# CPU Frequency      : 999 MHz
+# CPU Physical cores : 14
+# CPU Logical cores  : 14
+# Host memory        : 38654 MB
+# Swap memory        : 4294 MB
+# Total Virtual      : 42949 MB
+# Available Virtual  : 10253 MB
+#-----------------------------------------------------------
+source xsim.dir/hp3/xsim_script.tcl
+# xsim {hp3} -testplusarg ddr=1 -testplusarg unaligned=1 -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+PASS full renderer: unread DDR padding keeps completion pending
+HP3 traffic: writes=292 GPU_writes=292 reads=2 GPU_reads=2 max_write_beats=4
+$finish called at time : 52900 ns : File "Z:<workspace>/.context/ZZDosBox-ARM-68K/tests/amiga/dosbox/glide/full_renderer.v" Line 134
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Nov 19 23:32:07 2026...

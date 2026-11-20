@@ -1,0 +1,60 @@
+#-----------------------------------------------------------
+# xsim v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Thu Nov 19 23:31:03 2026
+# Process ID         : 412
+# Current directory  : Z:<workspace>/.context/ZZDosBox-ARM-68K/.context/amiga/glide/texture-hp3-test
+# Command line       : xsim.exe -mode tcl -source {xsim.dir/hp3/xsim_script.tcl}
+# Log file           : Z:<workspace>/.context/ZZDosBox-ARM-68K/.context/amiga/glide/texture-hp3-test/xsim.log
+# Journal file       : Z:<workspace>/.context/ZZDosBox-ARM-68K/.context/amiga/glide/texture-hp3-test\xsim.jou
+# Running On         : build-host
+# Platform           : Windows Server 2012 or Windows 8
+# Operating System   : 19045
+# Processor Detail   : VirtualApple @ 2.50GHz
+# CPU Frequency      : 999 MHz
+# CPU Physical cores : 14
+# CPU Logical cores  : 14
+# Host memory        : 38654 MB
+# Swap memory        : 4294 MB
+# Total Virtual      : 42949 MB
+# Available Virtual  : 11086 MB
+#-----------------------------------------------------------
+source xsim.dir/hp3/xsim_script.tcl
+# xsim {hp3} -testplusarg ddr=1 -testplusarg b_delay=37 -testplusarg r_delay=3 -autoloadwcfg -runall
+Time resolution is 1 ps
+run -all
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_wr_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[0].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[1].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[2].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[3].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[4].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+Addressing configuration for axi_crossbar_addr instance full_renderer_test.gpu.mainXBar.axi_crossbar_rd_inst.s_ifaces[5].addr_inst
+ 0 ( 0): 00000000 / 32 -- 00000000-ffffffff
+PASS full renderer: scene=0 cycles=20662 token_cycle=20568 ack_cycle=20677 writes=526 reads=2 cancel=0
+PASS full renderer: scene=1 cycles=6044 token_cycle=26663 ack_cycle=26750 writes=147 reads=5 cancel=0
+PASS full renderer: scene=2 cycles=6044 token_cycle=32736 ack_cycle=32823 writes=147 reads=168 cancel=0
+PASS full renderer: scene=3 cycles=7103 token_cycle=39852 ack_cycle=39955 writes=147 reads=21 cancel=0
+PASS full renderer: scene=4 cycles=6044 token_cycle=45941 ack_cycle=46028 writes=147 reads=168 cancel=0
+HP3 traffic: writes=1114 GPU_writes=1114 reads=364 GPU_reads=364 max_write_beats=4
+$finish called at time : 460570 ns : File "Z:<workspace>/.context/ZZDosBox-ARM-68K/tests/amiga/dosbox/glide/full_renderer.v" Line 161
+exit
+INFO: [Common 17-206] Exiting xsim at Thu Nov 19 23:31:14 2026...
