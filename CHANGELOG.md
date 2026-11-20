@@ -12,6 +12,12 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — Glide-to-RasterIX encoder
 
+- Add guest-timer snapshots over the same gameplay interval as the FPS counter.
+  Hardware tests at 3,000, 6,000 and 10,000 cycles show why higher FPS alone
+  cannot establish correct pacing. The 6,000-cycle sample measured 7.61 FPS
+  and 0.943 guest seconds per real second; kept as a separate test profile.
+  Default player/session unchanged. [Results](amiga/dosbox/glide/validation/gta-live/cycle-budget/README.md).
+
 - Copy completed Core0 readback payloads with bounded NEON loads/stores while
   retaining channel completion checks and barriers. Readback measured **43.30 →
   19.09 ms/frame (-55.9%)** and gameplay **6.28 → 7.59 FPS (+21.0%)** across

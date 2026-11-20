@@ -1,0 +1,89 @@
+{
+  "completed_frames": 652,
+  "intervals": 642,
+  "timer_hz": 399993206,
+  "first_tick": 4416603809225,
+  "last_tick": 4448843462472,
+  "seconds": 80.60050211702846,
+  "fps": 7.965210924714137,
+  "stages": {
+    "submit": {
+      "calls": 30141,
+      "bytes": 15852556,
+      "ticks": 3923255191,
+      "seconds": 9.808304571553148,
+      "percent": 12.169036561722546,
+      "calls_per_frame": 46.94859813084112
+    },
+    "upload": {
+      "calls": 448569,
+      "bytes": 18693578,
+      "ticks": 685790673,
+      "seconds": 1.7145058033810705,
+      "percent": 2.1271651644200453,
+      "calls_per_frame": 698.7056074766355
+    },
+    "readback": {
+      "calls": 23427,
+      "bytes": 757555200,
+      "ticks": 4930546285,
+      "seconds": 12.326575079377724,
+      "percent": 15.293422194169544,
+      "calls_per_frame": 36.49065420560748
+    },
+    "convert": {
+      "calls": 642,
+      "bytes": 788889600,
+      "ticks": 992222708,
+      "seconds": 2.480598902972367,
+      "percent": 3.0776469597802807,
+      "calls_per_frame": 1.0
+    },
+    "display": {
+      "calls": 642,
+      "bytes": 788889600,
+      "ticks": 3945010105,
+      "seconds": 9.862692780336873,
+      "percent": 12.236515308572978,
+      "calls_per_frame": 1.0
+    },
+    "lfb_lock": {
+      "calls": 1284,
+      "bytes": 0,
+      "ticks": 2136772821,
+      "seconds": 5.342022786757033,
+      "percent": 6.627778545350308,
+      "calls_per_frame": 2.0
+    },
+    "lfb_unlock": {
+      "calls": 1284,
+      "bytes": 0,
+      "ticks": 2549396557,
+      "seconds": 6.373599648090023,
+      "percent": 7.907642608523494,
+      "calls_per_frame": 2.0
+    },
+    "draw_self": {
+      "calls": 172158,
+      "bytes": 0,
+      "ticks": 600096050,
+      "seconds": 1.5002656070113352,
+      "percent": 1.8613601250684693,
+      "calls_per_frame": 268.1588785046729
+    },
+    "other_glide_self": {
+      "calls": 86728,
+      "bytes": 0,
+      "ticks": 34321024,
+      "seconds": 0.08580401738123522,
+      "percent": 0.10645593405442001,
+      "calls_per_frame": 135.09034267912773
+    }
+  },
+  "unaccounted_percent": 38.59297659833791,
+  "guest_first_ms": 85196,
+  "guest_last_ms": 130262,
+  "guest_elapsed_ms": 45066,
+  "guest_time_per_wall_time": 0.5591280304254943,
+  "frames_per_guest_second": 14.24577286646252
+}
