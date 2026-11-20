@@ -1,0 +1,16 @@
+[
+  {
+    "source": "RECOVER.bin",
+    "destination": "GRXONE.bin",
+    "sha256": "ccee9478fbfe0560becbfa5320728ed4712c2a6c2a79d4203d01ccff68b72642",
+    "state": "writer_completed",
+    "reply": "[OK]\nFWUP RC=0\n     3 Done. 4622144 bytes written to 0:/GRXONE.bin in 6.9s (652 KB/s)"
+  },
+  {
+    "source": "CANDIDATE.bin",
+    "destination": "BOOT.bin",
+    "sha256": "02b66e93f7772cfe954ac1d784a85a03211d6bd41fca39a7199f58479196ce29",
+    "state": "writer_completed",
+    "reply": "[OK]\nFWUP RC=0\n     3 Done. 4626560 bytes written to 0:/BOOT.bin in 6.7s (674 KB/s)"
+  }
+]

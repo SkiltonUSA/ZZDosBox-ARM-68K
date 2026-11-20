@@ -30,6 +30,9 @@ preparation, submission and completion polling. This is a small rendering test;
 - [Guest triangle batching](amiga/dosbox/glide/experimental/guest-draw.md) now passes
   native, firmware-validator and Cortex-A9 model checks, including packet rollover
   and failed-submission handling. Live guest transport is still pending.
+- The [larger workload test](amiga/dosbox/glide/validation/workload/README.md)
+  adds 320 textured triangles at 320×240 and 640×480. Firmware is staged;
+  physical timing awaits restart.
 - The existing 1.0 Beta release does not include this experimental firmware.
 
 [Measurement contract](amiga/dosbox/glide/experimental/measurement.md) ·

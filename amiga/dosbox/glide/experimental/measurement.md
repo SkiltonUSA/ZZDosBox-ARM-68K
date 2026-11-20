@@ -109,3 +109,17 @@ sets `fpga_is_reference_payload: true`; that package cannot run the new
 completion counter and must not be installed for the GPU test. Hardware testing
 requires the matching routed, timing-reviewed FPGA build. No such image has
 been installed by this packaging check.
+
+## Larger workload profiles
+
+The [ABI2 extension](../validation/workload/README.md) adds 320×240 and 640×480
+profiles, each with 320 textured triangles per frame. Packets pass the same
+validator, tagged completion and error handling. The frame counter waits for
+all 65 packets; it never reports packet throughput as frame throughput. ABI1
+remains supported for the original test. Firmware is staged; larger-workload
+hardware timing awaits restart.
+
+Build and check with `test_glide_workload.py --firmware <main.c>`,
+`test_glide_measure_firmware.py --firmware <main.c>` and
+`test_dosbox_glide_measure.py --host`. Packaging accepts `--build-record` only
+when the firmware hash, base provenance and recorded source hashes match.

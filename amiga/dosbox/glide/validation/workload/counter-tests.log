@@ -1,0 +1,2 @@
+PASS multi-packet frames: 65 retirements per frame, no packet-as-frame counting
+PASS completion-driven counter: warmup, delayed retirement, elapsed ticks, terminal faults

@@ -1,0 +1,51 @@
+{
+  "scope": "Offline packaging only; not hardware validated or installed",
+  "reference_boot_sha256": "c0e81e720e3a55a26d517b9bd5c06f1d71c89c243f8d60b37d92ec59cb6c8537",
+  "fsbl_elf_sha256": "185c8795326d800a1943865c1ed01723a71546690fbc81d892e08848dcde607b",
+  "firmware_elf_sha256": "2670a7499d309e6bef3ccaf415ff8679f03eabece6ac460677c92ce89074cbff",
+  "fpga_bit_sha256": "3a129f822e60f27747d458b0f67b278ae6a7bbb40dcbb5f2aea134c5bd01c90e",
+  "bootgen_sha256": "b6514dcf56a2cd32d34745d27836dddae327f10ba5ae89530ef31ae61477b177",
+  "build_record_sha256": "37e204dbcbdbbf738a0e358a3165de44ed61293e0cdffdb24ccba145fc11eaca",
+  "boot_bytes": 4626560,
+  "boot_sha256": "02b66e93f7772cfe954ac1d784a85a03211d6bd41fca39a7199f58479196ce29",
+  "reference_roundtrip_payloads_and_boot_header_identical": true,
+  "candidate_payloads_match_inputs": true,
+  "fpga_is_reference_payload": false,
+  "partitions": [
+    {
+      "load": "0x0",
+      "entry": "0x0",
+      "attributes": "0x10",
+      "bytes": 98312,
+      "sha256": "eb3166ca673c3be217b1486eed9eed3d4208aae12d120be9f42625e9209c9655"
+    },
+    {
+      "load": "0x0",
+      "entry": "0x0",
+      "attributes": "0x20",
+      "bytes": 4045568,
+      "sha256": "1c2ddb6a35dc510f533accb92700f25bb300030403e8b30073f847ff84f4152b"
+    },
+    {
+      "load": "0x100000",
+      "entry": "0x100000",
+      "attributes": "0x10",
+      "bytes": 451904,
+      "sha256": "5825b84c37338a486167339aa615411908c0cd9ad4e632a56bd7477f8e2c51be"
+    },
+    {
+      "load": "0x170000",
+      "entry": "0x0",
+      "attributes": "0x10",
+      "bytes": 16588,
+      "sha256": "e955f7faa7534eda081c563989d7ec9364baa35daee5194932031b49238e25bc"
+    },
+    {
+      "load": "0x3fcf0000",
+      "entry": "0x0",
+      "attributes": "0x10",
+      "bytes": 8192,
+      "sha256": "3f3fba956e45c253d38917ce45cca696597b7e11c99906590b25f3e45b84b9c4"
+    }
+  ]
+}
