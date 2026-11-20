@@ -51,8 +51,8 @@ results using synthetic pixels. These tests do not replace physical execution.
    unverified cleanup; do not retry a possibly active GPU client.
 
 The FPGA is unchanged from the tested carry-free texture-address build. Existing
-board timing/CDC limitations still apply. The new Core0 service is experimental
-and has not yet passed physical validation.
+board timing/CDC limitations still apply. The new Core0 service is experimental. Its empty-session lifecycle now passes
+on hardware; live drawing and gameplay measurement remain unverified.
 
 ## First physical lifecycle and close correction
 
@@ -76,6 +76,14 @@ existing measurement scenarios now pass in the ARM model.
 
 [Close-fix evidence](close-fix/) records the physical failure, corrected build
 and tests. The corrected boot image has been staged, with upload checksum and
-writer RC0 verified; boot-card readback has not been performed. The FPGA and isolated DOS player are unchanged. Physical validation
-of the correction remains pending a cold restart; **there is still no GTA FPS
-result**. The proven paired firmware remains available as `GRXPAIR.bin`.
+writer RC0 verified; boot-card readback has not been performed. The FPGA and
+isolated DOS player are unchanged. After a cold restart, the empty DOS session
+passed on hardware: RC0, `GLIDE_CLOSE OK`, restored Core1 registers/MMU/cache,
+and an inactive channel with no pending work or failure. ARM remained at
+800 MHz. The proven paired firmware remains available as `GRXPAIR.bin`.
+
+The first actual GTA session was launched windowed at 640×480, 3,000 DOS cycles,
+32 MiB guest RAM and sound disabled. The bridge screenshot request timed out;
+network pings and bridge heartbeats continued. No rendered-gameplay capture or
+completed-frame result was recovered. Further commands were stopped pending
+session recovery. **There is still no measured GTA gameplay FPS.**

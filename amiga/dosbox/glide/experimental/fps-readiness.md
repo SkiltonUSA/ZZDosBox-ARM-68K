@@ -2,8 +2,8 @@
 
 **No accelerated GTA gameplay FPS has been measured yet.** The fixed-scene
 hardware tests are successful, and the live GTA subset now builds. The next
-gate is physical validation of the GPU-close correction. The first empty DOS
-session restored Core1 but retained its GPU reservation; see the
+gate is rendered-gameplay validation and completed-frame measurement. The
+GPU-close correction passes physical startup/exit checks; see the
 [recorded cause and fix](../validation/gta-live/README.md#first-physical-lifecycle-and-close-correction).
 
 ## Completed
