@@ -1,0 +1,2 @@
+PASS ARM streaming: exclusion, uploads, reads, deferred retirement, clean close and failed-lease quarantine
+PASS ARM service: start, correctness warmup, counting, close/restart, busy, mapping, FIFO and pixel failures

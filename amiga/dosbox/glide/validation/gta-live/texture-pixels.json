@@ -1,0 +1,22 @@
+{
+  "scope": "Full RTL with synthetic AXI RAM, not hardware FPS",
+  "cases": [
+    {
+      "linear": false,
+      "pixels": {
+        "(16, 16)": 65504,
+        "(40, 16)": 31,
+        "(2, 16)": 0
+      }
+    },
+    {
+      "linear": true,
+      "pixels": {
+        "(16, 16)": 65504,
+        "(40, 16)": 31,
+        "(2, 16)": 0
+      }
+    }
+  ],
+  "simulator_sha256": "8c5d7e237402553c7c7c20b46e9ba91945456777b3a065b4198c850f68641b6a"
+}

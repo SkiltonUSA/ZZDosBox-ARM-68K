@@ -1,0 +1,14 @@
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
+PASS bounded guest argument decode, version write and no-board diagnostic
+PASS Glide 2 vertex layout, global/TMU W, transactional reads and perspective-preserving viewport clipping
+PASS timed keyboard: irregular polls, single delivery, ordered catch-up and invalid schedules
+PASS guest draw: 320 triangles, texture/origin/blend variants, ordered packet rollover
+PASS clipped fan crosses packets, TMU W and state boundary preserve ordering
+PASS bad guest pointers/state rejected, empty draws suppressed, failed transport stops stream
+PASS mid-stream retirement failure stops after accepted prefix without replay
+DRAW_DIGEST=05c053fd
+PASS ignored transport-rejection mutation detected

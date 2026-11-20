@@ -1,0 +1,5 @@
+PASS channel mapping: exact NC/XN pages, bounds, existing-map exclusion
+PASS GPU stream: bounded spans, no duplicate request, retirement before reply, failed lease retained
+PASS GTA texture flags, alpha threshold and unchanged RGB565 defaults
+PASS GTA allocation, LFB changed-pixel preservation, presentation and terminal unsupported state
+PASS GTA private call replay: calls=41997 swaps=61 translated_packets=5100 uploads=2122 textures=552 bytes=2082048; no rendering/FPS
