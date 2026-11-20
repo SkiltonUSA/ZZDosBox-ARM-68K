@@ -30,6 +30,7 @@ static int glide_finish(volatile uint8_t *mem){
  if(!glide_opened)return 1;
  CacheClearE((APTR)(mem+PC_GLIDE_REPORT),64,CACRF_ClearD);
  printf("GTA_PRESENT magic=%08x frames=%u warmup=10 first=%08x%08x last=%08x%08x call_error=%u status=%u\n",ad_get(mem,PC_GLIDE_REPORT),ad_get(mem,PC_GLIDE_REPORT+4),ad_get(mem,PC_GLIDE_REPORT+8),ad_get(mem,PC_GLIDE_REPORT+12),ad_get(mem,PC_GLIDE_REPORT+16),ad_get(mem,PC_GLIDE_REPORT+20),ad_get(mem,PC_GLIDE_REPORT+24),ad_get(mem,PC_GLIDE_REPORT+28));
+ printf("GTA_GUEST_MS first=%u last=%u\n",ad_get(mem,PC_GLIDE_GUEST_FIRST),ad_get(mem,PC_GLIDE_GUEST_LAST));
  CacheClearE((APTR)(mem+PC_GLIDE_PROFILE),PC_GLIDE_PROFILE_STAGES*PC_GLIDE_PROFILE_STRIDE,CACRF_ClearD);
  for(unsigned i=0;i<PC_GLIDE_PROFILE_STAGES;i++){
   unsigned at=PC_GLIDE_PROFILE+i*PC_GLIDE_PROFILE_STRIDE;

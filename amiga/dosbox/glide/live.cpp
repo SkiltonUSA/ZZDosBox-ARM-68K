@@ -6,6 +6,7 @@
 #include "mmu.h"
 #include "shell_api.h"
 #include "profile.h"
+#include "pic.h"
 #include "live_wire.h"
 #include "pixels_neon.h"
 #include "guest_calls.h"
@@ -21,6 +22,7 @@ static grx_gta game;
 static volatile grx_stream_channel *channel;
 static uint32_t sequence,nonce,*l1,section;
 static uint64_t first,last;
+static uint32_t guest_first,guest_last;
 static unsigned completed;
 /* Exclusive elapsed ticks: transport/presentation plus lock, unlock, draw and
  * other Glide-call self time (subtract nested transport/presentation costs).
@@ -75,7 +77,9 @@ static int present(void *,const unsigned char *pixels,unsigned w,unsigned h){
  }
  completed++;
  account(4,w*h*4,paint);
- uint64_t now=pc_clock_ticks();if(completed==10)first=now;if(completed>10)last=now;
+ uint64_t now=pc_clock_ticks();
+ if(completed==10){first=now;guest_first=PIC_Ticks;}
+ if(completed>10){last=now;guest_last=PIC_Ticks;}
  if(completed==10)memset(stages,0,sizeof(stages));
  if(completed>10)memcpy(measured,stages,sizeof(stages));
  volatile uint8_t *shared=db_shared();
@@ -93,6 +97,7 @@ void db_glide_live_open(uint32_t lfb){
  if(table+1024>(uintptr_t)shared+MB_TABLE_END||!grx_channel_map(l1,(uint32_t*)table,table,address,bytes))E_Exit("Glide channel mapping conflict");
  section=address>>20;tlb();
  channel=(volatile grx_stream_channel*)address;sequence=1;completed=0;first=last=0;
+ guest_first=guest_last=0;
  memset(stages,0,sizeof(stages));memset(measured,0,sizeof(measured));
  grx_gta_backend backend={nullptr,upload,readback,submit,present};grx_gta_init(&game,&backend,lfb);
 }
@@ -119,6 +124,8 @@ uint32_t db_glide_live_call(const grx_guest_call *c,const grx_guest_io *io){
  return reply;
 }
 void db_glide_live_close(){if(channel){
+ ad_put(db_shared(),PC_GLIDE_GUEST_FIRST,guest_first);
+ ad_put(db_shared(),PC_GLIDE_GUEST_LAST,guest_last);
  for(unsigned i=0;i<PC_GLIDE_PROFILE_STAGES;i++){
   unsigned at=PC_GLIDE_PROFILE+i*PC_GLIDE_PROFILE_STRIDE;const stage_stat &s=measured[i];
   ad_put(db_shared(),at,s.calls);ad_put(db_shared(),at+4,s.bytes>>32);ad_put(db_shared(),at+8,s.bytes);
