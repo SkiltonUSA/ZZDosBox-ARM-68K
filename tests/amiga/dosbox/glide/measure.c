@@ -2,17 +2,17 @@
 #include <assert.h>
 #include <stdio.h>
 struct fixture { uint64_t now; unsigned submitted,verified,valid,fault;
-    uint32_t epoch,sequence; unsigned submit_fail,pixel_fail; };
+    uint32_t epoch,sequence; unsigned submit_fail,pixel_fail,packets; };
 static int submit(void *p,unsigned scene,uint32_t epoch,uint32_t sequence)
 {
     struct fixture *f=p;
-    assert(scene==(f->submitted<5?f->submitted:1));
+    assert(scene==(f->submitted<5?f->submitted:(f->packets?5+(f->submitted-5)%f->packets:1)));
     f->submitted++; f->epoch=epoch; f->sequence=sequence;
     return !f->submit_fail;
 }
 static int verify(void *p,unsigned scene)
 {
-    struct fixture *f=p; assert(scene==(f->verified<5?f->verified:1));
+    struct fixture *f=p; assert(scene==(f->verified<5?f->verified:(f->packets?4+f->packets:1)));
     f->verified++; return !f->pixel_fail;
 }
 static uint64_t ticks(void *p) { return ((struct fixture*)p)->now; }
@@ -66,5 +66,17 @@ int main(void)
         unsigned submissions=f.submitted;grx_measure_poll(&m,&i);
         assert(f.submitted==submissions&&!grx_measure_begin(&m,3,1,100));
     }
+    f=(struct fixture){.packets=65};m=(grx_measure){0};i=io(&f);
+    assert(grx_measure_begin_batches(&m,3,3,100,65));
+    for(unsigned n=0;n<200;n++) {
+        f.now=n*10;grx_measure_poll(&m,&i);
+        unsigned completed=n<5?0:(n-5)/65;
+        assert(m.frames==completed);
+        f.now++;grx_measure_poll(&m,&i);assert(m.frames==completed);
+        f.valid=1;f.now+=3;grx_measure_poll(&m,&i);
+        assert(m.frames==(n<5?0:(n-4)/65));
+    }
+    assert(m.state==GRX_MEASURE_DONE&&m.frames==3&&m.elapsed==1944&&f.verified==6);
+    puts("PASS multi-packet frames: 65 retirements per frame, no packet-as-frame counting");
     puts("PASS completion-driven counter: warmup, delayed retirement, elapsed ticks, terminal faults");
 }

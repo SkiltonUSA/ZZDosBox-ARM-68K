@@ -5,7 +5,7 @@
 typedef uint64_t XTime;
 static uint64_t clock_ticks;
 static uint32_t token_epoch,token_sequence,token_valid;
-unsigned test_failure,test_sends;
+unsigned test_failure,test_sends,test_profile;
 static int xacpgpu_submit_pending,xacpgpu_test2_pending;
 static void XTime_GetTime(XTime *t){*t=(clock_ticks+=1000);}
 static void Xil_DCacheInvalidateRange(uintptr_t p,unsigned n){(void)p;(void)n;}
@@ -40,7 +40,8 @@ static int xacpgpu_fifo_send_be(const volatile uint32_t *words,uint32_t n,uint32
 static unsigned char message[64];
 uint32_t *test_command(unsigned op,unsigned frames,unsigned epoch)
 {
-    zc_put(message,op);zc_put(message+4,1);zc_put(message+8,frames);zc_put(message+12,epoch);
+    zc_put(message,op);zc_put(message+4,test_profile?2:1);zc_put(message+8,frames);zc_put(message+12,epoch);
+    zc_put(message+16,test_profile);
     grx_firmware_command(message);
     return (uint32_t*)message;
 }

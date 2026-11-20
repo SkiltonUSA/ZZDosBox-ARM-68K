@@ -32,14 +32,17 @@ def main():
         shutil.copytree(base/name,out/name,ignore=shutil.ignore_patterns('build','build-next-ay'))
     fw=out/'ZZ9000OS';dest=fw/'src/grx-measure';dest.mkdir()
     inputs=[SRC/name for name in ['translator.c','descriptor.c','probe_scene.c','translator.h',
-            'descriptor.h','vertex.h','pipeline.h','probe_scene.h','probe_readback.h']]
+            'descriptor.h','vertex.h','pipeline.h','probe_scene.h','probe_readback.h',
+            'draw_stream.c','draw_stream.h','guest_vertex.c','guest_vertex.h','guest.h','clip.c','clip.h']]
     inputs+= [SRC/'experimental'/name for name in ['measure.h','measure.c','measure_firmware.inc',
         'submit_prepare.inc','completion_client.h','completion_client.c','mmio_guard.h',
-        'mmio_guard.c','mmio_guard.S','mmio_transport.h','mmio_transport.c']]
+        'mmio_guard.c','mmio_guard.S','mmio_transport.h','mmio_transport.c','workload.h','workload.c']]
+    subprocess.run(['python3',str(ROOT/'scripts/build_dosbox_glide_ovl.py'),'--generate-only'],check=True)
+    inputs.append(ROOT/'.context/amiga/glide/ovl/guest_calls.h')
     for source in inputs:shutil.copyfile(source,dest/source.name)
     tool=lambda n:str(a.toolchain.resolve()/('arm-none-eabi-'+n))
     flags=['-mcpu=cortex-a9','-marm','-mfpu=neon','-mfloat-abi=hard','-O2',
-           '-ffunction-sections','-fdata-sections','-fno-unwind-tables','-fno-asynchronous-unwind-tables']
+           '-ffp-contract=off','-ffunction-sections','-fdata-sections','-fno-unwind-tables','-fno-asynchronous-unwind-tables']
     objs=[]
     for source in inputs:
         if source.suffix not in ('.c','.S'):continue

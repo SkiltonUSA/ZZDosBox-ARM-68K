@@ -15,9 +15,18 @@ ROOT = Path(__file__).resolve().parents[1]
 INPUTS = ROOT / 'amiga/dosbox/glide/validation/measure/boot-inputs.json'
 
 
-def package(reference, fsbl, firmware, bitstream, output, bootgen):
+def package(reference, fsbl, firmware, bitstream, output, bootgen, build_record=None):
     pin = json.loads(INPUTS.read_text())
     source, loader, arm, fpga = (p.read_bytes() for p in (reference, fsbl, firmware, bitstream))
+    if build_record is not None:
+        from build_glide_measure_firmware import PIN
+        built=json.loads(build_record.read_text())
+        if built['base']!=PIN or built['opcode']!='0x7a20' or built['remaining_bytes']<0:
+            raise ValueError('Unrecognized firmware build provenance')
+        for name,digest in built['sources'].items():
+            if sha((ROOT/name).read_bytes())!=digest:
+                raise ValueError('Source changed since firmware build: '+name)
+        pin['firmware_elf_sha256']=built['elf_sha256']
     for data, key in [(source, 'reference_boot_sha256'), (loader, 'fsbl_elf_sha256'),
                       (arm, 'firmware_elf_sha256')]:
         if sha(data) != pin[key]:
@@ -58,6 +67,7 @@ def package(reference, fsbl, firmware, bitstream, output, bootgen):
         'reference_boot_sha256': sha(source), 'fsbl_elf_sha256': sha(loader),
         'firmware_elf_sha256': sha(arm), 'fpga_bit_sha256': sha(fpga),
         'bootgen_sha256': sha(bootgen.read_bytes()),
+        'build_record_sha256': sha(build_record.read_bytes()) if build_record else None,
         'boot_bytes': len(candidate), 'boot_sha256': sha(candidate),
         'reference_roundtrip_payloads_and_boot_header_identical': True,
         'candidate_payloads_match_inputs': True,
@@ -73,6 +83,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('reference', 'fsbl', 'firmware', 'bitstream', 'output', 'bootgen'):
         parser.add_argument('--' + name, type=Path, required=True)
+    parser.add_argument('--build-record',type=Path)
     args = parser.parse_args()
     args.bootgen = args.bootgen.resolve()
     result = package(**vars(args))

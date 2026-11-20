@@ -17,7 +17,7 @@ typedef struct {
     enum grx_measure_state state;
     enum grx_measure_error error;
     grx_completion_batch batch;
-    unsigned target, frames, scene, waiting;
+    unsigned target, frames, scene, waiting, packets_per_frame, packet_index;
     uint64_t started, elapsed, deadline, timeout;
 } grx_measure;
 
@@ -26,5 +26,7 @@ typedef struct {
  * Ticks are raw CPU global-timer ticks: calibrate separately, never infer FPS
  * from the FPGA clock. Faulted measurements retain ownership until recovery. */
 int grx_measure_begin(grx_measure *, uint32_t epoch, unsigned frames, uint64_t timeout);
+/* Same five correctness scenes, then scenes 5..5+packets-1 form one frame. */
+int grx_measure_begin_batches(grx_measure *,uint32_t,unsigned,uint64_t,unsigned packets);
 void grx_measure_poll(grx_measure *, const grx_measure_io *);
 #endif
