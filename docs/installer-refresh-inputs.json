@@ -1,0 +1,15 @@
+{
+  "package_version": "1.0.0-beta.20261122",
+  "application_version": "1.0 Beta",
+  "base_installer_sha256": "38cdc3ec39517a36f8bd5ac6b61ca085958394a92f4ed3c8972310dee4bb6270",
+  "replacements": {
+    "zzdosbox": {
+      "Core/PC/ZZDosBox-Launcher": "65e1c67b2363892634c96c11d4cd199b161d6309c157c93c185b6f536504c499",
+      "Core/PC/ZZClock": "b0ab72855e3e1aa9e5a9cf072ff3f7e2892b70f4b2b7193f000ff26381edf4d0",
+      "Core/Clock-settings.md": "f5054d5ef1bf64c1b49a2693019b5dee302b97f869641832c46a8e4dc95c7474",
+      "Core/Release-notes.md": "fed651cb707ab732aee916686ff12cfe1abc9796e9cc8870acf2b589a0b21611",
+      "Core/README.md": "263d1f22ff98158f4188f8df7eda50b9ad3f34e2e1ea25bfca43d410ae1ea217"
+    }
+  },
+  "validation": "Signed catalogues, CRC and SHA256 round-trip checks; no fresh hardware installation."
+}

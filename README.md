@@ -1,5 +1,17 @@
 # ZZDosBox-ARM-68K
 
+<!-- installer-refresh-20261122 -->
+## Updated AmiPkg installer
+
+[Download the 22 November installer refresh](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v1.0.0-beta.20261122) · [Changes and installation](docs/installer-refresh-20261122.md)
+
+- **Settings → ZZOverclock:** 666.7 MHz or experimental 800 MHz, with Apply and Refresh.
+- Overclocking is optional. Without the clock-service firmware, the emulator still runs at standard speed; only clock control is unavailable.
+- Offline installation with dependency checks and a selectable destination. Existing settings and saves are preserved.
+- No automatic clock change or firmware installation. Package revision and embedded application version are listed separately in the release notes.
+
+Both **standard** and **with demos** installers are available. DOS runtimes remain unchanged; 800 MHz timing/FPS accounting is not validated for those runtimes. Use standard speed for comparable measurements.
+
 **DOSBox for AmigaOS and the ZZ9000 Cortex-A9**, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
 The ARM runs the emulated PC; the 68K handles the MUI interface, AmigaOS services
@@ -704,3 +716,5 @@ and separate correctness checks.
 ### Development validation
 
 [XACP 1.8 regression results and fullscreen foreground handling](amiga/records/2026-11-15/README.md): CPU/memory/audio fixtures and bounded Doom checks, including the remaining fullscreen limitation. These development results do not change the published beta.
+
+**Optional clock control:** Settings includes ZZOverclock: 666.7 MHz or experimental 800 MHz. Standard-speed operation does not require the custom clock service. [Clock settings](docs/clock-settings.md).
