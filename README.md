@@ -1,16 +1,16 @@
-# ZZDosBox-ARM-68K
+# ZZDosBox — 1.0.1 Beta
 
-<!-- installer-refresh-20261122 -->
-## Updated AmiPkg installer
+<!-- current-release -->
+## Current release — 1.0.1 Beta
 
-[Download the 22 November installer refresh](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v1.0.0-beta.20261122) · [Changes and installation](docs/installer-refresh-20261122.md)
+[Download the AmiPkg installer](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v1.0.1-beta) · [Changes and installation](docs/release-notes.md)
 
 - **Settings → ZZOverclock:** 666.7 MHz or experimental 800 MHz, with Apply and Refresh.
-- Overclocking is optional. Without the clock-service firmware, the emulator still runs at standard speed; only clock control is unavailable.
-- Offline installation with dependency checks and a selectable destination. Existing settings and saves are preserved.
-- No automatic clock change or firmware installation. Package revision and embedded application version are listed separately in the release notes.
+- The clock service is optional; standard XACP installations can still run the emulator.
+- Destination selection and dependency checks; existing settings and saves are preserved.
+- Launcher and release use the same version number. No automatic clock change or firmware installation.
 
-Both **standard** and **with demos** installers are available. DOS runtimes remain unchanged; 800 MHz timing/FPS accounting is not validated for those runtimes. Use standard speed for comparable measurements.
+Standard and with-demos editions are available. Retained DOS runtimes do not have validated 800 MHz FPS/timing accounting; use standard speed for comparable measurements.
 
 **DOSBox for AmigaOS and the ZZ9000 Cortex-A9**, based on
 [dosbox-libretro](https://github.com/libretro/dosbox-libretro).
@@ -74,7 +74,7 @@ the default is unchanged.
 [FPGA build evidence](amiga/dosbox/glide/validation/texture-address/README.md) ·
 [XACP rebuild guide](docs/xacp-firmware-rebuild.md).
 
-**Current release: 1.0 Beta — shared drives and Workbench CDs.**
+**Current release: 1.0.1 Beta — shared drives and Workbench CDs.**
 [Download the launcher update](artifacts/development/launcher-1.0-beta) ·
 [Navigation guide](docs/amiga-dosbox-launcher-navigation.md).
 
@@ -85,7 +85,7 @@ the default is unchanged.
 - Full-page settings forms; scrollbars appear when needed and compact layouts support 640×480.
 - **USB/SD shared drives:** choose a mounted Amiga volume or folder as DOS `C:`, add it under OS, and transfer files through Workbench. [Guide](docs/amiga-dosbox-shared-drives.md).
 
-Both [1.0 Beta installers](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v1.0.0-beta) include this launcher.
+Both [1.0.1 Beta installers](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v1.0.1-beta) include this launcher.
 Existing profiles are preserved; emulator runtimes are unchanged from 0.22.7 Beta.
 **Workbench CDs:** DOS → CD-ROM → Use Workbench CD selects a mounted ISO9660 data disc as read-only DOS D:, including IDE/ATAPI, SCSI and USB drives through their installed AmigaOS drivers.
 
@@ -665,12 +665,12 @@ A9 timings; instruction-model timing is not hardware performance evidence.
 
 ## Offline installers
 
-[**Download ZZDosBox 1.0 Beta**](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v1.0.0-beta).
+[**Download ZZDosBox 1.0.1 Beta**](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v1.0.1-beta).
 
 | Installer | Download | Contents | AHI audio |
 | --- | --- | --- | --- |
-| [Standard](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v1.0.0-beta/ZZDosBox-1.0.0-beta-standard-amipkg.lha) | 7.2 MB | ZZDosBox; empty library for your own programs | Optional; sound-off use allowed |
-| [With Demos](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v1.0.0-beta/ZZDosBox-1.0.0-beta-demos-amipkg.lha) | 23.7 MB | Same ZZDosBox plus Corridor 7, Doom 1.9 shareware and King's Quest VII Demo | Required for supplied audio profiles |
+| [Standard](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v1.0.1-beta/ZZDosBox-1.0.1-beta-standard-amipkg.lha) | 7.2 MB | ZZDosBox; empty library for your own programs | Optional; sound-off use allowed |
+| [With Demos](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/download/v1.0.1-beta/ZZDosBox-1.0.1-beta-demos-amipkg.lha) | 23.7 MB | Same ZZDosBox plus Corridor 7, Doom 1.9 shareware and King's Quest VII Demo | Required for supplied audio profiles |
 
 King's Quest VII is a non-interactive promotional demo. Both installers check
 MUI, AmigaOS libraries, Picasso96, ZZ9000 hardware and AHI. System libraries and
@@ -718,3 +718,5 @@ and separate correctness checks.
 [XACP 1.8 regression results and fullscreen foreground handling](amiga/records/2026-11-15/README.md): CPU/memory/audio fixtures and bounded Doom checks, including the remaining fullscreen limitation. These development results do not change the published beta.
 
 **Optional clock control:** Settings includes ZZOverclock: 666.7 MHz or experimental 800 MHz. Standard-speed operation does not require the custom clock service. [Clock settings](docs/clock-settings.md).
+
+[Release documentation and verification checklist](docs/release-process.md).

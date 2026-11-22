@@ -1,5 +1,11 @@
 # ZZDosBox changelog
 
+## 1.0.1 Beta
+
+Numbered AmiPkg release and rebuilt launcher, with optional clock controls.
+Recorded core/player builds are retained. [Release notes](../../docs/release-notes.md).
+[Publication checklist](../../docs/release-process.md).
+
 Version history from **0.1.0-dev** through **1.0 Beta**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
