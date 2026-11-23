@@ -79,3 +79,7 @@ test-cache32:
 .PHONY: test-audio-batch
 test-audio-batch:
 	$(PYTHON) scripts/test_dosbox_audio_batch.py
+
+.PHONY: test-cpu-checkpoint
+test-cpu-checkpoint:
+	$(PYTHON) scripts/test_dosbox_cpu_checkpoint.py
