@@ -1,0 +1,26 @@
+{
+  "base_installer_sha256": "edc01b62f8d2f00e701ca958b484d00d34753fd8a5bcaed63404304cdeec0b86",
+  "installer_sha256": "c5e693d6534bf6f04a591cece27e9db2c5422efd6e2d3486de9dcc3a8aae9edc",
+  "README_sha256": "bce42cf683e4b227181e08da9fa1973c13f48af7c3fe172efd37f898d57263cb",
+  "license_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+  "executable_hashes_unchanged": {
+    "Core/PC/ZZClock": "b0ab72855e3e1aa9e5a9cf072ff3f7e2892b70f4b2b7193f000ff26381edf4d0",
+    "Core/PC/ZZDosBox": "99e48245e3ac043d7a1c78d424cc918740de5b05eaa4c636ad39b9297f1020a6",
+    "Core/PC/ZZDosBox-Adaptive": "03d37d926e4e52987e8b79ead5368c54dab31d9fccf548dd54d842f4af269f94",
+    "Core/PC/ZZDosBox-Compat": "3cb8fc3f65c9bdf41687bd492a1b082193e1cfc485bc057bf24a3fcd102d557c",
+    "Core/PC/ZZDosBox-Expanded": "0f1c1c47e89e55f8d524b235a2e7db7cda3d0db243f5e21ffd1145743fa3581c",
+    "Core/PC/ZZDosBox-Launcher": "2fc2731053b3b4f9f4e6119668c13d6eddc7db3f01c8c07fc1fd83a1d026422a",
+    "Core/PC/ZZDosBox-Memory": "5f4ec2a7df3af7b296378af13daa8950f2ef04be9ebb3fb2a952ebf3e4dc1849",
+    "Core/PC/ZZDosBox-Net": "c5d84a29a8a65e12db6a47d59fdb3e835a31cb79bc912866a8763770a43d0587",
+    "Core/PC/ZZDosBox-Net-JIT": "40cf6897d2fd551cb92ddf025d4b4f8028735f7cae18dd26b2e8d2093b65a4e6",
+    "Core/PC/ZZDosBox-OpenGL": "494b039357f50df9835806e65f6fef787b60133a9f2f9898e57ad03584c8f407",
+    "Core/PC/ZZDosBox-Scanlines": "03d37d926e4e52987e8b79ead5368c54dab31d9fccf548dd54d842f4af269f94",
+    "Core/PC/ZZDosBox-Windows": "3ea2dbefe8bce5213fad399df2cb4ea9b73768b1bc9990ed60f2cda98a193496",
+    "Core/PC/ZZDosBox-Windows-Dynamic": "a3322b7563575ccf1eac2192efa2a237413e85939a7763ae2a7aeb7d5684e9be",
+    "Core/PC/ZZDosCreate": "fef740ed643c04147dbfcb92a2306731f1de51b18ccaa620c6275e17ee00b670",
+    "Core/PC/ZZDosDisk": "ab82722af6e07a1e639ff7fe364e6fc01286c2eb1c308b0a92fa8860a4afe302",
+    "Core/ZZInstall": "2127ae93221e546aed34432c8e7accce8bb212d2e5e734f77528254b6f15d2dc"
+  },
+  "component_count": 1,
+  "validation": "signed catalogue, payload checksums, full LHA round-trip, exact README and licence in outer and every component, all executables unchanged"
+}

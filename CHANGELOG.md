@@ -12,6 +12,11 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## 1.0.2 Beta
 
+- Archive documentation refresh: include the current main README as readme.txt,
+  plus about.txt and licence.txt in every installer/component LHA. Executable
+  hashes and application versions are unchanged by this refresh.
+
+
 - Integrate calibrated 666.7/800 MHz presentation/FPS timing in Compatibility,
   Expanded, memory-debug, network JIT, software-OpenGL and Windows players.
 - Rebuild those players and launcher at 1.0.2; record retained legacy player

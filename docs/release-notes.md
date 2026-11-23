@@ -27,3 +27,10 @@ normal emulator launch remains available. This release retains that client.
 
 [Release checks and build identities](runtime-clock/release-1.0.2/README.md) ·
 [Changelog](../CHANGELOG.md) · [Setup](../README.md#dependencies).
+
+## Archive documentation refresh
+
+Installers and component LHAs include readme.txt copied from the main README,
+about.txt with credits and licence.txt. Existing component notices are retained.
+This documentation-only refresh leaves executable hashes and application
+versions unchanged.
