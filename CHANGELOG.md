@@ -12,6 +12,10 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — calibrated runtime timing
 
+- Make the network backend honor the configured m68k container command instead
+  of an old machine-specific Podman connection. Full network rebuild and native
+  network/host tests pass; the ARM builder forwards its explicit override.
+
 - Rebuild standard and memory-debug players with calibrated timing. Three
   standard Doom display/presentation cases and a live memory-debug session
   pass on hardware, including pause/read/bounds/resume and clean teardown.

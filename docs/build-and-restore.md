@@ -61,6 +61,10 @@ podman run -d --name zz-dos-arm-build -v "$PWD:/work" -w /work zz-dos-arm sleep 
 export DOSBOX_ARM_COMMAND='["podman","exec","zz-dos-arm-build"]'
 ```
 
+The network backend uses the same `AMIGA_CONTAINER_COMMAND` setting. The ARM
+builder also forwards an explicit `--container-command` to that backend, so
+all m68k components use the selected SDK connection.
+
 Select your Podman connection explicitly if needed. Package versions are pinned;
 if Debian rotates them out, use its snapshot archive rather than silently
 upgrading. This environment does not replace the separately pinned m68k SDK.
