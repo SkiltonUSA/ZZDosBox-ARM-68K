@@ -1,8 +1,9 @@
 /* GPL-2.0-or-later. Initial paged JIT subset: register-only integer operations.
  * No memory operands, stack operations, branches, mode changes or x87 helpers.
- * Restricting a block to one instruction avoids speculative translation across
- * a faulting fetch and makes fallback retain the interpreter's restart rules. */
+ * The release baseline uses one instruction. The experimental group counter
+ * accepts only complete instructions inside caller-validated page/segment RAM. */
 #pragma once
+#include <stdint.h>
 static inline unsigned pc_paged_register_length(unsigned opcode,unsigned modrm,int big){
  unsigned word=big?4:2;
  if((opcode>=0x40&&opcode<=0x4f)||(opcode>=0x90&&opcode<=0x97))return 1;
@@ -17,4 +18,20 @@ static inline unsigned pc_paged_register_length(unsigned opcode,unsigned modrm,i
  if(opcode==0xc0||opcode==0xc1)return 3;
  if(opcode>=0xd0&&opcode<=0xd3)return 2;
  return 0;
+}
+
+/* The caller validates the page permissions and supplies only contiguous RAM
+ * within the current code page/segment. Never inspect a following page, even
+ * to classify an instruction which would subsequently fall back. */
+static inline unsigned pc_paged_register_count(const uint8_t *code,
+ unsigned available,int big,unsigned maximum){
+ unsigned count=0,offset=0;
+ while(count<maximum&&offset<available){
+  unsigned remaining=available-offset;
+  unsigned length=pc_paged_register_length(code[offset],
+      remaining>1?code[offset+1]:0,big);
+  if(!length||length>remaining)break;
+  offset+=length;count++;
+ }
+ return count;
 }

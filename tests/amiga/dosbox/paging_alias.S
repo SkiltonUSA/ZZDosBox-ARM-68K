@@ -1,4 +1,9 @@
 /* Original protected-mode fixture: code alias remap and self-modifying code. */
+#ifdef TEST_REGISTER_BLOCKS
+#define OP_OFFSET 8
+#else
+#define OP_OFFSET 0
+#endif
 .intel_syntax noprefix
 .code16
 .global _start
@@ -43,12 +48,18 @@ pages:
  or eax,0x80000000
  mov cr0,eax
  /* Exercise a virtual code alias, CR3 remapping and physical-alias SMC. */
- mov byte ptr [0x190000],0xb8
- mov dword ptr [0x190001],0x11111111
- mov byte ptr [0x190005],0xc3
- mov byte ptr [0x191000],0xb8
- mov dword ptr [0x191001],0x22222222
- mov byte ptr [0x191005],0xc3
+#ifdef TEST_REGISTER_BLOCKS
+ mov dword ptr [0x190000],0x90909090
+ mov dword ptr [0x190004],0x90909090
+ mov dword ptr [0x191000],0x90909090
+ mov dword ptr [0x191004],0x90909090
+#endif
+ mov byte ptr [0x190000+OP_OFFSET],0xb8
+ mov dword ptr [0x190001+OP_OFFSET],0x11111111
+ mov byte ptr [0x190005+OP_OFFSET],0xc3
+ mov byte ptr [0x191000+OP_OFFSET],0xb8
+ mov dword ptr [0x191001+OP_OFFSET],0x22222222
+ mov byte ptr [0x191005+OP_OFFSET],0xc3
  mov dword ptr [0x11604],0x190003
  mov ecx,cr3
  mov cr3,ecx
@@ -72,7 +83,7 @@ alias_1:
  jne fail
  dec esi
  jnz alias_1
- mov dword ptr [0x191001],0x33333333
+ mov dword ptr [0x191001+OP_OFFSET],0x33333333
  /* Repeat beyond the interpreter burst so this alias also reaches JIT. */
  mov esi,64
 alias_2:
@@ -93,6 +104,10 @@ fail:
 idle:
  hlt
  jmp idle
+#ifdef TEST_REGISTER_BLOCKS
+pf:
+ jmp fail
+#else
 pf:
  push eax
  mov eax,cr2
@@ -105,6 +120,7 @@ pf:
  pop eax
  add esp,4
  iretd
+#endif
 .balign 8
 gdt:
  .quad 0

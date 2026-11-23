@@ -15,6 +15,8 @@ parser.add_argument('--pc-jit-reuse-span',type=int,choices=(1,8),default=1,help=
 parser.add_argument('--pc-jit-write',action='store_true',help='Experimental guarded inline writes through the live writable TLB')
 parser.add_argument('--pc-audio-batch',action='store_true',help='Experimental host PCM batch drain before presentation')
 parser.add_argument('--pc-runtime-clock',action='store_true',help='Calibrate runtime presentation/FPS timing for 666 or 800 MHz; isolated build')
+parser.add_argument('--pc-paged-burst',type=int,choices=(32,128,256),default=32,help='Experimental paged-JIT interpreter fallback budget; requires isolated Expanded build')
+parser.add_argument('--pc-paged-blocks',action='store_true',help='Experimental same-page register blocks for opt-in paged JIT; requires Expanded and isolated output')
 parser.add_argument('--pc-row-cache',action='store_true',help='Experimental per-frame reuse of converted vertically repeated rows')
 parser.add_argument('--pc-glide-live',action='store_true',help='Private GTA subset; requires streaming candidate firmware')
 parser.add_argument('--base',type=Path,help='Inherit options from a verified recorded build; explicit flags override')
@@ -41,6 +43,8 @@ if args.pc_jit_reuse_span!=1 and not args.pc_jit_reuse:parser.error('--pc-jit-re
 if args.pc_audio_batch and not args.pc_compat:parser.error('--pc-audio-batch requires Compat')
 if args.pc_jit_write and not args.pc_dynrec:parser.error('--pc-jit-write requires dynrec')
 if args.pc_runtime_clock and not (args.pc and args.output):parser.error('--pc-runtime-clock requires --pc and isolated --output')
+if args.pc_paged_burst!=32 and not (args.pc_expanded and args.output):parser.error('--pc-paged-burst requires Expanded and isolated --output')
+if args.pc_paged_blocks and not (args.pc_expanded and args.output):parser.error('--pc-paged-blocks requires Expanded and isolated --output')
 if args.pc_row_cache and not args.pc:parser.error('--pc-row-cache requires --pc')
 if args.pc_file_readahead and not args.pc:parser.error('--pc-file-readahead requires --pc')
 if args.pc_expanded and not (args.pc_compat and args.pc_x87 and args.pc_dynrec and args.pc_jit_mib in (4,32)):parser.error('--pc-expanded requires Compat, x87 and 4/32 MiB JIT')
@@ -154,6 +158,8 @@ if args.pc_pixel_bench:flags+=['-DDB_PIXEL_BENCH'];sources.append(pc/'pixel_benc
 if args.pc_scanlines:flags+=['-DDB_SCANLINE_TEST']
 if args.pc_presentation:flags+=['-DDB_PRESENT_TEST']
 if args.pc_runtime_clock:flags+=['-DDB_RUNTIME_CLOCK']
+if args.pc_paged_blocks:flags+=['-DDB_PAGED_BLOCKS']
+if args.pc_paged_burst!=32:flags+=['-DDB_PAGED_BURST='+str(args.pc_paged_burst)]
 sources += [SRC/'adapter.cpp',BASE/'runtime.cpp',console/'bench.cpp' if args.console else SRC/'bench.cpp',SRC/'drive.cpp',ROOT/'amiga/common/arm/heap.c',ROOT/'amiga/common/arm/memory.c',OUT/'worker.cpp',OUT/'mmu.c',OUT/'mmu_asm.S',ROOT/'.context/amiga/dosbox-toolchain/picolibc-1.8.12/libc/machine/arm/setjmp.S',ROOT/'.context/amiga/dosbox-toolchain/picolibc-1.8.12/libc/stdlib/srandom.c',SRC/'platform_time.c']
 if args.console:sources.append(console/'transport.cpp')
 if args.shell:

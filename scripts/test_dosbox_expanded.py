@@ -15,9 +15,10 @@ if not a.paging_only:
  for sound,fixture in enumerate(('GUSTEST','CMSTEST','TANDTEST'),1):
   m.run(0x150020c0,'capability',options=(8,0,3000),hardware={'sound':sound},fixture=(fixture,'Extra sound PASS'))
 out=ROOT/'.context/amiga/dosbox-expansion/paging';out.mkdir(parents=True,exist_ok=True)
-for name,faults in [('paging_alias',0),('paging_fetch',1),('paging_rmw',1),('paging_nested',2),('paging_privilege',1)]:
+for name,faults in [('paging_blocks',0),('paging_alias',0),('paging_fetch',1),('paging_rmw',1),('paging_nested',2),('paging_privilege',1)]:
  obj=out/(name+'.o');binary=out/(name+'.bin')
- subprocess.run(['clang','--target=i386-none-elf','-c',str(ROOT/'tests/amiga/dosbox'/(name+'.S')),'-o',str(obj)],check=True)
+ source='paging_alias' if name=='paging_blocks' else name
+ subprocess.run(['clang','--target=i386-none-elf',*(['-DTEST_REGISTER_BLOCKS'] if name=='paging_blocks' else []),'-c',str(ROOT/'tests/amiga/dosbox'/(source+'.S')),'-o',str(obj)],check=True)
  subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base=0','-Ttext','0x7c00','--oformat=binary',str(obj),'-o',str(binary)],check=True)
  assert len(binary.read_bytes())==(1024 if name=='paging_privilege' else 512)
  for base in (0x12000040,0x150020c0):

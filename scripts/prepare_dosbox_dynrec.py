@@ -20,18 +20,19 @@ def prepare(out):
         assert old in s
         s=s.replace(old,old+'''
 #ifdef DB_EXPANDED
+        unsigned db_paged_count=1;
         if(db_last_paging!=paging.enabled){
             while(cache.used_pages)cache.used_pages->ClearRelease();
             db_last_paging=paging.enabled;
         }
         if(paging.enabled && !db_paged_jit){db_dynrec_paged_fallbacks++;return CPU_Core_Normal_Run();}
-        if(paging.enabled && !db_paged_register_instruction()){
+        if(paging.enabled && !(db_paged_count=db_paged_register_instructions())){
             // Let the paging-safe interpreter consume a short burst. Returning
             // after every memory/branch instruction floods the frontend with
             // dispatches. Preserve the scheduler's allocated cycle total and
             // never extend past an already scheduled event boundary.
             db_dynrec_paged_fallbacks++;
-            Bits quantum=CPU_Cycles>32?32:CPU_Cycles;
+            Bits quantum=CPU_Cycles>DB_PAGED_BURST?DB_PAGED_BURST:CPU_Cycles;
             CPU_CycleLeft+=CPU_Cycles-quantum;CPU_Cycles=quantum;
             return CPU_Core_Normal_Run();
         }
@@ -42,6 +43,9 @@ def prepare(out):
         helper='''
 #ifdef DB_EXPANDED
 #include "paged_plan.h"
+#ifndef DB_PAGED_BURST
+#define DB_PAGED_BURST 32
+#endif
 extern unsigned db_paged_jit;
 static bool db_last_paging;
 static HostPt db_paged_ram_page(Bitu page){
@@ -50,10 +54,12 @@ static HostPt db_paged_ram_page(Bitu page){
  if(!(h->flags&PFLAG_READABLE)||(h->flags&PFLAG_NOCODE))return nullptr;
  return h->GetHostReadPt(page);
 }
-static bool db_paged_register_instruction(){
+static unsigned db_paged_register_instructions(){
  PhysPt address=SegPhys(cs)+reg_eip;
  // No page-boundary, segment-wrap or device-memory speculative fetches.
+#ifndef DB_PAGED_BLOCKS
  if((address&4095)>4080||(!cpu.code.big&&(reg_eip&65535)>65520))return false;
+#endif
  HostPt directory=db_paged_ram_page(paging.base.page);if(!directory)return false;
  Bit32u pde=host_readd(directory+(address>>22)*4);if(!(pde&1))return false;
  HostPt table=db_paged_ram_page(pde>>12);if(!table)return false;
@@ -65,12 +71,22 @@ static bool db_paged_register_instruction(){
  // Read directly from validated physical RAM: supervisor-only pages normally
  // leave the upstream TLB unlinked, and forcing that TLB would lose checks.
  code+=address&4095;
+#ifdef DB_PAGED_BLOCKS
+ unsigned available=4096-(address&4095);
+ if(!cpu.code.big){unsigned segment=65536-(reg_eip&65535);if(segment<available)available=segment;}
+ return pc_paged_register_count(code,available,cpu.code.big,32);
+#else
  return pc_paged_register_length(host_readb(code),host_readb(code+1),cpu.code.big)!=0;
+#endif
 }
 #endif
 '''
         s=s.replace('unsigned db_dynrec_dispatches,db_dynrec_paged_fallbacks;',helper+'unsigned db_dynrec_dispatches,db_dynrec_paged_fallbacks;')
-        s=s.replace('CreateCacheBlock(chandler,ip_point,32)','CreateCacheBlock(chandler,ip_point,paging.enabled?1:32)')
+        s=s.replace('CreateCacheBlock(chandler,ip_point,32)', '''CreateCacheBlock(chandler,ip_point,
+#ifdef DB_EXPANDED
+                    paging.enabled?db_paged_count:
+#endif
+                    32)''')
         s=s.replace('block=LinkBlocks(ret);','if(paging.enabled)break;\n\t\t\tblock=LinkBlocks(ret);')
         s=s.replace('BlockReturn ret=core_dynrec.runcode(block->cache.start);','db_dynrec_dispatches++;\n\t\tBlockReturn ret=core_dynrec.runcode(block->cache.start);')
         return s
