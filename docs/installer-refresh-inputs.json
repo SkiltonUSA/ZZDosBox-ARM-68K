@@ -4,16 +4,17 @@
   "base_installer_sha256": "38cdc3ec39517a36f8bd5ac6b61ca085958394a92f4ed3c8972310dee4bb6270",
   "replacements": {
     "zzdosbox": {
-      "Core/PC/ZZDosBox-Launcher": "65e1c67b2363892634c96c11d4cd199b161d6309c157c93c185b6f536504c499",
+      "Core/PC/ZZDosBox-Launcher": "83f12d5f350753691a48e41ad75ae9e52e5533dc1f353375fcf346cbf2975a03",
       "Core/PC/ZZClock": "b0ab72855e3e1aa9e5a9cf072ff3f7e2892b70f4b2b7193f000ff26381edf4d0",
       "Core/Clock-settings.md": "f5054d5ef1bf64c1b49a2693019b5dee302b97f869641832c46a8e4dc95c7474",
       "Core/Release-notes.md": "023715eca2d32c5f3d25bf44e4020a97b0172c55733fb9103a5f68c30515bcfd",
       "Core/README.md": "7ae0235f77440aada6231d1ea0fd9715edacf78d0d92f5e598b80fa115cc11dc",
-      "Core/ZZDosBox-Launcher": "83f12d5f350753691a48e41ad75ae9e52e5533dc1f353375fcf346cbf2975a03",
       "Core/Changelog.md": "acf994ef5ab8b6878eb2e7153e4b0a687b4d55f8c3d041626fbb98f0c49b5e9b"
     }
   },
   "player_policy": "Recorded binaries retained; only launcher rebuilt.",
   "launcher_sha256": "83f12d5f350753691a48e41ad75ae9e52e5533dc1f353375fcf346cbf2975a03",
-  "release_tag": "v1.0.1-beta"
+  "release_tag": "v1.0.1-beta",
+  "launcher_member": "Core/PC/ZZDosBox-Launcher",
+  "readme_member": "Core/README.md"
 }
