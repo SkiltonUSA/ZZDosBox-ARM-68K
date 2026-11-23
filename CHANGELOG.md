@@ -12,6 +12,12 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — calibrated runtime timing
 
+- Rebuild standard and memory-debug players with calibrated timing. Three
+  standard Doom display/presentation cases and a live memory-debug session
+  pass on hardware, including pause/read/bounds/resume and clean teardown.
+  Audio gaps remain; no FPS gain or release promotion is claimed.
+  [Variant results](docs/runtime-clock/variants/README.md).
+
 - Restore a matching GCC 15.3.1/picolibc/C++ toolchain and rebuild all 108 ARM
   objects for the Expanded candidate. Publish the pinned container recipe and
   source/build evidence. Other player variants remain separate promotion gates.

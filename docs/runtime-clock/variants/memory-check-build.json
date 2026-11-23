@@ -1,0 +1,7 @@
+{
+  "source": "tests/amiga/dosbox/memory_live.c",
+  "source_sha256": "62292ac55818687bfa8dbc1c6d11723bffd5cfdaa4058c3de7a1891c09e6eef0",
+  "executable_sha256": "347033a781819f93aa156aa00dd163ff40dab3254479a1c45443d54018003717",
+  "target": "m68k-amigaos, -m68020 -O2 -std=c99 -noixemul -Wall -Wextra -Werror",
+  "sdk_image": "docker.io/amigadev/crosstools@sha256:93ca1a47903b61873f6638881b44f9f2d6086a39f1b9b916a26faff3a8ea4d3d"
+}

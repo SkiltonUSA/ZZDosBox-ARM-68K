@@ -53,3 +53,6 @@ See [provenance, hardware checks and promotion limits](expanded/README.md).
 
 A subsequent [full-source Expanded rebuild](full-core/README.md) removes the
 retained DOSBox-object dependency and documents the matching compiler headers.
+
+The [standard and memory-debug follow-up](variants/README.md) validates three
+display/presentation combinations and live debugger IPC on fresh source builds.

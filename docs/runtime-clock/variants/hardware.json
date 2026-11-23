@@ -1,0 +1,111 @@
+{
+  "cpu_mhz": 800,
+  "guest_ram_mib": 8,
+  "cycles": 10000,
+  "runs": [
+    {
+      "log": "swo3230.log",
+      "variant": "standard",
+      "display": "window",
+      "presentation": "Normal",
+      "timer": {
+        "estimated_hz": 399995427,
+        "selected_hz": 400000000,
+        "calibration_us": 2005143
+      },
+      "pc": {
+        "frames": 1399,
+        "emulated_ms": 20000,
+        "wall_ms": 47037,
+        "timed_done": 1
+      },
+      "audio": {
+        "queued": 640000,
+        "submitted": 640000,
+        "completed": 640000,
+        "highwater": 2,
+        "error": 0,
+        "stopped": 1,
+        "gaps": 623
+      }
+    },
+    {
+      "log": "swa3271.log",
+      "variant": "standard",
+      "display": "window",
+      "presentation": "Adaptive",
+      "timer": {
+        "estimated_hz": 399994947,
+        "selected_hz": 400000000,
+        "calibration_us": 2014596
+      },
+      "pc": {
+        "frames": 1400,
+        "emulated_ms": 20000,
+        "wall_ms": 40115,
+        "timed_done": 1
+      },
+      "audio": {
+        "queued": 640000,
+        "submitted": 640000,
+        "completed": 640000,
+        "highwater": 4,
+        "error": 0,
+        "stopped": 1,
+        "gaps": 452
+      }
+    },
+    {
+      "log": "sfa32ac.log",
+      "variant": "standard",
+      "display": "fullscreen",
+      "presentation": "Adaptive",
+      "timer": {
+        "estimated_hz": 399997484,
+        "selected_hz": 400000000,
+        "calibration_us": 2017217
+      },
+      "pc": {
+        "frames": 1400,
+        "emulated_ms": 20000,
+        "wall_ms": 40831,
+        "timed_done": 1
+      },
+      "audio": {
+        "queued": 640000,
+        "submitted": 640000,
+        "completed": 640000,
+        "highwater": 4,
+        "error": 0,
+        "stopped": 1,
+        "gaps": 459
+      }
+    },
+    {
+      "log": "mwa3311.log",
+      "variant": "memory",
+      "display": "window",
+      "presentation": "Adaptive",
+      "timer": {
+        "estimated_hz": 399997986,
+        "selected_hz": 400000000,
+        "calibration_us": 2006402
+      },
+      "pc": {
+        "frames": 1399,
+        "emulated_ms": 20000,
+        "wall_ms": 41542,
+        "timed_done": 1
+      },
+      "audio": {
+        "queued": 640000,
+        "submitted": 640000,
+        "completed": 640000,
+        "highwater": 4,
+        "error": 0,
+        "stopped": 1,
+        "gaps": 508
+      }
+    }
+  ]
+}
