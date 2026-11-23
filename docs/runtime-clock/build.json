@@ -1,0 +1,32 @@
+{
+  "scope": "Private runtime clock and foreground fix; retained DOS core objects; no speed comparison",
+  "baseline": "70e589d1c38dce5567487f874b6f24c0dbbeb216b9ca19ad3b917b1eff98332b",
+  "compiler": "arm-none-eabi-g++ (Arm GNU Toolchain 15.3.Rel2 (Build arm-15.181)) 15.3.1 20260627",
+  "sha256": {
+    "dosbox.elf": "cad6f7cdacc5ca9260e32533cf895daa8fed539138f5a1d876b7448e1a20fa01",
+    "ZZDosBox-Clock": "35860319a75bce9524c3bbb19b4a8b7a729e55e3e44c3bba97bd8aba67db64e6",
+    "zz_payload.h": "232ec063c796e104c0c2c5434158627efbf530f4e168e83f20a37c7b510738b5"
+  },
+  "flags": [
+    "-DDB_COMPAT",
+    "-DDB_SCANLINE_TEST",
+    "-DDB_PRESENT_TEST",
+    "-DDB_PIPELINE_DEFAULT=1",
+    "-DFF_DIRECT",
+    "-DZZ_PC_CD",
+    "-DZZ_HEADLESS_BENCH",
+    "-DZZ_RELEASE",
+    "-DZZ_BLOCK_SIZE=0x2000000",
+    "-DZZ_CONTROL=0x180000",
+    "-DMB_ALLOCATION=0x2000000",
+    "-DDB_JIT_MIB=4",
+    "-DZZ_APP_NAME=\"ZZDosBox-Diagnostic\"",
+    "-DZZ_APP_VERSION=\"0.22.7-host-diagnostic\"",
+    "-DZZ_MIN_STACK=65536",
+    "-DMB_MMU",
+    "-DMB_DCACHE",
+    "-DZZ_HEADLESS_MMU",
+    "-DZZ_HEADLESS_ICACHE",
+    "-DDB_RUNTIME_CLOCK"
+  ]
+}

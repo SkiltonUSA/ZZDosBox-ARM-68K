@@ -71,9 +71,19 @@ void db_pc_tick(){
 }
 static int (*host_stop)();
 static int stop(){return host_stop()||ad_get(db_shared(),PC_DONE);}
+#ifdef DB_RUNTIME_CLOCK
+uint32_t db_timer_hz=333333333u;
+#endif
 extern "C" int mesen_test(int verify,MesenResult*out,int(*halt)(),uint32_t(*clock)()){
  db_runtime_init();host_stop=halt;memset(out,0,sizeof(*out));DosboxResult r{};
  volatile uint8_t *b=db_shared();
+#ifdef DB_RUNTIME_CLOCK
+ db_timer_hz=ad_get(b,PC_TIMER_HZ);
+ if(ad_get(b,PC_TIMER_MAGIC)!=PC_TIMER_ABI||(db_timer_hz!=333333333u&&db_timer_hz!=400000000u)){
+  db_output("ARM timer ABI mismatch");return 1;
+ }
+#endif
+
  if(ad_get(b,PC_OPTIONS)==PC_OPTIONS_MAGIC){
   db_memory_mb=ad_get(b,PC_OPTIONS+4);db_machine_option=ad_get(b,PC_OPTIONS+8);db_cpu_cycles=ad_get(b,PC_OPTIONS+12);db_monochrome=ad_get(b,PC_OPTIONS+16);
   if(db_monochrome>3||!pc_options_valid(db_memory_mb,db_machine_option,db_cpu_cycles)){db_output("Invalid PC options");return 1;}

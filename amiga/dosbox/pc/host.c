@@ -231,6 +231,9 @@ static int poll_wait(void){
 static ULONG value(unsigned field){return ad_get(shared+MB_REPLY,MB_RESULT+field*4);}
 static void publish(unsigned offset,ULONG n){ad_put(shared,offset,n);syncio->push(shared+offset,4,NULL);syncio->barrier(NULL);}
 static ULONG receive(unsigned offset){syncio->pull(shared+offset,4,NULL);return ad_get(shared,offset);}
+#ifdef DB_RUNTIME_CLOCK
+#include "clock_host.h"
+#endif
 #ifdef DB_EXPANDED
 #include "joystick_host.h"
 #endif
@@ -406,6 +409,9 @@ int ff_window(volatile uint8_t *base,const struct ad_io *io,int connected){
  timer=(struct timerequest *)CreateIORequest(port,sizeof(*timer));if(!timer)goto done;
  if(OpenDevice(TIMERNAME,UNIT_MICROHZ,(struct IORequest *)timer,0))goto done;
  opened=1;TimerBase=timer->tr_node.io_Device;
+#ifdef DB_RUNTIME_CLOCK
+ if(!pc_clock_calibrate()){puts("Cannot calibrate ARM timer");goto done;}
+#endif
 #ifdef DB_EXPANDED
  if(!db_serial_host_open(base,io,serial_mode,serial_address,serial_port,&serial_physical)){puts("Cannot open COM1 transport");goto done;}
  if(!joystick_open()){puts("Joystick requires lowlevel.library V40");goto done;}

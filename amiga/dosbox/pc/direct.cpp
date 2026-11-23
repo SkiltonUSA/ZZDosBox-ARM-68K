@@ -59,6 +59,11 @@ static pc_row_cache converted_row;
 #endif
 static unsigned sequence;
 static pc_fps fps;
+#ifdef DB_RUNTIME_CLOCK
+extern uint32_t db_timer_hz;
+#else
+static const uint32_t db_timer_hz=333333333u;
+#endif
 #ifdef DB_PRESENT_TEST
 #include "presentation_plan.h"
 static pc_presentation presentation;
@@ -84,7 +89,7 @@ void db_video_present(){
  volatile uint8_t *b=db_shared();
 #ifdef DB_PRESENT_TEST
  uint64_t present_start=pc_clock_ticks();
- if(!pc_presentation_begin(&presentation,ad_get(b,PC_PRESENT_MODE),ad_get(b,PC_PRESENT_HZ),present_start)){
+ if(!pc_presentation_begin(&presentation,ad_get(b,PC_PRESENT_MODE),ad_get(b,PC_PRESENT_HZ),present_start,db_timer_hz)){
   /* No sequence increment, grant, mapping or bitmap writes on a skipped
    * frame. Keep cancellation and transport service alive. */
   pc_presentation_end(&presentation,present_start,pc_clock_ticks(),false);
@@ -184,8 +189,8 @@ void db_video_present(){
 #endif
    video_trace(PT_RENDERED,seq,error);
    if(!error&&(ad_get(b,PC_UI_FLAGS)&1)){
-    /* XX19c Zynq global timer: nominal 666.667 MHz CPU / 2. */
-    pc_fps_update(&fps,pc_clock_ticks(),sequence,333333333u);
+    /* Clock-aware candidates use host-calibrated ARM timer frequency. */
+    pc_fps_update(&fps,pc_clock_ticks(),sequence,db_timer_hz);
     pc_fps_draw(dst,pitch,format,fps.tenths,width);ad_put(b,PC_FPS_TENTHS,fps.tenths);
    }
   }

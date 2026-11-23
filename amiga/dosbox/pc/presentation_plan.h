@@ -6,7 +6,7 @@
 #include <string.h>
 struct pc_presentation {
  uint64_t end,last_present,work_sum,copy_sum,copy_total;
- uint32_t mode,hz,divisor,remaining,frames,presented,skipped,changes;
+ uint32_t frequency,mode,hz,divisor,remaining,frames,presented,skipped,changes;
  uint32_t samples,copies,recovery,work_mean,copy_mean;
  bool started;
 };
@@ -16,12 +16,11 @@ static inline void pc_presentation_history(pc_presentation *s){
  s->work_mean=s->copy_mean=0;s->remaining=0;
 }
 static inline bool pc_presentation_begin(pc_presentation *s,unsigned mode,
- unsigned hz,uint64_t now){
- const uint64_t frequency=333333333u;
+ unsigned hz,uint64_t now,uint32_t frequency=333333333u){
  if(mode>4)mode=0;
  if(hz!=30&&hz!=50&&hz!=60)hz=60;
- if(!s->started||s->mode!=mode||s->hz!=hz){
-  s->mode=mode;s->hz=hz;s->divisor=mode>=2?mode:1;
+ if(!s->started||s->mode!=mode||s->hz!=hz||s->frequency!=frequency){
+  s->mode=mode;s->hz=hz;s->frequency=frequency;s->divisor=mode>=2?mode:1;
   pc_presentation_history(s);s->started=false;
  }
  if(s->started){
@@ -62,7 +61,7 @@ static inline void pc_presentation_end(pc_presentation *s,uint64_t start,
  if(presented){
   uint64_t cost=now-start;
   s->presented++;s->copy_total+=cost;
-  if(cost>333333333u/4){
+  if(cost>s->frequency/4){
    pc_presentation_history(s);
    if(s->mode==1&&s->divisor!=1){s->divisor=1;s->changes++;}
   }else{s->copies++;s->copy_sum+=cost;}

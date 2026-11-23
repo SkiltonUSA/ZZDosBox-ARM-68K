@@ -31,6 +31,10 @@
 #define PC_EXTRA_SOUND (PC_OPTIONS+36u) /* 0 off, 1 GUS, 2 CMS, 3 Tandy */
 #define PC_GUEST_TICKS (PC_VIDEO+980u) /* ARM-owned progress for wall-time cycle control */
 #define PC_PAGED_JIT (PC_OPTIONS+40u)
+/* Optional runtime-clock ABI, host publishes before MB_VERIFY. */
+#define PC_TIMER_HZ (PC_OPTIONS+44u)
+#define PC_TIMER_MAGIC (PC_OPTIONS+48u)
+#define PC_TIMER_ABI 0x544d5231u
 #define PC_KEY_WRITE (PC_VIDEO+320u)
 #define PC_KEY_READ (PC_VIDEO+384u)
 #define PC_KEY_DATA (PC_VIDEO+448u)
