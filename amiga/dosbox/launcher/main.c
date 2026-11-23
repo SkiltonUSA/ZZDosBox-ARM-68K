@@ -50,7 +50,7 @@ static Object *app,*win,*list,*title,*drawer,*program,*helper,*memory,*machine,*
 static Object *program_views[DL_CATEGORIES+1];
 static Object *editor_pages[2],*program_tabs,*disk_image,*category,*category_lists[DL_CATEGORIES],*category_run[DL_CATEGORIES],*category_edit[DL_CATEGORIES],*category_rename[DL_CATEGORIES],*category_delete[DL_CATEGORIES];
 static const char *categories[]={"Games","Applications","OS",NULL};
-enum {PAGE_LOAD,PAGE_TERMINAL,PAGE_CPU,PAGE_DISPLAY,PAGE_AUDIO,PAGE_NETWORK,PAGE_IO,PAGE_JOYSTICK,PAGE_DISKS,PAGE_DEVELOPER,PAGE_COMPATIBILITY,PAGE_ABOUT,PAGE_COUNT};
+enum {PAGE_LOAD,PAGE_TERMINAL,PAGE_CPU,PAGE_DISPLAY,PAGE_AUDIO,PAGE_NETWORK,PAGE_IO,PAGE_JOYSTICK,PAGE_DISKS,PAGE_DEVELOPER,PAGE_COMPATIBILITY,PAGE_ABOUT,PAGE_SETTINGS,PAGE_COUNT};
 static Object *midi,*midi_port,*scanlines,*presentation,*monochrome,*renderer,*scanline_help;
 static Object *dev_trace,*dev_profile,*dev_break,*dev_frame,*dev_handoff,*dev_poll;
 static char dev_arguments[192];
@@ -73,7 +73,7 @@ struct editor {Object *list,*line;char rows[128][256];unsigned count;};
 static struct editor editors[3];
 static int selected=-1,busy;
 static char appdir[DL_PATH],configpath[DL_PATH],message[256];
-static const char *sections[]={"Load program","DOS terminal","CPU & memory","Display","Audio","Network","I/O","Joystick","Disks","Developer","Compatibility","About",NULL};
+static const char *sections[]={"Load program","DOS terminal","CPU & memory","Display","Audio","Network","I/O","Joystick","Disks","Developer","Compatibility","About","Settings",NULL};
 static Object *navigation,*navigation_view,*page_heading,*page_context,*main_pages;
 static unsigned active_page;
 static void ui_page_select(unsigned page);
@@ -81,13 +81,13 @@ enum {ID_NAVIGATE=43,ID_PROGRAM_TAB=44,ID_JOY_COUNT=45};
 static char context_text[96];
 
 static const char *library_tabs[]={"All programs","Games","Applications","OS",NULL};
-static const char *top_tabs[]={"Library","DOS","CPU","Display","Sound","Ports","Disks","Tools"};
-static const unsigned top_pages[]={PAGE_LOAD,PAGE_TERMINAL,PAGE_CPU,PAGE_DISPLAY,PAGE_AUDIO,PAGE_NETWORK,PAGE_DISKS,PAGE_DEVELOPER};
+static const char *top_tabs[]={"Library","DOS","CPU","Display","Sound","Ports","Disks","Tools","Settings"};
+static const unsigned top_pages[]={PAGE_LOAD,PAGE_TERMINAL,PAGE_CPU,PAGE_DISPLAY,PAGE_AUDIO,PAGE_NETWORK,PAGE_DISKS,PAGE_DEVELOPER,PAGE_SETTINGS};
 static const char *port_tabs[]={"Network","Serial I/O","Joystick",NULL};
 static const char *tool_tabs[]={"Developer","Compatibility",NULL};
-static Object *tab_buttons[8],*tab_row,*port_row,*tool_row,*port_choice,*tool_choice,*loglist;
+static Object *tab_buttons[9],*tab_row,*port_row,*tool_row,*port_choice,*tool_choice,*loglist;
 static unsigned loglines;
-enum {ID_TOP_TAB=800,ID_PORT_TAB=808,ID_TOOL_TAB,ID_ABOUT,ID_LOG_CLEAR};
+enum {ID_TOP_TAB=800,ID_PORT_TAB=809,ID_TOOL_TAB,ID_ABOUT,ID_LOG_CLEAR};
 static const char *terminal_tabs[]={"Terminal","AUTOEXEC.BAT","CONFIG.SYS","CD-ROM",NULL};
 static const char *startup_choices[]={"Default","Edited","File",NULL},*cd_choices[]={"None","ISO image","Amiga CD-ROM (IDE / SCSI / USB)",NULL};
 static const char *sizes[]={"320 x 240","640 x 480","960 x 720",NULL};
@@ -113,11 +113,11 @@ static void note(const char*s){
 static void joystick_test_active(int active);
 static void navigation_show(unsigned page){
  if(page>=PAGE_COUNT)page=active_page;
- unsigned active=8;
- for(unsigned i=0;i<8;i++)if(top_pages[i]==page)active=i;
+ unsigned active=9;
+ for(unsigned i=0;i<9;i++)if(top_pages[i]==page)active=i;
  if(page>=PAGE_NETWORK&&page<=PAGE_JOYSTICK)active=5;
  if(page==PAGE_COMPATIBILITY)active=7;
- for(unsigned i=0;i<8;i++)set(tab_buttons[i],MUIA_Selected,i==active);
+ for(unsigned i=0;i<9;i++)set(tab_buttons[i],MUIA_Selected,i==active);
  DoMethod(port_row,MUIM_Group_InitChange);set(port_row,MUIA_ShowMe,active==5);DoMethod(port_row,MUIM_Group_ExitChange);
  DoMethod(tool_row,MUIM_Group_InitChange);set(tool_row,MUIA_ShowMe,active==7);DoMethod(tool_row,MUIM_Group_ExitChange);
  if(active==5)SetAttrs(port_choice,MUIA_NoNotify,TRUE,MUIA_Cycle_Active,page-PAGE_NETWORK,TAG_DONE);
@@ -409,12 +409,13 @@ static void boot_disk(void){
 }
 #include "io_ui.h"
 #include "audio_detect.h"
+#include "../../common/zzclock/mui.h"
 #include "compatibility_ui.h"
 #include "scroll_pages.h"
 static int build(void){Object *about_button,*log_clear,*add,*remove,*rename,*save_button,*run,*term,*execute,*auto_run,*script,*mount_disks,*eject_disks,*boot_button,*cd_check,*cd_workbench_button,*audio_check,*dev_log,*root;
  style_open();
  tab_row=HGroup,MUIA_Group_Spacing,2,MUIA_VertWeight,0,End;
- for(unsigned i=0;i<8;i++){tab_buttons[i]=ui_button(top_tabs[i]);DoMethod(tab_row,OM_ADDMEMBER,(ULONG)tab_buttons[i]);}
+ for(unsigned i=0;i<9;i++){tab_buttons[i]=ui_button(top_tabs[i]);DoMethod(tab_row,OM_ADDMEMBER,(ULONG)tab_buttons[i]);}
  viewport_class=MUI_CreateCustomClass(NULL,MUIC_Virtgroup,NULL,0,(APTR)viewport_dispatch);if(!viewport_class)return 0;
  joy_diagram_class=MUI_CreateCustomClass(NULL,MUIC_Area,NULL,sizeof(struct joy_diagram_data),(APTR)joy_diagram_dispatch);if(!joy_diagram_class)return 0;
  P96Base=OpenLibrary("Picasso96API.library",2);if(!P96Base)return 0;
@@ -508,7 +509,9 @@ static int build(void){Object *about_button,*log_clear,*add,*remove,*rename,*sav
   Child,VGroup,UI_PANEL("Changelog"),Child,ListviewObject,MUIA_CycleChain,1,MUIA_Listview_Input,FALSE,
    MUIA_Listview_List,FloattextObject,ReadListFrame,MUIA_Font,ui_font(),
     MUIA_Floattext_Text,(ULONG)dl_changelog_text,End,End,End,End,
- End,End,End,
+ End,
+ Child,VGroup,Child,zzclock_panel(),Child,VSpace(0),End,
+ End,End,
  Child,VGroup,GroupFrameT("Status"),MUIA_VertWeight,0,MUIA_Group_Spacing,2,
   Child,ListviewObject,MUIA_Listview_Input,FALSE,MUIA_FixHeight,ui_compact?48:64,
    MUIA_Listview_List,loglist=ListObject,ReadListFrame,MUIA_Font,ui_code_font(),
@@ -519,10 +522,11 @@ static int build(void){Object *about_button,*log_clear,*add,*remove,*rename,*sav
   Child,TextObject,MUIA_HorizWeight,0,MUIA_Text_SetMax,TRUE,MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_Contents,(ULONG)"Rev " ZZ_LAUNCHER_VERSION,End,
   Child,temperature_text=TextObject,MUIA_HorizWeight,0,MUIA_FixWidthTxt,(ULONG)"ZZ9000: 150.0 C",MUIA_Text_PreParse,(ULONG)"\33r",MUIA_Text_Contents,(ULONG)"ZZ9000: n/a",MUIA_ShortHelp,(ULONG)"ZZ9000 Zynq chip temperature. Updates every two seconds while the launcher is active.",End,End,End,End,End;
  if(!app)return 0;
+ zzclock_wire(app);
  if(!ui_scroll_pages(main_pages))return 0;
  set(about_button,MUIA_ShortHelp,(ULONG)"About ZZDosBox");
  set(log_clear,MUIA_FixWidth,52);
- for(unsigned i=0;i<8;i++)notify(tab_buttons[i],MUIA_Pressed,FALSE,ID_TOP_TAB+i);
+ for(unsigned i=0;i<9;i++)notify(tab_buttons[i],MUIA_Pressed,FALSE,ID_TOP_TAB+i);
  notify(port_choice,MUIA_Cycle_Active,MUIV_EveryTime,ID_PORT_TAB);
  notify(tool_choice,MUIA_Cycle_Active,MUIV_EveryTime,ID_TOOL_TAB);
  notify(about_button,MUIA_Pressed,FALSE,ID_ABOUT);
@@ -592,6 +596,7 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
  rc=layout_probe();goto done;
 #endif
  while(running){ui_scroll_update();temperature_poll();joystick_test_poll();mem_poll();id=DoMethod(app,MUIM_Application_NewInput,(ULONG)&signals);
+  {const char *msg=zzclock_event(id,mem_busy);if(msg){note(msg);id=0;}}
   switch(id){case (ULONG)MUIV_Application_ReturnID_Quit:if(mem_busy){note("Wait for the pending memory request.");break;}if(!store_selection())break;if(!conf_save())break;if(!save()){note("Cannot save settings.");break;}running=0;break;
   case ID_SERIAL_CHANGE:serial_controls();break;
   case ID_SERIAL_INTERNAL:set(serial_device,MUIA_String_Contents,(ULONG)"serial.device");set(serial_unit,MUIA_String_Integer,0);set(serial_mode,MUIA_Cycle_Active,3);serial_controls();break;
@@ -633,7 +638,7 @@ static int __attribute__((noinline)) launcher_main(void){ULONG signals,id;int ru
   case ID_BOOT_DISK:boot_disk();break;
   case ID_MOUNT_DISKS:case ID_EJECT_DISKS:{char quoted[DL_PATH*2+3],cmd[DL_PATH*2+32];path(p,id==ID_MOUNT_DISKS?"Disks/Mount-DOS-Disks":"Disks/Eject-DOS-Disks");if(dl_quote(quoted,sizeof(quoted),p)){LONG result;snprintf(cmd,sizeof(cmd),"Execute %s",quoted);set(app,MUIA_Application_Sleep,TRUE);result=SystemTags(cmd,SYS_Input,0,SYS_Asynch,FALSE,NP_StackSize,16384,TAG_DONE);set(app,MUIA_Application_Sleep,FALSE);note(result==0?(id==ID_MOUNT_DISKS?"Disks mounted in Workbench.":"Disks ejected."):"Disk action failed.");}break;}
   case ID_BROWSE_DRAWER:if(browse(p,1,0,"Select C: drawer"))set(drawer,MUIA_String_Contents,(ULONG)p);break;
-  default:if(id>=ID_TOP_TAB&&id<ID_TOP_TAB+8){navigation_show(top_pages[id-ID_TOP_TAB]);note(sections[active_page]);break;}if(id>=ID_NET_MODE&&id<=ID_NET_GUIDE){network_action(id);break;}if(id>=ID_CAT_SELECT&&id<ID_CAT_SELECT+DL_CATEGORIES){unsigned c=id-ID_CAT_SELECT;if(!busy)select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active)));break;}
+  default:if(id>=ID_TOP_TAB&&id<ID_TOP_TAB+9){navigation_show(top_pages[id-ID_TOP_TAB]);note(sections[active_page]);break;}if(id>=ID_NET_MODE&&id<=ID_NET_GUIDE){network_action(id);break;}if(id>=ID_CAT_SELECT&&id<ID_CAT_SELECT+DL_CATEGORIES){unsigned c=id-ID_CAT_SELECT;if(!busy)select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active)));break;}
   if(id>=ID_CAT_DELETE&&id<ID_CAT_DELETE+DL_CATEGORIES){unsigned c=id-ID_CAT_DELETE;if(select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active))))delete_profile();break;}
   if(id>=ID_CAT_RENAME&&id<ID_CAT_RENAME+DL_CATEGORIES){unsigned c=id-ID_CAT_RENAME;if(select_profile(dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active))))rename_profile();break;}
   if((id>=ID_CAT_RUN&&id<ID_CAT_RUN+DL_CATEGORIES)||(id>=ID_CAT_EDIT&&id<ID_CAT_EDIT+DL_CATEGORIES)){unsigned c=id>=(unsigned)ID_CAT_EDIT?id-ID_CAT_EDIT:id-ID_CAT_RUN;int n=dl_category_index(&library,c,(LONG)val(category_lists[c],MUIA_List_Active));if(select_profile(n)){if(id>=ID_CAT_EDIT){navigation_show(PAGE_LOAD);set(program_tabs,MUIA_Group_ActivePage,0);}else launch(0,NULL);}break;}

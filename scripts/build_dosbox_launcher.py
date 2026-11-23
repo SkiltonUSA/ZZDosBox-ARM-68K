@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Build the MUI launcher and disk helper; does not deploy or start Core1."""
-import hashlib,json,subprocess
+import hashlib,json,subprocess,os
 from prepare_dosbox_disasm import prepare
 from prepare_dosbox_about import build as build_about
 from pathlib import Path
@@ -13,10 +13,10 @@ subprocess.run(['python3',str(ROOT/'scripts/prepare_dosbox_changelog.py')],check
 disasm=prepare(OUT)
 build_about(OUT)
 subprocess.run(['python3',str(ROOT/'scripts/prepare_dosbox_icon.py')],check=True,cwd=ROOT)
-subprocess.run(['podman','--connection','nuflix-converter-root','run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-fstack-usage','-Wall','-Wextra','-Werror','-Wno-unused-function','-Wno-misleading-indentation','-fwrapv','-Iamiga/dosbox/developer','-I.context/amiga/dosbox-launcher','amiga/dosbox/launcher/main.c','amiga/dosbox/pc/cd_host.c',str(disasm.relative_to(ROOT)),'-lamiga','-o','.context/amiga/dosbox-launcher/ZZDosBox-Launcher'],check=True,cwd=ROOT)
-subprocess.run(['podman','--connection','nuflix-converter-root','run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-Wall','-Wextra','-Werror','-I.context/amiga/dosbox-launcher','amiga/dosbox/launcher/icon.c','-lamiga','-o','.context/amiga/dosbox-launcher/MakeLauncherIcon'],check=True,cwd=ROOT)
-subprocess.run(['podman','--connection','nuflix-converter-root','run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-Wall','-Wextra','-Werror','-Wno-unused-function','-Wno-misleading-indentation','-Wframe-larger-than=2048','-fstack-usage','amiga/dosbox/launcher/disk.c','-lamiga','-o','.context/amiga/dosbox-launcher/ZZDosDisk'],check=True,cwd=ROOT)
-subprocess.run(['podman','--connection','nuflix-converter-root','run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-Wall','-Wextra','-Werror','-Wno-unused-function','-Wno-misleading-indentation','-Wframe-larger-than=2048','-fstack-usage','amiga/dosbox/launcher/create_disk.c','-lamiga','-o','.context/amiga/dosbox-launcher/ZZDosCreate'],check=True,cwd=ROOT)
+subprocess.run(['podman','--connection',os.environ.get('ZZ_CLOCK_PODMAN_CONNECTION','nuflix-converter-root'),'run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-fstack-usage','-Wall','-Wextra','-Werror','-Wno-unused-function','-Wno-misleading-indentation','-fwrapv','-Iamiga/dosbox/developer','-I.context/amiga/dosbox-launcher','amiga/dosbox/launcher/main.c','amiga/dosbox/pc/cd_host.c',str(disasm.relative_to(ROOT)),'-lamiga','-o','.context/amiga/dosbox-launcher/ZZDosBox-Launcher'],check=True,cwd=ROOT)
+subprocess.run(['podman','--connection',os.environ.get('ZZ_CLOCK_PODMAN_CONNECTION','nuflix-converter-root'),'run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-Wall','-Wextra','-Werror','-I.context/amiga/dosbox-launcher','amiga/dosbox/launcher/icon.c','-lamiga','-o','.context/amiga/dosbox-launcher/MakeLauncherIcon'],check=True,cwd=ROOT)
+subprocess.run(['podman','--connection',os.environ.get('ZZ_CLOCK_PODMAN_CONNECTION','nuflix-converter-root'),'run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-Wall','-Wextra','-Werror','-Wno-unused-function','-Wno-misleading-indentation','-Wframe-larger-than=2048','-fstack-usage','amiga/dosbox/launcher/disk.c','-lamiga','-o','.context/amiga/dosbox-launcher/ZZDosDisk'],check=True,cwd=ROOT)
+subprocess.run(['podman','--connection',os.environ.get('ZZ_CLOCK_PODMAN_CONNECTION','nuflix-converter-root'),'run','--rm','--platform','linux/amd64','-v',f'{ROOT}:/work','-w','/work',PIN['image'],'m68k-amigaos-gcc','-std=c99','-noixemul','-m68020','-O2','-g','-Wall','-Wextra','-Werror','-Wno-unused-function','-Wno-misleading-indentation','-Wframe-larger-than=2048','-fstack-usage','amiga/dosbox/launcher/create_disk.c','-lamiga','-o','.context/amiga/dosbox-launcher/ZZDosCreate'],check=True,cwd=ROOT)
 (ROOT/'create_disk.su').replace(OUT/'create-disk-stack.su')
 (ROOT/'main.su').replace(OUT/'launcher-stack.su')
 (ROOT/'cd_host.su').replace(OUT/'cd-stack.su')
@@ -36,3 +36,6 @@ subprocess.run(['/opt/homebrew/opt/lld/bin/ld.lld','-m','elf_i386','--image-base
 
 record['assets']={name:{'bytes':(OUT/name).stat().st_size,'sha256':hashlib.sha256((OUT/name).read_bytes()).hexdigest()} for name in ['Network.guide','Compatibility.dat','Compatibility.md','Compatibility-Details.md','ZZDosDisk','ZZDosCreate','ZZHELLO2.COM']}
 (OUT/'launcher-build.json').write_text(json.dumps(record,indent=2)+'\n')
+
+from build_clock_helper import build as build_clock
+build_clock(ROOT,OUT,PIN['image'])

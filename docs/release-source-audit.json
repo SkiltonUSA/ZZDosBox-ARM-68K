@@ -1,0 +1,47 @@
+{
+  "scope": "Previously uncommitted files exactly matching the published numbered release source archive; no runtime binaries changed.",
+  "files": [
+    {
+      "app": "ZZDosBox",
+      "file": "amiga/dosbox/launcher/main.c",
+      "matches_published_source": true,
+      "sha256": "a28217df95b7668c1661ebf75393f21640c0799a5b9843780b6a83ca0b09f5da"
+    },
+    {
+      "app": "ZZDosBox",
+      "file": "scripts/build_dosbox_launcher.py",
+      "matches_published_source": true,
+      "sha256": "15a5812ac17c75e99221445cb84de92d3f558062a0753ffd4aef081683b88149"
+    },
+    {
+      "app": "ZZDosBox",
+      "file": "amiga/common/zzclock/client.c",
+      "matches_published_source": true,
+      "sha256": "d9a1ee043843de1f1b6c949b50698a064d687a96207050f2e297c7aafc43bffc"
+    },
+    {
+      "app": "ZZDosBox",
+      "file": "amiga/common/zzclock/mui.h",
+      "matches_published_source": true,
+      "sha256": "89ed8f0690ce77237179885a9eef189f71ef8c69450d611d2b8e1f67bacd4e5a"
+    },
+    {
+      "app": "ZZDosBox",
+      "file": "amiga/common/zzclock/policy.h",
+      "matches_published_source": true,
+      "sha256": "8f5f88697db133f9446b38698a4dfdc2dd87f24e36b297f93220d5d9efdf8c5c"
+    },
+    {
+      "app": "ZZDosBox",
+      "file": "amiga/common/zzclock/test_policy.c",
+      "matches_published_source": true,
+      "sha256": "6ce85de02fe0df529822f1890ef9dc95433ddcca46735adc358b74f66747a2e3"
+    },
+    {
+      "app": "ZZDosBox",
+      "file": "scripts/build_clock_helper.py",
+      "matches_published_source": true,
+      "sha256": "5d87a1503f06cd163d8afe17918e89bcfa113014c4940b8f8eb11c219c960fc1"
+    }
+  ]
+}
