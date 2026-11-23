@@ -17,7 +17,7 @@ commands=b'dir /b\rtype readme.txt\recho saved text > SAVED.TXT\rtype saved.txt\
 def scan_row(data,mode,y):
  factor=(0 if y%2 else 8) if mode in (1,2) else (5 if y%2 else 8) if mode==3 else (8,6,4,6)[y%4] if mode==4 else 8
  return bytes(c*factor//8 for c in data)
-def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000,memory_requests=None,memory_stop=False,matrix_stop=False,disk_mib=32,paging_fixture=None,paging_faults=1,network=None,hardware=None,fixture=None,mouse_burst=False,jit_helpers=None):
+def run(base,mode,profile=False,options=None,presentation=None,adapter=None,developer=None,scheduler_trace=None,inherited_fpscr=0x01000000,memory_requests=None,memory_stop=False,matrix_stop=False,disk_mib=32,paging_fixture=None,paging_faults=1,network=None,hardware=None,fixture=None,mouse_burst=False,jit_helpers=None,timer_hz=333333333):
  build=json.loads((OUT/'build.json').read_text());allocation=build.get('allocation',0x2000000);expanded=build.get('expanded',False)
  image,rel,_=pack.unpack((OUT/'dosbox.elf').read_bytes(),expanded=expanded)
  for off in rel:struct.pack_into('<I',image,off,struct.unpack_from('<I',image,off)[0]+base)
@@ -90,6 +90,11 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
   address=symbols['db_dynrec_dispatches'];u.hook_add(UC_HOOK_MEM_WRITE,jit_dispatch,begin=address,end=address+3)
  def put(off,n):u.mem_write(base+off,struct.pack('>I',n&0xffffffff))
  def get(off):return struct.unpack('>I',u.mem_read(base+off,4))[0]
+ runtime_clock=build.get('build_options',{}).get('pc_runtime_clock',False)
+ if runtime_clock:
+  # Model the host's calibrated ABI; synthetic ticks never measure performance.
+  assert timer_hz in (333333333,400000000)
+  put(0x18812c,timer_hz);put(0x188130,0x544d5231)
  matrix_closed=[]
  if matrix_stop:
   def matrix_cancel(u,address,size,data):
@@ -111,7 +116,7 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
    assert record[0]==serial,record
    trace_records.append(record)
   u.hook_add(UC_HOOK_MEM_WRITE,trace_commit,begin=base+0x188e00,end=base+0x188e03)
- if profile or mode=="vga-shell" or present_build or trace_build:
+ if profile or mode=="vga-shell" or present_build or trace_build or runtime_clock:
   # Synthetic clock for accounting checks only, never a speed measurement.
   u.mem_map(0xf8f00000,4096);timer=[0xfffffff0]
   u.mem_write(0xf8f00200,struct.pack('<Q',timer[0]))
@@ -123,7 +128,7 @@ def run(base,mode,profile=False,options=None,presentation=None,adapter=None,deve
  if presentation is not None:
   put(0x188048,presentation);put(0x18804c,60)
   def present_enter(u,address,size,data):
-   timer[0]+=3333333 # Synthetic 10 ms of non-presentation work per frame.
+   timer[0]+=(timer_hz if runtime_clock else 333333333)//100 # Synthetic 10 ms.
    u.mem_write(0xf8f00200,struct.pack('<Q',timer[0]))
   addr=symbols['_Z16db_video_presentv']
   u.hook_add(UC_HOOK_CODE,present_enter,begin=addr,end=addr)

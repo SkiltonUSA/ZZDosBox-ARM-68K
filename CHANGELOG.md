@@ -12,6 +12,10 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — calibrated runtime timing
 
+- Extend the ARM instruction-model harness with the timer ABI. Paging alias,
+  fetch, read/modify/write and nested-fault tests pass at both supported timer
+  rates; the guard against unsafe paged JIT execution remains enforced.
+
 - Make the network backend honor the configured m68k container command instead
   of an old machine-specific Podman connection. Full network rebuild and native
   network/host tests pass; the ARM builder forwards its explicit override.
