@@ -23,6 +23,13 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 [Benchmarks](#benchmark-results) · [Screenshots](#launcher-screenshots) ·
 [Performance](#optimisation-history) · [Credits](#credits-and-licences)
 
+## Windows for Workgroups 3.11
+
+![Windows for Workgroups 3.11 Program Manager running in ZZDosBox on the A4000TX and ZZ9000](docs/runtime-clock/remaining-variants/windows-interpreter.png)
+
+Program Manager on the latest tested Windows interpreter candidate. The overlay
+shows presentation FPS, not an application benchmark. [Build and test details](docs/runtime-clock/remaining-variants/README.md).
+
 ## Development builds
 
 **Runtime timing calibration (unreleased):** standard, Expanded, memory-debug,
