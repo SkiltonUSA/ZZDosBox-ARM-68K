@@ -1,0 +1,2 @@
+DOS runtime clock: calibration bounds, matched adaptive cadence and FPS at 666/800 MHz PASS
+PASS presentation: baseline, fixed cadence, overload, slow recovery, CPU-bound gate, pause, refresh, rollover, bounds

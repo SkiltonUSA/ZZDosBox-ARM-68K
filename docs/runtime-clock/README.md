@@ -1,4 +1,4 @@
-# Runtime ARM timer calibration — experimental
+# Runtime ARM timer calibration
 
 The FPS overlay and adaptive presentation previously assumed a 333.333 MHz
 ARM global timer. At an 800 MHz CPU setting, the timer runs at 400 MHz. A fixed
@@ -13,7 +13,9 @@ No PLL, firmware, audio rate or emulated CPU cycle setting is changed.
 
 FPS and adaptive timing use the same selected frequency. Presentation state is
 reset if its rate changes. The build switch requires a separate output folder;
-it remains off in normal builds pending integration across release variants.
+it is selected explicitly for the seven updated players in 1.0.2. Legacy
+silent/scanline and network-interpreter players retain their previous builds.
+[Release validation and exact scope](release-1.0.2/README.md).
 
 ## Checks
 

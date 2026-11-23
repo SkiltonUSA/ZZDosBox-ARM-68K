@@ -1,5 +1,8 @@
 # Network, software-OpenGL and Windows timing candidates
 
+Historical candidate record. For packaged builds and subsequent checks, see
+[1.0.2 release validation](../release-1.0.2/README.md).
+
 Fresh source builds extend the opt-in timer calibration to the remaining
 player configurations. They select the 400 MHz timer at the standing 800 MHz
 ARM setting. No firmware, default clock, launcher or release package changed.

@@ -1,6 +1,6 @@
 # ZZDosBox changelog
 
-Version history from **0.1.0-dev** through **1.0 Beta**, newest first.
+Version history from **0.1.0-dev** through **1.0.2 Beta**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments
 without a new version are recorded separately below. Historical validation and
@@ -10,7 +10,21 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
-## Unreleased — calibrated runtime timing
+## 1.0.2 Beta
+
+- Integrate calibrated 666.7/800 MHz presentation/FPS timing in Compatibility,
+  Expanded, memory-debug, network JIT, software-OpenGL and Windows players.
+- Rebuild those players and launcher at 1.0.2; record retained legacy player
+  identities separately. Preserve paging fallback, settings and save data.
+- Include the network SDK selection and instruction-model timer ABI corrections.
+- Provide matching standard/demo AmiPkg installers. Audio gaps remain; this
+  timing correction is not a measured FPS or sound-quality gain.
+- [Release checks and build identities](docs/runtime-clock/release-1.0.2/README.md).
+
+### Candidate validation before 1.0.2
+
+The following records describe the earlier isolated candidates. Their
+then-pending release gates are superseded by the 1.0.2 release checks above.
 
 - Rebuild and test network, software-OpenGL and both Windows player variants.
   DHCP/HTTP returns the exact fixture, both TinyGL display paths close cleanly,

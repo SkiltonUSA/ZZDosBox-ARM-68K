@@ -1,5 +1,16 @@
 # ZZDosBox changelog
 
+## 1.0.2 Beta
+
+- Integrate calibrated 666.7/800 MHz presentation/FPS timing in Compatibility,
+  Expanded, memory-debug, network JIT, software-OpenGL and Windows players.
+- Rebuild those players and launcher at 1.0.2; record retained legacy player
+  identities separately. Preserve paging fallback, settings and save data.
+- Include the network SDK selection and instruction-model timer ABI corrections.
+- Provide matching standard/demo AmiPkg installers. Audio gaps remain; this
+  timing correction is not a measured FPS or sound-quality gain.
+- [Release checks and build identities](docs/runtime-clock/release-1.0.2/README.md).
+
 ## 1.0.1 Beta
 
 Numbered AmiPkg release and rebuilt launcher, with optional clock controls.

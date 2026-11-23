@@ -1,29 +1,29 @@
-# ZZDosBox 1.0.1 Beta
+# ZZDosBox 1.0.2 Beta
 
-Application/launcher version: **1.0.1 Beta**. AmiPkg version: **1.0.1-beta**.
+Application/launcher version: **1.0.2 Beta**. AmiPkg version: **1.0.2-beta**.
 
-## Changes
+Compatibility, Expanded, memory-debug, network JIT, software-OpenGL and both
+Windows players now measure the ARM timer at launch. Presentation scheduling
+and the FPS overlay use the selected 666.7/800 MHz frequency. This does not
+change CPU cycles, audio rate, firmware or the board clock.
 
-- Rebuild the launcher with the next numbered release; remove the dated package suffix.
-- Include Settings → ZZOverclock, with 666.7 MHz and experimental 800 MHz controls.
-- Retain the recorded emulator players and their build identifiers. This release does not rebuild or relabel those cores.
-- Update the main README and linked feature documentation.
+The launcher and these seven players are rebuilt at 1.0.2. Legacy silent,
+Adaptive/Scanlines and network-interpreter players retain their previous build
+identities and fixed-frequency accounting; use 666.7 MHz for measurements with
+those players. Separate Duke/Descent diagnostic observers are not included in
+this timing update. No FPS gain or audio-quality improvement is claimed;
+audio gaps remain. Windows JIT retains interpreter fallback for guest paging.
 
-Standard and demo editions include the updated launcher and clock client. Existing DOS runtimes are retained. Their older ARM-tick FPS/presentation accounting is not validated at 800 MHz; use 666.7 MHz for comparable measurements. No Glide experiment is included.
+Both standard and demo editions use the same emulator builds. The demo edition
+also includes Corridor 7, Doom and King's Quest demos. Existing settings and
+saves are preserved. Extract the installer and open Install to select a writable
+destination; close emulators before updating. MUI and other dependency checks
+run before installation. Missing optional clock services disable overclock
+controls only; no firmware or clock change happens automatically.
 
-## Installation and compatibility
+The existing clock client can refuse an immediate 800 → 666.7 → 800 MHz
+sequence because it reuses an ended session ID. Reset clears that session;
+normal emulator launch remains available. This release retains that client.
 
-Extract the LHA, open its drawer and double-click Install. Choose a writable
-destination and close emulators before updating. Dependency checks and existing
-settings/saves are preserved. Clock control requires the optional ABI 3 firmware
-service; its absence disables clock controls only. The clock affects the whole
-board. No firmware is installed and no clock change happens automatically.
-Use suitable cooling for 800 MHz; temperature preflight is not a continuous
-thermal watchdog. No new performance gain is claimed here.
-
-## Verification
-
-All launchers were cross-compiled into separate release directories. Recorded
-player hashes are retained. Installer signatures, payload hashes, extraction,
-component references and application version strings are checked before publication.
-Prior hardware evidence remains separate from these package checks.
+[Release checks and build identities](runtime-clock/release-1.0.2/README.md) ·
+[Changelog](../CHANGELOG.md) · [Setup](../README.md#dependencies).

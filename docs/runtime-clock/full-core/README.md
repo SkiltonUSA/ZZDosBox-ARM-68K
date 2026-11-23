@@ -1,5 +1,8 @@
 # Full-core runtime timer rebuild
 
+Historical candidate record. For packaged builds and subsequent checks, see
+[1.0.2 release validation](../release-1.0.2/README.md).
+
 The Expanded runtime now builds from the current DOSBox source using a matching
 Debian GCC 15.3.1, target libstdc++ and picolibc 1.8.12 toolchain. All 108 ARM
 objects were compiled in a new output directory; no retained DOSBox object was

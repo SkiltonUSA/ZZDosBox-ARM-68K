@@ -1,5 +1,8 @@
 # Standard and memory-debug runtime-clock candidates
 
+Historical candidate record. For packaged builds and subsequent checks, see
+[1.0.2 release validation](../release-1.0.2/README.md).
+
 Both configurations were rebuilt from current source using the matching
 [toolchain](../../build-and-restore.md#matching-arm-compiler-and-c-headers).
 The standard configuration follows `make build-current`, with opt-in runtime

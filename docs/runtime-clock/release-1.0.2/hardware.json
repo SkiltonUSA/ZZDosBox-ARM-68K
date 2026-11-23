@@ -1,0 +1,90 @@
+{
+  "tests": {
+    "666-compat": {
+      "sha256": "e0e3e91ce9d89f12c88682e3f843c0f247a3b5b28aacdcdb6a801e0956088aa9",
+      "guest_ms": 10000,
+      "timer_hz": 333333333,
+      "clean_exit": true
+    },
+    "666-expanded": {
+      "sha256": "9c27dddcc10ecaad00a6ff1abefe657c43ac5cd763a62068824ab16cb7c7ab02",
+      "guest_ms": 10000,
+      "timer_hz": 333333333,
+      "clean_exit": true
+    },
+    "666-memory": {
+      "sha256": "a118899e4a786886e7edee1e9d8703239f07bd5081e26e47d774fb878e25c364",
+      "guest_ms": 10000,
+      "timer_hz": 333333333,
+      "clean_exit": true
+    },
+    "666-network": {
+      "sha256": "e29c66fec0f1cf8f0dabadde482bef8d8df744c40725532aa3895392dbf4cca8",
+      "guest_ms": 10000,
+      "timer_hz": 333333333,
+      "clean_exit": true
+    },
+    "666-opengl": {
+      "sha256": "18789e74815e067b68ab2c17bedadce8b268520a515388fa614a6803521e27a3",
+      "guest_ms": 10000,
+      "timer_hz": 333333333,
+      "clean_exit": true
+    },
+    "666-windows": {
+      "sha256": "7ca7469626cb72812ddf220140b00ea31bdf003df978792ccc6b7791f5131719",
+      "guest_ms": 18000,
+      "timer_hz": 333333333,
+      "clean_exit": true
+    },
+    "666-windows-jit": {
+      "sha256": "82af2cb0405d342d92732e7f1806c360efb9c5646cecfab87f361fcc478ef1b9",
+      "guest_ms": 18000,
+      "timer_hz": 333333333,
+      "clean_exit": true
+    },
+    "800-compat": {
+      "sha256": "7dbc3cb2d26545980ad04ec740f2dfa777f531bb93b2715c07a911bd11c80dcc",
+      "guest_ms": 10000,
+      "timer_hz": 400000000,
+      "clean_exit": true
+    },
+    "800-expanded": {
+      "sha256": "9a1f9fd654a876a68357eff0d6b404dac47f30fe0609e8b52e6d3c9f4ede162b",
+      "guest_ms": 10000,
+      "timer_hz": 400000000,
+      "clean_exit": true
+    },
+    "800-memory": {
+      "sha256": "ba1b0066827459a186e314142d020aebddf2f99a5cb68e4535a6c49e57be4498",
+      "guest_ms": 10000,
+      "timer_hz": 400000000,
+      "clean_exit": true
+    },
+    "800-network": {
+      "sha256": "c0d59f5fa840fcbb35e7dba251476372e98b3015e6059d1b2a7b40df0cbd5e1b",
+      "guest_ms": 10000,
+      "timer_hz": 400000000,
+      "clean_exit": true
+    },
+    "800-opengl": {
+      "sha256": "8ad1157d407e985a4b01a793cf64d5f9134c348eee9d9fe90b27673253644a98",
+      "guest_ms": 10000,
+      "timer_hz": 400000000,
+      "clean_exit": true
+    },
+    "800-windows": {
+      "sha256": "4a40bb89f25f865dd0c3c0e5e45a7ba6d6db6d542f27c132c4b401c6e0115822",
+      "guest_ms": 18000,
+      "timer_hz": 400000000,
+      "clean_exit": true
+    },
+    "800-windows-jit": {
+      "sha256": "98cdd62ec06382abeb2010048f68679687da22b879201c19d04d7b22f337865f",
+      "guest_ms": 18000,
+      "timer_hz": 400000000,
+      "clean_exit": true
+    }
+  },
+  "scope": "Physical signed standard AmiPkg installation; bounded installed-player lifecycle checks, no FPS/listening gain claim",
+  "final_clock": "800 MHz KEEP restored"
+}

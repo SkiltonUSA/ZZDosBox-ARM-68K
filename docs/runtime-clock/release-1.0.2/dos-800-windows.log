@@ -1,0 +1,54 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=0e7c2ec6
+BOOTSTRAP amiga=405f0500 arm=007e0500 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+TIMER estimated_hz=399980806 selected_hz=400000000 calibration_us=2016427
+DISPLAY_CONFIG mode=window fps=1 system=booted DOS
+SETTINGS memory_mb=8 machine=0 cycles=6000 live=1
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+VIDEO adapter=0 source=640x480 monochrome=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+CPU_CYCLES applied=6000
+ARM_FPS tenths=118
+PC frames=1133 emulated_ms=18000 wall_ms=92302 timed_done=1
+PROFILE total=00000008989e0165 unwound=0
+PROFILE bucket=other ticks=0000000184ba52ef calls=0
+PROFILE bucket=cpu ticks=00000005089b4c5d calls=2315904
+PROFILE bucket=events ticks=00000000fbe2bda7 calls=2333904
+PROFILE bucket=capture ticks=0000000080ac32ea calls=512746
+PROFILE bucket=grant ticks=0000000021f6ecf2 calls=1133
+PROFILE bucket=copy ticks=000000006cc28496 calls=1133
+POLL ms=1 calls=49967 wait_us=64983238 max_us=109633
+SHELL result=2 guest_exit=0 slices=2333904 bytes=0 hash=811c9dc5 mismatches=0
+
+SHELL PASS mode=0
+FILES_TIME calls=629 read_us=10830218 write_us=574953 other_us=5754 max_us=271103 (totals saturate at 4294967295)
+FILES_OP op=disk_open calls=1 total_us=5754 max_us=5754
+FILES_OP op=disk_read calls=586 total_us=10830218 max_us=271103
+FILES_OP op=disk_write calls=42 total_us=574953 max_us=121936
+BIOS HDD close=ok
+DISK host_seeks=231
+FILES requests=629 read=2400256 written=21504; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=3
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00501000 restored=00501000
+REGISTER n=2 original=4e000000 restored=4e000000
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=02040000 restored=02040000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600f01d3 restored=600f01d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00001100 restored=00001100
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=1133 flips=0 wait_us=0 background_waits=0
+COPY observed_us=5296363 max_us=11230
+PIPELINE enabled=0 overlaps=0 releases=1133
+LAUNCHER exit=0; owned memory released

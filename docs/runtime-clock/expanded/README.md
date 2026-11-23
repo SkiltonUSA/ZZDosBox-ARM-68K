@@ -1,5 +1,8 @@
 # Runtime timer — packaged Expanded-core candidate
 
+Historical candidate record. For packaged builds and subsequent checks, see
+[1.0.2 release validation](../release-1.0.2/README.md).
+
 This pass carries the calibrated presentation/FPS timer into the recorded
 Expanded core, preserving its **4 MiB JIT cache, 32 MiB guest-RAM maximum and
 64 MiB Exec allocation**. These are the packaged core's values; this is not the

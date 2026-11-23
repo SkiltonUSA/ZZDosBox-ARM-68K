@@ -1,0 +1,32 @@
+OK: muimaster.library 21.227
+OK: workbench.library 47.33
+OK: asl.library 47.9
+OK: keymap.library 47.1
+OK: Picasso96API.library 2.455
+OK: ZZ9000 graphics and Fast RAM boards detected
+AHI: device 4.180
+OK: 28 AHI modes; unit 0 opens (no sound played)
+OK: camd.library 37.14
+Dependencies passed. XACP firmware, display modes and sound quality remain runtime checks.
+Catalogue signature verified.
+Added 'zzdist' (signed), lowest priority.
+Run 'amipkg update' to fetch its catalog.
+'official' is now disabled.
+   zzdosbox-1.0.2-beta.lha..Cached zzdosbox (sha256 verified).
+Unpacking + installing zzdosbox...
+copied.
+OK: muimaster.library 21.227
+OK: workbench.library 47.33
+OK: asl.library 47.9
+OK: keymap.library 47.1
+OK: Picasso96API.library 2.455
+OK: ZZ9000 graphics and Fast RAM boards detected
+AHI: device 4.180
+OK: 28 AHI modes; unit 0 opens (no sound played)
+OK: camd.library 37.14
+Dependencies passed. XACP firmware, display modes and sound quality remain runtime checks.
+Existing launcher library preserved.
+Installed zzdosbox 1.0.2-beta: 43 file(s).
+Existing launcher library preserved.
+Installation complete. Open PC/ZZDosBox-Launcher in the selected drawer.
+INSTALL_RC=0
