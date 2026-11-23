@@ -1,0 +1,28 @@
+{
+  "windows": {
+    "packaged_player_sha256": "59ddf2cdbf573732d7bbc059d80c4f52cc2e9d2b743ef9cc3117ccc62f5e22d6",
+    "retained_arm_sha256": "2121842224d6d9ec85f408c243c789822fa642f3b2c65492a98262eaf27746d6",
+    "original_base_sha256": "89f23df98c4be654aa08f155da9c96da1e671181248bce09aeb7c4fbf4a12e33",
+    "original_version": "0.10.1-dev",
+    "dynrec": false,
+    "jit_mib": 1,
+    "disk_cache_kib": 1024,
+    "neon": false,
+    "pipeline": false,
+    "compat_pcm": false,
+    "allocation": 33554432
+  },
+  "windows-jit": {
+    "packaged_player_sha256": "340e2c267e0354affce797e6dbf5610f2d604d03abc2cbf338530a206dd4704c",
+    "retained_arm_sha256": "55ea75c3c0fe34c3e44c3a6e15a3bcc3802ed6bcfe7635fd9455bd494c6ec1c4",
+    "original_base_sha256": "4df7efabca0277d5440b9a90ed8342db07eeb1379ee23fefa86ec57fe0c04728",
+    "original_version": "0.10.1-dev",
+    "dynrec": true,
+    "jit_mib": 4,
+    "disk_cache_kib": 1024,
+    "neon": false,
+    "pipeline": false,
+    "compat_pcm": false,
+    "allocation": 33554432
+  }
+}

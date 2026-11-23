@@ -1,0 +1,40 @@
+paging_alias synthetic timer Hz 333333333
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 3818816
+PASS paging policy; paged register dispatches 0 fallback calls 1
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-paging-cases/paging_alias.bin faults 0 and shutdown with unmapped text aperture
+paging_alias synthetic timer Hz 400000000
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 3818816
+PASS paging policy; paged register dispatches 0 fallback calls 1
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-paging-cases/paging_alias.bin faults 0 and shutdown with unmapped text aperture
+paging_fetch synthetic timer Hz 333333333
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 3818816
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-paging-cases/paging_fetch.bin faults 1 and shutdown with unmapped text aperture
+paging_fetch synthetic timer Hz 400000000
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 3818816
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-paging-cases/paging_fetch.bin faults 1 and shutdown with unmapped text aperture
+paging_rmw synthetic timer Hz 333333333
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 3818816
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-paging-cases/paging_rmw.bin faults 1 and shutdown with unmapped text aperture
+paging_rmw synthetic timer Hz 400000000
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 3818816
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-paging-cases/paging_rmw.bin faults 1 and shutdown with unmapped text aperture
+paging_nested synthetic timer Hz 333333333
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 3818816
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-paging-cases/paging_nested.bin faults 2 and shutdown with unmapped text aperture
+paging_nested synthetic timer Hz 400000000
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 11 dispatches 9 heap 3818816
+PASS paging policy; paged register dispatches 0 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-paging-cases/paging_nested.bin faults 2 and shutdown with unmapped text aperture

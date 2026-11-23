@@ -41,5 +41,6 @@ remain, and this single run per configuration is not a comparative audio benchma
 The [live debugger exchange](memory-ipc.log) passed status, pause, repeated reads,
 bounds rejection and resume while the memory player was running. The helper's
 [source and executable identity](memory-check-build.json) are recorded separately.
-Windows, network and OpenGL configurations still need their own builds and tests.
+The [Windows, network and OpenGL follow-up](../remaining-variants/README.md)
+records their separate builds and hardware checks.
 Stock-clock physical testing and release integration remain pending.

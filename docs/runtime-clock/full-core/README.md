@@ -30,8 +30,8 @@ are not a listening-quality or game-FPS claim.
 
 ## Remaining promotion gates
 
-This closes the clean Expanded-core rebuild gap. Other runtime configurations
-(network, memory-debug, Windows and OpenGL) still need their own build and
-hardware checks. Hardware remains at the requested 800 MHz KEEP; 666.7 MHz has
+This closes the clean Expanded-core rebuild gap. Later reports cover
+[standard/memory-debug](../variants/README.md) and
+[network, Windows and software OpenGL](../remaining-variants/README.md). Hardware remains at the requested 800 MHz KEEP; 666.7 MHz has
 native clock/cadence tests but no hardware run in this pass. Audio gaps remain,
 and these checks do not establish an FPS gain. No firmware is changed.

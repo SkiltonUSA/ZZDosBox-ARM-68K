@@ -56,3 +56,6 @@ retained DOSBox-object dependency and documents the matching compiler headers.
 
 The [standard and memory-debug follow-up](variants/README.md) validates three
 display/presentation combinations and live debugger IPC on fresh source builds.
+
+[Network, software-OpenGL and Windows checks](remaining-variants/README.md)
+extend coverage to the remaining player configurations and guest paging tests.

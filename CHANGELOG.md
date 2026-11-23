@@ -12,6 +12,13 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — calibrated runtime timing
 
+- Rebuild and test network, software-OpenGL and both Windows player variants.
+  DHCP/HTTP returns the exact fixture, both TinyGL display paths close cleanly,
+  and interpreter/JIT Windows builds reach Program Manager on private disk
+  copies. Preserve original Windows settings and guarded paging behavior.
+  All runs restore ARM state and release memory; audio gaps remain.
+  [Records, screenshots and release limits](docs/runtime-clock/remaining-variants/README.md).
+
 - Extend the ARM instruction-model harness with the timer ABI. Paging alias,
   fetch, read/modify/write and nested-fault tests pass at both supported timer
   rates; the guard against unsafe paged JIT execution remains enforced.

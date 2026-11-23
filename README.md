@@ -25,6 +25,10 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 
 ## Development builds
 
+**Runtime timing calibration (unreleased):** standard, Expanded, memory-debug,
+network, software-OpenGL and Windows candidates have separate build/test records.
+The released players remain unchanged. [Validation and limits](docs/runtime-clock/README.md).
+
 **Experimental [Glide-to-RasterIX translator](amiga/dosbox/glide/README.md):**
 the matching FPGA/firmware now completes physical GPU batches with pixel
 verification and clean shutdown. At 800 MHz ARM, the 1,000-frame test measured

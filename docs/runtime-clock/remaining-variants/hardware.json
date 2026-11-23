@@ -1,0 +1,94 @@
+{
+  "cpu_mhz": 800,
+  "guest_ram_mib": 8,
+  "runs": [
+    {
+      "log": "nwa3bed.log",
+      "variant": "network",
+      "case": "Doom window Adaptive",
+      "timer": "TIMER estimated_hz=399996153 selected_hz=400000000 calibration_us=2017168",
+      "pc": "PC frames=1399 emulated_ms=20000 wall_ms=42856 timed_done=1",
+      "audio": "AUDIO_TASK queued=640000 submitted=640000 completed=640000 highwater=4 error=0 stopped=1 gaps=500",
+      "opengl": null,
+      "network": "NETWORK frames_tx=0 frames_rx=0 dropped=0 errors=0 closed",
+      "jit": "JIT magic=4a495431 commits=8882 witness=1 dispatches=3600793 cache_bytes=4194304 heap_peak=3954560 paged_fallbacks=0"
+    },
+    {
+      "log": "http3c40.log",
+      "variant": "network",
+      "case": "DHCP/HTTP",
+      "timer": "TIMER estimated_hz=399996471 selected_hz=400000000 calibration_us=2016364",
+      "pc": "PC frames=93 emulated_ms=1353 wall_ms=2311 timed_done=0",
+      "audio": null,
+      "opengl": null,
+      "network": "NETWORK frames_tx=13 frames_rx=10 dropped=0 errors=0 closed",
+      "jit": "JIT magic=4a495431 commits=4508 witness=1 dispatches=75143 cache_bytes=4194304 heap_peak=3989120 paged_fallbacks=0"
+    },
+    {
+      "log": "owa3c61.log",
+      "variant": "opengl",
+      "case": "Doom window Adaptive",
+      "timer": "TIMER estimated_hz=399993733 selected_hz=400000000 calibration_us=2013732",
+      "pc": "PC frames=1399 emulated_ms=20000 wall_ms=43775 timed_done=1",
+      "audio": "AUDIO_TASK queued=640000 submitted=640000 completed=640000 highwater=2 error=0 stopped=1 gaps=526",
+      "opengl": "OPENGL magic=474c3031 frames=411 ticks_hi=0 ticks_lo=1587146669 closed=1 direct=411 fallback=0",
+      "network": null,
+      "jit": "JIT magic=4a495431 commits=8882 witness=1 dispatches=3600793 cache_bytes=4194304 heap_peak=6090816 paged_fallbacks=0"
+    },
+    {
+      "log": "ofa3c9d.log",
+      "variant": "opengl",
+      "case": "Doom fullscreen Adaptive",
+      "timer": "TIMER estimated_hz=399997371 selected_hz=400000000 calibration_us=2015768",
+      "pc": "PC frames=1399 emulated_ms=20000 wall_ms=44509 timed_done=1",
+      "audio": "AUDIO_TASK queued=640000 submitted=640000 completed=640000 highwater=2 error=0 stopped=1 gaps=533",
+      "opengl": "OPENGL magic=474c3031 frames=411 ticks_hi=0 ticks_lo=1575714728 closed=1 direct=411 fallback=0",
+      "network": null,
+      "jit": "JIT magic=4a495431 commits=8877 witness=1 dispatches=3601063 cache_bytes=4194304 heap_peak=6090752 paged_fallbacks=0"
+    },
+    {
+      "log": "windows-3d97.log",
+      "variant": "windows",
+      "case": "12,000 ms boot",
+      "timer": "TIMER estimated_hz=399991463 selected_hz=400000000 calibration_us=2000946",
+      "pc": "PC frames=772 emulated_ms=12000 wall_ms=61659 timed_done=1",
+      "audio": null,
+      "opengl": null,
+      "network": null,
+      "jit": null
+    },
+    {
+      "log": "windows-jit-3ded.log",
+      "variant": "windows-jit",
+      "case": "12,000 ms boot",
+      "timer": "TIMER estimated_hz=399997765 selected_hz=400000000 calibration_us=2017419",
+      "pc": "PC frames=773 emulated_ms=12000 wall_ms=61456 timed_done=1",
+      "audio": null,
+      "opengl": null,
+      "network": null,
+      "jit": "JIT magic=4a495431 commits=6003 witness=1 dispatches=4490387 cache_bytes=4194304 heap_peak=4085120 paged_fallbacks=280753"
+    },
+    {
+      "log": "windows-desktop-3eb2.log",
+      "variant": "windows",
+      "case": "18,000 ms desktop follow-up",
+      "timer": "TIMER estimated_hz=399996646 selected_hz=400000000 calibration_us=2016779",
+      "pc": "PC frames=1132 emulated_ms=18000 wall_ms=92569 timed_done=1",
+      "audio": null,
+      "opengl": null,
+      "network": null,
+      "jit": null
+    },
+    {
+      "log": "windows-jit-desktop-3f54.log",
+      "variant": "windows-jit",
+      "case": "18,000 ms desktop follow-up",
+      "timer": "TIMER estimated_hz=399994823 selected_hz=400000000 calibration_us=2015965",
+      "pc": "PC frames=1133 emulated_ms=18000 wall_ms=93258 timed_done=1",
+      "audio": null,
+      "opengl": null,
+      "network": null,
+      "jit": "JIT magic=4a495431 commits=6003 witness=1 dispatches=4490387 cache_bytes=4194304 heap_peak=4085120 paged_fallbacks=461150"
+    }
+  ]
+}

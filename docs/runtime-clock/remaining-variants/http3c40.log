@@ -1,0 +1,113 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=33554432 nonce=0ee2f1fe
+BOOTSTRAP amiga=40c73d00 arm=00e63d00 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+TIMER estimated_hz=399996471 selected_hz=400000000 calibration_us=2016364
+COMPAT ems=0 xms=1 sound=off speaker=0
+DISPLAY_CONFIG mode=window fps=1 system=embedded DOS 5
+SETTINGS memory_mb=8 machine=0 cycles=3000 live=0
+NETWORK NE2000 io=300 irq=3 active (private IPv4 NAT)
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+VIDEO adapter=0 source=720x400 monochrome=0
+JIT magic=4a495431 commits=4508 witness=1 dispatches=75143 cache_bytes=4194304 heap_peak=3989120 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=91 rendered_rows=43680 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=3000
+PRESENT magic=50525331 source=93 shown=91 skipped=2 divisor=2 changes=1 mode=1 hz=60 work_ticks=4740178 copy_ticks=2891453 total_copy=000000000e3d3330
+ARM_FPS tenths=348
+PC frames=93 emulated_ms=1353 wall_ms=2311 timed_done=0
+POLL ms=1 calls=622 wait_us=863390 max_us=11469
+SHELL result=0 guest_exit=0 slices=58036 bytes=1668 hash=cdc5b2ce mismatches=0
+DosBox ZZ9000 project                         1.0.1 Beta
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>NETTEST.BAT
+Packet driver for NE2000, version 11.4.3
+Packet driver skeleton copyright 1988-93, Crynwr Software.
+This program is freely copyable; source must be available; NO WARRANTY.
+See the file COPYING.DOC for details; send FAX to +1-315-268-9201 for a copy.
+
+System: [345]86 processor, ISA bus, Two 8259s
+Packet driver software interrupt is 0x60 (96)
+Interrupt number 0x3 (3)
+I/O port 0x300 (768)
+My Ethernet address is 02:5A:5A:00:00:01
+mTCP DHCP Client by M Brutman (mbbrutman@gmail.com) (C)opyright 2008-2026
+Version: Oct 10 2026
+
+Timeout per request: 10 seconds, Retry attempts: 3
+Requesting a 28800 second lease
+Sending DHCP requests, Press [ESC] to abort.
+
+DHCP request sent, attempt 1: Offer received, Acknowledged
+
+Good news everyone!
+
+HOSTNAME zzdosbox
+DOMAIN 
+IPADDR 10.0.2.15
+NETMASK 255.255.255.0
+GATEWAY 10.0.2.2
+NAMESERVER 10.0.2.3
+LEASE_TIME 86400 seconds
+
+Settings written to 'C:\MTCP.CFG'
+DHCPVER DHCP Client version Oct 10 2026
+TIMESTAMP ( 315550801 ) Tue Jan  1 00:00:01 1980
+packetint 0x60
+hostname zzdosbox
+HOSTNAME_ASSIGNED zzdosbox
+IPADDR 10.0.2.15
+NETMASK 255.255.255.0
+GATEWAY 10.0.2.2
+NAMESERVER 10.0.2.3
+LEASE_TIME 86400
+mTCP HTGet by M Brutman (mbbrutman@gmail.com) (C)opyright 2011-2026
+  Version: Oct 10 2026
+
+Server return code: 200 OK
+Warning: Not setting file timestamp because the TZ env variable is not set.
+C:\>exit
+
+
+SHELL PASS mode=0
+NETWORK frames_tx=13 frames_rx=10 dropped=0 errors=0 closed
+FILES_TIME calls=156 read_us=238892 write_us=6403 other_us=231047 max_us=17473 (totals saturate at 4294967295)
+FILES_OP op=open calls=17 total_us=65480 max_us=5550
+FILES_OP op=create calls=2 total_us=15702 max_us=8040
+FILES_OP op=close calls=17 total_us=34942 max_us=4910
+FILES_OP op=read calls=61 total_us=238892 max_us=9780
+FILES_OP op=write calls=3 total_us=6403 max_us=4676
+FILES_OP op=seek calls=26 total_us=20419 max_us=2258
+FILES_OP op=stat calls=28 total_us=78799 max_us=17473
+FILES_OP op=delete calls=1 total_us=3306 max_us=3306
+FILES_OP op=rename calls=1 total_us=12399 max_us=12399
+DISK host_seeks=0
+FILES requests=156 read=159618 written=4351; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=102f4000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=3
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00501000 restored=00501000
+REGISTER n=2 original=4e000000 restored=4e000000
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=02040000 restored=02040000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600f01d3 restored=600f01d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00001100 restored=00001100
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=91 flips=0 wait_us=0 background_waits=0
+COPY observed_us=536578 max_us=25265
+PIPELINE enabled=1 overlaps=0 releases=91
+LAUNCHER exit=0; owned memory released
