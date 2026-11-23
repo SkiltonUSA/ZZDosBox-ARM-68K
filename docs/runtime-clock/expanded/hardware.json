@@ -1,0 +1,54 @@
+[
+  {
+    "mode": "Window Normal",
+    "guest_mib": 8,
+    "measured_timer_hz": 399995959,
+    "selected_timer_hz": 400000000,
+    "guest_ms": 20000,
+    "shown": 1399,
+    "source": 320,
+    "audio_gaps": 621,
+    "audio_frames_completed": 640000,
+    "cleanup": "pass",
+    "log": "wo2aa3.log"
+  },
+  {
+    "mode": "Window Adaptive",
+    "guest_mib": 8,
+    "measured_timer_hz": 399995315,
+    "selected_timer_hz": 400000000,
+    "guest_ms": 20000,
+    "shown": 421,
+    "source": 320,
+    "audio_gaps": 474,
+    "audio_frames_completed": 640000,
+    "cleanup": "pass",
+    "log": "wa2aef.log"
+  },
+  {
+    "mode": "Fullscreen Adaptive",
+    "guest_mib": 8,
+    "measured_timer_hz": 399995703,
+    "selected_timer_hz": 400000000,
+    "guest_ms": 20000,
+    "shown": 424,
+    "source": 320,
+    "audio_gaps": 453,
+    "audio_frames_completed": 640000,
+    "cleanup": "pass",
+    "log": "fa2b35.log"
+  },
+  {
+    "mode": "Window Adaptive",
+    "guest_mib": 32,
+    "measured_timer_hz": 399994555,
+    "selected_timer_hz": 400000000,
+    "guest_ms": 20000,
+    "shown": 427,
+    "source": 320,
+    "audio_gaps": 473,
+    "audio_frames_completed": 640000,
+    "cleanup": "pass",
+    "log": "mwa2b8c.log"
+  }
+]

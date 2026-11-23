@@ -1,0 +1,583 @@
+{
+  "scope": "Packaged Expanded core with runtime clock; same 4 MiB JIT, 32 MiB guest maximum and 64 MiB allocation; rebuilt host/presenter; no speed comparison",
+  "baseline": "3ad6328ad6b051fae93dbe0acfba645fa7e5335b1101834ddcbd86c5361823a0",
+  "compiler": "arm-none-eabi-g++ (Arm GNU Toolchain 15.3.Rel2 (Build arm-15.181)) 15.3.1 20260627",
+  "sha256": {
+    "dosbox.elf": "535a6cd253fbf37116d4d385a1fd4f0aafbc86321672f350e13bbd35026aacb5",
+    "ZZDosBox-Clock": "4805505cf08b44cbc9eab25bca035758321c81b39dd8a6c75a4727243e0d38b9",
+    "zz_payload.h": "e7e1d00d9f841b5dc16d5b956ae03dc8b851a451c128787161454713863f48d7"
+  },
+  "flags": [
+    "-DDB_COMPAT",
+    "-DDB_SCANLINE_TEST",
+    "-DDB_PRESENT_TEST",
+    "-DDB_PIPELINE_DEFAULT=1",
+    "-DFF_DIRECT",
+    "-DZZ_PC_CD",
+    "-DZZ_HEADLESS_BENCH",
+    "-DZZ_RELEASE",
+    "-DZZ_BLOCK_SIZE=0x4000000",
+    "-DZZ_CONTROL=0x180000",
+    "-DMB_ALLOCATION=0x4000000",
+    "-DDB_JIT_MIB=4",
+    "-DZZ_APP_NAME=\"ZZDosBox-Diagnostic\"",
+    "-DZZ_APP_VERSION=\"0.22.7-host-diagnostic\"",
+    "-DZZ_MIN_STACK=65536",
+    "-DMB_MMU",
+    "-DMB_DCACHE",
+    "-DZZ_HEADLESS_MMU",
+    "-DZZ_HEADLESS_ICACHE",
+    "-DDB_RUNTIME_CLOCK",
+    "-DDB_EXPANDED"
+  ],
+  "sources": {
+    "amiga/dosbox/pc/bench.cpp": "28359c2530f05271b8d58d976ae52524ab22fcd309fcbdc2165aea320a689c84",
+    "amiga/dosbox/pc/direct.cpp": "d20b1a541b3b22c6a0e4f8eb59bba97fd285dcd7c6f8f8ff6b247cbc8adf08ea",
+    "amiga/dosbox/pc/host.c": "1d99ddd26b9206bf035e2a3e22485c77f5d4bfb02f391c571d60371e5f863dea",
+    "amiga/dosbox/pc/clock_rate.h": "3d1c83835e566974c20a10df01668744d66ae4dfedde08b9f62a0ca7597691e3",
+    "amiga/dosbox/pc/presentation_plan.h": "a5d0f1ab6c8cf3938bd6eb1c6e5498245ba62d60f4921630eb40060fbb214a65",
+    "amiga/dosbox/pc/fps.h": "b8e740fb5e9ba414796104546c480868360cfab333de6d9a745f332b5a2d841c"
+  },
+  "objects": [
+    {
+      "name": "0-cpu.arm.o",
+      "sha256": "7e4893ed5a9a5d50967a2b7eb060f8c917868d31717871be8da7579568efada0",
+      "rebuilt": false
+    },
+    {
+      "name": "1-core_normal.arm.o",
+      "sha256": "7a0f267a46f406c1f7b717b8c96306ddf1ccb69f09f21c65782b37ed58fb040c",
+      "rebuilt": false
+    },
+    {
+      "name": "2-flags.arm.o",
+      "sha256": "122b530bcda4e56d53d09511e4e7c19ecc2c37788cc0e2373c53703d22a8704a",
+      "rebuilt": false
+    },
+    {
+      "name": "3-modrm.arm.o",
+      "sha256": "4b38391121b623a4521b020d3c39a10f85afc667e1f7163d4e2eb9fa9b565155",
+      "rebuilt": false
+    },
+    {
+      "name": "4-paging.arm.o",
+      "sha256": "be2109f9eb3ae612f2df6f84d7e354f9cb81d5f1e38f48cf4438ca29b31ce4f7",
+      "rebuilt": false
+    },
+    {
+      "name": "5-callback.arm.o",
+      "sha256": "161087f9f3a38acd45c6fb550ccbb5b093f79fce2c2572324096b1db35397d8f",
+      "rebuilt": false
+    },
+    {
+      "name": "6-memory.arm.o",
+      "sha256": "c91972bd34c2b86b70fccfa1d6ceb44c7c2e9b77140eb70966f510a7d8579104",
+      "rebuilt": false
+    },
+    {
+      "name": "7-dos-drive-helpers.arm.o",
+      "sha256": "c228ae4bae95106ef60157b4f31f6ecaedc88b1d6714ff3b73d7697bee91f686",
+      "rebuilt": false
+    },
+    {
+      "name": "8-dos-memory.arm.o",
+      "sha256": "ec39babd2b31d303194c9f59f11f8dc1495a31f02c4fb96763e434009cc16d82",
+      "rebuilt": false
+    },
+    {
+      "name": "9-dos.arm.o",
+      "sha256": "347c0b336c9f63c04789d85bc664ba65f11051d9b17a126da79f0acf8426c4fe",
+      "rebuilt": false
+    },
+    {
+      "name": "10-dos_files.arm.o",
+      "sha256": "ad5d84ce529bbeaf6bc5c160f26ea0faad18d322bed6f47bdf0dc419747885e4",
+      "rebuilt": false
+    },
+    {
+      "name": "11-dos_execute.arm.o",
+      "sha256": "b0a1ba66dd8c8e72ac3e83a1a829faa70cbac5ce039478c4182e0115702eabf7",
+      "rebuilt": false
+    },
+    {
+      "name": "12-dos_memory.arm.o",
+      "sha256": "07d577527392a33c457e212a3650a42650506cb6b201590cda359f20f448e067",
+      "rebuilt": false
+    },
+    {
+      "name": "13-dos_tables.arm.o",
+      "sha256": "87756853d853b99c2dadca8ca02a0ee12ee0601c58be2ab82d6cfb2bdc17963b",
+      "rebuilt": false
+    },
+    {
+      "name": "14-dos_classes.arm.o",
+      "sha256": "39017355e3ff2cdfac91fbcf677020390f247ef3a52789c4d41f9749ea8ba3a6",
+      "rebuilt": false
+    },
+    {
+      "name": "15-dos_ioctl.arm.o",
+      "sha256": "056d4058d8a31b58594c2e7866b27c7ebabc760229f8034d062a1d1f7494b989",
+      "rebuilt": false
+    },
+    {
+      "name": "16-dos_devices.arm.o",
+      "sha256": "98e72997ef4bf300faa2059781552b2d43fd41b90ffdae84fed479c6a5d2a997",
+      "rebuilt": false
+    },
+    {
+      "name": "17-shell.arm.o",
+      "sha256": "14f515d592ab31d705af1973f6bac7bd6abc3ce03be5fe82bc85d6cc5fa4b618",
+      "rebuilt": false
+    },
+    {
+      "name": "18-shell_misc.arm.o",
+      "sha256": "c04934a23994f1a6eff89002c5737f9938d8edbc8b511c6521fc002d34a18669",
+      "rebuilt": false
+    },
+    {
+      "name": "19-shell_batch.arm.o",
+      "sha256": "736c928f154558c6f8df35d9e720321cbee8e41a8142ddb67dc7f08e407ea7f8",
+      "rebuilt": false
+    },
+    {
+      "name": "20-shell_cmds.arm.o",
+      "sha256": "ca0f97ac8b7a4f6fe77b2967d8540855aa50f79bcba1318e48611a9c4ad2d56f",
+      "rebuilt": false
+    },
+    {
+      "name": "21-programs.arm.o",
+      "sha256": "e46a638f6c0a1d60ae687f805c20484f8ce902b52cb2a3abaff734a85bd25536",
+      "rebuilt": false
+    },
+    {
+      "name": "22-setup.arm.o",
+      "sha256": "a5ce20e20f7a8084614a7b7681e412f8b1ca3fa4234c4481dc950f0e873de17a",
+      "rebuilt": false
+    },
+    {
+      "name": "23-support.arm.o",
+      "sha256": "8260d0980abb941a29c60e62d34c98a40cc0f06e60b0b963550cfb849be77a8a",
+      "rebuilt": false
+    },
+    {
+      "name": "24-shell_messages.arm.o",
+      "sha256": "a6d10daf502a03c27598e15ec12c640d1ac8e6c72b75f8e10647102fdfe4659c",
+      "rebuilt": false
+    },
+    {
+      "name": "25-dos_mscdex.arm.o",
+      "sha256": "bff0c0701d81dde45b13b9194f2d208ccb1dceb836b22c96551768b75bef4d56",
+      "rebuilt": false
+    },
+    {
+      "name": "26-drive_iso.arm.o",
+      "sha256": "496e519a3a22b811fe05a1d2b4b871c01a758f4d31cf339090529f60dcf80821",
+      "rebuilt": false
+    },
+    {
+      "name": "27-iohandler.arm.o",
+      "sha256": "e713da4ca2f322a7983f953bd276b646b1c6a0b71dd7d4babda3c4efd2567087",
+      "rebuilt": false
+    },
+    {
+      "name": "28-pic.arm.o",
+      "sha256": "04243c80d6d1c77f393059e12a470abad289371839d73823b2ac1f0e6618948d",
+      "rebuilt": false
+    },
+    {
+      "name": "29-timer.arm.o",
+      "sha256": "6aeccfb626fceabae37b7f86e6608329dc3f3f3ccb2d5cbdc0f9628df521e143",
+      "rebuilt": false
+    },
+    {
+      "name": "30-keyboard.arm.o",
+      "sha256": "48f241334e88e54dafb2cc5c0596445fbee9269786056413ae79fc4d40c097b4",
+      "rebuilt": false
+    },
+    {
+      "name": "31-cmos.arm.o",
+      "sha256": "8a6b695349fd084392b18ee9508999f86d5ae998705ff7bc24c4923e804c9c00",
+      "rebuilt": false
+    },
+    {
+      "name": "32-mpu401.arm.o",
+      "sha256": "eb32098969fb2ca8251269475a082578989f1a7a6977d3d613e0d6631d90be47",
+      "rebuilt": false
+    },
+    {
+      "name": "33-vga.arm.o",
+      "sha256": "fce16e2cb39caac894d04fa33e86cdb66872d3b918d88e17e583043683d16a14",
+      "rebuilt": false
+    },
+    {
+      "name": "34-vga_attr.arm.o",
+      "sha256": "7788a8d0b255c78fa55e7f40e758f0442f78b6b82a01a8a4ea557c17049b7f38",
+      "rebuilt": false
+    },
+    {
+      "name": "35-vga_crtc.arm.o",
+      "sha256": "a5dc549ed32d8cd2598e990c4e3a7bfa8e09ec34a2669cbb051f497e6e4707cc",
+      "rebuilt": false
+    },
+    {
+      "name": "36-vga_dac.arm.o",
+      "sha256": "cf58765a93370268b324042f5b2cb12318adafbfb109acfe07b8d441a9eb3876",
+      "rebuilt": false
+    },
+    {
+      "name": "37-vga_draw.arm.o",
+      "sha256": "c28a8935cff6b42aa6667edb7b0b1ff661011c365da6c30857006064d35e8ba5",
+      "rebuilt": false
+    },
+    {
+      "name": "38-vga_gfx.arm.o",
+      "sha256": "caa0c03c0869704e547b13e199de91ddc1bb3b28f2d931b8467457b698b78ebd",
+      "rebuilt": false
+    },
+    {
+      "name": "39-vga_other.arm.o",
+      "sha256": "897530228f6242bb462bbf22d6d82471be6a635ecaff0416397dd6e1856734b7",
+      "rebuilt": false
+    },
+    {
+      "name": "40-vga_memory.arm.o",
+      "sha256": "5d315bb4647671ecce329a9c793a94160c39ab0719802eddae2421d3050aa9b4",
+      "rebuilt": false
+    },
+    {
+      "name": "41-vga_misc.arm.o",
+      "sha256": "40e1df1d7e694c97fe548bc87aa8ec13c8713791c208bdbe23ad8e5f650cb2cd",
+      "rebuilt": false
+    },
+    {
+      "name": "42-vga_seq.arm.o",
+      "sha256": "6e83de9772ffd0d43ddad62f820a3cc4409b1edda0e6065b11a034b6e2598cbb",
+      "rebuilt": false
+    },
+    {
+      "name": "43-vga_xga.arm.o",
+      "sha256": "d9daaf0329c0d8b3c5bc68e70fd37671e904421081505335bfc89ba23f5b3b8e",
+      "rebuilt": false
+    },
+    {
+      "name": "44-vga_s3.arm.o",
+      "sha256": "ded6969afb6c17c35ec5dcd0248294e5d5847e7f819e3d62d08bf7358848b1ae",
+      "rebuilt": false
+    },
+    {
+      "name": "45-mouse.arm.o",
+      "sha256": "6ee4bd7be29a2f66bf71a13cb348254e16c61443af6f085206c56dfeb1c0204c",
+      "rebuilt": false
+    },
+    {
+      "name": "46-bios.arm.o",
+      "sha256": "2e2798c7fcff7ab7138bdd84abe461b2986f28ead150ed650aea2eb82d3b7bfd",
+      "rebuilt": false
+    },
+    {
+      "name": "47-bios_disk.arm.o",
+      "sha256": "6f810d8c2030ac7c59faa83ca0d728567daff733b895f5c69dc0f9b97b448478",
+      "rebuilt": false
+    },
+    {
+      "name": "48-bios_keyboard.arm.o",
+      "sha256": "71a767939e116f696b7ca8e65e0645bb1b78a9826a7bb880015440df4ba8658c",
+      "rebuilt": false
+    },
+    {
+      "name": "49-int10.arm.o",
+      "sha256": "8aa78a38d23e57f4a66c0558279e0168b4c808a0b8ec178005eb0bc538313942",
+      "rebuilt": false
+    },
+    {
+      "name": "50-int10_char.arm.o",
+      "sha256": "a65e2aadfdd61d1419febf8105a1df31f382ea1a3b13f75babe57bbe1918cf42",
+      "rebuilt": false
+    },
+    {
+      "name": "51-int10_memory.arm.o",
+      "sha256": "cbaa9581daadcd45257e6c9dfb2731f3b1a9d998ddf72dc9363e3e136ba941a7",
+      "rebuilt": false
+    },
+    {
+      "name": "52-int10_misc.arm.o",
+      "sha256": "776e39607691efd922019e86ade7959fd86d1cae5dc8ec21b54ab3578162c2d8",
+      "rebuilt": false
+    },
+    {
+      "name": "53-int10_modes.arm.o",
+      "sha256": "5e1dd327ce4338719b8ac36671799dbc2106bb3a31f09c64c29653a6b88ef7e6",
+      "rebuilt": false
+    },
+    {
+      "name": "54-int10_vesa.arm.o",
+      "sha256": "8a03609d8de7b1d689307356761a6d1d7d440a4a89c14b2ba1f7def12535a2a6",
+      "rebuilt": false
+    },
+    {
+      "name": "55-int10_pal.arm.o",
+      "sha256": "c48395356f402fd821cfc2b439bad77dd1d042d7f4b4abb095c09b74bc347f34",
+      "rebuilt": false
+    },
+    {
+      "name": "56-int10_put_pixel.arm.o",
+      "sha256": "77edf94bb25ea9d76d9de15229395c39da3c4c9349a5da4f9f0481aca2dc73e3",
+      "rebuilt": false
+    },
+    {
+      "name": "57-int10_video_state.arm.o",
+      "sha256": "4c7d545b3dbad6bb28d61b42e2cd5ce17798b085be3471f262544ad199738fc2",
+      "rebuilt": false
+    },
+    {
+      "name": "58-int10_vptable.arm.o",
+      "sha256": "5e92c22b9d37db806a5774165264377c1eeb5468c5927b9aaa973327a7861c16",
+      "rebuilt": false
+    },
+    {
+      "name": "59-core_full.arm.o",
+      "sha256": "8eac4c39b3de3175ea06ef47d3a78b0187cfd8d69d58c6a323d69074dcf578f6",
+      "rebuilt": false
+    },
+    {
+      "name": "60-fpu.arm.o",
+      "sha256": "74478175b5d181a47f78a4c532449aa285b270600d9917a493436573b3a59422",
+      "rebuilt": false
+    },
+    {
+      "name": "61-dma.arm.o",
+      "sha256": "fa0a3b6f6ebccfbf1a65464edde4e246ab456095d61291cc194daf1fe39864a8",
+      "rebuilt": false
+    },
+    {
+      "name": "62-ems.arm.o",
+      "sha256": "725ba0b07847fad5baebf2dd3fb25dc5e9e80b234cef1d63bafc6364f3bdb108",
+      "rebuilt": false
+    },
+    {
+      "name": "63-xms.arm.o",
+      "sha256": "fbab0c6f8207a191f3ec37330800ea312627ed0cc45976d7443dbcd9dba85b6a",
+      "rebuilt": false
+    },
+    {
+      "name": "64-extended_allocator.arm.o",
+      "sha256": "ef5a9e18acd610c63525d04d3a05c12b99219966b5fcc1716724d1dd05ec14b7",
+      "rebuilt": false
+    },
+    {
+      "name": "65-mixer.arm.o",
+      "sha256": "3a2000a0b5a8082ed30c6a350cde4b3c8119c0588288a45dcc8ac22f422af220",
+      "rebuilt": false
+    },
+    {
+      "name": "66-sblaster.arm.o",
+      "sha256": "edae2e33fbf605900fc807bef8998a3804c5bdbca282be40ca6c5ddfc7a77608",
+      "rebuilt": false
+    },
+    {
+      "name": "67-adlib.arm.o",
+      "sha256": "32c9bb21ffa6b4bdb81eb43c55fb068c65bb91c19f4a5f0ff9a0e9379e06a498",
+      "rebuilt": false
+    },
+    {
+      "name": "68-dbopl.arm.o",
+      "sha256": "17a1cf52436832c9f5d75a3a89a2b83f11611035d75c4f6c4937b6ab4bca5e65",
+      "rebuilt": false
+    },
+    {
+      "name": "69-pcspeaker.arm.o",
+      "sha256": "0ce167a5f1d06b7867c890b4091597d6054bdd7ec5368c7ec64296f2f6a5e4ad",
+      "rebuilt": false
+    },
+    {
+      "name": "70-compat.arm.o",
+      "sha256": "b9a682fb464ea3f8d85dbfca124b26376a4c33b206231a6548f80b2d24b00c26",
+      "rebuilt": false
+    },
+    {
+      "name": "71-audio.arm.o",
+      "sha256": "fb3e405b3ea300d11396f66daebb68e659246219f5d7e61186b0aeabbbb4e939",
+      "rebuilt": false
+    },
+    {
+      "name": "72-serialport.arm.o",
+      "sha256": "985f3ea1d81ba1ac8387d17e4c391b22b75ea4bb233e7a3cb0f0a4609f117141",
+      "rebuilt": false
+    },
+    {
+      "name": "73-joystick.arm.o",
+      "sha256": "ec47f6197cdd1a5359713d8c3296a90025bad792619cfcd5d55815fac6fad81f",
+      "rebuilt": false
+    },
+    {
+      "name": "74-gus.arm.o",
+      "sha256": "5e7651390fae541672d5c35626a64a5b08edfd748ebea031a3a36ca494e1a7a8",
+      "rebuilt": false
+    },
+    {
+      "name": "75-gameblaster.arm.o",
+      "sha256": "b2b1b76703daf7526dcf5cdf58d2c21f68bb7442c0a4d0653ed3b68f684e1c51",
+      "rebuilt": false
+    },
+    {
+      "name": "76-tandy_sound.arm.o",
+      "sha256": "18a78b3fa4c6095e8bf9ace34b0c8005b1d01e8d1250b4e25a3d17db442989fd",
+      "rebuilt": false
+    },
+    {
+      "name": "77-saa1099.arm.o",
+      "sha256": "653dc469430081365d2b71d08e1d5f70e21e946d7030f12c476023690efff1b0",
+      "rebuilt": false
+    },
+    {
+      "name": "78-sn76496.arm.o",
+      "sha256": "ffe3f5ffc1f6f1a0b4d9374881fc3c27e87fc33a03f328ee3da22b9fa771822c",
+      "rebuilt": false
+    },
+    {
+      "name": "79-serial.arm.o",
+      "sha256": "e859258b4b940ba30f125cb88eb27dd60f385f6a55eba21d76eb746093228ae4",
+      "rebuilt": false
+    },
+    {
+      "name": "80-core_dynrec.arm.o",
+      "sha256": "29217e7fa5f7f6bd9a8aa480cf619ed96474edf632acb84a38db173f486a5ef1",
+      "rebuilt": false
+    },
+    {
+      "name": "81-adapter.arm.o",
+      "sha256": "82d0edfb15ad9e1ddf783ede4aa3ec1ff57f184f5a9b22ea1ea10852eebf56b4",
+      "rebuilt": false
+    },
+    {
+      "name": "82-runtime.arm.o",
+      "sha256": "5eff5da28904d87bbe609ab4231a38d6c24ad468b82f6377cd26456ff6c9410f",
+      "rebuilt": false
+    },
+    {
+      "name": "83-bench.arm.o",
+      "sha256": "58f2e2e9572aabb6696e4485c4bbcfd80d37d4631b50d11caea28b8a26e75161",
+      "rebuilt": true
+    },
+    {
+      "name": "84-heap.arm.o",
+      "sha256": "2de5aed879f7543a9736ba7abf51d31a61ab999eddf0144f2c2985b58dd8c62c",
+      "rebuilt": false
+    },
+    {
+      "name": "85-memory.arm.o",
+      "sha256": "5d7bf53cfb710b9ae0dbf24c2d93f97185a7ef27da05518849792361e012d18f",
+      "rebuilt": false
+    },
+    {
+      "name": "86-worker.arm.o",
+      "sha256": "74382d9082850197ac500bc8e44674e9a798645f9e9d7fff289cb82d330c0a89",
+      "rebuilt": false
+    },
+    {
+      "name": "87-mmu.arm.o",
+      "sha256": "e8295c0fabb33e305afca28c569baff67bda7fc8beb75fe5efc1551d02f49b3c",
+      "rebuilt": false
+    },
+    {
+      "name": "88-mmu_asm.arm.o",
+      "sha256": "585de43ec839dda47bdc8cb415ae15cf07ef677cd8e86e2356d75172934d9345",
+      "rebuilt": false
+    },
+    {
+      "name": "89-setjmp.arm.o",
+      "sha256": "45603108b1db9d416bf0966266acdb157fb5479aea208349f48ec5ce0f876dcc",
+      "rebuilt": false
+    },
+    {
+      "name": "90-srandom.arm.o",
+      "sha256": "d2b358bb2275bbfbc1b3bc85b49e25e3af0995e94cab4b9ed9cff469119ba860",
+      "rebuilt": false
+    },
+    {
+      "name": "91-platform_time.arm.o",
+      "sha256": "8e7be81bc9521050b63097d49e8624b381a7024dd4b364f6d390ddfcbfc77024",
+      "rebuilt": false
+    },
+    {
+      "name": "92-transport.arm.o",
+      "sha256": "8c452dbbf2766622c25a992a3bbd23211abe7617379b7ace84b5187d731d9034",
+      "rebuilt": false
+    },
+    {
+      "name": "93-remote_drive.arm.o",
+      "sha256": "38dbb502a590223a3a0cfbba894d853dfa7a0920dacd9f416a7bf3fff4ce7138",
+      "rebuilt": false
+    },
+    {
+      "name": "94-frontend.arm.o",
+      "sha256": "9f719811a22a3cb7572b8d4ad2eea64908cf18674aecead1344c01a6fb170188",
+      "rebuilt": false
+    },
+    {
+      "name": "95-cxx_runtime.arm.o",
+      "sha256": "e1c3437036252a1579ba71839e45d15b26e8a2ef1c5ee6602fa0eda510ca5f9c",
+      "rebuilt": false
+    },
+    {
+      "name": "96-gcc_list.arm.o",
+      "sha256": "5b8ea8d49461a2167bd8bb783d8e58d93d4ab35fcea4346734080bada0059a08",
+      "rebuilt": false
+    },
+    {
+      "name": "97-devices.arm.o",
+      "sha256": "65347f624e0ad63b1bbdaba0dff923df78af29b5ab9f5d8a647bb6060483276c",
+      "rebuilt": false
+    },
+    {
+      "name": "98-boot.arm.o",
+      "sha256": "8de6c4a52fca242de611f6e9368c0f2a51d1cabd05328379f46d9f69c9ba2dd8",
+      "rebuilt": false
+    },
+    {
+      "name": "99-video.arm.o",
+      "sha256": "e79f44e7c2358a9cdac76fef5899ffd03bbb5cb93b966f952c93cefc034ccfe1",
+      "rebuilt": false
+    },
+    {
+      "name": "100-direct.arm.o",
+      "sha256": "5c9d5163dabecd3a91ecf6090a05506c960aa53ad5f74e53e440789e47b410ad",
+      "rebuilt": true
+    },
+    {
+      "name": "101-profile.arm.o",
+      "sha256": "11907d3004f6e274d687c2b0c689eada3edb40302968fb9d2d469d2caae134cf",
+      "rebuilt": false
+    },
+    {
+      "name": "102-cd.arm.o",
+      "sha256": "70c5843bc571ea2be5a007a3c8619d34b06d0c66d61e443ad976bdd9bd75799e",
+      "rebuilt": false
+    },
+    {
+      "name": "103-midi.arm.o",
+      "sha256": "a1a89add935b0ea6c0c5e0437dc8015bec891ff4e4aef17d1c15815536b89281",
+      "rebuilt": false
+    },
+    {
+      "name": "104-dynrec.arm.o",
+      "sha256": "b4261922bd0d6762f4f323c44db233960965977f961d3e1700c09cbb9fa9fff6",
+      "rebuilt": false
+    },
+    {
+      "name": "105-neon_context.arm.o",
+      "sha256": "d417a51a3d3917054b215bd7942a4e2f5dc1af16e9492c01d0e4d4a4a957c461",
+      "rebuilt": false
+    },
+    {
+      "name": "106-neon_state.arm.o",
+      "sha256": "aed04f1c3c8aaf7a511b353cbb44f6c079a8cfb60019ee0407386de459747a32",
+      "rebuilt": false
+    },
+    {
+      "name": "107-pixels_neon.arm.o",
+      "sha256": "23b3075abe961e87d8fe2915d5f2eb3166d34b0e9919bd30e34e9c400150ab8e",
+      "rebuilt": false
+    }
+  ]
+}

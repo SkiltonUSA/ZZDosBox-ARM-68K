@@ -10,6 +10,15 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
+## Unreleased — calibrated runtime timing
+
+- Add opt-in ARM timer calibration for FPS and adaptive presentation at the
+  supported clock settings. Native cadence/bounds tests pass. Extend hardware
+  checks to the retained packaged Expanded core without replacing its JIT core.
+  The release default remains unchanged pending clean toolchain and variant
+  validation. [Timing investigation](docs/runtime-clock/README.md) ·
+  [Expanded-core checks](docs/runtime-clock/expanded/README.md).
+
 ## Unreleased — Glide-to-RasterIX encoder
 
 - Add guest-timer snapshots over the same gameplay interval as the FPS counter.

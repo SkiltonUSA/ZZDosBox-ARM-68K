@@ -44,3 +44,9 @@ A subsequent host build incorrectly enabled the separate startup SIMD witness
 layout; Doom completed but that unrelated zero witness failed final validation.
 The final build uses the DOS runtime's own SIMD report, as the normal builder
 does. Both rejected builds remain recorded locally and were never installed.
+
+## Expanded-core follow-up
+
+The same timer integration now has a separate candidate using the retained
+packaged Expanded core (4 MiB JIT, 32 MiB guest maximum, 64 MiB allocation).
+See [provenance, hardware checks and promotion limits](expanded/README.md).
