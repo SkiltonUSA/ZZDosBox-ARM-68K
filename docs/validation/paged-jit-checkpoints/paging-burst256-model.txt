@@ -1,0 +1,48 @@
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 18 heap 3824896
+PASS paging policy; paged register dispatches 9 fallback calls 12
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_blocks.bin faults 0 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 20 dispatches 18 heap 3824896
+PASS paging policy; paged register dispatches 9 fallback calls 12
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_blocks.bin faults 0 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 10 heap 3820736
+PASS paging policy; paged register dispatches 1 fallback calls 6
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_alias.bin faults 0 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 10 heap 3820736
+PASS paging policy; paged register dispatches 1 fallback calls 6
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_alias.bin faults 0 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 10 heap 3820736
+PASS paging policy; paged register dispatches 1 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_fetch.bin faults 1 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 10 heap 3820736
+PASS paging policy; paged register dispatches 1 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_fetch.bin faults 1 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 10 heap 3820736
+PASS paging policy; paged register dispatches 1 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_rmw.bin faults 1 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 10 heap 3820736
+PASS paging policy; paged register dispatches 1 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_rmw.bin faults 1 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 10 heap 3820736
+PASS paging policy; paged register dispatches 1 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_nested.bin faults 2 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 12 dispatches 10 heap 3820736
+PASS paging policy; paged register dispatches 1 fallback calls 2
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_nested.bin faults 2 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 17 dispatches 1225 heap 3820736
+PASS paging policy; paged register dispatches 1212 fallback calls 2686
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_privilege.bin faults 1 and shutdown with unmapped text aperture
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 17 dispatches 1225 heap 3820736
+PASS paging policy; paged register dispatches 1212 fallback calls 2686
+PASS ARM paging fixture <checkout>/.context/amiga/dosbox-expansion/paging/paging_privilege-486.bin faults 1 and shutdown with unmapped text aperture

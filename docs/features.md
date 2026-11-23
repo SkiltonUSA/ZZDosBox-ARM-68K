@@ -75,7 +75,7 @@ for untrusted programs.
 | --- | --- |
 | Shared C: drawer | Read/write access to an Amiga directory, nested directories and restricted DOS 8.3 names. Current runtimes use bounded 4 KiB read-ahead for small read-only file requests; writes stay synchronous. [Measurement and coherence rules](amiga-dosbox-file-read-optimisation.md). |
 | Screenshots | Ctrl+F5 saves the completed player display as a local PPM. Per-program previews appear beside the library list; Capture launches the selected entry. |
-| Game saves | Normal files written by the game persist. Emulator snapshots/save states are not implemented. |
+| Game saves | Normal files written by the game persist. Emulator snapshots/save states are not implemented. A [CPU checkpoint component](paged-jit-and-save-states.md) is under development; it does not save a complete game. |
 | Floppy boot | Read-only 1.44 MB BIOS disk images. |
 | Hard-disk boot | The Windows/image runtime supports writable 32–256 MiB BIOS disk images, in 256 KiB increments, with bounds checking and persistent writes. Each image profile chooses its disk and startup command. |
 | New hard disk | Create a 32, 64, 128 or 256 MiB raw FAT16 `.IMG`, with startup files and an OS library entry. DOSBox DOS 5 is the default; optional MS-DOS 6.22 uses the installed system files. Existing images are never replaced. |

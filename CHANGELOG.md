@@ -10,6 +10,15 @@ Reconstructed from retained source, build metadata and development reports.
 No distinct 0.10.2 milestone was established from those records; the earlier
 scanline candidate is retained in the experiment notes rather than assigned one.
 
+## Unreleased experiments
+
+- Add isolated paged-JIT builds with bounded register groups and configurable,
+  event-bounded interpreter fallback batches. Keep release defaults unchanged.
+- Add a development-only real-mode CPU checkpoint and instruction-boundary,
+  corruption and fresh-process CPU/RAM continuation tests. This does not yet
+  implement emulator/game save states.
+- [Implementation and validation](docs/paged-jit-and-save-states.md).
+
 ## 1.0.2 Beta
 
 - Archive documentation refresh: include the current main README as readme.txt,

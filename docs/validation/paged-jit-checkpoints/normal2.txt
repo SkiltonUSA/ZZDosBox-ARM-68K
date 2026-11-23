@@ -1,0 +1,18 @@
+JIT magic=4a495431 commits=6004 witness=1 dispatches=4490378 cache_bytes=4194304 heap_peak=4023616 paged_fallbacks=99619
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+PC frames=414 emulated_ms=6000 wall_ms=37514 timed_done=1
+PROFILE total=000000037e2c8c0b unwound=0
+PROFILE bucket=other ticks=00000001c7a66262 calls=0
+PROFILE bucket=cpu ticks=000000011da83222 calls=1974565
+PROFILE bucket=events ticks=000000003b98151d calls=1980565
+PROFILE bucket=capture ticks=0000000015bf1398 calls=167487
+PROFILE bucket=grant ticks=000000001c287f11 calls=414
+PROFILE bucket=copy ticks=000000002b5e4fc1 calls=414
+SHELL PASS mode=0
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=10334000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=3
+MOUSE events=0 press=0 release=0
+DISPLAY frames=414 flips=0 wait_us=0 background_waits=0
+COPY observed_us=2408993 max_us=24543
+PIPELINE enabled=1 overlaps=0 releases=414
+LAUNCHER exit=0; owned memory released
+PLAYER_RC=0
