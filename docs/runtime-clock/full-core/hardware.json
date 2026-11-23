@@ -1,0 +1,50 @@
+[
+  {
+    "mode": "Window Normal",
+    "guest_mib": 8,
+    "timer_hz": 399991297,
+    "guest_ms": 20000,
+    "source_frames": 320,
+    "shown": 1400,
+    "audio_gaps": 623,
+    "completed_audio_frames": 640000,
+    "cleanup": "pass",
+    "log": "wo2e14.log"
+  },
+  {
+    "mode": "Window Adaptive",
+    "guest_mib": 8,
+    "timer_hz": 399997509,
+    "guest_ms": 20000,
+    "source_frames": 320,
+    "shown": 417,
+    "audio_gaps": 487,
+    "completed_audio_frames": 640000,
+    "cleanup": "pass",
+    "log": "wa2e5f.log"
+  },
+  {
+    "mode": "Fullscreen Adaptive",
+    "guest_mib": 8,
+    "timer_hz": 399992732,
+    "guest_ms": 20000,
+    "source_frames": 320,
+    "shown": 434,
+    "audio_gaps": 466,
+    "completed_audio_frames": 640000,
+    "cleanup": "pass",
+    "log": "fa2ea0.log"
+  },
+  {
+    "mode": "Window Adaptive",
+    "guest_mib": 32,
+    "timer_hz": 399994008,
+    "guest_ms": 20000,
+    "source_frames": 320,
+    "shown": 426,
+    "audio_gaps": 490,
+    "completed_audio_frames": 640000,
+    "cleanup": "pass",
+    "log": "mwa2f0a.log"
+  }
+]

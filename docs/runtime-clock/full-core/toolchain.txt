@@ -1,0 +1,5 @@
+binutils-arm-none-eabi	1:2.47-2+33
+gcc-arm-none-eabi	15:15.3.rel1-3
+libstdc++-arm-none-eabi	15:15.3.rel1-1+33
+libstdc++-arm-none-eabi-common	15:15.3.rel1-1+33
+picolibc-arm-none-eabi	1.8.12-1

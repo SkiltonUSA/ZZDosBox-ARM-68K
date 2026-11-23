@@ -50,3 +50,6 @@ does. Both rejected builds remain recorded locally and were never installed.
 The same timer integration now has a separate candidate using the retained
 packaged Expanded core (4 MiB JIT, 32 MiB guest maximum, 64 MiB allocation).
 See [provenance, hardware checks and promotion limits](expanded/README.md).
+
+A subsequent [full-source Expanded rebuild](full-core/README.md) removes the
+retained DOSBox-object dependency and documents the matching compiler headers.

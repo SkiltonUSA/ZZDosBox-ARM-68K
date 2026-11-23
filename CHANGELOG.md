@@ -12,6 +12,11 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased — calibrated runtime timing
 
+- Restore a matching GCC 15.3.1/picolibc/C++ toolchain and rebuild all 108 ARM
+  objects for the Expanded candidate. Publish the pinned container recipe and
+  source/build evidence. Other player variants remain separate promotion gates.
+  [Full-source rebuild](docs/runtime-clock/full-core/README.md).
+
 - Add opt-in ARM timer calibration for FPS and adaptive presentation at the
   supported clock settings. Native cadence/bounds tests pass. Extend hardware
   checks to the retained packaged Expanded core without replacing its JIT core.

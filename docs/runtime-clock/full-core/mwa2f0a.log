@@ -1,0 +1,95 @@
+OWNED amiga=50000040 arm_candidate=101f0040 size=67108864 nonce=0ee78a56
+BOOTSTRAP amiga=40c73d00 arm=00e63d00 (P96 allocated/locked)
+MAP status=4d415031 SCTLR=08c50878 MIDR=413fc090 MPIDR=80000001
+MAPPING PASS (eight nonce-derived words)
+ARM ready=41524d31 SCTLR=08c5187d MIDR=413fc090 MPIDR=80000001
+TIMER estimated_hz=399994008 selected_hz=400000000 calibration_us=2016762
+EXPANDED cpu=0 memory_services=0 joystick=0 extra_sound=0 cycle_mode=0 serial=0 paged_jit=0
+AUDIO task: AHI unit 0, 32000 Hz stereo; 4 queue slots, 64 ms prebuffer
+COMPAT ems=1 xms=1 sound=SB16 A220 I7 D1 H5 T6, OPL3 speaker=0
+DISPLAY_CONFIG mode=window fps=1 system=embedded DOS 5
+SETTINGS memory_mb=32 machine=0 cycles=10000 live=1
+WINDOW native_format=9 geometry=640x480 resizable=1 ARM=owned-bitmap present=P96-blit
+VIDEO adapter=0 source=320x400 monochrome=0
+JIT magic=4a495431 commits=8873 witness=1 dispatches=3649938 cache_bytes=4194304 heap_peak=3989440 paged_fallbacks=0
+NEON magic=4e454f31 witness=42 context_equal=1 cpacr=00f00000 fpexc=40000000 mvfr0=10110222 mvfr1=01111111
+SCANLINES magic=53434e31 frames=426 rendered_rows=204480 cleared_rows=0 skipped_rows=0 nonce_repairs=0
+CPU_CYCLES applied=10000
+PRESENT magic=50525331 source=1399 shown=426 skipped=973 divisor=4 changes=6 mode=1 hz=60 work_ticks=7265982 copy_ticks=2648327 total_copy=000000003d4f1be0
+ARM_FPS tenths=126
+PC frames=1399 emulated_ms=20000 wall_ms=41915 timed_done=1
+POLL ms=1 calls=13771 wait_us=24279199 max_us=52337
+SHELL result=2 guest_exit=0 slices=1001261 bytes=1340 hash=739f8cfc mismatches=0
+DosBox ZZ9000 project                         1.0.1 Beta
+AmigaOS - 32-bit | DOSBox / libretro
+https://github.com/SkiltonUSA/ZZDosBox-ARM-68K
+
+Alt+Return: window/fullscreen   Ctrl+- / Ctrl++: CPU speed
+F10: close session             HELP: DOS commands
+
+C:\>DOOM.EXE -playdemo demo3
+DOS/4GW Professional Protected Mode Run-time  Version 1.95
+Copyright (c) Rational Systems, Inc. 1990-1993
+
+P_Init: Checking cmd-line parameters...
+Playing demo demo3.lmp.
+V_Init: allocate screens.
+M_LoadDefaults: Load system defaults.
+Z_Init: Init zone memory allocation daemon. 
+DPMI memory: 0x1d72000, 0x800000 allocated for zone
+W_Init: Init WADfiles.
+	adding doom1.wad
+	couldn't open demo3.lmp
+	shareware version.
+M_Init: Init miscellaneous info.
+R_Init: Init DOOM refresh daemon - [                   ]...................
+P_Init: Init Playloop state.
+I_Init: Setting up machine state.
+I_StartupDPMI
+I_StartupMouse
+Mouse: detected
+CyberMan: Wrong mouse driver - no SWIFT support (AX=53c1).
+I_StartupJoystick
+I_StartupKeyboard
+I_StartupSound
+I_StartupTimer()
+  calling DMX_Init
+D_CheckNetGame: Checking network game status.
+startskill 2  deathmatch: 0  startmap: 1  startepisode: 1
+player 1 of 1 (1 nodes)
+S_Init: Setting up sound.
+HU_Init: Setting up heads up display.
+ST_Init: Init status bar.
+
+SHELL PASS mode=0
+AUDIO_TASK queued=640000 submitted=640000 completed=640000 highwater=4 error=0 stopped=1 gaps=490
+FILES_TIME calls=3123 read_us=7184933 write_us=0 other_us=1945668 max_us=28615 (totals saturate at 4294967295)
+FILES_OP op=open calls=7 total_us=24919 max_us=7998
+FILES_OP op=close calls=3 total_us=5654 max_us=2009
+FILES_OP op=read calls=1245 total_us=7184933 max_us=17239
+FILES_OP op=seek calls=1856 total_us=1887050 max_us=28615
+FILES_OP op=stat calls=12 total_us=28045 max_us=5365
+DISK host_seeks=0
+FILES requests=3123 read=5096445 written=0; handles closed
+EXIT epilogue=52455431 cache_echoes=0 rounds=0
+CACHE original=08c50878 running=08c5187d restored=08c50878
+MMU_RESTORE phase=3 register_mismatches=00000000 cpsr_control=1d3 expected=1d3 ttbr=10334000 ccsidr=701fe019 witness_bad=0 mailbox_rounds=3
+REGISTER n=0 original=08c50878 restored=08c50878
+REGISTER n=1 original=00501000 restored=00501000
+REGISTER n=2 original=4e000000 restored=4e000000
+REGISTER n=3 original=00000000 restored=00000000
+REGISTER n=4 original=02040000 restored=02040000
+REGISTER n=5 original=00000001 restored=00000001
+REGISTER n=6 original=600f01d3 restored=600f01d3
+REGISTER n=7 original=00000006 restored=00000006
+REGISTER n=8 original=00001100 restored=00001100
+REGISTER n=9 original=00098aa4 restored=00098aa4
+REGISTER n=10 original=44e048e0 restored=44e048e0
+REGISTER n=11 original=00000000 restored=00000000
+REGISTER n=12 original=00000001 restored=00000001
+REGISTER n=13 original=72360000 restored=72360000
+MOUSE events=0 press=0 release=0
+DISPLAY frames=426 flips=0 wait_us=0 background_waits=0
+COPY observed_us=1665367 max_us=24485
+PIPELINE enabled=1 overlaps=0 releases=426
+LAUNCHER exit=0; owned memory released

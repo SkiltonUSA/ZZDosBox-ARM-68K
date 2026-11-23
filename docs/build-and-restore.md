@@ -48,6 +48,26 @@ Use `make build-current`, `make build-expanded` and `make build-network-jit`
 for the 0.22.2 runtime configurations. These enable bounded file read-ahead;
 historical command lines retain the unbuffered path unless explicitly requested.
 
+### Matching ARM compiler and C++ headers
+
+The [container recipe](../scripts/dosbox-toolchain.Containerfile) records the
+Debian GCC 15.3.1/picolibc 1.8.12 environment used for the full-core clock checks.
+The target C++ headers require **libstdc++-arm-none-eabi**, not only its `common`
+package. Do not mix the Arm download's newlib headers with Debian picolibc.
+
+```
+podman build --platform linux/arm64 -t zz-dos-arm - < scripts/dosbox-toolchain.Containerfile
+podman run -d --name zz-dos-arm-build -v "$PWD:/work" -w /work zz-dos-arm sleep infinity
+export DOSBOX_ARM_COMMAND='["podman","exec","zz-dos-arm-build"]'
+```
+
+Select your Podman connection explicitly if needed. Package versions are pinned;
+if Debian rotates them out, use its snapshot archive rather than silently
+upgrading. This environment does not replace the separately pinned m68k SDK.
+Use a fresh `--output .context/<name>` when changing compilers: the existing
+per-object cache is source/flag based and does not fingerprint the compiler.
+[Full-core validation](runtime-clock/full-core/README.md).
+
 The launcher icon converter additionally needs ImageMagick (`magick`). The
 archived PIC soft-float libc is restored by the preparation script; its member
 sources and hashes are in `amiga/common/libc/libc-sources.json`. Rebuild it with

@@ -38,3 +38,9 @@ The results do not establish an FPS gain or uninterrupted audio. Source-frame
 and presentation counters are not Doom's internal rendered-game FPS. Descent
 and Duke-specific observers retain separate clock assumptions and are outside
 this candidate.
+
+## Follow-up
+
+The full current DOSBox source now rebuilds with a matching Debian toolchain.
+See [full-core validation](../full-core/README.md). The retained-object checks
+above remain historical evidence and have not been relabelled as that build.
