@@ -62,8 +62,15 @@ architecture mismatch are rejected. AddressSanitizer/UndefinedBehaviorSanitizer
 pass. The component also compiles for Cortex-A9 ARM32; it has not yet been used
 for a physical game-state restoration.
 
+Validation also rejects 20 deliberately malformed records with recalculated,
+valid CRCs. Checks now cover selector/descriptor widths, lazy carry, 16-bit stack
+masks and the relationship between DF and string direction. Rejection leaves the
+CPU unchanged. Both forward and reverse string direction remain restorable.
+The existing 200 continuation points and fresh-process CPU/RAM replay still pass
+under ASan/UBSan. This is correctness work, not a JIT speed improvement.
+
 ```sh
-python3 scripts/test_dosbox_cpu_checkpoint.py
+python3 scripts/test_dosbox_cpu_checkpoint.py --output .context/checkpoint-validation
 ```
 
 The private CPU/RAM test file is **not** a supported game-state format. The

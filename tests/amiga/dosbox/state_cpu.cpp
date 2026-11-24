@@ -27,6 +27,39 @@ static std::vector<uint8_t> checkpoint(){
  std::vector<uint8_t> image(db_cpu_checkpoint_bytes);
  assert(db_cpu_checkpoint_save(image.data(),image.size()));return image;
 }
+// Recalculate the wire CRC so malformed-field tests reach semantic validation.
+static void set_word(std::vector<uint8_t> &image,unsigned word,uint32_t value){
+ for(unsigned b=0;b<4;b++)image[word*4+b]=(uint8_t)(value>>(8*b));
+}
+static void repair_crc(std::vector<uint8_t> &image){
+ uint32_t crc=~0u;
+ for(unsigned i=0;i<image.size();i++)if(i<12||i>=16){
+  crc^=image[i];for(unsigned b=0;b<8;b++)crc=(crc>>1)^((crc&1)?0xedb88320u:0);
+ }
+ set_word(image,3,~crc);
+}
+static void malformed_fields(){
+ auto before=checkpoint();
+ const uint32_t fields[][2]={
+  {15,0x10000},{22,0x10000},{34,0xffffffff},{35,0xffffffff},{36,2},
+  {37,4},{38,4},{39,1},{39,0x80000000},{41,0x10000},{43,0x10000},
+  {44,0xffffffff},{45,0},{46,1},{47,1},{50,0},{50,2},{50,0xffffffff},{51,1}
+ };
+ for(auto &field:fields){
+  auto bad=before;set_word(bad,field[0],field[1]);repair_crc(bad);
+  if(db_cpu_checkpoint_load(bad.data(),bad.size())){
+   fprintf(stderr,"accepted invalid CPU checkpoint word %u = %08x\n",field[0],field[1]);abort();
+  }
+  assert(checkpoint()==before);
+ }
+ // DF and direction are a pair, not independent values.
+ CPU_SetFlags(FLAG_IF|FLAG_DF,FMASK_ALL);auto reverse=checkpoint();
+ assert(db_cpu_checkpoint_load(reverse.data(),reverse.size()));
+ auto bad=reverse;set_word(bad,50,1);repair_crc(bad);
+ assert(!db_cpu_checkpoint_load(bad.data(),bad.size()));assert(checkpoint()==reverse);
+ assert(db_cpu_checkpoint_load(before.data(),before.size()));
+ puts("PASS CPU checkpoint: 20 valid-CRC malformed records rejected atomically; reverse string direction restored");
+}
 static void disk_resume(const char *mode,const char *path){
  initialise();step(240);auto expected=checkpoint();
  std::vector<uint8_t> expected_ram(ram,ram+sizeof(ram));
@@ -57,6 +90,7 @@ int main(int argc,char **argv){
   assert(checkpoint()==expected&&memcmp(ram,expected_ram.data(),sizeof(ram))==0);
  }
  initialise();step(4);auto saved=checkpoint();auto before=checkpoint();
+ malformed_fields();
  for(size_t n=0;n<saved.size();n++){
   auto corrupt=saved;corrupt[n]^=0x80;
   assert(!db_cpu_checkpoint_load(corrupt.data(),corrupt.size()));assert(checkpoint()==before);

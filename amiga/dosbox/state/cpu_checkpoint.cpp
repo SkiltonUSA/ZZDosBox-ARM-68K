@@ -40,10 +40,13 @@ Image capture(){
  x.v[68]=CPU_Cycles;x.v[69]=CPU_CycleLeft;x.v[3]=checksum(x);return x;
 }
 bool valid(const Image &x){
+ for(unsigned n=0;n<8;n++)if(x.v[15+n]>0xffffu)return false;
  return x.v[0]==magic&&x.v[1]==schema&&x.v[2]==db_cpu_checkpoint_bytes&&x.v[3]==checksum(x)&&
   x.v[4]==unsigned(CPU_ArchitectureType)&&!(x.v[14]&(FLAG_VM|FLAG_TF))&&
-  x.v[34]<t_LASTFLAG&&x.v[35]<t_LASTFLAG&&x.v[37]<=3&&x.v[38]<=3&&
-  !(x.v[39]&0x80000001u)&&x.v[46]==0&&x.v[47]==0&&x.v[51]==0;
+  x.v[34]<t_LASTFLAG&&x.v[35]<t_LASTFLAG&&x.v[36]<=1&&x.v[37]<=3&&x.v[38]<=3&&
+  !(x.v[39]&0x80000001u)&&x.v[41]<=0xffffu&&x.v[43]<=0xffffu&&
+  x.v[44]==0xffffu&&x.v[45]==0xffff0000u&&
+  x.v[50]==((x.v[14]&FLAG_DF)?0xffffffffu:1u)&&x.v[46]==0&&x.v[47]==0&&x.v[51]==0;
 }
 void restore(const Image &x){
  for(unsigned n=0;n<8;n++)cpu_regs.regs[n].dword[0]=x.v[5+n];

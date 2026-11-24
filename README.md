@@ -42,7 +42,8 @@ Historical candidate measurements retain their tested build identities.
 [Validation and limits](docs/runtime-clock/README.md).
 
 **Paged JIT and save states:** bounded register-block candidates and a real-mode
-CPU checkpoint component are under test. Full game save/load is not available;
+CPU checkpoint component are under test, including malformed-state rejection.
+Full game save/load is not available;
 no paged-JIT speed gain has been established for the released player.
 [Implementation, tests and remaining work](docs/paged-jit-and-save-states.md).
 

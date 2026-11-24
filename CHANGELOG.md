@@ -12,6 +12,10 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased experiments
 
+- Harden the development CPU checkpoint against valid-CRC malformed fields;
+  add 20 atomic-rejection cases and reverse-direction restoration coverage.
+  Full PC save states remain unfinished; production binaries are unchanged.
+
 - Add isolated paged-JIT builds with bounded register groups and configurable,
   event-bounded interpreter fallback batches. Keep release defaults unchanged.
 - Add a development-only real-mode CPU checkpoint and instruction-boundary,

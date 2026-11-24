@@ -1,0 +1,3 @@
+PASS CPU checkpoint: 20 valid-CRC malformed records rejected atomically; reverse string direction restored
+PASS real CPU checkpoint: 200 resume points, pending flags, stack, REP, RAM continuation; corrupt/truncated/mismatched/unsupported states rejected without mutation
+PASS CPU checkpoint and test RAM resumed in a fresh process

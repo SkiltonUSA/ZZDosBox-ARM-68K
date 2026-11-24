@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Test the development-only real-mode CPU component; not a PC save state."""
-import subprocess
+import argparse, subprocess
 from pathlib import Path
 import build_dosbox as b
-b.OUT=b.ROOT/'.context/amiga/dosbox-state-cpu'
+parser=argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output',type=Path,default=b.ROOT/'.context/amiga/dosbox-state-cpu')
+b.OUT=parser.parse_args().output.resolve()
 units=b.prepare()
 output=b.OUT/'state-cpu-test'
 subprocess.run(['clang++','-std=c++17','-O1','-g','-fsanitize=address,undefined',
