@@ -2,6 +2,9 @@
 
 ## Unreleased — JIT/x87 compatibility checks
 
+- Both new fixtures pass on physical hardware at 800 MHz with clean context
+  restoration and memory release; recorded production player unchanged.
+
 - Add page-crossing segment-alias SMC and x87 rounding/state fixtures; both pass
   on the retained Compat ARM payload at two addresses. No player changes.
 - [Validation and limits](docs/validation/smc-fpu/README.md).

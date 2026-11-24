@@ -42,8 +42,8 @@ Historical candidate measurements retain their tested build identities.
 [Validation and limits](docs/runtime-clock/README.md).
 
 [JIT/x87 compatibility checks](docs/validation/smc-fpu/README.md): page-crossing
-aliased code writes and rounding/state restoration pass on the ARM instruction
-model; physical checks remain pending.
+aliased code writes and rounding/state restoration pass in the ARM instruction
+model and on physical hardware at 800 MHz, with clean teardown.
 
 **Paged JIT and save states:** bounded register-block candidates and a real-mode
 CPU checkpoint component are under test, including malformed-state rejection.

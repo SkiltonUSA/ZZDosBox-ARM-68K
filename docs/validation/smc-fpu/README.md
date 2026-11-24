@@ -25,7 +25,12 @@ modifies the retained player. Tests require Unicorn, Clang and LLVM lld/nm.
 
 These are instruction-model correctness results, not a paged-JIT speed gain,
 complete emulator save-state implementation or physical-cache validation.
-No player or installer changed. Physical runs remain pending because the bridge's
-Amiga connection was disconnected before any hardware test started.
+No player or installer changed. Both fixtures subsequently passed on the physical
+A4000TX at the retained 800 MHz setting, using an isolated copy of the recorded
+player. Their guest PASS messages were captured, with 530/20 JIT commits and
+1885/867 dispatches respectively. Host SIMD context, registers and cache witness
+restored; both runs released their allocated memory. These short fixtures are
+correctness checks, not gameplay/FPS or complete save-state evidence.
+[Hardware results](hardware.txt) · [Player hash](hardware-inputs.json).
 
 [Results](results.txt) · [Input and fixture hashes](hashes.json).
