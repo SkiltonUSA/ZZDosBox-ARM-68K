@@ -41,6 +41,10 @@ shows presentation FPS, not an application benchmark. [Build and test details](d
 Historical candidate measurements retain their tested build identities.
 [Validation and limits](docs/runtime-clock/README.md).
 
+[JIT/x87 compatibility checks](docs/validation/smc-fpu/README.md): page-crossing
+aliased code writes and rounding/state restoration pass on the ARM instruction
+model; physical checks remain pending.
+
 **Paged JIT and save states:** bounded register-block candidates and a real-mode
 CPU checkpoint component are under test, including malformed-state rejection.
 Full game save/load is not available;

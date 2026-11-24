@@ -1,5 +1,11 @@
 # ZZDosBox changelog
 
+## Unreleased — JIT/x87 compatibility checks
+
+- Add page-crossing segment-alias SMC and x87 rounding/state fixtures; both pass
+  on the retained Compat ARM payload at two addresses. No player changes.
+- [Validation and limits](docs/validation/smc-fpu/README.md).
+
 Version history from **0.1.0-dev** through **1.0.2 Beta**, newest first.
 Versions identify ZZDosBox development milestones, not upstream DOSBox releases.
 Launcher and ARM runtimes can carry different version strings; experiments

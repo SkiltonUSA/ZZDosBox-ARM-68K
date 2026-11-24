@@ -1,0 +1,7 @@
+{
+  ".context/release-102/compat/dosbox.elf": "7efecb7c33e58d5832579337e22b9847f8cb4fd83985038cf2035a069770c953",
+  "tests/amiga/dosbox/smc_alias.S": "e58d11f1c1eb1fe34017976ff47d1634f3ae29d19fb839f55d080aba0395d269",
+  "tests/amiga/dosbox/x87_roundtrip.S": "6cf011842b6d5e1e8eca55736a595a893c39c5724e69821554f5e0e4ed0349c0",
+  ".context/smc-fpu-test/SMCALIAS.COM": "dea3481c6768fe2dece7822fc1202a9d3e49b84f3adce7c44ccdbc6916a5bf74",
+  ".context/smc-fpu-test/FPROUND.COM": "307e317ea75ba395a149d97a74f70ff8e2e0d551e20c6c05d97febb8bdc4c8bd"
+}

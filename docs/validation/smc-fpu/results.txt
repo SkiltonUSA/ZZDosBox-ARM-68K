@@ -1,0 +1,29 @@
+CASE SMCALIAS 0x12000040 inherited FPSCR 0x3c09f00
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 529 dispatches 1041 heap 3913344
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability SMCALIAS {'cpu': 1} PCM 0 0
+CASE SMCALIAS 0x150020c0 inherited FPSCR 0x1000000
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 529 dispatches 1041 heap 3913344
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability SMCALIAS {'cpu': 1} PCM 0 0
+CASE FPROUND 0x12000040 inherited FPSCR 0x3c09f00
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 26 heap 3913344
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability FPROUND {'cpu': 1} PCM 0 0
+CASE FPROUND 0x150020c0 inherited FPSCR 0x1000000
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 19 dispatches 26 heap 3913344
+PASS profile publication and exclusive totals fixture unwound 0
+PASS ARM capability FPROUND {'cpu': 1} PCM 0 0
+PASS instruction-model compatibility; no physical timing claim
+
+Existing x87 regression:
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 32 dispatches 31 heap 3913152
+PASS ARM x87 arithmetic/rounding/state and SIMD restoration
+PASS NEON execution witness, all 32 SIMD registers and FPSCR restored
+PASS JIT cache witness/report, commits 32 dispatches 31 heap 3913152
+PASS ARM x87 arithmetic/rounding/state and SIMD restoration
