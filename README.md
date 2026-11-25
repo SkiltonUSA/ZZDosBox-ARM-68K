@@ -1,6 +1,8 @@
 # ZZDosBox — 1.0.2 Beta
 
 <!-- current-release -->
+
+[Remaining work and validation limits](docs/remaining-work.md). Historical results retain their tested build labels.
 ## Current release — 1.0.2 Beta
 
 [Download the AmiPkg installer](https://github.com/SkiltonUSA/ZZDosBox-ARM-68K/releases/tag/v1.0.2-beta) · [Changes and installation](docs/release-notes.md)
@@ -32,7 +34,7 @@ and display coordination through [Xanxi's XACP platform](https://github.com/Xanx
 
 ![Windows for Workgroups 3.11 Program Manager running in ZZDosBox on the A4000TX and ZZ9000](docs/runtime-clock/remaining-variants/windows-interpreter.png)
 
-Program Manager on the latest tested Windows interpreter candidate. The overlay
+Program Manager on the Windows interpreter build recorded for the 1.0.2 release. The overlay
 shows presentation FPS, not an application benchmark. [Build and test details](docs/runtime-clock/remaining-variants/README.md).
 
 ## Development builds
@@ -51,8 +53,10 @@ Full game save/load is not available;
 no paged-JIT speed gain has been established for the released player.
 [Implementation, tests and remaining work](docs/paged-jit-and-save-states.md).
 
-**Experimental [Glide-to-RasterIX translator](amiga/dosbox/glide/README.md):**
-the matching FPGA/firmware now completes physical GPU batches with pixel
+**Parked experiment — [Glide-to-RasterIX translator](amiga/dosbox/glide/README.md):**
+The following records describe the experimental firmware, not the released
+player or an active development priority. The matching FPGA/firmware completes
+physical GPU batches with pixel
 verification and clean shutdown. At 800 MHz ARM, the 1,000-frame test measured
 **9,302 offscreen FPS** for a **64 × 72 RGB565 solid triangle**, including Core0
 preparation, submission and completion polling. This is a small rendering test;
@@ -78,7 +82,7 @@ this synthetic result does not predict GTA performance.
   commits: **56.88 FPS at 320×240 (+4.56%)** and **47.24 FPS at 640×480 (+3.79%)**
   in matched hardware tests. A longer VGA run confirms the gain. These remain
   synthetic offscreen results; the released player is unchanged.
-- The existing 1.0 Beta release does not include this experimental firmware.
+- The current 1.0.2 Beta release does not include this experimental firmware.
 
 **Retained GTA baseline: 7.59 FPS** in the experimental Glide-to-RasterIX build.
 NEON copying from the completed readback channel reduced readback time by
@@ -89,7 +93,7 @@ sound off. Run lengths and player/camera positions differ; these are opening-str
 samples, not a fixed-replay benchmark.
 [Measurements, screenshot and limits](amiga/dosbox/glide/validation/gta-live/readback-copy/README.md).
 [Cycle-budget testing](amiga/dosbox/glide/validation/gta-live/cycle-budget/README.md)
-now compares FPS with guest timer progression: 6,000 cycles measured 7.61 FPS
+compares FPS with guest timer progression: 6,000 cycles measured 7.61 FPS
 with the closest guest-clock match. Movement/audio validation remains pending;
 the default is unchanged.
 
