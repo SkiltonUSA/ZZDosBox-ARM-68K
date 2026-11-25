@@ -31,6 +31,12 @@ bool valid(const Image &x){
  for(unsigned n=0;n<9;n++)if(x.v[10+n*3]>TAG_Empty)return false;
  return true;
 }
+bool decode(const void *buffer,size_t size,Image &x){
+ if(!buffer||size!=db_fpu_checkpoint_bytes)return false;
+ const uint8_t *p=(const uint8_t*)buffer;
+ for(unsigned n=0;n<words;n++)for(unsigned b=0;b<4;b++)x.v[n]|=uint32_t(p[n*4+b])<<(b*8);
+ return valid(x);
+}
 Image capture(){
  Image x{};x.v[0]=magic;x.v[1]=schema;x.v[2]=db_fpu_checkpoint_bytes;
  x.v[4]=portable_double;x.v[5]=fpu.cw;x.v[6]=fpu.sw;x.v[7]=fpu.top;
@@ -55,10 +61,10 @@ bool db_fpu_checkpoint_save(void *buffer,size_t size){
  for(unsigned n=0;n<words;n++)for(unsigned b=0;b<4;b++)p[n*4+b]=uint8_t(x.v[n]>>(b*8));
  return true;
 }
+bool db_fpu_checkpoint_validate(const void *buffer,size_t size){
+ Image x{};return decode(buffer,size,x);
+}
 bool db_fpu_checkpoint_load(const void *buffer,size_t size){
- if(!buffer||size!=db_fpu_checkpoint_bytes)return false;
- Image x{};const uint8_t *p=(const uint8_t*)buffer;
- for(unsigned n=0;n<words;n++)for(unsigned b=0;b<4;b++)x.v[n]|=uint32_t(p[n*4+b])<<(b*8);
- if(!valid(x))return false;
+ Image x{};if(!decode(buffer,size,x))return false;
  restore(x);return true;
 }

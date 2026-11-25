@@ -75,8 +75,8 @@ python3 scripts/test_dosbox_cpu_checkpoint.py --output .context/checkpoint-valid
 
 The private CPU/RAM test file is **not** a supported game-state format. The
 integer component intentionally does not promise hidden protected-mode state,
-a running DOS kernel or device restoration. The separate x87 component below
-still needs coordinated integration with it.
+a running DOS kernel or device restoration. The x87 component below is now coordinated with it by a processor transaction;
+whole-machine integration remains unfinished.
 
 ## Portable x87 checkpoint component
 
@@ -101,8 +101,9 @@ fresh-process continuation also passes under ASan/UBSan. A Cortex-A9 model loads
 native records, executes actual FPU operations and produces identical records.
 [Test results, build identities and limits](validation/fpu-checkpoint/README.md).
 
-This component is not linked into production players. Coordinated CPU/RAM/device
-validation, protected mode and full machine restoration remain unfinished.
+This component is not linked into production players. CPU/x87 prevalidation now runs as one transaction; RAM/device coordination,
+protected mode and full machine restoration remain unfinished.
+[Transaction evidence](validation/processor-checkpoint/README.md).
 
 ## Work needed before game save/load
 

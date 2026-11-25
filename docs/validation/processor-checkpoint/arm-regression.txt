@@ -1,0 +1,1 @@
+PASS Cortex-A9 portable x87: native wire image, four rounding continuations and 560 atomic corrupt-record refusals; no physical/FPS claim

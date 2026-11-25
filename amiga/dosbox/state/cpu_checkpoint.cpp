@@ -48,6 +48,12 @@ bool valid(const Image &x){
   x.v[44]==0xffffu&&x.v[45]==0xffff0000u&&
   x.v[50]==((x.v[14]&FLAG_DF)?0xffffffffu:1u)&&x.v[46]==0&&x.v[47]==0&&x.v[51]==0;
 }
+bool decode(const void *buffer,size_t size,Image &x){
+ if(!buffer||size!=db_cpu_checkpoint_bytes||!supported())return false;
+ const uint8_t *p=(const uint8_t*)buffer;
+ for(unsigned n=0;n<words;n++)for(unsigned b=0;b<4;b++)x.v[n]|=uint32_t(p[n*4+b])<<(b*8);
+ return valid(x);
+}
 void restore(const Image &x){
  for(unsigned n=0;n<8;n++)cpu_regs.regs[n].dword[0]=x.v[5+n];
  reg_eip=x.v[13];reg_flags=x.v[14];
@@ -69,9 +75,9 @@ bool db_cpu_checkpoint_save(void *buffer,size_t size){
  for(unsigned n=0;n<words;n++)for(unsigned b=0;b<4;b++)p[n*4+b]=(uint8_t)(x.v[n]>>(b*8));
  return true;
 }
+bool db_cpu_checkpoint_validate(const void *buffer,size_t size){
+ Image x{};return decode(buffer,size,x);
+}
 bool db_cpu_checkpoint_load(const void *buffer,size_t size){
- if(!buffer||size!=db_cpu_checkpoint_bytes||!supported())return false;
- const uint8_t *p=(const uint8_t*)buffer;Image x{};
- for(unsigned n=0;n<words;n++)for(unsigned b=0;b<4;b++)x.v[n]|=uint32_t(p[n*4+b])<<(b*8);
- if(!valid(x))return false;restore(x);return true;
+ Image x{};if(!decode(buffer,size,x))return false;restore(x);return true;
 }

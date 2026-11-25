@@ -7,4 +7,5 @@
 #include <stdint.h>
 enum { db_cpu_checkpoint_bytes=70*4 };
 bool db_cpu_checkpoint_save(void *buffer,size_t size);
+bool db_cpu_checkpoint_validate(const void *buffer,size_t size);
 bool db_cpu_checkpoint_load(const void *buffer,size_t size);

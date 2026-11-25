@@ -21,6 +21,11 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased experiments
 
+- Coordinate CPU/x87 checkpoints: validate both before restoration and stage both
+  before saving. Corrupt FPU data no longer permits partial CPU restoration in
+  the development transaction. Production save slots remain unavailable.
+  [Validation](docs/validation/processor-checkpoint/README.md).
+
 - Add a portable x87 checkpoint component with fixed little-endian fields,
   atomic rejection and preserved register bits. Actual interpreter continuation
   passes at 200 boundaries and in a fresh process; Cortex-A9 continuation matches

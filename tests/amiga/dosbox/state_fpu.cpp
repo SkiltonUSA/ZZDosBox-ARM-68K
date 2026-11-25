@@ -5,6 +5,7 @@
 #include "fpu.h"
 #include "state/cpu_checkpoint.h"
 #include "state/fpu_checkpoint.h"
+#include "state/processor_checkpoint.h"
 #include "fpu-program.h"
 extern void FPU_Init(Section*);
 using Bytes=std::vector<uint8_t>;
@@ -27,6 +28,7 @@ static void step(unsigned count){
 }
 static Bytes fp(){Bytes x(db_fpu_checkpoint_bytes);assert(db_fpu_checkpoint_save(x.data(),x.size()));return x;}
 static Bytes cpu_image(){Bytes x(db_cpu_checkpoint_bytes);assert(db_cpu_checkpoint_save(x.data(),x.size()));return x;}
+static Bytes processor(){Bytes x(db_processor_checkpoint_bytes);assert(db_processor_checkpoint_save(x.data(),x.size()));return x;}
 static void results(){
  const int32_t expected[]={2,-2,1,-3,2,-2,1,-2};
  for(unsigned n=0;n<8;n++)assert((int32_t)mem_readd(0x18100+n*4)==expected[n]);
@@ -42,13 +44,41 @@ static void rejected(Bytes bad,const Bytes &before){
 static void boundaries(){
  initialise();step(300);results();auto expected=fp(),expected_cpu=cpu_image();Bytes memory(ram,ram+sizeof(ram));
  for(unsigned at=0;at<200;at++){
-  initialise();step(at);auto saved=fp(),saved_cpu=cpu_image();Bytes saved_ram(ram,ram+sizeof(ram));
+  initialise();step(at);auto saved=processor();Bytes saved_ram(ram,ram+sizeof(ram));
   initialise();memcpy(ram,saved_ram.data(),sizeof(ram));
-  assert(db_cpu_checkpoint_load(saved_cpu.data(),saved_cpu.size()));
-  assert(db_fpu_checkpoint_load(saved.data(),saved.size()));step(300-at);
+  assert(db_processor_checkpoint_load(saved.data(),saved.size()));step(300-at);
   assert(fp()==expected&&cpu_image()==expected_cpu&&!memcmp(ram,memory.data(),sizeof(ram)));results();
  }
  puts("PASS x87 checkpoint: 200 interpreter continuations, four rounding modes, FXCH/arithmetic/sqrt, FSAVE/FRSTOR and CPU/RAM parity");
+}
+static void processor_transaction(){
+ initialise();step(5);Bytes saved(db_processor_checkpoint_bytes);
+ assert(db_processor_checkpoint_save(saved.data(),saved.size()));
+ step(10);auto before_cpu=cpu_image(),before_fpu=fp();
+ for(unsigned n=0;n<saved.size();n++){
+  auto bad=saved;bad[n]^=0x80;
+  assert(!db_processor_checkpoint_load(bad.data(),bad.size()));
+  assert(cpu_image()==before_cpu&&fp()==before_fpu);
+ }
+ for(unsigned n=0;n<saved.size();n++)assert(!db_processor_checkpoint_load(saved.data(),n));
+ auto extra=saved;extra.push_back(0);assert(!db_processor_checkpoint_load(extra.data(),extra.size()));
+ assert(!db_processor_checkpoint_load(nullptr,saved.size()));
+ for(unsigned offset:{0u,unsigned(db_cpu_checkpoint_bytes)}){
+  Bytes component(saved.begin()+offset,saved.begin()+offset+(offset?db_fpu_checkpoint_bytes:db_cpu_checkpoint_bytes));
+  put(component,offset?7:44,0xffffffffu);crc(component);
+  auto bad=saved;memcpy(bad.data()+offset,component.data(),component.size());
+  assert(!db_processor_checkpoint_load(bad.data(),bad.size()));
+  assert(cpu_image()==before_cpu&&fp()==before_fpu);
+ }
+ Bytes destination(saved.size(),0xa5),untouched=destination;
+ fpu.top=9;
+ assert(!db_processor_checkpoint_save(destination.data(),destination.size()));assert(destination==untouched);
+ assert(db_fpu_checkpoint_load(before_fpu.data(),before_fpu.size()));
+ cpu.pmode=true;assert(!db_processor_checkpoint_load(saved.data(),saved.size()));cpu.pmode=false;
+ assert(cpu_image()==before_cpu&&fp()==before_fpu);
+ assert(db_processor_checkpoint_load(saved.data(),saved.size()));
+ Bytes after(saved.size());assert(db_processor_checkpoint_save(after.data(),after.size()));assert(after==saved);
+ puts("PASS processor transaction: corrupt CPU or x87 leaves both unchanged; complete restoration");
 }
 static void bits_and_failures(){
  initialise();
@@ -81,12 +111,12 @@ static void disk(const char *mode,const char *path){
   initialise();Bytes c(db_cpu_checkpoint_bytes),f(db_fpu_checkpoint_bytes);FILE *file=fopen(path,"rb");assert(file);
   for(auto *x:{&c,&f})assert(fread(x->data(),1,x->size(),file)==x->size());
   assert(fread(ram,1,sizeof(ram),file)==sizeof(ram));assert(fgetc(file)==EOF);assert(fclose(file)==0);
-  assert(db_cpu_checkpoint_load(c.data(),c.size()));assert(db_fpu_checkpoint_load(f.data(),f.size()));step(295);
+  c.insert(c.end(),f.begin(),f.end());assert(db_processor_checkpoint_load(c.data(),c.size()));step(295);
   assert(fp()==expected&&cpu_image()==expected_cpu&&!memcmp(ram,memory.data(),sizeof(ram)));results();
   puts("PASS x87 checkpoint: CPU/FPU/test RAM fresh-process continuation");
  }
 }
 int main(int argc,char **argv){
  if(argc==3){disk(argv[1],argv[2]);return 0;}
- boundaries();bits_and_failures();
+ boundaries();bits_and_failures();processor_transaction();
 }

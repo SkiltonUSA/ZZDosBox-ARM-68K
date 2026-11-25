@@ -34,6 +34,7 @@ subprocess.run(['clang++','-std=c++17','-O1','-g','-fsanitize=address,undefined'
  *['-I'+str(p) for p in (b.OUT/'include',b.SRC,b.OUT,b.OUT/'src/cpu')],
  *map(str,units),str(b.OUT/'src/fpu/fpu.cpp'),
  str(b.SRC/'state/cpu_checkpoint.cpp'),str(b.SRC/'state/fpu_checkpoint.cpp'),
+ str(b.SRC/'state/processor_checkpoint.cpp'),
  str(b.ROOT/'tests/amiga/dosbox/state_fpu.cpp'),'-Wl,-dead_strip','-o',str(output)],check=True)
 subprocess.run([str(output)],check=True)
 checkpoint=b.OUT/'cpu-fpu-ram-fixture.bin'

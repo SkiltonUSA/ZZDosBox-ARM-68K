@@ -37,8 +37,9 @@ while preserving its GNU `LONGTYPE` macro; no FPU instruction logic is replaced.
 
 ## Limits
 
-This is a component checkpoint, not a game save format. CPU and FPU records still
-need all-or-nothing prevalidation inside a full machine transaction. Devices,
+This is a component checkpoint, not a game save format. CPU and FPU records subsequently gained
+[all-or-nothing processor prevalidation](../processor-checkpoint/README.md);
+a full machine transaction remains unfinished. Devices,
 scheduler, DOS/files, paging and media identities are not captured by this test.
 The private fixture file is not distributed as a supported save state.
 
