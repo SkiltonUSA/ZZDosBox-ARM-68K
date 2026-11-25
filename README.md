@@ -46,7 +46,7 @@ aliased code writes and rounding/state restoration pass in the ARM instruction
 model and on physical hardware at 800 MHz, with clean teardown.
 
 **Paged JIT and save states:** bounded register-block candidates and a real-mode
-CPU checkpoint component are under test, including malformed-state rejection.
+CPU and portable x87 checkpoint components are under test, including malformed-state rejection.
 Full game save/load is not available;
 no paged-JIT speed gain has been established for the released player.
 [Implementation, tests and remaining work](docs/paged-jit-and-save-states.md).

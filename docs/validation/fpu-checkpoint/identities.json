@@ -1,0 +1,20 @@
+{
+  "base_commit": "ae71be2b9e056caff90083b703a50c0566ca4960",
+  "upstream": {
+    "repository": "https://github.com/libretro/dosbox-libretro",
+    "revision": "a563bb5e9753f207d74e9d8c417d793b784fa4be",
+    "reviewed": "2026-10-12",
+    "license": "GPL-2.0-or-later; retain component notices"
+  },
+  "sha256": {
+    "amiga/dosbox/state/fpu_checkpoint.cpp": "022269f4aeca7e98ac56fbc0dfe6337d21d79cc9263fbd42886dbdc2fc8d5c15",
+    "amiga/dosbox/state/fpu_checkpoint.h": "10f68bce3da71195a5bff8facb5bd7582d527e1056ab7d7c9639f048d39a1512",
+    "scripts/test_dosbox_fpu_checkpoint.py": "ebb3344fac5c0e90bcd0a08bb2b996e334bd4f77762eaec73772c3663a4a8863",
+    "scripts/test_dosbox_fpu_checkpoint_arm.py": "f1aa349f69398a437632cffca937fd6587555cb96de8a1cf7f6f37dfd2bd149b",
+    "tests/amiga/dosbox/state_fpu.cpp": "f053742941dd3da8b8c6a149023b059febefdee80bf8d464eb28353254612964",
+    "tests/amiga/dosbox/state_fpu_arm.cpp": "e69f185b4c869b9f58d8b604afc14c9885fef61803d1bd78063e9590ce98e856",
+    ".context/checkpoint-fpu/state-fpu-test": "1b6121538bee0024de81aa15e228b1005dffe7c6580e62e94ae5909ce14b730a",
+    ".context/checkpoint-fpu-arm/probe.elf": "c1a7bf9712d89965e552abbb17c85d67a9b2a040a5163de753e97678e3686bb8",
+    ".context/checkpoint-fpu-arm/fpu-golden.h": "aee2639ac0a569ea4d2f208ebd00ea35f42d8e5ef97fd3fbf535907cf9c93ec5"
+  }
+}

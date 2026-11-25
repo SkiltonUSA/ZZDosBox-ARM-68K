@@ -21,6 +21,12 @@ scanline candidate is retained in the experiment notes rather than assigned one.
 
 ## Unreleased experiments
 
+- Add a portable x87 checkpoint component with fixed little-endian fields,
+  atomic rejection and preserved register bits. Actual interpreter continuation
+  passes at 200 boundaries and in a fresh process; Cortex-A9 continuation matches
+  native expected records. It remains development-only, with no new Save button.
+  [Test record](docs/validation/fpu-checkpoint/README.md).
+
 - Harden the development CPU checkpoint against valid-CRC malformed fields;
   add 20 atomic-rejection cases and reverse-direction restoration coverage.
   Full PC save states remain unfinished; production binaries are unchanged.

@@ -1,0 +1,92 @@
+/* GPL-2.0-or-later. Test actual x86 instruction continuation, not just fields. */
+#include <assert.h>
+#include <vector>
+#include "../../../amiga/dosbox/adapter.cpp"
+#include "fpu.h"
+#include "state/cpu_checkpoint.h"
+#include "state/fpu_checkpoint.h"
+#include "fpu-program.h"
+extern void FPU_Init(Section*);
+using Bytes=std::vector<uint8_t>;
+static void initialise(){
+ memset(ram,0,sizeof(ram));memset(&cpu_regs,0,sizeof(cpu_regs));
+ memset(&cpu,0,sizeof(cpu));memset(&Segs,0,sizeof(Segs));memset(&lflags,0,sizeof(lflags));
+ memset(&fpu,0,sizeof(fpu));FPU_Init(nullptr);
+ zz_dosbox_paging_init();CPU_ArchitectureType=CPU_ARCHTYPE_386SLOW;
+ CPU_Core_Normal_Init();cpudecoder=CPU_Core_Normal_Run;
+ for(unsigned seg=0;seg<6;seg++)SegSet16(seg,0x1000);
+ cpu.stack.mask=0xffff;cpu.stack.notmask=0xffff0000;
+ cpu.idt.SetBase(0);cpu.idt.SetLimit(1023);CPU_SetFlags(FLAG_IF,FMASK_ALL);
+ reg_sp=0xfffe;reg_eip=0x100;CPU_CycleLeft=0;CPU_Cycles=0;
+ memcpy(ram+0x10100,program,sizeof(program));
+ for(unsigned n=0;n<4;n++)mem_writew(0x18000+n*2,0x37f|(n<<10));
+ double a=1.5,b=-2.5;memcpy(ram+0x18010,&a,8);memcpy(ram+0x18018,&b,8);
+}
+static void step(unsigned count){
+ for(unsigned n=0;n<count;n++){CPU_Cycles=1;assert(CPU_Core_Normal_Run()==0);}
+}
+static Bytes fp(){Bytes x(db_fpu_checkpoint_bytes);assert(db_fpu_checkpoint_save(x.data(),x.size()));return x;}
+static Bytes cpu_image(){Bytes x(db_cpu_checkpoint_bytes);assert(db_cpu_checkpoint_save(x.data(),x.size()));return x;}
+static void results(){
+ const int32_t expected[]={2,-2,1,-3,2,-2,1,-2};
+ for(unsigned n=0;n<8;n++)assert((int32_t)mem_readd(0x18100+n*4)==expected[n]);
+}
+static void put(Bytes &x,unsigned word,uint32_t v){for(unsigned b=0;b<4;b++)x[word*4+b]=(uint8_t)(v>>(b*8));}
+static void crc(Bytes &x){
+ uint32_t c=~0u;for(unsigned n=0;n<x.size();n++)if(n<12||n>=16){c^=x[n];for(unsigned b=0;b<8;b++)c=(c>>1)^((c&1)?0xedb88320u:0);}
+ put(x,3,~c);
+}
+static void rejected(Bytes bad,const Bytes &before){
+ assert(!db_fpu_checkpoint_load(bad.data(),bad.size()));assert(fp()==before);
+}
+static void boundaries(){
+ initialise();step(300);results();auto expected=fp(),expected_cpu=cpu_image();Bytes memory(ram,ram+sizeof(ram));
+ for(unsigned at=0;at<200;at++){
+  initialise();step(at);auto saved=fp(),saved_cpu=cpu_image();Bytes saved_ram(ram,ram+sizeof(ram));
+  initialise();memcpy(ram,saved_ram.data(),sizeof(ram));
+  assert(db_cpu_checkpoint_load(saved_cpu.data(),saved_cpu.size()));
+  assert(db_fpu_checkpoint_load(saved.data(),saved.size()));step(300-at);
+  assert(fp()==expected&&cpu_image()==expected_cpu&&!memcmp(ram,memory.data(),sizeof(ram)));results();
+ }
+ puts("PASS x87 checkpoint: 200 interpreter continuations, four rounding modes, FXCH/arithmetic/sqrt, FSAVE/FRSTOR and CPU/RAM parity");
+}
+static void bits_and_failures(){
+ initialise();
+ // Raw payloads, including signed zero, subnormal, infinity and NaN, must not
+ // be converted through decimal or floating-point arithmetic by the serializer.
+ const uint64_t bits[]={0,0x8000000000000000ull,1,0x7ff0000000000000ull,
+  0xfff0000000000000ull,0x7ff8000000001234ull,0x7ff0000000004321ull,
+  0x3ff8000000000000ull,0xbff8000000000000ull};
+ for(unsigned n=0;n<9;n++){memcpy(&fpu.regs[n],&bits[n],8);fpu.tags[n]=FPU_Tag(n%4);}
+ fpu.top=5;fpu.sw=0xa541;FPU_SetCW(0x0b7f);auto saved=fp();
+ initialise();assert(db_fpu_checkpoint_load(saved.data(),saved.size()));assert(fp()==saved);
+ assert(fpu.top==5&&fpu.sw==0xa541&&fpu.round==ROUND_Up&&fpu.cw_mask_all==(fpu.cw|0x3f));
+ for(unsigned n=0;n<9;n++)assert(!memcmp(&fpu.regs[n],&bits[n],8));
+ for(unsigned n=0;n<saved.size();n++){auto bad=saved;bad[n]^=0x80;rejected(bad,saved);}
+ for(unsigned n=0;n<saved.size();n++)assert(!db_fpu_checkpoint_load(saved.data(),n));
+ auto extra=saved;extra.push_back(0);rejected(extra,saved);
+ const unsigned fields[]={0,1,2,4,5,6,7,10,13,16,19,22,25,28,31,34};
+ for(unsigned word:fields){auto bad=saved;put(bad,word,0xffffffff);crc(bad);rejected(bad,saved);}
+ assert(!db_fpu_checkpoint_load(nullptr,saved.size()));assert(!db_fpu_checkpoint_save(nullptr,saved.size()));
+ assert(!db_fpu_checkpoint_save(extra.data(),extra.size()));assert(fp()==saved);
+ puts("PASS x87 checkpoint: bit-exact nine registers, independent TOP/status, derived rounding, all-byte corruption/length and 16 valid-CRC malformed records rejected atomically");
+}
+static void disk(const char *mode,const char *path){
+ initialise();step(300);auto expected=fp(),expected_cpu=cpu_image();Bytes memory(ram,ram+sizeof(ram));
+ if(!strcmp(mode,"save")){
+  initialise();step(5);auto c=cpu_image(),f=fp();FILE *file=fopen(path,"wb");assert(file);
+  for(auto *x:{&c,&f})assert(fwrite(x->data(),1,x->size(),file)==x->size());
+  assert(fwrite(ram,1,sizeof(ram),file)==sizeof(ram));assert(fclose(file)==0);
+ }else{
+  initialise();Bytes c(db_cpu_checkpoint_bytes),f(db_fpu_checkpoint_bytes);FILE *file=fopen(path,"rb");assert(file);
+  for(auto *x:{&c,&f})assert(fread(x->data(),1,x->size(),file)==x->size());
+  assert(fread(ram,1,sizeof(ram),file)==sizeof(ram));assert(fgetc(file)==EOF);assert(fclose(file)==0);
+  assert(db_cpu_checkpoint_load(c.data(),c.size()));assert(db_fpu_checkpoint_load(f.data(),f.size()));step(295);
+  assert(fp()==expected&&cpu_image()==expected_cpu&&!memcmp(ram,memory.data(),sizeof(ram)));results();
+  puts("PASS x87 checkpoint: CPU/FPU/test RAM fresh-process continuation");
+ }
+}
+int main(int argc,char **argv){
+ if(argc==3){disk(argv[1],argv[2]);return 0;}
+ boundaries();bits_and_failures();
+}

@@ -74,12 +74,40 @@ python3 scripts/test_dosbox_cpu_checkpoint.py --output .context/checkpoint-valid
 ```
 
 The private CPU/RAM test file is **not** a supported game-state format. The
-current component intentionally does not promise hidden protected-mode state,
-x87 state, a running DOS kernel or device restoration.
+integer component intentionally does not promise hidden protected-mode state,
+a running DOS kernel or device restoration. The separate x87 component below
+still needs coordinated integration with it.
+
+## Portable x87 checkpoint component
+
+`amiga/dosbox/state/fpu_checkpoint.cpp` adds a separate development-only component
+for the existing portable, double-backed x87 implementation. It preserves all
+nine register payloads (including scratch slot 8), tags, control word, status word
+and stack top. Rounding and the masked control word are derived from the restored
+control word. Register bits are copied without floating-point conversion, so
+signed zero, subnormal, infinity and NaN payloads survive unchanged.
+
+The status word's TOP bits are deliberately preserved independently from the
+working stack top: this core synchronizes them only for instructions that need
+the status word. The portable backend does not use `p_regs`; those alternate
+backend fields are not serialized. The compile guard rejects the native-x86 FPU
+backend. This does not add 80-bit precision or alter normal emulation arithmetic.
+
+A 140-byte, versioned little-endian record identifies the portable backend and
+checks length, CRC32, field widths, stack bounds and tags before changing state.
+The actual normal interpreter passes 200 CPU/FPU/RAM continuation points through
+four rounding modes, arithmetic, stack operations and guest FSAVE/FRSTOR. A
+fresh-process continuation also passes under ASan/UBSan. A Cortex-A9 model loads
+native records, executes actual FPU operations and produces identical records.
+[Test results, build identities and limits](validation/fpu-checkpoint/README.md).
+
+This component is not linked into production players. Coordinated CPU/RAM/device
+validation, protected mode and full machine restoration remain unfinished.
 
 ## Work needed before game save/load
 
-1. Add protected-mode CPU/TSS, paging and x87 components; rebuild mappings and
+1. Add protected-mode CPU/TSS and paging components; coordinate the tested
+   integer/x87 components with the full machine, rebuild mappings and
    invalidate translated code when loading.
 2. Capture the full scheduler, event queue and interrupt state using stable
    callback identifiers instead of function addresses.
