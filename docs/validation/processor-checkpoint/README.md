@@ -17,6 +17,7 @@ when the FPU record is corrupt. The corrected transaction passes ASan/UBSan:
   null input, unsupported CPU mode and valid-CRC semantic corruption in either
   component is refused without changing CPU or FPU state.
 - Failure to capture the FPU leaves the caller's destination unchanged.
+- All three components compile for Cortex-A9 ARM32 with the player ABI.
 - Existing integer-component regression and Cortex-A9 x87 continuation tests pass.
   The latter tests the FPU component; it does not establish ARM execution of the
   new combined transaction or physical game restoration.

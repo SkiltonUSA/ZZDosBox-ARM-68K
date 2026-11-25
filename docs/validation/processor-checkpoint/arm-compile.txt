@@ -1,0 +1,3 @@
+PASS Cortex-A9 ARM32 compile: cpu_checkpoint
+PASS Cortex-A9 ARM32 compile: fpu_checkpoint
+PASS Cortex-A9 ARM32 compile: processor_checkpoint

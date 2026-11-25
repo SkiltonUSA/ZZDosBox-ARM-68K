@@ -1,7 +1,7 @@
 {
   "sha256": {
     "amiga/dosbox/state/cpu_checkpoint.cpp": "3c6f99db7316404e54c2fa492309659570815a92f6f3a1868d39b11ddfa286b1",
-    "amiga/dosbox/state/cpu_checkpoint.h": "b4147cc0538d774fb8480ab1c002084b2ea835b59431ba2ba25f210dfbc8de49",
+    "amiga/dosbox/state/cpu_checkpoint.h": "6c61256b6a525ffbfc7abebd6beec651b08331511504f733e6e7582dc6125765",
     "amiga/dosbox/state/fpu_checkpoint.cpp": "b1735f9ff584c7e423cb658b2d6dcc6287f377844afa4033974af067669e7bda",
     "amiga/dosbox/state/fpu_checkpoint.h": "593043a3731201288861bb9e5adbbbac5994b0cd574b74e441afbc3b6aa02be9",
     "amiga/dosbox/state/processor_checkpoint.cpp": "68059861c57aac29ec41cab4ab6a231da40053ea1586d9024bcb6734e8091da3",

@@ -1,6 +1,6 @@
 /* GPL-2.0-or-later. Development-only integer CPU checkpoint component.
  * Normal, real-mode interpreter at a returned instruction boundary only.
- * This is NOT a PC/game save state: RAM, devices, DOS, files, x87 and scheduler
+ * This is NOT a PC/game save state: RAM, devices, DOS, files and scheduler
  * still need coordinated serializers. Not linked into production players. */
 #pragma once
 #include <stddef.h>
