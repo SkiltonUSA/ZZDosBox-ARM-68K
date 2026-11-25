@@ -1,0 +1,19 @@
+{
+  "upstream": {
+    "repository": "https://github.com/libretro/dosbox-libretro",
+    "revision": "a563bb5e9753f207d74e9d8c417d793b784fa4be",
+    "reviewed": "2026-10-12",
+    "license": "GPL-2.0-or-later; retain component notices"
+  },
+  "sha256": {
+    "amiga/dosbox/state/cpu_checkpoint.cpp": "3c6f99db7316404e54c2fa492309659570815a92f6f3a1868d39b11ddfa286b1",
+    "amiga/dosbox/state/fpu_checkpoint.cpp": "b1735f9ff584c7e423cb658b2d6dcc6287f377844afa4033974af067669e7bda",
+    "amiga/dosbox/state/processor_checkpoint.cpp": "68059861c57aac29ec41cab4ab6a231da40053ea1586d9024bcb6734e8091da3",
+    "scripts/test_dosbox_processor_checkpoint_arm.py": "d277e9c9312810f63c3037376c8aab7a8b6412e3801d7cab5cee850377fa570c",
+    "tests/amiga/dosbox/state_fpu.cpp": "f51bdcd14f7be61d2d98ec62df6d8b26752695ff7408f557a936f69e55dfee82",
+    "tests/amiga/dosbox/state_fpu_fixture.h": "ffca2fdc1613df97df1ccd75872c8c0d9f8e26303c81111800f90c3c2a6d376a",
+    "tests/amiga/dosbox/state_processor_arm.cpp": "f590d17cef3748decb0f8a38c0588df60df0a513e192f1edaca07867a46402e9",
+    ".context/checkpoint-processor-a9/probe.elf": "3e98806545abe60ab06e61fc003445c0eedc61f8ebdedf822daccabc380ef3f3",
+    ".context/checkpoint-processor-a9/processor-golden.h": "6b8ff60a040a2712ae5f6fa4c423e52cd6a5cfc732e643e46ae13597e2af95db"
+  }
+}

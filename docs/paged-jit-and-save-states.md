@@ -103,6 +103,8 @@ native records, executes actual FPU operations and produces identical records.
 
 This component is not linked into production players. CPU/x87 prevalidation now runs as one transaction; RAM/device coordination,
 protected mode and full machine restoration remain unfinished.
+The coordinated transaction also passes actual-interpreter continuation in the
+Cortex-A9 model, with native wire records and whole diagnostic-RAM hashes.
 [Transaction evidence](validation/processor-checkpoint/README.md).
 
 ## Work needed before game save/load

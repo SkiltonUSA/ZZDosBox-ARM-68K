@@ -1,0 +1,4 @@
+PASS x87 checkpoint: 200 interpreter continuations, four rounding modes, FXCH/arithmetic/sqrt, FSAVE/FRSTOR and CPU/RAM parity
+PASS x87 checkpoint: bit-exact nine registers, independent TOP/status, derived rounding, all-byte corruption/length and 16 valid-CRC malformed records rejected atomically
+PASS processor transaction: corrupt CPU or x87 leaves both unchanged; complete restoration
+PASS x87 checkpoint: CPU/FPU/test RAM fresh-process continuation

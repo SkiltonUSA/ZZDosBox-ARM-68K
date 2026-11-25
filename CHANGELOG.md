@@ -1,5 +1,13 @@
 # ZZDosBox changelog
 
+## Unreleased — CPU/x87 checkpoint validation
+
+- Run coordinated CPU/x87 restoration through the actual pinned interpreter in
+  the Cortex-A9 model. Five native-record continuations and 2,100 corrupt-record
+  refusals pass, with native sanitizer/fresh-process regressions retained.
+- RAM is still restored by the test harness; full game save states remain
+  unfinished. [Evidence](docs/validation/processor-checkpoint/README.md).
+
 ## Unreleased — JIT/x87 compatibility checks
 
 - Both new fixtures pass on physical hardware at 800 MHz with clean context

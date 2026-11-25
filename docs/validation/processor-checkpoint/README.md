@@ -29,3 +29,28 @@ Run `python3 scripts/test_dosbox_fpu_checkpoint.py` to reproduce the transaction
 and continuation tests. Devices, RAM, scheduler, DOS/files, protected mode and
 storage still need whole-machine coordination. This is not a usable game-state
 format and does not enable launcher save slots.
+
+## Coordinated ARM32 continuation
+
+The same pinned normal interpreter now runs in a Cortex-A9 instruction model
+from five CPU/x87 records produced natively. Each restored point continues the
+x86 program to its common endpoint, matching the entire processor record and a
+hash of all 2 MiB of diagnostic RAM. The fixture exercises four rounding modes,
+FSAVE/FRSTOR and arithmetic. All 2,100 single-byte corruptions reject without
+changing either CPU component. The 200-boundary native sanitizer and fresh-process
+regressions still pass after sharing their fixture setup.
+
+The model runs the actual interpreter, not a stub CPU. Host I/O remains the
+existing diagnostic adapter; RAM is restored by the test harness, not by a new
+production component. Static C++ constructors run before the model's main;
+fixture-only assertion/exit/delete traps fail the probe if unexpectedly reached.
+This is not physical hardware, an FPS result or a complete PC snapshot.
+
+```sh
+python3 scripts/test_dosbox_processor_checkpoint_arm.py \
+  --prepared .context/checkpoint-fpu --output .context/checkpoint-processor-a9
+```
+
+Requires the pinned interpreter preparation, Unicorn, the ARM toolchain and the
+existing bare-metal libc archive, as for the earlier x87 model test.
+[Results](arm-interpreter.txt), [input identities](arm-identities.json).

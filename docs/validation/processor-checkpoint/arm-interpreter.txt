@@ -1,0 +1,1 @@
+PASS Cortex-A9 CPU/x87 transaction: five native-record interpreter continuations, whole test-RAM hash, 2100 atomic corrupt-record refusals; no physical/FPS claim
